@@ -5,7 +5,7 @@ const pathConfig = require("./path-config.json");
 
 module.exports = {
   images: true,
-  cloudinary: false,
+  cloudinary: true,
   fonts: true,
   static: true,
   svgSprite: true,
@@ -13,7 +13,7 @@ module.exports = {
   javascripts: false,
 
   html: {
-    collections: ["build"]
+    collections: ["build"],
   },
 
   esbuild: {
@@ -33,14 +33,14 @@ module.exports = {
 
   browserSync: {
     server: {
-      baseDir: pathConfig.dest
-    }
+      baseDir: pathConfig.dest,
+    },
   },
 
   workboxBuild: false,
 
   production: {
-    rev: true
+    rev: true,
   },
 
   additionalTasks: {
@@ -51,15 +51,15 @@ module.exports = {
         dest: projectPath(pathConfig.dest, pathConfig.esbuild.dest),
       };
       task("esbuild-prod", () =>
-          src(esmPaths.src)
-              .pipe(esbuild(taskConfig.esbuild.options))
-              .pipe(dest(esmPaths.dest))
+        src(esmPaths.src)
+          .pipe(esbuild(taskConfig.esbuild.options))
+          .pipe(dest(esmPaths.dest))
       );
       const esbuildInc = esbuild.createGulpEsbuild({ incremental: true });
       task("esbuild", () =>
-          src(esmPaths.src)
-              .pipe(esbuildInc(taskConfig.esbuild.options))
-              .pipe(dest(esmPaths.dest))
+        src(esmPaths.src)
+          .pipe(esbuildInc(taskConfig.esbuild.options))
+          .pipe(dest(esmPaths.dest))
       );
     },
     development: { code: ["esbuild"] },
