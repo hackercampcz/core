@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=7f1ad40435f93e921eb478cbf04367be8f592998",
-    "dotenv": "10.0.0",
+    "dotenv": "16.0.0",
     "dotenv-cli": "4.1.1",
     "esbuild": "0.14.28",
     "gulp-esbuild": "0.10.2",
