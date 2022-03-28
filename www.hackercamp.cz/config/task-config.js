@@ -1,7 +1,6 @@
-const createSharedTaskConfig = require("../../shared/config/createSharedTaskConfig");
 const pathConfig = require("./path-config.json");
 
-const config = createSharedTaskConfig(__dirname, {
+module.exports = {
   images: true,
   cloudinary: true,
   fonts: true,
@@ -17,20 +16,18 @@ const config = createSharedTaskConfig(__dirname, {
       filters: {
         year() {
           return new Date().getFullYear();
-        }
-      }
-    }
+        },
+      },
+    },
   },
 
   browserSync: {
     server: {
-      baseDir: pathConfig.dest
-    }
+      baseDir: pathConfig.dest,
+    },
   },
 
   production: {
-    rev: true
-  }
-});
-
-module.exports = config;
+    rev: true,
+  },
+};
