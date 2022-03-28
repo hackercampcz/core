@@ -16,6 +16,8 @@
   },
   "devDependencies": {
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=7f1ad40435f93e921eb478cbf04367be8f592998",
+    "dotenv": "^10.0.0",
+    "dotenv-cli": "^4.1.1",
     "esbuild": "^0.14.28",
     "gulp-esbuild": "^0.10.2",
     "gulp-mode": "^1.1.0",
@@ -26,7 +28,7 @@
   "scripts": {
     "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ blendid build --production",
     "build:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ blendid build --production",
-    "start:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ blendid",
-    "start:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ blendid"
+    "start:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid",
+    "start:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid"
   }
 }
