@@ -15,7 +15,8 @@ registerAutoTags({
 const config = new pulumi.Config();
 
 const donutDomain = config.get("donut-domain") as string;
-createCertificate(donutDomain);
+
+// createCertificate(donutDomain); // certificate is managed by topmonks-webs stack
 
 const donutSite = Website.create(donutDomain, {});
 
