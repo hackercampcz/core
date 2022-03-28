@@ -28,14 +28,7 @@ createTxtRecord(
   "google-site-verification=eIaBVqhznPV-0AAEEbFJN82j3w063w_tW0-DUZWX5C0"
 );
 
-const donutSite = Website.create(donutDomain, {});
-const webSite = Website.create(webDomain, {});
-
-export const donutUrl = donutSite.url;
-export const donutS3BucketUri = donutSite.s3BucketUri;
-export const donutS3WebsiteUrl = donutSite.s3WebsiteUrl;
-export const donutCloudFrontId = donutSite.cloudFrontId;
-export const webUrl = webSite.url;
-export const webS3BucketUri = webSite.s3BucketUri;
-export const webS3WebsiteUrl = webSite.s3WebsiteUrl;
-export const webCloudFrontId = webSite.cloudFrontId;
+export const websites: any = {
+  [donutDomain]: Website.create(donutDomain, {}),
+  [webDomain]: Website.create(webDomain, {})
+};
