@@ -1292,9 +1292,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hackercamp/donut@workspace:.":
+"@hackercamp/core@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@hackercamp/donut@workspace:."
+  resolution: "@hackercamp/core@workspace:."
   dependencies:
     "@material/layout-grid": ^13.0.0
     "@pulumi/aws": ^5.1.0
