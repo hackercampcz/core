@@ -34,13 +34,7 @@ module.exports = {
     }
   },
 
-  workboxBuild: {
-    globDirectory: pathConfig.dest,
-    globPatterns: ["**/*.{html,json,js,css,png,jpg,gif,svg}"],
-    // Create service-worker.js source file and define `swSrc` to use `injectManifest` method
-    // swSrc: `${pathConfig.src}/sw.js`,
-    swDest: `${pathConfig.dest}/sw.prod.js`
-  },
+  workboxBuild: false,
 
   production: {
     rev: true

@@ -1,10 +1,10 @@
-{% from 'macros/helpers.html' import sprite %}
+{% from 'macros/helpers.njk' import sprite %}
 <!doctype html>
-<html>
+<html lang="cs">
   <head>
     <meta charset="utf-8">
     <title>{% block title %}{{ title }}{% endblock %}</title>
-    <link rel="stylesheet" href="stylesheets/app.css">
+    <link rel="stylesheet" href="/assets/css/app.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="/manifest.json">
     <script>
@@ -17,12 +17,11 @@
       }
     </script>
     {% include "shared/app-icons.html" %}
+    {% include "shared/rollbar.njk" %}
     {% block head %}{% endblock %}
   </head>
   <body>
     {% block content %}{% endblock %}
-    {% block javascript %}
-      <script src="javascripts/app.js"></script>
-    {% endblock %}
+    {% block javascript %}{% endblock %}
   </body>
 </html>
