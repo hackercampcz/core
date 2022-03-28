@@ -1,0 +1,5 @@
+{
+  "environment": "development",
+  "version": "HEAD",
+  "build": "local"
+}
