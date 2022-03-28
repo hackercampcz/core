@@ -25,6 +25,8 @@
   },
   "scripts": {
     "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ blendid build --production",
-    "start:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ blendid"
+    "build:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ blendid build --production",
+    "start:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ blendid",
+    "start:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ blendid"
   }
 }
