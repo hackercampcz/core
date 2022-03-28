@@ -209,9 +209,13 @@ jobs:
         description: Steps that will be execute after S3 sync, but before Cloudfront distribution invalidation
         type: steps
         default: [ ]
+      rollbar_access_token:
+        type: string
     executor:
       name: node/default
       tag: "current"
+    environment:
+      ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
     steps:
       - checkout
       - attach_workspace:
@@ -257,6 +261,7 @@ workflows:
       - deploy-site:
           name: deploy-donut
           site_name: donut.hackercamp.cz
+          rollbar_access_token: 6ed48e07fedb43bb9767261178684740
           context: org-global
           requires:
             - provision
