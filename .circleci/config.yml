@@ -245,6 +245,8 @@ workflows:
             - org-global
           requires:
             - preview-provision
+            - build-donut
+            - build-web
           filters:
             branches:
               only: /renovate\/.*/
