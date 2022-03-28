@@ -262,3 +262,17 @@ workflows:
           filters:
             branches:
               only: trunk
+      - build-website:
+          name: build-web
+          site_name: www.hackercamp.cz
+          context: org-global
+      - deploy-site:
+          name: deploy-web
+          site_name: www.hackercamp.cz
+          context: org-global
+          requires:
+            - provision
+            - build-web
+          filters:
+            branches:
+              only: trunk

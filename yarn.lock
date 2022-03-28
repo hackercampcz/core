@@ -1296,6 +1296,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:."
   dependencies:
+    "@material/layout-grid": ^13.0.0
     "@pulumi/aws": ^5.1.0
     "@pulumi/awsx": ^0.40.0
     "@pulumi/pulumi": ^3.27.0
@@ -1345,6 +1346,15 @@ __metadata:
   version: 2.1.1
   resolution: "@logdna/tail-file@npm:2.1.1"
   checksum: dbe937090e41cbb833298b03d6d77765538f8d8c53b78e027bdbf2d2eb2bd8144ad8123d4493edeffdd63fc2bfb808f6c9897f51accb0ded63606e4cf3460cf5
+  languageName: node
+  linkType: hard
+
+"@material/layout-grid@npm:^13.0.0":
+  version: 13.0.0
+  resolution: "@material/layout-grid@npm:13.0.0"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: 206b4f0c3d97929f31f72b526492d1645b159f712d59b95dd92c4ceaed820c478a9d5c91c4eee155c747e98ed7aad6b3188d4b6073995fb77efb3c734a27006d
   languageName: node
   linkType: hard
 
