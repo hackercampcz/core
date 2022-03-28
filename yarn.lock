@@ -1296,18 +1296,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@pulumi/aws": ^5.1.0
-    "@pulumi/awsx": ^0.40.0
-    "@pulumi/pulumi": ^3.27.0
+    "@pulumi/aws": 5.1.0
+    "@pulumi/awsx": 0.40.0
+    "@pulumi/pulumi": 3.27.0
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=7f1ad40435f93e921eb478cbf04367be8f592998"
-    "@topmonks/pulumi-aws": ^1.10.1
-    dotenv: ^10.0.0
-    dotenv-cli: ^4.1.1
-    esbuild: ^0.14.28
-    gulp-esbuild: ^0.10.2
-    gulp-mode: ^1.1.0
-    npm-run-all: ^4.1.5
-    prettier: ^2.6.1
+    "@topmonks/pulumi-aws": 1.10.1
+    dotenv: 10.0.0
+    dotenv-cli: 4.1.1
+    esbuild: 0.14.28
+    gulp-esbuild: 0.10.2
+    gulp-mode: 1.1.0
+    npm-run-all: 4.1.5
+    prettier: 2.6.1
   languageName: unknown
   linkType: soft
 
@@ -1315,7 +1315,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    web-types-lit: ^0.1.0
+    web-types-lit: 0.1.0
   languageName: unknown
   linkType: soft
 
@@ -1323,7 +1323,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
   dependencies:
-    "@material/layout-grid": ^13.0.0
+    "@material/layout-grid": 13.0.0
   languageName: unknown
   linkType: soft
 
@@ -1365,7 +1365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/layout-grid@npm:^13.0.0":
+"@material/layout-grid@npm:13.0.0":
   version: 13.0.0
   resolution: "@material/layout-grid@npm:13.0.0"
   dependencies:
@@ -1494,7 +1494,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:^5.1.0":
+"@pulumi/aws@npm:5.1.0":
   version: 5.1.0
   resolution: "@pulumi/aws@npm:5.1.0"
   dependencies:
@@ -1508,7 +1508,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/awsx@npm:^0.40.0":
+"@pulumi/awsx@npm:0.40.0":
   version: 0.40.0
   resolution: "@pulumi/awsx@npm:0.40.0"
   dependencies:
@@ -1532,7 +1532,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:^3.0.0, @pulumi/pulumi@npm:^3.27.0":
+"@pulumi/pulumi@npm:3.27.0, @pulumi/pulumi@npm:^3.0.0":
   version: 3.27.0
   resolution: "@pulumi/pulumi@npm:3.27.0"
   dependencies:
@@ -1750,7 +1750,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@topmonks/pulumi-aws@npm:^1.10.1":
+"@topmonks/pulumi-aws@npm:1.10.1":
   version: 1.10.1
   resolution: "@topmonks/pulumi-aws@npm:1.10.1"
   peerDependencies:
@@ -3771,7 +3771,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv-cli@npm:^4.1.1":
+"dotenv-cli@npm:4.1.1":
   version: 4.1.1
   resolution: "dotenv-cli@npm:4.1.1"
   dependencies:
@@ -3792,7 +3792,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^10.0.0":
+"dotenv@npm:10.0.0":
   version: 10.0.0
   resolution: "dotenv@npm:10.0.0"
   checksum: f412c5fe8c24fbe313d302d2500e247ba8a1946492db405a4de4d30dd0eb186a88a43f13c958c5a7de303938949c4231c56994f97d05c4bc1f22478d631b4005
@@ -4236,7 +4236,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.14.23, esbuild@npm:^0.14.28":
+"esbuild@npm:0.14.28, esbuild@npm:^0.14.23":
   version: 0.14.28
   resolution: "esbuild@npm:0.14.28"
   dependencies:
@@ -5272,7 +5272,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gulp-esbuild@npm:^0.10.2":
+"gulp-esbuild@npm:0.10.2":
   version: 0.10.2
   resolution: "gulp-esbuild@npm:0.10.2"
   dependencies:
@@ -5361,7 +5361,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gulp-mode@npm:^1.1.0":
+"gulp-mode@npm:1.1.0":
   version: 1.1.0
   resolution: "gulp-mode@npm:1.1.0"
   dependencies:
@@ -7568,7 +7568,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"npm-run-all@npm:^4.1.5":
+"npm-run-all@npm:4.1.5":
   version: 4.1.5
   resolution: "npm-run-all@npm:4.1.5"
   dependencies:
@@ -8536,7 +8536,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.6.1":
+"prettier@npm:2.6.1":
   version: 2.6.1
   resolution: "prettier@npm:2.6.1"
   bin:
@@ -11038,7 +11038,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-types-lit@npm:^0.1.0":
+"web-types-lit@npm:0.1.0":
   version: 0.1.0
   resolution: "web-types-lit@npm:0.1.0"
   dependencies:
