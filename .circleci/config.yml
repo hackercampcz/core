@@ -167,7 +167,7 @@ jobs:
         type: string
       environment:
         type: string
-        default: dev
+        default: production
     executor:
       name: node/default
       tag: "current"
@@ -189,7 +189,7 @@ jobs:
             > << parameters.site_name >>/src/data/build.json
       - run:
           name: Build website << parameters.site_name >>
-          command: yarn build:<< parameters.site_name >> << parameters.environment >>
+          command: yarn build:<< parameters.site_name >>
       - persist_to_workspace:
           root: .
           paths: [ dist ]
