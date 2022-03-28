@@ -1,6 +1,6 @@
 {
   "src": "./www.hackercamp.cz/src",
-  "dest": "./public/www.hackercamp.cz",
+  "dest": "./dist/www.hackercamp.cz",
 
   "html": {
     "src": "html",
