@@ -1,6 +1,6 @@
 {
   "name": "@hackercamp/donut",
-  "main": "index.js",
+  "main": "index.ts",
   "version": "1.0.0",
   "repository": "https://github.com/hackercampcz/donut.git",
   "author": "Aleš Roubíček <ales@roubicek.name>",
