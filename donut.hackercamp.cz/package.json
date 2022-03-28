@@ -1,0 +1,7 @@
+{
+  "name": "@hackercamp/donut",
+  "packageManager": "yarn@3.2.0",
+  "devDependencies": {
+    "web-types-lit": "^0.1.0"
+  }
+}

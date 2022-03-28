@@ -8,7 +8,6 @@
   "private": true,
   "packageManager": "yarn@3.2.0",
   "dependencies": {
-    "@material/layout-grid": "^13.0.0",
     "@pulumi/aws": "^5.1.0",
     "@pulumi/awsx": "^0.40.0",
     "@pulumi/pulumi": "^3.27.0",
@@ -22,13 +21,16 @@
     "gulp-esbuild": "^0.10.2",
     "gulp-mode": "^1.1.0",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.6.1",
-    "web-types-lit": "^0.1.0"
+    "prettier": "^2.6.1"
   },
   "scripts": {
     "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ blendid build --production",
     "build:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ blendid build --production",
     "start:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid",
     "start:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid"
-  }
+  },
+  "workspaces": [
+    "donut.hackercamp.cz",
+    "www.hackercamp.cz"
+  ]
 }
