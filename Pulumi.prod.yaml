@@ -1,0 +1,4 @@
+config:
+  aws:region: eu-central-1
+  hackercamp:donut-domain: donut.hackercamp.cz
+  pulumi:template: aws-typescript
