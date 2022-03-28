@@ -25,7 +25,7 @@ commands:
     parameters:
       stack_name:
         type: string
-        default: hackercamp-prod
+        default: prod
       site_name:
         type: string
     steps:
@@ -46,7 +46,7 @@ commands:
     parameters:
       stack_name:
         type: string
-        default: hackercamp-prod
+        default: prod
     steps:
       - pulumi/login
       - run:
@@ -70,7 +70,7 @@ commands:
     parameters:
       stack_name:
         type: string
-        default: hackercamp-prod
+        default: prod
       site_name:
         type: string
       distribution_id:
@@ -107,7 +107,7 @@ jobs:
     parameters:
       stack_name:
         type: string
-        default: hackercamp-prod
+        default: prod
     executor:
       name: node/default
       tag: "current"
@@ -131,7 +131,7 @@ jobs:
     parameters:
       stack_name:
         type: string
-        default: hackercamp-prod
+        default: prod
     executor:
       name: node/default
       tag: "current"
@@ -202,7 +202,7 @@ jobs:
     parameters:
       stack_name:
         type: string
-        default: hackercamp-prod
+        default: prod
       site_name:
         type: string
       after_s3_sync:
