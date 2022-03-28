@@ -4,14 +4,17 @@ const projectPath = require("@topmonks/blendid/gulpfile.js/lib/projectPath.js");
 const pathConfig = require("./path-config.json");
 
 module.exports = {
-  html: true,
   images: true,
-  cloudinary: false,
+  cloudinary: true,
   fonts: true,
   static: true,
   svgSprite: true,
   stylesheets: true,
   javascripts: false,
+
+  html: {
+    collections: ["build"]
+  },
 
   esbuild: {
     extensions: ["ts", "js", "mjs"],

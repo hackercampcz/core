@@ -1,4 +1,3 @@
-{% from 'macros/helpers.njk' import sprite %}
 <!doctype html>
 <html lang="cs">
   <head>
@@ -6,16 +5,7 @@
     <title>{% block title %}{{ title }}{% endblock %}</title>
     <link rel="stylesheet" href="/assets/css/app.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="/manifest.json">
-    <script>
-      // Check that service workers are registered
-      if ('serviceWorker' in navigator) {
-          // Use the window load event to keep the page load performant
-          window.addEventListener('load', () => {
-              navigator.serviceWorker.register('/service-worker.prod.js');
-          });
-      }
-    </script>
+    {% include "shared/fonts.html" %}
     {% include "shared/app-icons.html" %}
     {% include "shared/rollbar.njk" %}
     {% block head %}{% endblock %}
