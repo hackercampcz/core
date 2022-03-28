@@ -29,6 +29,15 @@ createTxtRecord(
 );
 
 export const websites: any = {
-  [donutDomain]: Website.create(donutDomain, {}),
-  [webDomain]: Website.create(webDomain, {})
+  [donutDomain]: siteExports(Website.create(donutDomain, {})),
+  [webDomain]: siteExports(Website.create(webDomain, {}))
 };
+
+function siteExports(site) {
+  return {
+    url: site.url,
+    s3BucketUri: site.s3BucketUri,
+    s3WebsiteUrl: site.s3WebsiteUrl,
+    cloudFrontId: site.cloudFrontId,
+  }
+}
