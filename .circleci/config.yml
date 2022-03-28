@@ -211,6 +211,7 @@ jobs:
         default: [ ]
       rollbar_access_token:
         type: string
+        default: ""
     executor:
       name: node/default
       tag: "current"
