@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}{{ title }}{% endblock %}</title>
-    <link rel="stylesheet" href="/assets/css/app.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% include "shared/fonts.html" %}
+    {% include "shared/styles.html" %}
     {% include "shared/app-icons.html" %}
     {% include "shared/rollbar.njk" %}
     {% block head %}{% endblock %}
@@ -13,5 +13,17 @@
   <body>
     {% block content %}{% endblock %}
     {% block javascript %}{% endblock %}
+    <script type="module">
+      function el(tagName, attrs) {
+        const el = document.createElement(tagName);
+        for (const [key, val] of Object.entries(attrs))
+          el.setAttribute(key, val);
+        return el;
+      }
+      document.head.appendChild(el("link", {
+        rel: "stylesheet",
+        href: "/assets/css/app.css"
+      }));
+    </script>
   </body>
 </html>
