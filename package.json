@@ -17,7 +17,7 @@
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=68174f3426cf667d3e4023d5825f66d0eb58c0da",
     "dotenv": "16.0.0",
     "dotenv-cli": "5.1.0",
-    "esbuild": "0.14.29",
+    "esbuild": "0.14.30",
     "gulp-esbuild": "0.10.2",
     "gulp-mode": "1.1.0",
     "npm-run-all": "4.1.5",
