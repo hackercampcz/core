@@ -30,7 +30,7 @@ createTxtRecord(
 
 export const websites: any = {
   [donutDomain]: siteExports(Website.create(donutDomain, {})),
-  [webDomain]: siteExports(Website.create(webDomain, {}))
+  [webDomain]: siteExports(Website.create(webDomain, {})),
 };
 
 function siteExports(site) {
@@ -39,5 +39,5 @@ function siteExports(site) {
     s3BucketUri: site.s3BucketUri,
     s3WebsiteUrl: site.s3WebsiteUrl,
     cloudFrontId: site.cloudFrontId,
-  }
+  };
 }
