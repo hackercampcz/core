@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@thi.ng/atom": "5.1.5",
-    "@thi.ng/transducers": "^8.3.0",
+    "@thi.ng/transducers": "8.3.1",
     "date-fns": "^2.28.0",
     "jose": "^4.6.0",
     "lit": "2.2.2",
