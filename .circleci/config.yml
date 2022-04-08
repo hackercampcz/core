@@ -150,7 +150,7 @@ jobs:
 
   merge-pr:
     docker:
-      - image: cimg/base:2022.03
+      - image: cimg/base:2022.04
     steps:
       - checkout
       - github/install
