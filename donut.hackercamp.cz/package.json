@@ -2,8 +2,8 @@
   "name": "@hackercamp/donut",
   "packageManager": "yarn@3.2.0",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "5.18.0",
-    "@typescript-eslint/parser": "5.18.0",
+    "@typescript-eslint/eslint-plugin": "5.19.0",
+    "@typescript-eslint/parser": "5.19.0",
     "eslint-plugin-promise": "^6.0.0",
     "web-types-lit": "0.1.0"
   },
