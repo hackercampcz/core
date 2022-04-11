@@ -11,7 +11,7 @@
     "@thi.ng/atom": "5.1.5",
     "@thi.ng/transducers": "8.3.1",
     "date-fns": "^2.28.0",
-    "jose": "^4.6.0",
+    "jose": "4.6.1",
     "lit": "2.2.2",
     "ramda": "^0.28.0"
   }
