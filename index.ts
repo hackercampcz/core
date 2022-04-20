@@ -8,8 +8,7 @@ import {
   createTxtRecord,
   Website,
   CloudFront,
-
-
+} from "@topmonks/pulumi-aws";
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),
