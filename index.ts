@@ -33,11 +33,18 @@ export const websites: any = {
   [webDomain]: siteExports(Website.create(webDomain, {})),
 };
 
-function siteExports(site) {
+function siteExports(site: Website): WebsiteExport {
   return {
     url: site.url,
     s3BucketUri: site.s3BucketUri,
     s3WebsiteUrl: site.s3WebsiteUrl,
     cloudFrontId: site.cloudFrontId,
   };
+}
+
+interface WebsiteExport {
+  url: pulumi.Output<string>;
+  s3BucketUri: pulumi.Output<string>;
+  s3WebsiteUrl: pulumi.Output<string>;
+  cloudFrontId: pulumi.Output<string>;
 }
