@@ -42,6 +42,8 @@ const hackerProfilesBucket = new aws.s3.Bucket("hc-hacker-profiles", {
   forceDestroy: true,
 });
 
+console.log(hackersOai);
+
 const hackerProfilesBucketPolicy = new aws.s3.BucketPolicy(
   "hc-hacker-profiles",
   {
