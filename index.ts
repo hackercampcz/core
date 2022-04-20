@@ -8,7 +8,8 @@ import {
   createTxtRecord,
   Website,
   CloudFront,
-} from "@topmonks/pulumi-aws";
+
+
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),
@@ -53,7 +54,7 @@ const hackerProfilesBucketPolicy = new aws.s3.BucketPolicy(
           Sid: "1",
           Effect: "Allow",
           Principal: {
-            AWS: hackersOai.s3CanonicalUserId,
+            AWS: hackersOai.iamArn,
           },
           Action: "s3:GetObject",
           Resource: `arn:aws:s3:::${hackerProfilesBucket.bucketDomainName}/*`,
