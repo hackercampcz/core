@@ -42,26 +42,26 @@ const hackerProfilesBucket = new aws.s3.Bucket("hc-hacker-profiles", {
   forceDestroy: true,
 });
 
-console.log(hackersOai);
+const hackersPolicyDocument = aws.iam.getPolicyDocumentOutput({
+  statements: [
+    {
+      principals: [
+        {
+          type: "AWS",
+          identifiers: [hackersOai.iamArn],
+        },
+      ],
+      actions: ["s3:GetObject"],
+      resources: [pulumi.interpolate`${hackerProfilesBucket.arn}/*`],
+    },
+  ],
+});
 
 const hackerProfilesBucketPolicy = new aws.s3.BucketPolicy(
   "hc-hacker-profiles",
   {
-    bucket: hackerProfilesBucket.bucket,
-    policy: JSON.stringify({
-      Version: "2012-10-17",
-      Statement: [
-        {
-          Sid: "1",
-          Effect: "Allow",
-          Principal: {
-            AWS: hackersOai.iamArn,
-          },
-          Action: "s3:GetObject",
-          Resource: `arn:aws:s3:::${hackerProfilesBucket.bucketDomainName}/*`,
-        },
-      ],
-    }),
+    bucket: hackerProfilesBucket.id,
+    policy: hackersPolicyDocument.apply((x) => x.json),
   }
 );
 
@@ -75,18 +75,12 @@ export const websites: Record<string, WebsiteExport> = {
           s3OriginConfig: {
             originAccessIdentity: hackersOai.cloudfrontAccessIdentityPath,
           },
-          customOriginConfig: {
-            originProtocolPolicy: "http-only",
-            httpPort: 80,
-            httpsPort: 443,
-            originSslProtocols: ["TLSv1.2"],
-          },
         },
       ],
       extraCacheBehaviors: [
         {
           pathPattern: "hackers/*",
-          targetOriginId: hackerProfilesBucket.arn,
+          targetOriginId: "hackerProfiles",
           allowedMethods: ["GET", "HEAD", "OPTIONS"],
           cachedMethods: ["GET", "HEAD"],
           viewerProtocolPolicy: "redirect-to-https",
