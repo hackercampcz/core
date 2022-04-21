@@ -1341,7 +1341,7 @@ __metadata:
     "@typescript-eslint/parser": 5.20.0
     date-fns: ^2.28.0
     eslint-plugin-promise: ^6.0.0
-    jose: 4.6.2
+    jose: 4.7.0
     lit: 2.2.2
     ramda: ^0.28.0
     web-types-lit: 0.1.0
@@ -7308,10 +7308,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:4.6.2":
-  version: 4.6.2
-  resolution: "jose@npm:4.6.2"
-  checksum: 72c1b7850b8d70171936d4c054494f896faea022ce3477890bd1a705e28bc9e66582bd7eed3bf3de6991efaec0f480cabbbbb7478cb831fbacd49c58bd214207
+"jose@npm:4.7.0":
+  version: 4.7.0
+  resolution: "jose@npm:4.7.0"
+  checksum: ebe0e861036023706df84b786401b5b56b6cb0da8e3ff73d9b086f73932af1c93c610b6bef5db3c3efb32e1ea96cd7e7975a6530f9560e0d356a1057770abcdf
   languageName: node
   linkType: hard
 
