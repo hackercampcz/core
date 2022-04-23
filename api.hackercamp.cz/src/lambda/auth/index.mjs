@@ -53,6 +53,7 @@ async function getUserInfo(token) {
  */
 export async function handler(event) {
   const params = getPayload(event);
+  console.log({ params, body: event.body });
   const { resp, data } = await getJWT(params.code, process.env);
   console.log({ msg: "Get JWT", data });
   if (resp.ok && data.ok) {
