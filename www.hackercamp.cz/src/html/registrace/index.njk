@@ -150,10 +150,6 @@
       width: fit-content;
     }
 
-    section h2 {
-      margin: 3em auto 2em;
-    }
-
     .hc-hero {
       font-weight: bold;
     }
@@ -207,7 +203,7 @@
       }
     }
 
-    @media screen and (min-width: 840px) {
+    @media screen and (min-width: 899px) {
       .hc-card {
         padding: var(--mdc-layout-grid-gutter-desktop);
       }
@@ -295,6 +291,7 @@
 
     #top {
       padding-top: 78px;
+      margin-bottom: 0;
     }
 
     .hc-logo-link {
@@ -342,28 +339,75 @@
       text-align: center;
       max-width: 40em;
       margin: 24px auto 0 auto;
+      font-weight: 400;
     }
 
-    form {
+    #reg {
       max-width: 80em;
     }
 
-    .field {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 16px;
-      padding-bottom: 4px;
+    form h2 {
+      margin-left: auto;
+      margin-right: auto;
     }
-    .field label {
+
+    form .field {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 4px;
       flex: 1;
     }
-    .field input {
+    
+    form .field label {
+      flex: 1;
+      padding-top: 4px;
+      padding-bottom: 2px;
+    }
+
+    form .field input {
       flex: 2;
       font-size: 16px;
       padding: 4px;
+      flex-direction: column;
+
+      font-family: var(--hc-font-family);
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 1.5;
+      font-kerning: normal;
+      font-variant-numeric: lining-nums slashed-zero;
+      font-variant-ligatures: common-ligatures contextual;
+      -webkit-font-feature-settings: "kern","liga","clig","calt","lnum","zero";
+      font-feature-settings: "kern","liga","clig","calt","lnum","zero";
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+    }
+
+    form .group {
+      display: flex;
+      flex-direction: column;
     }
     
+    @media (min-width: 426px) {
+      form .group {
+        gap: 8px;
+        flex-direction: row;
+      }
+    }
+    @media (min-width: 600px) {
+      form .group {
+        flex-direction: row;
+        gap: 12px;
+      }
+    }
+    @media (min-width: 840px) and (max-width: 880px) {
+      form .group {
+        flex-direction: column;
+        gap: 0;
+      }
+    }
   </style>
   <link rel="canonical" href="https://www.hackercamp.cz/"/>
   <link rel="author" href="/humans.txt" type="text/plain"/>
@@ -444,57 +488,64 @@
 </div>
 
 
-<form action="" method="post" class="mdc-layout-grid">
+<form action="" method="post" class="mdc-layout-grid" id="reg">
   <div class="mdc-layout-grid__inner">
-    <section class="form-section mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Základní údaje</h2>
       <div class="hc-card">
-        <div class="field">
-          <label for="email">
-            E-mail
-          </label>
-          <input id="email" name="email" type="email" autocomplete="email" required="required"/>
+        <div class="group">
+          <div class="field">
+            <label for="firstname">
+              Jméno
+            </label>
+            <input id="firstname" name="firstName" type="text" autocomplete="given-name" required="required"/>
+          </div>
+          <div class="field">
+            <label for="lastname">
+              Příjmení
+            </label>
+            <input id="lastname" name="lastName" type="text" autocomplete="family-name" required="required"/>
+          </div>
         </div>
-        <div class="field">
-          <label for="firstname">
-            Jméno
-          </label>
-          <input id="firstname" name="firstName" type="text" autocomplete="given-name" required="required"/>
-        </div>
-        <div class="field">
-          <label for="lastname">
-            Příjmení
-          </label>
-          <input id="lastname" name="lastName" type="text" autocomplete="family-name" required="required"/>
-        </div>
-        <div class="field">
-          <label for="phonenum">
-            Telefon
-          </label>
-          <input id="phonenum" name="phone" type="tel" autocomplete="tel" required="required" value="+420 "/>
+        <div class="group">
+          <div class="field">
+            <label for="email">
+              E-mail
+            </label>
+            <input id="email" name="email" type="email" autocomplete="email" required="required"/>
+          </div>
+          <div class="field">
+            <label for="phonenum">
+              Telefon
+            </label>
+            <input id="phonenum" name="phone" type="tel" autocomplete="tel" required="required" />
+          </div>
         </div>
         <div class="field">
           <label for="company">
-            Společnost
+            Jméno firmy 
+            (jednotlivec nemusí)
           </label>
-          <input id="company" name="company" type="text" autocomplete="on" required="required"/>
+          <input id="company" name="company" type="text" autocomplete="on" />
         </div>
       </div>
     </section>
-    <section class="form-section mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Vedlejší informace</h2>
       <div class="hc-card">
-        <div class="field">
-          <label for="xxx">
-            XXX
-          </label>
-          <input id="xxx" name="xXx" type="text" required="required"/>
-        </div>
-        <div class="field">
-          <label for="yyy">
-            YYY
-          </label>
-          <input id="yyy" name="yYy" type="text" required="required"/>
+        <div class="group">
+          <div class="field">
+            <label for="xxx">
+              XXX
+            </label>
+            <input id="xxx" name="xXx" type="text" required="required"/>
+          </div>
+          <div class="field">
+            <label for="yyy">
+              YYY
+            </label>
+            <input id="yyy" name="yYy" type="text" required="required"/>
+          </div>
         </div>
         <div class="field">
           <label for="zzz">
@@ -503,13 +554,13 @@
           <input id="zzz" name="zZz" type="text" required="required"/>
         </div>
       </div>
-    </div>
-  </section>
-  <section class="mdc-layout-grid">
-    <button type="submit" class="hc-button">
-      Odeslat registraci
-    </button>
-  </section>
+    </section>
+    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <button type="submit" class="hc-button">
+        Závazně odeslat
+      </button>
+    </section>
+  </div>
 </form>
 
 <footer class="mdc-layout-grid">
