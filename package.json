@@ -27,8 +27,8 @@
     "prettier": "2.6.2"
   },
   "scripts": {
-    "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ blendid build --production",
-    "build:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ blendid build --production",
+    "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid build --production",
+    "build:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid build --production",
     "start:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid",
     "start:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid"
   },
