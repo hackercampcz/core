@@ -54,9 +54,11 @@ async function getUserInfo(token) {
 export async function handler(event) {
   const params = getPayload(event);
   const { resp, data } = await getJWT(params.code, process.env);
+  console.log({msg: "Get JWT", data})
   if (resp.ok && data.ok) {
     const token = data["id_token"];
     const { resp, data: profile } = await getUserInfo(token);
+    console.log({msg: "Get User Info", profile, token})
     if (resp.ok && profile.ok) {
       const payload = {
         expiresIn: "6h",
@@ -67,6 +69,7 @@ export async function handler(event) {
       };
       const idToken = jwt.sign(payload, process.env["private_key"]);
       delete data.ok;
+      console.log({msg: "Sign JWT", idToken})
       return withCORS(["POST", "OPTIONS"])(
         response({ idToken, profile, ok: true })
       );
