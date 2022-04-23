@@ -1,13 +1,8 @@
 import * as pulumi from "@pulumi/pulumi";
 import { buildSync } from "esbuild";
 
-const REQUIRE_SHIM = `
-  // Shim require if needed.
-  import module from 'module';
-  if (typeof globalThis.require === "undefined") {
-    globalThis.require = module.createRequire(import.meta.url);
-  }
-`;
+const REQUIRE_SHIM = `import module from 'module';
+if (typeof globalThis.require == "undefined") globalThis.require = module.createRequire(import.meta.url);`;
 
 function build(entrypoint: string, minify: boolean) {
   const result = buildSync({
@@ -17,7 +12,6 @@ function build(entrypoint: string, minify: boolean) {
     charset: "utf8",
     platform: "node",
     target: "node14.8",
-    mainFields: ["module", "main"],
     external: ["aws-sdk"],
     entryPoints: [entrypoint],
     write: false,
