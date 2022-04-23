@@ -42,7 +42,7 @@ commands:
           command: |
             CLOUDFRONT_ID=$(pulumi stack output websites | jq -rM  '.["<< parameters.site_name >>"] | .cloudFrontId | @text')
             echo "export AWS_CLOUDFRONT_DISTRIBUTION_ID=\"${CLOUDFRONT_ID}\"" >> $BASH_ENV
-  read_access_envs:
+  read_build_envs:
     parameters:
       stack_name:
         type: string
@@ -52,20 +52,25 @@ commands:
       - run:
           command: pulumi stack select << parameters.stack_name >>
       - run:
-          name: Read AWS_ACCESS_KEY_ID from Pulumi state
+          name: Read HC_API_URL from Pulumi state
           command: |
-            ACCESS_KEY_ID=$(pulumi stack output accessKeyId)
-            echo "export MYTREES_AWS_ACCESS_KEY_ID=\"${ACCESS_KEY_ID}\"" >> $BASH_ENV
+            API_URL=$(pulumi stack output apiUrl)
+            echo "export HC_API_URL=\"${API_URL}\"" >> $BASH_ENV
       - run:
-          name: Read AWS_ACCESS_SECRET_KEY from Pulumi state
+          name: Read HC_SLACK_CLIENT_ID from Pulumi config
           command: |
-            ACCESS_SECRET_KEY=$(pulumi stack output --show-secrets accessSecretKey)
-            echo "export MYTREES_AWS_ACCESS_SECRET_KEY=\"${ACCESS_SECRET_KEY}\"" >> $BASH_ENV
+            SLACK_CLIENT_ID=$(pulumi config get slack-client-id)
+            echo "export HC_SLACK_CLIENT_ID=\"${SLACK_CLIENT_ID}\"" >> $BASH_ENV
       - run:
-          name: Read BACKEND_HOST_NAME from Pulumi state
+          name: Read HC_DONUT_HOSTNAME from Pulumi config
           command: |
-            BACKEND_HOST_NAME=$(pulumi stack output --show-secrets backendHostName)
-            echo "export MYTREES_BACKEND_HOST_NAME=\"${BACKEND_HOST_NAME}\"" >> $BASH_ENV
+            DONUT_HOSTNAME=$(pulumi config get donut-domain)
+            echo "export HC_DONUT_HOSTNAME=\"${DONUT_HOSTNAME}\"" >> $BASH_ENV
+      - run:
+          name: Read HC_WEB_HOSTNAME from Pulumi config
+          command: |
+            WEB_HOSTNAME=$(pulumi config get web-domain)
+            echo "export HC_WEB_HOSTNAME=\"${WEB_HOSTNAME}\"" >> $BASH_ENV
   deploy_website:
     parameters:
       stack_name:
@@ -175,6 +180,7 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: yarn-berry
+      - read_build_envs
       - run:
           name: Export build metadata
           command: |
@@ -185,7 +191,13 @@ jobs:
                --arg value1 $CIRCLE_SHA1 \
                --arg key2 'build' \
                --arg value2 $CIRCLE_BUILD_NUM \
-               '. | .[$key0]=$value0 | .[$key1]=$value1 | .[$key2]=$value2' \
+               --arg key3 'hostname' \
+               --arg value3 $HC_DONUT_HOSTNAME \
+               --arg key4 'api-host' \
+               --arg value4 $HC_API_URL \
+               --arg key5 'slack/client_id' \
+               --arg value5 $HC_SLACK_CLIENT_ID \
+               '. | .[$key0]=$value0 | .[$key1]=$value1 | .[$key2]=$value2 | .[$key3]=$value3 | .[$key4]=$value4' | .[$key5]=$value5' \
             > << parameters.site_name >>/src/data/build.json
       - run:
           name: Build website << parameters.site_name >>
