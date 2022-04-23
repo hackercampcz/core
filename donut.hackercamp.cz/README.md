@@ -1,1 +1,1 @@
-# src
+# donut.hackercamp.cz

@@ -1,0 +1,25 @@
+.hc-profile {
+  display: grid;
+  grid-auto-columns: 178px 1fr;
+  column-gap: 1rem;
+  grid-template-areas:
+    "photo a"
+    "photo b"
+    "photo c"
+    "photo d"
+    "photo e";
+}
+
+.hc-profile h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.hc-profile__photo {
+  grid-area: photo;
+  display: flex;
+  justify-content: space-around;
+}
+.hc-profile__photo img {
+  border-radius: 50%;
+}
