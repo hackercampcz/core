@@ -9,6 +9,7 @@ import {
   Website,
   CloudFront,
 } from "@topmonks/pulumi-aws";
+import { createApi, routes } from "./api.hackercamp.cz";
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),
@@ -20,6 +21,7 @@ const config = new pulumi.Config();
 const domain = config.get("domain") as string;
 const donutDomain = config.get("donut-domain") as string;
 const webDomain = config.get("web-domain") as string;
+const apiDomain = config.get("api-domain") as string;
 
 createCertificate(donutDomain);
 createGoogleMxRecords(domain);
@@ -64,6 +66,10 @@ const hackerProfilesBucketPolicy = new aws.s3.BucketPolicy(
     policy: hackersPolicyDocument.apply((x) => x.json),
   }
 );
+
+const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
+
+export const apiUrl = api.url;
 
 export const websites: Record<string, WebsiteExport> = {
   [donutDomain]: siteExports(

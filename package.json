@@ -33,6 +33,7 @@
     "start:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid"
   },
   "workspaces": [
+    "api.hackercamp.cz",
     "donut.hackercamp.cz",
     "www.hackercamp.cz"
   ]

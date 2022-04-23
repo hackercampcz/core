@@ -1,0 +1,7 @@
+{
+  "name": "@hackercamp/api",
+  "dependencies": {
+    "@adobe/helix-fetch": "^3.0.8"
+  },
+  "packageManager": "yarn@3.2.0"
+}
