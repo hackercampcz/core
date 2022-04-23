@@ -69,7 +69,7 @@ const hackerProfilesBucketPolicy = new aws.s3.BucketPolicy(
 
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 
-export const apiUrl = api.url;
+export const apiUrl = api.url.apply((x) => new URL("v1/", x).href);
 
 export const websites: Record<string, WebsiteExport> = {
   [donutDomain]: siteExports(
