@@ -56,19 +56,19 @@ export async function handler(event) {
   const { resp, data } = await getJWT(params.code, process.env);
   if (resp.ok && data.ok) {
     const token = data["id_token"];
-    const { resp, data } = await getUserInfo(token);
-    if (resp.ok && data.ok) {
+    const { resp, data: profile } = await getUserInfo(token);
+    if (resp.ok && profile.ok) {
       const payload = {
         expiresIn: "6h",
         audience: "https://donut.hackercamp.cz/",
         issuer: "https://api.hackercamp.cz/",
-        "https://hackercamp.cz/email": data.email,
-        "https://slack.com/user_id": data.sub,
+        "https://hackercamp.cz/email": profile.email,
+        "https://slack.com/user_id": profile.sub,
       };
       const idToken = jwt.sign(payload, process.env["private_key"]);
       delete data.ok;
       return withCORS(["POST", "OPTIONS"])(
-        response({ idToken, profile: data, ok: true })
+        response({ idToken, profile, ok: true })
       );
     }
   }
