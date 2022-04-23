@@ -7,8 +7,8 @@
 export function movedPermanently(location) {
   return {
     statusCode: 301,
-    headers: { "Location": location },
-    body: ""
+    headers: { Location: location },
+    body: "",
   };
 }
 
@@ -19,7 +19,7 @@ export function movedPermanently(location) {
 export function notFound(body = { error: "Data not found" }) {
   return {
     statusCode: 404,
-    body: JSON.stringify(body)
+    body: JSON.stringify(body),
   };
 }
 
@@ -32,7 +32,7 @@ export function response(body, headers) {
   return {
     statusCode: 200,
     body: typeof body === "string" ? body : JSON.stringify(body),
-    headers
+    headers,
   };
 }
 
@@ -48,14 +48,13 @@ export function response(body, headers) {
  */
 export function withCORS(methods, origin = "*") {
   const allowMethods = Array.isArray(methods) ? methods.join(",") : methods;
-  return x => ({
-    ...x,
-    headers: {
-      ...x.headers,
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": allowMethods,
-      "Access-Control-Allow-Headers":
-        "Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token"
-    }
-  });
+  return (x) =>
+    Object.assign({}, x, {
+      headers: Object.assign({}, x.headers, {
+        "Access-Control-Allow-Origin": origin,
+        "Access-Control-Allow-Methods": allowMethods,
+        "Access-Control-Allow-Headers":
+          "Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token",
+      }),
+    });
 }
