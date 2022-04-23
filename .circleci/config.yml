@@ -197,7 +197,7 @@ jobs:
                --arg value4 "$HC_API_URL" \
                --arg key5 'slack/client-id' \
                --arg value5 "$HC_SLACK_CLIENT_ID" \
-               '. | .[$key0]=$value0 | .[$key1]=$value1 | .[$key2]=$value2 | .[$key3]=$value3 | .[$key4]=$value4' | .[$key5]=$value5' \
+               '. | .[$key0]=$value0 | .[$key1]=$value1 | .[$key2]=$value2 | .[$key3]=$value3 | .[$key4]=$value4 | .[$key5]=$value5' \
             > << parameters.site_name >>/src/data/build.json
       - run:
           name: Build website << parameters.site_name >>
