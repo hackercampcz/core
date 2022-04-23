@@ -13,6 +13,16 @@ export function movedPermanently(location) {
 }
 
 /**
+ * @returns {APIGatewayProxyResult}
+ */
+export function unauthorized() {
+  return {
+    statusCode: 401,
+    body: "",
+  };
+}
+
+/**
  * @param {Record<string, any>} body
  * @returns {APIGatewayProxyResult}
  */

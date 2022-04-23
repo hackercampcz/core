@@ -12,6 +12,8 @@ import {
 import * as path from "path";
 import * as lambdaBuilder from "../lambda-builder";
 
+const config = new pulumi.Config();
+
 export const routes = new Map<string, Record<string, RouteArgs>>([
   [
     "v1",
@@ -20,6 +22,14 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
         httpMethod: "POST",
         path: "/auth",
         fileName: "auth/index.mjs",
+        environment: {
+          variables: {
+            hostname: config.get("donut-domain"),
+            private_key: config.get("private-key"),
+            slack_client_id: config.get("slack-client-id"),
+            slack_client_secret: config.get("slack-client-secret"),
+          },
+        },
       },
     },
   ],

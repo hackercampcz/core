@@ -1,7 +1,8 @@
 {
   "name": "@hackercamp/api",
   "dependencies": {
-    "@adobe/helix-fetch": "^3.0.8"
+    "@adobe/helix-fetch": "^3.0.8",
+    "jsonwebtoken": "^8.5.1"
   },
   "packageManager": "yarn@3.2.0"
 }

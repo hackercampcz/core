@@ -1,7 +1,12 @@
 config:
   aws:region: eu-central-1
+  hackercamp:api-domain: api.hackercamp.cz
   hackercamp:domain: hackercamp.cz
   hackercamp:donut-domain: donut.hackercamp.cz
+  hackercamp:private-key:
+    secure: AAABAMiObrKrGCJNcaB9RdcBRl2shK6sfmHwYdEChCgqQy3dVOxeVIuH/zk2R4dGDbqq/LjS7ZVWWuiDoutiFxdmDyoR21q9VQtOiQg=
+  hackercamp:slack-client-id: "1990816352820.3334586910531"
+  hackercamp:slack-client-secret:
+    secure: AAABAPOefxVCpWj0ILWHq9UKChjnqzVPwlwAm8auqjii5KzUfgdHI7dV386pv69MQYJO2VV5KuWucxwuOwM4+g==
   hackercamp:web-domain: www.hackercamp.cz
-  hackercamp:api-domain: api.hackercamp.cz
   pulumi:template: aws-typescript
