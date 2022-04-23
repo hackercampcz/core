@@ -47,7 +47,7 @@ module.exports = {
     initialize(gulp, pathConfig, taskConfig) {
       const { src, task, dest } = gulp;
       const esmPaths = {
-        src: projectPath(pathConfig.src, pathConfig.esbuild.src, "*.mjs"),
+        src: projectPath(pathConfig.src, pathConfig.esbuild.src, "*.js"),
         dest: projectPath(pathConfig.dest, pathConfig.esbuild.dest),
       };
       task("esbuild-prod", () =>
