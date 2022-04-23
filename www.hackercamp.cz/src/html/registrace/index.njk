@@ -350,6 +350,22 @@
       margin-left: auto;
       margin-right: auto;
     }
+    
+    form input {
+      font-family: var(--hc-font-family);
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 1.5;
+      font-kerning: normal;
+      font-variant-numeric: lining-nums slashed-zero;
+      font-variant-ligatures: common-ligatures contextual;
+      -webkit-font-feature-settings: "kern","liga","clig","calt","lnum","zero";
+      font-feature-settings: "kern","liga","clig","calt","lnum","zero";
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+    }
 
     form .field {
       display: flex;
@@ -369,20 +385,6 @@
       font-size: 16px;
       padding: 4px;
       flex-direction: column;
-
-      font-family: var(--hc-font-family);
-      font-size: 16px;
-      letter-spacing: 0;
-      line-height: 1.5;
-      font-kerning: normal;
-      font-variant-numeric: lining-nums slashed-zero;
-      font-variant-ligatures: common-ligatures contextual;
-      -webkit-font-feature-settings: "kern","liga","clig","calt","lnum","zero";
-      font-feature-settings: "kern","liga","clig","calt","lnum","zero";
-      -webkit-text-size-adjust: 100%;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: geometricPrecision;
     }
 
     form .group {
@@ -408,6 +410,42 @@
         gap: 0;
       }
     }
+
+    form .question {
+      text-align: center;
+      padding-top: 12px;
+    }
+
+    form .choose {
+      display: flex;
+    }
+
+    form .choose input {
+      width: 16px;
+      height: 16px;
+    }
+
+    form .choose label {
+      padding-left: 8px;
+      display: block;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+
+
+    form .choose input:not(:checked) + div .patron-allowance {
+      display: none;
+    }
+
+    form .choose .patron-allowance input {
+      width: 120px;
+    }
+
+    form .choose label span {
+      display: block;
+      font-size: 14px;
+    }
+
   </style>
   <link rel="canonical" href="https://www.hackercamp.cz/"/>
   <link rel="author" href="/humans.txt" type="text/plain"/>
@@ -491,7 +529,7 @@
 <form action="" method="post" class="mdc-layout-grid" id="reg">
   <div class="mdc-layout-grid__inner">
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-6-desktop">
-      <h2>Základní údaje</h2>
+      <h2>Údaje účastníka</h2>
       <div class="hc-card">
         <div class="group">
           <div class="field">
@@ -528,24 +566,63 @@
           </label>
           <input id="company" name="company" type="text" autocomplete="on" />
         </div>
+        <div class="question">
+          <label>
+            <input type="checkbox" name="firstime" checked="checked" />
+            Letos se zúčastním poprvé
+          </label>
+        </div>
       </div>
     </section>
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-6-desktop">
-      <h2>Vedlejší informace</h2>
+      <h2>Vyber si lístek</h2>
       <div class="hc-card">
-        <div class="group">
-          <div class="field">
-            <label for="xxx">
-              XXX
+        <div class="choose">
+          <input type="radio" name="ticketType" value="nonprofit" id="ticket-nonprofit" />
+          <label for="ticket-nonprofit">
+            <strong>Táborník z neziskovky</strong> - 2.500 CZK
+            <span>Zvýhodněné vstupné (pro neziskové organizace a studenty)</span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="ticketType" value="hacker" checked="checked" id="ticket-hacker"/>
+          <label for="ticket-hacker">
+            <strong>Hacker</strong> - 5.000 CZK<br />
+            <span>Normální vstupné</span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="ticketType" value="hacker-plus" id="ticket-hacker-plus" />
+          <label for="ticket-hacker-plus">
+            <strong>Hacker, co má zlaté srdce</strong> - 7.500 CZK
+            <span>Normální vstupné + příspěvek na vstupné pro neziskové organizace a studenty</span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="ticketType" value="hacker-patron" id="ticket-patron" />
+          <div>
+            <label for="ticket-patron">
+              <strong>Patron campu</strong>
+              <span>Chci podpořit neziskovku i vás, protože chci podobnou akci i za rok.</span>
             </label>
-            <input id="xxx" name="xXx" type="text" required="required"/>
-          </div>
-          <div class="field">
-            <label for="yyy">
-              YYY
+            <label class="patron-allowance">
+              Přispěju částkou 7.500 CZK +
+              <input type="text" name="patronAllowance" /> CZK
             </label>
-            <input id="yyy" name="yYy" type="text" required="required"/>
           </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="mdc-layout-grid__inner">
+    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-6-desktop">
+      <h2>Fakturační údaje</h2>
+      <div class="hc-card">
+        <div class="field">
+          <label for="yyy">
+            YYY
+          </label>
+          <input id="yyy" name="yYy" type="text" required="required"/>
         </div>
         <div class="field">
           <label for="zzz">
