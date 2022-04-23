@@ -192,11 +192,11 @@ jobs:
                --arg key2 'build' \
                --arg value2 $CIRCLE_BUILD_NUM \
                --arg key3 'hostname' \
-               --arg value3 $HC_DONUT_HOSTNAME \
+               --arg value3 "$HC_DONUT_HOSTNAME" \
                --arg key4 'api-host' \
-               --arg value4 $HC_API_URL \
+               --arg value4 "$HC_API_URL" \
                --arg key5 'slack/client-id' \
-               --arg value5 $HC_SLACK_CLIENT_ID \
+               --arg value5 "$HC_SLACK_CLIENT_ID" \
                '. | .[$key0]=$value0 | .[$key1]=$value1 | .[$key2]=$value2 | .[$key3]=$value3 | .[$key4]=$value4' | .[$key5]=$value5' \
             > << parameters.site_name >>/src/data/build.json
       - run:
