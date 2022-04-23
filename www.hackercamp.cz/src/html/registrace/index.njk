@@ -380,7 +380,8 @@
       padding-bottom: 2px;
     }
 
-    form .field input {
+    form .field input,
+    form .field select {
       flex: 2;
       font-size: 16px;
       padding: 4px;
@@ -414,6 +415,11 @@
     form .question {
       text-align: center;
       padding-top: 12px;
+    }
+
+    form .question input {
+      width: 16px;
+      height: 16px;
     }
 
     form .choose {
@@ -566,11 +572,22 @@
           </label>
           <input id="company" name="company" type="text" autocomplete="on" />
         </div>
-        <div class="question">
-          <label>
-            <input type="checkbox" name="firstime" checked="checked" />
-            Letos se zúčastním poprvé
-          </label>
+        <div class="group">
+          <div class="field">
+            <label for="reference">
+              Kdo mě pozval?
+            </label>
+            <select name="reference" id="reference">
+              <option>Byl jsem loni</option>
+              <option>Někdo kdo byl loni</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="referent">
+              Její/jeho jméno
+            </label>
+            <input id="referent" name="referent" type="text" />
+          </div>
         </div>
       </div>
     </section>
@@ -580,7 +597,7 @@
         <div class="choose">
           <input type="radio" name="ticketType" value="nonprofit" id="ticket-nonprofit" />
           <label for="ticket-nonprofit">
-            <strong>Táborník z neziskovky</strong> - 2.500 CZK
+            <strong>Táborník z neziskovky</strong> - 2.500&nbsp;CZK
             <span>Zvýhodněné vstupné (pro neziskové organizace a studenty)</span>
           </label>
         </div>
@@ -594,7 +611,7 @@
         <div class="choose">
           <input type="radio" name="ticketType" value="hacker-plus" id="ticket-hacker-plus" />
           <label for="ticket-hacker-plus">
-            <strong>Hacker, co má zlaté srdce</strong> - 7.500 CZK
+            <strong>Hacker, co má zlaté srdce</strong> - 7.500&nbsp;CZK
             <span>Normální vstupné + příspěvek na vstupné pro neziskové organizace a studenty</span>
           </label>
         </div>
@@ -606,8 +623,8 @@
               <span>Chci podpořit neziskovku i vás, protože chci podobnou akci i za rok.</span>
             </label>
             <label class="patron-allowance">
-              Přispěju částkou 7.500 CZK +
-              <input type="text" name="patronAllowance" /> CZK
+              Přispěju částkou 7.500&nbsp;CZK +
+              <input type="text" name="patronAllowance" />&nbsp;CZK
             </label>
           </div>
         </div>
