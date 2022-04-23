@@ -271,13 +271,14 @@ workflows:
           name: build-donut
           site_name: donut.hackercamp.cz
           context: org-global
+          requires:
+            - provision
       - deploy-site:
           name: deploy-donut
           site_name: donut.hackercamp.cz
           rollbar_access_token: 6ed48e07fedb43bb9767261178684740
           context: org-global
           requires:
-            - provision
             - build-donut
           filters:
             branches:
