@@ -375,7 +375,7 @@
       flex: 1;
     }
 
-    form .field[aria-hidden="true"] {
+    form [aria-hidden="true"] {
       display: none;
     }
 
@@ -432,13 +432,13 @@
       height: 16px;
     }
 
-    form .choose label {
+    form .choose > label,
+    form .choose > div {
       padding-left: 8px;
       display: block;
       margin-bottom: 12px;
       flex: 1;
     }
-
 
     form .choose input:not(:checked) + div .patron-allowance {
       display: none;
@@ -451,6 +451,11 @@
     form .choose label span {
       display: block;
       font-size: 14px;
+    }
+    
+    .patron-allowance {
+      display: block;
+      margin-top: 8px;
     }
 
   </style>
@@ -605,18 +610,72 @@
           </div>
         </div>
       </div>
-      <script type="module">
-        document.querySelector("select#first-time").addEventListener("change", (event) => {
-          if (parseInt(event.target.value)) {
-            document.querySelector("#inviter").parentElement.removeAttribute("aria-hidden");
-            document.querySelector("#plus-one").parentElement.setAttribute("aria-hidden", "true");
-          } else {
-            document.querySelector("#plus-one").parentElement.removeAttribute("aria-hidden");
-            document.querySelector("#inviter").parentElement.setAttribute("aria-hidden", "true");
-          }
-        });
-      </script>
     </section>
+    <section
+      id="plus-one-section" aria-hidden="true" 
+      class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
+      <h2>Tvé +1</h2>
+      <div class="hc-card">
+        <div class="group">
+          <div class="field">
+            <label for="plus-firstname">
+              Jméno
+            </label>
+            <input id="plus-firstname" name="plusFirstName" type="text" />
+          </div>
+          <div class="field">
+            <label for="lastname">
+              Příjmení
+            </label>
+            <input id="plus-lastname" name="plusLastName" type="text" />
+          </div>
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="plus-email">
+              E-mail
+            </label>
+            <input id="plus-email" name="plusEmail" type="email" />
+          </div>
+          <div class="field">
+            <label for="plus-phonenum">
+              Telefon
+            </label>
+            <input id="plus-phonenum" name="plusPhone" type="tel" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="plus-company">
+            Jméno firmy
+          </label>
+          <input id="plus-company" name="plusCompany" type="text" autocomplete="on" />
+        </div>
+        <div class="field">
+          <label for="plus-reason">
+            Proč by měl/a na HC být?
+          </label>
+          <input id="plus-reason" name="plusReason" type="text" placeholder="Zajímá se o ..., baví ji ... a je ..."/>
+        </div>
+      </div>
+    </section>
+    <script type="module">
+      document.querySelector("select#first-time").addEventListener("change", (event) => {
+        if (parseInt(event.target.value)) {
+          document.querySelector("#inviter").parentElement.removeAttribute("aria-hidden");
+          document.querySelector("#plus-one").parentElement.setAttribute("aria-hidden", "true");
+        } else {
+          document.querySelector("#plus-one").parentElement.removeAttribute("aria-hidden");
+          document.querySelector("#inviter").parentElement.setAttribute("aria-hidden", "true");
+        }
+      });
+      document.querySelector("select#plus-one").addEventListener("change", (event) => {
+        if (parseInt(event.target.value)) {
+          document.querySelector("#plus-one-section").removeAttribute("aria-hidden");
+        } else {
+          document.querySelector("#plus-one-section").setAttribute("aria-hidden", "true");
+        }
+      });
+    </script>
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Lístek</h2>
       <div class="hc-card">
