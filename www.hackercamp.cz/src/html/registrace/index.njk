@@ -721,19 +721,50 @@
       <h2>Fakturace</h2>
       <div class="hc-card">
         <div class="field">
-          <label for="yyy">
-            YYY
+          <label for="invoice-name">
+            Jméno / název společnosti
           </label>
-          <input id="yyy" name="yYy" type="text" required="required"/>
+          <input id="invoice-name" name="invName" type="text" required="required" />
         </div>
         <div class="field">
-          <label for="zzz">
-            ZZZ
+          <label for="invoice-address">
+            Adresa
           </label>
-          <input id="zzz" name="zZz" type="text" required="required"/>
+          <input id="invoice-address" name="invAddress" type="text" required="required" />
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="invoice-regno">
+              IČ
+            </label>
+            <input id="invoice-regno" name="invRegNo" type="text" />
+          </div>
+          <div class="field">
+            <label for="invoice-vatno">
+              DIČ
+            </label>
+            <input id="invoice-vatno" name="invVatNo" type="text" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="invoice-text">
+            Text na faktuře
+          </label>
+          <input id="invoice-text" name="invText" type="text" />
+          <div class="field">
+            <label for="invoice-email">
+              Kontakt pro fakturaci
+            </label>
+            <input id="invoice-email" name="email" type="invEmail" autocomplete="email" required="required" />
+          </div>
         </div>
       </div>
     </section>
+    <script type="module">
+      document.querySelector("input#email").addEventListener("blur", event => {
+        document.querySelector("input#invoice-email").setAttribute("placeholder", event.target.value);
+      });
+    </script>
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       <button type="submit" class="hc-button">
         Závazně odeslat
