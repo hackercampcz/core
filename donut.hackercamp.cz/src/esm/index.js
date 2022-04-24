@@ -16,7 +16,7 @@ export async function main({ searchParams, slackButton, env }) {
       const { idToken, slackToken, slackProfile } = data;
       localStorage.setItem("hc:id_token", idToken);
       localStorage.setItem("slack:id_token", slackToken);
-      localStorage.setItem("slack:profile", JSON.stringify(slackToken));
+      localStorage.setItem("slack:profile", JSON.stringify(slackProfile));
       slackButton.style.display = "none";
       console.log(slackProfile);
     } else {
