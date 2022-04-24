@@ -351,6 +351,10 @@
       margin-right: auto;
     }
 
+    .section-story {
+      font-size: 14px;
+    }
+
     form input,
     form select {
       font-family: var(--hc-font-family);
@@ -386,13 +390,19 @@
     }
 
     form .field input,
+    form .field textarea,
     form .field select {
       flex: 2;
       font-size: 16px;
       padding: 4px;
     }
+
     form .field select {
       min-height: 36px;
+    }
+
+    form .field--block {
+      margin-bottom: 16px;
     }
 
     form .group {
@@ -448,7 +458,7 @@
       width: 120px;
     }
 
-    form .choose label span {
+    form label span {
       display: block;
       font-size: 14px;
     }
@@ -715,8 +725,6 @@
         </div>
       </div>
     </section>
-  </div>
-  <div class="mdc-layout-grid__inner">
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Fakturace</h2>
       <div class="hc-card">
@@ -765,6 +773,46 @@
         document.querySelector("input#invoice-email").setAttribute("placeholder", event.target.value);
       });
     </script>
+    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
+      <h2>Zapojení</h2>
+      <div class="hc-card">
+        <p>Každý z účastníků je zároveň aktivní tvůrce programu. Ať jsi jednotlivec, nebo se hlásíš za tým, jak náš Hacker Camp můžeš obohatit? Nápady nelimitujeme :) Můžeš přispět přednáškou, workshopem, panelovkou, zorganizovat ranní výběh nebo turnaj ve fotbálku. Přivést můžeš i jakýkoliv doprovodný program – uvítáme vše od pípy, baristy a přípravy kávy až po DJs.</p>
+        <p>V každé aktivitě respektujeme základní pravidlo: Hacker Camp je z principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš propagovat a nabízet jen pokud to obohatí samotnou akci.</p>
+        <div class="field field--block">
+          <label for="activity">
+            Jakou aktivitu sis pro táborníky připravil?
+          </label>
+          <textarea id="activity" name="activity" rows="5"></textarea>
+        </div>
+        <div class="field field--block">
+          <label for="activity-crew">
+            Kdo všechno s Tebou bude aktivitu zařízovat?
+            <span>Vypiš nám sem všechna jména a dej nám telefonní číslo a mail na toho, s kým můžeme případně řešit.</span>
+          </label>
+          <textarea id="activity-crew" name="activityCrew" rows="5"></textarea>
+        </div>
+        <div class="field field--block">
+          <label for="activity-place">
+            Potřebuješ k tomu nějaké speciální zázemí?
+            <span>Například zásuvku, elektriku, internet, klidné zákoutí…</span>
+          </label>
+          <textarea id="activity-place" name="activityPlace" rows="3"></textarea>
+        </div>
+        <div class="field field--block">
+          <label for="activity-preparation">
+            Potřebuješ nějakou přípravu před campem?
+            <span>Jakou, jak dlouho asi a kdy přijedeš?</span>
+          </label>
+          <textarea id="activity-preparation" name="activityPreparatin" rows="3"></textarea>
+        </div>
+        <div class="field field">
+          <label for="activity-help">
+            Potřebuješ od nás z org týmu, abychom pro Tebe před campem k aktivitě něco zařídili?
+          </label>
+          <textarea id="activity-help" name="activityHelp" rows="3"></textarea>
+        </div>
+      </div>
+    </section>
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       <button type="submit" class="hc-button">
         Závazně odeslat
@@ -783,4 +831,6 @@
   document.head.appendChild(stylesheet);
 </script>
 </body>
+  </div>
+  <div class="mdc-layout-grid__inner">
 </html>
