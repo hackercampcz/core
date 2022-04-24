@@ -70,7 +70,12 @@ export async function handler(event) {
       delete data.ok;
       console.log({ msg: "Sign JWT", idToken });
       return withCORS(["POST", "OPTIONS"])(
-        response({ idToken, profile, ok: true })
+        response({
+          ok: true,
+          idToken,
+          slackToken: token,
+          slackProfile: profile,
+        })
       );
     }
   }
