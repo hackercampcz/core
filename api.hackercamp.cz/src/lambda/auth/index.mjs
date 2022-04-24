@@ -39,9 +39,7 @@ async function getJWT(code, env) {
 
 async function getUserInfo(token) {
   const resp = await fetch("https://slack.com/api/openid.connect.userInfo", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ token }),
+    headers: { Authorization: `Bearer ${token}` },
   });
   const data = await resp.json();
   return { resp, data };
