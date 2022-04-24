@@ -197,13 +197,13 @@
       padding: 0
     }
 
-    @media screen and (min-width: 600px) and (max-width: 839px) {
+    @media screen and (min-width: 600px) {
       .hc-card {
         padding: var(--mdc-layout-grid-gutter-tablet);
       }
     }
 
-    @media screen and (min-width: 899px) {
+    @media screen and (min-width: 840px) {
       .hc-card {
         padding: var(--mdc-layout-grid-gutter-desktop);
       }
@@ -393,22 +393,16 @@
       flex-direction: column;
     }
 
-    @media (min-width: 426px) {
+    @media (min-width: 490px) {
       form .group {
         gap: 8px;
         flex-direction: row;
       }
     }
-    @media (min-width: 600px) {
+    @media (min-width: 840px) and (max-width: 1024px) {
       form .group {
-        flex-direction: row;
         gap: 12px;
-      }
-    }
-    @media (min-width: 840px) and (max-width: 880px) {
-      form .group {
         flex-direction: column;
-        gap: 0;
       }
     }
 
@@ -539,7 +533,7 @@
 
 <form action="" method="post" class="mdc-layout-grid" id="reg">
   <div class="mdc-layout-grid__inner">
-    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-6-desktop">
+    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Údaje účastníka</h2>
       <div class="hc-card">
         <div class="group">
@@ -596,7 +590,7 @@
         </div>
       </div>
     </section>
-    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-6-desktop">
+    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Vyber si lístek</h2>
       <div class="hc-card">
         <div class="choose">
@@ -637,7 +631,7 @@
     </section>
   </div>
   <div class="mdc-layout-grid__inner">
-    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12-tablet mdc-layout-grid__cell--span-6-desktop">
+    <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Fakturační údaje</h2>
       <div class="hc-card">
         <div class="field">
