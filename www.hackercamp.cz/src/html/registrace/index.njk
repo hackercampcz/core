@@ -351,7 +351,8 @@
       margin-right: auto;
     }
 
-    form input {
+    form input,
+    form select {
       font-family: var(--hc-font-family);
       font-size: 16px;
       letter-spacing: 0;
@@ -374,6 +375,10 @@
       flex: 1;
     }
 
+    form .field[aria-hidden="true"] {
+      display: none;
+    }
+
     form .field label {
       flex: 1;
       padding-top: 4px;
@@ -385,7 +390,9 @@
       flex: 2;
       font-size: 16px;
       padding: 4px;
-      flex-direction: column;
+    }
+    form .field select {
+      min-height: 36px;
     }
 
     form .group {
@@ -401,7 +408,7 @@
     }
     @media (min-width: 840px) and (max-width: 1024px) {
       form .group {
-        gap: 12px;
+        gap: 0;
         flex-direction: column;
       }
     }
@@ -482,7 +489,7 @@
   <!-- End Google Tag Manager -->
 </head>
 
-<body vocab="https://schema.org" typeof="FAQPage">
+<body vocab="https://schema.org" typeof="CheckoutPage">
 <!-- Google Tag Manager (noscript) -->
 <noscript>
   <iframe
@@ -534,7 +541,7 @@
 <form action="" method="post" class="mdc-layout-grid" id="reg">
   <div class="mdc-layout-grid__inner">
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
-      <h2>Údaje účastníka</h2>
+      <h2>Účastník</h2>
       <div class="hc-card">
         <div class="group">
           <div class="field">
@@ -573,25 +580,45 @@
         </div>
         <div class="group">
           <div class="field">
-            <label for="reference">
-              Kdo mě pozval?
+            <label for="first-time">
+              Jedeš na HC poprvé?
             </label>
-            <select name="reference" id="reference">
-              <option>Byl jsem loni</option>
-              <option>Někdo kdo byl loni</option>
+            <select name="firstTime" id="first-time">
+              <option value="1">Ano</option>
+              <option value="0">Byl/a jsem loni</option>
             </select>
           </div>
           <div class="field">
-            <label for="referent">
-              Její/jeho jméno
+            <label for="inviter">
+              Kdo tě pozval?
             </label>
-            <input id="referent" name="referent" type="text" />
+            <input id="inviter" name="inviter" type="text" />
+          </div>
+          <div class="field" aria-hidden="true">
+            <label for="plus-one">
+              Pro koho chceš místo?
+            </label>
+            <select name="plusOne" id="plus-one">
+              <option value="0">Jen pro sebe</option>
+              <option value="1">Chci pozvat +1</option>
+            </select>
           </div>
         </div>
       </div>
+      <script type="module">
+        document.querySelector("select#first-time").addEventListener("change", (event) => {
+          if (parseInt(event.target.value)) {
+            document.querySelector("#inviter").parentElement.removeAttribute("aria-hidden");
+            document.querySelector("#plus-one").parentElement.setAttribute("aria-hidden", "true");
+          } else {
+            document.querySelector("#plus-one").parentElement.removeAttribute("aria-hidden");
+            document.querySelector("#inviter").parentElement.setAttribute("aria-hidden", "true");
+          }
+        });
+      </script>
     </section>
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
-      <h2>Vyber si lístek</h2>
+      <h2>Lístek</h2>
       <div class="hc-card">
         <div class="choose">
           <input type="radio" name="ticketType" value="nonprofit" id="ticket-nonprofit" />
@@ -632,7 +659,7 @@
   </div>
   <div class="mdc-layout-grid__inner">
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
-      <h2>Fakturační údaje</h2>
+      <h2>Fakturace</h2>
       <div class="hc-card">
         <div class="field">
           <label for="yyy">
