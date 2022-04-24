@@ -766,7 +766,7 @@
           <label for="invoice-email">
             Kontakt pro fakturaci
           </label>
-          <input id="invoice-email" name="email" type="invEmail" autocomplete="email" required="required" />
+          <input id="invoice-email" name="invEmail" type="email" autocomplete="email" />
         </div>
       </div>
     </section>
@@ -778,8 +778,103 @@
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Ubytování</h2>
       <div class="hc-card">
+        <div class="field">
+          <label for="stay-time">
+            Na jak dlouho dorazíš?
+          </label>
+          <select name="stayTime" id="stay-time">
+            <option value="0">Od čtvrtka večera do neděle</option>
+            <option value="1">Od pátku do neděle</option>
+            <option value="2">Jiné?</option>
+          </select>
+        </div>
+        <div class="field" aria-hidden="true">
+          <label for="custom-stay-time">
+            Napiš nám, jak to plánuješ
+          </label>
+          <input id="custom-stay-time" name="stayTimeCustom" type="text" />
+        </div>
+        <p>Jak a kde budeš spát?</p>
+        <div class="choose">
+          <input type="radio" name="housing" value="own-tent" id="own-housing" checked="checked"/>
+          <label for="own-housing">
+            Přivezu si <strong>vlastní stan</strong> a v něm budu spát
+            <span>v areálu je k dispozici louka pro stanování</span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="own-car" id="car-housing" />
+          <label for="car-housing">
+            Přijedu autem a budu v něm i spát
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="own-caravan" id="caravan-housing" />
+          <label for="caravan-housing">
+            Přivezu si <strong>vlastní karavan</strong>, ve kterém chci spát
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="open-air" id="openair-housing" />
+          <label for="openair-housing">
+            Jsem pankáč a budu spát <strong>pod širákem</strong> nebo v&nbsp;hamace
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="cottage" id="cottage-housing" />
+          <label for="cottage-housing">
+            Chci postel <strong>v chatce</strong> pro 2, 4 nebo 6
+            <span>
+              Po vyplnění tohoto formuláře tě bude kontaktovat pavla.verflova@czechitas.cz a domluvíte se napřímo, kapacita omezena.
+            </span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="glamping" id="glamping-housing" />
+          <label for="glamping-housing">
+            Dejte mi místo <strong>v Glamping stanu</strong>
+            <span>
+              Stany bereme od <a href="https://chillvillage.cz/">chillvillage.cz</a> a budou mít kapacity pro 4 - 6 lidí
+            </span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="nearby" id="nearby-housing" />
+          <label for="nearby-housing">
+            Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
+            <span>
+              Po vyplnění formuláře tě bude kontaktovat pavla.verflova@czechitas.cz a domluvíte se napřímo
+            </span>
+          </label>
+        </div>
+        <div class="field">
+          <label for="roommates">
+            Chceš spát v chatce a už víš, kdo budou tvoji spolubydlící? Pokud jo, 
+            <span><strong>napiš nám jejich jména</strong>. Zkusíme vás dát dohromady. Díky.</span>
+          </label>
+          <textarea name="roommates" id="roommates" rows="2"></textarea>
+        </div>
+        <div class="field">
+          <label for="roommates-aggree">
+            Pokud nemáš spolubydlícího do chatky, 
+            <span>přiřadíme Ti spolubydlící, abychom využili kapacitu naplno</span>
+          </label>
+          <select name="roommatesAggree" id="roommates-aggree">
+            <option value="1">Jasný, s tím počítám</option>
+            <option value="0">Raději mi napište jména a když nenaplním chatku kámošema, zajistím si ubytko jinak</option>
+          </select>
+        </div>
       </div>
     </section>
+    <script type="module">
+      document.querySelector("select#stay-time").addEventListener("change", event => {
+        if (event.target.value == 2) {
+          document.querySelector("#custom-stay-time").parentElement.removeAttribute("aria-hidden");
+        } else {
+          document.querySelector("#custom-stay-time").parentElement.setAttribute("aria-hidden", "true");
+        }
+      });
+    </script>
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Zapojení</h2>
       <div class="hc-card">
