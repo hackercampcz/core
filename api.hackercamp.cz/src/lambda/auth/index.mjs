@@ -39,7 +39,10 @@ async function getJWT(code, env) {
 
 async function getUserInfo(token) {
   const resp = await fetch("https://slack.com/api/openid.connect.userInfo", {
-    headers: { Authorization: `Bearer ${token}` },
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
   });
   const data = await resp.json();
   return { resp, data };
@@ -55,7 +58,7 @@ export async function handler(event) {
   const { resp, data } = await getJWT(params.code, process.env);
   console.log({ msg: "Get JWT", data });
   if (resp.ok && data.ok) {
-    const token = data["id_token"];
+    const token = data["access_token"];
     const { resp, data: profile } = await getUserInfo(token);
     console.log({ msg: "Get User Info", profile, token });
     if (resp.ok && profile.ok) {
@@ -67,13 +70,14 @@ export async function handler(event) {
         "https://slack.com/user_id": profile.sub,
       };
       const idToken = jwt.sign(payload, process.env["private_key"]);
-      delete data.ok;
+      delete profile.ok;
       console.log({ msg: "Sign JWT", idToken });
       return withCORS(["POST", "OPTIONS"])(
         response({
           ok: true,
           idToken,
-          slackToken: token,
+          slackAccessToken: token,
+          slackToken: data["id_token"],
           slackProfile: profile,
         })
       );
