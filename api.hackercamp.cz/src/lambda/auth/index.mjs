@@ -68,6 +68,7 @@ export async function handler(event) {
         issuer: "https://api.hackercamp.cz/",
         "https://hackercamp.cz/email": profile.email,
         "https://slack.com/user_id": profile.sub,
+        "https://slack.com/access_token": token,
       };
       const idToken = jwt.sign(payload, process.env["private_key"]);
       delete profile.ok;
@@ -76,7 +77,6 @@ export async function handler(event) {
         response({
           ok: true,
           idToken,
-          slackAccessToken: token,
           slackToken: data["id_token"],
           slackProfile: profile,
         })
