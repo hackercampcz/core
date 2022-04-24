@@ -673,6 +673,8 @@
         if (parseInt(event.target.value)) {
           document.querySelector("#inviter").parentElement.removeAttribute("aria-hidden");
           document.querySelector("#plus-one").parentElement.setAttribute("aria-hidden", "true");
+          document.querySelector("#plus-one-section").setAttribute("aria-hidden", "true");
+          document.querySelector("select#plus-one").value = "0";
         } else {
           document.querySelector("#plus-one").parentElement.removeAttribute("aria-hidden");
           document.querySelector("#inviter").parentElement.setAttribute("aria-hidden", "true");
