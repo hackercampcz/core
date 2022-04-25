@@ -6,9 +6,13 @@ import * as jwt from "jsonwebtoken";
 const AWS = require("aws-sdk");
 const secretsManager = new AWS.SecretsManager();
 
-function isValidToken(authorization) {
+function isValidToken(headers) {
+  if (!headers["authorization"]) return false;
+
+  const authorization = headers["authorization"]?.[0]?.value;
   if (!authorization) return false;
   if (!authorization.startsWith("Bearer ")) return false;
+
   try {
     const [, token] = authorization.split("Bearer ");
     jwt.verify(
@@ -31,9 +35,7 @@ function isValidToken(authorization) {
  */
 export async function handler(event) {
   const request = event.Records[0].cf.request;
-  const authorization = request.headers["authorization"][0].value;
-
-  if (!isValidToken(authorization)) {
+  if (!isValidToken(request.headers)) {
     return {
       status: "401",
       statusDescription: "Not Authorized",

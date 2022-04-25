@@ -24,7 +24,7 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
       role,
     });
     const policy = new aws.iam.Policy(`${name}-secretsmanager-read-policy`, {
-      policy: JSON.stringify({
+      policy: {
         Version: "2012-10-17",
         Statement: [
           {
@@ -39,7 +39,7 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
             Resource: ["*"],
           },
         ],
-      }),
+      },
     });
     new aws.iam.RolePolicyAttachment(`${name}-secretsmanager-read-attachment`, {
       policyArn: policy.arn,
