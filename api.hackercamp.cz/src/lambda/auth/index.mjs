@@ -74,12 +74,17 @@ export async function handler(event) {
       delete profile.ok;
       console.log({ msg: "Sign JWT", idToken });
       return withCORS(["POST", "OPTIONS"])(
-        response({
-          ok: true,
-          idToken,
-          slackToken: data["id_token"],
-          slackProfile: profile,
-        })
+        response(
+          {
+            ok: true,
+            idToken,
+            slackToken: data["id_token"],
+            slackProfile: profile,
+          },
+          {
+            "Set-Cookie": `hc-id=${idToken}; Max-Age=360; Domain=hackercamp.cz; Secure; HttpOnly`,
+          }
+        )
       );
     }
   }

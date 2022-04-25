@@ -1,4 +1,5 @@
 import * as jwt from "jsonwebtoken";
+import { parse } from "../cookie.mjs";
 
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestEvent } CloudFrontRequestEvent */
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestResult } CloudFrontRequestResult */
@@ -6,15 +7,8 @@ import * as jwt from "jsonwebtoken";
 const AWS = require("aws-sdk");
 const secretsManager = new AWS.SecretsManager();
 
-function isValidToken(headers) {
-  if (!headers["authorization"]) return false;
-
-  const authorization = headers["authorization"]?.[0]?.value;
-  if (!authorization) return false;
-  if (!authorization.startsWith("Bearer ")) return false;
-
+function validate(token) {
   try {
-    const [, token] = authorization.split("Bearer ");
     jwt.verify(
       token,
       secretsManager.getSecretValue({ SecretId: "HC-JWT-SECRET" }),
@@ -27,6 +21,25 @@ function isValidToken(headers) {
   } catch (err) {
     return false;
   }
+}
+
+function isValidToken(headers) {
+  if (headers["cookie"]) {
+    const cookies = headers["cookie"].reduce(
+      (reduced, header) => Object.assign(reduced, parse(header.value)),
+      {}
+    );
+    if (cookies["hc-id"]) return validate(cookies["hc-id"]);
+  }
+
+  if (!headers["authorization"]) return false;
+
+  const authorization = headers["authorization"]?.[0]?.value;
+  if (!authorization) return false;
+  if (!authorization.startsWith("Bearer ")) return false;
+
+  const [, token] = authorization.split("Bearer ");
+  return validate(token);
 }
 
 /**
