@@ -76,7 +76,7 @@ new aws.s3.BucketPolicy("hc-hacker-profiles", {
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = api.url.apply((x) => new URL("/v1/", x).href);
 
-//const { lambda: authLambda } = AuthEdgeLambda.create("hc-auth-lambda");
+const { lambda: authLambda } = AuthEdgeLambda.create("hc-auth-lambda");
 export const websites: Record<string, WebsiteExport> = {
   [donutDomain]: siteExports(
     Website.create(donutDomain, {
@@ -104,15 +104,15 @@ export const websites: Record<string, WebsiteExport> = {
             CloudFront.ManagedOriginRequestPolicy.AllViewer,
         },
       ],
-      // edgeLambdas: [
-      //   {
-      //     pathPattern: "/hacker/*",
-      //     lambdaAssociation: {
-      //       eventType: "viewer-request",
-      //       lambdaArn: authLambda.arn,
-      //     },
-      //   },
-      // ],
+      edgeLambdas: [
+        {
+          pathPattern: "/*",
+          lambdaAssociation: {
+            eventType: "viewer-request",
+            lambdaArn: authLambda.arn,
+          },
+        },
+      ],
     })
   ),
   [webDomain]: siteExports(Website.create(webDomain, {})),

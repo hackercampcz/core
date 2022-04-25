@@ -23,7 +23,7 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
       policyArn: aws.iam.ManagedPolicies.AWSLambdaBasicExecutionRole,
       role,
     });
-    const policy = new aws.iam.Policy(`${name}-securitymanager-read-policy`, {
+    const policy = new aws.iam.Policy(`${name}-secretsmanager-read-policy`, {
       policy: JSON.stringify({
         Version: "2012-10-17",
         Statement: [
@@ -41,13 +41,10 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
         ],
       }),
     });
-    new aws.iam.RolePolicyAttachment(
-      `${name}-securitymanager-read-attachment`,
-      {
-        policyArn: policy.arn,
-        role: role,
-      }
-    );
+    new aws.iam.RolePolicyAttachment(`${name}-secretsmanager-read-attachment`, {
+      policyArn: policy.arn,
+      role: role,
+    });
 
     const buildAssets = (fileName: string) =>
       lambdaBuilder.buildCodeAsset(
