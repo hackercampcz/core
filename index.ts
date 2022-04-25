@@ -106,7 +106,7 @@ export const websites: Record<string, WebsiteExport> = {
       ],
       edgeLambdas: [
         {
-          pathPattern: "/*",
+          pathPattern: "/hacker/*",
           lambdaAssociation: {
             eventType: "viewer-request",
             lambdaArn: authLambda.arn,
