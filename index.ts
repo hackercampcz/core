@@ -1,6 +1,5 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
-import * as awsx from "@pulumi/awsx";
 import {
   registerAutoTags,
   createCertificate,
@@ -10,6 +9,7 @@ import {
   CloudFront,
 } from "@topmonks/pulumi-aws";
 import { createApi, routes } from "./api.hackercamp.cz";
+import { AuthEdgeLambda } from "./donut.hackercamp.cz/edge";
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),
@@ -38,6 +38,15 @@ const hackersOai = new aws.cloudfront.OriginAccessIdentity(
   }
 );
 
+const jwtSecret = new aws.secretsmanager.Secret("hc-jwt-secret", {
+  name: "HC-JWT-SECRET",
+});
+
+new aws.secretsmanager.SecretVersion("hc-jwt-secret", {
+  secretId: jwtSecret.arn,
+  secretString: config.get("private-key"),
+});
+
 const hackerProfilesBucket = new aws.s3.Bucket("hc-hacker-profiles", {
   acl: "private",
   bucketPrefix: "hc-hacker-profiles",
@@ -59,18 +68,15 @@ const hackersPolicyDocument = aws.iam.getPolicyDocumentOutput({
   ],
 });
 
-const hackerProfilesBucketPolicy = new aws.s3.BucketPolicy(
-  "hc-hacker-profiles",
-  {
-    bucket: hackerProfilesBucket.id,
-    policy: hackersPolicyDocument.apply((x) => x.json),
-  }
-);
+new aws.s3.BucketPolicy("hc-hacker-profiles", {
+  bucket: hackerProfilesBucket.id,
+  policy: hackersPolicyDocument.apply((x) => x.json),
+});
 
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
-
 export const apiUrl = api.url.apply((x) => new URL("/v1/", x).href);
 
+const { lambda: authLambda } = AuthEdgeLambda.create("hc-auth-lambda");
 export const websites: Record<string, WebsiteExport> = {
   [donutDomain]: siteExports(
     Website.create(donutDomain, {
@@ -96,6 +102,15 @@ export const websites: Record<string, WebsiteExport> = {
             CloudFront.ManagedResponseHeaderPolicy.SecurityHeadersPolicy,
           originRequestPolicyId:
             CloudFront.ManagedOriginRequestPolicy.AllViewer,
+        },
+      ],
+      edgeLambdas: [
+        {
+          pathPattern: "/hacker/*",
+          lambdaAssociation: {
+            eventType: "viewer-request",
+            lambdaArn: authLambda.arn,
+          },
         },
       ],
     })
