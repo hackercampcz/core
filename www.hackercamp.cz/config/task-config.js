@@ -11,7 +11,7 @@ module.exports = {
   workboxBuild: false,
 
   html: {
-    collections: ["images"],
+    collections: ["images", "build"],
     nunjucksRender: {
       filters: {
         year() {
