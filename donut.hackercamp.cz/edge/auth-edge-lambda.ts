@@ -23,10 +23,31 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
       policyArn: aws.iam.ManagedPolicies.AWSLambdaBasicExecutionRole,
       role,
     });
-    new aws.iam.RolePolicyAttachment(`${name}-dynamo-read-attachment`, {
-      policyArn: aws.iam.ManagedPolicy.AmazonDynamoDBReadOnlyAccess,
-      role: role,
+    const policy = new aws.iam.Policy(`${name}-securitymanager-read-policy`, {
+      policy: JSON.stringify({
+        Version: "2012-10-17",
+        Statement: [
+          {
+            Effect: "Allow",
+            Action: [
+              "secretsmanager:GetResourcePolicy",
+              "secretsmanager:GetSecretValue",
+              "secretsmanager:DescribeSecret",
+              "secretsmanager:ListSecretVersionIds",
+              "secretsmanager:ListSecrets",
+            ],
+            Resource: ["*"],
+          },
+        ],
+      }),
     });
+    new aws.iam.RolePolicyAttachment(
+      `${name}-securitymanager-read-attachment`,
+      {
+        policyArn: policy.arn,
+        role: role,
+      }
+    );
 
     const buildAssets = (fileName: string) =>
       lambdaBuilder.buildCodeAsset(
