@@ -10,6 +10,7 @@ export async function main({ searchParams, slackButton, env }) {
     const resp = await fetch(apiURL("auth"), {
       method: "POST",
       body: new URLSearchParams({ code }),
+      credentials: "include",
     });
     const data = await resp.json();
     if (resp.ok && data.ok) {
