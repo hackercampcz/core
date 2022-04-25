@@ -287,12 +287,13 @@ workflows:
           name: build-web
           site_name: www.hackercamp.cz
           context: org-global
+          requires:
+            - provision
       - deploy-site:
           name: deploy-web
           site_name: www.hackercamp.cz
           context: org-global
           requires:
-            - provision
             - build-web
           filters:
             branches:
