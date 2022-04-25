@@ -32,6 +32,7 @@ module.exports = {
   },
 
   browserSync: {
+    port: 3000,
     server: {
       baseDir: pathConfig.dest,
     },
