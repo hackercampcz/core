@@ -556,8 +556,7 @@
   </header>
 </div>
 
-
-<form action="" method="post" class="mdc-layout-grid" id="reg">
+<form action="#" method="post" class="mdc-layout-grid" id="reg">
   <div class="mdc-layout-grid__inner">
     <section class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
       <h2>Účastník</h2>
@@ -973,6 +972,45 @@
       </button>
     </section>
   </div>
+  <script type="module">
+    const formElement = document.querySelector("form#reg");
+    const storagePrefix = "reg:";
+
+    for (let key in localStorage) {
+      if (key.startsWith(storagePrefix) === false) {
+        continue;
+      }
+      const name = key.replace(storagePrefix, "");
+      const value = localStorage.getItem(key);
+      const element = formElement.querySelector(`[name="${name}"]`);
+
+      if (["radio", "checkbox"].includes(element.type)) {
+        formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
+      } else if (element.tagName.toLowerCase() === "select") {
+        element.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
+        element.dispatchEvent(new Event("change"));
+      } else {
+        element.setAttribute("value", value);
+      }
+    }
+
+    formElement.addEventListener("change", event => {
+      localStorage.setItem(storagePrefix + event.target.name, event.target.value);
+    });
+
+    formElement.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const data = new FormData(event.target);
+      console.warn("Not yet implemented", { data });
+
+      for (let key in localStorage) {
+        if (key.startsWith(storagePrefix)) {
+          localStorage.removeItem(key);
+        }
+      }
+    });
+  </script>
 </form>
 
 <footer class="mdc-layout-grid">
