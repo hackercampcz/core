@@ -88,5 +88,5 @@ export async function handler(event) {
       );
     }
   }
-  return withCORS(["POST", "OPTIONS"])(unauthorized());
+  return withCORS(["POST", "OPTIONS"], event.headers.origin)(unauthorized());
 }
