@@ -86,7 +86,7 @@ export async function handler(event) {
             slackProfile: profile,
           },
           {
-            "Set-Cookie": `hc-id=${idToken}; Max-Age=216000; Domain=hackercamp.cz; SameSite=strict; Secure; HttpOnly`,
+            "Set-Cookie": `hc-id=${idToken}; Max-Age=216000; Domain=hackercamp.cz; Path=/; SameSite=strict; Secure; HttpOnly`,
           }
         )
       );
