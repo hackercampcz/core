@@ -6,17 +6,18 @@ import { parse } from "../cookie.mjs";
 
 const AWS = require("aws-sdk");
 const secretsManager = new AWS.SecretsManager();
+const { SecretString: secret } = await secretsManager
+  .getSecretValue({ SecretId: "HC-JWT-SECRET" })
+  .promise();
+const jwtOptions = {
+  audience: "https://donut.hackercamp.cz/",
+  issuer: "https://api.hackercamp.cz/",
+};
 
-async function validateToken(token) {
+function validateToken(token) {
   try {
-    const secret = await secretsManager
-      .getSecretValue({ SecretId: "HC-JWT-SECRET" })
-      .promise();
     console.log({ token, secret });
-    jwt.verify(token, secret, {
-      audience: "https://donut.hackercamp.cz/",
-      issuer: "https://api.hackercamp.cz/",
-    });
+    jwt.verify(token, secret, jwtOptions);
     return true;
   } catch (err) {
     console.error(err);
@@ -24,7 +25,7 @@ async function validateToken(token) {
   }
 }
 
-async function validate(headers) {
+function validate(headers) {
   if (headers["cookie"]) {
     const cookies = headers["cookie"].reduce(
       (reduced, header) => Object.assign(reduced, parse(header.value)),
@@ -50,7 +51,7 @@ async function validate(headers) {
  */
 export async function handler(event) {
   const request = event.Records[0].cf.request;
-  const isValidToken = await validate(request.headers);
+  const isValidToken = validate(request.headers);
   if (isValidToken) return request;
   return {
     status: "401",
