@@ -56,7 +56,7 @@ export function response(body, headers) {
  * @param {string} [origin]
  * @return {ResponseTransformer}
  */
-export function withCORS(methods, origin = "*") {
+export function withCORS(methods, origin = "*", { allowCredentials } = {}) {
   const allowMethods = Array.isArray(methods) ? methods.join(",") : methods;
   return (x) =>
     Object.assign({}, x, {
@@ -65,6 +65,7 @@ export function withCORS(methods, origin = "*") {
         "Access-Control-Allow-Methods": allowMethods,
         "Access-Control-Allow-Headers":
           "Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token",
+        "Access-Control-Allow-Credentials": allowCredentials,
       }),
     });
 }
