@@ -9,16 +9,15 @@ const secretsManager = new AWS.SecretsManager();
 
 function validate(token) {
   try {
-    jwt.verify(
-      token,
-      secretsManager.getSecretValue({ SecretId: "HC-JWT-SECRET" }),
-      {
-        audience: "https://donut.hackercamp.cz/",
-        issuer: "https://api.hackercamp.cz/",
-      }
-    );
+    const secret = secretsManager.getSecretValue({ SecretId: "HC-JWT-SECRET" });
+    console.log({ token, secret });
+    jwt.verify(token, secret, {
+      audience: "https://donut.hackercamp.cz/",
+      issuer: "https://api.hackercamp.cz/",
+    });
     return true;
   } catch (err) {
+    console.error(err);
     return false;
   }
 }
@@ -29,6 +28,7 @@ function isValidToken(headers) {
       (reduced, header) => Object.assign(reduced, parse(header.value)),
       {}
     );
+    console.log({ cookies });
     if (cookies["hc-id"]) return validate(cookies["hc-id"]);
   }
 
