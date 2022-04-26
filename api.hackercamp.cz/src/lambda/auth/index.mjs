@@ -88,5 +88,6 @@ export async function handler(event) {
       );
     }
   }
-  return withCORS(["POST", "OPTIONS"], event.headers.origin)(unauthorized());
+  const origin = new URL(event.headers.origin).hostname;
+  return withCORS(["POST", "OPTIONS"], origin)(unauthorized());
 }
