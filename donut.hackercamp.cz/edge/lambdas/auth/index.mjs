@@ -7,9 +7,11 @@ import { parse } from "../cookie.mjs";
 const AWS = require("aws-sdk");
 const secretsManager = new AWS.SecretsManager();
 
-function validate(token) {
+async function validateToken(token) {
   try {
-    const secret = secretsManager.getSecretValue({ SecretId: "HC-JWT-SECRET" });
+    const secret = await secretsManager
+      .getSecretValue({ SecretId: "HC-JWT-SECRET" })
+      .promise();
     console.log({ token, secret });
     jwt.verify(token, secret, {
       audience: "https://donut.hackercamp.cz/",
@@ -22,14 +24,14 @@ function validate(token) {
   }
 }
 
-function isValidToken(headers) {
+async function validate(headers) {
   if (headers["cookie"]) {
     const cookies = headers["cookie"].reduce(
       (reduced, header) => Object.assign(reduced, parse(header.value)),
       {}
     );
     console.log({ cookies });
-    if (cookies["hc-id"]) return validate(cookies["hc-id"]);
+    if (cookies["hc-id"]) return validateToken(cookies["hc-id"]);
   }
 
   if (!headers["authorization"]) return false;
@@ -39,7 +41,7 @@ function isValidToken(headers) {
   if (!authorization.startsWith("Bearer ")) return false;
 
   const [, token] = authorization.split("Bearer ");
-  return validate(token);
+  return validateToken(token);
 }
 
 /**
@@ -48,11 +50,10 @@ function isValidToken(headers) {
  */
 export async function handler(event) {
   const request = event.Records[0].cf.request;
-  if (!isValidToken(request.headers)) {
-    return {
-      status: "401",
-      statusDescription: "Not Authorized",
-    };
-  }
-  return request;
+  const isValidToken = await validate(request.headers);
+  if (isValidToken) return request;
+  return {
+    status: "401",
+    statusDescription: "Not Authorized",
+  };
 }
