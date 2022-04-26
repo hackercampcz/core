@@ -9,10 +9,7 @@ const secretsManager = new AWS.SecretsManager();
 const { SecretString: secret } = await secretsManager
   .getSecretValue({ SecretId: "HC-JWT-SECRET" })
   .promise();
-const jwtOptions = {
-  audience: "https://donut.hackercamp.cz/",
-  issuer: "https://api.hackercamp.cz/",
-};
+const jwtOptions = { issuer: "https://api.hackercamp.cz/" };
 
 function validateToken(token) {
   try {
