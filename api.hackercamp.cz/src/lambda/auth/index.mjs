@@ -54,6 +54,7 @@ async function getUserInfo(token) {
  */
 export async function handler(event) {
   const params = getPayload(event);
+  const origin = new URL(event.headers.origin).hostname;
   console.log({ params, body: event.body });
   const { resp, data } = await getJWT(params.code, process.env);
   console.log({ msg: "Get JWT", data });
@@ -73,7 +74,7 @@ export async function handler(event) {
       const idToken = jwt.sign(payload, process.env["private_key"]);
       delete profile.ok;
       console.log({ msg: "Sign JWT", idToken });
-      return withCORS(["POST", "OPTIONS"])(
+      return withCORS(["POST", "OPTIONS"], origin)(
         response(
           {
             ok: true,
@@ -88,6 +89,5 @@ export async function handler(event) {
       );
     }
   }
-  const origin = new URL(event.headers.origin).hostname;
   return withCORS(["POST", "OPTIONS"], origin)(unauthorized());
 }
