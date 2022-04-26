@@ -48,7 +48,18 @@ export async function handler(event) {
   const isValidToken = validate(request.headers);
   if (isValidToken) return request;
   return {
-    status: "401",
-    statusDescription: "Not Authorized",
+    status: "307",
+    statusDescription: "Temporary Redirect",
+    headers: {
+      location: [
+        {
+          key: "location",
+          value: `https://donut.hackercamp.cz/?${new URLSearchParams({
+            state: "not-authenticated",
+            returnUrl: request.uri,
+          })}`,
+        },
+      ],
+    },
   };
 }
