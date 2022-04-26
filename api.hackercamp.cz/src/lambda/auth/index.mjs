@@ -57,14 +57,12 @@ export async function handler(event) {
   const origin = event.headers.origin;
   console.log({ params, body: event.body });
   const { resp, data } = await getJWT(params.code, process.env);
-  console.log({ msg: "Get JWT", data });
   const withCORS_ = withCORS(["POST", "OPTIONS"], origin, {
     allowCredentials: true,
   });
   if (resp.ok && data.ok) {
     const token = data["access_token"];
     const { resp, data: profile } = await getUserInfo(token);
-    console.log({ msg: "Get User Info", profile, token });
     if (resp.ok && profile.ok) {
       const payload = {
         expiresIn: "6h",
@@ -76,7 +74,6 @@ export async function handler(event) {
       };
       const idToken = jwt.sign(payload, process.env["private_key"]);
       delete profile.ok;
-      console.log({ msg: "Sign JWT", idToken });
       return withCORS_(
         response(
           {
@@ -91,6 +88,8 @@ export async function handler(event) {
         )
       );
     }
+    console.error({ token, profile });
   }
+  console.error({ code: params.code, data });
   return withCORS_(unauthorized());
 }

@@ -12,7 +12,6 @@ const { SecretString: secret } = await secretsManager
 
 function validateToken(token) {
   try {
-    console.log({ token, secret });
     jwt.verify(token, secret);
     return true;
   } catch (err) {
@@ -27,7 +26,6 @@ function validate(headers) {
       (reduced, header) => Object.assign(reduced, parse(header.value)),
       {}
     );
-    console.log({ cookies });
     if (cookies["hc-id"]) return validateToken(cookies["hc-id"]);
   }
 
