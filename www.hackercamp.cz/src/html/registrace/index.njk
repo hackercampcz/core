@@ -334,6 +334,13 @@
       text-align: center;
       margin-top: 2em;
     }
+    
+    hr {
+      border: 0 none;
+      height: 1px;
+      background-color: #F2F2FA;
+      margin: 24px 0;
+    }
 
     .form-story {
       text-align: center;
@@ -553,11 +560,12 @@
         ozvat nebo připomenout, než budeme zvát i&nbsp;ty, kdo loni na Campu
         nebyli&nbsp;:)</p>
       <p>Tvoje Hacker Camp Crew</p>
+      <hr />
+      <p>Byl/a jsi na minulém ročníku, nebo už máš přístup na Slack?<br /><a href="#"><strong>Pojď tudy</strong></a></p>
     </div>
   </header>
 </div>
-
-<form action="#" method="post" class="mdc-layout-grid" id="reg">
+<form action="{{ build["api-host"] }}registration" method="post" class="mdc-layout-grid" id="reg">
   <section>
     <h2>Účastník</h2>
     <div class="hc-card">
@@ -952,7 +960,7 @@
         <input type="radio" name="travel" value="bus" id="bus" />
         <label for="bus">
           Chci Hacker busem z Brna a okolí!
-          <span><em>Pokud se nám podaříá sehnat, doplníme podrobnosti.</em></span>
+          <span><em>Pokud se nám podaří sehnat, doplníme podrobnosti.</em></span>
         </label>
       </div>
       <div class="choose">
