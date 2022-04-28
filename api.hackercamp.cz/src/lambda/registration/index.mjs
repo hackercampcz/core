@@ -15,7 +15,7 @@ function getToken(event) {
  */
 export async function handler(event) {
   const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
-  const token = getToken(event.headers);
+  const token = getToken(event);
   if (!validateToken(token, process.env["private_key"])) {
     return withCORS_(unauthorized());
   }
