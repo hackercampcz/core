@@ -35,6 +35,7 @@
   "workspaces": [
     "api.hackercamp.cz",
     "donut.hackercamp.cz",
-    "www.hackercamp.cz"
+    "www.hackercamp.cz",
+    "lib"
   ]
 }

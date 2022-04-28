@@ -31,6 +31,16 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
           },
         },
       },
+      registration: {
+        httpMethod: "POST",
+        path: "/registration",
+        fileName: "registration/index.mjs",
+        environment: {
+          variables: {
+            private_key: config.get("private-key"),
+          },
+        },
+      },
     },
   ],
 ]);

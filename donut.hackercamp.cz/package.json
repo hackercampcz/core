@@ -9,6 +9,7 @@
     "web-types-lit": "0.1.0"
   },
   "dependencies": {
+    "@hackercamp/lib": "workspace:lib",
     "@material/layout-grid": "^13.0.0",
     "@thi.ng/atom": "5.1.5",
     "@thi.ng/transducers": "8.3.1",

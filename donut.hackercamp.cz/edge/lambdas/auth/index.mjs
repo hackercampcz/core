@@ -1,5 +1,5 @@
-import * as jwt from "jsonwebtoken";
-import { parse } from "../cookie.mjs";
+import { validateToken } from "@hackercamp/lib/auth.mjs";
+import { parse } from "@hackercamp/lib/cookie.mjs";
 
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestEvent } CloudFrontRequestEvent */
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestResult } CloudFrontRequestResult */
@@ -10,23 +10,13 @@ const { SecretString: secret } = await secretsManager
   .getSecretValue({ SecretId: "HC-JWT-SECRET" })
   .promise();
 
-function validateToken(token) {
-  try {
-    jwt.verify(token, secret);
-    return true;
-  } catch (err) {
-    console.error(err);
-    return false;
-  }
-}
-
-function validate(headers) {
+function validate(headers, secret) {
   if (headers["cookie"]) {
     const cookies = headers["cookie"].reduce(
       (reduced, header) => Object.assign(reduced, parse(header.value)),
       {}
     );
-    if (cookies["hc-id"]) return validateToken(cookies["hc-id"]);
+    if (cookies["hc-id"]) return validateToken(cookies["hc-id"], secret);
   }
 
   if (!headers["authorization"]) return false;
@@ -36,7 +26,7 @@ function validate(headers) {
   if (!authorization.startsWith("Bearer ")) return false;
 
   const [, token] = authorization.split("Bearer ");
-  return validateToken(token);
+  return validateToken(token, secret);
 }
 
 /**
@@ -45,7 +35,7 @@ function validate(headers) {
  */
 export async function handler(event) {
   const request = event.Records[0].cf.request;
-  const isValidToken = validate(request.headers);
+  const isValidToken = validate(request.headers, secret);
   if (isValidToken) return request;
   return {
     status: "307",

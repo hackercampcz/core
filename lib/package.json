@@ -1,0 +1,7 @@
+{
+  "name": "@hackercamp/lib",
+  "packageManager": "yarn@3.2.0",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
+}

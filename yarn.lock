@@ -1315,6 +1315,7 @@ __metadata:
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
     "@adobe/helix-fetch": ^3.0.8
+    "@hackercamp/lib": "workspace:lib"
     jsonwebtoken: ^8.5.1
   languageName: unknown
   linkType: soft
@@ -1346,6 +1347,7 @@ __metadata:
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
     "@adobe/helix-fetch": ^3.0.8
+    "@hackercamp/lib": "workspace:lib"
     "@material/layout-grid": ^13.0.0
     "@thi.ng/atom": 5.1.5
     "@thi.ng/transducers": 8.3.1
@@ -1356,6 +1358,14 @@ __metadata:
     lit: 2.2.2
     ramda: ^0.28.0
     web-types-lit: 0.1.0
+  languageName: unknown
+  linkType: soft
+
+"@hackercamp/lib@workspace:lib":
+  version: 0.0.0-use.local
+  resolution: "@hackercamp/lib@workspace:lib"
+  dependencies:
+    jsonwebtoken: ^8.5.1
   languageName: unknown
   linkType: soft
 
