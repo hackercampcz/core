@@ -2132,7 +2132,7 @@ __metadata:
   dependencies:
     "@adobe/helix-fetch": ^3.0.8
     "@hackercamp/lib": "workspace:lib"
-    "@material/layout-grid": ^13.0.0
+    "@material/layout-grid": 14.0.0
     "@thi.ng/atom": 5.1.5
     "@thi.ng/transducers": 8.3.1
     "@typescript-eslint/eslint-plugin": 5.21.0
@@ -2157,7 +2157,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
   dependencies:
-    "@material/layout-grid": 13.0.0
+    "@material/layout-grid": 14.0.0
   languageName: unknown
   linkType: soft
 
@@ -2217,12 +2217,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/layout-grid@npm:13.0.0, @material/layout-grid@npm:^13.0.0":
-  version: 13.0.0
-  resolution: "@material/layout-grid@npm:13.0.0"
+"@material/layout-grid@npm:14.0.0":
+  version: 14.0.0
+  resolution: "@material/layout-grid@npm:14.0.0"
   dependencies:
     tslib: ^2.1.0
-  checksum: 206b4f0c3d97929f31f72b526492d1645b159f712d59b95dd92c4ceaed820c478a9d5c91c4eee155c747e98ed7aad6b3188d4b6073995fb77efb3c734a27006d
+  checksum: 96a0748754fb034ab5a87cc7ed3642c9cb9b7812db034811599e12053ac39f06406f45d1f676bf3dbad597217b171313c0a314d20cad2c34fc93f08affc7307f
   languageName: node
   linkType: hard
 
