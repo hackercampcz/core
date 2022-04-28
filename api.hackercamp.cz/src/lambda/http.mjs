@@ -15,10 +15,11 @@ export function movedPermanently(location) {
 /**
  * @returns {APIGatewayProxyResult}
  */
-export function unauthorized() {
+export function unauthorized(headers= {}) {
   return {
     statusCode: 401,
     body: "",
+    headers
   };
 }
 

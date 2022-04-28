@@ -91,5 +91,7 @@ export async function handler(event) {
     console.error({ token, profile });
   }
   console.error({ code: params.code, data });
-  return withCORS_(unauthorized());
+  return withCORS_(unauthorized({
+    "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`
+  }));
 }

@@ -1,5 +1,4 @@
-import { validateToken } from "@hackercamp/lib/auth.mjs";
-import { parse } from "@hackercamp/lib/cookie.mjs";
+import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
 
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestEvent } CloudFrontRequestEvent */
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestResult } CloudFrontRequestResult */
@@ -10,32 +9,14 @@ const { SecretString: secret } = await secretsManager
   .getSecretValue({ SecretId: "HC-JWT-SECRET" })
   .promise();
 
-function validate(headers, secret) {
-  if (headers["cookie"]) {
-    const cookies = headers["cookie"].reduce(
-      (reduced, header) => Object.assign(reduced, parse(header.value)),
-      {}
-    );
-    if (cookies["hc-id"]) return validateToken(cookies["hc-id"], secret);
-  }
-
-  if (!headers["authorization"]) return false;
-
-  const authorization = headers["authorization"]?.[0]?.value;
-  if (!authorization) return false;
-  if (!authorization.startsWith("Bearer ")) return false;
-
-  const [, token] = authorization.split("Bearer ");
-  return validateToken(token, secret);
-}
-
 /**
  * @param {CloudFrontRequestEvent} event
  * @returns {Promise<CloudFrontRequestResult>}
  */
 export async function handler(event) {
   const request = event.Records[0].cf.request;
-  const isValidToken = validate(request.headers, secret);
+  const token = getToken(request.headers);
+  const isValidToken = validateToken(token, secret);
   if (isValidToken) return request;
   return {
     status: "307",
