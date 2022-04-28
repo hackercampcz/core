@@ -638,7 +638,7 @@
       </div>
     </div>
   </section>
-  <section id="plus-one-section" aria-hidden="true" >
+  <section id="plus-one-section" aria-hidden="true">
     <h2>Tvé +1</h2>
     <div class="hc-card">
       <div class="group">
@@ -746,53 +746,103 @@
     <h2>Fakturace</h2>
     <div class="hc-card">
       <div class="field">
-        <label for="invoice-name">
-          Jméno / název společnosti
+        <label for="invoice-recipient">
+          Kdo to zaplatí?
         </label>
-        <input id="invoice-name" name="invName" type="text" required="required" />
+        <select name="invoiceRecipient" id="invoice-recipient">
+          <option value="0">No, budu to muset být já</option>
+          <option value="1">Někdo jiný (např. firma)</option>
+        </select>
       </div>
-      <div class="field">
-        <label for="invoice-address">
-          Adresa
-        </label>
-        <input id="invoice-address" name="invAddress" type="text" required="required" />
-      </div>
-      <div class="group">
+      <div id="I-will-pay">
         <div class="field">
-          <label for="invoice-regno">
-            IČ
+          <label for="invoice-name">
+            Jméno / název společnosti
           </label>
-          <input id="invoice-regno" name="invRegNo" type="text" />
+          <input id="invoice-name" name="invName" type="text" required="required" />
         </div>
         <div class="field">
-          <label for="invoice-vatno">
-            DIČ
+          <label for="invoice-address">
+            Adresa
           </label>
-          <input id="invoice-vatno" name="invVatNo" type="text" />
+          <input id="invoice-address" name="invAddress" type="text" required="required" />
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="invoice-regno">
+              IČ
+            </label>
+            <input id="invoice-regno" name="invRegNo" type="text" />
+          </div>
+          <div class="field">
+            <label for="invoice-vatno">
+              DIČ
+            </label>
+            <input id="invoice-vatno" name="invVatNo" type="text" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="invoice-text">
+            Text na faktuře
+          </label>
+          <input id="invoice-text" name="invText" type="text" />
+        </div>
+        <div class="field">
+          <label for="invoice-email">
+            Kontakt pro fakturaci
+          </label>
+          <input id="invoice-email" name="invEmail" type="email" autocomplete="email" />
         </div>
       </div>
-      <div class="field">
-        <label for="invoice-text">
-          Text na faktuře
-        </label>
-        <input id="invoice-text" name="invText" type="text" />
-      </div>
-      <div class="field">
-        <label for="invoice-email">
-          Kontakt pro fakturaci
-        </label>
-        <input id="invoice-email" name="invEmail" type="email" autocomplete="email" />
+      <div id="someone-else-will-pay" aria-hidden="true">
+        <div class="group">
+          <div class="field">
+            <label for="invoice-recipient-firstname">
+              Jméno
+            </label>
+            <input id="invoice-recipient-firstname" name="invoiceRecipientFirstname" type="text" />
+          </div>
+          <div class="field">
+            <label for="invoice-recipient-lastname">
+              Příjmení
+            </label>
+            <input id="invoice-recipient-lastname" name="invoiceRecipientLastname" type="text" />
+          </div>
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="invoice-recipient-email">
+              E-mail
+            </label>
+            <input id="invoice-recipient-email" name="invoiceRecipientEmail" type="email" />
+          </div>
+          <div class="field">
+            <label for="invoice-recipient-phone">
+              Telefon
+            </label>
+            <input id="invoice-recipient-phone" name="invoiceRecipientPhone" type="tel" />
+          </div>
+        </div>
       </div>
     </div>
   </section>
-  <p class="disclaimer">
-    Následující informace bude možné doplnit později. Pokud ale už znáš odpovědi, můžeš si je tu připravit - změnit je bude možné :)
-  </p>
   <script type="module">
     document.querySelector("input#email").addEventListener("blur", event => {
       document.querySelector("input#invoice-email").setAttribute("placeholder", event.target.value);
     });
+    document.querySelector("select#invoice-recipient").addEventListener("change", event => {
+      if (event.target.value == 0) {
+        document.querySelector("#I-will-pay").removeAttribute("aria-hidden");
+        document.querySelector("#someone-else-will-pay").setAttribute("aria-hidden", "true");
+      } else if(event.target.value == 1) {
+        document.querySelector("#I-will-pay").setAttribute("aria-hidden", "true");
+        document.querySelector("#someone-else-will-pay").removeAttribute("aria-hidden");
+      }
+    });
   </script>
+  <p class="disclaimer">
+    Následující informace bude možné doplnit později. Pokud ale už znáš odpovědi, můžeš si je tu připravit - změnit je bude možné :)
+  </p>
   <section>
     <h2>Ubytování</h2>
     <div class="hc-card">
