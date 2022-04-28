@@ -284,16 +284,6 @@
       padding-top: 78px;
     }
 
-    .hc-logo-link {
-      display: block;
-      width: 190px;
-      height: 40px;
-      transform: translateY(6px);
-    }
-    .hc-logo-link img {
-      width: 100%;
-      height: 100%;
-    }
 
     .hc-navbar__right {
       display: none;
@@ -312,13 +302,6 @@
       .hc-navbar__right {
         display: flex;
         justify-content: flex-end;
-      }
-
-      .hc-logo-link {
-        display: block;
-        width: 266px;
-        height: 54px;
-        transform: translateY(4px);
       }
 
       #top {
@@ -385,11 +368,7 @@
 <nav class="hc-navbar mdc-layout-grid" style="line-height: 1;">
   <div class="mdc-layout-grid__inner">
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-      <a href="/" class="hc-logo-link">
-        <img
-          src="/hackercamp.svg"
-          alt="Hacker Camp - Hack To The Future" />
-      </a>
+      {% include "shared/logo.njk" %}
     </div>
     <div class="hc-navbar__right mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
       <!-- a class="hc-link hc-navbar__link" href="https://g.page/sobenak?share">Navigovat</a-->
