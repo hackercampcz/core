@@ -1,6 +1,29 @@
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
 
 /**
+ * @param {Record<string, any> | string} body
+ * @param {Record<string, boolean | number | string>} [headers]
+ * @returns {APIGatewayProxyResult}
+ */
+export function response(body, headers) {
+  return {
+    statusCode: 200,
+    body: typeof body === "string" ? body : JSON.stringify(body),
+    headers,
+  };
+}
+
+/**
+ * @returns {APIGatewayProxyResult}
+ */
+export function accepted() {
+  return {
+    statusCode: 202,
+    body: "",
+  };
+}
+
+/**
  * @param {string} location
  * @returns {APIGatewayProxyResult}
  */
@@ -13,13 +36,14 @@ export function movedPermanently(location) {
 }
 
 /**
+ * @param {{[p: string]: boolean | number | string}|undefined} headers
  * @returns {APIGatewayProxyResult}
  */
-export function unauthorized(headers= {}) {
+export function unauthorized(headers = {}) {
   return {
     statusCode: 401,
     body: "",
-    headers
+    headers,
   };
 }
 
@@ -35,15 +59,12 @@ export function notFound(body = { error: "Data not found" }) {
 }
 
 /**
- * @param {Record<string, any> | string} body
- * @param {Record<string, boolean | number | string>} [headers]
  * @returns {APIGatewayProxyResult}
  */
-export function response(body, headers) {
+export function internalError() {
   return {
-    statusCode: 200,
-    body: typeof body === "string" ? body : JSON.stringify(body),
-    headers,
+    statusCode: 500,
+    body: "",
   };
 }
 

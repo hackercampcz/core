@@ -2,6 +2,8 @@
   "name": "@hackercamp/api",
   "dependencies": {
     "@adobe/helix-fetch": "^3.0.8",
+    "@aws-sdk/client-dynamodb": "^3.79.0",
+    "@aws-sdk/util-dynamodb": "^3.79.0",
     "@hackercamp/lib": "workspace:lib",
     "jsonwebtoken": "^8.5.1"
   },

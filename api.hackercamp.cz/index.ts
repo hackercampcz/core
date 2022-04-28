@@ -50,6 +50,24 @@ function hcName(t: string, options?: any) {
   return `hc-${t}${suffix}`;
 }
 
+export function createDB() {
+  const registrations = new aws.dynamodb.Table(hcName("registrations"), {
+    name: hcName("registrations"),
+    hashKey: "email",
+    rangeKey: "year",
+    attributes: [
+      { name: "email", type: "S" },
+      { name: "year", type: "N" },
+    ],
+    writeCapacity: 1,
+    readCapacity: 1,
+  });
+
+  return pulumi.Output.create({
+    registrationsDataTable: registrations.name,
+  });
+}
+
 export function createApi(
   name: string,
   stage: string,

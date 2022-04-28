@@ -8,7 +8,7 @@ import {
   Website,
   CloudFront,
 } from "@topmonks/pulumi-aws";
-import { createApi, routes } from "./api.hackercamp.cz";
+import { createApi, createDB, routes } from "./api.hackercamp.cz";
 import { AuthEdgeLambda } from "./donut.hackercamp.cz/edge";
 
 registerAutoTags({
@@ -72,6 +72,9 @@ new aws.s3.BucketPolicy("hc-hacker-profiles", {
   bucket: hackerProfilesBucket.id,
   policy: hackersPolicyDocument.apply((x) => x.json),
 });
+
+const db = createDB();
+export const registrationsDataTable = db.registrationsDataTable;
 
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = api.url.apply((x) => new URL("/v1/", x).href);
