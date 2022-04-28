@@ -18,10 +18,11 @@ function readPayload(event) {
   const body = event.isBase64Encoded
     ? Buffer.from(event.body, "base64").toString("utf-8")
     : event.body;
+
   if (event.headers["Content-Type"] === "application/json") {
     return JSON.parse(body);
   }
-  return new URLSearchParams(body);
+  return Object.fromEntries(new URLSearchParams(body).entries());
 }
 
 /**
