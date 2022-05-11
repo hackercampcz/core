@@ -26,18 +26,23 @@
     {% block content %}{% endblock %}
   </main>
 
-    {% block javascript %}{% endblock %}
-    <script type="module">
-      function el(tagName, attrs) {
-        const el = document.createElement(tagName);
-        for (const [key, val] of Object.entries(attrs))
-          el.setAttribute(key, val);
-        return el;
-      }
-      document.head.appendChild(el("link", {
-        rel: "stylesheet",
-        href: "/assets/css/index.css"
-      }));
-    </script>
+  <footer class="mdc-layout-grid">
+    <p style="text-align: center">© 2021-{{ "this" | year }} Hacker camp crew z.s., IČ <a href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a></p>
+  </footer>
+
+  {% block javascript %}{% endblock %}
+  
+  <script type="module">
+    function el(tagName, attrs) {
+      const el = document.createElement(tagName);
+      for (const [key, val] of Object.entries(attrs))
+        el.setAttribute(key, val);
+      return el;
+    }
+    document.head.appendChild(el("link", {
+      rel: "stylesheet",
+      href: "/assets/css/index.css"
+    }));
+  </script>
   </body>
 </html>
