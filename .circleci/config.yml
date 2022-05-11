@@ -115,7 +115,6 @@ jobs:
         default: prod
     executor:
       name: node/default
-      tag: "current"
     environment:
       AWS_STS_REGIONAL_ENDPOINTS: regional
     steps:
@@ -139,7 +138,6 @@ jobs:
         default: prod
     executor:
       name: node/default
-      tag: "current"
     steps:
       - checkout
       - pulumi/login
@@ -175,7 +173,6 @@ jobs:
         default: production
     executor:
       name: node/default
-      tag: "current"
     steps:
       - checkout
       - node/install-packages:
@@ -226,7 +223,6 @@ jobs:
         default: ""
     executor:
       name: node/default
-      tag: "current"
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
     steps:
