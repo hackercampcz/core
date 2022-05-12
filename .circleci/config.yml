@@ -12,15 +12,6 @@ orbs:
   slack: circleci/slack@4.10.1
 
 commands:
-  install_packages:
-    parameters:
-      working_directory:
-        type: string
-        default: .
-    steps:
-      - node/install-packages:
-          pkg-manager: yarn-berry
-          override-ci-command: yarn install --immutable
   read_deployment_envs:
     parameters:
       stack_name:
@@ -120,7 +111,10 @@ jobs:
     steps:
       - checkout
       - pulumi/login
-      - install_packages
+      - node/install
+      - node/install-packages:
+          pkg-manager: yarn-berry
+          override-ci-command: yarn install --immutable
       - run:
           command: pulumi stack select << parameters.stack_name >>
       - pulumi/update:
@@ -141,7 +135,10 @@ jobs:
     steps:
       - checkout
       - pulumi/login
-      - install_packages
+      - node/install
+      - node/install-packages:
+          pkg-manager: yarn-berry
+          override-ci-command: yarn install --immutable
       - run:
           command: pulumi stack select << parameters.stack_name >>
       - pulumi/preview:
