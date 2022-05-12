@@ -104,8 +104,9 @@ jobs:
       stack_name:
         type: string
         default: prod
-    executor:
-      name: node/default
+    machine:
+      image: ubuntu-2004:202111-02
+    # resource_class: arm.medium
     environment:
       AWS_STS_REGIONAL_ENDPOINTS: regional
     steps:
@@ -130,8 +131,9 @@ jobs:
       stack_name:
         type: string
         default: prod
-    executor:
-      name: node/default
+    machine:
+      image: ubuntu-2004:202111-02
+    # resource_class: arm.medium
     steps:
       - checkout
       - pulumi/login
@@ -168,8 +170,9 @@ jobs:
       environment:
         type: string
         default: production
-    executor:
-      name: node/default
+    machine:
+      image: ubuntu-2004:202111-02
+      resource_class: arm.medium
     steps:
       - checkout
       - node/install-packages:
@@ -218,8 +221,9 @@ jobs:
       rollbar_access_token:
         type: string
         default: ""
-    executor:
-      name: node/default
+    machine:
+      image: ubuntu-2004:202111-02
+      resource_class: arm.medium
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
     steps:
