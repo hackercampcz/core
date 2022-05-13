@@ -7,5 +7,5 @@
     "@hackercamp/lib": "workspace:lib",
     "jsonwebtoken": "8.5.1"
   },
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.1"
 }

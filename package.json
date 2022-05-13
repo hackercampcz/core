@@ -6,7 +6,7 @@
   "author": "Aleš Roubíček <ales@roubicek.name>",
   "license": "EPL-2.0",
   "private": true,
-  "packageManager": "yarn@3.2.0",
+  "packageManager": "yarn@3.2.1",
   "dependencies": {
     "@pulumi/aws": "5.4.0",
     "@pulumi/awsx": "0.40.0",
