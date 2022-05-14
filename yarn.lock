@@ -5,14 +5,14 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@adobe/helix-fetch@npm:3.0.9":
-  version: 3.0.9
-  resolution: "@adobe/helix-fetch@npm:3.0.9"
+"@adobe/helix-fetch@npm:3.0.10":
+  version: 3.0.10
+  resolution: "@adobe/helix-fetch@npm:3.0.10"
   dependencies:
     debug: 4.3.4
     http-cache-semantics: 4.1.0
-    lru-cache: 7.8.1
-  checksum: 21444992d2101f0bc84191801389b6da1dbabdcfcb12e9e7829ca7d2ba7d9d14e3eb3b3b2ccb90101a217d1175455f0ce8863ec853c91c0b729c33458d2a73e3
+    lru-cache: 7.10.1
+  checksum: 236362060598508aacb7c7fafb181b9bf7acb5c141bbb90f765f24a9844eceaef9a571cc3a1cce617741493e4b0f34c46c8e16c087552128563262a831e0cf99
   languageName: node
   linkType: hard
 
@@ -2096,7 +2096,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@adobe/helix-fetch": 3.0.9
+    "@adobe/helix-fetch": 3.0.10
     "@aws-sdk/client-dynamodb": 3.87.0
     "@aws-sdk/util-dynamodb": 3.87.0
     "@hackercamp/lib": "workspace:lib"
@@ -2130,7 +2130,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@adobe/helix-fetch": 3.0.9
+    "@adobe/helix-fetch": 3.0.10
     "@hackercamp/lib": "workspace:lib"
     "@material/layout-grid": 14.0.0
     "@thi.ng/atom": 5.1.6
@@ -8786,10 +8786,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:7.8.1, lru-cache@npm:^7.7.1":
-  version: 7.8.1
-  resolution: "lru-cache@npm:7.8.1"
-  checksum: 31ea67388c9774300331d70f4affd5a433869bcf0fae5405f967d19d7b447930b713b0566a2e95362c9082034a8b496f3671ccf8f0c061d8e8048412663f9432
+"lru-cache@npm:7.10.1":
+  version: 7.10.1
+  resolution: "lru-cache@npm:7.10.1"
+  checksum: e8b190d71ed0fcd7b29c71a3e9b01f851c92d1ef8865ff06b5581ca991db1e5e006920ed4da8b56da1910664ed51abfd76c46fb55e82ac252ff6c970ff910d72
   languageName: node
   linkType: hard
 
@@ -8808,6 +8808,13 @@ __metadata:
   dependencies:
     yallist: ^4.0.0
   checksum: f97f499f898f23e4585742138a22f22526254fdba6d75d41a1c2526b3b6cc5747ef59c5612ba7375f42aca4f8461950e925ba08c991ead0651b4918b7c978297
+  languageName: node
+  linkType: hard
+
+"lru-cache@npm:^7.7.1":
+  version: 7.8.1
+  resolution: "lru-cache@npm:7.8.1"
+  checksum: 31ea67388c9774300331d70f4affd5a433869bcf0fae5405f967d19d7b447930b713b0566a2e95362c9082034a8b496f3671ccf8f0c061d8e8048412663f9432
   languageName: node
   linkType: hard
 
