@@ -1052,14 +1052,15 @@
       event.preventDefault();
       submitButtonElement.setAttribute("disabled", "disabled");
 
-      const { email, ...payload } = Object.fromEntries(new FormData(event.target));
+      const { email, ...payload } = Object.fromEntries(
+        new FormData(event.target)
+      );
       const headers = new Headers({
         "Content-Type": "application/json"
       });
 
       fetch(event.target.action, {
         method: "POST",
-        mode: "no-cors",
         headers,
         body: JSON.stringify({ email, year: {{ "this" | year }}, payload }),
       })
