@@ -8,8 +8,8 @@ function build(entrypoint: string, minify: boolean) {
     format: "esm",
     charset: "utf8",
     platform: "node",
-    target: "node14.8",
-    external: ["aws-sdk"],
+    target: "node16",
+    external: ["aws-sdk", "crypto"],
     entryPoints: [entrypoint],
     write: false,
   });
