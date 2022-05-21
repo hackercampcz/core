@@ -8,7 +8,7 @@ function build(entrypoint: string, minify: boolean) {
     format: "esm",
     charset: "utf8",
     platform: "node",
-    target: "node16",
+    target: "node14.8",
     external: ["aws-sdk", "crypto"],
     entryPoints: [entrypoint],
     write: false,
