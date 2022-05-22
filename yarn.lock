@@ -2134,7 +2134,7 @@ __metadata:
     "@hackercamp/lib": "workspace:lib"
     "@material/layout-grid": 14.0.0
     "@thi.ng/atom": 5.1.6
-    "@thi.ng/transducers": 8.3.2
+    "@thi.ng/transducers": 8.3.3
     "@typescript-eslint/eslint-plugin": 5.25.0
     "@typescript-eslint/parser": 5.25.0
     date-fns: 2.28.0
@@ -2557,17 +2557,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/arrays@npm:^2.2.2":
-  version: 2.2.2
-  resolution: "@thi.ng/arrays@npm:2.2.2"
+"@thi.ng/arrays@npm:^2.2.3":
+  version: 2.2.3
+  resolution: "@thi.ng/arrays@npm:2.2.3"
   dependencies:
     "@thi.ng/api": ^8.3.6
     "@thi.ng/checks": ^3.1.6
     "@thi.ng/compare": ^2.1.6
     "@thi.ng/equiv": ^2.1.6
     "@thi.ng/errors": ^2.1.6
-    "@thi.ng/random": ^3.2.6
-  checksum: 82f0ce535e633df03a1f0e7f88af0ceeba6ec1029227eccbf9d2b18123648458da5d3f48389ce329dba7ba5c84444c1614f67cb2c0391ba063743d5178801bc9
+    "@thi.ng/random": ^3.3.0
+  checksum: 3a0ceffd1997a3f223863cf61f53392d7fa1a9b5b398a7d5708d6aa49e8f7ae81a47587e119655bd782c65da29de1b4b8bc182d78ff41978773b4261cc23899f
   languageName: node
   linkType: hard
 
@@ -2653,31 +2653,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/random@npm:^3.2.6":
-  version: 3.2.6
-  resolution: "@thi.ng/random@npm:3.2.6"
+"@thi.ng/random@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@thi.ng/random@npm:3.3.0"
   dependencies:
     "@thi.ng/api": ^8.3.6
     "@thi.ng/checks": ^3.1.6
     "@thi.ng/errors": ^2.1.6
     "@thi.ng/hex": ^2.1.6
-  checksum: 59ff370c57dd0c71bb78b1d4cc7c05bae2e84055d485d12854f516e85a14c648e7d756f4c96e07f47eac901d53908159fdcf5b3e42a45cde0351316724503e98
+  checksum: 808f2e8e37004c9216b6aba23dfb24021b435b8cc64f4427e78176a5df185df67a8794f3e3cf78a8f3cd533c335c05e2babb8432b6a1426634c199deafa960e2
   languageName: node
   linkType: hard
 
-"@thi.ng/transducers@npm:8.3.2":
-  version: 8.3.2
-  resolution: "@thi.ng/transducers@npm:8.3.2"
+"@thi.ng/transducers@npm:8.3.3":
+  version: 8.3.3
+  resolution: "@thi.ng/transducers@npm:8.3.3"
   dependencies:
     "@thi.ng/api": ^8.3.6
-    "@thi.ng/arrays": ^2.2.2
+    "@thi.ng/arrays": ^2.2.3
     "@thi.ng/checks": ^3.1.6
     "@thi.ng/compare": ^2.1.6
     "@thi.ng/compose": ^2.1.6
     "@thi.ng/errors": ^2.1.6
     "@thi.ng/math": ^5.3.2
-    "@thi.ng/random": ^3.2.6
-  checksum: befeb47d769148e7c89350dc5c9aa6cccab9e5f5c15414edbef71d57fc2bd1f6f1f5b78294e689833a2b613842bd5eec23a49672c32fd95dd88ae1aa056687a1
+    "@thi.ng/random": ^3.3.0
+  checksum: 6d740bba64ee4a181d75518c60d2b6b847500fdfac6e53d59921681f587edeec73140a33019cc6328950502e112caf8ad3bd6fea29f8986a6be2d1865fd77144
   languageName: node
   linkType: hard
 
