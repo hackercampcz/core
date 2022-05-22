@@ -63,8 +63,21 @@ export function createDB() {
     readCapacity: 1,
   });
 
+  const contacts = new aws.dynamodb.Table(hcName("contacts"), {
+    name: hcName("contacts"),
+    hashKey: "email",
+    rangeKey: "slackID",
+    attributes: [
+      { name: "email", type: "S" },
+      { name: "slackID", type: "S" },
+    ],
+    writeCapacity: 1,
+    readCapacity: 1,
+  });
+
   return pulumi.Output.create({
     registrationsDataTable: registrations.name,
+    contactsDataTable: contacts.name,
   });
 }
 
