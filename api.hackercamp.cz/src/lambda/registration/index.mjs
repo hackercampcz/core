@@ -1,6 +1,6 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb/dist-es/DynamoDBClient.js";
-import { PutItemCommand } from "@aws-sdk/client-dynamodb/dist-es/commands/PutItemCommand.js";
-import { marshall } from "@aws-sdk/util-dynamodb/dist-es/marshall.js";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { marshall } from "@aws-sdk/util-dynamodb";
 import { accepted, internalError, withCORS } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
