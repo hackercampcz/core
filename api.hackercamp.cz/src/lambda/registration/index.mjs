@@ -36,7 +36,10 @@ export async function handler(event) {
     await db.send(
       new PutItemCommand({
         TableName: "hc-registrations",
-        Item: marshall({ email, year, payload }, { convertEmptyValues: true }),
+        Item: marshall(
+          { email, year: parseInt(year), payload },
+          { convertEmptyValues: true }
+        ),
       })
     );
     return withCORS_(accepted());
