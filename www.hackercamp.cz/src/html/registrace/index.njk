@@ -1035,7 +1035,7 @@
     const name = key.replace(storagePrefix, "");
     const value = localStorage.getItem(key);
     const element = formElement.querySelector(`[name="${name}"]`);
-
+    if (!element) continue;
     if (["radio", "checkbox"].includes(element.type)) {
       formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
     } else if (element.tagName.toLowerCase() === "select") {
