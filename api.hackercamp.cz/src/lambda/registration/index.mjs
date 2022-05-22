@@ -38,7 +38,11 @@ export async function handler(event) {
         TableName: "hc-registrations",
         Item: marshall(
           { email, year: parseInt(year), payload },
-          { convertEmptyValues: true }
+          {
+            convertEmptyValues: true,
+            removeUndefinedValues: true,
+            convertClassInstanceToMap: true,
+          }
         ),
       })
     );
