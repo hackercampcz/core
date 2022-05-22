@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "dynamodb": "https://denopkg.com/chiefbiiko/dynamodb/mod.ts",
+    "csv": "https://deno.land/x/csv/mod.ts",
+    "flags": "https://deno.land/std@0.140.0/flags/mod.ts"
+  }
+}
