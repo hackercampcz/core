@@ -12,9 +12,11 @@ function build(entrypoint: string, minify: boolean, format: "cjs" | "esm") {
     charset: "utf8",
     platform: "node",
     target: "node14.8",
+    mainFields: ["module", "main"],
     external: ["aws-sdk"],
     entryPoints: [entrypoint],
     banner: { js: format === "esm" ? requireShim : "" },
+    treeShaking: true,
     write: false,
   });
   return result?.outputFiles?.[0].text ?? "";
