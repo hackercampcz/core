@@ -49,7 +49,7 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
     const buildAssets = (fileName: string) =>
       lambdaBuilder.buildCodeAsset(
         path.join(__dirname, "lambdas", "auth", fileName),
-        true
+        { minify: true, format: "esm" }
       );
 
     // Some resources _must_ be put in us-east-1, such as Lambda at Edge.
