@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/donut.iml" filepath="$PROJECT_DIR$/.idea/donut.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/core.iml" filepath="$PROJECT_DIR$/.idea/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api.hackercamp.cz.iml" filepath="$PROJECT_DIR$/.idea/modules/api.hackercamp.cz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/donut.hackercamp.cz.iml" filepath="$PROJECT_DIR$/.idea/modules/donut.hackercamp.cz.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/www.hackercamp.cz.iml" filepath="$PROJECT_DIR$/.idea/modules/www.hackercamp.cz.iml" />
     </modules>
   </component>
 </project>
