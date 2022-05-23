@@ -3,8 +3,8 @@
   "packageManager": "yarn@3.2.1",
   "devDependencies": {
     "@adobe/helix-fetch": "3.0.10",
-    "@typescript-eslint/eslint-plugin": "5.25.0",
-    "@typescript-eslint/parser": "5.25.0",
+    "@typescript-eslint/eslint-plugin": "5.26.0",
+    "@typescript-eslint/parser": "5.26.0",
     "eslint-plugin-promise": "6.0.0",
     "web-types-lit": "0.1.0"
   },
