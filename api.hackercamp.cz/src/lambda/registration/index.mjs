@@ -37,7 +37,7 @@ export async function handler(event) {
       new PutItemCommand({
         TableName: "hc-registrations",
         Item: marshall(
-          { email, year: parseInt(year), payload },
+          { email, year: parseInt(year.trim(), 10), payload },
           {
             convertEmptyValues: true,
             removeUndefinedValues: true,
