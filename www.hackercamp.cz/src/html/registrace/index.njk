@@ -1022,11 +1022,20 @@
     </button>
   </section>
   <input type="hidden" name="year" value="{{ "this" | year }}" />
+  <input type="hidden" name="referral" />
 </form>
 <script type="module">
   const formElement = document.querySelector("form#reg");
   const submitButtonElement = formElement.querySelector("button[type=submit]");
   const storagePrefix = "reg:";
+
+  const { searchParams } = new URL(location.href);
+  if (searchParams.has("referral")) {
+    formElement.querySelector("input[name=referral]").setAttribute(
+      "value",
+      searchParams.get("referral")
+    );
+  }
 
   for (let key in localStorage) {
     if (key.startsWith(storagePrefix) === false) {
@@ -1054,14 +1063,8 @@
     event.preventDefault();
     submitButtonElement.setAttribute("disabled", "disabled");
 
-    // const headers = new Headers({
-    //   "Content-Type": "application/json"
-    // });
-
     fetch(event.target.action, {
       method: "POST",
-      // headers,
-      // body: JSON.stringify({ email, year: {{ "this" | year }}, payload }),
       body: new FormData(event.target)
     })
       .then(response => {
