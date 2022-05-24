@@ -59,8 +59,7 @@ export function createDB() {
       { name: "email", type: "S" },
       { name: "year", type: "N" },
     ],
-    writeCapacity: 10,
-    readCapacity: 1,
+    billingMode: "PAY_PER_REQUEST",
   });
 
   const contacts = new aws.dynamodb.Table(hcName("contacts"), {
@@ -71,8 +70,7 @@ export function createDB() {
       { name: "email", type: "S" },
       { name: "slackID", type: "S" },
     ],
-    writeCapacity: 10,
-    readCapacity: 1,
+    billingMode: "PAY_PER_REQUEST",
   });
 
   return pulumi.Output.create({
