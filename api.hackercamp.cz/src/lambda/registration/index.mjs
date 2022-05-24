@@ -33,11 +33,12 @@ export async function handler(event) {
 
   try {
     const { email, year, ...payload } = readPayload(event);
+    console.log("payload", payload);
     await db.send(
       new PutItemCommand({
         TableName: "hc-registrations",
         Item: marshall(
-          { email, year: parseInt(year.trim(), 10), payload },
+          { email, year: parseInt(year, 10), payload },
           {
             convertEmptyValues: true,
             removeUndefinedValues: true,
