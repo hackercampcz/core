@@ -74,7 +74,7 @@ new aws.s3.BucketPolicy("hc-hacker-profiles", {
 });
 
 const db = createDB();
-export const registrationsDataTable = db.registrationsDataTable;
+//export const registrationsDataTable = db.registrationsDataTable;
 
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = api.url.apply((x) => new URL("/v1/", x).href);
