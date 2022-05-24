@@ -1,8 +1,5 @@
-import { createClient } from "dynamodb";
-import { writeCSVObjects } from "csv";
-import { parse } from "flags";
-
-// const dynamo = createClient();
+import { parse } from "https://deno.land/std@0.140.0/flags/mod.ts";
+import { writeCSVObjects } from "https://deno.land/x/csv/mod.ts";
 
 async function main({ token }) {
   const skip = new Set(["slackbot", "jakub"]);

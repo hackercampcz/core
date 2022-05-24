@@ -2,7 +2,9 @@
   (:require
     [clojure.set]
     [clojure.data.csv :as csv]
-    [clojure.java.io :as io]))
+    [clojure.data.json :as json]
+    [clojure.java.io :as io]
+    [clojure.string :as str]))
 
 (def conversion
   {"milan@formanek.bio"          "milan.formanek@czechitas.cz"
@@ -14,6 +16,25 @@
    "jiri.necas@productboard.com" "necas.jirik@gmail.com"
    "ales.roubicek@topmonks.com"  "ales@roubicek.name"})
 
+(def conversions-regs
+  {"filipsuk@gmail.com"       "filip@investown.cz"
+   "sladek@contember.com"     "me@honzasladek.com"
+   "info@tunasec.com"         "zember@gmail.com"
+   "t.a.annamai@gmail.com"    "anna.mai@czechitas.cz"
+   ;"jiri.opletal@gmail.com"   ""                            ;; asi má zaplaceno
+   "filip.holec@tunasec.com"  "filip.holec@gmail.com"
+   ;"ivan@appsatori.eu"        ""                            ;; asi loni nebyl
+   "lucie.burisin@gmail.com"  "lucie@apify.com"
+   "zbiejczuk@gmail.com"      "adam@influencer.cz"
+   "matolin.matej@gmail.com"  "matej@impulseventures.com"
+   "aadel.sykor@gmail.com"    "adela.sykorova@czechitas.cz"
+   "vaclavkalous1@gmail.com"  "kalous@flatzone.cz"
+   "dan@kessl.net"            "daniel.kessl@applifting.cz"
+   "Tomas.severyn@gmail.com"  "tomas.severyn@gmail.com"
+   ;  "vena.kubik@seznam.cz"     ""                            ;; asi loni nebyl
+   ;"jakub@reframecircle.cz"   ""                            ;; asi loni nebyl
+   "vojtech.toulec@gmail.com" "vojtech@toulec.cz"})
+
 (defn invoices-csv-data->maps [csv-data]
   (map zipmap
        (repeat
@@ -23,25 +44,78 @@
 (defn contacts-csv-data->maps [csv-data]
   (map zipmap
        (repeat
-         [:email :slack-id :name])
+         [:email :slackID :name])
        (rest csv-data)))
+
+(defn registrations-csv-data->maps [csv-data]
+  (map zipmap
+       (repeat
+         [:timestamp :email :firstname :surname :phone :company :type :plus-one-name :plus-one-email :plus-one-phone :plus-one-pitch :activity :binding-order :price :invoice :invoice-company :invoice-address :invoice-vatid :invoice-text :invoice-contact])
+       (rest csv-data)))
+
+(defn vatid [s]
+  (let [match (re-find #"CZ\d+" s)]
+    (when (some? match)
+      match)))
+
+(defn company-id [s]
+  (let [match (re-find #"[^CZ]\d+" s)]
+    (when (some? match)
+      (str/trim match))))
+
+(defn normalize-vatid [item]
+  (assoc item
+    :company (some-> (:company item) str/trim)
+    :companyID (some-> (:VATID item) company-id)
+    :address (some-> (:address item) str/trim)
+    :vatID (some-> (:VATID item) vatid)))
 
 (defn -main []
   (let [invoices
         (with-open [reader (io/reader "resources/invoices.csv")]
-          (into [] (invoices-csv-data->maps (csv/read-csv reader))))
+          (into [] (map normalize-vatid) (invoices-csv-data->maps (csv/read-csv reader))))
         contacts
         (with-open [reader (io/reader "resources/contacts.csv")]
-          (into [] (contacts-csv-data->maps (csv/read-csv reader))))]
-    (with-open [writer (io/writer "resources/import.csv")]
-      (let [invoices (into {} (map #(vector (get conversion (:email %) (:email %)) %)) invoices)]
-        (csv/write-csv
-          writer
-          (into
-            []
-            (comp
-              (map #(merge % (select-keys (get invoices (:email %)) [:company :address :VATID])))
-              (map vals))
-            contacts))))))
+          (into [] (contacts-csv-data->maps (csv/read-csv reader))))
+        invoices-reg
+        (into {} (map #(vector (get conversions-regs (:email %) (:email %)) %) invoices))
+        invoices
+        (into {} (map #(vector (get conversion (:email %) (:email %)) %)) invoices)
+        contacts
+        (into
+          []
+          (comp
+            (map #(merge % (select-keys (get invoices (:email %)) [:company :companyID :vatID :address])))
+            (map #(assoc % :email (-> % :email str/lower-case)))
+            (map #(if (nil? (:vatID %)) (dissoc % :vatID) %))
+            (map #(if (nil? (:companyID %)) (dissoc % :companyID) %))
+            (map #(if (str/blank? (:company %)) (dissoc % :company) %))
+            (map #(if (= (:name %) (:company %)) (dissoc % :company) %))
+            (map #(if (str/blank? (:address %)) (dissoc % :address) %)))
+          contacts)
+        registrations
+        (with-open [reader (io/reader "resources/registrace2022.csv")]
+          (into [] (registrations-csv-data->maps (csv/read-csv reader))))]
+    (with-open [writer (io/writer "resources/import-contacts.json")]
+      (json/write contacts writer :escape-unicode false))
+    (let [reg (into #{} (map :email) registrations)
+          contacts (into #{} (map :email) contacts)]
+      #_(clojure.pprint/pprint
+        {:reg          reg
+         :contacts     contacts
+         :diff         (clojure.set/difference reg contacts)
+         :intersection (clojure.set/intersection reg contacts)
+         :count        (count (clojure.set/intersection reg contacts))}))
+    #_(with-open [writer (io/writer "resources/import-registrations.csv")]
+      (json/write
+        (into
+          []
+          (comp
+            (map #(assoc % :invoice-vatid (some-> % :invoice-vatid vatid)))
+            (map #(merge (select-keys (get invoices-reg (:email %)) [:company :VATID :address]) %))
+            (map #(select-keys % [:firstname :surname :company :VATID :type :invoice-vatid :address :invoice :invoice-company :invoice-address :invoice-vatid :invoice-text :invoice-contact]))
+            #_(filter #(or (some? (:VATID %)) (some? (:invoice-vatid %)))))
+          registrations)
+        writer))))
 
 
