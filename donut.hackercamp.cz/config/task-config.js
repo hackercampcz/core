@@ -14,6 +14,13 @@ module.exports = {
 
   html: {
     collections: ["build"],
+    nunjucksRender: {
+      filters: {
+        year() {
+          return new Date().getFullYear();
+        },
+      },
+    },
   },
 
   esbuild: {
