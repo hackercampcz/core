@@ -59,7 +59,7 @@ export function createDB() {
       { name: "email", type: "S" },
       { name: "year", type: "N" },
     ],
-    writeCapacity: 1,
+    writeCapacity: 10,
     readCapacity: 1,
   });
 
@@ -71,7 +71,7 @@ export function createDB() {
       { name: "email", type: "S" },
       { name: "slackID", type: "S" },
     ],
-    writeCapacity: 1,
+    writeCapacity: 10,
     readCapacity: 1,
   });
 
