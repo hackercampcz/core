@@ -33,7 +33,6 @@ export async function handler(event) {
 
   try {
     const { email, year, ...payload } = readPayload(event);
-    console.log("payload", payload);
     await db.send(
       new PutItemCommand({
         TableName: "hc-registrations",
