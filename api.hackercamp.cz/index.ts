@@ -51,6 +51,17 @@ function hcName(t: string, options?: any) {
 }
 
 export function createDB() {
+  const registrations = new aws.dynamodb.Table(hcName("registrations"), {
+    name: hcName("registrations"),
+    hashKey: "email",
+    rangeKey: "year",
+    attributes: [
+      { name: "email", type: "S" },
+      { name: "year", type: "N" },
+    ],
+    billingMode: "PAY_PER_REQUEST",
+  });
+
   const contacts = new aws.dynamodb.Table(hcName("contacts"), {
     name: hcName("contacts"),
     hashKey: "email",
@@ -63,7 +74,7 @@ export function createDB() {
   });
 
   return pulumi.Output.create({
-    //registrationsDataTable: registrations.name,
+    registrationsDataTable: registrations.name,
     contactsDataTable: contacts.name,
   });
 }
