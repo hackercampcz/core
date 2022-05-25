@@ -9,12 +9,13 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+    text-align: center;
   }
 </style>
 {% endblock %}
 
 {% block content %}
-  <div class="hc-login">
+  <div class="hc-login mdc-layout-grid">
     <p>Vstupujete do zóny, která je pouze pro účastníky Hacker Campu.</p>
     <a id="slack-button"
           href="https://slack.com/openid/connect/authorize?scope=openid%20email%20profile&amp;response_type=code&amp;redirect_uri=https%3A%2F%2F{{ build.hostname }}%2F&amp;client_id={{ build["slack/client-id"] }}"
