@@ -14,7 +14,10 @@ const db = new DynamoDBClient({});
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
+  const withCORS_ = withCORS(
+    ["GET", "POST", "OPTIONS"],
+    event.headers["origin"]
+  );
   const { id } = event.queryStringParameters;
   try {
     const resp = await db.send(

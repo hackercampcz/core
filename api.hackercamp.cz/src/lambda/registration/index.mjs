@@ -1,3 +1,4 @@
+import { withCORS } from "../http.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
 
@@ -14,6 +15,11 @@ export async function handler(event) {
       return get.handler(event);
     case "POST":
       return post.handler(event);
+    case "OPTIONS":
+      return withCORS(["GET", "POST", "OPTIONS"])({
+        statusCode: 204,
+        body: "",
+      });
     default:
       return { statusCode: 405, body: "Method Not Allowed" };
   }

@@ -30,7 +30,10 @@ function readPayload(event) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
+  const withCORS_ = withCORS(
+    ["GET", "POST", "OPTIONS"],
+    event.headers["origin"]
+  );
 
   try {
     const { email, year, ...rest } = readPayload(event);
