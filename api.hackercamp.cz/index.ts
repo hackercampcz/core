@@ -34,13 +34,18 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
       registration: {
         httpMethod: "POST",
         path: "/registration",
-        fileName: "registration/index.mjs",
+        fileName: "registration/post.mjs",
         environment: {
           variables: {
             private_key: config.get("private-key"),
             postmark_token: config.get("postmark-token"),
           },
         },
+      },
+      "registration-get": {
+        httpMethod: "GET",
+        path: "/registration",
+        fileName: "registration/get.mjs",
       },
     },
   ],

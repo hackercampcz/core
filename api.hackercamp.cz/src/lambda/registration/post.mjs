@@ -1,5 +1,4 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import crypto from "crypto";
 import { accepted, internalError, withCORS } from "../http.mjs";
@@ -39,7 +38,7 @@ export async function handler(event) {
     const editUrl = `https://www.hackercamp.cz/registrace?${new URLSearchParams(
       { id }
     )}`;
-    
+
     await Promise.all([
       db.send(
         new PutItemCommand({
