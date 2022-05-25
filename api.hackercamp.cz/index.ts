@@ -181,11 +181,15 @@ export function createApi(
     ),
   });
 
-  const customDomainDistribution = new CustomDomainDistribution(name, {
-    domainName: domain,
-    basePath: stage,
-    gateway: api.gateway,
-  });
+  const customDomainDistribution = new CustomDomainDistribution(
+    name,
+    {
+      domainName: domain,
+      basePath: stage,
+      gateway: api.gateway,
+    },
+    { dependsOn: [api] }
+  );
 
   return { url: customDomainDistribution.url };
 }
