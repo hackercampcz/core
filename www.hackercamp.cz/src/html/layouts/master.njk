@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <title>{% block title %}{{ title }}{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% include "shared/fonts.html" %}
+  {% include "shared/styles.html" %}
+  {% include "shared/app-icons.html" %}
+  {% include "shared/rollbar.njk" %}
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+<nav class="hc-navbar mdc-layout-grid" style="line-height: 1;">
+  <div class="mdc-layout-grid__inner">
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+      {% include "shared/logo.njk" %}
+    </div>
+    <div class="hc-navbar__right mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+
+    </div>
+  </div>
+</nav>
+<main id="top">
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="mdc-layout-grid">
+  <p style="text-align: center">© 2021-{{ "this" | year }} Hacker camp crew z.s., IČ <a href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a></p>
+</footer>
+
+{% block javascript %}{% endblock %}
+
+<script type="module">
+  function el(tagName, attrs) {
+    const el = document.createElement(tagName);
+    for (const [key, val] of Object.entries(attrs))
+      el.setAttribute(key, val);
+    return el;
+  }
+  document.head.appendChild(el("link", {
+    rel: "stylesheet",
+    href: "/assets/css/main.css"
+  }));
+</script>
+</body>
+</html>
