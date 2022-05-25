@@ -2,7 +2,8 @@ import { fetch } from "@adobe/helix-fetch";
 
 export const Template = {
   NewRegistration: 28029948,
-
+  PlusOneRegistration: 28062472,
+  HackerRegistration: 28062457,
 };
 
 export function sendEmailWithTemplate({ token, templateId, data, from, to }) {

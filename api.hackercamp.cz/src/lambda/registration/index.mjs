@@ -1,6 +1,7 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
+import crypto from "crypto";
 import { accepted, internalError, withCORS } from "../http.mjs";
 import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 
@@ -34,12 +35,14 @@ export async function handler(event) {
 
   try {
     const { email, year, ...rest } = readPayload(event);
+    const id = rest.id ?? crypto.randomBytes(20).toString("hex");
+
     await Promise.all([
       db.send(
         new PutItemCommand({
           TableName: "hc-registrations",
           Item: marshall(
-            { email, year: parseInt(year, 10), ...rest },
+            { email, year: parseInt(year, 10), ...rest, id },
             {
               convertEmptyValues: true,
               removeUndefinedValues: true,
@@ -50,8 +53,14 @@ export async function handler(event) {
       ),
       sendEmailWithTemplate({
         token: process.env["postmark_token"],
-        templateId: Template.NewRegistration,
-        data: {},
+        templateId: rest.referrer
+          ? Template.PlusOneRegistration
+          : Template.NewRegistration,
+        data: {
+          editUrl: `https://www.hackercamp.cz/registrace?${new URLSearchParams({
+            id,
+          })}`,
+        },
         from: "Hacker Camp Crew <team@hackercamp.cz>",
         to: email,
       }),
