@@ -16,10 +16,10 @@ export function response(body, headers) {
 /**
  * @returns {APIGatewayProxyResult}
  */
-export function accepted() {
+export function accepted(body = "") {
   return {
     statusCode: 202,
-    body: "",
+    body: typeof body === "string" ? body : JSON.stringify(body),
   };
 }
 

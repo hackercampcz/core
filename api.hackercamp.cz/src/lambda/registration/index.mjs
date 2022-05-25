@@ -36,7 +36,10 @@ export async function handler(event) {
   try {
     const { email, year, ...rest } = readPayload(event);
     const id = rest.id ?? crypto.randomBytes(20).toString("hex");
-
+    const editUrl = `https://www.hackercamp.cz/registrace?${new URLSearchParams(
+      { id }
+    )}`;
+    
     await Promise.all([
       db.send(
         new PutItemCommand({
@@ -56,16 +59,12 @@ export async function handler(event) {
         templateId: rest.referrer
           ? Template.PlusOneRegistration
           : Template.NewRegistration,
-        data: {
-          editUrl: `https://www.hackercamp.cz/registrace?${new URLSearchParams({
-            id,
-          })}`,
-        },
+        data: { editUrl },
         from: "Hacker Camp Crew <team@hackercamp.cz>",
         to: email,
       }),
     ]);
-    return withCORS_(accepted());
+    return withCORS_(accepted({ editUrl }));
   } catch (err) {
     console.error(err);
     return withCORS_(internalError());
