@@ -3,6 +3,8 @@ config:
   hackercamp:api-domain: api.hackercamp.cz
   hackercamp:domain: hackercamp.cz
   hackercamp:donut-domain: donut.hackercamp.cz
+  hackercamp:postmark-token:
+    secure: AAABAF/Uwb6BOz5Iik1PbYzp+nvMR+VvkJw1T9l3V84G5htqzIgzTkDtA98Th9o1hB96Eg6rCrsmz5pXGx2ex0lo7NM=
   hackercamp:private-key:
     secure: AAABAMiObrKrGCJNcaB9RdcBRl2shK6sfmHwYdEChCgqQy3dVOxeVIuH/zk2R4dGDbqq/LjS7ZVWWuiDoutiFxdmDyoR21q9VQtOiQg=
   hackercamp:slack-client-id: "1990816352820.3334586910531"

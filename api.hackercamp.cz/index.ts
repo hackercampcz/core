@@ -38,6 +38,7 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
         environment: {
           variables: {
             private_key: config.get("private-key"),
+            postmark_token: config.get("postmark-token"),
           },
         },
       },

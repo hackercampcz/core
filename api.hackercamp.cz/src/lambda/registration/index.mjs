@@ -2,6 +2,7 @@ import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import { accepted, internalError, withCORS } from "../http.mjs";
+import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -32,20 +33,29 @@ export async function handler(event) {
   const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
 
   try {
-    const { email, year, ...payload } = readPayload(event);
-    await db.send(
-      new PutItemCommand({
-        TableName: "hc-registrations",
-        Item: marshall(
-          { email, year: parseInt(year, 10), ...payload },
-          {
-            convertEmptyValues: true,
-            removeUndefinedValues: true,
-            convertClassInstanceToMap: true,
-          }
-        ),
-      })
-    );
+    const { email, year, ...rest } = readPayload(event);
+    await Promise.all([
+      db.send(
+        new PutItemCommand({
+          TableName: "hc-registrations",
+          Item: marshall(
+            { email, year: parseInt(year, 10), ...rest },
+            {
+              convertEmptyValues: true,
+              removeUndefinedValues: true,
+              convertClassInstanceToMap: true,
+            }
+          ),
+        })
+      ),
+      sendEmailWithTemplate({
+        token: process.env["postmark_token"],
+        templateId: Template.NewRegistration,
+        data: {},
+        from: "Hacker Camp Crew <team@hackercamp.cz>",
+        to: email,
+      }),
+    ]);
     return withCORS_(accepted());
   } catch (err) {
     console.error(err);
