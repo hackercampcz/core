@@ -336,140 +336,8 @@
       font-weight: 400;
     }
 
-    form#reg {
-      max-width: 40em;
-    }
-
-    form#reg h2 {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    form#reg p.disclaimer {
-      text-align: center;
-      font-size: 14px;
-      padding: 24px;
-    }
-
-    form#reg section {
-      margin-bottom: 24px;
-    }
-
-    form#reg h3 {
-      font-size: 16px;
-    }
-
-    .section-story {
-      font-size: 14px;
-    }
-
-    form#reg input,
-    form#reg select {
-      font-family: var(--hc-font-family);
-      font-size: 16px;
-      letter-spacing: 0;
-      line-height: 1.5;
-      font-kerning: normal;
-      font-variant-numeric: lining-nums slashed-zero;
-      font-variant-ligatures: common-ligatures contextual;
-      -webkit-font-feature-settings: "kern","liga","clig","calt","lnum","zero";
-      font-feature-settings: "kern","liga","clig","calt","lnum","zero";
-      -webkit-text-size-adjust: 100%;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: geometricPrecision;
-    }
-
-    form#reg .field {
-      display: flex;
-      flex-direction: column;
-      padding-bottom: 4px;
-      flex: 1;
-    }
-
-    form#reg [aria-hidden="true"] {
+    [aria-hidden="true"] {
       display: none;
-    }
-
-    form#reg .field label {
-      flex: 1;
-      padding-top: 4px;
-      padding-bottom: 2px;
-    }
-
-    form#reg .field input,
-    form#reg .field textarea,
-    form#reg .field select {
-      flex: 2;
-      font-size: 16px;
-      padding: 4px;
-    }
-
-    form#reg .field select {
-      min-height: 36px;
-    }
-
-    form#reg .field--block {
-      margin-bottom: 16px;
-    }
-
-    form#reg .group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    @media (min-width: 490px) {
-      form#reg .group {
-        gap: 8px;
-        flex-direction: row;
-      }
-    }
-
-    form#reg .question {
-      text-align: center;
-      padding-top: 12px;
-    }
-
-    form#reg .question input {
-      width: 16px;
-      height: 16px;
-    }
-
-    form#reg .choose {
-      display: flex;
-    }
-    form#reg .choose:not(:last-child) {
-      margin-bottom: 24px;
-    }
-
-    form#reg .choose input {
-      width: 16px;
-      height: 16px;
-    }
-
-    form#reg .choose > label,
-    form#reg .choose > div {
-      padding-left: 8px;
-      display: block;
-      flex: 1;
-    }
-
-    form#reg .choose input:not(:checked) + div .patron-allowance {
-      display: none;
-    }
-
-    form#reg .choose .patron-allowance input {
-      width: 120px;
-    }
-
-    form#reg label span {
-      display: block;
-      font-size: 14px;
-    }
-
-    .patron-allowance {
-      display: block;
-      margin-top: 8px;
     }
 
   </style>
@@ -542,9 +410,24 @@
       </div>
     </div>
     <div class="form-story">
-      <p>TBD</p>
+      <p>Díky, TBD</p>
+      <p id="edit-reg" aria-hidden="true">
+        Své informace můžeš <a href="#">doplnit nebo upravit <strong>zde</strong></a>.
+      </p>
     </div>
   </header>
+  <script>
+    const { searchParams } = new URL(location.href);
+
+    if (searchParams.has("editUrl")) {
+      const editInstruciton = document.querySelector("#edit-reg");
+      editInstruciton.querySelector("a").setAttribute(
+        "href",
+        decodeURIComponent(searchParams.get("editUrl"))
+      );
+      editInstruciton.removeAttribute("aria-hidden");
+    }
+  </script>
 </div>
 <footer class="mdc-layout-grid">
   <p style="text-align: center">© 2021-{{ "this" | year }} Hacker camp crew z.s., IČ <a href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a>;

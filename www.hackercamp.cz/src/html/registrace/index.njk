@@ -1028,6 +1028,7 @@
   </section>
   <input type="hidden" name="year" value="{{ "this" | year }}" />
   <input type="hidden" name="referral" />
+  <input type="hidden" name="id" />
 </form>
 <script type="module">
   const formElement = document.querySelector("form#reg");
@@ -1040,6 +1041,13 @@
     formElement.querySelector("input[name=referral]").setAttribute(
       "value",
       searchParams.get("referral")
+    );
+  }
+
+  if (searchParams.has("id")) {
+    formElement.querySelector("input[name=id]").setAttribute(
+      "value",
+      searchParams.get("id")
     );
   }
 
@@ -1080,14 +1088,17 @@
         if (!response.ok) {
           throw response;
         }
+        return response.json();
       })
-      .then(() => {
+      .then(({ editUrl }) => {
         for (let key in localStorage) {
           if (key.startsWith(storagePrefix)) {
             localStorage.removeItem(key);
           }
         }
-        window.location.href = "/registrace/odeslano/";
+        window.location.href = (
+          "/registrace/odeslano/?editUrl=" + encodeURIComponent(editUrl)
+        );
       })
       .catch((o_O) => {
         console.error(o_O);
