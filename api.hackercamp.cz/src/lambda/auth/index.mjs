@@ -63,12 +63,14 @@ export async function handler(event) {
   if (resp.ok && data.ok) {
     const token = data["access_token"];
     const { resp, data: profile } = await getUserInfo(token);
+    console.log(profile);
     if (resp.ok && profile.ok) {
       const payload = {
         expiresIn: "6h",
         audience: "https://donut.hackercamp.cz/",
         issuer: "https://api.hackercamp.cz/",
         "https://hackercamp.cz/email": profile.email,
+        //"https://hackercamp.cz/admin": profile,
         "https://slack.com/user_id": profile.sub,
         "https://slack.com/access_token": token,
       };
@@ -91,7 +93,9 @@ export async function handler(event) {
     console.error({ token, profile });
   }
   console.error({ code: params.code, data });
-  return withCORS_(unauthorized({
-    "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`
-  }));
+  return withCORS_(
+    unauthorized({
+      "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
+    })
+  );
 }
