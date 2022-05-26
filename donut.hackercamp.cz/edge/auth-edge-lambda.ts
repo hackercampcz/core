@@ -48,8 +48,7 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
 
     const buildAssets = (fileName: string) =>
       lambdaBuilder.buildCodeAsset(
-        path.join(__dirname, "lambdas", "auth", fileName),
-        { minify: true, format: "esm" }
+        path.join(__dirname, "lambdas", "auth", fileName)
       );
 
     // Some resources _must_ be put in us-east-1, such as Lambda at Edge.
@@ -64,7 +63,7 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
         timeout: 5,
         handler: "index.handler",
         runtime: aws.lambda.Runtime.NodeJS14dX,
-        code: buildAssets("index.mjs"),
+        code: buildAssets("index.js"),
       },
       { provider: awsUsEast1 }
     );
