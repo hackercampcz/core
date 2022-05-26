@@ -30,7 +30,7 @@ async function getJWT(code, env, origin) {
       code,
       client_id: env["slack_client_id"],
       client_secret: env["slack_client_secret"],
-      redirect_uri: `https://${origin}/`,
+      redirect_uri: origin,
     }),
   });
   const data = await resp.json();
