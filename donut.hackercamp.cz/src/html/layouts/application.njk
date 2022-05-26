@@ -17,10 +17,16 @@
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
         {% include "shared/logo.njk" %}
       </div>
-      <div class="hc-navbar__right mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
+      <div id="hc-header__profile" class="hc-navbar__right mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
 
       </div>
     </div>
+    <script type="module">
+      import { init } from "/assets/esm/header.js";
+      init({
+        profile: document.getElementById("hc-header__profile")
+      })
+    </script>
   </nav>
   <main id="top">
     {% block content %}{% endblock %}
