@@ -48,6 +48,7 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
 
     const buildAssets = (fileName: string) =>
       lambdaBuilder.buildCodeAsset(path.join(__dirname, "lambdas", fileName), {
+        minify: false,
         format: "esm",
       });
 
