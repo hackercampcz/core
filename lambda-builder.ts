@@ -29,7 +29,10 @@ export function buildCodeAsset(
     format: "cjs",
   }
 ): pulumi.asset.AssetArchive {
+  const ext = format === "esm" ? "mjs" : "js";
   return new pulumi.asset.AssetArchive({
-    "index.js": new pulumi.asset.StringAsset(build(entrypoint, minify, format)),
+    [`index.${ext}`]: new pulumi.asset.StringAsset(
+      build(entrypoint, minify, format)
+    ),
   });
 }
