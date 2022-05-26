@@ -48,6 +48,19 @@ async function getUserInfo(token) {
   return { resp, data };
 }
 
+async function getUsersInfo(user, token) {
+  const resp = await fetch("https://slack.com/api/users.info", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: new URLSearchParams({ user }),
+  });
+  const data = await resp.json();
+  return { resp, data };
+}
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
@@ -63,6 +76,7 @@ export async function handler(event) {
   if (resp.ok && data.ok) {
     const token = data["access_token"];
     const { resp, data: profile } = await getUserInfo(token);
+    const { is_admin: isAdmin } = await getUsersInfo(profile.sub, token);
     console.log(profile);
     if (resp.ok && profile.ok) {
       const payload = {
@@ -70,7 +84,7 @@ export async function handler(event) {
         audience: "https://donut.hackercamp.cz/",
         issuer: "https://api.hackercamp.cz/",
         "https://hackercamp.cz/email": profile.email,
-        //"https://hackercamp.cz/admin": profile,
+        "https://hackercamp.cz/is_admin": isAdmin,
         "https://slack.com/user_id": profile.sub,
         "https://slack.com/access_token": token,
       };
