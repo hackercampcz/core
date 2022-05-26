@@ -22,7 +22,7 @@ function getPayload(event) {
   return Object.fromEntries(new URLSearchParams(payload).entries());
 }
 
-async function getJWT(code, env) {
+async function getJWT(code, env, origin) {
   const resp = await fetch("https://slack.com/api/openid.connect.token", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -30,7 +30,7 @@ async function getJWT(code, env) {
       code,
       client_id: env["slack_client_id"],
       client_secret: env["slack_client_secret"],
-      redirect_uri: `https://${env.hostname}/`,
+      redirect_uri: `https://${origin}/`,
     }),
   });
   const data = await resp.json();
@@ -66,10 +66,10 @@ async function getUsersInfo(user, token) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
+  console.log(event.headers);
   const params = getPayload(event);
   const origin = event.headers.origin;
-  console.log({ params, body: event.body });
-  const { resp, data } = await getJWT(params.code, process.env);
+  const { resp, data } = await getJWT(params.code, process.env, origin);
   const withCORS_ = withCORS(["POST", "OPTIONS"], origin, {
     allowCredentials: true,
   });
@@ -77,7 +77,6 @@ export async function handler(event) {
     const token = data["access_token"];
     const { resp, data: profile } = await getUserInfo(token);
     const { is_admin: isAdmin } = await getUsersInfo(profile.sub, token);
-    console.log(profile);
     if (resp.ok && profile.ok) {
       const payload = {
         expiresIn: "6h",
