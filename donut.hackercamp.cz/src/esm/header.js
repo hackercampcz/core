@@ -1,14 +1,15 @@
 import { html, render } from "lit";
 
-function headerProfile(profile) {
-  return html`<span style="display: flex;"
-    ><img
+function headerProfile({ name, picture }) {
+  return html`<span style="display: flex;align-items: center;gap: 16px">
+    <img
       alt=""
-      src="${profile.picture}"
+      src="${picture}"
       width="48"
       height="48"
       style="border-radius: 50%"
-    />${profile.name}</span
+    />
+    <strong>${name}</strong></span
   >`;
 }
 
