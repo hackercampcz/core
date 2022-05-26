@@ -23,15 +23,14 @@ function getPayload(event) {
 }
 
 async function getJWT(code, env, origin) {
-  console.log({ code, env, origin });
   const resp = await fetch("https://slack.com/api/openid.connect.token", {
     method: "POST",
-    // headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       code,
       client_id: env["slack_client_id"],
       client_secret: env["slack_client_secret"],
-      redirect_uri: origin,
+      redirect_uri: new URL("/", origin).href,
     }),
   });
   const data = await resp.json();
