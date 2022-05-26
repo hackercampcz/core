@@ -1038,34 +1038,35 @@
   const { searchParams } = new URL(location.href);
 
   if (searchParams.has("referral")) {
-    formElement.querySelector("input[name=referral]").setAttribute(
+    formElement.elements.referral.setAttribute(
       "value",
       searchParams.get("referral")
     );
   }
 
   if (searchParams.has("id")) {
-    formElement.querySelector("input[name=id]").setAttribute(
+    formElement.elements.id.setAttribute(
       "value",
       searchParams.get("id")
     );
-  }
-
-  for (let key in localStorage) {
-    if (key.startsWith(storagePrefix) === false) {
-      continue;
-    }
-    const name = key.replace(storagePrefix, "");
-    const value = localStorage.getItem(key);
-    const element = formElement.querySelector(`[name="${name}"]`);
-    if (!element) continue;
-    if (["radio", "checkbox"].includes(element.type)) {
-      formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
-    } else if (element.tagName.toLowerCase() === "select") {
-      element.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
-      element.dispatchEvent(new Event("change"));
-    } else {
-      element.setAttribute("value", value);
+    letsGetHydrated();
+  } else {
+    for (let key in localStorage) {
+      if (key.startsWith(storagePrefix) === false) {
+        continue;
+      }
+      const name = key.replace(storagePrefix, "");
+      const value = localStorage.getItem(key);
+      const element = formElement.querySelector(`[name="${name}"]`);
+      if (!element) continue;
+      if (["radio", "checkbox"].includes(element.type)) {
+        formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
+      } else if (element.tagName.toLowerCase() === "select") {
+        element.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
+        element.dispatchEvent(new Event("change"));
+      } else {
+        element.setAttribute("value", value);
+      }
     }
   }
 
@@ -1107,8 +1108,15 @@
       .finally(() => {
         submitButtonElement.removeAttribute("disabled");
       })
-
   });
+
+  async function letsGetHydrated() {
+    const response = await fetch(
+      `https://api.hackercamp.cz/v1/registration?id=${formElement.elements.id}`
+    );
+    const data = await response.json();
+    debugger;
+  }
 </script>
 <footer class="mdc-layout-grid">
   <p style="text-align: center">© 2021-{{ "this" | year }} Hacker camp crew z.s., IČ <a href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a>;
