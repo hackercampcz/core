@@ -37,7 +37,7 @@ export async function handler(event) {
 
   try {
     const { email, year, ...rest } = readPayload(event);
-    const id = rest.id ?? crypto.randomBytes(20).toString("hex");
+    const id = crypto.randomBytes(20).toString("hex");
     const editUrl = `https://www.hackercamp.cz/registrace?${new URLSearchParams(
       { id }
     )}`;
