@@ -28,13 +28,19 @@ export async function main({ searchParams, slackButton, env }) {
     hideSlackButton(slackButton);
   }
 
+  if (searchParams.has("returnUrl")) {
+    localStorage.setItem("hc:returnUrl", searchParams.get("returnUrl"));
+  }
+
   if (searchParams.has("code")) {
     try {
       await authenticate({ searchParams, apiURL });
       window.dispatchEvent(new Event("hc:profile"));
       hideSlackButton(slackButton);
-      if (searchParams.has("returnUrl")) {
-        location.assign(searchParams.get("returnUrl"));
+      const returnUrl = localStorage.getItem("hc:returnUrl");
+      if (returnUrl) {
+        localStorage.removeItem("hc:returnUrl");
+        location.assign(returnUrl);
       }
     } catch (e) {
       console.error(e);
