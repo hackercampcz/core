@@ -894,10 +894,67 @@
   </section>
   <section>
     <button type="submit" class="hc-button">
-      Závazně odeslat
+      Uložit
     </button>
   </section>
   <input type="hidden" name="year" value="{{ "this" | year }}" />
   <input type="hidden" name="referral" />
 </form>
+<script type="module">
+  const formElement = document.querySelector("form#reg");
+  const submitButtonElement = formElement.querySelector("button[type=submit]");
+
+  const { searchParams } = new URL(location.href);
+
+   try {
+     const { email } = JSON.parse(localStorage.getItem("slack:profile"));
+     const response = await fetch(
+       `https://api.hackercamp.cz/v1/registration?email=${email}`
+     );
+     const [data] = await response.json();
+     for (let key in data) {
+       const field = formElement.elements[key];
+       if (!field) continue;
+       const value = data[key];
+       if (["checkbox"].includes(field.type) || field.length) {
+         formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
+       } else if (field.tagName.toLowerCase() === "select") {
+         field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
+         field.dispatchEvent(new Event("change"));
+       } else {
+         field.setAttribute("value", value);
+       }
+     }
+  } catch(o_O) {
+    console.error(o_O);
+    alert("Něco se kouslo, zkuste to jindy.");
+  }
+
+  formElement.addEventListener("submit", event => {
+    event.preventDefault();
+    submitButtonElement.setAttribute("disabled", "disabled");
+
+    fetch(event.target.action, {
+      method: "POST",
+      body: new URLSearchParams(new FormData(event.target)),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw response;
+        }
+        return response.json();
+      })
+      .catch((o_O) => {
+        console.error(o_O);
+        alert("Se to někdě zaseklo, zkuste to prosím znovu");
+      })
+      .finally(() => {
+        submitButtonElement.removeAttribute("disabled");
+      })
+  });
+
+</script>
 {% endblock %}
