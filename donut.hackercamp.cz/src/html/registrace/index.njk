@@ -1,11 +1,903 @@
 {% extends 'layouts/application.njk' %}
 
 {% block title %}Registrace pro Hackery{% endblock %}
-
 {% block head %}
+<style>
+  :root {
+    --hc-layout-width: 1600px;
+    --hc-font-family: PT Mono, monospace;
+    --hc-background-color: #fff;
+    --hc-text-color: #585a5c;
+    --hc-heading-color: #000;
+    --hc-link-color: #2161b1;
+    --hc-link-visited-color: #bb006e;
+    --hc-gradient: linear-gradient(
+      90deg,
+      #ee771b -0.01%,
+      #e9444e 25.57%,
+      #e62271 42.71%,
+      #684997 78.9%,
+      #3e7abc 100.02%
+    );
+    --hc-gradient-btn: linear-gradient(
+      90deg,
+      #ee771b -0.01%,
+      #e9444e 11.28%,
+      #e62271 24.31%,
+      #684997 36.29%,
+      #3e7abc 50%,
+      #684997 61.3%,
+      #e62271 74.84%,
+      #e9444e 88.39%,
+      #ee771b 100.02%
+    );
+  }
 
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --hc-background-color: #222;
+      --hc-background-image: url(data:image/png;base64,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);
+      --hc-text-color: #ececec;
+      --hc-heading-color: #fff;
+      --hc-link-color: #5d88c8;
+      --hc-link-visited-color: #ea7c46;
+    }
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    color: var(--hc-text-color);
+    background-color: var(--hc-background-color);
+    background-image: var(--hc-background-image, none);
+    font-family: var(--hc-font-family);
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 1.5;
+    font-kerning: normal;
+    font-variant-numeric: lining-nums slashed-zero;
+    font-variant-ligatures: common-ligatures contextual;
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum",
+    "zero";
+    font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+  }
+
+  a:link {
+    color: var(--hc-link-color);
+  }
+
+  a:visited {
+    color: var(--hc-link-visited-color);
+  }
+
+  strong em {
+    font-style: normal;
+  }
+
+  ul {
+    max-width: 60em;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  header,
+  footer,
+  section {
+    margin: 0 auto;
+    max-width: var(--hc-layout-width);
+  }
+
+  footer::before {
+    content: "";
+    display: block;
+    height: 3px;
+    background-image: var(--hc-gradient);
+  }
+
+  h1,
+  h2 {
+    font-weight: bold;
+    color: var(--hc-heading-color);
+  }
+
+  h1 {
+    margin-bottom: 0;
+    font-weight: 800;
+    font-size: 3em;
+  }
+
+  hgroup h2 {
+    margin: 0;
+  }
+
+  hgroup small {
+    text-transform: capitalize;
+  }
+
+  h2,
+  .hc-text--gay {
+    color: #fff;
+    background-image: var(--hc-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .hc-hero {
+    font-weight: bold;
+  }
+
+  .hc-card {
+    background-color: var(--hc-background-color);
+    /* border: 1px solid #f2f2f2; */
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.07);
+    padding: var(--mdc-layout-grid-gutter-phone);
+  }
+
+  .hc-card.hc-card--decorated {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hc-card.hc-card--decorated::before {
+    content: "";
+    display: block;
+    width: 135px;
+    height: 4px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    background-image: var(--hc-gradient);
+    transition: width 0.4s ease;
+  }
+
+  .hc-card.hc-card--decorated:active::before,
+  .hc-card.hc-card--decorated:hover::before {
+    width: 100%;
+  }
+
+  .hc-card.hc-card--flat {
+    background-image: var(--hc-gradient);
+    color: #fff;
+  }
+
+  .hc-card.hc-card--centered {
+    text-align: center;
+  }
+
+  .hc-card.hc-card--picture {
+    padding: 0
+  }
+
+  @media screen and (min-width: 600px) {
+    .hc-card {
+      padding: var(--mdc-layout-grid-gutter-tablet);
+    }
+  }
+
+  @media screen and (min-width: 840px) {
+    .hc-card {
+      padding: var(--mdc-layout-grid-gutter-desktop);
+    }
+  }
+
+  .hc-button {
+    color: #fff;
+    background-image: var(--hc-gradient-btn);
+    background-size: 200% 100%;
+    font-family: var(--hc-font-family);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0;
+    line-height: 1.5;
+    font-kerning: normal;
+    font-variant-numeric: lining-nums slashed-zero;
+    font-variant-ligatures: common-ligatures contextual;
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum",
+    "zero";
+    font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+    display: inline-block;
+    text-decoration: none;
+    padding: 0.75em 2.5em;
+    transition: background-position 0.4s ease-in-out;
+    border: 0 none;
+    margin: 16px auto;
+    display: block;
+  }
+
+  .hc-button:active,
+  .hc-button:hover {
+    background-position: 100% 0;
+  }
+
+  .hc-button:disabled {
+    opacity: .8;
+  }
+
+  .hc-icon-link:link,
+  .hc-icon-link:visited {
+    --icon-color: var(--hc-text-color);
+    color: var(--hc-text-color);
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .hc-icon-link:hover {
+    --icon-color: var(--hc-link-color);
+    color: var(--hc-link-color);
+    text-decoration: underline;
+  }
+
+  .hc-icon-link svg {
+    padding-right: 1ex;
+  }
+
+  .hc-link--decorated {
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    padding: 18px 16px;
+    border: 2px solid;
+    border-image-slice: 1;
+    border-image-source: var(--hc-gradient);
+    background-image: var(--hc-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hc-navbar {
+    position: fixed;
+    width: 100%;
+    height: 78px;
+    background: var(--hc-background-color);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    z-index: 1000;
+  }
+
+  .hc-navbar__link {
+    line-height: 56px;
+    margin-right: 2em;
+  }
+
+  #top {
+    padding-top: 78px;
+    margin-bottom: 0;
+  }
+
+  .hc-navbar__right {
+    display: none;
+  }
+
+  @media screen and (min-width: 600px) {
+    .hc-navbar {
+      height: 100px;
+    }
+
+    .hc-navbar__right {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    #top {
+      padding-top: 100px;
+    }
+  }
+
+  h1 {
+    text-align: center;
+    margin-top: 2em;
+  }
+
+  hr {
+    border: 0 none;
+    height: 1px;
+    background-color: #F2F2FA;
+    margin: 24px 0;
+  }
+
+  .form-story {
+    text-align: center;
+    max-width: 40em;
+    margin: 24px auto 0 auto;
+    font-weight: 400;
+  }
+
+  form#reg {
+    max-width: 40em;
+  }
+
+  form#reg h2 {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  form#reg p.disclaimer {
+    text-align: center;
+    font-size: 14px;
+    padding: 24px;
+  }
+
+  form#reg section {
+    margin-bottom: 24px;
+  }
+
+  form#reg h3 {
+    font-size: 16px;
+  }
+
+  .section-story {
+    font-size: 14px;
+  }
+
+  form#reg input,
+  form#reg select {
+    font-family: var(--hc-font-family);
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 1.5;
+    font-kerning: normal;
+    font-variant-numeric: lining-nums slashed-zero;
+    font-variant-ligatures: common-ligatures contextual;
+    -webkit-font-feature-settings: "kern","liga","clig","calt","lnum","zero";
+    font-feature-settings: "kern","liga","clig","calt","lnum","zero";
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: geometricPrecision;
+  }
+
+  form#reg .field {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 4px;
+    flex: 1;
+  }
+
+  form#reg [aria-hidden="true"] {
+    display: none;
+  }
+
+  form#reg .field label {
+    flex: 1;
+    padding-top: 4px;
+    padding-bottom: 2px;
+  }
+
+  form#reg .field input,
+  form#reg .field textarea,
+  form#reg .field select {
+    flex: 2;
+    font-size: 16px;
+    padding: 4px;
+  }
+
+  form#reg .field select {
+    min-height: 36px;
+  }
+
+  form#reg .field--block {
+    margin-bottom: 16px;
+  }
+
+  form#reg .group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (min-width: 490px) {
+    form#reg .group {
+      gap: 8px;
+      flex-direction: row;
+    }
+  }
+
+  form#reg .question {
+    text-align: center;
+    padding-top: 12px;
+  }
+
+  form#reg .question input {
+    width: 16px;
+    height: 16px;
+  }
+
+  form#reg .choose {
+    display: flex;
+  }
+  form#reg .choose:not(:last-child) {
+    margin-bottom: 24px;
+  }
+
+  form#reg .choose input {
+    width: 16px;
+    height: 16px;
+  }
+
+  form#reg .choose > label,
+  form#reg .choose > div {
+    padding-left: 8px;
+    display: block;
+    flex: 1;
+  }
+
+  form#reg .choose input:not(:checked) + div .patron-allowance {
+    display: none;
+  }
+
+  form#reg .choose .patron-allowance input {
+    width: 120px;
+  }
+
+  form#reg label span {
+    display: block;
+    font-size: 14px;
+  }
+
+  .patron-allowance {
+    display: block;
+    margin-top: 8px;
+  }
+
+</style>
 {% endblock %}
 
 {% block content %}
-TBD
+<form action="{{ build["api-host"] }}registration" method="post" class="mdc-layout-grid" id="reg">
+  <section>
+    <h2>Účastník</h2>
+    <div class="hc-card">
+      <div class="group">
+        <div class="field">
+          <label for="firstname">
+            Jméno
+          </label>
+          <input id="firstname" name="firstName" type="text" autocomplete="given-name" required="required"/>
+        </div>
+        <div class="field">
+          <label for="lastname">
+            Příjmení
+          </label>
+          <input id="lastname" name="lastName" type="text" autocomplete="family-name" required="required"/>
+        </div>
+      </div>
+      <div class="group">
+        <div class="field">
+          <label for="email">
+            E-mail
+          </label>
+          <input id="email" name="email" type="email" autocomplete="email" required="required"/>
+        </div>
+        <div class="field">
+          <label for="phonenum">
+            Telefon
+          </label>
+          <input id="phonenum" name="phone" type="tel" autocomplete="tel" required="required" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="company">
+          Jméno firmy
+          (jednotlivec nemusí)
+        </label>
+        <input id="company" name="company" type="text" autocomplete="on" />
+      </div>
+      <div class="group">
+        <div class="field">
+          <label for="plus-one">
+            Pro koho chceš místo?
+          </label>
+          <select name="plusOne" id="plus-one">
+            <option value="0">Jen pro sebe</option>
+            <option value="1">Chci pozvat +1</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="plus-one-section" aria-hidden="true">
+    <h2>Tvé +1</h2>
+    <div class="hc-card">
+      <div class="group">
+        <div class="field">
+          <label for="plus-firstname">
+            Jméno
+          </label>
+          <input id="plus-firstname" name="plusFirstName" type="text" />
+        </div>
+        <div class="field">
+          <label for="lastname">
+            Příjmení
+          </label>
+          <input id="plus-lastname" name="plusLastName" type="text" />
+        </div>
+      </div>
+      <div class="group">
+        <div class="field">
+          <label for="plus-email">
+            E-mail
+          </label>
+          <input id="plus-email" name="plusEmail" type="email" />
+        </div>
+        <div class="field">
+          <label for="plus-phonenum">
+            Telefon
+          </label>
+          <input id="plus-phonenum" name="plusPhone" type="tel" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="plus-company">
+          Jméno firmy
+        </label>
+        <input id="plus-company" name="plusCompany" type="text" autocomplete="on" />
+      </div>
+      <div class="field">
+        <label for="plus-reason">
+          Proč by měl/a na HC být?
+        </label>
+        <input id="plus-reason" name="plusReason" type="text" placeholder="Zajímá se o ..., baví ji ... a je ..."/>
+      </div>
+    </div>
+  </section>
+  <script type="module">
+    document.querySelector("select#plus-one").addEventListener("change", (event) => {
+      if (parseInt(event.target.value)) {
+        document.querySelector("#plus-one-section").removeAttribute("aria-hidden");
+      } else {
+        document.querySelector("#plus-one-section").setAttribute("aria-hidden", "true");
+      }
+    });
+  </script>
+  <section>
+    <h2>Lístek</h2>
+    <div class="hc-card">
+      <div class="choose">
+        <input type="radio" name="ticketType" value="nonprofit" id="ticket-nonprofit" />
+        <label for="ticket-nonprofit">
+          <strong>Táborník z neziskovky</strong> - 2.500&nbsp;CZK
+          <span>Zvýhodněné vstupné (pro neziskové organizace a studenty)</span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="ticketType" value="hacker" checked="checked" id="ticket-hacker"/>
+        <label for="ticket-hacker">
+          <strong>Hacker</strong> - 5.000 CZK<br />
+          <span>Normální vstupné</span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="ticketType" value="hacker-plus" id="ticket-hacker-plus" />
+        <label for="ticket-hacker-plus">
+          <strong>Hacker, co má zlaté srdce</strong> - 7.500&nbsp;CZK
+          <span>Normální vstupné + příspěvek na vstupné pro neziskové organizace a studenty</span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="ticketType" value="hacker-patron" id="ticket-patron" />
+        <div>
+          <label for="ticket-patron">
+            <strong>Patron campu</strong>
+            <span>Chci podpořit neziskovku i vás, protože chci podobnou akci i za rok.</span>
+          </label>
+          <label class="patron-allowance">
+            Přispěju částkou 7.500&nbsp;CZK +
+            <input type="text" name="patronAllowance" />&nbsp;CZK
+          </label>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Fakturace</h2>
+    <div class="hc-card">
+      <div class="field">
+        <label for="invoice-recipient">
+          Kdo to zaplatí?
+        </label>
+        <select name="invRecipient" id="invoice-recipient">
+          <option value="0">No, budu to muset být já</option>
+          <option value="1">Někdo jiný (např. firma)</option>
+        </select>
+      </div>
+      <div id="I-will-pay">
+        <div class="field">
+          <label for="invoice-name">
+            Jméno / název společnosti
+          </label>
+          <input id="invoice-name" name="invName" type="text" />
+        </div>
+        <div class="field">
+          <label for="invoice-address">
+            Adresa
+          </label>
+          <input id="invoice-address" name="invAddress" type="text" />
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="invoice-regno">
+              IČ
+            </label>
+            <input id="invoice-regno" name="invRegNo" type="text" />
+          </div>
+          <div class="field">
+            <label for="invoice-vatno">
+              DIČ
+            </label>
+            <input id="invoice-vatno" name="invVatNo" type="text" />
+          </div>
+        </div>
+        <div class="field">
+          <label for="invoice-text">
+            Text na faktuře
+          </label>
+          <input id="invoice-text" name="invText" type="text" />
+        </div>
+        <div class="field">
+          <label for="invoice-email">
+            Kontakt pro fakturaci
+          </label>
+          <input id="invoice-email" name="invEmail" type="email" autocomplete="email" />
+        </div>
+      </div>
+      <div id="someone-else-will-pay" aria-hidden="true">
+        <div class="group">
+          <div class="field">
+            <label for="invoice-recipient-firstname">
+              Jméno
+            </label>
+            <input id="invoice-recipient-firstname" name="invRecipientFirstname" type="text" />
+          </div>
+          <div class="field">
+            <label for="invoice-recipient-lastname">
+              Příjmení
+            </label>
+            <input id="invoice-recipient-lastname" name="invRecipientLastname" type="text" />
+          </div>
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="invoice-recipient-email">
+              E-mail
+            </label>
+            <input id="invoice-recipient-email" name="invRecipientEmail" type="email" />
+          </div>
+          <div class="field">
+            <label for="invoice-recipient-phone">
+              Telefon
+            </label>
+            <input id="invoice-recipient-phone" name="invRecipientPhone" type="tel" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script type="module">
+    document.querySelector("input#email").addEventListener("blur", event => {
+      document.querySelector("input#invoice-email").setAttribute("placeholder", event.target.value);
+    });
+    document.querySelector("select#invoice-recipient").addEventListener("change", event => {
+      if (event.target.value == 0) {
+        document.querySelector("#I-will-pay").removeAttribute("aria-hidden");
+        document.querySelector("#someone-else-will-pay").setAttribute("aria-hidden", "true");
+      } else if(event.target.value == 1) {
+        document.querySelector("#I-will-pay").setAttribute("aria-hidden", "true");
+        document.querySelector("#someone-else-will-pay").removeAttribute("aria-hidden");
+      }
+    });
+  </script>
+  <p class="disclaimer">
+    Následující informace bude možné doplnit později. Pokud ale už znáš odpovědi, můžeš si je tu připravit - změnit je bude možné :)
+  </p>
+  <section>
+    <h2>Ubytování</h2>
+    <div class="hc-card">
+      <div class="field">
+        <label for="stay-time">
+          Na jak dlouho dorazíš?
+        </label>
+        <select name="stayTime" id="stay-time">
+          <option value="0">Od čtvrtka večera do neděle</option>
+          <option value="1">Od pátku do neděle</option>
+          <option value="2">Jiné?</option>
+        </select>
+      </div>
+      <div class="field" aria-hidden="true">
+        <label for="custom-stay-time">
+          Napiš nám, jak to plánuješ
+        </label>
+        <input id="custom-stay-time" name="stayTimeCustom" type="text" />
+      </div>
+      <h3>Jak a kde budeš spát?</h3>
+      <div class="choose">
+        <input type="radio" name="housing" value="own-tent" id="own-housing" checked="checked"/>
+        <label for="own-housing">
+          Přivezu si <strong>vlastní stan</strong> a v něm budu spát
+          <span>v areálu je k dispozici louka pro stanování</span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="housing" value="own-car" id="car-housing" />
+        <label for="car-housing">
+          Přijedu autem a budu v něm i spát
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="housing" value="own-caravan" id="caravan-housing" />
+        <label for="caravan-housing">
+          Přivezu si <strong>vlastní karavan</strong>, ve kterém chci spát
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="housing" value="open-air" id="openair-housing" />
+        <label for="openair-housing">
+          Jsem pankáč a budu spát <strong>pod širákem</strong> nebo v&nbsp;hamace
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="housing" value="cottage" id="cottage-housing" />
+        <label for="cottage-housing">
+          Chci postel <strong>v chatce</strong> pro 2, 4 nebo 6
+          <span>
+            Po vyplnění tohoto formuláře tě bude kontaktovat pavla.verflova@czechitas.cz a domluvíte se napřímo, kapacita omezena.
+          </span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="housing" value="glamping" id="glamping-housing" />
+        <label for="glamping-housing">
+          Dejte mi místo <strong>v Glamping stanu</strong>
+          <span>
+            Stany bereme od <a href="https://chillvillage.cz/">chillvillage.cz</a> a budou mít kapacity pro 4 - 6 lidí
+          </span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="housing" value="nearby" id="nearby-housing" />
+        <label for="nearby-housing">
+          Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
+          <span>
+            Po vyplnění formuláře tě bude kontaktovat pavla.verflova@czechitas.cz a domluvíte se napřímo
+          </span>
+        </label>
+      </div>
+      <div class="field field--block">
+        <label for="roommates">
+          Chceš spát v chatce a už víš, kdo budou tvoji spolubydlící? Pokud jo,
+          <span><strong>napiš nám jejich jména</strong>. Zkusíme vás dát dohromady. Díky.</span>
+        </label>
+        <textarea name="roommates" id="roommates" rows="2"></textarea>
+      </div>
+      <div class="field">
+        <label for="roommates-aggree">
+          Pokud nemáš spolubydlícího do chatky,
+          <span>přiřadíme Ti spolubydlící, abychom využili kapacitu naplno</span>
+        </label>
+        <select name="roommatesAggree" id="roommates-aggree">
+          <option value="1">Jasný, s tím počítám</option>
+          <option value="0">Raději mi napište jména a když nenaplním chatku kámošema, zajistím si ubytko jinak</option>
+        </select>
+      </div>
+    </div>
+  </section>
+  <script type="module">
+    document.querySelector("select#stay-time").addEventListener("change", event => {
+      if (event.target.value == 2) {
+        document.querySelector("#custom-stay-time").parentElement.removeAttribute("aria-hidden");
+      } else {
+        document.querySelector("#custom-stay-time").parentElement.setAttribute("aria-hidden", "true");
+      }
+    });
+  </script>
+  <section>
+    <h2>Zapojení</h2>
+    <div class="hc-card">
+      <p>Každý z účastníků je zároveň aktivní tvůrce programu. Ať jsi jednotlivec, nebo se hlásíš za tým, jak náš Hacker Camp můžeš obohatit? Nápady nelimitujeme :) Můžeš přispět přednáškou, workshopem, panelovkou, zorganizovat ranní výběh nebo turnaj ve fotbálku. Přivést můžeš i jakýkoliv doprovodný program – uvítáme vše od pípy, baristy a přípravy kávy až po DJs.</p>
+      <p>V každé aktivitě respektujeme základní pravidlo: Hacker Camp je z principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš propagovat a nabízet jen pokud to obohatí samotnou akci.</p>
+      <div class="field field--block">
+        <label for="activity">
+          Jakou aktivitu sis pro táborníky připravil?
+        </label>
+        <textarea id="activity" name="activity" rows="5"></textarea>
+      </div>
+      <div class="field field--block">
+        <label for="activity-crew">
+          Kdo všechno s Tebou bude aktivitu zařízovat?
+          <span>Vypiš nám sem všechna jména a dej nám telefonní číslo a mail na toho, s kým můžeme případně řešit.</span>
+        </label>
+        <textarea id="activity-crew" name="activityCrew" rows="5"></textarea>
+      </div>
+      <div class="field field--block">
+        <label for="activity-place">
+          Potřebuješ k tomu nějaké speciální zázemí?
+          <span>Například zásuvku, elektriku, internet, klidné zákoutí…</span>
+        </label>
+        <textarea id="activity-place" name="activityPlace" rows="3"></textarea>
+      </div>
+      <div class="field field--block">
+        <label for="activity-preparation">
+          Potřebuješ nějakou přípravu před campem?
+          <span>Jakou, jak dlouho asi a kdy přijedeš?</span>
+        </label>
+        <textarea id="activity-preparation" name="activityPreparatin" rows="3"></textarea>
+      </div>
+      <div class="field field">
+        <label for="activity-help">
+          Potřebuješ od nás z org týmu, abychom pro Tebe před campem k aktivitě něco zařídili?
+        </label>
+        <textarea id="activity-help" name="activityHelp" rows="3"></textarea>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>Cesta / doprava</h2>
+    <div class="hc-card">
+      <h3>Jak se na camp dopravíš?</h3>
+      <p>Ptáme se, abychom věděli, jestli a jak potřebujeme řešit parkování.</p>
+      <div class="choose">
+        <input type="radio" name="travel" value="full-car" id="full-car" />
+        <label for="full-car">
+          Přijedu autem a jsme full - jedeme ve 4
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="travel" value="free-car" id="free-car" />
+        <label for="free-car">
+          Přijedu autem a nabídnu spolujízdu
+          <span>(budeme domlouvat na Hacker Camp slacku), abych nabral s sebou minimálně další 3 lidi</span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="travel" value="carpool" id="carpool" />
+        <label for="carpool">
+          S někým  se svezu,
+          <span>počkám, kdo nabídne spolujízdu</span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="travel" value="no-car" id="no-car" />
+        <label for="no-car">
+          Nejedu autem (využiju bus, vlak, kolo, pěškobusem),
+          <span><strong>parking nepotřebuju</strong></span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="travel" value="bus" id="bus" />
+        <label for="bus">
+          Chci Hacker busem z Brna a okolí!
+          <span><em>Pokud se nám podaří sehnat, doplníme podrobnosti.</em></span>
+        </label>
+      </div>
+      <div class="choose">
+        <input type="radio" name="travel" value="no-car-but-info" id="no-car-but-info" />
+        <label for="no-car-but-info">
+          Nejedu autem (využiju bus, vlak, kolo, pěškobusem),
+          <span>parking nepotřebuju, ale zajímá mě, jestli mě umíte nějakým shuttlem přiblížit Campu</span>
+        </label>
+      </div>
+    </div>
+  </section>
+  <section>
+    <button type="submit" class="hc-button">
+      Závazně odeslat
+    </button>
+  </section>
+  <input type="hidden" name="year" value="{{ "this" | year }}" />
+  <input type="hidden" name="referral" />
+</form>
 {% endblock %}
