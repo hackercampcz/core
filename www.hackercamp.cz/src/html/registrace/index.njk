@@ -1051,7 +1051,7 @@
     const value = localStorage.getItem(key);
     const element = formElement.elements[name];
     if (!element) continue;
-    if (["radio", "checkbox"].includes(element.type)) {
+    if (["checkbox"].includes(element.type) || element.length) {
       formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
     } else if (element.tagName.toLowerCase() === "select") {
       element.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
@@ -1068,8 +1068,18 @@
     const [data] = await response.json();
     for (let key in data) {
       const field = formElement.elements[key];
-      if (field) field.value = data[key];
+      const value = data[key];
+      if (!field || value === null) continue;
+      if (["checkbox"].includes(field.type) || field.length) {
+        formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
+      } else if (field.tagName.toLowerCase() === "select") {
+        field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
+        field.dispatchEvent(new Event("change"));
+      } else {
+        field.setAttribute("value", value);
+      }
     }
+    submitButtonElement.innerText = "Upravit";
   } 
 
   formElement.addEventListener("change", event => {
