@@ -21,6 +21,13 @@ async function authenticate({ searchParams, apiURL }) {
   }
 }
 
+function handleReturnUrl() {
+  const returnUrl = localStorage.getItem("hc:returnUrl");
+  if (!returnUrl) return;
+  localStorage.removeItem("hc:returnUrl");
+  location.assign(returnUrl);
+}
+
 export async function main({ searchParams, slackButton, env }) {
   const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
 
@@ -37,11 +44,7 @@ export async function main({ searchParams, slackButton, env }) {
       await authenticate({ searchParams, apiURL });
       window.dispatchEvent(new Event("hc:profile"));
       hideSlackButton(slackButton);
-      const returnUrl = localStorage.getItem("hc:returnUrl");
-      if (returnUrl) {
-        localStorage.removeItem("hc:returnUrl");
-        location.assign(returnUrl);
-      }
+      handleReturnUrl();
     } catch (e) {
       console.error(e);
     }
