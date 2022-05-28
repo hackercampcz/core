@@ -36,13 +36,13 @@ async function getRegistrationByEmail(email, year, slackID) {
     db.send(
       new GetItemCommand({
         TableName: "hc-contacts",
-        Key: { email, slackID },
+        Key: marshall({ email, slackID }),
       })
     ),
     db.send(
       new GetItemCommand({
         TableName: "hc-registrations",
-        Key: { email, year: parseInt(year) },
+        Key: marshall({ email, year: parseInt(year) }),
       })
     ),
   ]);
