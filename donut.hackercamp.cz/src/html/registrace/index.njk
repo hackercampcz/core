@@ -915,7 +915,7 @@
     const data = await response.json();
     for (let key in data) {
       const field = formElement.elements[key];
-      if (!field) continue;
+      if (!field || value === null) continue;
       const value = data[key];
       if (["checkbox"].includes(field.type) || field.length) {
         formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
