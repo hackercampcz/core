@@ -20,7 +20,10 @@ async function getRegistrationById(id) {
       Select: "ALL_ATTRIBUTES",
       Limit: 1,
       FilterExpression: "id = :id",
-      ExpressionAttributeValues: marshall({ ":id": id }),
+      ExpressionAttributeValues: marshall(
+        { ":id": id },
+        { removeUndefinedValues: true }
+      ),
     })
   );
   const [data] = resp.Items.map((x) => unmarshall(x));
@@ -28,6 +31,7 @@ async function getRegistrationById(id) {
 }
 
 async function getRegistrationByEmail(email, year, slackID) {
+  console.log("getRegistrationByEmail", { email, yaer, slackID });
   const [contactResp, regResp] = await Promise.all([
     db.send(
       new GetItemCommand({
@@ -43,11 +47,12 @@ async function getRegistrationByEmail(email, year, slackID) {
     ),
   ]);
 
+  console.log("getRegistrationByEmail", { contactResp, regResp });
   if (regResp.Item) {
     return unmarshall(regResp.Item);
   }
   if (contactResp.Item) {
-    const contact =  unmarshall(contactResp.Item);
+    const contact = unmarshall(contactResp.Item);
     return {
       invRegNo: contact.companyID,
       invVatNo: contact.vatID,
@@ -72,7 +77,9 @@ export async function handler(event) {
   try {
     const data = id
       ? await getRegistrationById(id)
-      : await getRegistrationByEmail(email, year, slackID);
+      : email && year && slackID
+      ? await getRegistrationByEmail(email, year, slackID)
+      : null;
     if (!data) return withCORS_(notFound());
     return withCORS_(response(data));
   } catch (err) {
