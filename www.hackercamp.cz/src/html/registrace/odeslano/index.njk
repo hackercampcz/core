@@ -410,9 +410,21 @@
       </div>
     </div>
     <div class="form-story">
-      <p>Díky, TBD</p>
+      <p id="text-for-stranger" aria-hidden="true">Tvůj zájem o&nbsp;Hacker Camp nás moc těší. Asi ses na webu dočetl či
+      dočetla, že camp je jen pro pozvané. Kapacita campu je maximálně
+      300&nbsp;táborníků. A&nbsp;my všem loňským táborníkům slíbili, že jim
+      přednostně držíme místa. A&nbsp;to až do půlnoci 14.&nbsp;června. Tvůj zájem
+      nás ale moc těší. <strong>Proto poprosíme, vydrž do 15.&nbsp;června. Pokud
+      nebude kapacita naplněna, rozhodně Ti dáme vědět, že můžeš svůj zájem
+      o&nbsp;camp potvrdit.</strong></p>
+
+      <p id="text-for-plus-one" aria-hidden="true">Tvůj zájem o&nbsp;Hacker Camp nás moc těší. Asi ses na webu dočetl či
+      Díky, že nám dáváš důvěru a chceš s námi zažít první ročník Hacker Campu. Snad očekávání ani Tebe letos nijak nezklameme. Tímhle Tvoji rezervaci potvrzujeme. Fakturu pošleme do pár dnů. Mezitím si můžeš vytunit svůj profil, rozmyslet si, čím přispěješ do programu, nebo dát vědět, jak chceš přijet. Ubytko si budeš moct vybrat, jakmile bude Tvoje faktura uhrazená. Určitě Ti dáme vědět :)
+
+      <p>Za Tvoji trpělivost děkujeme. Hacker Camp #crew: Kuba, Kosi, Pája, Kačka,
+      Kája, Jirka, Rarouš a&nbsp;Ir</p>
       <p id="edit-reg" aria-hidden="true">
-        Své informace můžeš <a href="#">doplnit nebo upravit <strong>zde</strong></a>.
+        Své informace můžeš <a href="#"><strong>doplnit nebo upravit zde</strong></a>.
       </p>
     </div>
   </header>
@@ -427,7 +439,13 @@
       );
       editInstruciton.removeAttribute("aria-hidden");
     }
-  </script>
+
+    if (searchParams.has("referral")) {
+      document.querySelector("#text-for-plus-one").removeAttribute("aria-hidden")
+    } else {
+      document.querySelector("#text-for-stranger").removeAttribute("aria-hidden")
+    }
+</script>
 </div>
 <footer class="mdc-layout-grid">
   <p style="text-align: center">© 2021-{{ "this" | year }} Hacker camp crew z.s., IČ <a href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a>;
