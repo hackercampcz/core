@@ -6,8 +6,14 @@ export const Template = {
   HackerRegistration: 28062457,
 };
 
-export function sendEmailWithTemplate({ token, templateId, data, from, to }) {
-  return fetch("https://api.postmarkapp.com/email/withTemplate", {
+export async function sendEmailWithTemplate({
+  token,
+  templateId,
+  data,
+  from,
+  to,
+}) {
+  const resp = await fetch("https://api.postmarkapp.com/email/withTemplate", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -21,4 +27,6 @@ export function sendEmailWithTemplate({ token, templateId, data, from, to }) {
       MessageStream: "outbound",
     },
   });
+  if (!resp.ok) throw new Error("Mail not send", { cause: await resp.json() });
+  return resp.json();
 }
