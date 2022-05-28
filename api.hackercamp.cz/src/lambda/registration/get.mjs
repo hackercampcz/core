@@ -42,7 +42,7 @@ async function getRegistrationByEmail(email, year, slackID) {
     db.send(
       new GetItemCommand({
         TableName: "hc-registrations",
-        Key: { email, year },
+        Key: { email, year: parseInt(year) },
       })
     ),
   ]);
