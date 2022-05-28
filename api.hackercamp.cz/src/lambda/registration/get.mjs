@@ -31,7 +31,7 @@ async function getRegistrationById(id) {
 }
 
 async function getRegistrationByEmail(email, year, slackID) {
-  console.log("getRegistrationByEmail", { email, yaer, slackID });
+  console.log("getRegistrationByEmail", { email, year, slackID });
   const [contactResp, regResp] = await Promise.all([
     db.send(
       new GetItemCommand({
