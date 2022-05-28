@@ -31,7 +31,6 @@ async function getRegistrationById(id) {
 }
 
 async function getRegistrationByEmail(email, year, slackID) {
-  console.log("getRegistrationByEmail", { email, year, slackID });
   const [contactResp, regResp] = await Promise.all([
     db.send(
       new GetItemCommand({
@@ -47,18 +46,19 @@ async function getRegistrationByEmail(email, year, slackID) {
     ),
   ]);
 
-  console.log("getRegistrationByEmail", { contactResp, regResp });
   if (regResp.Item) {
     return unmarshall(regResp.Item);
   }
   if (contactResp.Item) {
     const contact = unmarshall(contactResp.Item);
     return {
+      email: contact.email,
+      company: contact.company,
       invRegNo: contact.companyID,
       invVatNo: contact.vatID,
       invAddress: contact.address,
-      invEmail: contact.email,
-      invName: contact.company || contact.name,
+      invEmail: contact.invoiceEmail || contact.email,
+      invName: contact.invoiceContact || contact.company || contact.name,
     };
   }
   return null;
