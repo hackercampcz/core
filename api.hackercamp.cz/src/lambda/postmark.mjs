@@ -27,6 +27,9 @@ export async function sendEmailWithTemplate({
       MessageStream: "outbound",
     },
   });
-  if (!resp.ok) throw new Error("Mail not send", { cause: await resp.json() });
+  if (!resp.ok) {
+    console.error(await resp.json());
+    throw new Error("Mail not send");
+  }
   return resp.json();
 }
