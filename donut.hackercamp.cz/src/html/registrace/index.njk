@@ -472,6 +472,21 @@
       <p>Moc nás těší Tvůj zájem o&nbsp;účast na Hacker Campu! </p>
       <p>Prosím, zkontroluj nebo doplň o sobě základní info.</p>
       <p>Kdyby cokoliv, kontaktuj nás na Slacku. Tvoje Hacker Camp Crew</p>
+      <hr />
+      <p>
+        Pokud <strong>nemáš zájem</strong> zúčastnit se letošního ročníku, 
+        klikni na
+        <a class="" href="javascript:optout()">Odhlásit odběr</a>
+        a my tě letos už nebudeme otravovat.
+      </p>
+      <script>
+        function optout() {
+          if (confirm("Opravdu se letos nezúčastníš? Tohle nejde vzít zpět.")) {
+            console.wanr("Not yet implemented");
+            // fetch(``);
+          }
+        }
+      </script>
     </div>
   </header>
 </div>
@@ -882,7 +897,6 @@
     </div>
   </section>
   <section>
-    <!-- TODO: přesměrovat na potvrzeno a to i když má v profilu info že potvrdil -->
     <button type="submit" class="hc-button">
       Potvrdit a odeslat
     </button>
