@@ -30,6 +30,7 @@ module.exports = {
       splitting: true,
       treeShaking: true,
       minify: mode.production(),
+      mainFields: ["module", "browser", "main"],
       sourcemap: true,
       format: "esm",
       platform: "browser",
