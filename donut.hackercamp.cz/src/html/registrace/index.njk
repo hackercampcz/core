@@ -295,7 +295,7 @@
     }
 
     #top {
-      padding-top: 100px;
+      padding-top: 60px;
     }
   }
 
@@ -458,9 +458,26 @@
 {% endblock %}
 
 {% block content %}
+<div class="hc-code-bg">
+  <header id="top" class="hc-hero mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <div
+        class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+      >
+        <h1>Podtvrzení registrace</h1>
+      </div>
+    </div>
+    <div class="form-story">
+      <p>Ahoj!</p>
+      <p>Moc nás těší Tvůj zájem o&nbsp;účast na Hacker Campu! </p>
+      <p>Prosím, zkontroluj nebo doplň o sobě základní info.</p>
+      <p>Kdyby cokoliv, kontaktuj nás na Slacku. Tvoje Hacker Camp Crew</p>
+    </div>
+  </header>
+</div>
 <form action="{{ build["api-host"] }}registration" method="post" class="mdc-layout-grid" id="reg">
   <section>
-    <h2>Účastník</h2>
+    <h2>Hacker</h2>
     <div class="hc-card">
       <div class="group">
         <div class="field">
@@ -497,21 +514,23 @@
         </label>
         <input id="company" name="company" type="text" autocomplete="on" />
       </div>
-      <div class="group">
-        <div class="field">
-          <label for="plus-one">
-            Pro koho chceš místo?
-          </label>
-          <select name="plusOne" id="plus-one">
-            <option value="0">Jen pro sebe</option>
-            <option value="1">Chci pozvat +1</option>
-          </select>
-        </div>
-      </div>
+      <!-- <div class="group"> -->
+      <!--   <div class="field"> -->
+      <!--     <label for="plus-one"> -->
+      <!--       Pro koho chceš místo? -->
+      <!--     </label> -->
+      <!--     <select name="plusOne" id="plus-one"> -->
+      <!--       <option value="0">Jen pro sebe</option> -->
+      <!--       <option value="1">Chci pozvat +1</option> -->
+      <!--     </select> -->
+      <!--   </div> -->
+      <!-- </div> -->
     </div>
   </section>
   <section id="plus-one-section" aria-hidden="true">
     <h2>Tvé +1</h2>
+    <p>TODO, pokud víme že měl +1 zobrazit</p>
+    <!-- zsjisti ze serveru -->
     <div class="hc-card">
       <div class="group">
         <div class="field">
@@ -725,13 +744,6 @@
       </div>
       <h3>Jak a kde budeš spát?</h3>
       <div class="choose">
-        <input type="radio" name="housing" value="own-tent" id="own-housing" checked="checked"/>
-        <label for="own-housing">
-          Přivezu si <strong>vlastní stan</strong> a v něm budu spát
-          <span>v areálu je k dispozici louka pro stanování</span>
-        </label>
-      </div>
-      <div class="choose">
         <input type="radio" name="housing" value="own-car" id="car-housing" />
         <label for="car-housing">
           Přijedu autem a budu v něm i spát
@@ -750,12 +762,10 @@
         </label>
       </div>
       <div class="choose">
-        <input type="radio" name="housing" value="cottage" id="cottage-housing" />
-        <label for="cottage-housing">
-          Chci postel <strong>v chatce</strong> pro 2, 4 nebo 6
-          <span>
-            Po vyplnění tohoto formuláře tě bude kontaktovat pavla.verflova@czechitas.cz a domluvíte se napřímo, kapacita omezena.
-          </span>
+        <input type="radio" name="housing" value="own-tent" id="own-housing" checked="checked"/>
+        <label for="own-housing">
+          Přivezu si <strong>vlastní stan</strong> a v něm budu spát
+          <span>v areálu je k dispozici louka pro stanování</span>
         </label>
       </div>
       <div class="choose">
@@ -768,30 +778,22 @@
         </label>
       </div>
       <div class="choose">
+        <input type="radio" name="housing" value="cottage" id="cottage-housing" />
+        <label for="cottage-housing">
+          Chci postel <strong>v chatce</strong> pro 2, 4 nebo 6
+          <span>
+            Konkrétní postel si vybereš po zaplacení faktury
+          </span>
+        </label>
+      </div>
+      <div class="choose">
         <input type="radio" name="housing" value="nearby" id="nearby-housing" />
         <label for="nearby-housing">
           Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
           <span>
-            Po vyplnění formuláře tě bude kontaktovat pavla.verflova@czechitas.cz a domluvíte se napřímo
+            V okolí je několik hezkých penzionů, pokud budeš potřebovat poradit, napiš Páje Verflové
           </span>
         </label>
-      </div>
-      <div class="field field--block">
-        <label for="roommates">
-          Chceš spát v chatce a už víš, kdo budou tvoji spolubydlící? Pokud jo,
-          <span><strong>napiš nám jejich jména</strong>. Zkusíme vás dát dohromady. Díky.</span>
-        </label>
-        <textarea name="roommates" id="roommates" rows="2"></textarea>
-      </div>
-      <div class="field">
-        <label for="roommates-aggree">
-          Pokud nemáš spolubydlícího do chatky,
-          <span>přiřadíme Ti spolubydlící, abychom využili kapacitu naplno</span>
-        </label>
-        <select name="roommatesAggree" id="roommates-aggree">
-          <option value="1">Jasný, s tím počítám</option>
-          <option value="0">Raději mi napište jména a když nenaplním chatku kámošema, zajistím si ubytko jinak</option>
-        </select>
       </div>
     </div>
   </section>
@@ -829,26 +831,13 @@
         </label>
         <textarea id="activity-place" name="activityPlace" rows="3"></textarea>
       </div>
-      <div class="field field--block">
-        <label for="activity-preparation">
-          Potřebuješ nějakou přípravu před campem?
-          <span>Jakou, jak dlouho asi a kdy přijedeš?</span>
-        </label>
-        <textarea id="activity-preparation" name="activityPreparatin" rows="3"></textarea>
-      </div>
-      <div class="field field">
-        <label for="activity-help">
-          Potřebuješ od nás z org týmu, abychom pro Tebe před campem k aktivitě něco zařídili?
-        </label>
-        <textarea id="activity-help" name="activityHelp" rows="3"></textarea>
-      </div>
     </div>
   </section>
   <section>
     <h2>Cesta / doprava</h2>
     <div class="hc-card">
       <h3>Jak se na camp dopravíš?</h3>
-      <p>Ptáme se, abychom věděli, jestli a jak potřebujeme řešit parkování.</p>
+      <p>Ptáme se, abychom věděli, jestli a jak potřebujeme řešit parkování. Jsme v přírodě, čím méně aut tím lépe.</p>
       <div class="choose">
         <input type="radio" name="travel" value="full-car" id="full-car" />
         <label for="full-car">
@@ -873,7 +862,7 @@
         <input type="radio" name="travel" value="bus" id="bus" />
         <label for="bus">
           Chci Hacker busem z Brna a okolí!
-          <span><em>Pokud se nám podaří sehnat, doplníme podrobnosti.</em></span>
+          <span>Tuhle variantu doplníme podle toho jaký o ní bude zájem</span>
         </label>
       </div>
       <div class="choose">
@@ -886,15 +875,16 @@
       <div class="choose">
         <input type="radio" name="travel" value="no-car-but-info" id="no-car-but-info" />
         <label for="no-car-but-info">
-          Nejedu autem ale zajímá mě, jestli mě umíte nějakým
+          Nejedu autem, ale zajímá mě, jestli mě umíte nějakým
           shuttlem přiblížit Campu
         </label>
       </div>
     </div>
   </section>
   <section>
+    <!-- TODO: přesměrovat na potvrzeno a to i když má v profilu info že potvrdil -->
     <button type="submit" class="hc-button">
-      Uložit
+      Potvrdit a odeslat
     </button>
   </section>
   <input type="hidden" name="year" value="{{ "this" | year }}" />
