@@ -7,6 +7,7 @@ import {
   createTxtRecord,
   Website,
   CloudFront,
+  getHostedZone,
 } from "@topmonks/pulumi-aws";
 import { createApi, createDB, routes } from "./api.hackercamp.cz";
 import { AuthEdgeLambda } from "./donut.hackercamp.cz/edge";
@@ -30,6 +31,20 @@ createTxtRecord(
   domain,
   "google-site-verification=eIaBVqhznPV-0AAEEbFJN82j3w063w_tW0-DUZWX5C0"
 );
+createTxtRecord(
+  "postmark-dkim",
+  domain,
+  "k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4oUe6QSmHlcBgjSY41LwJGQO/7fh4MD5WXvZMW8hu1H8KKTIfuNgRyV3I6xDPzzHjIMUlAlVClvxGzffC7wQ1qJM6jPFHCTO2o3AkSWfwk2PnT6MsFFFWft9TdAyA6HWO+PtUkuMsujB+JG1uoN19d9CqvMxvjQdNwdGkwwMdmQIDAQAB"
+);
+
+const hostedZone = getHostedZone(domain);
+new aws.route53.Record("postmark-bounce-record", {
+  name: pulumi.interpolate`pm-bounces.${hostedZone.name}`,
+  type: "CNAME",
+  zoneId: pulumi.interpolate`${hostedZone.zoneId}`,
+  records: ["pm.mtasv.net"],
+  ttl: 3600,
+});
 
 const hackersOai = new aws.cloudfront.OriginAccessIdentity(
   "hc-hacker-profiles",
