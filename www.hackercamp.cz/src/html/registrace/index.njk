@@ -995,7 +995,7 @@
       {headers: {Accept: "application/json"}}
     );
     const data = await response.json();
-    for (const [key, value] in Object.entries(data)) {
+    for (const [key, value] of Object.entries(data)) {
       const field = formElement.elements[key];
       if (!field || !value) continue;
       if (["checkbox"].includes(field.type) || field.length) {
