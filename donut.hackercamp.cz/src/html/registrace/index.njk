@@ -910,7 +910,8 @@
    try {
     const { email, sub: sid } = JSON.parse(localStorage.getItem("slack:profile"));
     const response = await fetch(
-      `https://api.hackercamp.cz/v1/registration?email=${email}&year=${year}&slackID=${sid}`
+      `https://api.hackercamp.cz/v1/registration?${new URLSearchParams({email, year, slackID: sid})}`,
+      {headers: {Accept: "application/json"}}
     );
     const data = await response.json();
     for (let key in data) {
@@ -939,6 +940,7 @@
       method: "POST",
       body: new URLSearchParams(new FormData(event.target)),
       headers: {
+        Accept: "application/json",
         "Content-Type": "application/x-www-form-urlencoded"
       }
     })
