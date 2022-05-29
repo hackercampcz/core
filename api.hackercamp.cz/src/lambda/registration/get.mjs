@@ -58,7 +58,10 @@ async function getRegistrationByEmail(email, year, slackID) {
   console.log(contactResp);
   if (contactResp.Item) {
     const contact = unmarshall(contactResp.Item);
+    const [firstName, lastName] = contact.name.split(' ');
     return {
+      firstName,
+      lastName,
       email: contact.email,
       company: contact.company,
       invRegNo: contact.companyID,

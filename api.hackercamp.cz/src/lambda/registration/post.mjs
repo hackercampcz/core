@@ -36,7 +36,7 @@ export async function handler(event) {
   );
 
   try {
-    const { email, year, ...rest } = readPayload(event);
+    const { email, year, firstTime, ...rest } = readPayload(event);
     const id = crypto.randomBytes(20).toString("hex");
     const editUrl = `https://www.hackercamp.cz/registrace/?${new URLSearchParams(
       { id }
@@ -47,7 +47,13 @@ export async function handler(event) {
         new PutItemCommand({
           TableName: "hc-registrations",
           Item: marshall(
-            { email, year: parseInt(year, 10), ...rest, id },
+            {
+              email,
+              year: parseInt(year, 10),
+              firstTime: firstTime === "1",
+              ...rest,
+              id,
+            },
             {
               convertEmptyValues: true,
               removeUndefinedValues: true,

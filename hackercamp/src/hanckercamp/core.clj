@@ -50,7 +50,26 @@
 (defn registrations-csv-data->maps [csv-data]
   (map zipmap
        (repeat
-         [:timestamp :email :firstname :surname :phone :company :type :plus-one-name :plus-one-email :plus-one-phone :plus-one-pitch :activity :binding-order :price :invoice :invoice-company :invoice-address :invoice-vatid :invoice-text :invoice-contact])
+         [:timestamp
+          :email
+          :firstName
+          :lastName
+          :phone
+          :company
+          :type
+          :plus-one-name
+          :plus-one-email
+          :plus-one-phone
+          :plus-one-pitch
+          :activity
+          :binding-order
+          :price
+          :invoice
+          :invoice-company
+          :invoice-address
+          :invoice-vatid
+          :invoice-text
+          :invoice-contact])
        (rest csv-data)))
 
 (defn vatid [s]
@@ -69,6 +88,34 @@
     :companyID (some-> (:VATID item) company-id)
     :address (some-> (:address item) str/trim)
     :vatID (some-> (:VATID item) vatid)))
+
+(defn clean [m k k1 k2]
+  (assoc m k (if (str/blank? (get m k1)) (get m k2) (get m k1))))
+
+(defn ticket-type [s]
+  (case s
+    "5.000 CZK - Hacker = Normální vstupné" "hacker"
+    "7.500 CZK - Hacker, co má zlaté srdce = Normální vstupné + příspěvek na vstupné pro neziskové organizace a studenty" "hacker-plus"
+    "Patron campu = Chci podpořit neziskovku i vás, protože chci podobnou akci i za rok. Přispěju vyšší částkou (nad 7.500 CZK, částku uveďte níže)" "hacker-patron"
+    "nonprofit"))
+
+(defn import-registration [item]
+  (let [[first-name last-name] (str/split (:plus-one-name item) #"\s")]
+    (into
+      {}
+      (remove (fn [[key val]] (or (nil? val) (and (string? val) (str/blank? val)))))
+      (->
+        item
+        (assoc
+          :ticketType (some-> item :price ticket-type)
+          :firstTime false
+          :year 2022
+          :plusFirstName first-name
+          :plusLastName last-name
+          :plusEmail (:plus-one-email item)
+          :plusPhone (:plus-one-phone item)
+          :plusReason (:plus-one-pitch item))
+        (dissoc :plus-one-name :plus-one-email :plus-one-phone :plus-one-pitch :price)))))
 
 (defn -main []
   (let [invoices
@@ -101,21 +148,30 @@
     (let [reg (into #{} (map :email) registrations)
           contacts (into #{} (map :email) contacts)]
       #_(clojure.pprint/pprint
-        {:reg          reg
-         :contacts     contacts
-         :diff         (clojure.set/difference reg contacts)
-         :intersection (clojure.set/intersection reg contacts)
-         :count        (count (clojure.set/intersection reg contacts))}))
-    #_(with-open [writer (io/writer "resources/import-registrations.csv")]
+          {:reg          reg
+           :contacts     contacts
+           :diff         (clojure.set/difference reg contacts)
+           :intersection (clojure.set/intersection reg contacts)
+           :count        (count (clojure.set/intersection reg contacts))}))
+    (with-open [writer (io/writer "resources/import-registrations.json")]
       (json/write
         (into
           []
           (comp
             (map #(assoc % :invoice-vatid (some-> % :invoice-vatid vatid)))
+            (map #(assoc % :invoice-regNo (some-> % :invoice-vatid company-id)))
             (map #(merge (select-keys (get invoices-reg (:email %)) [:company :VATID :address]) %))
-            (map #(select-keys % [:firstname :surname :company :VATID :type :invoice-vatid :address :invoice :invoice-company :invoice-address :invoice-vatid :invoice-text :invoice-contact]))
+            (map #(if (nil? (:invoice-vatid %)) (assoc % :invoice-vatid (some-> % :VATID vatid)) %))
+            (map #(if (nil? (:invoice-regNo %)) (assoc % :invoice-regNo (some-> % :VATID company-id)) %))
+            #_(map #(select-keys % [:firstname :surname :company :VATID :type :invoice-vatid :address :invoice :invoice-company :invoice-address :invoice-vatid :invoice-text :invoice-contact]))
+            (map #(clean % :invAddress :invoice-address :address))
+            (map #(clean % :invVatNo :invoice-vatid :VATID))
+            (map #(clean % :invRegNo :invoice-regNo :companyID))
+            (map #(clean % :invName :invoice-company :company))
+            (map import-registration)
+            (map #(dissoc % :invoice-address :invoice-regNo :VATID :invoice-vatid :invoice-company :invoice-text :invoice :type :timestamp :binding-order))
             #_(filter #(or (some? (:VATID %)) (some? (:invoice-vatid %)))))
           registrations)
-        writer))))
+        writer :escape-unicode false))))
 
 
