@@ -14,6 +14,7 @@ import { response, internalError, withCORS, notFound } from "../http.mjs";
 const db = new DynamoDBClient({});
 
 async function getRegistrationById(id) {
+  console.log("Loading data by id", { id });
   const resp = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
@@ -26,11 +27,13 @@ async function getRegistrationById(id) {
       ),
     })
   );
+  console.log(resp);
   const [data] = resp.Items.map((x) => unmarshall(x));
   return data;
 }
 
 async function getRegistrationByEmail(email, year, slackID) {
+  console.log("Loading data by registered used", { email, year, slackID });
   const [contactResp, regResp] = await Promise.all([
     db.send(
       new GetItemCommand({
@@ -46,9 +49,13 @@ async function getRegistrationByEmail(email, year, slackID) {
     ),
   ]);
 
+  console.log(regResp);
+
   if (regResp.Item) {
     return unmarshall(regResp.Item);
   }
+
+  console.log(contactResp);
   if (contactResp.Item) {
     const contact = unmarshall(contactResp.Item);
     return {
@@ -73,6 +80,7 @@ export async function handler(event) {
     ["GET", "POST", "OPTIONS"],
     event.headers["origin"]
   );
+  console.log("QS", event.queryStringParameters);
   const { id, email, year, slackID } = event.queryStringParameters;
   try {
     const data = id
