@@ -574,15 +574,15 @@
       </div>
     </div>
   </section>
-  <script type="module">
-    document.querySelector("select#plus-one").addEventListener("change", (event) => {
-      if (parseInt(event.target.value)) {
-        document.querySelector("#plus-one-section").removeAttribute("aria-hidden");
-      } else {
-        document.querySelector("#plus-one-section").setAttribute("aria-hidden", "true");
-      }
-    });
-  </script>
+  <!-- <script type="module"> -->
+  <!--   document.querySelector("select#plus-one").addEventListener("change", (event) => { -->
+  <!--     if (parseInt(event.target.value)) { -->
+  <!--       document.querySelector("#plus-one-section").removeAttribute("aria-hidden"); -->
+  <!--     } else { -->
+  <!--       document.querySelector("#plus-one-section").setAttribute("aria-hidden", "true"); -->
+  <!--     } -->
+  <!--   }); -->
+  <!-- </script> -->
   <section>
     <h2>Lístek</h2>
     <div class="hc-card">
@@ -939,6 +939,9 @@
           throw response;
         }
         return response.json();
+      })
+      .then(data => {
+        location.href = "/registrace/potvrzeno/";
       })
       .catch((o_O) => {
         console.error(o_O);
