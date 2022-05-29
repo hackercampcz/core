@@ -1,7 +1,7 @@
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import crypto from "crypto";
-import { accepted, internalError, withCORS } from "../http.mjs";
+import { accepted, internalError, seeOther, withCORS } from "../http.mjs";
 import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -66,7 +66,10 @@ export async function handler(event) {
         to: email,
       }),
     ]);
-    return withCORS_(accepted({ editUrl }));
+    if (event.headers.Accept === "application/json") {
+      return withCORS_(accepted({ editUrl }));
+    }
+    return withCORS_(seeOther(editUrl));
   } catch (err) {
     console.error(err);
     return withCORS_(internalError());

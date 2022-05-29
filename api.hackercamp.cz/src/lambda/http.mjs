@@ -35,6 +35,14 @@ export function movedPermanently(location) {
   };
 }
 
+export function seeOther(location) {
+  return {
+    statusCode: 303,
+    headers: { Location: location },
+    body: "",
+  }
+}
+
 /**
  * @param {{[p: string]: boolean | number | string}|undefined} headers
  * @returns {APIGatewayProxyResult}
