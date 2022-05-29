@@ -907,7 +907,7 @@
     for (let key in data) {
       const field = formElement.elements[key];
       const value = data[key];
-      if (!field || value === null) continue;
+      if (!field || !value) continue;
       if (["checkbox"].includes(field.type) || field.length) {
         formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
       } else if (field.tagName.toLowerCase() === "select") {
