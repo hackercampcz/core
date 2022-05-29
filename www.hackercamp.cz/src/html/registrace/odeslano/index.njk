@@ -410,7 +410,7 @@
       </div>
     </div>
     <div class="form-story">
-      <p id="text-for-stranger" aria-hidden="true">Tvůj zájem o&nbsp;Hacker Camp nás moc těší. Asi ses na webu dočetl či
+      <p id="text-for-stranger">Tvůj zájem o&nbsp;Hacker Camp nás moc těší. Asi ses na webu dočetl či
       dočetla, že camp je jen pro pozvané. Kapacita campu je maximálně
       300&nbsp;táborníků. A&nbsp;my všem loňským táborníkům slíbili, že jim
       přednostně držíme místa. A&nbsp;to až do půlnoci 14.&nbsp;června. Tvůj zájem
@@ -441,11 +441,12 @@
     }
 
     if (searchParams.has("referral")) {
-      document.querySelector("#text-for-plus-one").removeAttribute("aria-hidden")
-    } else {
-      document.querySelector("#text-for-stranger").removeAttribute("aria-hidden")
+      document.querySelector("#text-for-stranger")
+        .setAttribute("aria-hidden", "true");
+      document.querySelector("#text-for-plus-one")
+        .removeAttribute("aria-hidden");
     }
-</script>
+  </script>
 </div>
 <footer class="mdc-layout-grid">
   <p style="text-align: center">© 2021-{{ "this" | year }} Hacker camp crew z.s., IČ <a href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a>;
