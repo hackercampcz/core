@@ -20,7 +20,6 @@ async function getRegistrationById(id) {
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
-      Limit: 1,
       FilterExpression: "id = :id",
       ExpressionAttributeValues: marshall(
         { ":id": id },
