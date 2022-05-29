@@ -132,7 +132,7 @@ export function createApi(
   ): aws.lambda.Function =>
     new aws.lambda.Function(hcName(`api-${name}-lambda`, { stage }), {
       publish: true,
-      runtime: aws.lambda.Runtime.NodeJS14dX,
+      runtime: "nodejs16.x",
       architectures: ["arm64"],
       role: role.arn,
       handler: "index.handler",
