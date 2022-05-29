@@ -26,18 +26,19 @@ const apiDomain = config.get("api-domain") as string;
 
 createCertificate(donutDomain);
 createGoogleMxRecords(domain);
-createTxtRecord(
-  "hc-google-site-verification",
-  domain,
-  "google-site-verification=eIaBVqhznPV-0AAEEbFJN82j3w063w_tW0-DUZWX5C0"
-);
-createTxtRecord(
-  "postmark-dkim",
-  domain,
-  "k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4oUe6QSmHlcBgjSY41LwJGQO/7fh4MD5WXvZMW8hu1H8KKTIfuNgRyV3I6xDPzzHjIMUlAlVClvxGzffC7wQ1qJM6jPFHCTO2o3AkSWfwk2PnT6MsFFFWft9TdAyA6HWO+PtUkuMsujB+JG1uoN19d9CqvMxvjQdNwdGkwwMdmQIDAQAB"
-);
 
 const hostedZone = getHostedZone(domain);
+new aws.route53.Record(`${domain}/txt-records`, {
+  name: pulumi.interpolate`${hostedZone.name}`,
+  type: "TXT",
+  zoneId: pulumi.interpolate`${hostedZone.zoneId}`,
+  records: [
+    "google-site-verification=eIaBVqhznPV-0AAEEbFJN82j3w063w_tW0-DUZWX5C0",
+    // postmark-dkim
+    "k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4oUe6QSmHlcBgjSY41LwJGQO/7fh4MD5WXvZMW8hu1H8KKTIfuNgRyV3I6xDPzzHjIMUlAlVClvxGzffC7wQ1qJM6jPFHCTO2o3AkSWfwk2PnT6MsFFFWft9TdAyA6HWO+PtUkuMsujB+JG1uoN19d9CqvMxvjQdNwdGkwwMdmQIDAQAB",
+  ],
+  ttl: 3600,
+});
 new aws.route53.Record("postmark-bounce-record", {
   name: pulumi.interpolate`pm-bounces.${hostedZone.name}`,
   type: "CNAME",
