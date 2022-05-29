@@ -482,7 +482,7 @@
       <script>
         function optout() {
           if (confirm("Opravdu se letos nezúčastníš? Tohle nejde vzít zpět.")) {
-            console.wanr("Not yet implemented");
+            alert("Not yet implemented");
             // fetch(``);
           }
         }
@@ -545,7 +545,6 @@
   <section id="plus-one-section" aria-hidden="true">
     <h2>Tvé +1</h2>
     <p>Víme od tebe, že bys rád pozval svou +1. Zkontroluj, že jsi nám vypnil všechny údaje, abychom nového hackera mohli k registraci vyzvat.</p>
-    <!-- zsjisti ze serveru -->
     <div class="hc-card">
       <div class="group">
         <div class="field">
@@ -918,6 +917,11 @@
       {headers: {Accept: "application/json"}}
     );
     const data = await response.json();
+
+    if (data.plusFirstName || data.plusLastName) {
+      document.querySelector("#plus-one-section").removeAttribute("aria-hidden"); 
+    }
+
     for (let key in data) {
       const field = formElement.elements[key];
       const value = data[key];
