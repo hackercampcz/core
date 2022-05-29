@@ -15,6 +15,7 @@ const db = new DynamoDBClient({});
 
 async function getRegistrationById(id) {
   console.log("Loading data by id", { id });
+  console.log(marshall({ ":id": id }, { removeUndefinedValues: true }));
   const resp = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
