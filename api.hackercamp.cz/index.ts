@@ -121,7 +121,11 @@ export function createApi(
 
   const buildAssets = (fileName: string) =>
     lambdaBuilder.buildCodeAsset(
-      path.join(__dirname, "src", "lambda", fileName)
+      path.join(__dirname, "src", "lambda", fileName),
+      {
+        minify: false,
+        format: "esm",
+      }
     );
 
   const getRouteHandler = (
