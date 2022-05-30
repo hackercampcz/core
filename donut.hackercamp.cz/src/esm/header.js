@@ -1,6 +1,6 @@
+import { defAtom } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import { when } from "lit-html/directives/when.js";
-import { defAtom } from "@thi.ng/atom";
 
 const state = defAtom({
   profile: null,
@@ -54,12 +54,11 @@ function header(profile, isPopupVisible, togglePopup) {
 
 function renderProfile({ profile, isPopupVisible }) {
   if (!profile) return;
-
-  function togglePopup() {
-    state.swap((x) => Object.assign(x, { isPopupVisible: !isPopupVisible }));
-  }
-
-  return header(profile, isPopupVisible, togglePopup);
+  return header(profile, isPopupVisible, () => {
+    state.swap((x) =>
+      Object.assign({}, x, { isPopupVisible: !isPopupVisible })
+    );
+  });
 }
 
 function getProfile() {
@@ -88,17 +87,17 @@ function loadProfile() {
   state.swap((x) => Object.assign(x, { profile: getProfile() }));
 }
 
-export async function init({ profile: profileEl }) {
+export async function init({ profile: root }) {
   const scheduleRendering = renderScheduler();
   state.addWatch("render", (id, prev, curr) => {
     const { view } = curr;
     if (typeof view !== "function") return;
     scheduleRendering({
       preFirstRender() {
-        profileEl.innerHTML = null;
+        root.innerHTML = null;
       },
       render() {
-        render(view(curr), profileEl);
+        render(view(curr), root);
       },
     });
   });
