@@ -53,6 +53,7 @@ export async function handler(event) {
               firstTime: firstTime === "1",
               ...rest,
               id,
+              timestamp: new Date().toISOString()
             },
             {
               convertEmptyValues: true,
