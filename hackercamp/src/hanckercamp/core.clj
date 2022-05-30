@@ -38,7 +38,23 @@
 (defn invoices-csv-data->maps [csv-data]
   (map zipmap
        (repeat
-         [:timestamp :email :type :count :combination :people :company :address :VATID :invoice-text :contact :jahoda :invoice-date :amount :paid-amount :comment :sent])
+         [:timestamp
+          :email
+          :type
+          :count
+          :combination
+          :people
+          :company
+          :address
+          :VATID
+          :invoice-text
+          :invoiceEmail
+          :jahoda
+          :invoice-date
+          :amount
+          :paid-amount
+          :comment
+          :sent])
        (rest csv-data)))
 
 (defn contacts-csv-data->maps [csv-data]
@@ -132,7 +148,7 @@
         (into
           []
           (comp
-            (map #(merge % (select-keys (get invoices (:email %)) [:company :companyID :vatID :address])))
+            (map #(merge % (select-keys (get invoices (:email %)) [:company :companyID :vatID :address :invoiceEmail])))
             (map #(assoc % :email (-> % :email str/lower-case)))
             (map #(if (nil? (:vatID %)) (dissoc % :vatID) %))
             (map #(if (nil? (:companyID %)) (dissoc % :companyID) %))
@@ -169,7 +185,7 @@
             (map #(clean % :invRegNo :invoice-regNo :companyID))
             (map #(clean % :invName :invoice-company :company))
             (map import-registration)
-            (map #(dissoc % :invoice-address :invoice-regNo :VATID :invoice-vatid :invoice-company :invoice-text :invoice :type :timestamp :binding-order))
+            (map #(dissoc % :invoice-address :invoice-regNo :VATID :invoice-vatid :invoice-company :invoice-text :invoice :type :binding-order))
             #_(filter #(or (some? (:VATID %)) (some? (:invoice-vatid %)))))
           registrations)
         writer :escape-unicode false))))
