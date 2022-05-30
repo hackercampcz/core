@@ -2,6 +2,8 @@ import { defAtom } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import { when } from "lit-html/directives/when.js";
 
+/** @typedef { import("@thi.ng/atom").Atom } Atom */
+
 const state = defAtom({
   profile: null,
   idPopupVisible: false,
@@ -84,10 +86,16 @@ function renderScheduler() {
 }
 
 function loadProfile() {
-  state.swap((x) => Object.assign(x, { profile: getProfile() }));
+  const profile = getProfile();
+  return state.swap((x) => Object.assign(x, { profile }));
 }
 
-export async function init({ profile: root }) {
+/**
+ *
+ * @param {Atom<T>} state
+ * @param {HTMLElement} root
+ */
+function initRenderLoop(state, root) {
   const scheduleRendering = renderScheduler();
   state.addWatch("render", (id, prev, curr) => {
     const { view } = curr;
@@ -101,10 +109,10 @@ export async function init({ profile: root }) {
       },
     });
   });
+}
 
+export async function init({ profile: root }) {
+  initRenderLoop(state, root);
   loadProfile();
-
-  window.addEventListener("hc:profile", (e) => {
-    loadProfile();
-  });
+  window.addEventListener("hc:profile", loadProfile);
 }
