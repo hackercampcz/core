@@ -22,7 +22,7 @@ async function main({}) {
 
   for (const registration of data) {
     await dynamo.putItem({ TableName: "hc-registrations", Item: registration });
-    console.log(".");
+    process.stdout.write(".");
   }
 }
 

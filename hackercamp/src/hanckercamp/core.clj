@@ -110,10 +110,10 @@
 
 (defn ticket-type [s]
   (case s
-    "5.000 CZK - Hacker = Normální vstupné" "hacker"
+    "2.500 CZK - Táborník z neziskovky = Zvýhodněné vstupné (pro neziskové organizace a studenty)" "nonprofit"
     "7.500 CZK - Hacker, co má zlaté srdce = Normální vstupné + příspěvek na vstupné pro neziskové organizace a studenty" "hacker-plus"
     "Patron campu = Chci podpořit neziskovku i vás, protože chci podobnou akci i za rok. Přispěju vyšší částkou (nad 7.500 CZK, částku uveďte níže)" "hacker-patron"
-    "nonprofit"))
+    "hacker"))
 
 (defn import-registration [item]
   (let [[first-name last-name] (str/split (:plus-one-name item) #"\s")]
@@ -187,6 +187,15 @@
             (map import-registration)
             (map #(dissoc % :invoice-address :invoice-regNo :VATID :invoice-vatid :invoice-company :invoice-text :invoice :type :binding-order))
             #_(filter #(or (some? (:VATID %)) (some? (:invoice-vatid %)))))
+          registrations)
+        writer :escape-unicode false))
+    (with-open [writer (io/writer "resources/import-plusOnes.json")]
+      (json/write
+        (into
+          []
+          (comp
+            (map #(select-keys % [:firstName :lastName :company :plus-one-name :plus-one-email :plus-one-phone :plus-one-pitch]))
+            (remove #(str/blank? (:plus-one-name %))))
           registrations)
         writer :escape-unicode false))))
 
