@@ -4,19 +4,22 @@
   gap: 16px;
 }
 
-.hc-header__profile-photo {;
-  background-image: var(--hc-gradient-btn);
-  background-size: 200% 100%;
+.hc-header__profile-photo {
   border: none;
   padding: 0;
+}
+
+button.hc-header__profile-photo {
+  background-image: var(--hc-gradient-btn);
+  background-size: 200% 100%;
   border-radius: 50%;
   width: 52px;
   height: 52px;
   transition: background-position 0.8s ease-in-out;
 }
 
-.hc-header__profile-photo:active,
-.hc-header__profile-photo:hover {
+button.hc-header__profile-photo:active,
+button.hc-header__profile-photo:hover {
   background-position: 100% 0;
   box-shadow: #ee771b 0 0 12px 0;
 }
@@ -25,4 +28,47 @@
   border: 2px solid transparent;
   border-radius: 50%;
   background-clip: padding-box;
+}
+
+.hc-popup {
+  width: 16rem;
+  position: absolute;
+  top: 76px;
+  background: var(--hc-background-color);
+  box-shadow: 0 4px 20px rgb(0 0 0 / 4%);
+
+  &::before {
+    content: "";
+    border-left: .75rem solid transparent;
+    border-right: .75rem solid transparent;
+    border-bottom: .75rem solid var(--hc-background-color);
+    position: absolute;
+    top: -.75rem;
+    right: 14px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+
+    li {
+      display:flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px;
+    }
+  }
+}
+
+
+.hc-btn {
+  font-family: inherit;
+  border: 2px solid;
+  border-radius: 0;
+  border-image-source: var(--hc-gradient);
+  border-image-slice: 1;
+  background: transparent;
+  padding: 4px 8px;
+  cursor: pointer;
 }
