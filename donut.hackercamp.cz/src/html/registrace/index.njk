@@ -474,7 +474,7 @@
       <p>Kdyby cokoliv, kontaktuj nás na Slacku. Tvoje Hacker Camp Crew</p>
       <hr />
       <p>
-        Pokud <strong>nemáš zájem</strong> zúčastnit se letošního ročníku, 
+        Pokud <strong>nemáš zájem</strong> zúčastnit se letošního ročníku,
         klikni na
         <a class="" href="javascript:optout()">Odhlásit odběr</a>
         a my tě letos už nebudeme otravovat.
@@ -804,6 +804,9 @@
         <input type="radio" name="housing" value="nearby" id="nearby-housing" />
         <label for="nearby-housing">
           Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
+          <span>
+            V okolí je několik hezkých penzionů, zeptej se crew na případné tipy.
+          </span>
         </label>
       </div>
     </div>
@@ -916,7 +919,7 @@
     const data = await response.json();
 
     if (data.plusFirstName || data.plusLastName) {
-      document.querySelector("#plus-one-section").removeAttribute("aria-hidden"); 
+      document.querySelector("#plus-one-section").removeAttribute("aria-hidden");
     }
 
     for (let key in data) {
