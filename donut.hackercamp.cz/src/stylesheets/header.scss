@@ -1,0 +1,28 @@
+.hc-header__profile-detail {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.hc-header__profile-photo {;
+  background-image: var(--hc-gradient-btn);
+  background-size: 200% 100%;
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  transition: background-position 0.8s ease-in-out;
+}
+
+.hc-header__profile-photo:active,
+.hc-header__profile-photo:hover {
+  background-position: 100% 0;
+  box-shadow: #ee771b 0 0 12px 0;
+}
+
+.hc-header__profile-photo img{
+  border: 2px solid transparent;
+  border-radius: 50%;
+  background-clip: padding-box;
+}

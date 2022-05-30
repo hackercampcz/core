@@ -1,16 +1,11 @@
 import { html, render } from "lit";
 
 function headerProfile({ name, picture }) {
-  return html`<span style="display: flex;align-items: center;gap: 16px">
-    <img
-      alt=""
-      src="${picture}"
-      width="48"
-      height="48"
-      style="border-radius: 50%"
-    />
-    <strong>${name}</strong></span
-  >`;
+  return html`<span class="hc-header__profile-detail">
+    <button class="hc-header__profile-photo" title="Profile menu">
+      <img alt="${name}" src="${picture}" width="48" height="48" />
+    </button>
+  </span>`;
 }
 
 function renderProfile(profile, profileEl) {
