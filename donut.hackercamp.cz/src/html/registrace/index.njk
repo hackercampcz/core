@@ -480,10 +480,32 @@
         a my tě letos už nebudeme otravovat.
       </p>
       <script>
-        function optout() {
-          if (confirm("Opravdu se letos nezúčastníš? Tohle nejde vzít zpět.")) {
-            alert("Not yet implemented");
-            // fetch(``);
+        async function optout() {
+          if (!confirm("Opravdu se letos nezúčastníš? Tohle nejde vzít zpět.")) {
+            return;
+          }
+          try {
+            const { email } = JSON.parse(localStorage.getItem("slack:profile"));
+            await fetch(
+              "https://api.hackercamp.cz/v1/optout",
+              {
+                method: "POST",
+                body: new URLSearchParams({
+                  email,
+                  year: "{{ "this" | year }}"
+                }),
+                 headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/x-www-form-urlencoded"
+                }
+              }
+            )
+            if (confirm("Ohlášeno. Díky za ochotu.")) {
+              window.location.href = "https://hackercamp.cz/";
+            }
+          } catch (E_r) {
+            console.error(E_r);
+            alert("Se nepovedlo, zkusim prosím jiny.");
           }
         }
       </script>
@@ -902,8 +924,8 @@
    try {
     const { email, sub: sid } = JSON.parse(localStorage.getItem("slack:profile"));
     const response = await fetch(
-      `https://api.hackercamp.cz/v1/registration?${new URLSearchParams({email, year, slackID: sid})}`,
-      {headers: {Accept: "application/json"}}
+      `https://api.hackercamp.cz/v1/registration?${new URLSearchParams({ email, year, slackID: sid })}`,
+      { headers: { Accept: "application/json" } }
     );
     const data = await response.json();
 
