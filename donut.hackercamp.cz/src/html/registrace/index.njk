@@ -937,11 +937,12 @@
       const field = formElement.elements[key];
       const value = data[key];
       if (!field || !value) continue;
-      if (["checkbox"].includes(field.type) || field.length) {
+      const isRadio = field.length && field[0].type === "radio";
+      if (isRadio) {
         formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
-      } else if (field.tagName.toLowerCase() === "textarea") {
+      } else if (field.type === "textarea") {
         field.innerText = value;
-      } else if (field.tagName.toLowerCase() === "select") {
+      } else if (field.type === "select-one") {
         field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
         field.dispatchEvent(new Event("change"));
       } else {

@@ -970,23 +970,24 @@
     );
   }
 
-  for (const key in localStorage) {
+  for (let key in localStorage) {
     if (key.startsWith(storagePrefix) === false) {
       continue;
     }
-    const name = key.replace(storagePrefix, "");
     const value = localStorage.getItem(key);
-    const element = formElement.elements[name];
-    if (!element) continue;
-    if (["checkbox"].includes(element.type) || element.length) {
+    const field = formElement.elements[key.replace(storagePrefix, "")];
+
+    if (!field || !value) continue;
+    const isRadio = field.length && field[0].type === "radio";
+    if (isRadio) {
       formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
-    } else if (field.tagName.toLowerCase() === "textarea") {
+    } else if (field.type === "textarea") {
       field.innerText = value;
-    } else if (element.tagName.toLowerCase() === "select") {
-      element.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
-      element.dispatchEvent(new Event("change"));
+    } else if (field.type === "select-one") {
+      field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
+      field.dispatchEvent(new Event("change"));
     } else {
-      element.setAttribute("value", value);
+      field.setAttribute("value", value);
     }
   }
 
@@ -997,12 +998,16 @@
       {headers: {Accept: "application/json"}}
     );
     const data = await response.json();
-    for (const [key, value] of Object.entries(data)) {
+    for (let key in data) {
       const field = formElement.elements[key];
+      const value = data[key];
       if (!field || !value) continue;
-      if (["checkbox"].includes(field.type) || field.length) {
+      const isRadio = field.length && field[0].type === "radio";
+      if (isRadio) {
         formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
-      } else if (field.tagName.toLowerCase() === "select") {
+      } else if (field.type === "textarea") {
+        field.innerText = value;
+      } else if (field.type === "select-one") {
         field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
         field.dispatchEvent(new Event("change"));
       } else {
