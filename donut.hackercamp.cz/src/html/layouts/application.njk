@@ -22,12 +22,6 @@
 
       </div>
     </div>
-    <script type="module">
-      import { init } from "/assets/esm/header.js";
-      init({
-        profile: document.getElementById("hc-header__profile")
-      })
-    </script>
   </nav>
   <main id="top">
     {% block content %}{% endblock %}
@@ -38,8 +32,16 @@
       <a href="https://www.hlidacshopu.cz/zpracovani-osobnich-udaju/">Zpracování osobních údajů</a></p>
   </footer>
 
+  <script type="importmap" src="/import-map.importmap"></script>
+
   {% block javascript %}{% endblock %}
 
+  <script type="module">
+    import { init } from "/assets/esm/header.js";
+    init({
+      profile: document.getElementById("hc-header__profile")
+    })
+  </script>
   <script type="module">
     function el(tagName, attrs) {
       const el = document.createElement(tagName);
