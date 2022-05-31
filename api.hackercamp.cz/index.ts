@@ -37,10 +37,16 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
         fileName: "registration/index.mjs",
         environment: {
           variables: {
+            hostname: config.get("web-domain"),
             private_key: config.get("private-key"),
             postmark_token: config.get("postmark-token"),
           },
         },
+      },
+      optout: {
+        httpMethod: "POST",
+        path: "/optout",
+        fileName: "optout/index.mjs",
       },
     },
   ],
@@ -52,6 +58,17 @@ function hcName(t: string, options?: any) {
 }
 
 export function createDB() {
+  const optOuts = new aws.dynamodb.Table(hcName("optouts"), {
+    name: hcName("optouts"),
+    hashKey: "email",
+    rangeKey: "year",
+    attributes: [
+      { name: "email", type: "S" },
+      { name: "year", type: "N" },
+    ],
+    billingMode: "PAY_PER_REQUEST",
+  });
+
   const registrations = new aws.dynamodb.Table(hcName("registrations"), {
     name: hcName("registrations"),
     hashKey: "email",
@@ -77,6 +94,7 @@ export function createDB() {
   return pulumi.Output.create({
     registrationsDataTable: registrations.name,
     contactsDataTable: contacts.name,
+    optOutsDataTable: optOuts.name,
   });
 }
 

@@ -1,7 +1,13 @@
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import crypto from "crypto";
-import { accepted, internalError, seeOther, withCORS } from "../http.mjs";
+import {
+  accepted,
+  internalError,
+  readPayload,
+  seeOther,
+  withCORS,
+} from "../http.mjs";
 import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -10,20 +16,6 @@ import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
-
-/**
- * @param {APIGatewayProxyEvent} event
- */
-function readPayload(event) {
-  const body = event.isBase64Encoded
-    ? Buffer.from(event.body, "base64").toString("utf-8")
-    : event.body;
-
-  if (event.headers["Content-Type"] === "application/json") {
-    return JSON.parse(body);
-  }
-  return Object.fromEntries(new URLSearchParams(body).entries());
-}
 
 /**
  * @param {APIGatewayProxyEvent} event
@@ -38,9 +30,9 @@ export async function handler(event) {
   try {
     const { email, year, firstTime, ...rest } = readPayload(event);
     const id = crypto.randomBytes(20).toString("hex");
-    const editUrl = `https://www.hackercamp.cz/registrace/?${new URLSearchParams(
-      { id }
-    )}`;
+    const editUrl = `https://${
+      process.env["hostname"]
+    }/registrace/?${new URLSearchParams({ id })}`;
 
     await Promise.all([
       db.send(
@@ -53,7 +45,7 @@ export async function handler(event) {
               firstTime: firstTime === "1",
               ...rest,
               id,
-              timestamp: new Date().toISOString()
+              timestamp: new Date().toISOString(),
             },
             {
               convertEmptyValues: true,
