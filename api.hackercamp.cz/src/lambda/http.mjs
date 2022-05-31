@@ -40,7 +40,7 @@ export function seeOther(location) {
     statusCode: 303,
     headers: { Location: location },
     body: "",
-  }
+  };
 }
 
 /**
@@ -105,12 +105,12 @@ export function withCORS(methods, origin = "*", { allowCredentials } = {}) {
  * @returns {Object}
  */
 export function readPayload(event) {
-    const body = event.isBase64Encoded
-        ? Buffer.from(event.body, "base64").toString("utf-8")
-        : event.body;
+  const body = event.isBase64Encoded
+    ? Buffer.from(event.body, "base64").toString("utf-8")
+    : event.body;
 
-    if (event.headers["Content-Type"] === "application/json") {
-        return JSON.parse(body);
-    }
-    return Object.fromEntries(new URLSearchParams(body).entries());
+  if (event.headers["Content-Type"] === "application/json") {
+    return JSON.parse(body);
+  }
+  return Object.fromEntries(new URLSearchParams(body).entries());
 }
