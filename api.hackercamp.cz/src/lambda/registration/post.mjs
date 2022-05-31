@@ -29,6 +29,7 @@ export async function handler(event) {
 
   try {
     const { email, year, firstTime, ...rest } = readPayload(event);
+    const isNewbee = firstTime === "1";
     const id = crypto.randomBytes(20).toString("hex");
     const editUrl = `https://${
       process.env["hostname"]
@@ -42,7 +43,7 @@ export async function handler(event) {
             {
               email,
               year: parseInt(year, 10),
-              firstTime: firstTime === "1",
+              firstTime: isNewbee,
               ...rest,
               id,
               timestamp: new Date().toISOString(),
@@ -57,9 +58,11 @@ export async function handler(event) {
       ),
       sendEmailWithTemplate({
         token: process.env["postmark_token"],
-        templateId: rest.referrer
-          ? Template.PlusOneRegistration
-          : Template.NewRegistration,
+        templateId: isNewbee
+          ? rest.referrer
+            ? Template.PlusOneRegistration
+            : Template.NewRegistration
+          : Template.HackerRegistration,
         data: { editUrl },
         from: "Hacker Camp Crew <team@hackercamp.cz>",
         to: email,
