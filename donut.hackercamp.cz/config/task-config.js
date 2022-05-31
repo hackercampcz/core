@@ -50,7 +50,7 @@ module.exports = {
   workboxBuild: false,
 
   production: {
-    rev: true,
+    rev: false,
   },
 
   additionalTasks: {
