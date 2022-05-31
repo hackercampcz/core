@@ -935,7 +935,7 @@
 
     for (let key in data) {
       const field = formElement.elements[key];
-      const value = data[key];
+      let value = data[key];
       if (!field || !value) continue;
       const isRadio = field.length && field[0].type === "radio";
       if (isRadio) {
@@ -943,6 +943,7 @@
       } else if (field.type === "textarea") {
         field.innerText = value;
       } else if (field.type === "select-one") {
+        if (value === true) value = "1";
         field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
         field.dispatchEvent(new Event("change"));
       } else {
