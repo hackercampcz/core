@@ -31,9 +31,11 @@ export async function handler(event) {
     const { email, year, firstTime, ...rest } = readPayload(event);
     const isNewbee = firstTime === "1";
     const id = crypto.randomBytes(20).toString("hex");
-    const editUrl = `https://${
-      process.env["hostname"]
-    }/registrace/?${new URLSearchParams({ id })}`;
+    const editUrl = isNewbee
+      ? `https://${process.env["hostname"]}/registrace/?${new URLSearchParams({
+          id,
+        })}`
+      : `https://${process.env["donut"]}/registrace/`;
 
     await Promise.all([
       db.send(

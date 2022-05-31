@@ -38,6 +38,7 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
         environment: {
           variables: {
             hostname: config.get("web-domain"),
+            donut: config.get("donut-domain"),
             private_key: config.get("private-key"),
             postmark_token: config.get("postmark-token"),
           },
