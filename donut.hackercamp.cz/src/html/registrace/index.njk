@@ -939,6 +939,8 @@
       if (!field || !value) continue;
       if (["checkbox"].includes(field.type) || field.length) {
         formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
+      } else if (field.tagName.toLowerCase() === "textarea") {
+        field.innerText = value;
       } else if (field.tagName.toLowerCase() === "select") {
         field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
         field.dispatchEvent(new Event("change"));
