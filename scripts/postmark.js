@@ -3,32 +3,36 @@ export const Template = {
   PlusOneRegistration: 28062472,
   HackerRegistration: 28062457,
   HackerInvitation: 28120216,
+  HackerInvitationLate: 28122158,
 };
 
 export async function sendEmailWithTemplate({
   token,
   templateId,
+  templateAlias,
   data,
   from,
   to,
-  cc,
-  bcc,
 }) {
+  const body = JSON.stringify(
+    Object.fromEntries(
+      Object.entries({
+        From: from,
+        To: to,
+        TemplateId: templateId,
+        TemplateAlias: templateAlias,
+        TemplateModel: data,
+      }).filter(([_, v]) => Boolean(v))
+    )
+  );
   const resp = await fetch("https://api.postmarkapp.com/email/withTemplate", {
     method: "POST",
     headers: {
       Accept: "application/json",
+      "Content-Type": "application/json",
       "X-Postmark-Server-Token": token,
     },
-    body: {
-      TemplateId: templateId,
-      TemplateModel: data,
-      From: from,
-      To: to,
-      Cc: cc,
-      Bcc: bcc,
-      MessageStream: "outbound",
-    },
+    body,
   });
   if (!resp.ok) {
     console.error(await resp.json());

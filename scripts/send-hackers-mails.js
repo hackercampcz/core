@@ -4,22 +4,38 @@ import { sendEmailWithTemplate, Template } from "./postmark.js";
 
 const dynamo = createClient();
 
-async function main({ token }) {
+async function getRegistrations() {
   const result = await dynamo.scan({
     TableName: "hc-registrations",
     Select: "ALL_ATTRIBUTES",
   });
-  const registrations = result.Items;
-  const hackers = registrations.filter((x) => !x.firstTime);
-  const waitingList = registrations.filter((x) => x.firstTime);
-  console.log({ hackers, waitingList });
-  for (const hacker of hackers) {
+  return result.Items;
+}
+
+async function getContacts() {
+  const result = await dynamo.scan({
+    TableName: "hc-contacts",
+    Select: "ALL_ATTRIBUTES",
+  });
+  return result.Items;
+}
+
+async function main({ token }) {
+  const registrations = new Set((await getRegistrations()).map((x) => x.email));
+  const contacts = await getContacts();
+  const invitations = contacts
+    .filter((c) => registrations.has(c.email))
+    .map((c) => c.email);
+
+  console.log(invitations.length);
+  return;
+  for (const email of invitations) {
     await sendEmailWithTemplate({
       token,
-      templateId: Template.HackerInvitation,
+      templateId: Template.HackerInvitationLate,
       from: "Hacker Camp Crew <team@hackercamp.cz>",
-      to: hacker.email,
-      bcc: "ir@izatlouk.cz",
+      to: email,
+      data: {},
     });
   }
 }
