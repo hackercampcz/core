@@ -31,6 +31,13 @@ function handleReturnUrl() {
 export async function main({ searchParams, slackButton, env }) {
   const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
 
+  if (
+    searchParams.has("returnUrl") &&
+    searchParams.get("state") === "not-authenticated"
+  ) {
+    localStorage.removeItem("hc:id_token");
+  }
+
   if (localStorage.getItem("hc:id_token")) {
     hideSlackButton(slackButton);
   }
