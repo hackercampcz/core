@@ -36,6 +36,9 @@ export async function main({ searchParams, slackButton, env }) {
     searchParams.get("state") === "not-authenticated"
   ) {
     localStorage.removeItem("hc:id_token");
+    localStorage.removeItem("slack:id_token");
+    localStorage.removeItem("slack:profile");
+    window.dispatchEvent(new Event("hc:profile"));
   }
 
   if (localStorage.getItem("hc:id_token")) {

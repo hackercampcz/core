@@ -64,7 +64,9 @@ function renderProfile({ profile, isPopupVisible }) {
 }
 
 function getProfile() {
-  return JSON.parse(localStorage.getItem("slack:profile"));
+  const item = localStorage.getItem("slack:profile");
+  if (!item) return null;
+  return JSON.parse(item);
 }
 
 function renderScheduler() {
