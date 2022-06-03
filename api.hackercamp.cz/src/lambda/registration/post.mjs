@@ -61,7 +61,7 @@ export async function handler(event) {
       sendEmailWithTemplate({
         token: process.env["postmark_token"],
         templateId: isNewbee
-          ? rest.referrer
+          ? rest.referral
             ? Template.PlusOneRegistration
             : Template.NewRegistration
           : Template.HackerRegistration,
