@@ -4,6 +4,7 @@ export const Template = {
   HackerRegistration: 28062457,
   HackerInvitation: 28120216,
   HackerInvitationLate: 28122158,
+  PlusOneInvitation: 28151070,
 };
 
 export async function sendEmailWithTemplate({

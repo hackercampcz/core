@@ -1,4 +1,4 @@
-import { withCORS } from "../http.mjs";
+import { withCORS } from "../../http.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
 
