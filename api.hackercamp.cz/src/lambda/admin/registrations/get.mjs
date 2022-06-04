@@ -49,7 +49,7 @@ async function getPlusOneRegistrations(page, pageSize) {
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "firstTime = :firstTime AND attribute_not_exists(referral)",
+        "firstTime = :firstTime AND attribute_exists(referral)",
       ExpressionAttributeValues: marshall(
         { ":firstTime": true },
         { removeUndefinedValues: true }
