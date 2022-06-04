@@ -1,8 +1,7 @@
 import { defAtom } from "@thi.ng/atom";
-import { html, render } from "lit-html";
+import { html } from "lit-html";
 import { when } from "lit-html/directives/when.js";
-
-/** @typedef { import("@thi.ng/atom").Atom } Atom */
+import { initRenderLoop } from "./renderer.js";
 
 const state = defAtom({
   profile: null,
@@ -69,48 +68,9 @@ function getProfile() {
   return JSON.parse(item);
 }
 
-function renderScheduler() {
-  let uiUpdateId;
-  let isFirstUpdate = true;
-  return ({ preFirstRender, render }) => {
-    if (uiUpdateId) {
-      cancelAnimationFrame(uiUpdateId);
-      uiUpdateId = null;
-    }
-    uiUpdateId = requestAnimationFrame(() => {
-      if (isFirstUpdate) {
-        isFirstUpdate = false;
-        preFirstRender();
-      }
-      render();
-    });
-  };
-}
-
 function loadProfile() {
   const profile = getProfile();
   return state.swap((x) => Object.assign(x, { profile }));
-}
-
-/**
- *
- * @param {Atom<T>} state
- * @param {HTMLElement} root
- */
-function initRenderLoop(state, root) {
-  const scheduleRendering = renderScheduler();
-  state.addWatch("render", (id, prev, curr) => {
-    const { view } = curr;
-    if (typeof view !== "function") return;
-    scheduleRendering({
-      preFirstRender() {
-        root.innerHTML = null;
-      },
-      render() {
-        render(view(curr), root);
-      },
-    });
-  });
 }
 
 export async function init({ profile: root }) {
