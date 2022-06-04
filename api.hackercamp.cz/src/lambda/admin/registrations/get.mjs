@@ -22,8 +22,7 @@ async function getHackersRegistrations(page, pageSize) {
       ),
     })
   );
-  const [data] = resp.Items.map((x) => unmarshall(x));
-  return data;
+  return resp.Items.map((x) => unmarshall(x));
 }
 
 async function getWaitingListRegistrations(page, pageSize) {
@@ -40,8 +39,7 @@ async function getWaitingListRegistrations(page, pageSize) {
       ),
     })
   );
-  const [data] = resp.Items.map((x) => unmarshall(x));
-  return data;
+  return resp.Items.map((x) => unmarshall(x));
 }
 
 async function getPlusOneRegistrations(page, pageSize) {
@@ -58,8 +56,7 @@ async function getPlusOneRegistrations(page, pageSize) {
       ),
     })
   );
-  const [data] = resp.Items.map((x) => unmarshall(x));
-  return data;
+  return resp.Items.map((x) => unmarshall(x));
 }
 
 function getData(type) {
