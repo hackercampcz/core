@@ -49,6 +49,11 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
         path: "/optout",
         fileName: "optout/index.mjs",
       },
+      adminRegistrations: {
+        httpMethod: "ANY",
+        path: "/admin/registrations",
+        fileName: "admin/registrations/index.mjs",
+      },
     },
   ],
 ]);
