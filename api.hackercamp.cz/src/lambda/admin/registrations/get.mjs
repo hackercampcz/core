@@ -32,9 +32,9 @@ async function getWaitingListRegistrations(page, pageSize) {
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "firstTime = :firstTime AND attribute_not_exists(referral) OR attribute_type(referral, NULL)",
+        "firstTime = :firstTime AND attribute_not_exists(referral) OR attribute_type(referral, :null)",
       ExpressionAttributeValues: marshall(
-        { ":firstTime": true },
+        { ":firstTime": true, ":null": "NULL" },
         { removeUndefinedValues: true }
       ),
     })
@@ -49,9 +49,9 @@ async function getPlusOneRegistrations(page, pageSize) {
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "firstTime = :firstTime AND attribute_exists(referral) AND NOT attribute_type(referral, NULL)",
+        "firstTime = :firstTime AND attribute_exists(referral) AND (NOT attribute_type(referral, :null))",
       ExpressionAttributeValues: marshall(
-        { ":firstTime": true },
+        { ":firstTime": true, ":null": "NULL" },
         { removeUndefinedValues: true }
       ),
     })
