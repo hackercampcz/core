@@ -1,0 +1,25 @@
+{% extends "layouts/application.njk" %}
+
+{% block title %}Administrace Hacker Campu{% endblock %}
+
+{% block head %}
+  <style>
+    table {
+      font-size: 14px;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div id="app-root"></div>
+{% endblock %}
+
+{% block javascript %}
+<script type="module">
+  import { main } from "/assets/esm/admin.js";
+  main({
+    searchParams: new URLSearchParams(location.search),
+    appRoot: document.getElementById("app-root"),
+    env: {{ build | dump(8) | safe }}
+  });
+</script>{% endblock %}

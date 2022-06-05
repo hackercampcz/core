@@ -34,7 +34,7 @@ module.exports = {
       sourcemap: true,
       format: "esm",
       platform: "browser",
-      target: ["es2017"],
+      target: ["es2018"],
       charset: "utf8",
     },
   },
@@ -45,6 +45,7 @@ module.exports = {
     server: {
       baseDir: pathConfig.dest,
     },
+    https: true,
   },
 
   workboxBuild: false,
