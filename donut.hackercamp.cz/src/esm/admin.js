@@ -24,7 +24,7 @@ const formatDateTime = (x) =>
 const sortByTimestamp = (x) =>
   x.sort((a, b) => -1 * a.timestamp.localeCompare(b.timestamp));
 
-function chips(view) {
+function chips(view, { hackers, waitingList, plusOnes, hackersConfirmed }) {
   return html`<span
     class="mdc-evolution-chip-set"
     role="grid"
@@ -38,6 +38,7 @@ function chips(view) {
           "mdc-evolution-chip": true,
           "mdc-evolution-chip--selectable": true,
           "mdc-evolution-chip--filter": true,
+          "hc-chip": true,
           "hc-chip--selected": view === View.hackersConfirmed,
         })}"
         role="presentation"
@@ -67,7 +68,16 @@ function chips(view) {
               </svg>
             </span>
           </span>
-          <span class="mdc-evolution-chip__text-label">Potvrzení Hackeři</span>
+          <span class="mdc-evolution-chip__text-label"
+            >Potvrzení Hackeři
+            ${when(
+              hackersConfirmed,
+              () =>
+                html`<data value="${hackersConfirmed}"
+                  >${hackersConfirmed}</data
+                >`
+            )}</span
+          >
         </a>
       </span>
       <span
@@ -75,6 +85,7 @@ function chips(view) {
           "mdc-evolution-chip": true,
           "mdc-evolution-chip--selectable": true,
           "mdc-evolution-chip--filter": true,
+          "hc-chip": true,
           "hc-chip--selected": view === View.hackers,
         })}"
         role="presentation"
@@ -104,7 +115,13 @@ function chips(view) {
               </svg>
             </span>
           </span>
-          <span class="mdc-evolution-chip__text-label">Hackeři</span>
+          <span class="mdc-evolution-chip__text-label"
+            >Hackeři
+            ${when(
+              hackers,
+              () => html`<data value="${hackers}">${hackers}</data>`
+            )}</span
+          >
         </a>
       </span>
       <span
@@ -112,6 +129,7 @@ function chips(view) {
           "mdc-evolution-chip": true,
           "mdc-evolution-chip--selectable": true,
           "mdc-evolution-chip--filter": true,
+          "hc-chip": true,
           "hc-chip--selected": view === View.plusOnes,
         })}"
         role="presentation"
@@ -141,7 +159,13 @@ function chips(view) {
               </svg>
             </span>
           </span>
-          <span class="mdc-evolution-chip__text-label">Plus Ones</span>
+          <span class="mdc-evolution-chip__text-label"
+            >Plus Ones
+            ${when(
+              plusOnes,
+              () => html`<data value="${plusOnes}">${plusOnes}</data>`
+            )}</span
+          >
         </a>
       </span>
       <span
@@ -149,6 +173,7 @@ function chips(view) {
           "mdc-evolution-chip": true,
           "mdc-evolution-chip--selectable": true,
           "mdc-evolution-chip--filter": true,
+          "hc-chip": true,
           "hc-chip--selected": view === View.waitingList,
         })}"
         role="presentation"
@@ -178,7 +203,13 @@ function chips(view) {
               </svg>
             </span>
           </span>
-          <span class="mdc-evolution-chip__text-label">Waiting List</span>
+          <span class="mdc-evolution-chip__text-label"
+            >Waiting List
+            ${when(
+              waitingList,
+              () => html`<data value="${waitingList}">${waitingList}</data>`
+            )}</span
+          >
         </a>
       </span>
     </span>
@@ -245,7 +276,7 @@ function renderTable(data, { view, detail }) {
   const showDetail = Boolean(detail);
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${chips(view)}
+      ${chips(view, { [view]: data.length })}
     </div>
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"

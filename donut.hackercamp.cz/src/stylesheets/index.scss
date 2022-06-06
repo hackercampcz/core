@@ -50,3 +50,13 @@
     padding-left: 8px;
   }
 }
+
+.hc-chip {
+  --mdc-typography-body2-font-family: var(--hc-font-family);
+}
+
+.hc-chip data {
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 8px;
+}
