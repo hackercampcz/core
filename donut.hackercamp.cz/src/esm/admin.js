@@ -73,12 +73,11 @@ function chips(view, { hackers, waitingList, plusOnes, hackersConfirmed }) {
           </span>
           <span class="mdc-evolution-chip__text-label"
             >Potvrzení Hackeři
-            ${when(
-              hackersConfirmed,
-              () =>
-                html`<data value="${hackersConfirmed}"
-                  >${hackersConfirmed}</data
-                >`
+            ${until(
+              hackersConfirmed?.then(
+                (x) => html`<data value="${x}">${x}</data>`,
+                ""
+              )
             )}</span
           >
         </a>
@@ -120,9 +119,9 @@ function chips(view, { hackers, waitingList, plusOnes, hackersConfirmed }) {
           </span>
           <span class="mdc-evolution-chip__text-label"
             >Hackeři
-            ${when(
-              hackers,
-              () => html`<data value="${hackers}">${hackers}</data>`
+            ${until(
+              hackers?.then((x) => html`<data value="${x}">${x}</data>`),
+              ""
             )}</span
           >
         </a>
@@ -164,9 +163,9 @@ function chips(view, { hackers, waitingList, plusOnes, hackersConfirmed }) {
           </span>
           <span class="mdc-evolution-chip__text-label"
             >Plus Ones
-            ${when(
-              plusOnes,
-              () => html`<data value="${plusOnes}">${plusOnes}</data>`
+            ${until(
+              plusOnes?.then((x) => html`<data value="${x}">${x}</data>`),
+              ""
             )}</span
           >
         </a>
@@ -208,9 +207,8 @@ function chips(view, { hackers, waitingList, plusOnes, hackersConfirmed }) {
           </span>
           <span class="mdc-evolution-chip__text-label"
             >Waiting List
-            ${when(
-              waitingList,
-              () => html`<data value="${waitingList}">${waitingList}</data>`
+            ${until(
+              waitingList?.then((x) => html`<data value="${x}">${x}</data>`)
             )}</span
           >
         </a>
@@ -501,7 +499,9 @@ function registrationsTemlate(state) {
   const { data, selectedView, detail } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${chips(selectedView, { [selectedView]: data.length })}
+      ${chips(selectedView, {
+        [selectedView]: data?.then((data) => data.length),
+      })}
     </div>
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
