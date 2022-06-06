@@ -4,7 +4,7 @@
 .mdc-evolution-chip {
   border: 1px solid;
   border-image: var(--hc-gradient) 1;
-  background-color: #fff;
+  background-color: var(--hc-background-color);
   background-image: var(--hc-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
