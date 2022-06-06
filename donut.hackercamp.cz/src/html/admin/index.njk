@@ -6,12 +6,23 @@
   <style>
     table {
       font-size: 14px;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+    }
+    thead th {
+      text-align: left;
+      border-bottom: 3px double #ddd;
+    }
+    tbody td {
+      border-bottom: 1px solid #ddd;
     }
   </style>
 {% endblock %}
 
 {% block content %}
-<div id="app-root"></div>
+  <div id="app-root"></div>
 {% endblock %}
 
 {% block javascript %}
@@ -22,4 +33,5 @@
     appRoot: document.getElementById("app-root"),
     env: {{ build | dump(8) | safe }}
   });
-</script>{% endblock %}
+</script>
+{% endblock %}
