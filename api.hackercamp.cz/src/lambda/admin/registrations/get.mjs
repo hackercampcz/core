@@ -16,7 +16,7 @@ async function getConfirmedHackersRegistrations(page, pageSize) {
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "firstTime = :firstTime AND #ts > :timestamp",
-      ExpressionAttributeNames: marshall({"#ts": "timestamp"}),
+      ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
         {
           ":firstTime": false,
@@ -36,7 +36,7 @@ async function getHackersRegistrations(page, pageSize) {
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "firstTime = :firstTime AND #ts < :timestamp",
-      ExpressionAttributeNames: marshall({"#ts": "timestamp"}),
+      ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
         {
           ":firstTime": false,
