@@ -22,12 +22,6 @@ const sortByTimestamp = (x) =>
   x.sort((a, b) => -1 * a.timestamp.localeCompare(b.timestamp));
 
 function chips(view) {
-  console.log({
-    "mdc-evolution-chip": true,
-    "mdc-evolution-chip--selectable": true,
-    "mdc-evolution-chip--filter": true,
-    "hc-chip--selected": view === View.hackersConfirmed,
-  });
   return html`<span
     class="mdc-evolution-chip-set"
     role="grid"
@@ -189,26 +183,23 @@ function chips(view) {
 }
 
 function renderTable(data, view) {
-  console.log(view);
   return html`
-    <div id="top" class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-          ${chips(view)}
-        </div>
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-          <table>
-            <thead>
-              <tr>
-                <th>Jméno</th>
-                <th>Společnost</th>
-                <th>Čas registrace</th>
-                <th>Akce</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${data.map(
-                (row) => html`
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      ${chips(view)}
+    </div>
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <table>
+        <thead>
+          <tr>
+            <th>Jméno</th>
+            <th>Společnost</th>
+            <th>Čas registrace</th>
+            <th>Akce</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${data.map(
+            (row) => html`
                 <tr>
                   <td>${row.firstName} ${row.lastName}</td>
                   <td>${row.company}</td>
@@ -241,22 +232,30 @@ function renderTable(data, view) {
                   </td>
                 </tr>
               `
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+          )}
+        </tbody>
+      </table>
     </div>
   `;
 }
 
 function renderView(state) {
-  return html`${until(
-    state.data?.then((x) =>
-      renderTable(sortByTimestamp(x), state.selectedView)
-    ),
-    html`<p>Načítám data&hellip;</p>`
-  )}`;
+  return html`
+    <div id="top" class="mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">
+        ${until(
+          state.data?.then((x) =>
+            renderTable(sortByTimestamp(x), state.selectedView)
+          ),
+          html`
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+              <p>Načítám data&hellip;</p>
+            </div>
+          `
+        )}
+      </div>
+    </div>
+  `;
 }
 
 /**
