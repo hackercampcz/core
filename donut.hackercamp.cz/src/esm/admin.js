@@ -1,6 +1,7 @@
 import { defAtom } from "@thi.ng/atom";
 import { html, svg } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
+import { guard } from "lit-html/directives/guard.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
@@ -424,8 +425,14 @@ function detailTemplate(detail) {
         () => html`
           <h3>Aktivita</h3>
           ${unsafeHTML(marked.parse(detail.activity))}
-          <p>${detail.activityCrew}</p>
-          <p>${detail.activityPlace}</p>
+          ${when(
+            detail.activityCrew,
+            () => html`<p>Parťáci: ${detail.activityCrew}</p>`
+          )}
+          ${when(
+            detail.activityPlace,
+            () => html`<p>Zázemí: ${detail.activityPlace}</p>`
+          )}
         `
       )}
     </div>
@@ -435,83 +442,73 @@ function detailTemplate(detail) {
 const renderDetail = (detail) => () =>
   transact((x) => Object.assign(x, { detail }));
 
-function renderTable(data, { view, detail }) {
-  const showDetail = Boolean(detail);
+function tableTemplate(data) {
+  return html`
+    <table>
+      <thead>
+        <tr>
+          <th>Jméno</th>
+          <th>Společnost</th>
+          <th>Čas registrace</th>
+          <th>Akce</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(
+          (row) => html`
+            <tr
+              @click="${renderDetail(row)}">
+              <td>${row.firstName} ${row.lastName}</td>
+              <td>${row.company}</td>
+              <td>${formatDateTime(new Date(row.timestamp))}</td>
+              <td>
+                <a
+                  href="mailto:${row.email}"
+                  title="Napsat ${row.email}""><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  width="24"
+                >
+                  <path d="M0 0h24v24H0z" fill="none"/>
+                  <path
+                    fill="var(--hc-text-color)"
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                  />
+                </svg></a>
+                <a
+                  href="tel:${row.phone.replace(" ", "")}"
+                  title="Zavolat ${row.phone}"><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    width="24"
+                  >
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                    <path
+                      fill="var(--hc-text-color)"
+                      d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
+                    />
+                  </svg></a>
+              </td>
+            </tr>
+          `
+        )}
+      </tbody>
+    </table>
+  `;
+}
+
+function registrationsTemlate(state) {
+  const { data, selectedView, detail } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${chips(view, { [view]: data.length })}
+      ${chips(selectedView, { [selectedView]: data.length })}
     </div>
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
     >
       <div class="hc-card hc-master-detail__list">
-        <table>
-          <thead>
-            <tr>
-              <th>Jméno</th>
-              <th>Společnost</th>
-              <th>Čas registrace</th>
-              <th>Akce</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${data.map(
-              (row) => html`
-                <tr
-                  @click="${renderDetail(row)}">
-                  <td>${row.firstName} ${row.lastName}</td>
-                  <td>${row.company}</td>
-                  <td>${formatDateTime(new Date(row.timestamp))}</td>
-                  <td>
-                    <a
-                      href="mailto:${row.email}"
-                      title="Napsat ${row.email}""><svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24"
-                      width="24"
-                    >
-                      <path d="M0 0h24v24H0z" fill="none"/>
-                      <path
-                        fill="var(--hc-text-color)"
-                        d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
-                      />
-                    </svg></a>
-                    <a
-                      href="tel:${row.phone.replace(" ", "")}"
-                      title="Zavolat ${row.phone}"><svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="24"
-                        width="24"
-                      >
-                        <path d="M0 0h24v24H0z" fill="none"/>
-                        <path
-                          fill="var(--hc-text-color)"
-                          d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
-                        />
-                      </svg></a>
-                  </td>
-                </tr>
-              `
-            )}
-          </tbody>
-        </table>
-      </div>
-      ${when(showDetail, () => detailTemplate(detail))}
-    </div>
-  `;
-}
-
-function renderView(state) {
-  return html`
-    <div id="top" class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
         ${until(
-          state.data?.then((x) =>
-            renderTable(sortByTimestamp(x), {
-              view: state.selectedView,
-              detail: state.detail,
-            })
-          ),
+          data?.then((data) => tableTemplate(data)),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p>Načítám data&hellip;</p>
@@ -519,6 +516,15 @@ function renderView(state) {
           `
         )}
       </div>
+      ${when(detail, () => detailTemplate(detail))}
+    </div>
+  `;
+}
+
+function renderView(state) {
+  return html`
+    <div id="top" class="mdc-layout-grid">
+      <div class="mdc-layout-grid__inner">${registrationsTemlate(state)}</div>
     </div>
   `;
 }
