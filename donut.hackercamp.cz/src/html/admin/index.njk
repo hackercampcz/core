@@ -19,7 +19,7 @@
       text-align: left;
     }
     tbody tr:hover {
-      background-color: #e3f1fb;
+      background-color: var(--hc-row-highlight);
     }
     tbody td {
       border-bottom: 1px solid #ddd;
@@ -38,6 +38,10 @@
     .hc-master-detail__list thead {
       position: sticky;
       top: 0;
+    }
+    .hc-master-detail__detail {
+      min-width: 33%;
+      transition: width .2s ease-out;
     }
   </style>
 {% endblock %}
