@@ -2108,7 +2108,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@pulumi/aws": 5.6.0
+    "@pulumi/aws": 5.7.0
     "@pulumi/awsx": 0.40.0
     "@pulumi/pulumi": 3.33.2
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=7efd932d3dd987367f7b27997fe0d478d92225b0"
@@ -2540,9 +2540,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:5.6.0":
-  version: 5.6.0
-  resolution: "@pulumi/aws@npm:5.6.0"
+"@pulumi/aws@npm:5.7.0":
+  version: 5.7.0
+  resolution: "@pulumi/aws@npm:5.7.0"
   dependencies:
     "@pulumi/pulumi": ^3.0.0
     aws-sdk: ^2.0.0
@@ -2550,7 +2550,7 @@ __metadata:
     mime: ^2.0.0
     read-package-tree: ^5.2.1
     resolve: ^1.7.1
-  checksum: 54cb88c38d8c613328aafdd0dc14443297d47f0cdc84f7fa08baf1d69839591c2eb4023bed13595f4b00bcf789f580f247e59279898db7d0e258e1a97d23336e
+  checksum: 9a4910656dba4dbd45527fa769dc112759366f119a5341ac5c6aa5a8ec1c6889e75cb3163cd85ed37e0108d91cfe964c9941431fc780006d62bd33af5a1c9c2d
   languageName: node
   linkType: hard
 
