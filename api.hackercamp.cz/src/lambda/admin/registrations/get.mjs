@@ -9,15 +9,37 @@ import { response, internalError, withCORS, notFound } from "../../http.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
+async function getConfirmedHackersRegistrations(page, pageSize) {
+  console.log("Loading confirmed hackers data", { page, pageSize });
+  const resp = await db.send(
+    new ScanCommand({
+      TableName: "hc-registrations",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "firstTime = :firstTime AND timestamp > :timestamp",
+      ExpressionAttributeValues: marshall(
+        {
+          ":firstTime": false,
+          ":timestamp": "2022-05-31T00:00:00.000Z",
+        },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return resp.Items.map((x) => unmarshall(x));
+}
+
 async function getHackersRegistrations(page, pageSize) {
   console.log("Loading hackers data", { page, pageSize });
   const resp = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "firstTime = :firstTime",
+      FilterExpression: "firstTime = :firstTime AND timestamp < :timestamp",
       ExpressionAttributeValues: marshall(
-        { ":firstTime": false },
+        {
+          ":firstTime": false,
+          ":timestamp": "2022-05-31T00:00:00.000Z",
+        },
         { removeUndefinedValues: true }
       ),
     })
@@ -61,6 +83,8 @@ async function getPlusOneRegistrations(page, pageSize) {
 
 function getData(type) {
   switch (type) {
+    case "hackersConfirmed":
+      return getConfirmedHackersRegistrations();
     case "hackers":
       return getHackersRegistrations();
     case "plusOnes":

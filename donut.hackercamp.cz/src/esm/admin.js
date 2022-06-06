@@ -6,6 +6,7 @@ import { initRenderLoop } from "./renderer.js";
 
 const View = {
   hackers: "hackers",
+  hackersConfirmed: "hackersConfirmed",
   plusOnes: "plusOnes",
   waitingList: "waitingList",
 };
@@ -26,6 +27,39 @@ function chips(view) {
     aria-multiselectable="false"
   >
     <span class="mdc-evolution-chip-set__chips" role="presentation">
+      <span
+        class="mdc-evolution-chip mdc-evolution-chip--selectable mdc-evolution-chip--filter"
+        role="presentation"
+        id="filter-not-paid"
+      >
+        <a
+          class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
+          role="option"
+          aria-selected="${view === View.hackersConfirmed ? "true" : "false"}"
+          tabindex="0"
+          href="?view=${View.hackersConfirmed}"
+        >
+          <span
+            class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
+          ></span>
+          <span class="mdc-evolution-chip__graphic">
+            <span class="mdc-evolution-chip__checkmark">
+              <svg
+                class="mdc-evolution-chip__checkmark-svg"
+                viewBox="-2 -3 30 30"
+              >
+                <path
+                  class="mdc-evolution-chip__checkmark-path"
+                  fill="none"
+                  stroke="black"
+                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                />
+              </svg>
+            </span>
+          </span>
+          <span class="mdc-evolution-chip__text-label">Potvrzení Hackeři</span>
+        </a>
+      </span>
       <span
         class="mdc-evolution-chip mdc-evolution-chip--selectable mdc-evolution-chip--filter"
         role="presentation"
