@@ -281,21 +281,19 @@ function renderTable(data, { view, detail }) {
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
     >
-      <table
-        class="hc-card"
-        style="min-width: 33%; max-width: 50%; flex-shrink: 0"
-      >
-        <thead>
-          <tr>
-            <th>Jméno</th>
-            <th>Společnost</th>
-            <th>Čas registrace</th>
-            <th>Akce</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${data.map(
-            (row) => html`
+      <div class="hc-card hc-master-detail__list">
+        <table>
+          <thead>
+            <tr>
+              <th>Jméno</th>
+              <th>Společnost</th>
+              <th>Čas registrace</th>
+              <th>Akce</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${data.map(
+              (row) => html`
                 <tr
                   @click="${renderDetail(row)}">
                   <td>${row.firstName} ${row.lastName}</td>
@@ -329,9 +327,10 @@ function renderTable(data, { view, detail }) {
                   </td>
                 </tr>
               `
-          )}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
       ${when(showDetail, () => detailTemplate(detail))}
     </div>
   `;

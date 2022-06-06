@@ -11,9 +11,12 @@
     th, td {
       padding: 8px;
     }
+    thead {
+      background-color: #fff;
+      border-bottom: 3px double #ddd;
+    }
     thead th {
       text-align: left;
-      border-bottom: 3px double #ddd;
     }
     tbody tr:hover {
       background-color: #e3f1fb;
@@ -23,6 +26,18 @@
     }
     .hc-master-detail {
       display: flex;
+    }
+    .hc-master-detail__list {
+      overflow-y: scroll;
+      min-width: 33%;
+      max-width: 50%;
+      flex-shrink: 0;
+      max-height: calc(100vh - 340px);
+      padding: 0;
+    }
+    .hc-master-detail__list thead {
+      position: sticky;
+      top: 0;
     }
   </style>
 {% endblock %}
