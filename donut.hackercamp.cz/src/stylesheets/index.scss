@@ -1,2 +1,52 @@
 @use "@material/layout-grid/mdc-layout-grid";
 @use "@material/chips/styles";
+
+.mdc-evolution-chip {
+  border: 1px solid;
+  border-image: var(--hc-gradient) 1;
+  background-color: #fff;
+  background-image: var(--hc-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  border-radius: 4px;
+  height: 28px;
+  --mdc-ripple-color: #b9e6f1;
+
+  .mdc-evolution-chip__ripple {
+    border-radius: 4px;
+  }
+
+  .mdc-evolution-chip__graphic {
+    width: 0;
+    transition: width 0.1s linear;
+  }
+
+  .mdc-evolution-chip__checkmark,
+  .mdc-evolution-chip__icon--primary,
+  .mdc-evolution-chip__icon--trailing,
+  .mdc-evolution-chip__text-label {
+    color: #2f5b7e;
+  }
+}
+
+.mdc-evolution-chip--filter.mdc-evolution-chip--selected,
+.mdc-evolution-chip--filter.hc-chip--selected {
+  color: #fff;
+  -webkit-background-clip: inherit;
+  -webkit-text-fill-color: initial;
+  --mdc-chip-graphic-selected-width: 20px;
+  
+  .mdc-evolution-chip__text-label {
+    color: #fff;
+  }
+  .mdc-evolution-chip__graphic {
+    width: var(--mdc-chip-graphic-selected-width, 20px);
+    padding-right: 8px;
+  }
+  .mdc-evolution-chip__checkmark {
+    opacity: 1;
+  }
+  .mdc-evolution-chip__action--primary {
+    padding-left: 8px;
+  }
+}

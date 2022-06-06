@@ -1,6 +1,6 @@
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
-import { when } from "lit-html/directives/when.js";
+import { classMap } from "lit-html/directives/class-map.js";
 import { until } from "lit-html/directives/until.js";
 import { initRenderLoop } from "./renderer.js";
 
@@ -11,7 +11,10 @@ const View = {
   waitingList: "waitingList",
 };
 
-const state = defAtom({ selectedView: View.hackers, view: renderView });
+const state = defAtom({
+  selectedView: View.hackersConfirmed,
+  view: renderView,
+});
 
 const formatDateTime = (x) =>
   x?.toLocaleString("cs", { dateStyle: "short", timeStyle: "short" }) ?? null;
@@ -19,6 +22,12 @@ const sortByTimestamp = (x) =>
   x.sort((a, b) => -1 * a.timestamp.localeCompare(b.timestamp));
 
 function chips(view) {
+  console.log({
+    "mdc-evolution-chip": true,
+    "mdc-evolution-chip--selectable": true,
+    "mdc-evolution-chip--filter": true,
+    "hc-chip--selected": view === View.hackersConfirmed,
+  });
   return html`<span
     class="mdc-evolution-chip-set"
     role="grid"
@@ -28,9 +37,13 @@ function chips(view) {
   >
     <span class="mdc-evolution-chip-set__chips" role="presentation">
       <span
-        class="mdc-evolution-chip mdc-evolution-chip--selectable mdc-evolution-chip--filter"
+        class="${classMap({
+          "mdc-evolution-chip": true,
+          "mdc-evolution-chip--selectable": true,
+          "mdc-evolution-chip--filter": true,
+          "hc-chip--selected": view === View.hackersConfirmed,
+        })}"
         role="presentation"
-        id="filter-not-paid"
       >
         <a
           class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
@@ -61,9 +74,13 @@ function chips(view) {
         </a>
       </span>
       <span
-        class="mdc-evolution-chip mdc-evolution-chip--selectable mdc-evolution-chip--filter"
+        class="${classMap({
+          "mdc-evolution-chip": true,
+          "mdc-evolution-chip--selectable": true,
+          "mdc-evolution-chip--filter": true,
+          "hc-chip--selected": view === View.hackers,
+        })}"
         role="presentation"
-        id="filter-not-paid"
       >
         <a
           class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
@@ -94,9 +111,13 @@ function chips(view) {
         </a>
       </span>
       <span
-        class="mdc-evolution-chip mdc-evolution-chip--selectable mdc-evolution-chip--filter"
+        class="${classMap({
+          "mdc-evolution-chip": true,
+          "mdc-evolution-chip--selectable": true,
+          "mdc-evolution-chip--filter": true,
+          "hc-chip--selected": view === View.plusOnes,
+        })}"
         role="presentation"
-        id="filter-bank-transfer"
       >
         <a
           class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
@@ -127,9 +148,13 @@ function chips(view) {
         </a>
       </span>
       <span
-        class="mdc-evolution-chip mdc-evolution-chip--selectable mdc-evolution-chip--filter"
+        class="${classMap({
+          "mdc-evolution-chip": true,
+          "mdc-evolution-chip--selectable": true,
+          "mdc-evolution-chip--filter": true,
+          "hc-chip--selected": view === View.waitingList,
+        })}"
         role="presentation"
-        id="filter-by-card"
       >
         <a
           class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
@@ -164,6 +189,7 @@ function chips(view) {
 }
 
 function renderTable(data, view) {
+  console.log(view);
   return html`
     <div id="top" class="mdc-layout-grid">
       <div class="mdc-layout-grid__inner">
@@ -226,7 +252,9 @@ function renderTable(data, view) {
 
 function renderView(state) {
   return html`${until(
-    state.data?.then((x) => renderTable(sortByTimestamp(x))),
+    state.data?.then((x) =>
+      renderTable(sortByTimestamp(x), state.selectedView)
+    ),
     html`<p>Načítám data&hellip;</p>`
   )}`;
 }
@@ -237,11 +265,12 @@ function renderView(state) {
  * @param {URLSearchParams} searchParams
  */
 function loadData(state, searchParams) {
-  const view = searchParams.get("view") ?? View.hackers;
+  const selectedView = searchParams.get("view") ?? View.hackersConfirmed;
   state.swap((x) =>
     Object.assign(x, {
+      selectedView,
       data: fetch(
-        `https://api.hackercamp.cz/v1/admin/registrations?type=${view}`
+        `https://api.hackercamp.cz/v1/admin/registrations?type=${selectedView}`
       ).then((resp) => resp.json()),
     })
   );
