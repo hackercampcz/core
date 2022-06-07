@@ -432,6 +432,20 @@ function detailTemplate(detail) {
         `
       )}
       ${when(
+        detail.invRecipient,
+        () => html`
+          <p>
+            Faturovat za něj bude
+            <a href="mailto:${detail.invRecipientEmail}"
+              >${detail.invRecipientFirstname} ${detail.invRecipientLastname}</a
+            >
+            <a href="tel:${detail.invRecipientPhone}"
+              >${detail.invRecipientPhone}</a
+            >
+          </p>
+        `
+      )}
+      ${when(
         detail.invAddress,
         () => html`
           <address
