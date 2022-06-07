@@ -432,7 +432,7 @@ function detailTemplate(detail) {
         `
       )}
       ${when(
-        detail.invRecipient,
+        detail.invRecipient === "1",
         () => html`
           <p>
             Faturovat za něj bude
