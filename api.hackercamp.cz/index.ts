@@ -53,6 +53,11 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
         httpMethod: "ANY",
         path: "/admin/registrations",
         fileName: "admin/registrations/index.mjs",
+        environment: {
+          variables: {
+            private_key: config.get("private-key"),
+          },
+        },
       },
     },
   ],
