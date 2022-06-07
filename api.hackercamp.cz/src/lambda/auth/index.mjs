@@ -75,21 +75,17 @@ export async function handler(event) {
   if (resp.ok && data.ok) {
     const token = data["access_token"];
     const { resp, data: profile } = await getUserInfo(token);
-    const user = await getUsersInfo(profile.sub, token);
-    console.log(user);
     const {
-      resp: info,
-      data: {
-        user: { is_admin: isAdmin },
-      },
-    } = user;
-    if (resp.ok && profile.ok && info.ok) {
+      data: { user },
+    } = await getUsersInfo(profile.sub, token);
+
+    if (resp.ok && profile.ok) {
       const payload = {
         expiresIn: "6h",
         audience: "https://donut.hackercamp.cz/",
         issuer: "https://api.hackercamp.cz/",
         "https://hackercamp.cz/email": profile.email,
-        "https://hackercamp.cz/is_admin": isAdmin,
+        "https://hackercamp.cz/is_admin": user?.is_admin,
         "https://slack.com/user_id": profile.sub,
         "https://slack.com/access_token": token,
       };
