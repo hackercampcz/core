@@ -66,7 +66,6 @@ async function getUsersInfo(user, token) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  console.log(event.headers);
   const params = getPayload(event);
   const origin = event.headers.origin;
   const { resp, data } = await getJWT(params.code, process.env, origin);
