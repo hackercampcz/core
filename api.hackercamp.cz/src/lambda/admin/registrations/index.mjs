@@ -31,19 +31,28 @@ export async function handler(event) {
       case "POST":
         return post.handler(event);
       case "OPTIONS":
-        return withCORS(["GET", "POST", "OPTIONS"])({
+        return withCORS(
+          ["GET", "POST", "OPTIONS"],
+          event.headers["origin"]
+        )({
           statusCode: 204,
           body: "",
         });
       default:
-        return withCORS(["GET", "POST", "OPTIONS"])({
+        return withCORS(
+          ["GET", "POST", "OPTIONS"],
+          event.headers["origin"]
+        )({
           statusCode: 405,
           body: "Method Not Allowed",
         });
     }
   } catch (e) {
     console.error(e);
-    return withCORS(["GET", "POST", "OPTIONS"])(
+    return withCORS(
+      ["GET", "POST", "OPTIONS"],
+      event.headers["origin"]
+    )(
       unauthorized({
         "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
       })
