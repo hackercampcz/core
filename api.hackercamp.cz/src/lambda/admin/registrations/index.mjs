@@ -11,6 +11,11 @@ import * as post from "./post.mjs";
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
+  console.log({
+    headers: event.headers,
+    token: getToken(event.headers),
+    secret: process.env["private_key"],
+  });
   try {
     const isAuthorized = await authorize(
       "admin",
