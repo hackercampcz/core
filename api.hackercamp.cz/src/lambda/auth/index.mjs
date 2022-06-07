@@ -75,12 +75,14 @@ export async function handler(event) {
   if (resp.ok && data.ok) {
     const token = data["access_token"];
     const { resp, data: profile } = await getUserInfo(token);
+    const user = await getUsersInfo(profile.sub, token);
+    console.log(user);
     const {
       resp: info,
       data: {
         user: { is_admin: isAdmin },
       },
-    } = await getUsersInfo(profile.sub, token);
+    } = user;
     if (resp.ok && profile.ok && info.ok) {
       const payload = {
         expiresIn: "6h",
