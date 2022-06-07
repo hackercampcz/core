@@ -417,25 +417,6 @@ function detailTemplate(detail) {
         travel.get(detail.travel) ?? "Ještě si nevybral"
       }</strong></p>
       ${when(
-        detail.invAddress,
-        () => html`
-          <address style="border: 1px solid #ddd">
-            <h3>Fakturační údaje</h3>
-            <p>${detail.invName}</p>
-            <p>${detail.invAddress}</p>
-            <p>
-              E-mail:
-              <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
-            </p>
-            <p>
-              ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
-              ${when(detail.invVatNo, () => html`DIČ: ${detail.invVatNo}`)}
-            </p>
-            ${when(detail.invText, () => html`<p>${detail.invText}</p>`)}
-          </address>
-        `
-      )}
-      ${when(
         detail.activity,
         () => html`
           <h3>Aktivita</h3>
@@ -448,6 +429,32 @@ function detailTemplate(detail) {
             detail.activityPlace,
             () => html`<p>Zázemí: ${detail.activityPlace}</p>`
           )}
+        `
+      )}
+      ${when(
+        detail.invAddress,
+        () => html`
+          <address
+            style="border: 1px solid #ddd; padding: 16px; font-size: 14px;"
+          >
+            <h3>Fakturační údaje</h3>
+            <p>${detail.invName}</p>
+            <p>${detail.invAddress}</p>
+            ${when(
+              detail.invEmail || detail["invoice-contact"],
+              () => html`
+                <p>
+                  E-mail:
+                  <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
+                </p>
+              `
+            )}
+            <p>
+              ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
+              ${when(detail.invVatNo, () => html`DIČ: ${detail.invVatNo}`)}
+            </p>
+            ${when(detail.invText, () => html`<p>${detail.invText}</p>`)}
+          </address>
         `
       )}
     </div>
