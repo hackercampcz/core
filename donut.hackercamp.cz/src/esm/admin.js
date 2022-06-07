@@ -417,10 +417,21 @@ function detailTemplate(detail) {
         travel.get(detail.travel) ?? "Ještě si nevybral"
       }</strong></p>
       ${when(
-        detail.address,
+        detail.invAddress,
         () => html`
           <address style="border: 1px solid #ddd">
-            <p>${detail.address}</p>
+            <h3>Fakturační údaje</h3>
+            <p>${detail.invName}</p>
+            <p>${detail.invAddress}</p>
+            <p>
+              E-mail:
+              <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
+            </p>
+            <p>
+              ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
+              ${when(detail.invVatNo, () => html`DIČ: ${detail.invVatNo}`)}
+            </p>
+            ${when(detail.invText, () => html`<p>${detail.invText}</p>`)}
           </address>
         `
       )}
