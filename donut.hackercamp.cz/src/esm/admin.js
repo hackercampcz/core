@@ -501,6 +501,10 @@ function tableTemplate(data) {
   `;
 }
 
+function unauthorized() {
+  return html`<p>Nemáte oprávnění pro tuto sekci.</p>`;
+}
+
 function registrationsTemlate(state) {
   const { data, selectedView, detail } = state;
   return html`
@@ -514,7 +518,10 @@ function registrationsTemlate(state) {
     >
       <div class="hc-card hc-master-detail__list">
         ${until(
-          data?.then((data) => tableTemplate(data)),
+          data?.then((data) => {
+            if (data.unauthorized) return unauthorized();
+            return tableTemplate(data);
+          }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p>Načítám data&hellip;</p>
@@ -547,7 +554,10 @@ function loadData(searchParams) {
       data: fetch(
         `https://api.hackercamp.cz/v1/admin/registrations?type=${selectedView}`,
         { credentials: "include" }
-      ).then((resp) => resp.json()),
+      ).then((resp) => {
+        if (resp.ok) return resp.json();
+        return { unauthorized: true };
+      }),
     })
   );
 }
