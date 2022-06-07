@@ -103,7 +103,6 @@ function getData(type) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  // TODO: authorization for admins
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
     event.headers["origin"]
