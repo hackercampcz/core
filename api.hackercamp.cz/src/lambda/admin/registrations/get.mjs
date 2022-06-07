@@ -105,7 +105,10 @@ function getData(type) {
 export async function handler(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    event.headers["origin"]
+    event.headers["origin"],
+    {
+      allowCredentials: true,
+    }
   );
   console.log("QS", event.queryStringParameters);
   const { type } = event.queryStringParameters;

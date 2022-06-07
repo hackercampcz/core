@@ -16,6 +16,13 @@ export async function handler(event) {
     token: getToken(event.headers),
     secret: process.env["private_key"],
   });
+  const withCORS_ = withCORS(
+    ["GET", "POST", "OPTIONS"],
+    event.headers["origin"],
+    {
+      allowCredentials: true,
+    }
+  );
   try {
     const isAuthorized = await authorize(
       "admin",
@@ -31,28 +38,19 @@ export async function handler(event) {
       case "POST":
         return post.handler(event);
       case "OPTIONS":
-        return withCORS(
-          ["GET", "POST", "OPTIONS"],
-          event.headers["origin"]
-        )({
+        return withCORS_({
           statusCode: 204,
           body: "",
         });
       default:
-        return withCORS(
-          ["GET", "POST", "OPTIONS"],
-          event.headers["origin"]
-        )({
+        return withCORS_({
           statusCode: 405,
           body: "Method Not Allowed",
         });
     }
   } catch (e) {
     console.error(e);
-    return withCORS(
-      ["GET", "POST", "OPTIONS"],
-      event.headers["origin"]
-    )(
+    return withCORS_(
       unauthorized({
         "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
       })
