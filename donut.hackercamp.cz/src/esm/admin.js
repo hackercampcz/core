@@ -1,7 +1,6 @@
 import { defAtom } from "@thi.ng/atom";
 import { html, svg } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
-import { guard } from "lit-html/directives/guard.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
@@ -28,193 +27,195 @@ const sortByTimestamp = (x) =>
   x.sort((a, b) => -1 * a.timestamp.localeCompare(b.timestamp));
 
 function chips(view, { hackers, waitingList, plusOnes, hackersConfirmed }) {
-  return html`<span
-    class="mdc-evolution-chip-set"
-    role="grid"
-    id="filters"
-    aria-orientation="horizontal"
-    aria-multiselectable="false"
-  >
-    <span class="mdc-evolution-chip-set__chips" role="presentation">
-      <span
-        class="${classMap({
-          "mdc-evolution-chip": true,
-          "mdc-evolution-chip--selectable": true,
-          "mdc-evolution-chip--filter": true,
-          "hc-chip": true,
-          "hc-chip--selected": view === View.hackersConfirmed,
-        })}"
-        role="presentation"
-      >
-        <a
-          class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
-          role="option"
-          aria-selected="${view === View.hackersConfirmed ? "true" : "false"}"
-          tabindex="0"
-          href="?view=${View.hackersConfirmed}"
+  return html`
+    <div
+      class="mdc-evolution-chip-set"
+      role="grid"
+      id="filters"
+      aria-orientation="horizontal"
+      aria-multiselectable="false"
+    >
+      <span class="mdc-evolution-chip-set__chips" role="presentation">
+        <span
+          class="${classMap({
+            "mdc-evolution-chip": true,
+            "mdc-evolution-chip--selectable": true,
+            "mdc-evolution-chip--filter": true,
+            "hc-chip": true,
+            "hc-chip--selected": view === View.hackersConfirmed,
+          })}"
+          role="presentation"
         >
-          <span
-            class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
-          ></span>
-          <span class="mdc-evolution-chip__graphic">
-            <span class="mdc-evolution-chip__checkmark">
-              <svg
-                class="mdc-evolution-chip__checkmark-svg"
-                viewBox="-2 -3 30 30"
-              >
-                <path
-                  class="mdc-evolution-chip__checkmark-path"
-                  fill="none"
-                  stroke="black"
-                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                />
-              </svg>
+          <a
+            class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
+            role="option"
+            aria-selected="${view === View.hackersConfirmed ? "true" : "false"}"
+            tabindex="0"
+            href="?view=${View.hackersConfirmed}"
+          >
+            <span
+              class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
+            ></span>
+            <span class="mdc-evolution-chip__graphic">
+              <span class="mdc-evolution-chip__checkmark">
+                <svg
+                  class="mdc-evolution-chip__checkmark-svg"
+                  viewBox="-2 -3 30 30"
+                >
+                  <path
+                    class="mdc-evolution-chip__checkmark-path"
+                    fill="none"
+                    stroke="black"
+                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                  />
+                </svg>
+              </span>
             </span>
-          </span>
-          <span class="mdc-evolution-chip__text-label"
-            >Potvrzení Hackeři
-            ${until(
-              hackersConfirmed?.then(
-                (x) => html`<data value="${x}">${x}</data>`,
+            <span class="mdc-evolution-chip__text-label"
+              >Potvrzení Hackeři
+              ${until(
+                hackersConfirmed?.then(
+                  (x) => html`<data value="${x}">${x}</data>`,
+                  ""
+                )
+              )}</span
+            >
+          </a>
+        </span>
+        <span
+          class="${classMap({
+            "mdc-evolution-chip": true,
+            "mdc-evolution-chip--selectable": true,
+            "mdc-evolution-chip--filter": true,
+            "hc-chip": true,
+            "hc-chip--selected": view === View.hackers,
+          })}"
+          role="presentation"
+        >
+          <a
+            class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
+            role="option"
+            aria-selected="${view === View.hackers ? "true" : "false"}"
+            tabindex="0"
+            href="?view=${View.hackers}"
+          >
+            <span
+              class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
+            ></span>
+            <span class="mdc-evolution-chip__graphic">
+              <span class="mdc-evolution-chip__checkmark">
+                <svg
+                  class="mdc-evolution-chip__checkmark-svg"
+                  viewBox="-2 -3 30 30"
+                >
+                  <path
+                    class="mdc-evolution-chip__checkmark-path"
+                    fill="none"
+                    stroke="black"
+                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                  />
+                </svg>
+              </span>
+            </span>
+            <span class="mdc-evolution-chip__text-label"
+              >Hackeři
+              ${until(
+                hackers?.then((x) => html`<data value="${x}">${x}</data>`),
                 ""
-              )
-            )}</span
-          >
-        </a>
-      </span>
-      <span
-        class="${classMap({
-          "mdc-evolution-chip": true,
-          "mdc-evolution-chip--selectable": true,
-          "mdc-evolution-chip--filter": true,
-          "hc-chip": true,
-          "hc-chip--selected": view === View.hackers,
-        })}"
-        role="presentation"
-      >
-        <a
-          class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
-          role="option"
-          aria-selected="${view === View.hackers ? "true" : "false"}"
-          tabindex="0"
-          href="?view=${View.hackers}"
+              )}</span
+            >
+          </a>
+        </span>
+        <span
+          class="${classMap({
+            "mdc-evolution-chip": true,
+            "mdc-evolution-chip--selectable": true,
+            "mdc-evolution-chip--filter": true,
+            "hc-chip": true,
+            "hc-chip--selected": view === View.plusOnes,
+          })}"
+          role="presentation"
         >
-          <span
-            class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
-          ></span>
-          <span class="mdc-evolution-chip__graphic">
-            <span class="mdc-evolution-chip__checkmark">
-              <svg
-                class="mdc-evolution-chip__checkmark-svg"
-                viewBox="-2 -3 30 30"
-              >
-                <path
-                  class="mdc-evolution-chip__checkmark-path"
-                  fill="none"
-                  stroke="black"
-                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                />
-              </svg>
-            </span>
-          </span>
-          <span class="mdc-evolution-chip__text-label"
-            >Hackeři
-            ${until(
-              hackers?.then((x) => html`<data value="${x}">${x}</data>`),
-              ""
-            )}</span
+          <a
+            class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
+            role="option"
+            aria-selected="${view === View.plusOnes ? "true" : "false"}"
+            tabindex="-1"
+            href="?view=${View.plusOnes}"
           >
-        </a>
-      </span>
-      <span
-        class="${classMap({
-          "mdc-evolution-chip": true,
-          "mdc-evolution-chip--selectable": true,
-          "mdc-evolution-chip--filter": true,
-          "hc-chip": true,
-          "hc-chip--selected": view === View.plusOnes,
-        })}"
-        role="presentation"
-      >
-        <a
-          class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
-          role="option"
-          aria-selected="${view === View.plusOnes ? "true" : "false"}"
-          tabindex="-1"
-          href="?view=${View.plusOnes}"
+            <span
+              class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
+            ></span>
+            <span class="mdc-evolution-chip__graphic">
+              <span class="mdc-evolution-chip__checkmark">
+                <svg
+                  class="mdc-evolution-chip__checkmark-svg"
+                  viewBox="-2 -3 30 30"
+                >
+                  <path
+                    class="mdc-evolution-chip__checkmark-path"
+                    fill="none"
+                    stroke="black"
+                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                  />
+                </svg>
+              </span>
+            </span>
+            <span class="mdc-evolution-chip__text-label"
+              >Plus Ones
+              ${until(
+                plusOnes?.then((x) => html`<data value="${x}">${x}</data>`),
+                ""
+              )}</span
+            >
+          </a>
+        </span>
+        <span
+          class="${classMap({
+            "mdc-evolution-chip": true,
+            "mdc-evolution-chip--selectable": true,
+            "mdc-evolution-chip--filter": true,
+            "hc-chip": true,
+            "hc-chip--selected": view === View.waitingList,
+          })}"
+          role="presentation"
         >
-          <span
-            class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
-          ></span>
-          <span class="mdc-evolution-chip__graphic">
-            <span class="mdc-evolution-chip__checkmark">
-              <svg
-                class="mdc-evolution-chip__checkmark-svg"
-                viewBox="-2 -3 30 30"
-              >
-                <path
-                  class="mdc-evolution-chip__checkmark-path"
-                  fill="none"
-                  stroke="black"
-                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                />
-              </svg>
-            </span>
-          </span>
-          <span class="mdc-evolution-chip__text-label"
-            >Plus Ones
-            ${until(
-              plusOnes?.then((x) => html`<data value="${x}">${x}</data>`),
-              ""
-            )}</span
+          <a
+            class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
+            role="option"
+            aria-selected="${view === View.waitingList ? "true" : "false"}"
+            tabindex="-1"
+            href="?view=${View.waitingList}"
           >
-        </a>
-      </span>
-      <span
-        class="${classMap({
-          "mdc-evolution-chip": true,
-          "mdc-evolution-chip--selectable": true,
-          "mdc-evolution-chip--filter": true,
-          "hc-chip": true,
-          "hc-chip--selected": view === View.waitingList,
-        })}"
-        role="presentation"
-      >
-        <a
-          class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
-          role="option"
-          aria-selected="${view === View.waitingList ? "true" : "false"}"
-          tabindex="-1"
-          href="?view=${View.waitingList}"
-        >
-          <span
-            class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
-          ></span>
-          <span class="mdc-evolution-chip__graphic">
-            <span class="mdc-evolution-chip__checkmark">
-              <svg
-                class="mdc-evolution-chip__checkmark-svg"
-                viewBox="-2 -3 30 30"
-              >
-                <path
-                  class="mdc-evolution-chip__checkmark-path"
-                  fill="none"
-                  stroke="black"
-                  d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                />
-              </svg>
+            <span
+              class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
+            ></span>
+            <span class="mdc-evolution-chip__graphic">
+              <span class="mdc-evolution-chip__checkmark">
+                <svg
+                  class="mdc-evolution-chip__checkmark-svg"
+                  viewBox="-2 -3 30 30"
+                >
+                  <path
+                    class="mdc-evolution-chip__checkmark-path"
+                    fill="none"
+                    stroke="black"
+                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
+                  />
+                </svg>
+              </span>
             </span>
-          </span>
-          <span class="mdc-evolution-chip__text-label"
-            >Waiting List
-            ${until(
-              waitingList?.then((x) => html`<data value="${x}">${x}</data>`)
-            )}</span
-          >
-        </a>
+            <span class="mdc-evolution-chip__text-label"
+              >Waiting List
+              ${until(
+                waitingList?.then((x) => html`<data value="${x}">${x}</data>`)
+              )}</span
+            >
+          </a>
+        </span>
       </span>
-    </span>
-  </span>`;
+    </div>
+  `;
 }
 
 const housing = new Map([
@@ -254,8 +255,13 @@ const ticketBadge = new Map([
           <circle opacity="0.23" cx="11" cy="55" r="24" fill="white" />
         </g>
         <defs>
-          <linearGradient id="paint5_linear" x1="2.55465e-06" y1="-8" x2="66" y2="73.5"
-                          gradientUnits="userSpaceOnUse">
+          <linearGradient
+            id="paint5_linear"
+            x1="2.55465e-06"
+            y1="-8"
+            x2="66"
+            y2="73.5"
+            gradientUnits="userSpaceOnUse">
             <stop stop-color="#E0E0E0" />
             <stop offset="1" stop-color="#BEBEBE" />
           </linearGradient>
@@ -539,7 +545,8 @@ function loadData(searchParams) {
     Object.assign(x, {
       selectedView,
       data: fetch(
-        `https://api.hackercamp.cz/v1/admin/registrations?type=${selectedView}`
+        `https://api.hackercamp.cz/v1/admin/registrations?type=${selectedView}`,
+        { credentials: "include" }
       ).then((resp) => resp.json()),
     })
   );
