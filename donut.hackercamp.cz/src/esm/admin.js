@@ -534,7 +534,25 @@ function tableTemplate(data) {
 }
 
 function unauthorized() {
-  return html`<p>Nemáte oprávnění pro tuto sekci.</p>`;
+  return html`<p>
+      Nemáte oprávnění pro tuto sekci. Pokud si myslíte, že je mít máte,
+      klikněte na následující tlačítko a potvrďte požadovaná oprávnění:
+    </p>
+    <div>
+      <a
+        href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email,incoming-webhook&user_scope=users.profile:read,users.profile:write,users:read"
+      >
+        <img
+          alt="Add to Slack"
+          height="40"
+          width="139"
+          src="https://platform.slack-edge.com/img/add_to_slack.png"
+          srcset="
+            https://platform.slack-edge.com/img/add_to_slack.png    1x,
+            https://platform.slack-edge.com/img/add_to_slack@2x.png 2x
+          "
+      /></a>
+    </div>`;
 }
 
 function registrationsTemlate(state) {
