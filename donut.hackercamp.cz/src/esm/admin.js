@@ -540,7 +540,7 @@ function unauthorized() {
     </p>
     <div>
       <a
-        href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email,incoming-webhook&user_scope=users.profile:read,users.profile:write,users:read"
+        href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read"
       >
         <img
           alt="Add to Slack"
