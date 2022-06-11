@@ -12,7 +12,7 @@
     "@hackercamp/lib": "workspace:lib",
     "@material/chips": "14.0.0",
     "@material/layout-grid": "14.0.0",
-    "@thi.ng/atom": "5.1.7",
+    "@thi.ng/atom": "5.1.8",
     "@thi.ng/transducers": "8.3.4",
     "date-fns": "2.28.0",
     "lit-html": "2.2.5",

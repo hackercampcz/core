@@ -2148,7 +2148,7 @@ __metadata:
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": 14.0.0
     "@material/layout-grid": 14.0.0
-    "@thi.ng/atom": 5.1.7
+    "@thi.ng/atom": 5.1.8
     "@thi.ng/transducers": 8.3.4
     "@typescript-eslint/eslint-plugin": 5.27.1
     "@typescript-eslint/parser": 5.27.1
@@ -2778,16 +2778,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/atom@npm:5.1.7":
-  version: 5.1.7
-  resolution: "@thi.ng/atom@npm:5.1.7"
+"@thi.ng/atom@npm:5.1.8":
+  version: 5.1.8
+  resolution: "@thi.ng/atom@npm:5.1.8"
   dependencies:
     "@thi.ng/api": ^8.3.7
     "@thi.ng/equiv": ^2.1.7
     "@thi.ng/errors": ^2.1.7
-    "@thi.ng/paths": ^5.1.7
+    "@thi.ng/paths": ^5.1.8
     tslib: ^2.4.0
-  checksum: c7215f7566b1c79953971c9e597be124f0b9708c939c12035072904b9afdde45e36f428101c9c238b94814ab744d2afb0821539e94fd6103f57fb71162e32e02
+  checksum: 0cdbb0b437b19eca139ba22ca558ea54ddc1c2ce701f491f3f1897bbecdd657c04163beade8415f784c0fb1f65358bb8dd241dc323761cfeff8a9b4251a22947
   languageName: node
   linkType: hard
 
@@ -2797,6 +2797,15 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: bec7abbe166ad5041eb16c60f8f05432a6fcd4a41c718a5d31ee6366c3a6cf5ce894696bc903bcfecc5e5b67ab0cec44db6df93ff7c970f7486940796f6d35a6
+  languageName: node
+  linkType: hard
+
+"@thi.ng/checks@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "@thi.ng/checks@npm:3.2.1"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 182dc1694706650a0e5d91b9b937d03779f2d4d63eae950215fec47c49e37dd683a758e84f5d8e4c096031b73572a67b2a2bd78a3eb2e24b11651d1599a68143
   languageName: node
   linkType: hard
 
@@ -2849,14 +2858,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/paths@npm:^5.1.7":
-  version: 5.1.7
-  resolution: "@thi.ng/paths@npm:5.1.7"
+"@thi.ng/paths@npm:^5.1.8":
+  version: 5.1.8
+  resolution: "@thi.ng/paths@npm:5.1.8"
   dependencies:
     "@thi.ng/api": ^8.3.7
-    "@thi.ng/checks": ^3.2.0
+    "@thi.ng/checks": ^3.2.1
     "@thi.ng/errors": ^2.1.7
-  checksum: 6db7bb261162cf93ea27c281ed3f0f13da15ae241a3a31df5b54736d7f0fa45d016a1b07972826c0126349e03b3ed333856c83bf1cc9e1b0f21067d8aef42db0
+  checksum: aaaceb0609ee0d012d9dc7995228d8a7b9b8eb53c35b0f69c833107d2a1554b66c5fd3b4f6cff24105c4b69f1f4edd4fadac9d8b9a8b573cc8157aff3400b501
   languageName: node
   linkType: hard
 
