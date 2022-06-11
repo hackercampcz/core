@@ -2149,7 +2149,7 @@ __metadata:
     "@material/chips": 14.0.0
     "@material/layout-grid": 14.0.0
     "@thi.ng/atom": 5.1.8
-    "@thi.ng/transducers": 8.3.4
+    "@thi.ng/transducers": 8.3.5
     "@typescript-eslint/eslint-plugin": 5.27.1
     "@typescript-eslint/parser": 5.27.1
     date-fns: 2.28.0
@@ -2764,17 +2764,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/arrays@npm:^2.2.4":
-  version: 2.2.4
-  resolution: "@thi.ng/arrays@npm:2.2.4"
+"@thi.ng/arrays@npm:^2.2.5":
+  version: 2.2.5
+  resolution: "@thi.ng/arrays@npm:2.2.5"
   dependencies:
     "@thi.ng/api": ^8.3.7
-    "@thi.ng/checks": ^3.2.0
+    "@thi.ng/checks": ^3.2.1
     "@thi.ng/compare": ^2.1.7
     "@thi.ng/equiv": ^2.1.7
     "@thi.ng/errors": ^2.1.7
-    "@thi.ng/random": ^3.3.1
-  checksum: 2890c86fa0fa87a2c899869bd21535a47fd0517adaf7c37ef20d51aabbf042e19cee9466104f0cbd63d6aa929abbd606a5408478a4d1628c433b00debd63b009
+    "@thi.ng/random": ^3.3.2
+  checksum: f4c67d209288850411429f6f054e462cbbd9322101d686a4d4b61fb3e0b61e21dad132b88b19df415cbcd7d38bee92dfdfc5a1f4b25065cd7fe6278d6c0e5731
   languageName: node
   linkType: hard
 
@@ -2788,15 +2788,6 @@ __metadata:
     "@thi.ng/paths": ^5.1.8
     tslib: ^2.4.0
   checksum: 0cdbb0b437b19eca139ba22ca558ea54ddc1c2ce701f491f3f1897bbecdd657c04163beade8415f784c0fb1f65358bb8dd241dc323761cfeff8a9b4251a22947
-  languageName: node
-  linkType: hard
-
-"@thi.ng/checks@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "@thi.ng/checks@npm:3.2.0"
-  dependencies:
-    tslib: ^2.4.0
-  checksum: bec7abbe166ad5041eb16c60f8f05432a6fcd4a41c718a5d31ee6366c3a6cf5ce894696bc903bcfecc5e5b67ab0cec44db6df93ff7c970f7486940796f6d35a6
   languageName: node
   linkType: hard
 
@@ -2869,31 +2860,31 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/random@npm:^3.3.1":
-  version: 3.3.1
-  resolution: "@thi.ng/random@npm:3.3.1"
+"@thi.ng/random@npm:^3.3.2":
+  version: 3.3.2
+  resolution: "@thi.ng/random@npm:3.3.2"
   dependencies:
     "@thi.ng/api": ^8.3.7
-    "@thi.ng/checks": ^3.2.0
+    "@thi.ng/checks": ^3.2.1
     "@thi.ng/errors": ^2.1.7
     "@thi.ng/hex": ^2.1.7
-  checksum: 7c84f62cd89192a1033ed35be15cdb0bb8d11732542a6cebcfdc4913f0db9a8685eaaffc4fd70da85ad653913503921bda1d221ae78bbff4f5d1acee6536d7ad
+  checksum: 617d3b4a880056529b0f6cf0ddb39cc080bcbccd05fe141f978121382add6c2746b098b065b7974803f384f517774b4185ace8d566b3a739a0545c6b54d19d26
   languageName: node
   linkType: hard
 
-"@thi.ng/transducers@npm:8.3.4":
-  version: 8.3.4
-  resolution: "@thi.ng/transducers@npm:8.3.4"
+"@thi.ng/transducers@npm:8.3.5":
+  version: 8.3.5
+  resolution: "@thi.ng/transducers@npm:8.3.5"
   dependencies:
     "@thi.ng/api": ^8.3.7
-    "@thi.ng/arrays": ^2.2.4
-    "@thi.ng/checks": ^3.2.0
+    "@thi.ng/arrays": ^2.2.5
+    "@thi.ng/checks": ^3.2.1
     "@thi.ng/compare": ^2.1.7
     "@thi.ng/compose": ^2.1.7
     "@thi.ng/errors": ^2.1.7
     "@thi.ng/math": ^5.3.3
-    "@thi.ng/random": ^3.3.1
-  checksum: 2a14ef1df1302b3ac45d9d5e8b4b90f5e08ab6035d9c9abcc36df1bd593fa390b7a9de3dc91a2e2b77d27029f48713b84657efbf4f7a479bae683aac10fab0b3
+    "@thi.ng/random": ^3.3.2
+  checksum: d9206749895b439518dd3b173d66536f89e8700e4fd869a7c4a25fc4a67e7591449f7c0c0d744276f32b4ca51b381913c0ac2217c461e2e105cf666701d1704c
   languageName: node
   linkType: hard
 
