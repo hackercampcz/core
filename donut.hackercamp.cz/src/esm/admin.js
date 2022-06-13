@@ -6,6 +6,7 @@ import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
 import { initRenderLoop } from "./renderer.js";
 import * as marked from "marked";
+import * as rollbar from "./rollbar.js";
 
 const View = {
   hackers: "hackers",
@@ -555,7 +556,7 @@ function unauthorized() {
     </div>`;
 }
 
-function registrationsTemlate(state) {
+function registrationsTemplate(state) {
   const { data, selectedView, detail } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -587,7 +588,7 @@ function registrationsTemlate(state) {
 function renderView(state) {
   return html`
     <div id="top" class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">${registrationsTemlate(state)}</div>
+      <div class="mdc-layout-grid__inner">${registrationsTemplate(state)}</div>
     </div>
   `;
 }
@@ -613,6 +614,7 @@ function loadData(searchParams) {
 }
 
 export async function main({ appRoot, searchParams, env }) {
+  rollbar.init(env);
   initRenderLoop(state, appRoot);
   loadData(searchParams);
 }

@@ -1,4 +1,5 @@
 import { render, html } from "lit-html";
+import * as rollbar from "./rollbar.js";
 
 function hideSlackButton(slackButton, slackProfile) {
   slackButton.innerHTML = "";
@@ -50,6 +51,7 @@ function signOut() {
 }
 
 export async function main({ searchParams, slackButton, env }) {
+  rollbar.init(env);
   const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
 
   if (

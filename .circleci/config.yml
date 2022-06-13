@@ -172,6 +172,8 @@ jobs:
     machine:
       image: ubuntu-2004:202201-02
       resource_class: arm.medium
+    environment:
+      ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
     steps:
       - checkout
       - node/install-packages:
@@ -193,6 +195,8 @@ jobs:
                --arg value4 "$HC_API_URL" \
                --arg key5 'slack/client-id' \
                --arg value5 "$HC_SLACK_CLIENT_ID" \
+               --arg key5 'rollbar/access-token' \
+               --arg value5 "$ROLLBAR_ACCESS_TOKEN" \
                '. | .[$key0]=$value0 | .[$key1]=$value1 | .[$key2]=$value2 | .[$key3]=$value3 | .[$key4]=$value4 | .[$key5]=$value5' \
             > << parameters.site_name >>/src/data/build.json
       - run:
@@ -266,6 +270,7 @@ workflows:
       - build-website:
           name: build-donut
           site_name: donut.hackercamp.cz
+          rollbar_access_token: 6ed48e07fedb43bb9767261178684740
           context: org-global
           requires:
             - provision
