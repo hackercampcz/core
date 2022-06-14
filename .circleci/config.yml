@@ -270,7 +270,7 @@ workflows:
       - build-website:
           name: build-donut
           site_name: donut.hackercamp.cz
-          rollbar_access_token: 6ed48e07fedb43bb9767261178684740
+          rollbar_access_token: a1f80d94b33346c1baf8e5be27ae5646
           context: org-global
           requires:
             - provision
@@ -294,12 +294,14 @@ workflows:
       - build-website:
           name: build-web
           site_name: www.hackercamp.cz
+          rollbar_access_token: 0e85a6c66092466eb20ef77aae300485
           context: org-global
           requires:
             - provision
       - deploy-site:
           name: deploy-web
           site_name: www.hackercamp.cz
+          rollbar_access_token: 1f07ff28d2d34cef95f57f34f8fab39d
           context: org-global
           requires:
             - build-web
