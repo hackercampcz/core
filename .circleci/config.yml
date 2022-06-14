@@ -169,6 +169,9 @@ jobs:
       environment:
         type: string
         default: production
+      rollbar_access_token:
+        type: string
+        default: ""
     machine:
       image: ubuntu-2004:202201-02
       resource_class: arm.medium
