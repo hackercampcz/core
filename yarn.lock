@@ -2157,7 +2157,7 @@ __metadata:
     lit-html: 2.2.5
     marked: 4.0.17
     ramda: 0.28.0
-    rollbar: ^2.25.0
+    rollbar: 2.25.0
     web-types-lit: 0.1.0
   languageName: unknown
   linkType: soft
@@ -11531,7 +11531,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollbar@npm:^2.25.0":
+"rollbar@npm:2.25.0":
   version: 2.25.0
   resolution: "rollbar@npm:2.25.0"
   dependencies:
