@@ -571,7 +571,7 @@ function registrationsTemplate(state) {
         ${until(
           data?.then((data) => {
             if (data.unauthorized) return unauthorized();
-            return tableTemplate(data);
+            return tableTemplate(sortByTimestamp(data));
           }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
