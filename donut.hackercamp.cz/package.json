@@ -15,7 +15,7 @@
     "@thi.ng/atom": "5.1.8",
     "@thi.ng/transducers": "8.3.5",
     "date-fns": "2.28.0",
-    "lit-html": "2.2.5",
+    "lit-html": "2.2.6",
     "marked": "4.0.17",
     "ramda": "0.28.0",
     "rollbar": "2.25.0"
