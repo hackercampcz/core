@@ -35,7 +35,7 @@ createTxtRecord(
 createTxtRecord(
   "hckr-google-site-verification",
   "hckr.camp",
-  "google-site-verification=YDWQyw0oXmTtX2YclHtVJCA2jGaYaJK3lMIdL9xokrY"
+  "google-site-verification=ZPwDOXETfpTUVRkNge-bejcAHnlXhlm14LSpOWsOZsA"
 );
 
 const hostedZone = getHostedZone(domain);
