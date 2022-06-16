@@ -32,6 +32,12 @@ createTxtRecord(
   "google-site-verification=eIaBVqhznPV-0AAEEbFJN82j3w063w_tW0-DUZWX5C0"
 );
 
+createTxtRecord(
+  "hckr-google-site-verification",
+  "hckr.camp",
+  "google-site-verification=YDWQyw0oXmTtX2YclHtVJCA2jGaYaJK3lMIdL9xokrY"
+);
+
 const hostedZone = getHostedZone(domain);
 new aws.route53.Record(`${domain}/txt-records-postmark-dkim`, {
   name: pulumi.interpolate`20220529092104pm._domainkey.${hostedZone.name}`,
