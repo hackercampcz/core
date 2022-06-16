@@ -32,6 +32,7 @@ createTxtRecord(
   "google-site-verification=eIaBVqhznPV-0AAEEbFJN82j3w063w_tW0-DUZWX5C0"
 );
 
+createGoogleMxRecords("hckr.camp");
 createTxtRecord(
   "hckr-google-site-verification",
   "hckr.camp",
