@@ -1,5 +1,4 @@
 {% extends 'layouts/application.njk' %}
-
 {% block title %}Ubytování na HC{% endblock %}
 {% block head %}
 <style>
@@ -313,6 +312,45 @@
     font-weight: 400;
   }
 
+  form {
+    max-width: 40em;
+  }
+
+  form section {
+    margin: 0 auto;
+    margin-bottom: 24px;
+    max-width: var(--hc-layout-width);
+  }
+
+  section.housing-type select {
+    width: 100%;
+    height: 36px;
+    font-size: 18px;
+  }
+  section.housing-type label {
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  form .choose {
+    display: flex;
+  }
+  form .choose:not(:last-child) {
+    margin-bottom: 24px;
+  }
+
+  form .choose input {
+    width: 16px;
+    height: 16px;
+  }
+
+  form .choose > label,
+  form .choose > div {
+    padding-left: 8px;
+    display: block;
+    flex: 1;
+  }
+
 </style>
 {% endblock %}
 
@@ -327,9 +365,65 @@
       </div>
     </div>
     <div class="form-story">
-      <p>Ahoj!</p>
       <p>Tady si vyber, kde a s kým chceš na Hacker Campu bydlet.</p>
     </div>
   </header>
+  <form action="{{ build["api-host"] }}housing" method="post" class="mdc-layout-grid">
+    <section class="housing-type">
+      <div class="hc-card hc-card--decorated">
+        <label for="acommodation-type">Nejprve si prosím vyber, jakou formu ubytování preferuješ:</label>
+        <select name="type" id="housing-type">
+          <option value="custom">na vlastní pěst</option>
+          <option value="glamping">Glamping stan pro 4 až 6 lidí</option>
+          <option value="little-house"><strong>domeček</strong> pro více lidí</option>
+          <option value="little-house">chata pro 2 až 4 lidi</option>
+        </select>
+        <p>
+          A tady kdyžtak najdeš
+          <a download href="{{ "areal-map.png" | cloudinaryUrl(dpr="auto") }}">
+            mapu areálu</a> ke stažení.
+        </p>
+      </div>
+    </section>
+    <section class="custom-housing">
+      <h2>Na vlastní pěst</h2>
+      <div class="hc-card">
+        <div class="choose">
+            <input type="radio" name="housing" value="own-car" id="car-housing" />
+            <label for="car-housing">
+              Přijedu autem a budu v něm i spát
+            </label>
+          </div>
+          <div class="choose">
+            <input type="radio" name="housing" value="own-caravan" id="caravan-housing" />
+            <label for="caravan-housing">
+              Přivezu si <strong>vlastní karavan</strong>, ve kterém chci spát
+            </label>
+          </div>
+          <div class="choose">
+            <input type="radio" name="housing" value="open-air" id="openair-housing" />
+            <label for="openair-housing">
+              Jsem pankáč a budu spát <strong>pod širákem</strong> nebo v&nbsp;hamace
+            </label>
+          </div>
+          <div class="choose">
+            <input type="radio" name="housing" value="own-tent" id="own-housing" checked="checked"/>
+            <label for="own-housing">
+              Přivezu si <strong>vlastní stan</strong> a v něm budu spát
+              <span>v areálu je k dispozici louka pro stanování</span>
+            </label>
+          </div>
+          <div class="choose">
+            <input type="radio" name="housing" value="nearby" id="nearby-housing" />
+            <label for="nearby-housing">
+              Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
+              <span>
+                V okolí je několik hezkých penzionů, zeptej se crew na případné tipy.
+              </span>
+            </label>
+          </div>
+      </section>
+    </form>
+  </div>
 </div>
 {% endblock %}
