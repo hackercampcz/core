@@ -333,6 +333,7 @@
     height: 36px;
     font-size: 18px;
   }
+
   section.housing-type label {
     display: block;
     margin-bottom: 16px;
@@ -380,6 +381,10 @@
     box-sizing: border-box;
   }
 
+  form section[aria-hidden="true"] {
+    display: none;
+  }
+
 </style>
 
 {% endblock %}
@@ -402,11 +407,12 @@
     <section class="housing-type">
       <div class="hc-card hc-card--decorated">
         <label for="acommodation-type">Nejprve si prosím vyber, jakou formu ubytování preferuješ:</label>
-        <select name="type" id="housing-type">
-          <option value="custom">na vlastní pěst</option>
+        <select name="type" id="housing-type" required>
+          <option value="" hidden></option>
+          <option value="custom">Na vlastní pěst</option>
           <option value="glamping">Glamping stan pro 4 až 6 lidí</option>
-          <option value="little-house">domeček pro více lidí</option>
-          <option value="little-house">chata pro 2 až 4 lidi</option>
+          <option value="house">Domeček pro více lidí</option>
+          <option value="cottage">Chata pro 2 až 4 lidi</option>
         </select>
         <p>
           A tady kdyžtak najdeš
@@ -415,7 +421,7 @@
         </p>
       </div>
     </section>
-    <section class="custom-housing">
+    <section class="custom-housing" aria-hidden="true">
       <h2>Na vlastní pěst</h2>
       <div class="hc-card">
         <div class="choose">
@@ -453,7 +459,7 @@
             </label>
           </div>
       </section>
-      <section class="glamping-housing">
+      <section class="glamping-housing" aria-hidden="true">
         <h2>Glamping stany</h2>
         <div class="hc-card">
           <p>V areálu připravíme i ubytování v ChillVillage stanech. Stany jsou pro <strong>6 osob</strong>.</p>
@@ -600,4 +606,24 @@
     </form>
   </div>
 </div>
+<script>
+  const formElm = document.getElementById("housing");
+  formElm.elements.type.addEventListener("change", (event) => {
+    const { value } = event.target;
+    for (let sectionElm of formElm.querySelectorAll("section:not(:first-child)")) {
+      if (Array.from(sectionElm.classList).includes(`${value}-housing`)) {
+        sectionElm.removeAttribute("aria-hidden");
+      } else {
+        sectionElm.setAttribute("aria-hidden", "true");
+      }
+    }
+  });
+
+  // fake fetch
+  setTimeout(() => {
+    const selectElm = formElm.elements.type;
+    selectElm.value = "glamping";
+    selectElm.dispatchEvent(new Event("change"));
+  }, 200)
+</script>
 {% endblock %}
