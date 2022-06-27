@@ -10,6 +10,16 @@ module.exports = {
   stylesheets: true,
   workboxBuild: false,
 
+  generate: {
+    redirects: [
+      {
+        collection: "redirects",
+        host: "https://donut.hackercamp.cz",
+        route: (x) => x,
+      },
+    ],
+  },
+
   html: {
     collections: ["images", "build"],
     nunjucksRender: {
