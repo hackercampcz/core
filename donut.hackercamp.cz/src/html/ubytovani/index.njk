@@ -313,7 +313,7 @@
   }
 
   form {
-    max-width: 40em;
+    max-width: 42em;
   }
 
   form section {
@@ -363,6 +363,7 @@
     grid-template-columns: auto;
     grid-column-gap: 16px;
     grid-row-gap: 8px;
+    margin-bottom: 32px;
   }
   @media screen and (min-width: 600px) {
     .booking-grid {
@@ -400,7 +401,7 @@
       </div>
     </div>
     <div class="form-story">
-      <p>Tady si vyber, kde a s kým chceš na Hacker Campu bydlet.</p>
+      <p>Tady si zvol jak, kde a s kým chceš na Hacker Campu bydlet.</p>
     </div>
   </header>
   <form id="housing" action="{{ build["api-host"] }}housing" method="post" class="mdc-layout-grid">
@@ -458,153 +459,25 @@
               </span>
             </label>
           </div>
-      </section>
-      <section class="glamping-housing" aria-hidden="true">
-        <h2>Glamping stany</h2>
-        <div class="hc-card">
-          <p>V areálu připravíme i ubytování v ChillVillage stanech. Stany jsou pro <strong>6 osob</strong>.</p>
-          <h3>Stan č. 1</h3>
-          <div class="booking-grid">
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --" />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-          </div>
-
-          <h3>Stan č. 2</h3>
-          <div class="booking-grid">
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --" />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-          </div>
-
-          <h3>Stan č. 3</h3>
-          <div class="booking-grid">
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --" />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-          </div>
-
-          <h3>Stan č. 4</h3>
-          <div class="booking-grid">
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --" />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-          </div>
-
-          <h3>Stan č. 5</h3>
-          <div class="booking-grid">
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --" />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-          </div>
-
-          <h3>Stan č. 6</h3>
-          <div class="booking-grid">
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --" />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-            <div class="booking-grid__cell">
-              <input list="hackers" name="glamping[]" placeholder="-- Volno --"  />
-            </div>
-          </div>
-
-        <datalist id="hackers">
-          <option value="Dan Hromada z TopMonks">
-          <option value="Jakub Balada z Apify">
-          <option value="Pepa Prdlej z Depa">
-          <option value="Aleš Šroubíček z atlas.cz">
-          <option value="John Doe" disabled>
-        </datalist>
-      </section>
-    </form>
-  </div>
+        </div>
+    </section>
+    <section class="glamping-housing" aria-hidden="true">
+      <h2>Glamping stany</h2>
+      <div class="hc-card">
+        <p>V areálu připravíme i ubytování v ChillVillage stanech. Stany jsou pro <strong>6 osob</strong>.</p>
+      </div>
+      <datalist id="hackers">
+        <option value="Dan Hromada z TopMonks">
+        <option value="Jakub Balada z Apify">
+        <option value="Pepa Prdlej z Depa">
+        <option value="Aleš Šroubíček z atlas.cz">
+        <option value="John Doe" disabled>
+      </datalist>
+    </section>
+    <button type="submit" class="hc-button" disabled>
+      Uložit (se)
+    </button>
+  </form>
 </div>
 {% endblock %}
 
