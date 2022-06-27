@@ -1,7 +1,8 @@
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { when } from "lit-html/directives/when.js";
-import { initRenderLoop } from "./renderer.js";
+import { initRenderLoop } from "./lib/renderer.js";
+import * as workbox from "./lib/workbox.js";
 
 const state = defAtom({
   profile: null,
@@ -74,6 +75,9 @@ function loadProfile() {
 }
 
 export async function init({ profile: root }) {
+  workbox.init(() => {
+    // TODO: show notification about update
+  });
   initRenderLoop(state, root);
   loadProfile();
   window.addEventListener("hc:profile", loadProfile);

@@ -1,3 +1,4 @@
+{%- from '../macros/helpers.njk' import importMapTarget -%}
 <!doctype html>
 <html lang="cs">
 <head>
@@ -7,8 +8,9 @@
   {% include "shared/fonts.html" %}
   {% include "shared/styles.html" %}
   {% include "shared/app-icons.html" %}
+  {{ importMapTarget() }}
   {% block head %}{% endblock %}
-  <link rel="stylesheet" href="/assets/css/index.css" />
+  <link rel="stylesheet" href="/assets/css/index.css">
 </head>
 <body>
 
@@ -42,6 +44,5 @@
     profile: document.getElementById("hc-header__profile")
   })
 </script>
-
 </body>
 </html>

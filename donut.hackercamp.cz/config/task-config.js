@@ -45,13 +45,13 @@ module.exports = {
     server: {
       baseDir: pathConfig.dest,
     },
-    https: true,
+    browser: ["Google Chrome Canary"],
   },
 
   workboxBuild: false,
 
   production: {
-    rev: false,
+    rev: true,
   },
 
   additionalTasks: {

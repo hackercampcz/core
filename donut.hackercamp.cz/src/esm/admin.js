@@ -4,9 +4,9 @@ import { classMap } from "lit-html/directives/class-map.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
-import { initRenderLoop } from "./renderer.js";
+import { initRenderLoop } from "./lib/renderer.js";
 import * as marked from "marked";
-import * as rollbar from "./rollbar.js";
+import * as rollbar from "./lib/rollbar.js";
 
 const View = {
   hackers: "hackers",
@@ -593,22 +593,25 @@ function renderView(state) {
   `;
 }
 
+async function fetchData(selectedView, apiHost) {
+  const params = new URLSearchParams({ type: selectedView });
+  const resource = new URL(`admin/registrations?${params}`, apiHost).href;
+  const resp = await fetch(resource, { credentials: "include" });
+  if (resp.ok) return resp.json();
+  return { unauthorized: true };
+}
+
 /**
  *
  * @param {URLSearchParams} searchParams
+ * @param {string} apiHost
  */
-function loadData(searchParams) {
+function loadData(searchParams, apiHost) {
   const selectedView = searchParams.get("view") ?? View.hackersConfirmed;
   transact((x) =>
     Object.assign(x, {
       selectedView,
-      data: fetch(
-        `https://api.hackercamp.cz/v1/admin/registrations?type=${selectedView}`,
-        { credentials: "include" }
-      ).then((resp) => {
-        if (resp.ok) return resp.json();
-        return { unauthorized: true };
-      }),
+      data: fetchData(selectedView, apiHost),
     })
   );
 }
@@ -616,5 +619,5 @@ function loadData(searchParams) {
 export async function main({ appRoot, searchParams, env }) {
   rollbar.init(env);
   initRenderLoop(state, appRoot);
-  loadData(searchParams);
+  loadData(searchParams, env["api-host"]);
 }

@@ -1,5 +1,5 @@
 import { render, html } from "lit-html";
-import * as rollbar from "./rollbar.js";
+import * as rollbar from "./lib/rollbar.js";
 
 function hideSlackButton(slackButton, slackProfile) {
   slackButton.innerHTML = "";

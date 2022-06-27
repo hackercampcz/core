@@ -2135,6 +2135,7 @@ __metadata:
     "@aws-sdk/client-dynamodb": 3.118.0
     "@aws-sdk/util-dynamodb": 3.118.0
     "@hackercamp/lib": "workspace:lib"
+    fast-xml-parser: ^4.0.8
     jsonwebtoken: 8.5.1
   languageName: unknown
   linkType: soft
@@ -2146,7 +2147,7 @@ __metadata:
     "@pulumi/aws": 5.9.1
     "@pulumi/awsx": 0.40.0
     "@pulumi/pulumi": 3.35.0
-    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=7efd932d3dd987367f7b27997fe0d478d92225b0"
+    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=2479e8ad897002cbf8dc12ee73c3927a3f24c33f"
     "@topmonks/pulumi-aws": 2.2.4
     dotenv: 16.0.1
     dotenv-cli: 5.1.0
@@ -2180,6 +2181,7 @@ __metadata:
     ramda: 0.28.0
     rollbar: 2.25.0
     web-types-lit: 0.1.0
+    workbox-window: 6.5.3
   languageName: unknown
   linkType: soft
 
@@ -2924,9 +2926,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=7efd932d3dd987367f7b27997fe0d478d92225b0":
+"@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=2479e8ad897002cbf8dc12ee73c3927a3f24c33f":
   version: 6.0.0
-  resolution: "@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=7efd932d3dd987367f7b27997fe0d478d92225b0"
+  resolution: "@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=2479e8ad897002cbf8dc12ee73c3927a3f24c33f"
   dependencies:
     "@rollup/plugin-alias": ^3.1.9
     "@rollup/plugin-node-resolve": ^13.3.0
@@ -2986,7 +2988,7 @@ __metadata:
     workbox-build: ^6.5.3
   bin:
     blendid: bin/blendid.js
-  checksum: c6934b16d5ea198ccf8595e8fbbcb62c559e9c5939c350a4c64f936989d26659f2ba9226c1ac5ecfbf3b671318c5d72cd89cada31d7c83ce93db01a096d1e57c
+  checksum: b75fbb481e1f3050373707f8d41a2c12ee9da4b60ba22401340409ed813501ca7b10c0a3b57d4a6b4c04d0fe86f63aef781b365f6721e7eb32c1a0963980fa04
   languageName: node
   linkType: hard
 
@@ -6327,6 +6329,17 @@ __metadata:
   bin:
     xml2js: cli.js
   checksum: d9da9145f73d90c05ee2746d80c78eca4da0249dea8c81ea8f1a6e1245e62988ed4a040dbd1c7229b1e0bdcbf69d33c882e0ac337d10c7eedb159a4dc9779327
+  languageName: node
+  linkType: hard
+
+"fast-xml-parser@npm:^4.0.8":
+  version: 4.0.8
+  resolution: "fast-xml-parser@npm:4.0.8"
+  dependencies:
+    strnum: ^1.0.5
+  bin:
+    fxparser: src/cli/cli.js
+  checksum: bf8467fb59b0840f4e3e8383872ec39a97f6cc16fc1c05b3e28060500f85cd34477911254fae61dff64e42129687f2e4ae47c86038230344e306124abaa2f335
   languageName: node
   linkType: hard
 
@@ -12350,6 +12363,13 @@ __metadata:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: 492f73e27268f9b1c122733f28ecb0e7e8d8a531a6662efbd08e22cccb3f9475e90a1b82cab06a392f6afae6d2de636f977e231296400d0ec5304ba70f166443
+  languageName: node
+  linkType: hard
+
+"strnum@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "strnum@npm:1.0.5"
+  checksum: 651b2031db5da1bf4a77fdd2f116a8ac8055157c5420f5569f64879133825915ad461513e7202a16d7fec63c54fd822410d0962f8ca12385c4334891b9ae6dd2
   languageName: node
   linkType: hard
 

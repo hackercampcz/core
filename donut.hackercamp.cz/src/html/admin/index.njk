@@ -27,27 +27,33 @@
     tbody td {
       border-bottom: 1px solid #ddd;
     }
-    .hc-master-detail {
-      display: flex;
-    }
-    .hc-master-detail__list {
-      overflow-y: scroll;
-      min-width: 33%;
-      max-width: 50%;
-      flex-shrink: 0;
-      max-height: calc(100vh - 212px);
-      padding: 0;
-    }
-    .hc-master-detail__list table {
-      width: 100%;
-    }
-    .hc-master-detail__list thead {
-      position: sticky;
-      top: 0;
-    }
-    .hc-master-detail__detail {
-      min-width: 33%;
-      transition: width .2s ease-out;
+    @media (min-width: 840px) {
+      .hc-master-detail {
+        display: flex;
+      }
+
+      .hc-master-detail__list {
+        overflow-y: scroll;
+        min-width: 33%;
+        max-width: 50%;
+        flex-shrink: 0;
+        max-height: calc(100vh - 212px);
+        padding: 0;
+      }
+
+      .hc-master-detail__list table {
+        width: 100%;
+      }
+
+      .hc-master-detail__list thead {
+        position: sticky;
+        top: 0;
+      }
+
+      .hc-master-detail__detail {
+        min-width: 33%;
+        transition: width .2s ease-out;
+      }
     }
   </style>
 {% endblock %}
