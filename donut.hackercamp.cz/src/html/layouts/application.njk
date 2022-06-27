@@ -8,6 +8,7 @@
   {% include "shared/styles.html" %}
   {% include "shared/app-icons.html" %}
   {% block head %}{% endblock %}
+  <link rel="stylesheet" href="/assets/css/index.css" />
 </head>
 <body>
 
@@ -42,18 +43,5 @@
   })
 </script>
 
-<script type="module">
-  function el(tagName, attrs) {
-    const el = document.createElement(tagName);
-    for (const [key, val] of Object.entries(attrs))
-      el.setAttribute(key, val);
-    return el;
-  }
-
-  document.head.appendChild(el("link", {
-    rel: "stylesheet",
-    href: "/assets/css/index.css"
-  }));
-</script>
 </body>
 </html>
