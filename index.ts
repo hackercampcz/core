@@ -8,8 +8,6 @@ import {
   Website,
   CloudFront,
   getHostedZone,
-  createCacheBoostingPolicy,
-  createSecurityHeadersAndPermissionsPolicy,
 } from "@topmonks/pulumi-aws";
 import { createApi, createDB, routes } from "./api.hackercamp.cz";
 import { AuthEdgeLambda } from "./donut.hackercamp.cz/edge";
