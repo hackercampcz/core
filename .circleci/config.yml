@@ -227,9 +227,7 @@ jobs:
       rollbar_access_token:
         type: string
         default: ""
-    machine:
-      image: ubuntu-2004:current
-    resource_class: arm.medium
+    executor: aws-cli/default
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
     steps:
