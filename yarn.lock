@@ -2135,7 +2135,7 @@ __metadata:
     "@aws-sdk/client-dynamodb": 3.118.0
     "@aws-sdk/util-dynamodb": 3.118.0
     "@hackercamp/lib": "workspace:lib"
-    fast-xml-parser: ^4.0.8
+    fast-xml-parser: 4.0.8
     jsonwebtoken: 8.5.1
   languageName: unknown
   linkType: soft
@@ -6332,7 +6332,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:^4.0.8":
+"fast-xml-parser@npm:4.0.8":
   version: 4.0.8
   resolution: "fast-xml-parser@npm:4.0.8"
   dependencies:
