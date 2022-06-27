@@ -108,22 +108,28 @@ export const contactsDataTable = db.contactsDataTable;
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = api.url.apply((x) => new URL("/v1/", x).href);
 
-const donutCacheBoostingPolicy = createCacheBoostingPolicy(donutDomain, {
-  cookiesConfig: { cookieBehavior: "none" },
-  headersConfig: { headerBehavior: "none" },
-  queryStringsConfig: { queryStringBehavior: "none" },
-});
+const donutCacheBoostingPolicy = createCacheBoostingPolicy(
+  `${donutDomain}-assets-cache-boosting`,
+  {
+    cookiesConfig: { cookieBehavior: "none" },
+    headersConfig: { headerBehavior: "none" },
+    queryStringsConfig: { queryStringBehavior: "none" },
+  }
+);
 const donutSecurityHeadersPolicy = createSecurityHeadersAndPermissionsPolicy(
-  donutDomain,
+  `${donutDomain}-security-headers`,
   {}
 );
-const webCacheBoostingPolicy = createCacheBoostingPolicy(webDomain, {
-  cookiesConfig: { cookieBehavior: "none" },
-  headersConfig: { headerBehavior: "none" },
-  queryStringsConfig: { queryStringBehavior: "none" },
-});
+const webCacheBoostingPolicy = createCacheBoostingPolicy(
+  `${webDomain}-assets-cache-boosting`,
+  {
+    cookiesConfig: { cookieBehavior: "none" },
+    headersConfig: { headerBehavior: "none" },
+    queryStringsConfig: { queryStringBehavior: "none" },
+  }
+);
 const webSecurityHeadersPolicy = createSecurityHeadersAndPermissionsPolicy(
-  webDomain,
+  `${webDomain}-security-headers`,
   {}
 );
 
