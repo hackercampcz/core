@@ -48,7 +48,12 @@ module.exports = {
     browser: ["Google Chrome Canary"],
   },
 
-  workboxBuild: false,
+  workboxBuild: {
+    swSrc: projectPath(pathConfig.src, pathConfig.esbuild.src, "sw.js"),
+    swDest: projectPath(pathConfig.dest, "sw.js"),
+    globDirectory: pathConfig.dest,
+    globPatterns: ["**/*.html", "assets/**/*.{js,mjs,css}"],
+  },
 
   production: {
     rev: true,

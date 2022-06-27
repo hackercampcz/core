@@ -5,7 +5,7 @@ const isProduction = () =>
 
 export function init(showSkipWaitingPrompt) {
   if ("serviceWorker" in navigator && isProduction()) {
-    const wb = new Workbox("/assets/esm/sw.js");
+    const wb = new Workbox("/sw.js");
     wb.addEventListener("waiting", showSkipWaitingPrompt);
     wb.register().catch((ex) => console.error(ex));
   }
