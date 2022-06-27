@@ -360,15 +360,17 @@
 
   .booking-grid {
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 1fr;
     grid-column-gap: 16px;
     grid-row-gap: 8px;
     margin-bottom: 32px;
   }
   @media screen and (min-width: 600px) {
     .booking-grid {
-      grid-template-columns: auto auto;
+      grid-template-columns: 1fr 1fr;
     }
+  }
+  .booking-grid__cell {
   }
   .booking-grid__cell input.me {
     font-weight: bold;
