@@ -105,7 +105,7 @@ jobs:
         default: prod
     machine:
       image: ubuntu-2004:current
-    resource_class: arm.medium
+    resource_class: arm.large
     environment:
       AWS_STS_REGIONAL_ENDPOINTS: regional
     steps:
@@ -132,7 +132,7 @@ jobs:
         default: prod
     machine:
       image: ubuntu-2004:current
-    resource_class: arm.medium
+    resource_class: arm.large
     steps:
       - checkout
       - pulumi/login
