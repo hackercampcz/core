@@ -1,0 +1,44 @@
+[
+  {
+    "type": "cottage",
+    "name": "for-two",
+    "title": "Chatky pro dva",
+    "description": "V areálu stojí 10 malých starších chatek. Každá chatka je pro 2 pořádné pankáče. Chatek je bez elektrické zásuvky."
+  },
+  {
+    "type": "cottage",
+    "name": "for-six",
+    "title": "Chatky pro šest",
+    "description": "V areálu stojí 20 klasických táborových čtyřlůžkových chatek. Chatky jsou udržované. V každé chatce jsou dvě palandy, dvě skříně, stoleček s židlí. V polovině chatek jsou elektrické zásuvky."
+  },
+  {
+    "type": "house",
+    "name": "blue",
+    "title": "Modrý domek",
+    "description": "Modrý domek má celkovou kapacitu 28 lůžek. Domek je rozdělen do dvou půlek. Každá polovina má jeden dvoulůžkový, dva šestilůžkové pokoje a koupelnu s umyvadly a toaletou."
+  },
+  {
+    "type": "house",
+    "name": "green",
+    "title": "Zelený domek",
+    "description": "Zelený domek má celkovou kapacitu 28 lůžek. Každý pokoj má vlastní sociální zařízení (koupelna, toaleta)."
+  },
+  {
+    "type": "house",
+    "name": "yellow",
+    "title": "Žlutý domek",
+    "description": "Žlutý domek má celkovou kapacitu 28 lůžek. Domek je rozdělen do dvou půlek. Každá polovina má jeden dvoulůžkový, dva šestilůžkové pokoje a koupelnu s umyvadly a toaletou."
+  },
+  {
+    "type": "house",
+    "name": "red",
+    "title": "Červený domek",
+    "description": "Červený domek má celkovou kapacitu 24 lůžek. Jeden pokoj je kompletně bezbariérový. Pokoje jsou s vlatní koupelnou a toaletou (VK) nebo s koupelnou a toaletou na chodbě (CHK)"
+  },
+  {
+    "type": "tent",
+    "name": "glamping",
+    "title": "Glamping stany",
+    "description": "V areálu připravíme i ubytování v ChillVillage stanech. Stany jsou pro 6 osob."
+  }
+]

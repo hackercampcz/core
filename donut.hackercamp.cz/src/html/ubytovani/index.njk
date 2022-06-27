@@ -411,9 +411,6 @@
         <select name="type" id="housing-type" required>
           <option value="" hidden disabled></option>
           <option value="custom">Na vlastní pěst</option>
-          <option value="glamping">Glamping stan pro 4 až 6 lidí</option>
-          <option value="house">Domeček pro více lidí</option>
-          <option value="cottage">Chata pro 2 až 4 lidi</option>
         </select>
         <p>
           A tady kdyžtak najdeš
@@ -461,22 +458,19 @@
           </div>
         </div>
     </section>
-    <section class="glamping-housing" aria-hidden="true">
-      <h2>Glamping stany</h2>
-      <div class="hc-card">
-        <p>V areálu připravíme i ubytování v ChillVillage stanech. Stany jsou pro <strong>6 osob</strong>.</p>
-      </div>
-      <datalist id="hackers">
-        <option value="Dan Hromada z TopMonks">
-        <option value="Jakub Balada z Apify">
-        <option value="Pepa Prdlej z Depa">
-        <option value="Aleš Šroubíček z atlas.cz">
-        <option value="John Doe" disabled>
-      </datalist>
-    </section>
+
+    <div id="generated-housing-variant-sections"></div>
+
     <button type="submit" class="hc-button" disabled>
       Uložit (se)
     </button>
+    <datalist id="hackers">
+      <option value="Dan Hromada z TopMonks">
+      <option value="Jakub Balada z Apify">
+      <option value="Pepa Prdlej z Depa">
+      <option value="Aleš Šroubíček z atlas.cz">
+      <option value="John Doe" disabled>
+    </datalist>
   </form>
 </div>
 {% endblock %}
@@ -487,7 +481,9 @@
   const formElement = document.getElementById("housing");
   main({
     formElement,
-    sectionElements: formElement.querySelectorAll("section:not(:first-child)"),
+    variantsRootElement: document.getElementById(
+      "generated-housing-variant-sections"
+    ),
     env: {{ build | dump(8) | safe }}
   });
 </script>
