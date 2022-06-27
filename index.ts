@@ -8,6 +8,8 @@ import {
   Website,
   CloudFront,
   getHostedZone,
+  createCacheBoostingPolicy,
+  createSecurityHeadersAndPermissionsPolicy,
 } from "@topmonks/pulumi-aws";
 import { createApi, createDB, routes } from "./api.hackercamp.cz";
 import { AuthEdgeLambda } from "./donut.hackercamp.cz/edge";
@@ -106,10 +108,35 @@ export const contactsDataTable = db.contactsDataTable;
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = api.url.apply((x) => new URL("/v1/", x).href);
 
+const donutCacheBoostingPolicy = createCacheBoostingPolicy(donutDomain, {
+  cookiesConfig: { cookieBehavior: "none" },
+  headersConfig: { headerBehavior: "none" },
+  queryStringsConfig: { queryStringBehavior: "none" },
+});
+const donutSecurityHeadersPolicy = createSecurityHeadersAndPermissionsPolicy(
+  donutDomain,
+  {}
+);
+const webCacheBoostingPolicy = createCacheBoostingPolicy(webDomain, {
+  cookiesConfig: { cookieBehavior: "none" },
+  headersConfig: { headerBehavior: "none" },
+  queryStringsConfig: { queryStringBehavior: "none" },
+});
+const webSecurityHeadersPolicy = createSecurityHeadersAndPermissionsPolicy(
+  webDomain,
+  {}
+);
+
 const { lambda: authLambda } = AuthEdgeLambda.create("hc-auth-lambda");
 export const websites: Record<string, WebsiteExport> = {
   [donutDomain]: siteExports(
     Website.create(donutDomain, {
+      assetsCachePolicyId: donutCacheBoostingPolicy.id,
+      assetResponseHeadersPolicyId:
+        CloudFront.ManagedResponseHeaderPolicy
+          .CORSwithPreflightAndSecurityHeadersPolicy,
+      cachePolicyId: CloudFront.ManagedCachePolicy.CachingOptimized,
+      responseHeadersPolicyId: donutSecurityHeadersPolicy.id,
       extraOrigins: [
         {
           originId: "hackerProfiles",
@@ -147,7 +174,16 @@ export const websites: Record<string, WebsiteExport> = {
       ),
     })
   ),
-  [webDomain]: siteExports(Website.create(webDomain, {})),
+  [webDomain]: siteExports(
+    Website.create(webDomain, {
+      assetsCachePolicyId: webCacheBoostingPolicy.id,
+      assetResponseHeadersPolicyId:
+        CloudFront.ManagedResponseHeaderPolicy
+          .CORSwithPreflightAndSecurityHeadersPolicy,
+      cachePolicyId: CloudFront.ManagedCachePolicy.CachingOptimized,
+      responseHeadersPolicyId: webSecurityHeadersPolicy.id,
+    })
+  ),
 };
 
 function siteExports(site: Website): WebsiteExport {
