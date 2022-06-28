@@ -142,16 +142,17 @@ export const websites: Record<string, WebsiteExport> = {
             CloudFront.ManagedOriginRequestPolicy.AllViewer,
         },
       ],
-      edgeLambdas: ["/hacker/*", "/registrace/", "/admin/"].map((pathPattern) =>
-        Object.assign(
-          { pathPattern },
-          {
-            lambdaAssociation: {
-              eventType: "viewer-request",
-              lambdaArn: authLambda.arn,
-            },
-          }
-        )
+      edgeLambdas: ["/hacker/*", "/registrace/", "/ubytovani/", "/admin/"].map(
+        (pathPattern) =>
+          Object.assign(
+            { pathPattern },
+            {
+              lambdaAssociation: {
+                eventType: "viewer-request",
+                lambdaArn: authLambda.arn,
+              },
+            }
+          )
       ),
     })
   ),
