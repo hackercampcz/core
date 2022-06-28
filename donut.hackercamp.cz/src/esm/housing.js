@@ -5,12 +5,23 @@ async function loadHousingData() {
     fetch(`/housing/index.json`),
     fetch(`/housing/types.json`),
     fetch(`/housing/variants.json`),
-    fetch(`/housing/hackers.json`),
+    fetch(`/housing/hackers.json`, {
+      // 👆 change to API endpoint when it's ready
+      headers: { Accept: "application/json" },
+      credentials: "include",
+    }),
   ]);
   const [housing, types, variants, hackers] = await Promise.all(
     responses.map((r) => r.json())
   );
   return { housing, types, variants, hackers };
+}
+
+export function inlineHackerName({ firstName, lastName, company }) {
+  if (company) {
+    return `${firstName} ${lastName} z ${company}`;
+  }
+  return `${firstName} ${lastName}`;
 }
 
 function renderHousingTypes(
@@ -65,6 +76,7 @@ function renderHousingVariants(rootElement, { variants, housing }) {
                   list="hackers"
                   name="housing['${room}'][${index}]"
                   placeholder="-- Volno --"
+                  type="search"
                 />
               </div>
             `
@@ -81,33 +93,56 @@ function renderHousingVariants(rootElement, { variants, housing }) {
 }
 
 function renderHackers(rootElement, { hackers, hacker }) {
-  const hackersList = document.createElement("datalist");
-  hackersList.id = "hackers";
+  const hackersListElement = document.createElement("datalist");
+  hackersListElement.id = "hackers";
 
   for (const { sub, firstName, lastName, company, housing } of hackers) {
     const isHomeless = !housing;
-    const inlineValue = `${firstName} ${lastName} z ${company}`;
+    const inlineValue = inlineHackerName({ firstName, lastName, company });
 
     if (isHomeless) {
       const option = document.createElement("option");
       option.value = inlineValue;
-      hackersList.appendChild(option);
-    } else {
-      const inputElement = rootElement.querySelector(`
-        input[name^="housing['${housing}']"]:placeholder-shown,
-        [value="${housing}"]
-      `);
-      inputElement.value = inlineValue;
+      option.dataset.id = sub;
+      hackersListElement.appendChild(option);
+      continue;
+    }
 
-      if (sub === hacker.sub) {
-        inputElement.classList.add("me");
-      } else {
-        inputElement.disabled = true;
-      }
+    const inputElement = rootElement.querySelector(`
+      input[name^="housing['${housing}']"]:placeholder-shown,
+      [value="${housing}"]
+    `);
+    inputElement.value = inlineValue;
+
+    if (sub === hacker.sub) {
+      inputElement.classList.add("me");
+    } else {
+      inputElement.disabled = true;
     }
   }
 
-  rootElement.appendChild(hackersList);
+  rootElement.appendChild(hackersListElement);
+
+  for (let inputElement of rootElement.querySelectorAll("input[type=search]")) {
+    inputElement.addEventListener("blur", handleInputBlur);
+  }
+
+  function handleInputBlur({ target }) {
+    if (target.value === "") {
+      target.classList.remove("me");
+      return;
+    }
+    const filledHacker = hackersListElement.querySelector(
+      `[value="${target.value}"]`
+    );
+
+    if (!filledHacker) {
+      target.value = "";
+      target.classList.remove("me");
+    } else {
+      filledHacker.remove();
+    }
+  }
 }
 
 export async function main({ formElement, variantsRootElement }) {
@@ -123,5 +158,45 @@ export async function main({ formElement, variantsRootElement }) {
   renderHousingVariants(variantsRootElement, { variants, housing });
   selectElement.dispatchEvent(new Event("change"));
 
-  renderHackers(formElement, { hackers, hacker });
+  renderHackers(formElement, {
+    hackers,
+    hacker,
+  });
+
+  formElement.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const jsonData = {};
+    const formData = new FormData(formElement);
+    for (let [key, value] of formData.entries()) {
+      const inputedHacker = hackers.find(
+        (hacker) => inlineHackerName(hacker) === value
+      );
+      if (!inputedHacker) {
+        continue;
+      }
+      const [, room, index] = key.match(/^housing\['(.+)'\]\[(\d+)\]$/);
+      if (!jsonData[room]) {
+        jsonData[room] = [];
+      }
+      jsonData[room][index] = inputedHacker.sub;
+    }
+
+    console.info("Sending data to server...", jsonData);
+    sendHousingData(jsonData).catch((O_o) => {
+      console.error(O_o);
+      alert("Něco se pokazilo:" + O_o);
+    });
+  });
+
+  async function sendHousingData(data) {
+    const response = await fetch(formElement.action, {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: { Accept: "application/json" },
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw await response.text();
+    }
+  }
 }
