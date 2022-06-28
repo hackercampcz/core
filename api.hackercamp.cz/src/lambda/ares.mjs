@@ -5,6 +5,7 @@ const parser = new xml.XMLParser();
 const parseXML = (input) => parser.parse(input);
 
 function getJSONData(ico, data) {
+  console.log({ ico, data });
   const entry = data["are:Ares_odpovedi"]["are:Odpoved"]["D:Vypis_OR"];
   if (!entry) {
     throw new Error("Unknown response from MFCR");
