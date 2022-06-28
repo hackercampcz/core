@@ -5,16 +5,18 @@ async function loadHousingData() {
     fetch(`/housing/index.json`),
     fetch(`/housing/types.json`),
     fetch(`/housing/variants.json`),
+    fetch(`/housing/backstage.json`),
     fetch(`/housing/hackers.json`, {
       // 👆 change to API endpoint when it's ready
       headers: { Accept: "application/json" },
       credentials: "include",
     }),
   ]);
-  const [housing, types, variants, hackers] = await Promise.all(
+  const [housing, types, variants, backstage, hackers] = await Promise.all(
     responses.map((r) => r.json())
   );
-  return { housing, types, variants, hackers };
+
+  return { housing, types, variants, hackers, backstage };
 }
 
 export function inlineHackerName({ firstName, lastName, company }) {
@@ -147,11 +149,23 @@ function renderHackers(rootElement, { hackers, hacker }) {
   }
 }
 
+function renderBackstage(rootElement, { backstage }) {
+  for (let { room, label } of backstage) {
+    for (let inputElement of rootElement.querySelectorAll(
+      `input[name^="housing['${room}']"]`
+    )) {
+      inputElement.value = label;
+      inputElement.disabled = true;
+    }
+  }
+}
+
 export async function main({ formElement, variantsRootElement }) {
   const selectElement = formElement.elements.type;
 
   const profile = getHackerSlackProfile();
-  const { housing, hackers, types, variants } = await loadHousingData();
+  const { housing, hackers, types, variants, backstage } =
+    await loadHousingData();
 
   const hacker = hackers.find(({ sub }) => sub === profile.sub);
   const hackerHousing = housing.find(({ room }) => room === hacker.housing);
@@ -164,6 +178,8 @@ export async function main({ formElement, variantsRootElement }) {
     hackers,
     hacker,
   });
+
+  renderBackstage(formElement, { backstage });
 
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
