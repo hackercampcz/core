@@ -116,7 +116,9 @@ function renderHackers(rootElement, { hackers, hacker }) {
 
     if (sub === hacker.sub) {
       inputElement.classList.add("me");
-    } else {
+    }
+    // do not disabled custom housing options
+    else if (inputElement.type === "search") {
       inputElement.disabled = true;
     }
   }
@@ -167,18 +169,26 @@ export async function main({ formElement, variantsRootElement }) {
     event.preventDefault();
     const jsonData = {};
     const formData = new FormData(formElement);
+
+    // collection loop
     for (let [key, value] of formData.entries()) {
+      if (key.startsWith("housing") === false) {
+        continue;
+      }
       const inputedHacker = hackers.find(
         (hacker) => inlineHackerName(hacker) === value
       );
       if (!inputedHacker) {
         continue;
       }
-      const [, room, index] = key.match(/^housing\['(.+)'\]\[(\d+)\]$/);
-      if (!jsonData[room]) {
-        jsonData[room] = [];
-      }
-      jsonData[room][index] = inputedHacker.sub;
+      const [, room] = key.match(/^housing\['(.+)'\]\[(\d+)\]$/);
+      jsonData[inputedHacker.sub] = room;
+    }
+
+    // This allow you to fillup somebody else to any room but yourself to custom housing variant (your :troll:)
+    // and cus this is bellow the collection loop, it will override your previously filled up room (our :troll:)
+    if (formData.get("type") === "custom" && formData.get("custom")) {
+      jsonData[profile.sub] = formData.get("custom");
     }
 
     console.info("Sending data to server...", jsonData);
