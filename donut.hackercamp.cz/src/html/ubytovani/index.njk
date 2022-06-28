@@ -384,8 +384,16 @@
     box-sizing: border-box;
   }
 
-  form section[aria-hidden="true"] {
+  form [aria-hidden="true"] {
     display: none;
+  }
+
+  .show-rooms {
+    text-align: center;
+    margin: 32px 8px 8px 8px;
+  }
+  .show-rooms .hc-link {
+    padding: 8px 12px;
   }
 
 </style>
@@ -461,8 +469,7 @@
     </section>
 
     <div id="generated-housing-variant-sections"></div>
-
-    <button type="submit" class="hc-button">
+    <button type="submit" class="hc-button" aria-hidden="true">
       Uložit (se)
     </button>
   </form>

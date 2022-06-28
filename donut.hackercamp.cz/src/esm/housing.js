@@ -53,7 +53,10 @@ function getHackerSlackProfile() {
   return profile;
 }
 
-function renderHousingVariants(rootElement, { variants, housing }) {
+function renderHousingVariants(
+  rootElement,
+  { variants, housing, formElement }
+) {
   for (const variant of variants) {
     const sectionElement = document.createElement("section");
     sectionElement.classList.add(`${variant.type}-housing`);
@@ -65,36 +68,57 @@ function renderHousingVariants(rootElement, { variants, housing }) {
       <h2>${variant.title}</h2>
       <div class="hc-card">
         <p>${variant.description}</p>
-        ${housingOfVariant
-          .map(
-            ({ room, capacity }) => `
-          <h3>${room}</h3>
-          <div class="booking-grid">
-          ${Array.from({ length: capacity })
+        <div class="rooms" aria-hidden="true">
+          ${housingOfVariant
             .map(
-              (_, index) => `
-              <div class="booking-grid__cell">
-                <input
-                  list="hackers"
-                  name="housing['${room}'][${index}]"
-                  placeholder="-- Volno --"
-                  type="search"
-                />
-              </div>
-            `
+              ({ room, capacity }) => `
+              <h3>${room}</h3>
+              <div class="booking-grid">
+              ${Array.from({ length: capacity })
+                .map(
+                  (_, index) => `
+                  <div class="booking-grid__cell">
+                    <input
+                      list="hackers"
+                      name="housing['${room}'][${index}]"
+                      placeholder="-- Volno --"
+                      type="search"
+                    />
+                  </div>
+                `
+                )
+                .join("")}
+            </div>
+          `
             )
             .join("")}
-          </div>
-        `
-          )
-          .join("")}
+        </div>
+        <div class="show-rooms">
+          <p><strong>Volných míst: <span class="zimmer-frei">${0}</span></strong></p>
+          <a class="hc-link hc-link--decorated" href="#">chci sem</a>
+        </div>
       </div>
     `.trim();
     rootElement.appendChild(sectionElement);
+
+    sectionElement
+      .querySelector(".show-rooms a")
+      .addEventListener("click", (event) => {
+        event.preventDefault();
+        sectionElement
+          .querySelector(".rooms")
+          .setAttribute("aria-hidden", "false");
+        sectionElement
+          .querySelector(".show-rooms")
+          .setAttribute("aria-hidden", "true");
+        formElement
+          .querySelector("button[type=submit]")
+          .setAttribute("aria-hidden", "false");
+      });
   }
 }
 
-function renderHackers(rootElement, { hackers, hacker }) {
+function renderHackers(formElement, { hackers, hacker }) {
   const hackersListElement = document.createElement("datalist");
   hackersListElement.id = "hackers";
 
@@ -110,7 +134,7 @@ function renderHackers(rootElement, { hackers, hacker }) {
       continue;
     }
 
-    const inputElement = rootElement.querySelector(`
+    const inputElement = formElement.querySelector(`
       input[name^="housing['${housing}']"]:placeholder-shown,
       [value="${housing}"]
     `);
@@ -125,9 +149,9 @@ function renderHackers(rootElement, { hackers, hacker }) {
     }
   }
 
-  rootElement.appendChild(hackersListElement);
+  formElement.appendChild(hackersListElement);
 
-  for (let inputElement of rootElement.querySelectorAll("input[type=search]")) {
+  for (let inputElement of formElement.querySelectorAll("input[type=search]")) {
     inputElement.addEventListener("blur", handleInputBlur);
   }
 
@@ -160,6 +184,16 @@ function renderBackstage(rootElement, { backstage }) {
   }
 }
 
+function renderZimmerFrei(rootElement) {
+  for (let sectionElement of rootElement.querySelectorAll("section")) {
+    const counterElement = sectionElement.querySelector(".zimmer-frei");
+    const { length: zimmerFrei } = Array.from(
+      sectionElement.querySelectorAll("input[type=search]")
+    ).filter(({ disabled }) => !disabled);
+    counterElement.textContent = zimmerFrei;
+  }
+}
+
 export async function main({ formElement, variantsRootElement }) {
   const selectElement = formElement.elements.type;
 
@@ -171,15 +205,21 @@ export async function main({ formElement, variantsRootElement }) {
   const hackerHousing = housing.find(({ room }) => room === hacker.housing);
 
   renderHousingTypes(selectElement, { types, formElement, hackerHousing });
-  renderHousingVariants(variantsRootElement, { variants, housing });
+  renderHousingVariants(variantsRootElement, {
+    variants,
+    housing,
+    formElement,
+  });
   selectElement.dispatchEvent(new Event("change"));
 
   renderHackers(formElement, {
     hackers,
     hacker,
   });
-
   renderBackstage(formElement, { backstage });
+  renderZimmerFrei(variantsRootElement);
+
+
 
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
