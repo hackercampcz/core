@@ -67,6 +67,11 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
         cache: { ttl: 3600 },
         memorySize: 512,
       },
+      fakturoidWebhook: {
+        httpMethod: "POST",
+        path: "/fakturoid/webhook",
+        fileName: "fakturoid/webhook.mjs",
+      },
     },
   ],
 ]);
