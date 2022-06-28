@@ -13,7 +13,7 @@ module.exports = {
   javascripts: false,
 
   html: {
-    collections: ["build"],
+    collections: ["build", "images"],
     nunjucksRender: {
       filters: {
         year() {

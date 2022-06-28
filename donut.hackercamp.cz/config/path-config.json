@@ -34,7 +34,7 @@
 
   "cloudinary": {
     "src": "cloudinary",
-    "dest": ""
+    "dest": "donut.hackercamp.cz"
   },
 
   "data": {
