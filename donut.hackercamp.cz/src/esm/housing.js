@@ -205,9 +205,12 @@ export async function main({ formElement, variantsRootElement }) {
     await loadHousingData();
 
   const hacker = hackers.find(({ sub }) => sub === profile.sub);
-  const hackerHousing = housing.find(({ room }) => room === hacker.housing);
-
+  if (!hacker) {
+    alert("Nenašel jsem tě v seznamu hackerů 😭");
+  }
+  const hackerHousing = housing.find(({ room }) => room === hacker?.housing);
   renderHousingTypes(selectElement, { types, formElement, hackerHousing });
+
   renderHousingVariants(variantsRootElement, {
     variants,
     housing,
