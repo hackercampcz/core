@@ -119,19 +119,25 @@ export async function createSubject(data, token) {
   return resp.json();
 }
 
-async function main({ token }) {
-  console.log(
-    await createSubject(
-      {
-        name: "Staroměstská Agentura",
-        country: "CZ",
-        registration_no: "16882491",
-        vat_no: "CZ6801011679",
-        email: "petr.mihle@gmail.com",
+export async function fetchInvoice(token) {
+  const basic = btoa(`${email}:${token}`);
+  const resp = await fetch(
+    `https://app.fakturoid.cz/api/v2/accounts/${slug}/invoices/23915828.json`,
+    {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        Authorization: `Basic ${basic}`,
+        "Content-Type": "application/json",
+        "User-Agent": userAgent,
       },
-      token
-    )
+    }
   );
+  return resp.json();
+}
+
+async function main({ token }) {
+  console.log(await fetchInvoice(token));
 }
 
 await main(parse(Deno.args));
