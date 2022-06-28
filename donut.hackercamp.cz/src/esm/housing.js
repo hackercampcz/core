@@ -33,7 +33,7 @@ function renderHousingTypes(
   for (const type of types) {
     const option = document.createElement("option");
     option.value = type.name;
-    option.selected = type.name === hackerHousing.type;
+    option.selected = type.name === hackerHousing?.type;
     option.textContent = type.title;
     selectElement.appendChild(option);
   }
@@ -142,6 +142,9 @@ function renderHackers(formElement, { hackers, hacker }) {
 
     if (sub === hacker.sub) {
       inputElement.classList.add("me");
+      if (inputElement.name === "custom") {
+        inputElement.checked = true;
+      }
     }
     // do not disabled custom housing options
     else if (inputElement.type === "search") {
@@ -218,8 +221,6 @@ export async function main({ formElement, variantsRootElement }) {
   });
   renderBackstage(formElement, { backstage });
   renderZimmerFrei(variantsRootElement);
-
-
 
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
