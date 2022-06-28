@@ -59,6 +59,14 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
           },
         },
       },
+      ares: {
+        httpMethod: "GET",
+        path: "/ares",
+        fileName: "ares/index.mjs",
+        requiredParameters: [{ in: "query", name: "ico" }],
+        cache: { ttl: 3600 },
+        memorySize: 512,
+      },
     },
   ],
 ]);
