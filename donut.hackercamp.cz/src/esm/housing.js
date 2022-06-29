@@ -53,10 +53,7 @@ function getHackerSlackProfile() {
   return profile;
 }
 
-function renderHousingVariants(
-  rootElement,
-  { variants, housing }
-) {
+function renderHousingVariants(rootElement, { variants, housing }) {
   for (const variant of variants) {
     const sectionElement = document.createElement("section");
     sectionElement.classList.add(`${variant.type}-housing`);
@@ -159,14 +156,17 @@ function renderHackers(formElement, { hackers, hacker }) {
   formElement.appendChild(hackersListElement);
 
   for (let inputElement of formElement.querySelectorAll("input[type=search]")) {
+    inputElement.addEventListener("focus", handleInputFocus);
     inputElement.addEventListener("blur", handleInputBlur);
   }
 
+  let prevHackerValue;
+
+  function handleInputFocus({ target }) {
+    prevHackerValue = target.value;
+  }
+
   function handleInputBlur({ target }) {
-    if (target.value === "") {
-      target.classList.remove("me");
-      return;
-    }
     const filledHacker = hackersListElement.querySelector(
       `[value="${target.value}"]`
     );
@@ -174,6 +174,18 @@ function renderHackers(formElement, { hackers, hacker }) {
     if (!filledHacker) {
       target.value = "";
       target.classList.remove("me");
+      if (prevHackerValue) {
+        console.log({ prevHackerValue });
+        const prevHacker = hackers.find(
+          (h) => inlineHackerName(h) === prevHackerValue
+        );
+        if (prevHacker) {
+          const option = document.createElement("option");
+          option.value = inlineHackerName(prevHacker);
+          option.dataset.id = prevHacker.sub;
+          hackersListElement.prepend(option);
+        }
+      }
     } else {
       filledHacker.remove();
     }
