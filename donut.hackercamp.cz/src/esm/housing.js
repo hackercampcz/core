@@ -55,7 +55,7 @@ function getHackerSlackProfile() {
 
 function renderHousingVariants(
   rootElement,
-  { variants, housing, formElement }
+  { variants, housing }
 ) {
   for (const variant of variants) {
     const sectionElement = document.createElement("section");
@@ -92,6 +92,9 @@ function renderHousingVariants(
           `
             )
             .join("")}
+          <button type="submit" class="hc-button">
+            Uložit (se)
+          </button>
         </div>
         <div class="show-rooms">
           <p><strong>Volných míst: <span class="zimmer-frei">${0}</span></strong></p>
@@ -111,9 +114,6 @@ function renderHousingVariants(
         sectionElement
           .querySelector(".show-rooms")
           .setAttribute("aria-hidden", "true");
-        formElement
-          .querySelector("button[type=submit]")
-          .setAttribute("aria-hidden", "false");
       });
   }
 }
@@ -206,7 +206,7 @@ export async function main({ formElement, variantsRootElement }) {
 
   const hacker = hackers.find(({ sub }) => sub === profile.sub);
   if (!hacker) {
-    alert("Nenašel jsem tě v seznamu hackerů 😭");
+    alert("Nenašlo jsem tě v seznamu hackerů 😭");
   }
   const hackerHousing = housing.find(({ room }) => room === hacker?.housing);
   renderHousingTypes(selectElement, { types, formElement, hackerHousing });
