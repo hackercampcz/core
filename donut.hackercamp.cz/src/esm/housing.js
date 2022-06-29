@@ -175,7 +175,6 @@ function renderHackers(formElement, { hackers, hacker }) {
       target.value = "";
       target.classList.remove("me");
       if (prevHackerValue) {
-        console.log({ prevHackerValue });
         const prevHacker = hackers.find(
           (h) => inlineHackerName(h) === prevHackerValue
         );
@@ -187,6 +186,9 @@ function renderHackers(formElement, { hackers, hacker }) {
         }
       }
     } else {
+      if (filledHacker.dataset.id === hacker.sub) {
+        target.classList.add("me");
+      }
       filledHacker.remove();
     }
   }
