@@ -1,5 +1,3 @@
-//
-
 async function loadHousingData() {
   const responses = await Promise.all([
     fetch(`/housing/index.json`),
@@ -19,7 +17,7 @@ async function loadHousingData() {
   return { housing, types, variants, hackers, backstage };
 }
 
-export function inlineHackerName({ firstName, lastName, company }) {
+function inlineHackerName({ firstName, lastName, company }) {
   if (company) {
     return `${firstName} ${lastName} z ${company}`;
   }
@@ -49,10 +47,41 @@ function renderHousingVariants(rootElement, { variants, housing }) {
     const housingOfVariant = housing.filter(
       (x) => x.type === variant.type && x.variant === variant.name
     );
+    const [firstPhoto, ...photos] = variant.images;
     sectionElement.innerHTML = `
       <h2>${variant.title}</h2>
       <div class="hc-card">
         <p>${variant.description}</p>
+        ${
+          (firstPhoto || "") &&
+          `
+          <div class="pswp-gallery pswp-gallery--single-column housing-gallery">
+            <a
+              href="${firstPhoto.src}"
+              target="_blank"
+              data-pswp-width="${firstPhoto.width}"
+              data-pswp-height="${firstPhoto.height}"
+            >
+              <img width="100%" src="${
+                firstPhoto.src
+              }" alt="Obrázek ubytování" />
+            </a>
+            ${photos
+              .map(
+                (photo) => `
+                  <a href="${photo.src}"
+                    data-pswp-src="${photo.src}"
+                    data-pswp-width="${photo.width}"
+                    data-pswp-height="${photo.height}"
+                    aria-hidden="true"
+                  >
+                  </a>
+                `
+              )
+              .join("")}
+          </div>
+        `
+        }
         <div class="rooms" aria-hidden="true">
           ${housingOfVariant
             .map(
@@ -231,40 +260,7 @@ function autoShowHousingOfMine({ formElement, selectElement }) {
   selectElement.dispatchEvent(new Event("change"));
 }
 
-export async function main({ formElement, variantsRootElement }) {
-  const selectElement = formElement.elements.type;
-
-  const profile = getHackerSlackProfile();
-  const { housing, hackers, types, variants, backstage } =
-    await loadHousingData();
-
-  const hacker = hackers.find(({ sub }) => sub === profile.sub);
-  if (!hacker) {
-    alert("Nenašlo jsem tě v seznamu hackerů 😭");
-  }
-  const hackerHousing = housing.find(({ room }) => room === hacker?.housing);
-  renderHousingTypes(selectElement, {
-    types,
-    formElement,
-    hackerHousing,
-    hacker,
-  });
-
-  renderHousingVariants(variantsRootElement, {
-    variants,
-    housing,
-    formElement,
-  });
-
-  renderHackers(formElement, {
-    hackers,
-    hacker,
-  });
-  renderBackstage(formElement, { backstage });
-  renderZimmerFrei(variantsRootElement);
-
-  autoShowHousingOfMine({ formElement, selectElement });
-
+function handlaFormaSubmita(formElement) {
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
     const jsonData = {};
@@ -309,4 +305,64 @@ export async function main({ formElement, variantsRootElement }) {
       throw await response.text();
     }
   }
+}
+
+async function initializeHousingGalleries() {
+  const { default: PhotoSwipeLightbox } = await import(
+    "https://unpkg.com/photoswipe/dist/photoswipe-lightbox.esm.js"
+  );
+
+  document.head.appendChild(
+    el("link", {
+      rel: "stylesheet",
+      href: "https://unpkg.com/photoswipe@5.2.2/dist/photoswipe.css",
+    })
+  );
+  const lightbox = new PhotoSwipeLightbox({
+    gallery: ".housing-gallery",
+    children: "a",
+    pswpModule: () => import("https://unpkg.com/photoswipe"),
+  });
+  lightbox.init();
+
+  function el(tagName, attrs) {
+    const el = document.createElement(tagName);
+    for (const [key, val] of Object.entries(attrs)) el.setAttribute(key, val);
+    return el;
+  }
+}
+
+export async function main({ formElement, variantsRootElement }) {
+  const selectElement = formElement.elements.type;
+
+  const profile = getHackerSlackProfile();
+  const { housing, hackers, types, variants, backstage } =
+    await loadHousingData();
+
+  const hacker = hackers.find(({ sub }) => sub === profile.sub);
+  const hackerHousing = housing.find(({ room }) => room === hacker?.housing);
+  if (!hacker) {
+    alert("Nenašlo jsem tě v seznamu hackerů 😭");
+  }
+
+  renderHousingTypes(selectElement, {
+    types,
+    formElement,
+    hackerHousing,
+    hacker,
+  });
+  renderHousingVariants(variantsRootElement, {
+    variants,
+    housing,
+    formElement,
+  });
+  renderHackers(formElement, {
+    hackers,
+    hacker,
+  });
+  renderBackstage(formElement, { backstage });
+  renderZimmerFrei(variantsRootElement);
+  autoShowHousingOfMine({ formElement, selectElement });
+  handlaFormaSubmita(formElement);
+  initializeHousingGalleries();
 }

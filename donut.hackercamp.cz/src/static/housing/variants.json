@@ -4,21 +4,29 @@
     "name": "for-two",
     "title": "Chatky pro dva",
     "description": "V areálu stojí 10 malých starších chatek. Každá chatka je pro 2 pořádné pankáče. Chatek je bez elektrické zásuvky.",
-    "images": []
+    "images": [
+      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3920.jpg", "width": 1752, "height": 1168 }
+    ]
   },
   {
     "type": "cottage",
     "name": "for-four",
     "title": "Chatky pro čtyři",
     "description": "V areálu stojí 20 klasických táborových čtyřlůžkových chatek. Chatky jsou udržované. V každé chatce jsou dvě palandy, dvě skříně, stoleček s židlí. V polovině chatek jsou elektrické zásuvky.",
-    "images": []
+    "images": [
+      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3874.jpg", "width": 1819, "height": 1212 },
+      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3912.jpg", "width": 1198, "height": 1796 }
+    ]
   },
   {
     "type": "house",
     "name": "blue",
     "title": "Modrý domek",
     "description": "Modrý domek má celkovou kapacitu 28 lůžek. Domek je rozdělen do dvou půlek. Každá polovina má jeden dvoulůžkový, dva šestilůžkové pokoje a koupelnu s umyvadly a toaletou.",
-    "images": []
+    "images": [
+      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/Modry%CC%81.jpg", "width": 2466, "height": 902 },
+      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3666.jpg", "width": 1800, "height": 1200 }
+    ]
   },
   {
     "type": "house",
