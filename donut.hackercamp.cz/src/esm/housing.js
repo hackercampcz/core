@@ -26,10 +26,7 @@ export function inlineHackerName({ firstName, lastName, company }) {
   return `${firstName} ${lastName}`;
 }
 
-function renderHousingTypes(
-  selectElement,
-  { types, formElement, hackerHousing }
-) {
+function renderHousingTypes(selectElement, { types, hackerHousing }) {
   for (const type of types) {
     const option = document.createElement("option");
     option.value = type.name;
@@ -37,15 +34,6 @@ function renderHousingTypes(
     option.textContent = type.title;
     selectElement.appendChild(option);
   }
-  selectElement.addEventListener("change", ({ target: { value } }) => {
-    for (let section of formElement.querySelectorAll("section")) {
-      if (section.classList.contains(`${value}-housing`)) {
-        section.setAttribute("aria-hidden", "false");
-      } else if (!section.classList.contains("housing-type")) {
-        section.setAttribute("aria-hidden", "true");
-      }
-    }
-  });
 }
 
 function getHackerSlackProfile() {
@@ -215,6 +203,34 @@ function renderZimmerFrei(rootElement) {
   }
 }
 
+function autoShowHousingOfMine({ formElement, selectElement }) {
+  selectElement.addEventListener("change", ({ target }) => {
+    for (let section of formElement.querySelectorAll("section")) {
+      if (section.classList.contains(`${target.value}-housing`)) {
+        section.setAttribute("aria-hidden", "false");
+      } else if (!section.classList.contains("housing-type")) {
+        section.setAttribute("aria-hidden", "true");
+      }
+
+      const roomsElement = section.querySelector(".rooms");
+      if (roomsElement) {
+        const showRoomsElement = section.querySelector(".show-rooms");
+        const inputWithMyName = section.querySelector("input.me");
+
+        if (inputWithMyName) {
+          roomsElement.setAttribute("aria-hidden", "false");
+          showRoomsElement.setAttribute("aria-hidden", "true");
+        } else {
+          roomsElement.setAttribute("aria-hidden", "true");
+          showRoomsElement.setAttribute("aria-hidden", "false");
+        }
+      }
+    }
+  });
+
+  selectElement.dispatchEvent(new Event("change"));
+}
+
 export async function main({ formElement, variantsRootElement }) {
   const selectElement = formElement.elements.type;
 
@@ -227,14 +243,18 @@ export async function main({ formElement, variantsRootElement }) {
     alert("Nenašlo jsem tě v seznamu hackerů 😭");
   }
   const hackerHousing = housing.find(({ room }) => room === hacker?.housing);
-  renderHousingTypes(selectElement, { types, formElement, hackerHousing });
+  renderHousingTypes(selectElement, {
+    types,
+    formElement,
+    hackerHousing,
+    hacker,
+  });
 
   renderHousingVariants(variantsRootElement, {
     variants,
     housing,
     formElement,
   });
-  selectElement.dispatchEvent(new Event("change"));
 
   renderHackers(formElement, {
     hackers,
@@ -242,6 +262,8 @@ export async function main({ formElement, variantsRootElement }) {
   });
   renderBackstage(formElement, { backstage });
   renderZimmerFrei(variantsRootElement);
+
+  autoShowHousingOfMine({ formElement, selectElement });
 
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
