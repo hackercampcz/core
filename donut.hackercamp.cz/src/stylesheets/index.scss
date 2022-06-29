@@ -60,3 +60,104 @@
   font-weight: bold;
   margin-left: 8px;
 }
+
+.hc-button {
+  color: #fff;
+  background-image: var(--hc-gradient-btn);
+  background-size: 200% 100%;
+  font-family: var(--hc-font-family);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.5;
+  font-kerning: normal;
+  font-variant-numeric: lining-nums slashed-zero;
+  font-variant-ligatures: common-ligatures contextual;
+  -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum",
+  "zero";
+  font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.75em 2.5em;
+  transition: background-position 0.4s ease-in-out;
+  border: 0 none;
+  margin: 16px auto;
+  display: block;
+}
+
+.hc-button:active,
+.hc-button:hover {
+  background-position: 100% 0;
+}
+
+.hc-button:disabled {
+  opacity: .8;
+}
+
+.hc-icon-link:link,
+.hc-icon-link:visited {
+  --icon-color: var(--hc-text-color);
+  color: var(--hc-text-color);
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hc-icon-link:hover {
+  --icon-color: var(--hc-link-color);
+  color: var(--hc-link-color);
+  text-decoration: underline;
+}
+
+.hc-icon-link svg {
+  padding-right: 1ex;
+}
+
+.hc-link--decorated {
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  padding: 18px 16px;
+  border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: var(--hc-gradient);
+  background-image: var(--hc-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hc-navbar {
+  position: fixed;
+  width: 100%;
+  height: 78px;
+  background: var(--hc-background-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  z-index: 1000;
+}
+
+.hc-navbar__link {
+  line-height: 56px;
+  margin-right: 2em;
+}
+
+
+
+.hc-navbar__right {
+  display: none;
+}
+
+@media screen and (min-width: 600px) {
+  .hc-navbar {
+    height: 100px;
+  }
+
+  .hc-navbar__right {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
