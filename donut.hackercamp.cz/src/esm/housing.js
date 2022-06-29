@@ -130,7 +130,11 @@ function renderHackers(formElement, { hackers, hacker }) {
       const option = document.createElement("option");
       option.value = inlineValue;
       option.dataset.id = sub;
-      hackersListElement.appendChild(option);
+      if (sub === hacker.sub) {
+        hackersListElement.prepend(option);
+      } else {
+        hackersListElement.appendChild(option);
+      }
       continue;
     }
 
