@@ -1,4 +1,3 @@
-{%- from '../macros/helpers.njk' import importMapTarget -%}
 <!doctype html>
 <html lang="cs">
 <head>
@@ -8,9 +7,6 @@
   {% include "shared/fonts.html" %}
   {% include "shared/styles.html" %}
   {% include "shared/app-icons.html" %}
-  {% if not (build.environment == "development") %}
-  {{ importMapTarget() }}
-  {% endif %}
   {% block head %}{% endblock %}
   <link rel="stylesheet" href="/assets/css/index.css">
 </head>
