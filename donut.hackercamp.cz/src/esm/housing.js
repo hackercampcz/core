@@ -263,7 +263,7 @@ function autoShowHousingOfMine({ formElement, selectElement }) {
   selectElement.dispatchEvent(new Event("change"));
 }
 
-function handlaFormaSubmita(formElement) {
+function handlaFormaSubmita(formElement, { hackers }) {
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
     const jsonData = {};
@@ -371,6 +371,6 @@ export async function main({ formElement, variantsRootElement }) {
   renderBackstage(formElement, { backstage });
   renderZimmerFrei(variantsRootElement);
   autoShowHousingOfMine({ formElement, selectElement });
-  handlaFormaSubmita(formElement);
+  handlaFormaSubmita(formElement, { hackers });
   initializeHousingGalleries();
 }
