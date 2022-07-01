@@ -66,6 +66,13 @@ export function notFound(body = { error: "Data not found" }) {
   };
 }
 
+export function unprocessableEntity() {
+  return {
+    statusCode: 422,
+    body: ""
+  }
+}
+
 /**
  * @returns {APIGatewayProxyResult}
  */

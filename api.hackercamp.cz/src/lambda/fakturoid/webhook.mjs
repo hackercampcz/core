@@ -1,10 +1,15 @@
-import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBClient,
+  UpdateItemCommand,
+  ScanCommand,
+} from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import {
-  accepted,
   internalError,
+  notFound,
   readPayload,
-  seeOther,
+  response,
+  unprocessableEntity,
   withCORS,
 } from "../http.mjs";
 
@@ -20,13 +25,47 @@ const db = new DynamoDBClient({});
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const withCORS_ = withCORS(
-    ["POST", "OPTIONS"],
-    event.headers["origin"]
-  );
+  const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
 
   try {
-    console.log(readPayload(event));
+    const payload = readPayload(event);
+    if (payload.event_name !== "invoice_paid") {
+      console.log({ event: "Unknown event", payload });
+      return withCORS_(unprocessableEntity());
+    }
+
+    const { invoice_id, paid_at } = payload;
+    const resp = await db.send(
+      new ScanCommand({
+        TableName: "hc-registrations",
+        Select: "email,year",
+        FilterExpression: "invoice_id = :invoice_id",
+        ExpressionAttributeValues: marshall({
+          ":invoice_id": invoice_id,
+        }),
+      })
+    );
+    const registration = resp.Items[0];
+    if (!registration) {
+      console.log({ event: "Registration not found", invoice_id });
+      return withCORS_(notFound());
+    }
+    await db.send(
+      new UpdateItemCommand({
+        TableName: "hc-registrations",
+        Key: marshall(registration),
+        UpdateExpression: "ADD paid = :paid",
+        ExpressionAttributeValues: marshall({
+          ":paid": new Date(paid_at).toISOString(),
+        }),
+      })
+    );
+    console.log({
+      event: "Invoice marked as paid",
+      invoice_id,
+      ...registration,
+    });
+    return withCORS_(response({}));
   } catch (err) {
     console.error(err);
     return withCORS_(internalError());
