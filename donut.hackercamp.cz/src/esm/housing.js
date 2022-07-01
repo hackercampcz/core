@@ -291,10 +291,15 @@ function handlaFormaSubmita(formElement) {
     }
 
     console.info("Sending data to server...", jsonData);
-    sendHousingData(jsonData).catch((O_o) => {
-      console.error(O_o);
-      alert("Něco se pokazilo:" + O_o);
-    });
+    sendHousingData(jsonData)
+      .then(() => {
+        location.href = "/ubytovani/ulozeno/";
+        return;
+      })
+      .catch((O_o) => {
+        console.error(O_o);
+        alert("Něco se pokazilo:" + O_o);
+      });
   });
 
   async function sendHousingData(data) {

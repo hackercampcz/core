@@ -1,0 +1,50 @@
+{% extends 'layouts/application.njk' %}
+
+{% block title %}Registrace odeslána{% endblock %}
+{% block head %}
+<style>
+
+  #top {
+    padding-top: 40px;
+    margin-bottom: 0;
+  }
+
+  h1 {
+    text-align: center;
+    margin-top: 2em;
+  }
+
+  hr {
+    border: 0 none;
+    height: 1px;
+    background-color: #F2F2FA;
+    margin: 24px 0;
+  }
+
+  .form-story {
+    text-align: center;
+    max-width: 40em;
+    margin: 24px auto 0 auto;
+    font-weight: 400;
+  }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hc-code-bg">
+  <header id="top" class="hc-hero mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <div
+        class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+      >
+        <h1>Uloženo!</h1>
+      </div>
+    </div>
+    <div class="form-story">
+      <p>Potvrzení jsme odeslali emailem. Najdeš v něm i odkaz <br>pro eventuélní změny.</p>
+    </div>
+  </header>
+</div>
+{% endblock %}
+
