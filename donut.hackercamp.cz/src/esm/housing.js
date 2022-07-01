@@ -55,7 +55,10 @@ function renderHousingVariants(rootElement, { variants, housing }) {
         ${
           (firstPhoto || "") &&
           `
-          <div class="pswp-gallery pswp-gallery--single-column housing-gallery">
+          <div
+            class="pswp-gallery pswp-gallery--single-column housing-gallery"
+            ${(photos.length > 0 || "") && `data-count="${photos.length}"`}
+          >
             <a
               href="${firstPhoto.src}"
               target="_blank"

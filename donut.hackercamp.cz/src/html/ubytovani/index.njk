@@ -130,18 +130,49 @@
 
   .housing-gallery {
     margin-top: 24px;
+    position: relative;
+  }
+  .housing-gallery a {
+    display: block;
+    line-height: 0;
+  }
+  .housing-gallery[data-count]:after {
+    content: "+" attr(data-count);
+    display: table;
+    position: absolute;
+    width: 32px;
+    line-height: 32px;
+    bottom: 0;
+    right: 0;
+    background-color: var(--hc-background-color);
+    text-align: center;
+    font-size: small;
+    border-top: 2px solid;
+    border-left: 2px solid;
+    border-image-slice: 1;
+    border-image-source: var(--hc-gradient);
   }
 
   select, input:not([type="radio"]) {
     -webkit-appearance: none;
     border: 0 none;
     padding: 2px 8px;
-    border-radius: 1px;
+    border: 1px solid #c4c4c4;
 
-    {# background-color: var(--hc-background-color);
+    /* background-color: var(--hc-background-color);
     background-image: var(--hc-background-image, none);
-    color: var(--hc-color); #}
+    color: var(--hc-color); */
   }
+
+  @media (prefers-color-scheme: dark) {
+    select, input:not([type="radio"]) {
+      border-color: transparent;
+    }
+    input:not([type="radio"]):disabled {
+      background-color: #c4c4c4;
+    }
+  }
+
 
   .rooms h3 {
     margin-bottom: 8px;
