@@ -2171,7 +2171,7 @@ __metadata:
     "@material/chips": 14.0.0
     "@material/layout-grid": 14.0.0
     "@thi.ng/atom": 5.1.8
-    "@thi.ng/transducers": 8.3.5
+    "@thi.ng/transducers": 8.3.6
     "@typescript-eslint/eslint-plugin": 5.30.5
     "@typescript-eslint/parser": 5.30.5
     date-fns: 2.28.0
@@ -2788,9 +2788,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/arrays@npm:^2.2.5":
-  version: 2.2.5
-  resolution: "@thi.ng/arrays@npm:2.2.5"
+"@thi.ng/arrays@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@thi.ng/arrays@npm:2.3.0"
   dependencies:
     "@thi.ng/api": ^8.3.7
     "@thi.ng/checks": ^3.2.1
@@ -2798,7 +2798,7 @@ __metadata:
     "@thi.ng/equiv": ^2.1.7
     "@thi.ng/errors": ^2.1.7
     "@thi.ng/random": ^3.3.2
-  checksum: f4c67d209288850411429f6f054e462cbbd9322101d686a4d4b61fb3e0b61e21dad132b88b19df415cbcd7d38bee92dfdfc5a1f4b25065cd7fe6278d6c0e5731
+  checksum: 5b7594d46c3d2d7a75859979e41b665386479295bbf0fd37b97d28b8b37bead702ece6611fe51a1b02de42f358abf7557fbbd4a703a1e4e708f57a761c435600
   languageName: node
   linkType: hard
 
@@ -2896,19 +2896,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/transducers@npm:8.3.5":
-  version: 8.3.5
-  resolution: "@thi.ng/transducers@npm:8.3.5"
+"@thi.ng/transducers@npm:8.3.6":
+  version: 8.3.6
+  resolution: "@thi.ng/transducers@npm:8.3.6"
   dependencies:
     "@thi.ng/api": ^8.3.7
-    "@thi.ng/arrays": ^2.2.5
+    "@thi.ng/arrays": ^2.3.0
     "@thi.ng/checks": ^3.2.1
     "@thi.ng/compare": ^2.1.7
     "@thi.ng/compose": ^2.1.7
     "@thi.ng/errors": ^2.1.7
     "@thi.ng/math": ^5.3.3
     "@thi.ng/random": ^3.3.2
-  checksum: d9206749895b439518dd3b173d66536f89e8700e4fd869a7c4a25fc4a67e7591449f7c0c0d744276f32b4ca51b381913c0ac2217c461e2e105cf666701d1704c
+  checksum: 2cc08a7316294c7e42a29e16673fc8280374dbd88bd3e8066dc665e87b829d4976ad9b9831bc8c06ec97a3bcb4a223ce9c31cb3e9fe7b33f9a94ed009f357557
   languageName: node
   linkType: hard
 
