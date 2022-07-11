@@ -744,12 +744,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.121.0":
-  version: 3.121.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.121.0"
+"@aws-sdk/util-dynamodb@npm:3.127.0":
+  version: 3.127.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.127.0"
   dependencies:
     tslib: ^2.3.1
-  checksum: d094f00d41386caff58cc56fc990350d85ecd705dcd9ee024d77eeb1b7d426e96d4c0e4dc09ac2c0d28379f0ed424cb192280b81ba3c7dc01f84a9fd3c27f45b
+  checksum: 5aad4a62a29a647b5b5059ab6ac894eee8d0887c717eddf25991235cf333ad9b573739b9a0042d1823e27e9ee170db577ba46f656a3afc1243ee068bff005a27
   languageName: node
   linkType: hard
 
@@ -2133,7 +2133,7 @@ __metadata:
   dependencies:
     "@adobe/helix-fetch": 3.1.1
     "@aws-sdk/client-dynamodb": 3.127.0
-    "@aws-sdk/util-dynamodb": 3.121.0
+    "@aws-sdk/util-dynamodb": 3.127.0
     "@hackercamp/lib": "workspace:lib"
     fast-xml-parser: 4.0.9
     jsonwebtoken: 8.5.1
