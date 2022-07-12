@@ -21,11 +21,6 @@
     "dest": "./"
   },
 
-  "javascripts": {
-    "src": "javascripts",
-    "dest": "assets/js"
-  },
-
   "stylesheets": {
     "src": "stylesheets",
     "dest": "assets/css"

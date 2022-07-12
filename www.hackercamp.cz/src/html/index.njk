@@ -1,14 +1,15 @@
+{% from "macros/helpers.njk" import twitterCardImage %}
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8"/>
   <meta name="robots" content="noindex">
   <title>Hacker Camp</title>
-  <link rel="preconnect" href="https://res.cloudinary.com" />
-  <link rel="preconnect" href="https://www.googletagmanager.com" />
-  <link rel="preconnect" href="https://www.google-analytics.com" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta http-equiv="Accept-CH" content="DPR,Viewport-Width,Width,Save-Data" />
+  <link rel="preconnect" href="https://res.cloudinary.com"/>
+  <link rel="preconnect" href="https://www.googletagmanager.com"/>
+  <link rel="preconnect" href="https://www.google-analytics.com"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+  <meta http-equiv="Accept-CH" content="DPR,Viewport-Width,Width,Save-Data"/>
   <meta
     name="viewport"
     content="width=device-width,initial-scale=1,viewport-fit=cover"
@@ -17,12 +18,9 @@
     name="description"
     content="Zažijte netradiční třídenní festival pro lidi z české tech scény. V duchu nekonference či barcampu se od sebe budeme vzájemně učit, bavit se a poznávat."
   />
-  {%- set publicId = images["IMG_5429.jpg"]["public_id"] -%}
-  <meta name="twitter:image" property="og:image"
-        content="{{ publicId | cloudinaryUrl(width=1200, height=630, crop="fill", dpr="1") }}">
+  {{ twitterCardImage(images["IMG_5429.jpg"]["public_id"]) }}
   <meta name="twitter:card" content="summary_large_image">
 
-  {% include "shared/fonts.njk" %}
   <style>
     :root {
       --hc-layout-width: 1600px;
@@ -310,20 +308,20 @@
     }
 
     #top video {
-      max-width: calc(100vw - var(--mdc-layout-grid-margin-phone,16px) * 2);
+      max-width: calc(100vw - var(--mdc-layout-grid-margin-phone, 16px) * 2);
     }
   </style>
-  <link rel="canonical" href="https://www.hackercamp.cz/" />
-  <link rel="author" href="/humans.txt" type="text/plain" />
+  <link rel="canonical" href="https://www.hackercamp.cz/"/>
+  <link rel="author" href="/humans.txt" type="text/plain"/>
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="manifest" href="/sitemanifest.json" />
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#e052a4" />
-  <meta name="msapplication-TileColor" content="#f5f5f5" />
-  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#222222" media="(prefers-color-scheme: dark)" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+  <link rel="manifest" href="/sitemanifest.json"/>
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#e052a4"/>
+  <meta name="msapplication-TileColor" content="#f5f5f5"/>
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"/>
+  <meta name="theme-color" content="#222222" media="(prefers-color-scheme: dark)"/>
 
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -332,7 +330,7 @@
 
   <!-- Google Tag Manager -->
   <script>
-    (function(w, d, s, l, i) {
+    (function (w, d, s, l, i) {
       w[l] = w[l] || [];
       w[l].push({
         "gtm.start": new Date().getTime(),
@@ -350,7 +348,7 @@
 </head>
 
 <body vocab="https://schema.org" typeof="Festival">
-<link property="eventStatus" href="https://schema.org/EventScheduled" />
+<link property="eventStatus" href="https://schema.org/EventScheduled"/>
 <link
   property="eventAttendanceMode"
   href="https://schema.org/MixedEventAttendanceMode"
@@ -368,7 +366,7 @@
 <nav class="hc-navbar mdc-layout-grid" style="line-height: 1;">
   <div class="mdc-layout-grid__inner">
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-      {% include "shared/logo.njk" %}
+      {% include "shared/logo.html" %}
     </div>
     <div class="hc-navbar__right mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
       <!-- a class="hc-link hc-navbar__link" href="https://g.page/sobenak?share">Navigovat</a-->
@@ -763,7 +761,7 @@
               width="16"
               height="16"
             >
-              <path d="M0 0h24v24H0z" fill="none" />
+              <path d="M0 0h24v24H0z" fill="none"/>
               <path
                 d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19a2 2 0 002 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
                 fill="var(--icon-color)"
@@ -805,11 +803,11 @@
                 y2="53.508"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#EE771B" />
-                <stop offset=".256" stop-color="#E9444E" />
-                <stop offset=".427" stop-color="#E62271" />
-                <stop offset=".789" stop-color="#684997" />
-                <stop offset="1" stop-color="#3E7ABC" />
+                <stop stop-color="#EE771B"/>
+                <stop offset=".256" stop-color="#E9444E"/>
+                <stop offset=".427" stop-color="#E62271"/>
+                <stop offset=".789" stop-color="#684997"/>
+                <stop offset="1" stop-color="#3E7ABC"/>
               </linearGradient>
             </defs>
           </svg>
@@ -830,7 +828,7 @@
           >
         </h3>
         <p property="address" typeof="PostalAddress">
-          <span property="streetAddress">Starý Rožmitál 148</span><br />
+          <span property="streetAddress">Starý Rožmitál 148</span><br/>
           <span property="postalCode">262 42</span>
           <span property="addressLocality">Rožmitál pod Třemšínem</span>
         </p>
@@ -858,18 +856,18 @@
             class="hc-price-list__badge"
             width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#item1_clip0)">
-              <rect width="66" height="66" rx="20" fill="url(#paint5_linear)" />
-              <circle opacity="0.23" cx="52" cy="11" r="17" fill="white" />
-              <circle opacity="0.23" cx="11" cy="55" r="24" fill="white" />
+              <rect width="66" height="66" rx="20" fill="url(#paint5_linear)"/>
+              <circle opacity="0.23" cx="52" cy="11" r="17" fill="white"/>
+              <circle opacity="0.23" cx="11" cy="55" r="24" fill="white"/>
             </g>
             <defs>
               <linearGradient id="paint5_linear" x1="2.55465e-06" y1="-8" x2="66" y2="73.5"
                               gradientUnits="userSpaceOnUse">
-                <stop stop-color="#E0E0E0" />
-                <stop offset="1" stop-color="#BEBEBE" />
+                <stop stop-color="#E0E0E0"/>
+                <stop offset="1" stop-color="#BEBEBE"/>
               </linearGradient>
               <clipPath id="item1_clip0">
-                <rect width="66" height="66" rx="20" fill="white" />
+                <rect width="66" height="66" rx="20" fill="white"/>
               </clipPath>
             </defs>
           </svg>
@@ -892,32 +890,32 @@
             class="hc-price-list__badge"
             width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#item2_clip0)">
-              <rect width="66" height="66" rx="20" fill="url(#paint6_linear)" />
-              <circle opacity="0.23" cx="52" cy="11" r="17" fill="url(#paint1_linear)" />
-              <circle opacity="0.23" cx="11" cy="55" r="24" fill="url(#paint2_linear)" />
+              <rect width="66" height="66" rx="20" fill="url(#paint6_linear)"/>
+              <circle opacity="0.23" cx="52" cy="11" r="17" fill="url(#paint1_linear)"/>
+              <circle opacity="0.23" cx="11" cy="55" r="24" fill="url(#paint2_linear)"/>
             </g>
             <defs>
               <linearGradient id="paint6_linear" x1="2.55465e-06" y1="-8" x2="66" y2="73.5"
                               gradientUnits="userSpaceOnUse">
-                <stop stop-color="#E0E0E0" />
-                <stop offset="1" stop-color="#BEBEBE" />
+                <stop stop-color="#E0E0E0"/>
+                <stop offset="1" stop-color="#BEBEBE"/>
               </linearGradient>
               <linearGradient id="paint1_linear" x1="33.0682" y1="21.0455" x2="85.2184" y2="11.0029"
                               gradientUnits="userSpaceOnUse">
-                <stop stop-color="#EE771B" />
-                <stop offset="0.4271" stop-color="#E62271" />
-                <stop offset="0.7889" stop-color="#684997" />
-                <stop offset="1" stop-color="#3E7ABC" />
+                <stop stop-color="#EE771B"/>
+                <stop offset="0.4271" stop-color="#E62271"/>
+                <stop offset="0.7889" stop-color="#684997"/>
+                <stop offset="1" stop-color="#3E7ABC"/>
               </linearGradient>
               <linearGradient id="paint2_linear" x1="-15.7273" y1="69.1818" x2="57.8966" y2="55.0041"
                               gradientUnits="userSpaceOnUse">
-                <stop stop-color="#EE771B" />
-                <stop offset="0.4271" stop-color="#E62271" />
-                <stop offset="0.7889" stop-color="#684997" />
-                <stop offset="1" stop-color="#3E7ABC" />
+                <stop stop-color="#EE771B"/>
+                <stop offset="0.4271" stop-color="#E62271"/>
+                <stop offset="0.7889" stop-color="#684997"/>
+                <stop offset="1" stop-color="#3E7ABC"/>
               </linearGradient>
               <clipPath id="item2_clip0">
-                <rect width="66" height="66" rx="20" fill="white" />
+                <rect width="66" height="66" rx="20" fill="white"/>
               </clipPath>
             </defs>
           </svg>
@@ -943,20 +941,20 @@
             class="hc-price-list__badge"
             width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#item3_clip0)">
-              <rect width="66" height="66" rx="20" fill="url(#paint3_linear)" />
-              <circle opacity="0.23" cx="52" cy="11" r="17" fill="white" />
-              <circle opacity="0.23" cx="11" cy="55" r="24" fill="white" />
+              <rect width="66" height="66" rx="20" fill="url(#paint3_linear)"/>
+              <circle opacity="0.23" cx="52" cy="11" r="17" fill="white"/>
+              <circle opacity="0.23" cx="11" cy="55" r="24" fill="white"/>
             </g>
             <defs>
               <linearGradient id="paint3_linear" x1="-3.75" y1="52.5" x2="97.4828" y2="33.0057"
                               gradientUnits="userSpaceOnUse">
-                <stop stop-color="#EE771B" />
-                <stop offset="0.4271" stop-color="#E62271" />
-                <stop offset="0.7889" stop-color="#684997" />
-                <stop offset="1" stop-color="#3E7ABC" />
+                <stop stop-color="#EE771B"/>
+                <stop offset="0.4271" stop-color="#E62271"/>
+                <stop offset="0.7889" stop-color="#684997"/>
+                <stop offset="1" stop-color="#3E7ABC"/>
               </linearGradient>
               <clipPath id="item3_clip0">
-                <rect width="66" height="66" rx="20" fill="white" />
+                <rect width="66" height="66" rx="20" fill="white"/>
               </clipPath>
             </defs>
           </svg>
@@ -981,19 +979,19 @@
             class="hc-price-list__badge"
             width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#item4_clip0)">
-              <rect width="66" height="66" rx="20" fill="url(#paint10_linear)" />
-              <circle opacity="0.23" cx="52" cy="11" r="17" fill="white" />
-              <circle opacity="0.23" cx="11" cy="55" r="24" fill="white" />
+              <rect width="66" height="66" rx="20" fill="url(#paint10_linear)"/>
+              <circle opacity="0.23" cx="52" cy="11" r="17" fill="white"/>
+              <circle opacity="0.23" cx="11" cy="55" r="24" fill="white"/>
             </g>
             <defs>
               <linearGradient id="paint10_linear" x1="-3.75" y1="52.5" x2="97.4828" y2="33.0057"
                               gradientUnits="userSpaceOnUse">
-                <stop stop-color="#FDF59A" />
-                <stop offset="0.498264" stop-color="#F1CF5D" />
-                <stop offset="1" stop-color="#E1BB49" />
+                <stop stop-color="#FDF59A"/>
+                <stop offset="0.498264" stop-color="#F1CF5D"/>
+                <stop offset="1" stop-color="#E1BB49"/>
               </linearGradient>
               <clipPath id="item4_clip0">
-                <rect width="66" height="66" rx="20" fill="white" />
+                <rect width="66" height="66" rx="20" fill="white"/>
               </clipPath>
             </defs>
           </svg>
@@ -1085,7 +1083,6 @@
       <div class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
         Každý účastník je zároveň tvůrce akce.
       </div>
-
 
       <div
         class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell"
@@ -1202,7 +1199,8 @@
 </section>
 
 <footer class="mdc-layout-grid">
-  <p style="text-align: center">© 2021-{{ "this" | year }} Hacker camp crew z.s., IČ <a href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a></p>
+  <p style="text-align: center">© 2021-{{ "this" | year }} Hacker camp crew z.s., IČ <a
+      href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a></p>
   <p style="text-align: center">Photos ©
     <a href="https://cz.linkedin.com/in/petrmihle">Petr Mihle</a> &amp;
     <a href="https://ptrnka.cz/">Pavel Trnka</a>
@@ -1216,6 +1214,7 @@
       el.setAttribute(key, val);
     return el;
   }
+
   document.head.appendChild(el("link", {
     rel: "stylesheet",
     href: "/assets/css/main.css"

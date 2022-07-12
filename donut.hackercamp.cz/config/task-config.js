@@ -16,9 +16,7 @@ module.exports = {
     collections: ["build", "images"],
     nunjucksRender: {
       filters: {
-        year() {
-          return new Date().getFullYear();
-        },
+        year: () => new Date().getFullYear(),
       },
     },
   },

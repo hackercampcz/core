@@ -21,12 +21,10 @@ module.exports = {
   },
 
   html: {
-    collections: ["images", "build"],
+    collections: ["build", "images"],
     nunjucksRender: {
       filters: {
-        year() {
-          return new Date().getFullYear();
-        },
+        year: () => new Date().getFullYear(),
       },
     },
   },

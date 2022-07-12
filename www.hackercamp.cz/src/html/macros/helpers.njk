@@ -26,3 +26,8 @@
          src="{{ imageUrl | cloudinaryUrl(dpr="auto",width=w) }}">
   </picture>
 {%- endmacro %}
+
+{% macro twitterCardImage(publicId) -%}
+  <meta name="twitter:image" property="og:image"
+        content="{{ publicId | cloudinaryUrl(width=1200, height=630, crop="fill", dpr="1") }}">
+{%- endmacro %}
