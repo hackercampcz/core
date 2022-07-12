@@ -78,7 +78,7 @@
     "type": "tent",
     "name": "glamping",
     "title": "Glamping stany",
-    "description": "V areálu připravíme i ubytování v ChillVillage stanech. Stany jsou pro 6 osob.",
+    "description": "V areálu připravíme i ubytování v ChillVillage stanech. Stany jsou pro 5 osob a v každém budou matrace, povlečení, polštáře, peřiny, led osvětlení a dokonce i kobereček.",
     "images": [
       { "src": "https://chillvillage.cz/wp-content/uploads/2022/03/MG_0681-scaled.jpg", "width": 2560, "height": 1707 },
       { "src": "https://chillvillage.cz/wp-content/uploads/2020/02/DSCN0801-scaled.jpg", "width": 1600, "height": 1200 }
