@@ -38,11 +38,12 @@ export async function handler(event) {
     const resp = await db.send(
       new ScanCommand({
         TableName: "hc-registrations",
-        ProjectionExpression: "email,year",
+        ProjectionExpression: "email,#y",
         FilterExpression: "invoice_id = :invoice_id",
         ExpressionAttributeValues: marshall({
           ":invoice_id": invoice_id,
         }),
+        ExpressionAttributeNames: { "#y": "year" },
       })
     );
     const registration = resp.Items[0];
