@@ -55,7 +55,7 @@ export async function handler(event) {
       new UpdateItemCommand({
         TableName: "hc-registrations",
         Key: marshall(registration),
-        UpdateExpression: "ADD paid :paid",
+        UpdateExpression: "SET paid = :paid",
         ExpressionAttributeValues: marshall({
           ":paid": new Date(paid_at).toISOString(),
         }),
