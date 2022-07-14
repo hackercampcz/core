@@ -51,6 +51,7 @@ export async function handler(event) {
       console.log({ event: "Registration not found", invoice_id });
       return withCORS_(notFound());
     }
+    console.log(registration);
     await db.send(
       new UpdateItemCommand({
         TableName: "hc-registrations",
