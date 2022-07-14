@@ -56,7 +56,7 @@ export async function handler(event) {
       await db.send(
         new UpdateItemCommand({
           TableName: "hc-registrations",
-          Key: marshall(registration),
+          Key: registration,
           UpdateExpression: "SET paid = :paid",
           ExpressionAttributeValues: marshall({
             ":paid": new Date(paid_at).toISOString(),
