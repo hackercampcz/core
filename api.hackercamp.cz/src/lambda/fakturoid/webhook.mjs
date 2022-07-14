@@ -46,27 +46,29 @@ export async function handler(event) {
         ExpressionAttributeNames: { "#y": "year" },
       })
     );
-    const registration = resp.Items[0];
-    if (!registration) {
-      console.log({ event: "Registration not found", invoice_id });
+    const registrations = resp.Items;
+    if (!registrations.length) {
+      console.log({ event: "Registrations not found", invoice_id });
       return withCORS_(notFound());
     }
-    console.log(registration);
-    await db.send(
-      new UpdateItemCommand({
-        TableName: "hc-registrations",
-        Key: marshall(registration),
-        UpdateExpression: "SET paid = :paid",
-        ExpressionAttributeValues: marshall({
-          ":paid": new Date(paid_at).toISOString(),
-        }),
-      })
-    );
-    console.log({
-      event: "Invoice marked as paid",
-      invoice_id,
-      ...registration,
-    });
+    for (const registration of registrations) {
+      console.log({ event: "Marking as paid", ...registration });
+      await db.send(
+        new UpdateItemCommand({
+          TableName: "hc-registrations",
+          Key: marshall(registration),
+          UpdateExpression: "SET paid = :paid",
+          ExpressionAttributeValues: marshall({
+            ":paid": new Date(paid_at).toISOString(),
+          }),
+        })
+      );
+      console.log({
+        event: "Invoice marked as paid",
+        invoice_id,
+        ...registration,
+      });
+    }
     return withCORS_(response({}));
   } catch (err) {
     console.error(err);
