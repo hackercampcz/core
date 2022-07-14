@@ -7,7 +7,7 @@ async function markAsPaid(registration, paidAt) {
   await dynamo.updateItem({
     TableName: "hc-registrations",
     Key: registration,
-    UpdateExpression: "ADD paid :paid",
+    UpdateExpression: "SET paid = :paid",
     ExpressionAttributeValues: {
       ":paid": new Date(paidAt).toISOString(),
     },
@@ -36,4 +36,4 @@ async function main({ invoiceId, paidAt }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config dynamo-scripts.js --invoiceId 1 --paidAt 2022-07-12
+// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config invoice-paid.js --invoiceId 1 --paidAt 2022-07-12
