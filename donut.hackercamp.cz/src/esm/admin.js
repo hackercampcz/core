@@ -9,14 +9,15 @@ import * as marked from "marked";
 import * as rollbar from "./lib/rollbar.js";
 
 const View = {
+  paid: "paid",
+  invoiced: "invoiced",
+  confirmed: "confirmed",
   hackers: "hackers",
-  hackersConfirmed: "hackersConfirmed",
-  plusOnes: "plusOnes",
   waitingList: "waitingList",
 };
 
 const state = defAtom({
-  selectedView: View.hackersConfirmed,
+  selectedView: View.paid,
   view: renderView,
 });
 
@@ -27,7 +28,55 @@ const formatDateTime = (x) =>
 const sortByTimestamp = (x) =>
   x.sort((a, b) => -1 * a.timestamp.localeCompare(b.timestamp));
 
-function chips(view, { hackers, waitingList, plusOnes, hackersConfirmed }) {
+function chip({ text, count, selected, view }) {
+  return html`
+    <span
+      class="${classMap({
+        "mdc-evolution-chip": true,
+        "mdc-evolution-chip--selectable": true,
+        "mdc-evolution-chip--filter": true,
+        "hc-chip": true,
+        "hc-chip--selected": selected,
+      })}"
+      role="presentation"
+    >
+      <a
+        class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
+        role="option"
+        aria-selected="${selected ? "true" : "false"}"
+        tabindex="0"
+        href="?view=${view}"
+      >
+        <span
+          class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
+        ></span>
+        <span class="mdc-evolution-chip__graphic">
+          <span class="mdc-evolution-chip__checkmark">
+            <svg
+              class="mdc-evolution-chip__checkmark-svg"
+              viewBox="-2 -3 30 30"
+            >
+              <path
+                class="mdc-evolution-chip__checkmark-path"
+                fill="none"
+                stroke="black"
+                d="M1.73,12.91 8.1,19.28 22.79,4.59"
+              />
+            </svg>
+          </span>
+        </span>
+        <span class="mdc-evolution-chip__text-label"
+          >${text}
+          ${until(
+            count?.then((x) => html`<data value="${x}">${x}</data>`, "")
+          )}</span
+        >
+      </a>
+    </span>
+  `;
+}
+
+function chips(view, { hackers, waitingList, confirmed, invoiced, paid }) {
   return html`
     <div
       class="mdc-evolution-chip-set"
@@ -37,183 +86,36 @@ function chips(view, { hackers, waitingList, plusOnes, hackersConfirmed }) {
       aria-multiselectable="false"
     >
       <span class="mdc-evolution-chip-set__chips" role="presentation">
-        <span
-          class="${classMap({
-            "mdc-evolution-chip": true,
-            "mdc-evolution-chip--selectable": true,
-            "mdc-evolution-chip--filter": true,
-            "hc-chip": true,
-            "hc-chip--selected": view === View.hackersConfirmed,
-          })}"
-          role="presentation"
-        >
-          <a
-            class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
-            role="option"
-            aria-selected="${view === View.hackersConfirmed ? "true" : "false"}"
-            tabindex="0"
-            href="?view=${View.hackersConfirmed}"
-          >
-            <span
-              class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
-            ></span>
-            <span class="mdc-evolution-chip__graphic">
-              <span class="mdc-evolution-chip__checkmark">
-                <svg
-                  class="mdc-evolution-chip__checkmark-svg"
-                  viewBox="-2 -3 30 30"
-                >
-                  <path
-                    class="mdc-evolution-chip__checkmark-path"
-                    fill="none"
-                    stroke="black"
-                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                  />
-                </svg>
-              </span>
-            </span>
-            <span class="mdc-evolution-chip__text-label"
-              >Potvrzení Hackeři
-              ${until(
-                hackersConfirmed?.then(
-                  (x) => html`<data value="${x}">${x}</data>`,
-                  ""
-                )
-              )}</span
-            >
-          </a>
-        </span>
-        <span
-          class="${classMap({
-            "mdc-evolution-chip": true,
-            "mdc-evolution-chip--selectable": true,
-            "mdc-evolution-chip--filter": true,
-            "hc-chip": true,
-            "hc-chip--selected": view === View.hackers,
-          })}"
-          role="presentation"
-        >
-          <a
-            class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
-            role="option"
-            aria-selected="${view === View.hackers ? "true" : "false"}"
-            tabindex="0"
-            href="?view=${View.hackers}"
-          >
-            <span
-              class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
-            ></span>
-            <span class="mdc-evolution-chip__graphic">
-              <span class="mdc-evolution-chip__checkmark">
-                <svg
-                  class="mdc-evolution-chip__checkmark-svg"
-                  viewBox="-2 -3 30 30"
-                >
-                  <path
-                    class="mdc-evolution-chip__checkmark-path"
-                    fill="none"
-                    stroke="black"
-                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                  />
-                </svg>
-              </span>
-            </span>
-            <span class="mdc-evolution-chip__text-label"
-              >Hackeři
-              ${until(
-                hackers?.then((x) => html`<data value="${x}">${x}</data>`),
-                ""
-              )}</span
-            >
-          </a>
-        </span>
-        <span
-          class="${classMap({
-            "mdc-evolution-chip": true,
-            "mdc-evolution-chip--selectable": true,
-            "mdc-evolution-chip--filter": true,
-            "hc-chip": true,
-            "hc-chip--selected": view === View.plusOnes,
-          })}"
-          role="presentation"
-        >
-          <a
-            class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
-            role="option"
-            aria-selected="${view === View.plusOnes ? "true" : "false"}"
-            tabindex="-1"
-            href="?view=${View.plusOnes}"
-          >
-            <span
-              class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
-            ></span>
-            <span class="mdc-evolution-chip__graphic">
-              <span class="mdc-evolution-chip__checkmark">
-                <svg
-                  class="mdc-evolution-chip__checkmark-svg"
-                  viewBox="-2 -3 30 30"
-                >
-                  <path
-                    class="mdc-evolution-chip__checkmark-path"
-                    fill="none"
-                    stroke="black"
-                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                  />
-                </svg>
-              </span>
-            </span>
-            <span class="mdc-evolution-chip__text-label"
-              >Plus Ones
-              ${until(
-                plusOnes?.then((x) => html`<data value="${x}">${x}</data>`),
-                ""
-              )}</span
-            >
-          </a>
-        </span>
-        <span
-          class="${classMap({
-            "mdc-evolution-chip": true,
-            "mdc-evolution-chip--selectable": true,
-            "mdc-evolution-chip--filter": true,
-            "hc-chip": true,
-            "hc-chip--selected": view === View.waitingList,
-          })}"
-          role="presentation"
-        >
-          <a
-            class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
-            role="option"
-            aria-selected="${view === View.waitingList ? "true" : "false"}"
-            tabindex="-1"
-            href="?view=${View.waitingList}"
-          >
-            <span
-              class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
-            ></span>
-            <span class="mdc-evolution-chip__graphic">
-              <span class="mdc-evolution-chip__checkmark">
-                <svg
-                  class="mdc-evolution-chip__checkmark-svg"
-                  viewBox="-2 -3 30 30"
-                >
-                  <path
-                    class="mdc-evolution-chip__checkmark-path"
-                    fill="none"
-                    stroke="black"
-                    d="M1.73,12.91 8.1,19.28 22.79,4.59"
-                  />
-                </svg>
-              </span>
-            </span>
-            <span class="mdc-evolution-chip__text-label"
-              >Waiting List
-              ${until(
-                waitingList?.then((x) => html`<data value="${x}">${x}</data>`)
-              )}</span
-            >
-          </a>
-        </span>
+        ${chip({
+          text: "Zaplacení",
+          count: paid,
+          selected: view === View.paid,
+          view: View.paid,
+        })}
+        ${chip({
+          text: "Vyfakturovaní",
+          count: invoiced,
+          selected: view === View.invoiced,
+          view: View.invoiced,
+        })}
+        ${chip({
+          text: "Potvrzení",
+          count: confirmed,
+          selected: view === View.confirmed,
+          view: View.confirmed,
+        })}
+        ${chip({
+          text: "Nepotvrzení",
+          count: hackers,
+          selected: view === View.hackers,
+          view: View.hackers,
+        })}
+        ${chip({
+          text: "Waiting list",
+          count: waitingList,
+          selected: view === View.waitingList,
+          view: View.waitingList,
+        })}
       </span>
     </div>
   `;
@@ -541,13 +443,16 @@ function unauthorized() {
     </p>
     <div>
       <a
-        href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read"
+        href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F"
       >
         <img
           alt="Add to Slack"
           height="40"
           width="139"
           src="https://platform.slack-edge.com/img/add_to_slack.png"
+          @click="${() => {
+            localStorage.setItem("hc:returnUrl", location.href);
+          }}"
           srcset="
             https://platform.slack-edge.com/img/add_to_slack.png    1x,
             https://platform.slack-edge.com/img/add_to_slack@2x.png 2x
@@ -607,7 +512,7 @@ async function fetchData(selectedView, apiHost) {
  * @param {string} apiHost
  */
 function loadData(searchParams, apiHost) {
-  const selectedView = searchParams.get("view") ?? View.hackersConfirmed;
+  const selectedView = searchParams.get("view") ?? View.paid;
   transact((x) =>
     Object.assign(x, {
       selectedView,

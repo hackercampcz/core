@@ -15,7 +15,8 @@ async function getConfirmedHackersRegistrations(page, pageSize) {
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "firstTime = :firstTime AND #ts > :timestamp",
+      FilterExpression:
+        "firstTime = :firstTime AND #ts > :timestamp AND attribute_not_exists(invoiced)",
       ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
         {
@@ -35,7 +36,8 @@ async function getHackersRegistrations(page, pageSize) {
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "firstTime = :firstTime AND #ts < :timestamp",
+      FilterExpression:
+        "firstTime = :firstTime AND #ts < :timestamp AND attribute_not_exists(invoiced)",
       ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
         {
@@ -56,7 +58,7 @@ async function getWaitingListRegistrations(page, pageSize) {
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "firstTime = :firstTime AND (attribute_not_exists(referral) OR attribute_type(referral, :null))",
+        "firstTime = :firstTime AND (attribute_not_exists(referral) OR attribute_type(referral, :null)) AND attribute_not_exists(invoiced)",
       ExpressionAttributeValues: marshall(
         { ":firstTime": true, ":null": "NULL" },
         { removeUndefinedValues: true }
@@ -66,18 +68,26 @@ async function getWaitingListRegistrations(page, pageSize) {
   return resp.Items.map((x) => unmarshall(x));
 }
 
-async function getPlusOneRegistrations(page, pageSize) {
-  console.log("Loading plus one data", { page, pageSize });
+async function getInvoicedRegistrations(page, pageSize) {
+  console.log("Loading invoiced registrations", { page, pageSize });
   const resp = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "firstTime = :firstTime AND attribute_exists(referral) AND (NOT attribute_type(referral, :null))",
-      ExpressionAttributeValues: marshall(
-        { ":firstTime": true, ":null": "NULL" },
-        { removeUndefinedValues: true }
-      ),
+        "attribute_exists(invoiced) AND attribute_not_exists(paid)",
+    })
+  );
+  return resp.Items.map((x) => unmarshall(x));
+}
+
+async function getPaidRegistrations(page, pageSize) {
+  console.log("Loading paid registrations", { page, pageSize });
+  const resp = await db.send(
+    new ScanCommand({
+      TableName: "hc-registrations",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "attribute_exists(paid)",
     })
   );
   return resp.Items.map((x) => unmarshall(x));
@@ -85,12 +95,14 @@ async function getPlusOneRegistrations(page, pageSize) {
 
 function getData(type) {
   switch (type) {
-    case "hackersConfirmed":
+    case "confirmed":
       return getConfirmedHackersRegistrations();
     case "hackers":
       return getHackersRegistrations();
-    case "plusOnes":
-      return getPlusOneRegistrations();
+    case "invoiced":
+      return getInvoicedRegistrations();
+    case "paid":
+      return getPaidRegistrations();
     case "waitingList":
       return getWaitingListRegistrations();
     default:
