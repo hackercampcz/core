@@ -91,6 +91,8 @@ export async function handler(event) {
       };
       const idToken = jwt.sign(payload, process.env["private_key"]);
       delete profile.ok;
+      // For local development we need to relax Cross site security
+      const sameSite = origin.includes("localhost") ? "Lax" : "Strict";
       return withCORS_(
         response(
           {
@@ -100,7 +102,7 @@ export async function handler(event) {
             slackProfile: profile,
           },
           {
-            "Set-Cookie": `hc-id=${idToken}; Max-Age=216000; Domain=hackercamp.cz; Path=/; SameSite=strict; Secure; HttpOnly`,
+            "Set-Cookie": `hc-id=${idToken}; Max-Age=216000; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
           }
         )
       );
