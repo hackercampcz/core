@@ -92,7 +92,7 @@ export async function handler(event) {
       const idToken = jwt.sign(payload, process.env["private_key"]);
       delete profile.ok;
       // For local development we need to relax Cross site security
-      const sameSite = origin.includes("localhost") ? "Lax" : "Strict";
+      const sameSite = origin.includes("localhost") ? "None" : "Strict";
       return withCORS_(
         response(
           {
