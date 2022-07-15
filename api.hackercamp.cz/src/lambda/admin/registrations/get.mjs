@@ -15,12 +15,10 @@ async function getConfirmedHackersRegistrations(page, pageSize) {
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression:
-        "firstTime = :firstTime AND #ts > :timestamp AND attribute_not_exists(invoiced)",
+      FilterExpression: "#ts > :timestamp AND attribute_not_exists(invoiced)",
       ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
         {
-          ":firstTime": false,
           ":timestamp": "2022-05-31T00:00:00.000Z",
         },
         { removeUndefinedValues: true }
