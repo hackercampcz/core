@@ -25,8 +25,8 @@ const transact = (fn) => state.swap(fn);
 
 const formatDateTime = (x) =>
   x?.toLocaleString("cs", { dateStyle: "short", timeStyle: "short" }) ?? null;
-const sortByTimestamp = (x) =>
-  x.sort((a, b) => -1 * a.timestamp.localeCompare(b.timestamp));
+const sortBy = (attr, x) =>
+  x.sort((a, b) => -1 * a[attr].localeCompare(b[attr]));
 
 function chip({ text, count, selected, view }) {
   return html`
@@ -381,14 +381,14 @@ function detailTemplate(detail) {
 const renderDetail = (detail) => () =>
   transact((x) => Object.assign(x, { detail }));
 
-function tableTemplate(data) {
+function tableTemplate(data, { timeHeader, timeAttr }) {
   return html`
     <table>
       <thead>
         <tr>
           <th>Jméno</th>
           <th>Společnost</th>
-          <th>Čas registrace</th>
+          <th>${timeHeader}</th>
           <th>Akce</th>
         </tr>
       </thead>
@@ -399,7 +399,7 @@ function tableTemplate(data) {
               @click="${renderDetail(row)}">
               <td>${row.firstName} ${row.lastName}</td>
               <td>${row.company}</td>
-              <td>${formatDateTime(new Date(row.timestamp))}</td>
+              <td>${formatDateTime(new Date(row[timeAttr]))}</td>
               <td>
                 <a
                   href="mailto:${row.email}"
@@ -461,6 +461,11 @@ function unauthorized() {
     </div>`;
 }
 
+const timeColumn = new Map([
+  [View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
+  [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }],
+]);
+
 function registrationsTemplate(state) {
   const { data, selectedView, detail } = state;
   return html`
@@ -476,7 +481,14 @@ function registrationsTemplate(state) {
         ${until(
           data?.then((data) => {
             if (data.unauthorized) return unauthorized();
-            return tableTemplate(sortByTimestamp(data));
+            const timeColumnSettings = timeColumn.get(selectedView) ?? {
+              timeHeader: "Čas registrace",
+              timeAttr: "timestamp",
+            };
+            return tableTemplate(
+              sortBy(timeColumnSettings.timeAttr, data),
+              timeColumnSettings
+            );
           }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
