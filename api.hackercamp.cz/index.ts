@@ -120,10 +120,22 @@ export function createDB() {
     billingMode: "PAY_PER_REQUEST",
   });
 
+  const attendees = new aws.dynamodb.Table(hcName("attendees"), {
+    name: hcName("attendees"),
+    hashKey: "slackID",
+    rangeKey: "year",
+    attributes: [
+      { name: "slackID", type: "S" },
+      { name: "year", type: "N" },
+    ],
+    billingMode: "PAY_PER_REQUEST",
+  });
+
   return pulumi.Output.create({
     registrationsDataTable: registrations.name,
     contactsDataTable: contacts.name,
     optOutsDataTable: optOuts.name,
+    attributesDataTable: attendees.name,
   });
 }
 
