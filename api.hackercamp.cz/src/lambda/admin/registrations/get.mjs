@@ -15,10 +15,10 @@ async function getConfirmedHackersRegistrations(page, pageSize) {
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#ts > :timestamp AND attribute_not_exists(invoiced)",
+      FilterExpression: "#ts > :ts AND attribute_not_exists(invoiced)",
       ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
-        { ":timestamp": "2022-05-31T00:00:00.000Z" },
+        { ":ts": "2022-05-31T00:00:00.000Z" },
         { removeUndefinedValues: true }
       ),
     })
@@ -33,12 +33,12 @@ async function getHackersRegistrations(page, pageSize) {
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "firstTime = :firstTime AND #ts < :timestamp AND attribute_not_exists(invoiced)",
+        "firstTime = :false AND #ts < :ts AND attribute_not_exists(invoiced)",
       ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
         {
-          ":firstTime": false,
-          ":timestamp": "2022-05-31T00:00:00.000Z",
+          ":false": false,
+          ":ts": "2022-05-31T00:00:00.000Z",
         },
         { removeUndefinedValues: true }
       ),
@@ -54,9 +54,9 @@ async function getWaitingListRegistrations(page, pageSize) {
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "firstTime = :firstTime AND (attribute_not_exists(referral) OR attribute_type(referral, :null)) AND attribute_not_exists(invoiced)",
+        "firstTime = :true AND attribute_not_exists(invoiced) AND (attribute_not_exists(referral) OR attribute_type(referral, :null))",
       ExpressionAttributeValues: marshall(
-        { ":firstTime": true, ":null": "NULL" },
+        { ":true": true, ":null": "NULL" },
         { removeUndefinedValues: true }
       ),
     })
