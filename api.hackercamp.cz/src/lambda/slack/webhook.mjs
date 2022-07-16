@@ -20,21 +20,28 @@ import {
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
+function dispatchByType(payload) {
+  switch (payload.type) {
+    case "url_verification":
+      return response({ challenge: payload.challenge });
+    case "team_join":
+      // todo: implement new team member
+      return notFound();
+    default:
+      console.log({ event: "Unknown event", payload });
+      return unprocessableEntity();
+  }
+}
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
   const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
-
   try {
     const payload = readPayload(event);
-    if (payload.type !== "team_join") {
-      console.log({ event: "Unknown event", payload });
-      return withCORS_(unprocessableEntity());
-    }
-
-    return withCORS_(response({}));
+    return withCORS_(dispatchByType(payload));
   } catch (err) {
     console.error(err);
     return withCORS_(internalError());
