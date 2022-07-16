@@ -41,6 +41,7 @@ export async function handler(event) {
   const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
   try {
     const payload = readPayload(event);
+    console.log(payload);
     return withCORS_(dispatchByType(payload));
   } catch (err) {
     console.error(err);
