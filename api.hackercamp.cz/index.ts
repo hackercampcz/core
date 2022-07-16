@@ -72,6 +72,11 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
         path: "/fakturoid/webhook",
         fileName: "fakturoid/webhook.mjs",
       },
+      slackWebhook: {
+        httpMethod: "POST",
+        path: "/slack/webhook",
+        fileName: "slack/webhook.mjs",
+      },
     },
   ],
 ]);
