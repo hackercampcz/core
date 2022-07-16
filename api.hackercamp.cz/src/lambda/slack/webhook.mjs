@@ -20,13 +20,21 @@ import {
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
+function onUrlVerification(payload) {
+  return response({ challenge: payload.challenge });
+}
+
+function onTeamJoin(payload) {
+  // todo: implement new team member
+  return notFound();
+}
+
 function dispatchByType(payload) {
   switch (payload.type) {
     case "url_verification":
-      return response({ challenge: payload.challenge });
+      return onUrlVerification(payload);
     case "team_join":
-      // todo: implement new team member
-      return notFound();
+      return onTeamJoin(payload);
     default:
       console.log({ event: "Unknown event", payload });
       return unprocessableEntity();
