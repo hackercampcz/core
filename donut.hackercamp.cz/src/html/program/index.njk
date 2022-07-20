@@ -1,0 +1,26 @@
+{% extends 'layouts/application.njk' %}
+{% block title %}Program Campu{% endblock %}
+{% block head %}
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="program-root"></div>
+{% endblock %}
+
+{% block javascript %}
+<script type="module">
+  import { main } from "/assets/esm/program.js";
+
+  main({
+    rootElement: document.querySelector("#program-root"),
+    env: {{ build | dump(8) | safe }},
+  });
+</script>
+{% endblock %}

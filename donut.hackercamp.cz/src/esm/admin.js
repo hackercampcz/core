@@ -437,11 +437,11 @@ function tableTemplate(data, { timeHeader, timeAttr }) {
 }
 
 function unauthorized() {
-  return html`<p>
+  return html`<p style="padding: 16px">
       Nemáte oprávnění pro tuto sekci. Pokud si myslíte, že je mít máte,
       klikněte na následující tlačítko a potvrďte požadovaná oprávnění:
     </p>
-    <div>
+    <div style="padding: 16px">
       <a
         href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F"
       >
@@ -492,7 +492,7 @@ function registrationsTemplate(state) {
           }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-              <p>Načítám data&hellip;</p>
+              <p style="padding: 16px">Načítám data&hellip;</p>
             </div>
           `
         )}
