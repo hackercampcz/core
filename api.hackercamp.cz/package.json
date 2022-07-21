@@ -8,5 +8,5 @@
     "fast-xml-parser": "4.0.9",
     "jsonwebtoken": "8.5.1"
   },
-  "packageManager": "yarn@3.2.1"
+  "packageManager": "yarn@3.2.2"
 }
