@@ -1,5 +1,6 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { response } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -7,16 +8,6 @@ import { response } from "../http.mjs";
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
 
 const dynamo = new DynamoDBClient({});
-
-/**
- * @param {{[p: string]: T}} obj
- * @param {Set} keys
- */
-function selectKeys(obj, keys) {
-  return Object.fromEntries(
-    Object.entries(obj).filter(([key]) => keys.has(key))
-  );
-}
 
 /**
  *
@@ -30,9 +21,11 @@ async function getAttendees(dynamo) {
       Select: "ALL_ATTRIBUTES",
     })
   );
-  return result.Items.map((x) => unmarshall(x)).map((x) =>
-    selectKeys(x, new Set(["name", "slackID", "housing", "company"]))
-  );
+  return result.Items.map((x) => unmarshall(x))
+    .map((x) =>
+      selectKeys(x, new Set(["name", "slackID", "housing", "company"]))
+    )
+    .map((x) => Object.assign({ isEditable: true }, x));
 }
 
 /**
