@@ -31,7 +31,7 @@ async function getAttendees(dynamo) {
     })
   );
   return result.Items.map((x) => unmarshall(x)).map((x) =>
-    selectKeys(x, new Set(["name", "slackID", "housing"]))
+    selectKeys(x, new Set(["name", "slackID", "housing", "company"]))
   );
 }
 
