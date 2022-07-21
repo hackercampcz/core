@@ -6,7 +6,8 @@ async function main({ token }) {
   const resp = await fetch("https://slack.com/api/users.list", {
     headers: { Authorization: `Bearer ${token}` },
   });
-  const users = (await resp.json()).members.filter(
+  const data = await resp.json();
+  const users = data.members.filter(
     (x) => !(x.is_bot || x.deleted || skip.has(x.name))
   );
 
@@ -30,4 +31,3 @@ async function main({ token }) {
 }
 
 await main(parse(Deno.args));
-

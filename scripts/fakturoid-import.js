@@ -119,10 +119,10 @@ export async function createSubject(data, token) {
   return resp.json();
 }
 
-export async function fetchInvoice(token) {
+export async function fetchInvoice(token, invoiceId) {
   const basic = btoa(`${email}:${token}`);
   const resp = await fetch(
-    `https://app.fakturoid.cz/api/v2/accounts/${slug}/invoices/23915828.json`,
+    `https://app.fakturoid.cz/api/v2/accounts/${slug}/invoices/${invoiceId}.json`,
     {
       method: "GET",
       headers: {
@@ -133,11 +133,18 @@ export async function fetchInvoice(token) {
       },
     }
   );
+  if (!resp.ok) {
+    throw new Error(resp.statusText);
+  }
   return resp.json();
 }
 
-async function main({ token }) {
-  console.log(await fetchInvoice(token));
+async function main({ token, invoiceId }) {
+  try {
+    console.log(await fetchInvoice(token, invoiceId));
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 await main(parse(Deno.args));
