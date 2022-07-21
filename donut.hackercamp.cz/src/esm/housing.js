@@ -1,11 +1,12 @@
-async function loadHousingData() {
+import { getSlackProfile, signOut } from "./lib/profile.js";
+
+async function loadHousingData(apiBase) {
   const responses = await Promise.all([
     fetch(`/housing/index.json`),
     fetch(`/housing/types.json`),
     fetch(`/housing/variants.json`),
     fetch(`/housing/backstage.json`),
-    fetch(`/housing/hackers.json`, {
-      // 👆 change to API endpoint when it's ready
+    fetch(`${apiBase}housing`, {
       headers: { Accept: "application/json" },
       credentials: "include",
     }),
@@ -14,29 +15,26 @@ async function loadHousingData() {
     responses.map((r) => r.json())
   );
 
+  console.warn(`TODO: call signOut() once API returns 401`);
+
   return { housing, types, variants, hackers, backstage };
 }
 
-function inlineHackerName({ firstName, lastName, company }) {
+function inlineHackerName({ name, company }) {
   if (company) {
-    return `${firstName} ${lastName} z ${company}`;
+    return `${name} z ${company}`;
   }
-  return `${firstName} ${lastName}`;
+  return name;
 }
 
-function renderHousingTypes(selectElement, { types, hackerHousing }) {
+function renderHousingTypes(selectElement, { types, hacker }) {
   for (const type of types) {
     const option = document.createElement("option");
     option.value = type.name;
-    option.selected = type.name === hackerHousing?.type;
+    option.selected = type.name === hacker.housing;
     option.textContent = type.title;
     selectElement.appendChild(option);
   }
-}
-
-function getHackerSlackProfile() {
-  const profile = JSON.parse(localStorage.getItem("slack:profile") || "{}");
-  return profile;
 }
 
 function renderHousingVariants(rootElement, { variants, housing }) {
@@ -85,11 +83,11 @@ function renderHousingVariants(rootElement, { variants, housing }) {
           </div>
         `
         }
-        <div class="rooms" aria-hidden="true">
+        <div class="placements" aria-hidden="true">
           ${housingOfVariant
             .map(
-              ({ room, capacity }) => `
-              <h3>${room}</h3>
+              ({ type, placement, capacity }) => `
+              <h3>${placement}</h3>
               <div class="booking-grid">
               ${Array.from({ length: capacity })
                 .map(
@@ -97,7 +95,7 @@ function renderHousingVariants(rootElement, { variants, housing }) {
                   <div class="booking-grid__cell">
                     <input
                       list="hackers"
-                      name="housing['${room}'][${index}]"
+                      name="${type}['${placement}'][${index}]"
                       placeholder="-- Volno --"
                       type="search"
                     />
@@ -113,7 +111,7 @@ function renderHousingVariants(rootElement, { variants, housing }) {
             Uložit (se)
           </button>
         </div>
-        <div class="show-rooms">
+        <div class="show-placements">
           <p><strong>Volných míst: <span class="zimmer-frei">${0}</span></strong></p>
           <a class="hc-link hc-link--decorated" href="#">chci sem</a>
         </div>
@@ -122,14 +120,14 @@ function renderHousingVariants(rootElement, { variants, housing }) {
     rootElement.appendChild(sectionElement);
 
     sectionElement
-      .querySelector(".show-rooms a")
+      .querySelector(".show-placements a")
       .addEventListener("click", (event) => {
         event.preventDefault();
         sectionElement
-          .querySelector(".rooms")
+          .querySelector(".placements")
           .setAttribute("aria-hidden", "false");
         sectionElement
-          .querySelector(".show-rooms")
+          .querySelector(".show-placements")
           .setAttribute("aria-hidden", "true");
       });
   }
@@ -139,15 +137,15 @@ function renderHackers(formElement, { hackers, hacker }) {
   const hackersListElement = document.createElement("datalist");
   hackersListElement.id = "hackers";
 
-  for (const { sub, firstName, lastName, company, housing } of hackers) {
-    const isHomeless = !housing;
-    const inlineValue = inlineHackerName({ firstName, lastName, company });
+  for (const { slackID, name, company, housing, housingPlacement } of hackers) {
+    const isHomeless = !housingPlacement;
+    const inlineValue = inlineHackerName({ name, company });
 
     if (isHomeless) {
       const option = document.createElement("option");
       option.value = inlineValue;
-      option.dataset.id = sub;
-      if (sub === hacker.sub) {
+      option.dataset.id = slackID;
+      if (slackID === hacker.slackID) {
         hackersListElement.prepend(option);
       } else {
         hackersListElement.appendChild(option);
@@ -156,12 +154,12 @@ function renderHackers(formElement, { hackers, hacker }) {
     }
 
     const inputElement = formElement.querySelector(`
-      input[name^="housing['${housing}']"]:placeholder-shown,
-      [value="${housing}"]
+      input[name^="${housing}['${housingPlacement}']"]:placeholder-shown
     `);
+
     inputElement.value = inlineValue;
 
-    if (sub === hacker.sub) {
+    if (slackID === hacker.slackID) {
       inputElement.classList.add("me");
       if (inputElement.name === "custom") {
         inputElement.checked = true;
@@ -215,9 +213,9 @@ function renderHackers(formElement, { hackers, hacker }) {
 }
 
 function renderBackstage(rootElement, { backstage }) {
-  for (let { room, label } of backstage) {
+  for (let { type, placement, label } of backstage) {
     for (let inputElement of rootElement.querySelectorAll(
-      `input[name^="housing['${room}']"]`
+      `input[name^="${type}['${placement}']"]`
     )) {
       inputElement.value = label;
       inputElement.disabled = true;
@@ -244,16 +242,16 @@ function autoShowHousingOfMine({ formElement, selectElement }) {
         section.setAttribute("aria-hidden", "true");
       }
 
-      const roomsElement = section.querySelector(".rooms");
-      if (roomsElement) {
-        const showRoomsElement = section.querySelector(".show-rooms");
+      const placementsElement = section.querySelector(".placements");
+      if (placementsElement) {
+        const showRoomsElement = section.querySelector(".show-placements");
         const inputWithMyName = section.querySelector("input.me");
 
         if (inputWithMyName) {
-          roomsElement.setAttribute("aria-hidden", "false");
+          placementsElement.setAttribute("aria-hidden", "false");
           showRoomsElement.setAttribute("aria-hidden", "true");
         } else {
-          roomsElement.setAttribute("aria-hidden", "true");
+          placementsElement.setAttribute("aria-hidden", "true");
           showRoomsElement.setAttribute("aria-hidden", "false");
         }
       }
@@ -263,15 +261,19 @@ function autoShowHousingOfMine({ formElement, selectElement }) {
   selectElement.dispatchEvent(new Event("change"));
 }
 
-function handlaFormaSubmita(formElement, { hackers }) {
+const HOUSING_INPUT_REGEX = /^(cottage|house|tent)\['(.+)'\]\[(\d+)\]$/;
+
+function handlaFormaSubmita(formElement, { hackers, profile }) {
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
-    const jsonData = {};
     const formData = new FormData(formElement);
+    const jsonData = {
+      year: formData.get("year"),
+      items: [],
+    };
 
-    // collection loop
     for (let [key, value] of formData.entries()) {
-      if (key.startsWith("housing") === false) {
+      if (HOUSING_INPUT_REGEX.test(key) === false) {
         continue;
       }
       const inputedHacker = hackers.find(
@@ -280,17 +282,19 @@ function handlaFormaSubmita(formElement, { hackers }) {
       if (!inputedHacker) {
         continue;
       }
-      const [, room] = key.match(/^housing\['(.+)'\]\[(\d+)\]$/);
-      jsonData[inputedHacker.sub] = room;
+      const [, housing, housingPlacement] = key.match(HOUSING_INPUT_REGEX);
+      jsonData.items.push({
+        slackID: inputedHacker.slackID,
+        housing,
+        housingPlacement,
+      });
     }
 
-    // This allow you to fillup somebody else to any room but yourself to custom housing variant (your :troll:)
-    // and cus this is bellow the collection loop, it will override your previously filled up room (our :troll:)
+    // This allow you to fillup somebody else to any placement but yourself to custom housing variant (your :troll:)
+    // and cus this is bellow the collection loop, it will override your previously filled up placement (our :troll:)
     if (formData.get("type") === "custom" && formData.get("custom")) {
       jsonData[profile.sub] = formData.get("custom");
     }
-
-    console.info("Sending data to server...", jsonData);
     sendHousingData(jsonData)
       .then(() => {
         location.href = "/ubytovani/ulozeno/";
@@ -303,9 +307,11 @@ function handlaFormaSubmita(formElement, { hackers }) {
   });
 
   async function sendHousingData(data) {
+    const body = JSON.stringify(data);
+    console.info("Sending housing data to server...", body);
     const response = await fetch(formElement.action, {
       method: "POST",
-      body: JSON.stringify(data),
+      body,
       headers: { Accept: "application/json" },
       credentials: "include",
     });
@@ -340,15 +346,15 @@ async function initializeHousingGalleries() {
   }
 }
 
-export async function main({ formElement, variantsRootElement }) {
+export async function main({ formElement, variantsRootElement, env }) {
   const selectElement = formElement.elements.type;
 
-  const profile = getHackerSlackProfile();
+  const profile = getSlackProfile();
   const { housing, hackers, types, variants, backstage } =
-    await loadHousingData();
+    await loadHousingData(env["api-host"]);
 
-  const hacker = hackers.find(({ sub }) => sub === profile.sub);
-  const hackerHousing = housing.find(({ room }) => room === hacker?.housing);
+  const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
+
   if (!hacker) {
     alert("Nenašlo jsem tě v seznamu hackerů 😭");
   }
@@ -356,7 +362,6 @@ export async function main({ formElement, variantsRootElement }) {
   renderHousingTypes(selectElement, {
     types,
     formElement,
-    hackerHousing,
     hacker,
   });
   renderHousingVariants(variantsRootElement, {
@@ -371,6 +376,6 @@ export async function main({ formElement, variantsRootElement }) {
   renderBackstage(formElement, { backstage });
   renderZimmerFrei(variantsRootElement);
   autoShowHousingOfMine({ formElement, selectElement });
-  handlaFormaSubmita(formElement, { hackers });
+  handlaFormaSubmita(formElement, { hackers, profile });
   initializeHousingGalleries();
 }

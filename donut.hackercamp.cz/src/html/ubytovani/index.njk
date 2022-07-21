@@ -101,11 +101,11 @@
     display: none;
   }
 
-  .show-rooms {
+  .show-placements {
     text-align: center;
     margin: 32px 8px 8px 8px;
   }
-  .show-rooms .hc-link {
+  .show-placements .hc-link {
     padding: 8px 12px;
   }
 
@@ -158,7 +158,7 @@
   }
 
 
-  .rooms h3 {
+  .placements h3 {
     margin-bottom: 8px;
   }
 
@@ -256,6 +256,7 @@
     <div class="gou-up">
       <a href="javascript:window.scrollTo(0, 0);">⤴</a>
     </div>
+    <input type="hidden" name="year" value="{{ "this" | year }}" />
   </form>
 </div>
 {% endblock %}
