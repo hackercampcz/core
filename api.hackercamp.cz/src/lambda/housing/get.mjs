@@ -1,9 +1,12 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
+import { response } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
+
+const dynamo = new DynamoDBClient({});
 
 /**
  *
@@ -25,5 +28,5 @@ async function getAttendees(dynamo) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-
+  return response(await getAttendees(dynamo));
 }
