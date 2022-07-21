@@ -293,7 +293,14 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
     // This allow you to fillup somebody else to any placement but yourself to custom housing variant (your :troll:)
     // and cus this is bellow the collection loop, it will override your previously filled up placement (our :troll:)
     if (formData.get("type") === "custom" && formData.get("custom")) {
-      jsonData[profile.sub] = formData.get("custom");
+      jsonData.items = jsonData.items.filter(
+        ({ slackID }) => slackID !== profile.sub
+      );
+      jsonData.items.push({
+        slackID: profile.sub,
+        housing: "custom",
+        housingPlacement: formData.get("custom"),
+      });
     }
     sendHousingData(jsonData)
       .then(() => {
