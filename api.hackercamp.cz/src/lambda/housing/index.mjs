@@ -1,5 +1,5 @@
-import { getToken, authorize } from "@hackercamp/lib/auth.mjs";
-import { unauthorized, withCORS } from "../../http.mjs";
+import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
+import { unauthorized, withCORS } from "../http.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
 
@@ -19,11 +19,8 @@ export async function handler(event) {
     }
   );
   try {
-    const isAuthorized = await authorize(
-      "admin",
-      getToken(event.headers),
-      process.env["private_key"]
-    );
+    const token = getToken(event.headers);
+    const isAuthorized = await validateToken(token, process.env["private_key"]);
     if (!isAuthorized) {
       throw Error("Unauthorized");
     }

@@ -1,6 +1,6 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { response, internalError, withCORS, notFound } from "../../http.mjs";
+import { response, internalError, notFound } from "../../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -111,21 +111,14 @@ function getData(type) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const withCORS_ = withCORS(
-    ["GET", "POST", "OPTIONS"],
-    event.headers["origin"],
-    {
-      allowCredentials: true,
-    }
-  );
   console.log("QS", event.queryStringParameters);
   const { type } = event.queryStringParameters;
   try {
     const data = await getData(type);
-    if (!data) return withCORS_(notFound());
-    return withCORS_(response(data));
+    if (!data) return notFound();
+    return response(data);
   } catch (err) {
     console.error(err);
-    return withCORS_(internalError());
+    return internalError();
   }
 }
