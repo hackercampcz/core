@@ -14,13 +14,19 @@ const dynamo = new DynamoDBClient({});
  * @returns {Promise<*>}
  */
 async function getAttendees(dynamo) {
-  const result = await dynamo.send(
-    new ScanCommand({
-      TableName: "hc-attendees",
-      Select: "ALL_ATTRIBUTES",
-    })
-  );
-  return unmarshall(result.Items);
+  let result;
+  try {
+    result = await dynamo.send(
+      new ScanCommand({
+        TableName: "hc-attendees",
+        Select: "ALL_ATTRIBUTES",
+      })
+    );
+    return unmarshall(result.Items);
+  } catch (e) {
+    console.log(result.Items);
+    throw e;
+  }
 }
 
 /**
