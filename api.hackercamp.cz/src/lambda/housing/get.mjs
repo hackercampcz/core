@@ -9,24 +9,30 @@ import { response } from "../http.mjs";
 const dynamo = new DynamoDBClient({});
 
 /**
+ * @param {{[p: string]: T}} obj
+ * @param {Set} keys
+ */
+function selectKeys(obj, keys) {
+  return Object.fromEntries(
+    Object.entries(obj).filter(([key]) => keys.has(key))
+  );
+}
+
+/**
  *
  * @param {DynamoDBClient} dynamo
  * @returns {Promise<*>}
  */
 async function getAttendees(dynamo) {
-  let result;
-  try {
-    result = await dynamo.send(
-      new ScanCommand({
-        TableName: "hc-attendees",
-        Select: "ALL_ATTRIBUTES",
-      })
-    );
-    return unmarshall(result.Items);
-  } catch (e) {
-    console.log(result.Items);
-    throw e;
-  }
+  const result = await dynamo.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+    })
+  );
+  return result.Items.map((x) => unmarshall(x)).map((x) =>
+    selectKeys(x, new Set(["name", "slackID", "housing"]))
+  );
 }
 
 /**
