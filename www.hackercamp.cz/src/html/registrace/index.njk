@@ -613,7 +613,7 @@
           <label for="inviter">
             Kdo tě pozval?
           </label>
-          <input id="inviter" name="inviter" type="text" placeholder="Celé jméno prosím" />
+          <input id="inviter" name="inviter" type="text" placeholder="Celé jméno prosím"/>
         </div>
       </div>
       <p id="go-to-login" aria-hidden="true">
@@ -700,20 +700,21 @@
           <label for="invoice-name">
             Jméno / název společnosti
           </label>
-          <input id="invoice-name" name="invName" type="text"/>
+          <input id="invoice-name" name="invName" type="text" placeholder="Kancelář prezidenta republiky"/>
         </div>
         <div class="field">
           <label for="invoice-address">
-            Adresa
+            Adresa (Ulice č.p., PSČ, Město)
           </label>
-          <input id="invoice-address" name="invAddress" type="text"/>
+          <input id="invoice-address" name="invAddress" type="text"
+                 placeholder="Hrad I. nádvoří 1, Hradčany, 119 08 Prague 1"/>
         </div>
         <div class="group">
           <div class="field">
             <label for="invoice-regno">
               IČ
             </label>
-            <input id="invoice-regno" name="invRegNo" type="text"/>
+            <input id="invoice-regno" name="invRegNo" type="text" placeholder="48136000"/>
           </div>
           <div class="field">
             <label for="invoice-vatno">
@@ -734,7 +735,7 @@
             Kontakt pro fakturaci
             <span>Pokud to nejsi ty</span>
           </label>
-          <input id="invoice-email" name="invEmail" type="email" autocomplete="email"/>
+          <input id="invoice-email" name="invEmail" type="email" autocomplete="email" placeholder="invoices@hrad.cz"/>
         </div>
       </div>
       <div id="someone-else-will-pay" aria-hidden="true">
@@ -809,7 +810,7 @@
       </div>
       <h3>Jak a kde budeš spát?</h3>
       <div class="choose">
-        <input type="radio" name="housing" value="own-car" id="car-housing" />
+        <input type="radio" name="housing" value="own-car" id="car-housing"/>
         <label for="car-housing">
           Přijedu autem a budu v něm i spát
         </label>
@@ -843,7 +844,7 @@
         </label>
       </div>
       <div class="choose">
-        <input type="radio" name="housing" value="cottage" id="cottage-housing" />
+        <input type="radio" name="housing" value="cottage" id="cottage-housing"/>
         <label for="cottage-housing">
           Chci postel <strong>v chatce</strong> pro 2, 4 nebo 6
           <span>
@@ -852,7 +853,7 @@
         </label>
       </div>
       <div class="choose">
-        <input type="radio" name="housing" value="nearby" id="nearby-housing" />
+        <input type="radio" name="housing" value="nearby" id="nearby-housing"/>
         <label for="nearby-housing">
           Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
           <span>
