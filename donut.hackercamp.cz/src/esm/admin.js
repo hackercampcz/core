@@ -4,6 +4,7 @@ import { classMap } from "lit-html/directives/class-map.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
+import { setReturnUrl } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as marked from "marked";
 import * as rollbar from "./lib/rollbar.js";
@@ -451,7 +452,7 @@ function unauthorized() {
           width="139"
           src="https://platform.slack-edge.com/img/add_to_slack.png"
           @click="${() => {
-            localStorage.setItem("hc:returnUrl", location.href);
+            setReturnUrl(location.href);
           }}"
           srcset="
             https://platform.slack-edge.com/img/add_to_slack.png    1x,

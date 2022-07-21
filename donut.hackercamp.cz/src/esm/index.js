@@ -1,4 +1,12 @@
-import { render, html } from "lit-html";
+import { html, render } from "lit-html";
+import {
+  getSlackProfile,
+  handleReturnUrl,
+  isSignedIn,
+  setReturnUrl,
+  signIn,
+  signOut,
+} from "./lib/profile.js";
 import * as rollbar from "./lib/rollbar.js";
 
 function hideSlackButton(slackButton, slackProfile) {
@@ -26,28 +34,10 @@ async function authenticate({ searchParams, apiURL }) {
   });
   const data = await resp.json();
   if (resp.ok && data.ok) {
-    const { idToken, slackToken, slackProfile } = data;
-    localStorage.setItem("hc:id_token", idToken);
-    localStorage.setItem("slack:id_token", slackToken);
-    localStorage.setItem("slack:profile", JSON.stringify(slackProfile));
-    return slackProfile;
+    return signIn(data);
   } else {
     throw new Error("Authentication error", { cause: data });
   }
-}
-
-function handleReturnUrl() {
-  const returnUrl = localStorage.getItem("hc:returnUrl");
-  if (!returnUrl) return;
-  localStorage.removeItem("hc:returnUrl");
-  location.assign(returnUrl);
-}
-
-function signOut() {
-  localStorage.removeItem("hc:id_token");
-  localStorage.removeItem("slack:id_token");
-  localStorage.removeItem("slack:profile");
-  window.dispatchEvent(new Event("hc:profile"));
 }
 
 export async function main({ searchParams, slackButton, env }) {
@@ -58,24 +48,21 @@ export async function main({ searchParams, slackButton, env }) {
     searchParams.has("returnUrl") &&
     searchParams.get("state") === "not-authenticated"
   ) {
+    setReturnUrl(searchParams.has("returnUrl"));
     signOut();
   }
 
-  if (localStorage.getItem("hc:id_token")) {
-    hideSlackButton(
-      slackButton,
-      JSON.parse(localStorage.getItem("slack:profile"))
-    );
+  if (isSignedIn()) {
+    hideSlackButton(slackButton, getSlackProfile());
   }
 
   if (searchParams.has("returnUrl")) {
-    localStorage.setItem("hc:returnUrl", searchParams.get("returnUrl"));
+    setReturnUrl(searchParams.get("returnUrl"));
   }
 
   if (searchParams.has("code")) {
     try {
       const slackProfile = await authenticate({ searchParams, apiURL });
-      window.dispatchEvent(new Event("hc:profile"));
       hideSlackButton(slackButton, slackProfile);
       handleReturnUrl();
     } catch (e) {

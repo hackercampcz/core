@@ -1,6 +1,7 @@
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { when } from "lit-html/directives/when.js";
+import { signOut } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as workbox from "./lib/workbox.js";
 
@@ -9,11 +10,6 @@ const state = defAtom({
   idPopupVisible: false,
   view: renderProfile,
 });
-
-function signOut() {
-  localStorage.clear();
-  location.assign("/");
-}
 
 function headerProfile({ name, picture }, togglePopup) {
   return html`<span class="hc-header__profile-detail">
