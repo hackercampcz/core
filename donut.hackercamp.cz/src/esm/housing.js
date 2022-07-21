@@ -359,7 +359,6 @@ export async function main({ formElement, variantsRootElement, env }) {
   const profile = getSlackProfile();
   const { housing, hackers, types, variants, backstage } =
     await loadHousingData(env["api-host"]);
-
   const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
 
   if (!hacker) {

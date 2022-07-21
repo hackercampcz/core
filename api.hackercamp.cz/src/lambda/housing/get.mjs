@@ -23,7 +23,10 @@ async function getAttendees(dynamo) {
   );
   return result.Items.map((x) => unmarshall(x))
     .map((x) =>
-      selectKeys(x, new Set(["name", "slackID", "housing", "company"]))
+      selectKeys(
+        x,
+        new Set(["name", "slackID", "housing", "housingPlacement", "company"])
+      )
     )
     .map((x) => Object.assign({ isEditable: true }, x));
 }
