@@ -13,12 +13,14 @@ import { response, internalError, notFound } from "../../http.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
+function partiQL(strings, ...params) {
+  return db.send(new ExecuteStatementCommand({ Statement: strings[0] }));
+}
+
 async function getOptOuts() {
   console.log("Loading opt-outs");
-  const res = await db.send(
-    new ExecuteStatementCommand({ Statement: `SELECT email FROM "hc-optouts"` })
-  );
-  return new Set(res.Items.map((x) => unmarshall(x)));
+  const res = await partiQL`SELECT email FROM "hc-optouts"`;
+  return new Set(res.Items.map((x) => unmarshall(x)).map((x) => x.email));
 }
 
 async function getConfirmedHackersRegistrations(page, pageSize) {
@@ -127,9 +129,8 @@ export async function handler(event) {
   const { type } = event.queryStringParameters;
   try {
     const [optouts, data] = await Promise.all([getOptOuts(), getData(type)]);
-    console.log({ optouts });
     if (!data) return notFound();
-    return response(data);
+    return response(data.filter((x) => !optouts.has(x.email)));
   } catch (err) {
     console.error(err);
     return internalError();
