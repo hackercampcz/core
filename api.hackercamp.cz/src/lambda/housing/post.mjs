@@ -1,7 +1,7 @@
-import {DynamoDBClient, UpdateItemCommand} from "@aws-sdk/client-dynamodb";
-import {marshall} from "@aws-sdk/util-dynamodb";
-import {selectKeys} from "@hackercamp/lib/object.mjs";
-import {accepted, internalError, readPayload, seeOther} from "../http.mjs";
+import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { marshall } from "@aws-sdk/util-dynamodb";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
+import { accepted, internalError, readPayload, seeOther } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -31,6 +31,7 @@ function saveAttendee(dynamo, data) {
 export async function handler(event) {
   try {
     const data = readPayload(event);
+    console.log({ method: "POST", data });
     for (const item of data.items) {
       await saveAttendee(dynamo, Object.assign({ year: data.year }, item));
     }
