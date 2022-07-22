@@ -116,6 +116,9 @@ export function readPayload(event) {
     ? Buffer.from(event.body, "base64").toString("utf-8")
     : event.body;
 
+  if (event.headers["content-type"] === "application/json") {
+    return JSON.parse(body);
+  }
   if (event.headers["Content-Type"] === "application/json") {
     return JSON.parse(body);
   }

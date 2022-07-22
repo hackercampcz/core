@@ -30,6 +30,7 @@ function saveAttendee(dynamo, data) {
  */
 export async function handler(event) {
   try {
+    console.log(event.headers)
     const data = readPayload(event);
     console.log({ method: "POST", data });
     for (const item of data.items) {

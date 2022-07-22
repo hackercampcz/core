@@ -319,7 +319,10 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
     const response = await fetch(formElement.action, {
       method: "POST",
       body,
-      headers: { Accept: "application/json" },
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
       credentials: "include",
     });
     if (!response.ok) {
