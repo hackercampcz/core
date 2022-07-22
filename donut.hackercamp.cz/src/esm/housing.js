@@ -6,7 +6,7 @@ async function loadHousingData(apiBase) {
     fetch(`/housing/types.json`),
     fetch(`/housing/variants.json`),
     fetch(`/housing/backstage.json`),
-    fetch(`${apiBase}housing`, {
+    fetch(new URL(`housing?year=2022`, apiBase).href, {
       headers: { Accept: "application/json" },
       credentials: "include",
     }),
@@ -304,8 +304,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
     }
     sendHousingData(jsonData)
       .then(() => {
-        location.href = "/ubytovani/ulozeno/";
-        return;
+        return location.assign("/ubytovani/ulozeno/");
       })
       .catch((O_o) => {
         console.error(O_o);
@@ -318,12 +317,13 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
     console.info("Sending housing data to server...", body);
     const response = await fetch(formElement.action, {
       method: "POST",
-      body,
+      credentials: "include",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      credentials: "include",
+      body,
+      referrerPolicy: "no-referrer",
     });
     if (!response.ok) {
       throw await response.text();
