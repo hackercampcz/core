@@ -9,9 +9,20 @@ import { response, internalError, notFound } from "../../http.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
+async function getOptOuts() {
+  console.log("Loafing opt-outs");
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-optouts",
+      Select: "email",
+    })
+  );
+  return new Set(res.Items.map((x) => unmarshall(x)));
+}
+
 async function getConfirmedHackersRegistrations(page, pageSize) {
   console.log("Loading confirmed hackers data", { page, pageSize });
-  const resp = await db.send(
+  const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
@@ -23,12 +34,12 @@ async function getConfirmedHackersRegistrations(page, pageSize) {
       ),
     })
   );
-  return resp.Items.map((x) => unmarshall(x));
+  return res.Items.map((x) => unmarshall(x));
 }
 
 async function getHackersRegistrations(page, pageSize) {
   console.log("Loading hackers data", { page, pageSize });
-  const resp = await db.send(
+  const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
@@ -44,12 +55,12 @@ async function getHackersRegistrations(page, pageSize) {
       ),
     })
   );
-  return resp.Items.map((x) => unmarshall(x));
+  return res.Items.map((x) => unmarshall(x));
 }
 
 async function getWaitingListRegistrations(page, pageSize) {
   console.log("Loading waiting list data", { page, pageSize });
-  const resp = await db.send(
+  const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
@@ -61,12 +72,12 @@ async function getWaitingListRegistrations(page, pageSize) {
       ),
     })
   );
-  return resp.Items.map((x) => unmarshall(x));
+  return res.Items.map((x) => unmarshall(x));
 }
 
 async function getInvoicedRegistrations(page, pageSize) {
   console.log("Loading invoiced registrations", { page, pageSize });
-  const resp = await db.send(
+  const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
@@ -74,19 +85,19 @@ async function getInvoicedRegistrations(page, pageSize) {
         "attribute_exists(invoiced) AND attribute_not_exists(paid)",
     })
   );
-  return resp.Items.map((x) => unmarshall(x));
+  return res.Items.map((x) => unmarshall(x));
 }
 
 async function getPaidRegistrations(page, pageSize) {
   console.log("Loading paid registrations", { page, pageSize });
-  const resp = await db.send(
+  const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "attribute_exists(paid)",
     })
   );
-  return resp.Items.map((x) => unmarshall(x));
+  return res.Items.map((x) => unmarshall(x));
 }
 
 function getData(type) {
@@ -114,7 +125,8 @@ export async function handler(event) {
   console.log("QS", event.queryStringParameters);
   const { type } = event.queryStringParameters;
   try {
-    const data = await getData(type);
+    const [optouts, data] = await Promise.all([getOptOuts(), getData(type)]);
+    console.log({ optouts });
     if (!data) return notFound();
     return response(data);
   } catch (err) {
