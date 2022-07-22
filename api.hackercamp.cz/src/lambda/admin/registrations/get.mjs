@@ -1,4 +1,8 @@
-import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBClient,
+  ScanCommand,
+  ExecuteStatementCommand,
+} from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { response, internalError, notFound } from "../../http.mjs";
 
@@ -10,12 +14,9 @@ import { response, internalError, notFound } from "../../http.mjs";
 const db = new DynamoDBClient({});
 
 async function getOptOuts() {
-  console.log("Loafing opt-outs");
+  console.log("Loading opt-outs");
   const res = await db.send(
-    new ScanCommand({
-      TableName: "hc-optouts",
-      Select: "email",
-    })
+    new ExecuteStatementCommand({ Statement: "SELECT email FROM hc-optouts" })
   );
   return new Set(res.Items.map((x) => unmarshall(x)));
 }
