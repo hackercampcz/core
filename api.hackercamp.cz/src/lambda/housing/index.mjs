@@ -11,6 +11,7 @@ import * as post from "./post.mjs";
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
+  console.log(event);
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
     event.headers["origin"],
