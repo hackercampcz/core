@@ -11,9 +11,13 @@ import * as post from "./post.mjs";
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const withCORS_ = withCORS(["GET", "POST", "OPTIONS"], event.headers.origin, {
-    allowCredentials: true,
-  });
+  const withCORS_ = withCORS(
+    ["GET", "POST", "OPTIONS"],
+    event.headers?.origin ?? "*",
+    {
+      allowCredentials: true,
+    }
+  );
   try {
     const token = getToken(event.headers);
     const isAuthorized = await validateToken(token, process.env["private_key"]);

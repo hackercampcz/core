@@ -13,7 +13,7 @@ import * as post from "./post.mjs";
 export async function handler(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    event.headers["origin"],
+    event.headers?.origin ?? "*",
     {
       allowCredentials: true,
     }
