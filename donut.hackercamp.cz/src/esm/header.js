@@ -12,35 +12,39 @@ const state = defAtom({
 });
 
 function headerProfile({ name, picture }, togglePopup) {
-  return html`<span class="hc-header__profile-detail">
-    <button
-      class="hc-header__profile-photo"
-      title="Profile menu"
-      @click="${() => togglePopup()}"
-    >
-      <img alt="${name}" src="${picture}" width="48" height="48" />
-    </button>
-  </span>`;
+  return html`
+    <span class="hc-header__profile-detail">
+      <button
+        class="hc-header__profile-photo"
+        title="Profile menu"
+        @click="${() => togglePopup()}"
+      >
+        <img alt="${name}" src="${picture}" width="48" height="48" />
+      </button>
+    </span>
+  `;
 }
 
 function headerProfilePopup({ name, picture }, signOut) {
-  return html`<div class="hc-popup">
-    <ul>
-      <li>
-        <div class="hc-header__profile-photo">
-          <img alt="${name}" src="${picture}" width="48" height="48" />
-        </div>
-        <div class="hc-header__profile-name">
-          <strong>${name}</strong>
-        </div>
-      </li>
-      <li>
-        <button class="hc-btn hc-btn__sign-out" @click="${() => signOut()}">
-          Odhlásit se
-        </button>
-      </li>
-    </ul>
-  </div>`;
+  return html`
+    <div class="hc-popup">
+      <ul>
+        <li>
+          <div class="hc-header__profile-photo">
+            <img alt="${name}" src="${picture}" width="48" height="48" />
+          </div>
+          <div class="hc-header__profile-name">
+            <strong>${name}</strong>
+          </div>
+        </li>
+        <li>
+          <button class="hc-btn hc-btn__sign-out" @click="${() => signOut()}">
+            Odhlásit se
+          </button>
+        </li>
+      </ul>
+    </div>
+  `;
 }
 
 function header(profile, isPopupVisible, togglePopup) {
