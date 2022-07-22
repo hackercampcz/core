@@ -16,7 +16,7 @@ const db = new DynamoDBClient({});
 async function getOptOuts() {
   console.log("Loading opt-outs");
   const res = await db.send(
-    new ExecuteStatementCommand({ Statement: "SELECT email FROM hc-optouts" })
+    new ExecuteStatementCommand({ Statement: `SELECT email FROM "hc-optouts"` })
   );
   return new Set(res.Items.map((x) => unmarshall(x)));
 }
