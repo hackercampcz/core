@@ -69,8 +69,8 @@ export function notFound(body = { error: "Data not found" }) {
 export function unprocessableEntity() {
   return {
     statusCode: 422,
-    body: ""
-  }
+    body: "",
+  };
 }
 
 /**
@@ -100,8 +100,13 @@ export function withCORS(methods, origin = "*", { allowCredentials } = {}) {
       headers: Object.assign({}, x.headers, {
         "Access-Control-Allow-Origin": origin,
         "Access-Control-Allow-Methods": allowMethods,
-        "Access-Control-Allow-Headers":
-          "Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token",
+        "Access-Control-Allow-Headers": [
+          "Authorization",
+          "Cookie",
+          "X-Amz-Date",
+          "X-Api-Key",
+          "X-Amz-Security-Token",
+        ].join(),
         "Access-Control-Allow-Credentials": allowCredentials,
       }),
     });
