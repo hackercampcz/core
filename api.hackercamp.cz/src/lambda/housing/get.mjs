@@ -1,5 +1,5 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
-import {marshall, unmarshall} from "@aws-sdk/util-dynamodb";
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { response } from "../http.mjs";
 
@@ -20,7 +20,8 @@ async function getAttendees(dynamo, year) {
     new ScanCommand({
       TableName: "hc-attendees",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "year = :y",
+      FilterExpression: "#y = :y",
+      ExpressionAttributeNames: { "#y": "year" },
       ExpressionAttributeValues: marshall({ ":y": year }),
     })
   );
