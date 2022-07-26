@@ -94,15 +94,17 @@ export function internalError() {
  * @return {ResponseTransformer}
  */
 export function withCORS(methods, origin = "*", { allowCredentials } = {}) {
-  const allowMethods = Array.isArray(methods) ? methods.join(",") : methods;
+  const allowMethods = Array.isArray(methods) ? methods.join() : methods;
   return (x) =>
     Object.assign({}, x, {
       headers: Object.assign({}, x.headers, {
         "Access-Control-Allow-Origin": origin,
         "Access-Control-Allow-Methods": allowMethods,
         "Access-Control-Allow-Headers": [
+          "Accept",
           "Authorization",
           "Cookie",
+          "Content-Type",
           "X-Amz-Date",
           "X-Api-Key",
           "X-Amz-Security-Token",
