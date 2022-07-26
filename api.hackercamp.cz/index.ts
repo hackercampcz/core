@@ -44,6 +44,16 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
           },
         },
       },
+      housing: {
+        httpMethod: "ANY",
+        path: "/housing",
+        fileName: "housing/index.mjs",
+        environment: {
+          variables: {
+            private_key: config.get("private-key"),
+          },
+        },
+      },
       optout: {
         httpMethod: "POST",
         path: "/optout",
