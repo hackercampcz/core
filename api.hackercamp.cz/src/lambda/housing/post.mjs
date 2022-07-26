@@ -31,9 +31,10 @@ function saveAttendee(dynamo, data) {
 export async function handler(event) {
   try {
     const data = readPayload(event);
+    const year = parseInt(data.year, 10);
     console.log({ method: "POST", data });
     for (const item of data.items) {
-      await saveAttendee(dynamo, Object.assign({ year: data.year }, item));
+      await saveAttendee(dynamo, Object.assign({ year }, item));
     }
     if (event.headers.Accept === "application/json") {
       return accepted();
