@@ -6,6 +6,7 @@ export const Template = {
   HackerInvitationLate: 28122158,
   HackersReminder: 28432253,
   PlusOneInvitation: 28151070,
+  VolunteerSlackInvite: 28672994,
 };
 
 export async function sendEmailWithTemplate({

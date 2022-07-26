@@ -17,14 +17,14 @@ function partiQL(strings, ...params) {
   return db.send(new ExecuteStatementCommand({ Statement: strings[0] }));
 }
 
-async function getOptOuts() {
+async function getOptOuts(year) {
   console.log("Loading opt-outs");
   const res = await partiQL`SELECT email FROM "hc-optouts"`;
-  return new Set(res.Items.map((x) => unmarshall(x)).map((x) => x.email));
+  return new Set(res.Items.map((x) => x.email.S));
 }
 
-async function getConfirmedHackersRegistrations(page, pageSize) {
-  console.log("Loading confirmed hackers data", { page, pageSize });
+async function getConfirmedHackersRegistrations(year) {
+  console.log("Loading confirmed hackers data", { year });
   const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
@@ -40,8 +40,8 @@ async function getConfirmedHackersRegistrations(page, pageSize) {
   return res.Items.map((x) => unmarshall(x));
 }
 
-async function getHackersRegistrations(page, pageSize) {
-  console.log("Loading hackers data", { page, pageSize });
+async function getHackersRegistrations(year) {
+  console.log("Loading hackers data", { year });
   const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
@@ -61,8 +61,8 @@ async function getHackersRegistrations(page, pageSize) {
   return res.Items.map((x) => unmarshall(x));
 }
 
-async function getWaitingListRegistrations(page, pageSize) {
-  console.log("Loading waiting list data", { page, pageSize });
+async function getWaitingListRegistrations(year) {
+  console.log("Loading waiting list data", { year });
   const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
@@ -78,8 +78,8 @@ async function getWaitingListRegistrations(page, pageSize) {
   return res.Items.map((x) => unmarshall(x));
 }
 
-async function getInvoicedRegistrations(page, pageSize) {
-  console.log("Loading invoiced registrations", { page, pageSize });
+async function getInvoicedRegistrations(year) {
+  console.log("Loading invoiced registrations", { year });
   const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
@@ -91,8 +91,8 @@ async function getInvoicedRegistrations(page, pageSize) {
   return res.Items.map((x) => unmarshall(x));
 }
 
-async function getPaidRegistrations(page, pageSize) {
-  console.log("Loading paid registrations", { page, pageSize });
+async function getPaidRegistrations(year) {
+  console.log("Loading paid registrations", { year });
   const res = await db.send(
     new ScanCommand({
       TableName: "hc-registrations",
@@ -103,18 +103,20 @@ async function getPaidRegistrations(page, pageSize) {
   return res.Items.map((x) => unmarshall(x));
 }
 
-function getData(type) {
+function getData(type, year) {
   switch (type) {
     case "confirmed":
-      return getConfirmedHackersRegistrations();
+      return getConfirmedHackersRegistrations(year);
     case "hackers":
-      return getHackersRegistrations();
+      return getHackersRegistrations(year);
     case "invoiced":
-      return getInvoicedRegistrations();
+      return getInvoicedRegistrations(year);
     case "paid":
-      return getPaidRegistrations();
+      return getPaidRegistrations(year);
     case "waitingList":
-      return getWaitingListRegistrations();
+      return getWaitingListRegistrations(year);
+    case "optouts":
+      return getOptOuts(year);
     default:
       throw new Error(`Unknown type ${type}`);
   }
@@ -126,9 +128,15 @@ function getData(type) {
  */
 export async function handler(event) {
   console.log("QS", event.queryStringParameters);
-  const { type } = event.queryStringParameters;
+  const { type, year } = Object.assign(
+    { year: 2022 },
+    event.queryStringParameters
+  );
   try {
-    const [optouts, data] = await Promise.all([getOptOuts(), getData(type)]);
+    const [optouts, data] = await Promise.all([
+      getOptOuts(year),
+      getData(type, year),
+    ]);
     if (!data) return notFound();
     return response(data.filter((x) => !optouts.has(x.email)));
   } catch (err) {
