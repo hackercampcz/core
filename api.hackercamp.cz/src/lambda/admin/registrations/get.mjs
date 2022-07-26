@@ -13,13 +13,17 @@ import { response, internalError, notFound } from "../../http.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
-function partiQL(strings, ...params) {
-  return db.send(new ExecuteStatementCommand({ Statement: strings[0] }));
-}
-
 async function getOptOuts(year) {
   console.log("Loading opt-outs");
-  const res = await partiQL`SELECT email FROM "hc-optouts"`;
+  const res = db.send(
+    new ScanCommand({
+      TableName: "hc-optouts",
+      ProjectionExpression: "email",
+      FilterExpression: "#y = :y",
+      ExpressionAttributeNames: { "#y": "year" },
+      ExpressionAttributeValues: marshall({ ":y": year }),
+    })
+  );
   return new Set(res.Items.map((x) => x.email.S));
 }
 
