@@ -237,7 +237,6 @@ export function createApi(
       memorySize,
       environment,
     }),
-    //cors: { methods: [httpMethod, "OPTIONS"] }, // autogenerate CORS handler
     authorizers,
     requiredParameters,
     httpMethod,
