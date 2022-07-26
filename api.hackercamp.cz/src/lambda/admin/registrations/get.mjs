@@ -15,7 +15,7 @@ const db = new DynamoDBClient({});
 
 async function getOptOuts(year) {
   console.log("Loading opt-outs");
-  const res = db.send(
+  const res = await db.send(
     new ScanCommand({
       TableName: "hc-optouts",
       ProjectionExpression: "email",
