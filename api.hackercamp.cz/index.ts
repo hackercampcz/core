@@ -7,6 +7,7 @@ import {
   Api,
   ApiRoute,
   CacheSettings,
+  CorsSettings,
   CustomDomainDistribution,
 } from "@topmonks/pulumi-aws";
 import * as path from "path";
@@ -236,7 +237,7 @@ export function createApi(
       memorySize,
       environment,
     }),
-    cors: { methods: [httpMethod, "OPTIONS"] }, // autogenerate CORS handler
+    //cors: { methods: [httpMethod, "OPTIONS"] }, // autogenerate CORS handler
     authorizers,
     requiredParameters,
     httpMethod,
