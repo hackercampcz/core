@@ -13,21 +13,20 @@ import * as post from "./post.mjs";
 export async function handler(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    event.headers?.origin ?? "*",
+    event?.headers?.origin ?? "*",
     {
       allowCredentials: true,
     }
   );
   try {
-    // const token = getToken(event.headers);
-    // const isAuthorized = await validateToken(token, process.env["private_key"]);
-    // if (!isAuthorized) throw Error("Unauthorized");
+    const token = getToken(event.headers);
+    const isAuthorized = await validateToken(token, process.env["private_key"]);
+    if (!isAuthorized) throw Error("Unauthorized");
 
     switch (event.httpMethod) {
       case "GET":
         return get.handler(event).then((x) => withCORS_(x));
       case "POST":
-        return withCORS_({ statusCode: 200, body: "" });
         return post.handler(event).then((x) => withCORS_(x));
       case "OPTIONS":
         return withCORS_({
