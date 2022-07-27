@@ -165,6 +165,7 @@ function renderHackers(formElement, { hackers, hacker }) {
     const inputElement = formElement.querySelector(`
       input[name^="${housing}['${housingPlacement}']"]:placeholder-shown
     `);
+    if (!inputElement) continue;
 
     inputElement.value = inlineValue;
 
