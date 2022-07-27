@@ -1,23 +1,32 @@
 import { getSlackProfile, signOut } from "./lib/profile.js";
 
 async function loadHousingData(apiBase) {
-  const responses = await Promise.all([
-    fetch(`/housing/index.json`),
-    fetch(`/housing/types.json`),
-    fetch(`/housing/variants.json`),
-    fetch(`/housing/backstage.json`),
-    fetch(new URL(`housing?year=2022`, apiBase).href, {
-      headers: { Accept: "application/json" },
-      credentials: "include",
-    }),
-  ]);
-  const [housing, types, variants, backstage, hackers] = await Promise.all(
-    responses.map((r) => r.json())
-  );
-
-  console.warn(`TODO: call signOut() once API returns 401`);
-
-  return { housing, types, variants, hackers, backstage };
+  try {
+    const responses = await Promise.all([
+      fetch(`/housing/index.json`),
+      fetch(`/housing/types.json`),
+      fetch(`/housing/variants.json`),
+      fetch(`/housing/backstage.json`),
+      fetch(new URL(`housing?year=2022`, apiBase).href, {
+        headers: { Accept: "application/json" },
+        credentials: "include",
+      }),
+    ]);
+    const [housing, types, variants, backstage, hackers] = await Promise.all(
+      responses.map((resp) => {
+        if (!resp.ok) {
+          if (resp.status === 401) signOut();
+          else throw new Error(`${resp.status}: ${resp.statusText}`);
+        }
+        return resp.json();
+      })
+    );
+    return { housing, types, variants, hackers, backstage };
+  } catch (error) {
+    console.error(error);
+    alert("Nepodařilo se načíst data o ubytování.");
+    return { housing: [], types: [], variants: [], hackers: [], backstage: [] };
+  }
 }
 
 function inlineHackerName({ name, company }) {
