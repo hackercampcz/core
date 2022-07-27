@@ -164,8 +164,10 @@ function renderHackers(formElement, { hackers, hacker }) {
     }
 
     const inputElement = formElement.querySelector(`
-      input[name^="${housing}['${housingPlacement}']"]:placeholder-shown
+      input[name^="${housing}['${housingPlacement}']"]:placeholder-shown,
+      input[name="${housingPlacement}"][value="${housing}"]
     `);
+
     if (!inputElement) continue;
 
     inputElement.value = inlineValue;
@@ -310,6 +312,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
       jsonData.items.push({
         slackID: profile.sub,
         housing: formData.get("custom"),
+        housingPlacement: "custom",
       });
     }
     sendHousingData(jsonData)
