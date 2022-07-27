@@ -1,4 +1,5 @@
 import { getSlackProfile, signOut } from "./lib/profile.js";
+import * as rollbar from "./lib/rollbar.js";
 
 async function loadHousingData(apiBase) {
   try {
@@ -366,8 +367,9 @@ async function initializeHousingGalleries() {
 }
 
 export async function main({ formElement, variantsRootElement, env }) {
-  const selectElement = formElement.elements.type;
+  rollbar.init(env);
 
+  const selectElement = formElement.elements.type;
   const profile = getSlackProfile();
   const { housing, hackers, types, variants, backstage } =
     await loadHousingData(env["api-host"]);
