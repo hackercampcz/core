@@ -307,8 +307,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
       );
       jsonData.items.push({
         slackID: profile.sub,
-        housing: "custom",
-        housingPlacement: formData.get("custom"),
+        housing: formData.get("custom"),
       });
     }
     sendHousingData(jsonData)
