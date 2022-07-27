@@ -16,10 +16,13 @@ function saveAttendee(dynamo, data) {
       Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
       UpdateExpression:
         "SET housing = :housing, housingPlacement = :housingPlacement",
-      ExpressionAttributeValues: marshall({
-        ":housing": data.housing,
-        ":housingPlacement": data.housingPlacement,
-      }),
+      ExpressionAttributeValues: marshall(
+        {
+          ":housing": data.housing,
+          ":housingPlacement": data.housingPlacement,
+        },
+        { removeUndefinedValues: true }
+      ),
     })
   );
 }
