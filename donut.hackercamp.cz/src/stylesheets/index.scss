@@ -1,6 +1,12 @@
 @use "@material/layout-grid/mdc-layout-grid";
 @use "@material/chips/styles";
 
+.hc-action-button {
+  -webkit-appearance: none;
+  border: none;
+  background-color: var(--hc-background-color);
+}
+
 .mdc-evolution-chip {
   border: 1px solid;
   border-image: var(--hc-gradient) 1;
