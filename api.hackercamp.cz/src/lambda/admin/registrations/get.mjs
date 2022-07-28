@@ -41,7 +41,9 @@ async function getConfirmedHackersRegistrations(year) {
       ),
     })
   );
-  return res.Items.map((x) => unmarshall(x));
+  return res.Items.map((x) => unmarshall(x)).filter(
+    (x) => !x.firstTime || x.referral
+  );
 }
 
 async function getHackersRegistrations(year) {
