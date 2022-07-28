@@ -2181,7 +2181,7 @@ __metadata:
     ramda: 0.28.0
     rollbar: 2.25.0
     web-types-lit: 0.1.0
-    workbox-window: 6.5.3
+    workbox-window: 6.5.4
   languageName: unknown
   linkType: soft
 
@@ -13768,6 +13768,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"workbox-core@npm:6.5.4":
+  version: 6.5.4
+  resolution: "workbox-core@npm:6.5.4"
+  checksum: d973cc6c1c5fdbde7f6642632384c2e0de48f08228eb234db2c97a18a7e5422b483005767e7b447ea774abc0772dfc1edef2ef2b5df174df4d40ae61d4c49719
+  languageName: node
+  linkType: hard
+
 "workbox-expiration@npm:6.5.3":
   version: 6.5.3
   resolution: "workbox-expiration@npm:6.5.3"
@@ -13875,6 +13882,16 @@ __metadata:
     "@types/trusted-types": ^2.0.2
     workbox-core: 6.5.3
   checksum: c9410f63833a1d8a0350b7c0b1bcd0c3bef1de412b326234f070f743d633cc4867927ce9d4260f571cc7e5ebb940ff100b2c60fff22bf790e8df898f1e426481
+  languageName: node
+  linkType: hard
+
+"workbox-window@npm:6.5.4":
+  version: 6.5.4
+  resolution: "workbox-window@npm:6.5.4"
+  dependencies:
+    "@types/trusted-types": ^2.0.2
+    workbox-core: 6.5.4
+  checksum: bc43c8d31908ab564d740eb1041180c0b0ca4d1f0a3ccde59c5764a8f96d7b08edb7df975360fd37c2bec9f3f57ca9de6c7e34fd252aa1a4a075b5b002f74f60
   languageName: node
   linkType: hard
 

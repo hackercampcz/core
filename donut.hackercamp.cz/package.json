@@ -19,6 +19,6 @@
     "marked": "4.0.18",
     "ramda": "0.28.0",
     "rollbar": "2.25.0",
-    "workbox-window": "6.5.3"
+    "workbox-window": "6.5.4"
   }
 }
