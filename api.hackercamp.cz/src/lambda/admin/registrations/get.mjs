@@ -125,7 +125,7 @@ function getData(type, year) {
     case "waitingList":
       return getWaitingListRegistrations(year);
     case "optouts":
-      return getOptOuts(year);
+      return null;
     default:
       throw new Error(`Unknown type ${type}`);
   }
@@ -147,6 +147,7 @@ export async function handler(event) {
       getData(type, year),
     ]);
     if (!data) return notFound();
+    if (type === "optouts") return response(optouts);
     return response(data.filter((x) => !optouts.has(x.email)));
   } catch (err) {
     console.error(err);
