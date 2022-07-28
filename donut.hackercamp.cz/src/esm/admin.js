@@ -15,6 +15,7 @@ const View = {
   confirmed: "confirmed",
   hackers: "hackers",
   waitingList: "waitingList",
+  optouts: "optouts",
 };
 
 const state = defAtom({
@@ -82,7 +83,10 @@ function chip({ text, count, selected, view }) {
   `;
 }
 
-function chips(view, { hackers, waitingList, confirmed, invoiced, paid }) {
+function chips(
+  view,
+  { hackers, waitingList, confirmed, invoiced, paid, optouts }
+) {
   return html`
     <div
       class="mdc-evolution-chip-set"
@@ -121,6 +125,12 @@ function chips(view, { hackers, waitingList, confirmed, invoiced, paid }) {
           count: waitingList,
           selected: view === View.waitingList,
           view: View.waitingList,
+        })}
+        ${chip({
+          text: "Opt-outs",
+          count: optouts,
+          selected: view === View.optouts,
+          view: View.optouts,
         })}
       </span>
     </div>
@@ -502,6 +512,13 @@ function registrationsTemplate(state) {
               timeHeader: "Čas registrace",
               timeAttr: "timestamp",
             };
+            if (selectedView === View.optouts) {
+              return html`
+                <ul>
+                  ${data.map((x) => html`<li>${x}</li>`)}
+                </ul>
+              `;
+            }
             return tableTemplate(
               sortBy(timeColumnSettings.timeAttr, data),
               timeColumnSettings
