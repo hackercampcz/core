@@ -143,7 +143,14 @@ function renderHousingVariants(rootElement, { variants, housing }) {
   }
 }
 
-function renderHackers(formElement, { hackers, hacker }) {
+/**
+ * 1. Create <datalist> with all homeless hackers for autocompletion
+ * 2. Fill in <input>s with housed hackers
+ * 3. Disable other located hackers, but highlight me
+ * 4. Once hacker is autocompleted, remove him from <datalist> and vise versa
+ * 5. Allow hackers to change housing from custom to specific placement
+ */
+function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
   const hackersListElement = document.createElement("datalist");
   hackersListElement.id = "hackers";
 
@@ -202,6 +209,7 @@ function renderHackers(formElement, { hackers, hacker }) {
       `[value="${target.value}"]`
     );
 
+    // Allow only explicit values that matches any <option> of <datalist>
     if (!filledHacker) {
       target.value = "";
       target.classList.remove("me");
@@ -216,11 +224,29 @@ function renderHackers(formElement, { hackers, hacker }) {
           hackersListElement.prepend(option);
         }
       }
-    } else {
-      if (filledHacker.dataset.id === hacker.sub) {
+    }
+    // Highlight input with my name and remove it
+    //  from <datalist> to not be autocompleted anymore
+    else {
+      if (filledHacker.dataset.id === hacker.slackID) {
         target.classList.add("me");
       }
       filledHacker.remove();
+    }
+  }
+
+  selectElement.addEventListener("change", handleSelectChange);
+
+  // Append back my inlined name to <datalist> when housing type
+  //  changed from custom AND there is no search input with my name yet
+  function handleSelectChange({ target }) {
+    if (target.value === "custom") return;
+    const myInlinedHackerName = inlineHackerName(hacker);
+    if (!hackersListElement.querySelector(`[value="${myInlinedHackerName}"]`)) {
+      const option = document.createElement("option");
+      option.value = myInlinedHackerName;
+      option.dataset.id = hacker.slackID;
+      hackersListElement.prepend(option);
     }
   }
 }
@@ -392,10 +418,7 @@ export async function main({ formElement, variantsRootElement, env }) {
     housing,
     formElement,
   });
-  renderHackers(formElement, {
-    hackers,
-    hacker,
-  });
+  renderHackers({ formElement, selectElement }, { hackers, hacker });
   renderBackstage(formElement, { backstage });
   renderZimmerFrei(variantsRootElement);
   autoShowHousingOfMine({ formElement, selectElement });
