@@ -33,17 +33,20 @@ async function getConfirmedHackersRegistrations(year) {
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#ts > :ts AND attribute_not_exists(invoiced)",
+      FilterExpression:
+        "#ts > :ts AND attribute_not_exists(invoiced) AND (firstTime = :false OR (attribute_exists(referral) AND attribute_type(referral, :string)))",
       ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
-        { ":ts": "2022-05-31T00:00:00.000Z" },
+        {
+          ":false": false,
+          ":ts": "2022-05-31T00:00:00.000Z",
+          ":string": "S",
+        },
         { removeUndefinedValues: true }
       ),
     })
   );
-  return res.Items.map((x) => unmarshall(x)).filter(
-    (x) => !x.firstTime || x.referral
-  );
+  return res.Items.map((x) => unmarshall(x));
 }
 
 async function getHackersRegistrations(year) {
