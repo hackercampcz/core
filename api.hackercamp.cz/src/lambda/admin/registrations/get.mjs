@@ -146,7 +146,7 @@ export async function handler(event) {
       getOptOuts(year),
       getData(type, year),
     ]);
-    if (type === "optouts") return response(optouts);
+    if (type === "optouts") return response(Array.from(optouts));
     if (!data) return notFound();
     return response(data.filter((x) => !optouts.has(x.email)));
   } catch (err) {
