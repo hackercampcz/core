@@ -6,6 +6,13 @@ import * as post from "./post.mjs";
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
 
+async function checkAuthorization(event) {
+  const token = getToken(event.headers);
+  const privateKey = process.env["private_key"];
+  const isAuthorized = await authorize("admin", token, privateKey);
+  if (!isAuthorized) throw Error("Unauthorized");
+}
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
@@ -13,24 +20,16 @@ import * as post from "./post.mjs";
 export async function handler(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    event.headers?.origin ?? "*",
-    {
-      allowCredentials: true,
-    }
+    event?.headers?.origin ?? "*",
+    { allowCredentials: true }
   );
   try {
-    const isAuthorized = await authorize(
-      "admin",
-      getToken(event.headers),
-      process.env["private_key"]
-    );
-    if (!isAuthorized) {
-      throw Error("Unauthorized");
-    }
     switch (event.httpMethod) {
       case "GET":
+        await checkAuthorization(event);
         return get.handler(event).then((x) => withCORS_(x));
       case "POST":
+        await checkAuthorization(event);
         return post.handler(event).then((x) => withCORS_(x));
       case "OPTIONS":
         return withCORS_({
