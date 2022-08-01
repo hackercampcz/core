@@ -1,8 +1,4 @@
-import {
-  DynamoDBClient,
-  ScanCommand,
-  ExecuteStatementCommand,
-} from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { response, internalError, notFound } from "../../http.mjs";
 
@@ -56,11 +52,10 @@ async function getHackersRegistrations(year) {
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "firstTime = :false AND #ts < :ts AND attribute_not_exists(invoiced)",
+        "#ts < :ts AND attribute_not_exists(invoiced)",
       ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
         {
-          ":false": false,
           ":ts": "2022-05-31T00:00:00.000Z",
         },
         { removeUndefinedValues: true }
