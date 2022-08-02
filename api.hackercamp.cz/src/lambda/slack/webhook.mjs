@@ -49,7 +49,7 @@ function dispatchByType(event) {
     case "user_profile_change":
       return onUserProfileChange(event);
     default:
-      console.log({ event: "Unknown event", payload: event });
+      console.log({ msg: "Unknown event", event });
       return unprocessableEntity();
   }
 }
@@ -61,7 +61,7 @@ function dispatchByType(event) {
 export async function handler(event) {
   const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
   try {
-    const { payload } = readPayload(event);
+    const payload = readPayload(event);
     console.log(payload);
     return withCORS_(dispatchByType(payload.event));
   } catch (err) {
