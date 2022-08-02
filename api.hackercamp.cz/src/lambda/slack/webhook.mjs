@@ -31,11 +31,11 @@ function onTeamJoin({ user }) {
   return notFound();
 }
 
-function onUserProfileChange(event) {
+function onUserProfileChange({ user }) {
   // TODO: implement profile change
   // - update contact, update attendee
   console.log("User profile change");
-  console.log({ event });
+  console.log({ user });
   return notFound();
 }
 
@@ -62,7 +62,6 @@ export async function handler(event) {
   const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
   try {
     const payload = readPayload(event);
-    console.log(payload);
     return withCORS_(dispatchByType(payload.event));
   } catch (err) {
     console.error(err);
