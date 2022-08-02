@@ -630,6 +630,8 @@
       );
       const data = await response.json();
 
+      if (data.invoiced || data.paid) disableForm();
+
       if (data.plusFirstName || data.plusLastName) {
         document.querySelector("#plus-one-section").removeAttribute("aria-hidden");
       }
@@ -685,6 +687,16 @@
           submitButtonElement.removeAttribute("disabled");
         })
     });
+
+    function disableForm() {
+      formElement.setAttribute("disabled", "disabled");
+      formElement.querySelectorAll("input, textarea, select").forEach(field => {
+        field.setAttribute("disabled", "disabled");
+      });
+      formElement.querySelectorAll("button").forEach(button => {
+        button.setAttribute("disabled", "disabled");
+      });
+    }
 
   </script>
 {% endblock %}

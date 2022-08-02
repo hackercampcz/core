@@ -1001,6 +1001,9 @@
       {headers: {Accept: "application/json"}}
     );
     const data = await response.json();
+
+    if (data.invoiced || data.paid) disableForm();
+
     for (let key in data) {
       const field = formElement.elements[key];
       let value = data[key];
@@ -1067,6 +1070,16 @@
         submitButtonElement.removeAttribute("disabled");
       })
   });
+
+  function disableForm() {
+    formElement.setAttribute("disabled", "disabled");
+    formElement.querySelectorAll("input, textarea, select").forEach(field => {
+      field.setAttribute("disabled", "disabled");
+    });
+    formElement.querySelectorAll("button").forEach(button => {
+      button.setAttribute("disabled", "disabled");
+    });
+  }
 
 </script>
 <footer class="mdc-layout-grid">
