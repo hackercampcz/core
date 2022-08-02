@@ -97,7 +97,57 @@ function hcName(t: string, options?: any) {
   return `hc-${t}${suffix}`;
 }
 
+const buildAssets = (fileName: string) =>
+  lambdaBuilder.buildCodeAsset(
+    path.join(__dirname, "src", "lambda", fileName),
+    {
+      minify: false,
+      format: "esm",
+    }
+  );
+
+const getHandler = (
+  name: string,
+  fileName: string,
+  role: aws.iam.Role,
+  { environment, timeout = 15, memorySize = 128 }: HandlerArgs
+): aws.lambda.Function =>
+  new aws.lambda.Function(name, {
+    publish: true,
+    runtime: aws.lambda.Runtime.NodeJS16dX,
+    architectures: ["arm64"],
+    role: role.arn,
+    handler: "index.handler",
+    code: buildAssets(fileName),
+    memorySize,
+    timeout, // reasonable timeout for initial request without 500
+    environment,
+  });
+
+const getRouteHandler = (
+  name: string,
+  fileName: string,
+  role: aws.iam.Role,
+  { stage, ...args }: RouteHandlerArgs
+): aws.lambda.Function =>
+  getHandler(hcName(`api-${name}-lambda`, { stage }), fileName, role, args);
+
+const getTableEventHandler = (
+  name: string,
+  fileName: string,
+  role: aws.iam.Role,
+  args: HandlerArgs
+): aws.lambda.Function =>
+  getHandler(
+    hcName(`dynamodb-${name}-lambda`),
+    path.join("dynamodb", fileName),
+    role,
+    args
+  );
+
 export function createDB() {
+  const defaultLambdaRole = createDefaultLambdaRole("dynamodb");
+
   const optOuts = new aws.dynamodb.Table(hcName("optouts"), {
     name: hcName("optouts"),
     hashKey: "email",
@@ -118,7 +168,19 @@ export function createDB() {
       { name: "year", type: "N" },
     ],
     billingMode: "PAY_PER_REQUEST",
+    streamEnabled: true,
+    streamViewType: "NEW_AND_OLD_IMAGES",
   });
+  registrations.onEvent(
+    "MODIFY",
+    getTableEventHandler(
+      "paid-registration",
+      "registrations/paid/index.mjs",
+      defaultLambdaRole,
+      {}
+    ),
+    { startingPosition: "LATEST" }
+  );
 
   const contacts = new aws.dynamodb.Table(hcName("contacts"), {
     name: hcName("contacts"),
@@ -150,12 +212,7 @@ export function createDB() {
   });
 }
 
-export function createApi(
-  name: string,
-  stage: string,
-  domain: string,
-  routes: Record<string, RouteArgs>
-) {
+export function createDefaultLambdaRole(stage) {
   const defaultLambdaRole = new aws.iam.Role(
     hcName("default-lambda-role", { stage }),
     {
@@ -188,34 +245,16 @@ export function createApi(
       role: defaultLambdaRole,
     }
   );
+  return defaultLambdaRole;
+}
 
-  const buildAssets = (fileName: string) =>
-    lambdaBuilder.buildCodeAsset(
-      path.join(__dirname, "src", "lambda", fileName),
-      {
-        minify: false,
-        format: "esm",
-      }
-    );
-
-  const getRouteHandler = (
-    name: string,
-    fileName: string,
-    role: aws.iam.Role,
-    { environment, timeout = 15, memorySize = 128 }: RouteHandlerArgs
-  ): aws.lambda.Function =>
-    new aws.lambda.Function(hcName(`api-${name}-lambda`, { stage }), {
-      publish: true,
-      runtime: aws.lambda.Runtime.NodeJS16dX,
-      architectures: ["arm64"],
-      role: role.arn,
-      handler: "index.handler",
-      code: buildAssets(fileName),
-      memorySize,
-      timeout, // reasonable timeout for initial request without 500
-      environment,
-    });
-
+export function createApi(
+  name: string,
+  stage: string,
+  domain: string,
+  routes: Record<string, RouteArgs>
+) {
+  const defaultLambdaRole = createDefaultLambdaRole(stage);
   const createHandlerRoute = (
     name: string,
     {
@@ -236,6 +275,7 @@ export function createApi(
       timeout: timeout ?? 15,
       memorySize,
       environment,
+      stage,
     }),
     authorizers,
     requiredParameters,
@@ -267,10 +307,14 @@ export function createApi(
   return { url: customDomainDistribution.url };
 }
 
-interface RouteHandlerArgs {
+interface HandlerArgs {
   timeout?: number;
   environment?: lambda.FunctionEnvironment;
   memorySize?: number;
+}
+
+interface RouteHandlerArgs extends HandlerArgs {
+  stage?: string;
 }
 
 interface RouteArgs {

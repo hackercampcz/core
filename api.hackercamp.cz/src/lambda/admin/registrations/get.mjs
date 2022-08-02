@@ -51,8 +51,7 @@ async function getHackersRegistrations(year) {
     new ScanCommand({
       TableName: "hc-registrations",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression:
-        "#ts < :ts AND attribute_not_exists(invoiced)",
+      FilterExpression: "#ts < :ts AND attribute_not_exists(invoiced)",
       ExpressionAttributeNames: { "#ts": "timestamp" },
       ExpressionAttributeValues: marshall(
         {
