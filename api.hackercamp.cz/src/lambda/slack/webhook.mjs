@@ -1,9 +1,9 @@
 import {
   DynamoDBClient,
-  UpdateItemCommand,
-  ScanCommand,
+  GetItemCommand,
+  PutItemCommand,
 } from "@aws-sdk/client-dynamodb";
-import { marshall } from "@aws-sdk/util-dynamodb";
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import {
   internalError,
   notFound,
@@ -20,23 +20,50 @@ import {
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
-function onUrlVerification(payload) {
+async function onUrlVerification(payload) {
   return response({ challenge: payload.challenge });
 }
 
-function onTeamJoin({ user }) {
+async function onTeamJoin({ user }) {
   // TODO: implement new team member
   console.log("Team join");
   console.log({ user });
   return notFound();
 }
 
-function onUserProfileChanged({ user }) {
+async function getContact(email) {
+  const resp = await db.send(
+    new GetItemCommand({
+      TableName: "hc-contacts",
+      Key: marshall({ email }),
+    })
+  );
+  const contact = unmarshall(resp.Item);
+  return contact;
+}
+
+function updateContact(contact, user) {
+  return db.send(
+    new PutItemCommand({
+      TableName: "hc-contacts",
+      Item: marshall(
+        Object.assign({}, contact, {
+          name: user.profile.real_name || contact.name,
+          image: user.profile.image_512,
+          company: user.profile?.fields?.Xf03A7A5815F?.alt || contact.company,
+        })
+      ),
+    })
+  );
+}
+
+async function onUserProfileChanged({ user }) {
   // TODO: implement profile change
-  // - update contact, update attendee
-  console.log("User profile changed");
-  console.log(user.profile.fields);
-  return notFound();
+  // - update attendee
+  const contact = await getContact(user.profile.email);
+  if (!contact) return notFound();
+  await updateContact(contact, user);
+  return response("");
 }
 
 function dispatchByType(event) {
@@ -49,7 +76,7 @@ function dispatchByType(event) {
       return onUserProfileChanged(event);
     default:
       console.log({ msg: "Unknown event", event });
-      return unprocessableEntity();
+      return Promise.resolve(unprocessableEntity());
   }
 }
 
@@ -61,7 +88,7 @@ export async function handler(event) {
   const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
   try {
     const payload = readPayload(event);
-    return withCORS_(dispatchByType(payload.event));
+    return dispatchByType(payload.event).then((x) => withCORS_(x));
   } catch (err) {
     console.error(err);
     return withCORS_(internalError());
