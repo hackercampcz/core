@@ -41,11 +41,11 @@ async function getContact(email, slackID) {
   return unmarshall(resp.Item);
 }
 
-async function getAttendee(email, year) {
+async function getAttendee(slackID, year) {
   const resp = await db.send(
     new GetItemCommand({
       TableName: "hc-attendees",
-      Key: marshall({ email, year }),
+      Key: marshall({ slackID, year }),
     })
   );
   return unmarshall(resp.Item);
@@ -84,7 +84,7 @@ function updateContact(contact, user) {
 async function onUserProfileChanged({ user }) {
   const [contact, attendee] = await Promise.all([
     getContact(user.profile.email, user.id),
-    getAttendee(user.profile.email, 2022),
+    getAttendee(user.id, 2022),
   ]);
   if (!contact) return notFound();
   await updateContact(contact, user);
