@@ -31,11 +31,11 @@ async function onTeamJoin({ user }) {
   return notFound();
 }
 
-async function getContact(email) {
+async function getContact(email, slackID) {
   const resp = await db.send(
     new GetItemCommand({
       TableName: "hc-contacts",
-      Key: marshall({ email }),
+      Key: marshall({ email, slackID }),
     })
   );
   const contact = unmarshall(resp.Item);
@@ -60,7 +60,7 @@ function updateContact(contact, user) {
 async function onUserProfileChanged({ user }) {
   // TODO: implement profile change
   // - update attendee
-  const contact = await getContact(user.profile.email);
+  const contact = await getContact(user.profile.email, user.id);
   if (!contact) return notFound();
   await updateContact(contact, user);
   return response("");
