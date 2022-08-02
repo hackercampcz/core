@@ -31,10 +31,10 @@ function onTeamJoin({ user }) {
   return notFound();
 }
 
-function onUserProfileChange({ user }) {
+function onUserProfileChanged({ user }) {
   // TODO: implement profile change
   // - update contact, update attendee
-  console.log("User profile change");
+  console.log("User profile changed");
   console.log({ user });
   return notFound();
 }
@@ -45,9 +45,8 @@ function dispatchByType(event) {
       return onUrlVerification(event);
     case "team_join":
       return onTeamJoin(event);
-    case "user_change":
-    case "user_profile_change":
-      return onUserProfileChange(event);
+    case "user_profile_changed":
+      return onUserProfileChanged(event);
     default:
       console.log({ msg: "Unknown event", event });
       return unprocessableEntity();
