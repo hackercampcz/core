@@ -24,19 +24,32 @@ function onUrlVerification(payload) {
   return response({ challenge: payload.challenge });
 }
 
-function onTeamJoin(payload) {
-  // todo: implement new team member
+function onTeamJoin({ user }) {
+  // TODO: implement new team member
+  console.log("Team join");
+  console.log({ user });
   return notFound();
 }
 
-function dispatchByType(payload) {
-  switch (payload.type) {
+function onUserProfileChange(event) {
+  // TODO: implement profile change
+  // - update contact, update attendee
+  console.log("User profile change");
+  console.log({ event });
+  return notFound();
+}
+
+function dispatchByType(event) {
+  switch (event.type) {
     case "url_verification":
-      return onUrlVerification(payload);
+      return onUrlVerification(event);
     case "team_join":
-      return onTeamJoin(payload);
+      return onTeamJoin(event);
+    case "user_change":
+    case "user_profile_change":
+      return onUserProfileChange(event);
     default:
-      console.log({ event: "Unknown event", payload });
+      console.log({ event: "Unknown event", payload: event });
       return unprocessableEntity();
   }
 }
@@ -48,9 +61,9 @@ function dispatchByType(payload) {
 export async function handler(event) {
   const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
   try {
-    const payload = readPayload(event);
+    const { payload } = readPayload(event);
     console.log(payload);
-    return withCORS_(dispatchByType(payload));
+    return withCORS_(dispatchByType(payload.event));
   } catch (err) {
     console.error(err);
     return withCORS_(internalError());
