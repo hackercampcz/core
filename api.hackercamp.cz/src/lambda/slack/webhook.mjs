@@ -38,8 +38,32 @@ async function getContact(email, slackID) {
       Key: marshall({ email, slackID }),
     })
   );
-  const contact = unmarshall(resp.Item);
-  return contact;
+  return unmarshall(resp.Item);
+}
+
+async function getAttendee(email, year) {
+  const resp = await db.send(
+    new GetItemCommand({
+      TableName: "hc-attendees",
+      Key: marshall({ email, year }),
+    })
+  );
+  return unmarshall(resp.Item);
+}
+
+function updateAttendee(attendee, user) {
+  return db.send(
+    new PutItemCommand({
+      TableName: "hc-attendees",
+      Item: marshall(
+        Object.assign({}, attendee, {
+          name: user.profile.real_name || attendee.name,
+          image: user.profile.image_512,
+          company: user.profile?.fields?.Xf03A7A5815F?.alt || attendee.company,
+        })
+      ),
+    })
+  );
 }
 
 function updateContact(contact, user) {
@@ -58,11 +82,13 @@ function updateContact(contact, user) {
 }
 
 async function onUserProfileChanged({ user }) {
-  // TODO: implement profile change
-  // - update attendee
-  const contact = await getContact(user.profile.email, user.id);
+  const [contact, attendee] = await Promise.all([
+    getContact(user.profile.email, user.id),
+    getAttendee(user.profile.email, 2022),
+  ]);
   if (!contact) return notFound();
   await updateContact(contact, user);
+  if (attendee) await updateAttendee(attendee, user);
   return response("");
 }
 
