@@ -35,7 +35,7 @@ function onUserProfileChanged({ user }) {
   // TODO: implement profile change
   // - update contact, update attendee
   console.log("User profile changed");
-  console.log({ user });
+  console.log(user.profile.fields);
   return notFound();
 }
 
