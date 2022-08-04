@@ -14,6 +14,7 @@ import { sendMessageToSlack } from "../../../slack.mjs";
 const dynamo = new DynamoDBClient({});
 
 async function getContact(dynamodb, email) {
+  console.log({ event: "Get contact", email });
   const res = await dynamo.send(
     new GetItemCommand({
       TableName: "hc-contacts",
@@ -27,7 +28,7 @@ async function getContact(dynamodb, email) {
 }
 
 function createAttendee(dynamo, contact, record) {
-  console.log({ event: "Create attendee" , contact, record });
+  console.log({ event: "Create attendee", contact, record });
   return dynamo.send(
     new PutItemCommand({
       TableName: "hc-attendees",
@@ -50,7 +51,7 @@ async function sendSlackInvitation(email, postmarkToken) {
     templateId: Template.SlackInvite,
     data: {},
   });
-  console.log(`${email} sent`);
+  console.log({ event: "Slack invitation sent", email });
 }
 
 /**
