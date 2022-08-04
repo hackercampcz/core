@@ -20,17 +20,6 @@ import {
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
-async function onUrlVerification(payload) {
-  return response({ challenge: payload.challenge });
-}
-
-async function onTeamJoin({ user }) {
-  // TODO: implement new team member
-  console.log("Team join");
-  console.log({ user });
-  return notFound();
-}
-
 async function getContact(email, slackID) {
   const resp = await db.send(
     new GetItemCommand({
@@ -38,7 +27,7 @@ async function getContact(email, slackID) {
       Key: marshall({ email, slackID }),
     })
   );
-  return unmarshall(resp.Item);
+  return resp.Item ? unmarshall(resp.Item) : null;
 }
 
 async function getAttendee(slackID, year) {
@@ -48,7 +37,7 @@ async function getAttendee(slackID, year) {
       Key: marshall({ slackID, year }),
     })
   );
-  return unmarshall(resp.Item);
+  return resp.Item ? unmarshall(resp.Item) : null;
 }
 
 function updateAttendee(attendee, user) {
@@ -79,6 +68,19 @@ function updateContact(contact, user) {
       ),
     })
   );
+}
+
+async function onUrlVerification(payload) {
+  return response({ challenge: payload.challenge });
+}
+
+async function onTeamJoin({ user }) {
+  // TODO: implement new team member
+  console.log("Team join");
+  console.log({ user });
+  // TODO: create contact
+  // TODO: create attendee
+  return notFound();
 }
 
 async function onUserProfileChanged({ user }) {
@@ -114,6 +116,7 @@ export async function handler(event) {
   const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
   try {
     const payload = readPayload(event);
+    // TODO: push this to queue instead
     return dispatchByType(payload.event).then((x) => withCORS_(x));
   } catch (err) {
     console.error(err);
