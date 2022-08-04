@@ -7,7 +7,6 @@ import {
   Api,
   ApiRoute,
   CacheSettings,
-  CorsSettings,
   CustomDomainDistribution,
 } from "@topmonks/pulumi-aws";
 import * as path from "path";
@@ -336,4 +335,3 @@ interface RouteArgs {
   environment?: lambda.FunctionEnvironment;
   memorySize?: number;
 }
-export { sendMessageToSlack } from "./src/lambda/slack.mjs";
