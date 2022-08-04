@@ -171,16 +171,16 @@ export function createDB() {
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
   });
-  registrations.onEvent(
-    "paidRegistration",
-    getTableEventHandler(
-      "paid-registration",
-      "registrations/paid/index.mjs",
-      defaultLambdaRole,
-      {}
-    ),
-    { startingPosition: "LATEST" }
-  );
+  // registrations.onEvent(
+  //   "paidRegistration",
+  //   getTableEventHandler(
+  //     "paid-registration",
+  //     "registrations/paid/index.mjs",
+  //     defaultLambdaRole,
+  //     {}
+  //   ),
+  //   { startingPosition: "LATEST" }
+  // );
 
   const contacts = new aws.dynamodb.Table(hcName("contacts"), {
     name: hcName("contacts"),
