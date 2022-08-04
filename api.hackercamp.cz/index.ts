@@ -172,7 +172,7 @@ export function createDB() {
     streamViewType: "NEW_AND_OLD_IMAGES",
   });
   registrations.onEvent(
-    "MODIFY",
+    "paidRegistration",
     getTableEventHandler(
       "paid-registration",
       "registrations/paid/index.mjs",
