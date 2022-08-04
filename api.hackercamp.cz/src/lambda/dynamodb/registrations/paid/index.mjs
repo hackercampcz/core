@@ -17,14 +17,17 @@ async function getContact(dynamodb, email) {
   const res = await dynamo.send(
     new GetItemCommand({
       TableName: "hc-contacts",
-      Key: marshall({ email }),
+      Key: marshall(
+        { email },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
     })
   );
-  return unmarshall(res.Item);
+  return res.Item ? unmarshall(res.Item) : null;
 }
 
-async function createAttendee(dynamo, contact, record) {
-  const res = await dynamo.send(
+function createAttendee(dynamo, contact, record) {
+  return dynamo.send(
     new PutItemCommand({
       TableName: "hc-attendees",
       Item: marshall(

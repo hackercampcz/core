@@ -140,6 +140,10 @@ async function onTeamJoin({ user }) {
   const { email } = user.profile;
   console.log({ event: "Team join", email });
   const registration = await getRegistration(email, 2022);
+  if (!registration) {
+    console.log({ event: "Registration not found", email });
+    return notFound();
+  }
   await Promise.all([
     createContact(user),
     createAttendee(user, registration),
