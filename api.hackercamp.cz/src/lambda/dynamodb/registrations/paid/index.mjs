@@ -60,9 +60,12 @@ export async function handler(event) {
   const newlyPaidRegistrations = event.Records.filter(
     (x) => x.eventName === "MODIFY"
   )
-    .map((x) => unmarshall(x.dynamodb))
-    .filter((x) => x.NewImage.paid && !x.OldImage.paid)
-    .map((x) => x.NewImage);
+    .map((x) => ({
+      newImage: unmarshall(x.dynamodb.NewImage),
+      oldImage: unmarshall(x.dynamodb.OldImage),
+    }))
+    .filter((x) => x.newImage.paid && !x.oldImage.paid)
+    .map((x) => x.newImage);
   for (const record of newlyPaidRegistrations) {
     const { email } = record;
     const contact = await getContact(dynamo, email);
