@@ -6,6 +6,13 @@
     scroll-behavior: smooth;
   }
 
+  #program-root {
+    box-sizing: border-box;
+    min-height: 90vh;
+
+    display: flex;
+    flex-direction: column;
+  }
 
 </style>
 {% endblock %}
@@ -16,7 +23,7 @@
 
 {% block javascript %}
 <script type="module">
-  import { main } from "/assets/esm/program.js";
+  import { main } from "/assets/esm/program.js?2";
 
   main({
     rootElement: document.querySelector("#program-root"),
