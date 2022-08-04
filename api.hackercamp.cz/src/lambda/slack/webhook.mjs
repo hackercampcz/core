@@ -23,6 +23,7 @@ import { sendMessageToSlack } from "../slack.mjs";
 const db = new DynamoDBClient({});
 
 function createContact({ id, profile }) {
+  console.log({ event: "Create contact", slackID: id });
   return db.send(
     new PutItemCommand({
       TableName: "hc-contacts",
@@ -37,6 +38,7 @@ function createContact({ id, profile }) {
 }
 
 async function createAttendee({ id, profile }, record) {
+  console.log({ event: "Create attendee", slackID: id });
   return db.send(
     new PutItemCommand({
       TableName: "hc-attendees",
@@ -57,36 +59,49 @@ async function createAttendee({ id, profile }, record) {
 }
 
 async function getContact(email, slackID) {
+  console.log({ event: "Get contact", email, slackID });
   const resp = await db.send(
     new GetItemCommand({
       TableName: "hc-contacts",
-      Key: marshall({ email, slackID }),
+      Key: marshall(
+        { email, slackID },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
 
 async function getAttendee(slackID, year) {
+  console.log({ event: "Get attendee", year, slackID });
   const resp = await db.send(
     new GetItemCommand({
       TableName: "hc-attendees",
-      Key: marshall({ slackID, year }),
+      Key: marshall(
+        { slackID, year },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
 
 async function getRegistration(email, year) {
+  console.log({ event: "Get registration", email, year });
   const resp = await db.send(
     new GetItemCommand({
       TableName: "hc-registrations",
-      Key: marshall({ email, year }),
+      Key: marshall(
+        { email, year },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
 
 function updateAttendee(attendee, user) {
+  console.log({ event: "Update attendee", slackID: user.id });
   return db.send(
     new PutItemCommand({
       TableName: "hc-attendees",
@@ -102,6 +117,7 @@ function updateAttendee(attendee, user) {
 }
 
 function updateContact(contact, user) {
+  console.log({ event: "Update contact", slackID: user.id });
   return db.send(
     new PutItemCommand({
       TableName: "hc-contacts",
