@@ -180,7 +180,8 @@ export function createDB() {
       {
         environment: {
           variables: {
-            SLACK_WEBHOOK_URL: config.get("slack-incoming-webhook"),
+            slack_announcement_url: config.get("slack-incoming-webhook"),
+            postmark_token: config.get("postmark-token"),
           },
         },
       }
@@ -335,3 +336,4 @@ interface RouteArgs {
   environment?: lambda.FunctionEnvironment;
   memorySize?: number;
 }
+export { sendMessageToSlack } from "./src/lambda/slack.mjs";

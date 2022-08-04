@@ -4,6 +4,7 @@ import {
   PutItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
 import {
   internalError,
   notFound,
@@ -12,6 +13,7 @@ import {
   unprocessableEntity,
   withCORS,
 } from "../http.mjs";
+import { sendMessageToSlack } from "../slack.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -19,6 +21,40 @@ import {
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
+
+function createContact({ id, profile }) {
+  return db.send(
+    new PutItemCommand({
+      TableName: "hc-contacts",
+      Item: marshall({
+        email: profile.email,
+        slackID: id,
+        name: profile.real_name,
+        image: profile.image_512,
+      }),
+    })
+  );
+}
+
+async function createAttendee({ id, profile }, record) {
+  return db.send(
+    new PutItemCommand({
+      TableName: "hc-attendees",
+      Item: marshall(
+        Object.assign(
+          {},
+          {
+            email: profile.email,
+            slackID: id,
+            name: profile.real_name,
+            image: profile.image_512,
+          },
+          selectKeys(record, new Set(attendee.attributes))
+        )
+      ),
+    })
+  );
+}
 
 async function getContact(email, slackID) {
   const resp = await db.send(
@@ -35,6 +71,16 @@ async function getAttendee(slackID, year) {
     new GetItemCommand({
       TableName: "hc-attendees",
       Key: marshall({ slackID, year }),
+    })
+  );
+  return resp.Item ? unmarshall(resp.Item) : null;
+}
+
+async function getRegistration(email, year) {
+  const resp = await db.send(
+    new GetItemCommand({
+      TableName: "hc-registrations",
+      Key: marshall({ email, year }),
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
@@ -75,12 +121,19 @@ async function onUrlVerification(payload) {
 }
 
 async function onTeamJoin({ user }) {
-  // TODO: implement new team member
-  console.log("Team join");
-  console.log({ user });
-  // TODO: create contact
-  // TODO: create attendee
-  return notFound();
+  const { email } = user.profile;
+  console.log({ event: "Team join", email });
+  const registration = await getRegistration(email, 2022);
+  await Promise.all([
+    createContact(user),
+    createAttendee(user, registration),
+    sendMessageToSlack({
+      slackID: user.id,
+      name: user.profile.real_name,
+      image: user.profile.image_512,
+    }),
+  ]);
+  return response("");
 }
 
 async function onUserProfileChanged({ user }) {
