@@ -2,6 +2,7 @@ import {
   DynamoDBClient,
   GetItemCommand,
   PutItemCommand,
+  ScanCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import * as attendee from "@hackercamp/lib/attendee.mjs";
@@ -16,15 +17,16 @@ const dynamo = new DynamoDBClient({});
 async function getContact(dynamodb, email) {
   console.log({ event: "Get contact", email });
   const res = await dynamo.send(
-    new GetItemCommand({
+    new ScanCommand({
       TableName: "hc-contacts",
-      Key: marshall(
-        { email },
+      FilterExpression: "email = :email",
+      ExpressionAttributeValues: marshall(
+        { ":email": email },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
     })
   );
-  return res.Item ? unmarshall(res.Item) : null;
+  return res.Items.map((x) => unmarshall(x))?.[0];
 }
 
 function createAttendee(dynamo, contact, record) {
