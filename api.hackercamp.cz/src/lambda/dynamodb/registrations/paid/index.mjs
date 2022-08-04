@@ -74,7 +74,7 @@ export async function handler(event) {
     const { email } = record;
     const contact = await getContact(dynamo, email);
     if (!contact) {
-      console.log(`No contact found for e-mail: ${email}`);
+      console.log({ event: "No contact found", email });
       await sendSlackInvitation(email, process.env.postmark_token);
     } else {
       await Promise.all([
