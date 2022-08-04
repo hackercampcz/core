@@ -171,16 +171,22 @@ export function createDB() {
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
   });
-  // registrations.onEvent(
-  //   "paidRegistration",
-  //   getTableEventHandler(
-  //     "paid-registration",
-  //     "registrations/paid/index.mjs",
-  //     defaultLambdaRole,
-  //     {}
-  //   ),
-  //   { startingPosition: "LATEST" }
-  // );
+  registrations.onEvent(
+    "paidRegistration",
+    getTableEventHandler(
+      "paid-registration",
+      "registrations/paid/index.mjs",
+      defaultLambdaRole,
+      {
+        environment: {
+          variables: {
+            SLACK_WEBHOOK_URL: config.get("slack-incoming-webhook"),
+          },
+        },
+      }
+    ),
+    { startingPosition: "LATEST" }
+  );
 
   const contacts = new aws.dynamodb.Table(hcName("contacts"), {
     name: hcName("contacts"),
