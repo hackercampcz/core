@@ -5,6 +5,7 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
+import * as attendee from "@hackercamp/lib/attendee.mjs";
 
 /** @typedef { import("aws-lambda").DynamoDBStreamEvent } DynamoDBStreamEvent */
 
@@ -24,7 +25,13 @@ async function createAttendee(dynamo, contact, record) {
   const res = await dynamo.send(
     new PutItemCommand({
       TableName: "hc-attendees",
-      Item: marshall(Object.assign({}, selectKeys(contact, new Set(["slackID", "name"])), selectKeys(record, new Set([])))),
+      Item: marshall(
+        Object.assign(
+          {},
+          selectKeys(contact, new Set(["slackID", "name"])),
+          selectKeys(record, new Set(attendee.attributes))
+        )
+      ),
     })
   );
 }
@@ -43,8 +50,9 @@ export async function handler(event) {
   for (const record of newlyPaidRegistrations) {
     const { email } = record;
     const contact = await getContact(dynamo, email);
-    if (!contact) console.log(`No contact found for e-mail: ${email}`);
-    else {
+    if (!contact) {
+      console.log(`No contact found for e-mail: ${email}`);
+    } else {
       await createAttendee(dynamo, contact, record);
     }
     // TODO: check `hc-contacts` by `email`
