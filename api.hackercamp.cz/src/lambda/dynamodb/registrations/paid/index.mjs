@@ -27,6 +27,7 @@ async function getContact(dynamodb, email) {
 }
 
 function createAttendee(dynamo, contact, record) {
+  console.log({ event: "Create attendee" , contact, record });
   return dynamo.send(
     new PutItemCommand({
       TableName: "hc-attendees",
