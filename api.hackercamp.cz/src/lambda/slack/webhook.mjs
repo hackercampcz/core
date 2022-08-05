@@ -3,6 +3,7 @@ import {
   GetItemCommand,
   PutItemCommand,
 } from "@aws-sdk/client-dynamodb";
+import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { attributes } from "@hackercamp/lib/attendee.mjs";
@@ -14,7 +15,7 @@ import {
   unprocessableEntity,
   withCORS,
 } from "../http.mjs";
-import { postChatMessage, sendMessageToSlack } from "../slack.mjs";
+import { postChatMessage } from "../slack.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -22,6 +23,7 @@ import { postChatMessage, sendMessageToSlack } from "../slack.mjs";
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
+const queue = new SQSClient({});
 
 function createContact({ id, profile }) {
   console.log({ event: "Create contact", slackID: id });
@@ -143,6 +145,19 @@ async function onUrlVerification(payload) {
   return response({ challenge: payload.challenge });
 }
 
+function enqueueSlackWelcomeMessage(user) {
+  return queue.send(
+    new SendMessageCommand({
+      QueueUrl: process.env.slack_queue_url,
+      DelaySeconds: 900, // 15 min delay
+      MessageBody: JSON.stringify({
+        event: "send-welcome-message",
+        slackID: user.id,
+      }),
+    })
+  );
+}
+
 async function onTeamJoin({ user }) {
   const { email } = user.profile;
   console.log({ event: "Team join", email });
@@ -168,12 +183,7 @@ Chceš se inspirovat tím, co další táborníci chystají jako svoje zapojení
 
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
     ),
-    // TODO: schedule following after 3h
-    sendMessageToSlack({
-      slackID: user.id,
-      name: user.profile.real_name,
-      image: user.profile.image_512,
-    }),
+    enqueueSlackWelcomeMessage(user),
   ]);
   return response("");
 }
