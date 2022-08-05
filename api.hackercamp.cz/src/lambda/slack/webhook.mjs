@@ -160,7 +160,7 @@ async function onTeamJoin({ user }) {
 
 Vítej v našem slacku. Začátek září se blíží. Snad se těšíš stejně jako my.
 
-Nastav si svou profilovou fotku, ať tě ostatní poznají.
+Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají.
 
 Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá. Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce. Nebo se můžeš kouknout, kde a jak zapojit své ruce k dílu → #hands_wanted.
 

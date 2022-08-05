@@ -9,7 +9,12 @@ import {
   CloudFront,
   getHostedZone,
 } from "@topmonks/pulumi-aws";
-import { createApi, createDB, routes } from "./api.hackercamp.cz";
+import {
+  createApi,
+  createDB,
+  createQueues,
+  createRoutes,
+} from "./api.hackercamp.cz";
 import { AuthEdgeLambda } from "./donut.hackercamp.cz/edge";
 
 registerAutoTags({
@@ -102,7 +107,19 @@ new aws.s3.BucketPolicy("hc-hacker-profiles", {
 const db = createDB();
 export const registrationsDataTable = db.registrationsDataTable;
 export const contactsDataTable = db.contactsDataTable;
+export const optOutsDataTable = db.optOutsDataTable;
+export const attendeesDataTable = db.attendeesDataTable;
 
+const queues = createQueues();
+export const slackQueueUrl = queues.slackQueueUrl;
+
+const routes = createRoutes({
+  slackQueueUrl,
+  registrationsDataTable,
+  contactsDataTable,
+  optOutsDataTable,
+  attendeesDataTable,
+});
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = api.url.apply((x) => new URL("/v1/", x).href);
 
