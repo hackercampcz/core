@@ -65,8 +65,13 @@ function makeTimeline(startAt, endAt, minutes = 15) {
 function getSlotNumber(time, minutes = 15) {}
 
 function makeTick(time) {
+  // return time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
   if (time.getMinutes() === 0) {
-    return html` <span> ${time.getHours()}. </span> `;
+    // return time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    return `${time.getHours()}h`;
+  } else {
+    return `${time.getMinutes()}m`;
   }
 }
 
@@ -90,11 +95,13 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         --padding: var(--mdc-layout-grid-margin-desktop, 24px);
         --head-width: calc(100vw * 2 / 3);
         --slot-width: calc(100vw / 2.5 / 4);
-        --border-color: #eee;
+        --tick-color: #eee;
+        --tick-highlight-color: #aaa;
       }
       @media (prefers-color-scheme: dark) {
         .program {
-          --border-color: #666;
+          --tick-color: #666;
+          --tick-highlight-color: #888;
         }
       }
       .program__header {
@@ -104,33 +111,13 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       .program__content {
         max-width: 100vw;
         overflow-x: auto;
+        padding: var(--padding) 0;
       }
       @media (min-width: 600px) {
         .program {
           --head-width: calc(100vw / 3);
           --slot-width: calc(100vw / 6 / 4);
         }
-      }
-
-      /**
-       * Days and time ticks
-       */
-      .timeline {
-        display: flex;
-        width: max-content;
-        box-sizing: border-box;
-      }
-      .timeline__header {
-        min-width: var(--head-width);
-        text-align: right;
-      }
-      .timeline__content {
-        display: flex;
-        align-items: center;
-      }
-      .timeline__tick {
-        width: calc(4 * var(--slot-width));
-        text-align: center;
       }
 
       /**
@@ -143,8 +130,9 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         min-width: var(--head-width);
         background-color: var(--hc-background-color);
         box-sizing: border-box;
-        padding: calc(var(--padding) / 2);
-        border-top: 1px solid var(--border-color);
+        padding: calc(var(--padding));
+        border-top: 1px solid var(--tick-color);
+        border-right: 1px solid var(--tick-highlight-color);
       }
       .lineup__content {
         display: flex;
@@ -155,8 +143,30 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         width: var(--slot-width);
         height: 100%;
         box-sizing: border-box;
-        border-top: 1px solid var(--border-color);
-        border-right: 1px solid var(--border-color);
+        border-top: 1px solid var(--tick-color);
+        border-right: 1px solid var(--tick-color);
+        position: relative;
+      }
+      .lineup__slot:nth-child(4n) {
+        border-right: 1px solid var(--tick-highlight-color);
+      }
+      .lineup__slot:after {
+        content: attr(data-tick);
+        display: block;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        line-height: 1.4;
+        bottom: 0;
+        font-size: 12px;
+        color: var(--tick-color);
+      }
+      .lineup__slot[data-tick$="h"]:after {
+        color: var(--tick-highlight-color);
+      }
+      .lineup:last-child .lineup__header,
+      .lineup:last-child .lineup__slot {
+        border-bottom: 1px solid var(--tick-color);
       }
       .lineup__event {
         position: absolute;
@@ -167,7 +177,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         border-radius: 4px;
         cursor: pointer;
         overflow: hidden;
-        border: 1px solid var(--border-color);
+        border: 1px solid var(--tick-color);
       }
       .lineup__event:hover {
         width: max-content;
@@ -182,18 +192,6 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         </p>
       </div>
       <div class="program__content">
-        <div class="timeline">
-          <div class="timeline__header">
-            <span>Sobota</span>
-          </div>
-          <div class="timeline__content">
-            ${makeTimeline(startAt, endAt, 60).map(
-              (time) => html`
-                <div class="timeline__tick">${makeTick(time)}</div>
-              `
-            )}
-          </div>
-        </div>
         ${lineups.map(
           (lineup) => html`
             <div class="lineup">
@@ -205,7 +203,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                 ${makeTimeline(startAt, endAt, 15).map(
                   (time) =>
                     html`
-                      <div class="lineup__slot" data-time=${time.toISOString()}>
+                      <div class="lineup__slot" data-tick=${makeTick(time)}>
                         &nbsp;
                       </div>
                     `
