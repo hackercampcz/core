@@ -14,88 +14,97 @@ import * as lambdaBuilder from "../lambda-builder";
 
 const config = new pulumi.Config();
 
-export const routes = new Map<string, Record<string, RouteArgs>>([
-  [
-    "v1",
-    {
-      auth: {
-        httpMethod: "POST",
-        path: "/auth",
-        fileName: "auth/index.mjs",
-        environment: {
-          variables: {
-            hostname: config.get("donut-domain"),
-            private_key: config.get("private-key"),
-            slack_client_id: config.get("slack-client-id"),
-            slack_client_secret: config.get("slack-client-secret"),
+export const createRoutes = ({
+  slackQueueUrl,
+  // TODO: inject table names to lambdas
+  registrationsDataTable,
+  contactsDataTable,
+  optOutsDataTable,
+  attendeesDataTable,
+}) =>
+  new Map<string, Record<string, RouteArgs>>([
+    [
+      "v1",
+      {
+        auth: {
+          httpMethod: "POST",
+          path: "/auth",
+          fileName: "auth/index.mjs",
+          environment: {
+            variables: {
+              hostname: config.get("donut-domain"),
+              private_key: config.get("private-key"),
+              slack_client_id: config.get("slack-client-id"),
+              slack_client_secret: config.get("slack-client-secret"),
+            },
+          },
+        },
+        registration: {
+          httpMethod: "ANY",
+          path: "/registration",
+          fileName: "registration/index.mjs",
+          environment: {
+            variables: {
+              hostname: config.get("web-domain"),
+              donut: config.get("donut-domain"),
+              private_key: config.get("private-key"),
+              postmark_token: config.get("postmark-token"),
+            },
+          },
+        },
+        housing: {
+          httpMethod: "ANY",
+          path: "/housing",
+          fileName: "housing/index.mjs",
+          environment: {
+            variables: {
+              private_key: config.get("private-key"),
+            },
+          },
+        },
+        optout: {
+          httpMethod: "POST",
+          path: "/optout",
+          fileName: "optout/index.mjs",
+        },
+        adminRegistrations: {
+          httpMethod: "ANY",
+          path: "/admin/registrations",
+          fileName: "admin/registrations/index.mjs",
+          environment: {
+            variables: {
+              private_key: config.get("private-key"),
+            },
+          },
+        },
+        ares: {
+          httpMethod: "GET",
+          path: "/ares",
+          fileName: "ares/index.mjs",
+          requiredParameters: [{ in: "query", name: "ico" }],
+          cache: { ttl: 3600 },
+          memorySize: 512,
+        },
+        fakturoidWebhook: {
+          httpMethod: "POST",
+          path: "/fakturoid/webhook",
+          fileName: "fakturoid/webhook.mjs",
+        },
+        slackWebhook: {
+          httpMethod: "POST",
+          path: "/slack/webhook",
+          fileName: "slack/webhook.mjs",
+          environment: {
+            variables: {
+              slack_queue_url: slackQueueUrl,
+              slack_announcement_url: config.get("slack-incoming-webhook"),
+              slack_bot_token: config.get("slack-bot-token"),
+            },
           },
         },
       },
-      registration: {
-        httpMethod: "ANY",
-        path: "/registration",
-        fileName: "registration/index.mjs",
-        environment: {
-          variables: {
-            hostname: config.get("web-domain"),
-            donut: config.get("donut-domain"),
-            private_key: config.get("private-key"),
-            postmark_token: config.get("postmark-token"),
-          },
-        },
-      },
-      housing: {
-        httpMethod: "ANY",
-        path: "/housing",
-        fileName: "housing/index.mjs",
-        environment: {
-          variables: {
-            private_key: config.get("private-key"),
-          },
-        },
-      },
-      optout: {
-        httpMethod: "POST",
-        path: "/optout",
-        fileName: "optout/index.mjs",
-      },
-      adminRegistrations: {
-        httpMethod: "ANY",
-        path: "/admin/registrations",
-        fileName: "admin/registrations/index.mjs",
-        environment: {
-          variables: {
-            private_key: config.get("private-key"),
-          },
-        },
-      },
-      ares: {
-        httpMethod: "GET",
-        path: "/ares",
-        fileName: "ares/index.mjs",
-        requiredParameters: [{ in: "query", name: "ico" }],
-        cache: { ttl: 3600 },
-        memorySize: 512,
-      },
-      fakturoidWebhook: {
-        httpMethod: "POST",
-        path: "/fakturoid/webhook",
-        fileName: "fakturoid/webhook.mjs",
-      },
-      slackWebhook: {
-        httpMethod: "POST",
-        path: "/slack/webhook",
-        fileName: "slack/webhook.mjs",
-        environment: {
-          variables: {
-            slack_announcement_url: config.get("slack-incoming-webhook"),
-            slack_bot_token: config.get("slack-bot-token"),
-          },
-        },
-      },
-    },
-  ],
-]);
+    ],
+  ]);
 
 function hcName(t: string, options?: any) {
   const suffix = options?.stage ? "-" + options?.stage : "";
@@ -220,7 +229,7 @@ export function createDB() {
     registrationsDataTable: registrations.name,
     contactsDataTable: contacts.name,
     optOutsDataTable: optOuts.name,
-    attributesDataTable: attendees.name,
+    attendeesDataTable: attendees.name,
   });
 }
 
@@ -258,6 +267,11 @@ export function createDefaultLambdaRole(stage) {
     }
   );
   return defaultLambdaRole;
+}
+
+export function createQueues() {
+  const slackQueue = new aws.sqs.Queue(hcName("slack-message-queue"), {});
+  return { slackQueueUrl: slackQueue.url };
 }
 
 export function createApi(
