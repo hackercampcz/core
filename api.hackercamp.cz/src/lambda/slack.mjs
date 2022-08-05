@@ -74,5 +74,5 @@ export async function sendMessageToSlack(profile) {
       ],
     }),
   });
-  return resp.json();
+  return resp.text();
 }
