@@ -14,7 +14,7 @@ import {
   unprocessableEntity,
   withCORS,
 } from "../http.mjs";
-import {postChatMessage, sendMessageToSlack} from "../slack.mjs";
+import { postChatMessage, sendMessageToSlack } from "../slack.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -154,7 +154,20 @@ async function onTeamJoin({ user }) {
   await Promise.all([
     createContact(user),
     createAttendee(user, registration),
-    postChatMessage(user.id, "Ahoj, táborníku,\n\nDíky za platbu a vítej v našem slacku. Začátek září se blíží. Snad se těšíš stejně jako my. Tady se můžeš připojit k jakémukoliv kanálu, který Tě zajímá. Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce. Nebo se můžeš kouknout, kde a jak zapojit své ruce k dílu #hands_wanted.\n\nChceš se inspirovat tím, co další táborníci chystají jako svoje zapojení Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda. Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni. Důležité novinky najdeš v kanále #general.\n\nMáš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz"),
+    postChatMessage(
+      user.id,
+      `Ahoj, táborníku,
+
+Vítej v našem slacku. Začátek září se blíží. Snad se těšíš stejně jako my.
+
+Nastav si svou profilovou fotku, ať tě ostatní poznají.
+
+Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá. Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce. Nebo se můžeš kouknout, kde a jak zapojit své ruce k dílu → #hands_wanted.
+
+Chceš se inspirovat tím, co další táborníci chystají jako svoje zapojení Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda. Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni. Důležité novinky najdeš v kanále #general.
+
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
+    ),
     // TODO: schedule following after 3h
     sendMessageToSlack({
       slackID: user.id,
