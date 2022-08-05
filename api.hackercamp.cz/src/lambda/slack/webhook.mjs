@@ -5,6 +5,7 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
+import { attributes } from "@hackercamp/lib/attendee.mjs";
 import {
   internalError,
   notFound,
@@ -27,12 +28,15 @@ function createContact({ id, profile }) {
   return db.send(
     new PutItemCommand({
       TableName: "hc-contacts",
-      Item: marshall({
-        email: profile.email,
-        slackID: id,
-        name: profile.real_name,
-        image: profile.image_512,
-      }),
+      Item: marshall(
+        {
+          email: profile.email,
+          slackID: id,
+          name: profile.real_name,
+          image: profile.image_512,
+        },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
     })
   );
 }
@@ -51,8 +55,9 @@ async function createAttendee({ id, profile }, record) {
             name: profile.real_name,
             image: profile.image_512,
           },
-          selectKeys(record, new Set(attendee.attributes))
-        )
+          selectKeys(record, attributes)
+        ),
+        { removeUndefinedValues: true, convertEmptyValues: true }
       ),
     })
   );
@@ -110,7 +115,8 @@ function updateAttendee(attendee, user) {
           name: user.profile.real_name || attendee.name,
           image: user.profile.image_512,
           company: user.profile?.fields?.Xf03A7A5815F?.alt || attendee.company,
-        })
+        }),
+        { removeUndefinedValues: true, convertEmptyValues: true }
       ),
     })
   );
@@ -126,7 +132,8 @@ function updateContact(contact, user) {
           name: user.profile.real_name || contact.name,
           image: user.profile.image_512,
           company: user.profile?.fields?.Xf03A7A5815F?.alt || contact.company,
-        })
+        }),
+        { removeUndefinedValues: true, convertEmptyValues: true }
       ),
     })
   );
