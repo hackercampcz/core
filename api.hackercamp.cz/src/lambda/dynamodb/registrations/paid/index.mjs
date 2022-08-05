@@ -1,11 +1,10 @@
 import {
   DynamoDBClient,
-  GetItemCommand,
   PutItemCommand,
   ScanCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import * as attendee from "@hackercamp/lib/attendee.mjs";
+import { attributes } from "@hackercamp/lib/attendee.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { sendEmailWithTemplate, Template } from "../../../postmark.mjs";
 import { sendMessageToSlack } from "../../../slack.mjs";
@@ -38,7 +37,7 @@ function createAttendee(dynamo, contact, record) {
         Object.assign(
           {},
           selectKeys(contact, new Set(["slackID", "name", "image"])),
-          selectKeys(record, new Set(attendee.attributes))
+          selectKeys(record, attributes)
         )
       ),
     })
@@ -56,11 +55,7 @@ async function sendSlackInvitation(email, postmarkToken) {
   console.log({ event: "Slack invitation sent", email });
 }
 
-/**
- * @param {DynamoDBStreamEvent} event
- * @returns {Promise<void>}
- */
-export async function handler(event) {
+async function handlePaidRegistrations(event) {
   const newlyPaidRegistrations = event.Records.filter(
     (x) => x.eventName === "MODIFY"
   )
@@ -83,4 +78,12 @@ export async function handler(event) {
       ]);
     }
   }
+}
+
+/**
+ * @param {DynamoDBStreamEvent} event
+ * @returns {Promise<void>}
+ */
+export async function handler(event) {
+  await handlePaidRegistrations(event);
 }
