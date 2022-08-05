@@ -88,6 +88,7 @@ export const routes = new Map<string, Record<string, RouteArgs>>([
         fileName: "slack/webhook.mjs",
         environment: {
           variables: {
+            slack_announcement_url: config.get("slack-incoming-webhook"),
             slack_bot_token: config.get("slack-bot-token"),
           },
         },
