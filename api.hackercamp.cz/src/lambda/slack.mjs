@@ -1,16 +1,16 @@
 import { fetch } from "@adobe/helix-fetch";
 
 const actions = [
-  "Znáte se? -> 😈",
-  "Chceš se potkat na campu? -> 🙋",
-  "Tešíš se? -> 🤩",
-  "Dáte drink? -> 🍻",
-  "Zapaříte? -> :picklerick:",
-  "Prokecáte celý camp? -> 🗣",
-  "Hmm, netušíš, co si můžete říct? Zkusíš to na campu prolomit? -> :awkward_monkey_look:",
-  "Přijde Ti povědomý/á? Nepleteš se? Tak to na campu rozseknete? -> :cool-doge:",
-  "Potřebuješ se seznámit? -> :wave:",
-  "Nemůžeš si ho/ji nechat ujít? -> 🥑",
+  "Znáte se? → 😈",
+  "Chceš se potkat na campu? → 🙋",
+  "Tešíš se? → 🤩",
+  "Dáte drink? → 🍻",
+  "Zapaříte? → :picklerick:",
+  "Prokecáte celý camp? → 🗣",
+  "Hmm, netušíš, co si můžete říct? Zkusíš to na campu prolomit? → :awkward_monkey_look:",
+  "Přijde Ti povědomý/á? Nepleteš se? Tak to na campu rozseknete? → :cool-doge:",
+  "Potřebuješ se seznámit? → :wave:",
+  "Nemůžeš si ho/ji nechat ujít? → 🥑",
 ];
 
 function randomIndex(prev) {
@@ -22,6 +22,30 @@ function getActions() {
   const a = randomIndex();
   const b = randomIndex(a);
   return [actions[a], actions[b < 0 ? 0 : b]];
+}
+
+export async function postChatMessage(channel, message) {
+  const resp = await fetch("https://slack.com/api/chat.postMessage", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.slack_bot_token}`,
+    },
+    body: JSON.stringify({
+      channel,
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: message,
+          },
+        },
+      ],
+    }),
+  });
+  return resp.json();
 }
 
 export async function sendMessageToSlack(profile) {

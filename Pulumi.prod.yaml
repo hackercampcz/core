@@ -7,6 +7,8 @@ config:
     secure: AAABAF/Uwb6BOz5Iik1PbYzp+nvMR+VvkJw1T9l3V84G5htqzIgzTkDtA98Th9o1hB96Eg6rCrsmz5pXGx2ex0lo7NM=
   hackercamp:private-key:
     secure: AAABAMiObrKrGCJNcaB9RdcBRl2shK6sfmHwYdEChCgqQy3dVOxeVIuH/zk2R4dGDbqq/LjS7ZVWWuiDoutiFxdmDyoR21q9VQtOiQg=
+  hackercamp:slack-bot-token:
+    secure: AAABACoHB2TgYtSI2iuIj21KWTNfMLf0Sy5i4iyo4rNOSE5rz82lXe6I+OnTiusSrR7aF9eazd1CoUzta6pVkMIQUushrfJre3EVf1ZR2zG6Qe4hLinno4I=
   hackercamp:slack-client-id: "1990816352820.3334586910531"
   hackercamp:slack-client-secret:
     secure: AAABAPOefxVCpWj0ILWHq9UKChjnqzVPwlwAm8auqjii5KzUfgdHI7dV386pv69MQYJO2VV5KuWucxwuOwM4+g==
