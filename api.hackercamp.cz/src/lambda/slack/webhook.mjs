@@ -179,11 +179,16 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
 }
 
 async function onUserProfileChanged({ user }) {
+  const { email } = user.profile;
+  console.log({ event: "Profile update", email });
   const [contact, attendee] = await Promise.all([
-    getContact(user.profile.email, user.id),
+    getContact(email, user.id),
     getAttendee(user.id, 2022),
   ]);
-  if (!contact) return notFound();
+  if (!contact) {
+    console.log({ event: "Contact not found", email, slackID: user.id });
+    return notFound();
+  }
   await updateContact(contact, user);
   if (attendee) await updateAttendee(attendee, user);
   return response("");
@@ -198,7 +203,7 @@ function dispatchByType(event) {
     case "user_profile_changed":
       return onUserProfileChanged(event);
     default:
-      console.log({ msg: "Unknown event", event });
+      console.log({ event: "Unknown event", payload: event });
       return Promise.resolve(unprocessableEntity());
   }
 }
