@@ -104,14 +104,14 @@ new aws.s3.BucketPolicy("hc-hacker-profiles", {
   policy: hackersPolicyDocument.apply((x) => x.json),
 });
 
-const db = createDB();
+const queues = createQueues();
+export const slackQueueUrl = queues.slackQueueUrl;
+
+const db = createDB({ slackQueueUrl });
 export const registrationsDataTable = db.registrationsDataTable;
 export const contactsDataTable = db.contactsDataTable;
 export const optOutsDataTable = db.optOutsDataTable;
 export const attendeesDataTable = db.attendeesDataTable;
-
-const queues = createQueues();
-export const slackQueueUrl = queues.slackQueueUrl;
 
 const routes = createRoutes({
   slackQueueUrl,

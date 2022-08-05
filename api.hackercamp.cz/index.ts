@@ -97,7 +97,6 @@ export const createRoutes = ({
           environment: {
             variables: {
               slack_queue_url: slackQueueUrl,
-              slack_announcement_url: config.get("slack-incoming-webhook"),
               slack_bot_token: config.get("slack-bot-token"),
             },
           },
@@ -159,7 +158,20 @@ const getTableEventHandler = (
     args
   );
 
-export function createDB() {
+const getSQSHandler = (
+  name: string,
+  fileName: string,
+  role: aws.iam.Role,
+  args: HandlerArgs
+): aws.lambda.Function =>
+  getHandler(
+    hcName(`sqs-${name}-lambda`),
+    path.join("sqs", fileName),
+    role,
+    args
+  );
+
+export function createDB({ slackQueueUrl }) {
   const defaultLambdaRole = createDefaultLambdaRole("dynamodb");
 
   const optOuts = new aws.dynamodb.Table(hcName("optouts"), {
@@ -189,12 +201,12 @@ export function createDB() {
     "paidRegistration",
     getTableEventHandler(
       "paid-registration",
-      "registrations/paid/index.mjs",
+      "registrations/paid.mjs",
       defaultLambdaRole,
       {
         environment: {
           variables: {
-            slack_announcement_url: config.get("slack-incoming-webhook"),
+            slack_queue_url: slackQueueUrl,
             postmark_token: config.get("postmark-token"),
           },
         },
@@ -266,11 +278,27 @@ export function createDefaultLambdaRole(stage) {
       role: defaultLambdaRole,
     }
   );
+
+  new aws.iam.RolePolicyAttachment(hcName("lambda-sqs-attachment", { stage }), {
+    policyArn: aws.iam.ManagedPolicy.AmazonSQSFullAccess,
+    role: defaultLambdaRole,
+  });
   return defaultLambdaRole;
 }
 
 export function createQueues() {
+  const defaultRole = createDefaultLambdaRole("sqs");
   const slackQueue = new aws.sqs.Queue(hcName("slack-message-queue"), {});
+  slackQueue.onEvent(
+    "slack-message",
+    getSQSHandler("slack", "slack/handler.mjs", defaultRole, {
+      environment: {
+        variables: {
+          slack_announcement_url: config.get("slack-incoming-webhook"),
+        },
+      },
+    })
+  );
   return { slackQueueUrl: slackQueue.url };
 }
 

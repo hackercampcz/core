@@ -3,15 +3,16 @@ import {
   PutItemCommand,
   ScanCommand,
 } from "@aws-sdk/client-dynamodb";
+import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { attributes } from "@hackercamp/lib/attendee.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
-import { sendEmailWithTemplate, Template } from "../../../postmark.mjs";
-import { sendMessageToSlack } from "../../../slack.mjs";
+import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
 
 /** @typedef { import("aws-lambda").DynamoDBStreamEvent } DynamoDBStreamEvent */
 
 const dynamo = new DynamoDBClient({});
+const queue = new SQSClient({});
 
 async function getContact(dynamodb, email) {
   console.log({ event: "Get contact", email });
@@ -55,6 +56,19 @@ async function sendSlackInvitation(email, postmarkToken) {
   console.log({ event: "Slack invitation sent", email });
 }
 
+function enqueueSlackWelcomeMessage(user) {
+  return queue.send(
+    new SendMessageCommand({
+      QueueUrl: process.env.slack_queue_url,
+      DelaySeconds: 900, // 15 min delay
+      MessageBody: JSON.stringify({
+        event: "send-welcome-message",
+        slackID: user.id,
+      }),
+    })
+  );
+}
+
 async function handlePaidRegistrations(event) {
   const newlyPaidRegistrations = event.Records.filter(
     (x) => x.eventName === "MODIFY"
@@ -74,7 +88,7 @@ async function handlePaidRegistrations(event) {
     } else {
       await Promise.all([
         createAttendee(dynamo, contact, record),
-        sendMessageToSlack(contact),
+        enqueueSlackWelcomeMessage({ id: contact.slackID }),
       ]);
     }
   }

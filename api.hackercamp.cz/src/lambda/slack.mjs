@@ -24,37 +24,25 @@ function getActions() {
   return [actions[a], actions[b < 0 ? 0 : b]];
 }
 
-export async function postChatMessage(channel, message) {
-  const resp = await fetch("https://slack.com/api/chat.postMessage", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.slack_bot_token}`,
-    },
-    body: JSON.stringify({
-      channel,
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: message,
-          },
-        },
-      ],
-    }),
-  });
-  return resp.json();
+function getTravel(travel) {
+  switch (travel) {
+    case "carpool":
+      return [
+        "A potřebuje na camp hodit. Máš místo v autě? Domluvíte se v kanále #spolujizda?",
+      ];
+    case "free-car":
+      return [
+        "A navíc má místo v autě a nabízí odvoz! Domluvíte se v kanále #spolujizda?",
+      ];
+    default:
+      return [];
+  }
 }
 
 export async function sendMessageToSlack(profile) {
   const resp = await fetch(process.env.slack_announcement_url, {
     method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       blocks: [
         {
@@ -62,6 +50,7 @@ export async function sendMessageToSlack(profile) {
           text: {
             type: "mrkdwn",
             text: [`Hey! <@${profile.slackID}> s námi letos jede na camp.`]
+              .concat(getTravel(profile.travel))
               .concat(getActions())
               .join("\n"),
           },
@@ -70,6 +59,26 @@ export async function sendMessageToSlack(profile) {
             image_url: profile.image,
             alt_text: profile.name,
           },
+        },
+      ],
+    }),
+  });
+  return resp.text();
+}
+
+export async function postChatMessage(channel, message) {
+  const resp = await fetch("https://slack.com/api/chat.postMessage", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.slack_bot_token}`,
+    },
+    body: JSON.stringify({
+      channel,
+      blocks: [
+        {
+          type: "section",
+          text: { type: "mrkdwn", text: message },
         },
       ],
     }),
