@@ -49,7 +49,7 @@ async function getUserInfo(token) {
 }
 
 async function getUsersInfo(user, token) {
-  const resp = await fetch("https://slack.com/api/users.profile.get", {
+  const resp = await fetch("https://slack.com/api/users.info", {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -100,7 +100,6 @@ export async function handler(event) {
             idToken,
             slackToken: data["id_token"],
             slackProfile: profile,
-            user
           },
           {
             "Set-Cookie": `hc-id=${idToken}; Max-Age=216000; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
