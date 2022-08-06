@@ -49,7 +49,7 @@ async function getUserInfo(token) {
 }
 
 async function getUsersInfo(user, token) {
-  const resp = await fetch("https://slack.com/api/users.info", {
+  const resp = await fetch("https://slack.com/api/users.profile.get", {
     method: "POST",
     headers: {
       Accept: "application/json",
