@@ -1,16 +1,10 @@
-import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
+import { checkAuthorization } from "../auth.mjs";
 import { unauthorized, withCORS } from "../http.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
-
-async function checkAuthorization(event) {
-  const token = getToken(event.headers);
-  const isAuthorized = await validateToken(token, process.env["private_key"]);
-  if (!isAuthorized) throw Error("Unauthorized");
-}
 
 /**
  * @param {APIGatewayProxyEvent} event

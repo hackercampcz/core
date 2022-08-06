@@ -1,6 +1,7 @@
 import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { notFound, response } from "../http.mjs";
+import { checkAuthorization } from "../auth.mjs";
+import { notFound, response, unauthorized, withCORS } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -26,9 +27,24 @@ async function getContact(dynamo, slackID, email) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const params = event.queryStringParameters;
-  console.log({ method: "GET", params });
-  const contact = await getContact(dynamo, params.slackID, params.email);
-  if (!contact) return notFound();
-  return response(contact);
+  const withCORS_ = withCORS(
+    ["GET", "OPTIONS"],
+    event?.headers?.origin ?? "*",
+    { allowCredentials: true }
+  );
+  try {
+    await checkAuthorization(event);
+    const params = event.queryStringParameters;
+    console.log({ method: "GET", params });
+    const contact = await getContact(dynamo, params.slackID, params.email);
+    if (!contact) return withCORS_(notFound());
+    return withCORS_(response(contact));
+  } catch (ex) {
+    console.error(ex);
+    return withCORS_(
+      unauthorized({
+        "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
+      })
+    );
+  }
 }
