@@ -11,6 +11,7 @@ import {
 } from "@topmonks/pulumi-aws";
 import * as path from "path";
 import * as lambdaBuilder from "../lambda-builder";
+import { environment } from "gulp-esbuild";
 
 const config = new pulumi.Config();
 
@@ -41,6 +42,16 @@ export const createRoutes = ({
               private_key: config.get("private-key"),
               slack_client_id: config.get("slack-client-id"),
               slack_client_secret: config.get("slack-client-secret"),
+            },
+          },
+        },
+        contacts: {
+          httpMethod: "GET",
+          path: "/contacts",
+          fileName: "contacts/index.mjs",
+          environment: {
+            variables: {
+              db_table_contacts: contactsDataTable,
             },
           },
         },
