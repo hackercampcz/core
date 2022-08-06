@@ -106,7 +106,7 @@ export const createRoutes = ({
   ]);
 
 function hcName(t: string, options?: any) {
-  const suffix = options?.stage ? "-" + options?.stage : "";
+  const suffix = options?.stage ? `-${options.stage}` : "";
   return `hc-${t}${suffix}`;
 }
 
