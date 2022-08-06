@@ -100,6 +100,7 @@ export async function handler(event) {
             idToken,
             slackToken: data["id_token"],
             slackProfile: profile,
+            slackAccessToken: data["access_token"],
           },
           {
             "Set-Cookie": `hc-id=${idToken}; Max-Age=216000; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
