@@ -1,6 +1,14 @@
 @use "@material/layout-grid/mdc-layout-grid";
 @use "@material/chips/styles";
 
+code {
+  font-family: inherit;
+  font-size: 0.9em;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
 .hc-action-button {
   -webkit-appearance: none;
   border: none;

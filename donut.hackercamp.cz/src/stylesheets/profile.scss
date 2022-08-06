@@ -14,12 +14,16 @@
   font-size: 2rem;
   margin: 0;
 }
-
+.hc-profile h2 {
+  margin: 0;
+}
+.hc-profile p {
+  margin-bottom: 0;
+}
 .hc-profile__photo {
   grid-area: photo;
   display: flex;
   justify-content: space-around;
 }
 .hc-profile__photo img {
-  border-radius: 50%;
 }

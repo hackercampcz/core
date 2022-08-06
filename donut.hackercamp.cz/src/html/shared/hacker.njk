@@ -12,8 +12,9 @@
     <div class="mdc-layout-grid__inner">
       <article class="hc-profile mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         <h1>{{ profile.real_name }}</h1>
-        <h2>{{ profile.title }}</h2>
-        <div><code>@{{ profile.display_name }}</code></div>
+        {% if attendee.company %}<h2>{{ attendee.company }}</h2>{% endif %}
+        <p>Na Slacku jako&nbsp;<code>@{{ profile.display_name or profile.real_name }}</code></p>
+        {% if profile.title %}<p>{{ profile.title }}</p>{% endif %}
         <div>{{ profile.status_text }}</div>
         <div class="hc-profile__photo">
           <img
