@@ -11,7 +11,6 @@ import {
 } from "@topmonks/pulumi-aws";
 import * as path from "path";
 import * as lambdaBuilder from "../lambda-builder";
-import { environment } from "gulp-esbuild";
 
 const config = new pulumi.Config();
 
