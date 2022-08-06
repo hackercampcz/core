@@ -62,13 +62,6 @@ new aws.route53.Record(`${domain}/cname-record-postmark-bounce`, {
   ttl: 3600,
 });
 
-const hackersOai = new aws.cloudfront.OriginAccessIdentity(
-  "hc-hacker-profiles",
-  {
-    comment: "Hackers profiles access identity",
-  }
-);
-
 const jwtSecret = new aws.secretsmanager.Secret("hc-jwt-secret", {
   name: "HC-JWT-SECRET",
 });
@@ -76,32 +69,6 @@ const jwtSecret = new aws.secretsmanager.Secret("hc-jwt-secret", {
 new aws.secretsmanager.SecretVersion("hc-jwt-secret", {
   secretId: jwtSecret.arn,
   secretString: config.get("private-key"),
-});
-
-const hackerProfilesBucket = new aws.s3.Bucket("hc-hacker-profiles", {
-  acl: "private",
-  bucketPrefix: "hc-hacker-profiles",
-  forceDestroy: true,
-});
-
-const hackersPolicyDocument = aws.iam.getPolicyDocumentOutput({
-  statements: [
-    {
-      principals: [
-        {
-          type: "AWS",
-          identifiers: [hackersOai.iamArn],
-        },
-      ],
-      actions: ["s3:GetObject"],
-      resources: [pulumi.interpolate`${hackerProfilesBucket.arn}/*`],
-    },
-  ],
-});
-
-new aws.s3.BucketPolicy("hc-hacker-profiles", {
-  bucket: hackerProfilesBucket.id,
-  policy: hackersPolicyDocument.apply((x) => x.json),
 });
 
 const queues = createQueues();
@@ -135,41 +102,22 @@ export const websites: Record<string, WebsiteExport> = {
       responseHeadersPolicyId:
         CloudFront.ManagedResponseHeaderPolicy
           .CORSwithPreflightAndSecurityHeadersPolicy,
-      extraOrigins: [
-        {
-          originId: "hackerProfiles",
-          domainName: hackerProfilesBucket.bucketRegionalDomainName,
-          s3OriginConfig: {
-            originAccessIdentity: hackersOai.cloudfrontAccessIdentityPath,
-          },
-        },
-      ],
-      extraCacheBehaviors: [
-        {
-          pathPattern: "hackers/*",
-          targetOriginId: "hackerProfiles",
-          allowedMethods: ["GET", "HEAD", "OPTIONS"],
-          cachedMethods: ["GET", "HEAD"],
-          viewerProtocolPolicy: "redirect-to-https",
-          compress: true,
-          cachePolicyId: CloudFront.ManagedCachePolicy.CachingOptimized,
-          responseHeadersPolicyId:
-            CloudFront.ManagedResponseHeaderPolicy.SecurityHeadersPolicy,
-          originRequestPolicyId:
-            CloudFront.ManagedOriginRequestPolicy.AllViewer,
-        },
-      ],
-      edgeLambdas: ["/hacker/*", "/registrace/", "/ubytovani/", "/admin/"].map(
-        (pathPattern) =>
-          Object.assign(
-            { pathPattern },
-            {
-              lambdaAssociation: {
-                eventType: "viewer-request",
-                lambdaArn: authLambda.arn,
-              },
-            }
-          )
+      edgeLambdas: [
+        "/hackers/*",
+        "/registrace/",
+        "/ubytovani/",
+        "/program/",
+        "/admin/",
+      ].map((pathPattern) =>
+        Object.assign(
+          { pathPattern },
+          {
+            lambdaAssociation: {
+              eventType: "viewer-request",
+              lambdaArn: authLambda.arn,
+            },
+          }
+        )
       ),
     })
   ),
