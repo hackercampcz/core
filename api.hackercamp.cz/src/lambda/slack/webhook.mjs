@@ -181,7 +181,7 @@ Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají nejen v kan
 
 Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá. Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce. Nebo se můžeš kouknout, kde a jak zapojit své ruce k dílu → #hands_wanted.
 
-Chceš se inspirovat tím, co další táborníci chystají jako svoje zapojení. Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda. Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni. Důležité novinky najdeš v kanále #general.
+Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda. Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni. Důležité novinky najdeš v kanále #general.
 
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
     ),
