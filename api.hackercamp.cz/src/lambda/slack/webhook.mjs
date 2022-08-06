@@ -25,7 +25,7 @@ import { postChatMessage } from "../slack.mjs";
 const db = new DynamoDBClient({});
 const queue = new SQSClient({});
 
-function createContact({ id, profile }) {
+function createContact({ id, profile, name }) {
   console.log({ event: "Create contact", slackID: id });
   return db.send(
     new PutItemCommand({
@@ -34,6 +34,7 @@ function createContact({ id, profile }) {
         {
           email: profile.email,
           slackID: id,
+          slug: name,
           name: profile.real_name,
           image: profile.image_512,
         },
@@ -43,7 +44,7 @@ function createContact({ id, profile }) {
   );
 }
 
-async function createAttendee({ id, profile }, record) {
+async function createAttendee({ id, profile, name }, record) {
   console.log({ event: "Create attendee", slackID: id });
   return db.send(
     new PutItemCommand({
@@ -54,6 +55,7 @@ async function createAttendee({ id, profile }, record) {
           {
             email: profile.email,
             slackID: id,
+            slug: name,
             name: profile.real_name,
             image: profile.image_512,
           },

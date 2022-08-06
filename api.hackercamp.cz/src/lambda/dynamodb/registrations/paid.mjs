@@ -37,7 +37,7 @@ function createAttendee(dynamo, contact, record) {
       Item: marshall(
         Object.assign(
           {},
-          selectKeys(contact, new Set(["slackID", "name", "image"])),
+          selectKeys(contact, new Set(["slackID", "name", "image", "slug"])),
           selectKeys(record, attributes)
         )
       ),
