@@ -26,6 +26,11 @@ export const createRoutes = ({
     [
       "v1",
       {
+        attendees: {
+          httpMethod: "GET",
+          path: "/attendees",
+          fileName: "attendees/index.mjs",
+        },
         auth: {
           httpMethod: "POST",
           path: "/auth",
