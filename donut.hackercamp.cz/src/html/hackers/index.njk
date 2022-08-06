@@ -1,0 +1,12 @@
+{% extends 'layouts/application.njk' %}
+
+{% block content %}
+  <ul>
+  {% for hacker in hackers %}
+    {% set slug = hacker[0] %}
+    {% set profile = hacker[1] %}
+    {% set attendee = hacker[2] %}
+    <li><a href="/hackers/{{ slug }}">{{ attendee.name }}</a></li>
+  {% endfor %}
+  </ul>
+{% endblock %}

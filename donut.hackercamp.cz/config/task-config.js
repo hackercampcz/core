@@ -1,7 +1,29 @@
+const fs = require("fs");
+const { fetch } = require("@adobe/helix-fetch");
 const esbuild = require("gulp-esbuild");
 const mode = require("gulp-mode")();
 const projectPath = require("@topmonks/blendid/gulpfile.js/lib/projectPath.js");
 const pathConfig = require("./path-config.json");
+
+async function getSlackProfiles(token) {
+  console.log("Loading Slack profiles...");
+  const skip = new Set(["slackbot", "jakub"]);
+  const resp = await fetch("https://slack.com/api/users.list", {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await resp.json();
+  return new Map(
+    data.members
+      .filter((x) => !(x.is_bot || skip.has(x.name)))
+      .map((x) => [x.id, x.profile])
+  );
+}
+
+async function getAttendees() {
+  console.log("Loading attendees...");
+  const resp = await fetch("https://api.hackercamp.cz/v1/attendees");
+  return resp.json();
+}
 
 module.exports = {
   images: true,
@@ -13,12 +35,22 @@ module.exports = {
   javascripts: false,
 
   html: {
-    collections: ["build", "images"],
+    collections: ["build", "images", "hackers"],
     nunjucksRender: {
       filters: {
         year: () => new Date().getFullYear(),
       },
     },
+  },
+
+  generate: {
+    html: [
+      {
+        collection: "hackers",
+        template: "shared/hacker.njk",
+        route: (x) => `hackers/${x[0]}/index.html`,
+      },
+    ],
   },
 
   esbuild: {
@@ -64,6 +96,24 @@ module.exports = {
         src: projectPath(pathConfig.src, pathConfig.esbuild.src, "*.js"),
         dest: projectPath(pathConfig.dest, pathConfig.esbuild.dest),
       };
+
+      task("prepare-data", async () => {
+        const [profiles, items] = await Promise.all([
+          getSlackProfiles(process.env["SLACK_TOKEN"]),
+          getAttendees(),
+        ]);
+        const attendees = items.map((x) => [
+          x.slug,
+          profiles.get(x.slackID),
+          x,
+        ]);
+        return fs.promises.writeFile(
+          projectPath(pathConfig.src, pathConfig.data.src, "hackers.json"),
+          JSON.stringify(attendees, null, 2),
+          { encoding: "utf-8" }
+        );
+      });
+
       task("esbuild-prod", () =>
         src(esmPaths.src)
           .pipe(esbuild(taskConfig.esbuild.options))
@@ -76,8 +126,14 @@ module.exports = {
           .pipe(dest(esmPaths.dest))
       );
     },
-    development: { code: ["esbuild"] },
-    production: { code: ["esbuild-prod"] },
+    development: {
+      prebuild: ["prepare-data"],
+      code: ["esbuild"],
+    },
+    production: {
+      prebuild: ["prepare-data"],
+      code: ["esbuild-prod"],
+    },
   },
 
   watch: {
