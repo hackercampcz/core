@@ -30,6 +30,11 @@ export const createRoutes = ({
           httpMethod: "GET",
           path: "/attendees",
           fileName: "attendees/index.mjs",
+          environment: {
+            variables: {
+              db_table_attendees: attendeesDataTable,
+            },
+          },
         },
         auth: {
           httpMethod: "POST",

@@ -1,5 +1,9 @@
-import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
-import {marshall, unmarshall} from "@aws-sdk/util-dynamodb";
+import {
+  DynamoDBClient,
+  ScanCommand,
+  GetItemCommand,
+} from "@aws-sdk/client-dynamodb";
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { response } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -11,7 +15,7 @@ const dynamo = new DynamoDBClient({});
 async function getAttendees(dynamo, year) {
   const result = await dynamo.send(
     new ScanCommand({
-      TableName: "hc-attendees",
+      TableName: process.env.db_table_attendees,
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "#y = :y",
       ExpressionAttributeNames: { "#y": "year" },
@@ -21,6 +25,16 @@ async function getAttendees(dynamo, year) {
   return result.Items.map((x) => unmarshall(x));
 }
 
+async function getAttendee(dynamo, slackID, year) {
+  const result = await dynamo.send(
+    new GetItemCommand({
+      TableName: process.env.db_table_attendees,
+      Key: marshall({ slackID, year }),
+    })
+  );
+  return result.Item ? unmarshall(result.Item) : null;
+}
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
@@ -28,5 +42,7 @@ async function getAttendees(dynamo, year) {
 export async function handler(event) {
   const params = Object.assign({ year: "2022" }, event.queryStringParameters);
   console.log({ method: "GET", params });
-  return response(await getAttendees(dynamo, parseInt(params.year, 10)));
+  const year = parseInt(params.year, 10);
+  if (params.slackID) return response(await getAttendee(dynamo, slackID, year));
+  return response(await getAttendees(dynamo, year));
 }
