@@ -27,7 +27,7 @@ export const createRoutes = ({
       "v1",
       {
         attendees: {
-          httpMethod: "GET",
+          httpMethod: "ANY",
           path: "/attendees",
           fileName: "attendees/index.mjs",
           environment: {
