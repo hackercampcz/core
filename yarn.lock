@@ -5,14 +5,14 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@adobe/helix-fetch@npm:3.1.1":
-  version: 3.1.1
-  resolution: "@adobe/helix-fetch@npm:3.1.1"
+"@adobe/helix-fetch@npm:3.1.2":
+  version: 3.1.2
+  resolution: "@adobe/helix-fetch@npm:3.1.2"
   dependencies:
     debug: 4.3.4
     http-cache-semantics: 4.1.0
-    lru-cache: 7.10.2
-  checksum: 9d1d558f2e7b837f5c147626d87d5dafc55ed1fbca6d9be2d0519ee877abe80970f8701e81439843d95495baec365f59f45cd6ad38be766a434c63058c2257a9
+    lru-cache: 7.13.2
+  checksum: 0f756bbc53a2450eb80ec4f4249c0e94892446fe5992de945bd669dc4ab55db9ec41be9158c458829a35c09389a8aeef40c9f069ee1cddea372ee2788b6c4a3d
   languageName: node
   linkType: hard
 
@@ -2207,7 +2207,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@adobe/helix-fetch": 3.1.1
+    "@adobe/helix-fetch": 3.1.2
     "@aws-sdk/client-dynamodb": 3.142.0
     "@aws-sdk/client-sqs": 3.142.0
     "@aws-sdk/util-dynamodb": 3.142.0
@@ -2243,7 +2243,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@adobe/helix-fetch": 3.1.1
+    "@adobe/helix-fetch": 3.1.2
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": 14.0.0
     "@material/layout-grid": 14.0.0
@@ -9351,10 +9351,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru-cache@npm:7.10.2":
-  version: 7.10.2
-  resolution: "lru-cache@npm:7.10.2"
-  checksum: b8f98064c981ce98e2a3b82903726dd28d842f54b7f53e1d6029c6836546243d4157b8495a405c062209715c612050150bdf30b5fa8200d5a3559fb0fd4072c1
+"lru-cache@npm:7.13.2":
+  version: 7.13.2
+  resolution: "lru-cache@npm:7.13.2"
+  checksum: dfed24e52bae95edf490d0f28f4f14552319ac7e7dc37ae0b84a72e084949233821b33227271abe81d8361ac079810f9d171a706f316cfdeda135012e4311015
   languageName: node
   linkType: hard
 
