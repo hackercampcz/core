@@ -4,7 +4,7 @@ import {
   GetItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { response } from "../http.mjs";
+import { response, withCORS } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -40,9 +40,21 @@ async function getAttendee(dynamo, slackID, year) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
+  const withCORS_ = withCORS(
+    ["GET", "POST", "OPTIONS"],
+    event.headers["origin"]
+  );
+  if (event.method === "OPTIONS") {
+    return withCORS_({
+      statusCode: 204,
+      body: "",
+    });
+  }
   const params = Object.assign({ year: "2022" }, event.queryStringParameters);
   console.log({ method: "GET", params });
   const year = parseInt(params.year, 10);
-  if (params.slackID) return response(await getAttendee(dynamo, slackID, year));
+  if (params.slackID) {
+    return withCORS_(response(await getAttendee(dynamo, slackID, year)));
+  }
   return response(await getAttendees(dynamo, year));
 }
