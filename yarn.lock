@@ -2248,7 +2248,7 @@ __metadata:
     "@material/chips": 14.0.0
     "@material/layout-grid": 14.0.0
     "@thi.ng/atom": 5.1.12
-    "@thi.ng/transducers": 8.3.10
+    "@thi.ng/transducers": 8.3.11
     "@typescript-eslint/eslint-plugin": 5.32.0
     "@typescript-eslint/parser": 5.32.0
     date-fns: 2.29.1
@@ -2980,9 +2980,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/transducers@npm:8.3.10":
-  version: 8.3.10
-  resolution: "@thi.ng/transducers@npm:8.3.10"
+"@thi.ng/transducers@npm:8.3.11":
+  version: 8.3.11
+  resolution: "@thi.ng/transducers@npm:8.3.11"
   dependencies:
     "@thi.ng/api": ^8.3.9
     "@thi.ng/arrays": ^2.3.3
@@ -2992,7 +2992,7 @@ __metadata:
     "@thi.ng/errors": ^2.1.10
     "@thi.ng/math": ^5.3.5
     "@thi.ng/random": ^3.3.5
-  checksum: be78549a0f6a741bba4b29893d436d9c98c365d7b7729208948a9a6ceca5a3051d1ab8a0b8463053a9783b4959d515efbbf4fe3dce11f4af807fdcd821acb929
+  checksum: 1ec2d62732f95c8cbd81f22e2b007bc2dc4e7ad67ea5a493753a05e9a4de793d17bcaaa878d0874619e2b8380064de128a998f67494d72fec2578ab7dc233db2
   languageName: node
   linkType: hard
 
