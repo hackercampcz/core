@@ -51,6 +51,9 @@ export const createRoutes = ({
           environment: {
             variables: {
               db_table_contacts: contactsDataTable,
+              hostname: config.get("web-domain"),
+              donut: config.get("donut-domain"),
+              private_key: config.get("private-key"),
             },
           },
         },

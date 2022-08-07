@@ -103,6 +103,7 @@ export const websites: Record<string, WebsiteExport> = {
         CloudFront.ManagedResponseHeaderPolicy
           .CORSwithPreflightAndSecurityHeadersPolicy,
       edgeLambdas: [
+        "/hackers/",
         "/hackers/*",
         "/registrace/",
         "/ubytovani/",
