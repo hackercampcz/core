@@ -150,7 +150,8 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       .lineup__slot:nth-child(4n) {
         border-right: 1px solid var(--tick-highlight-color);
       }
-      .lineup__slot:after {
+      /* first and every odd */
+      .lineup:nth-child(2n + 1) .lineup__slot:after {
         content: attr(data-tick);
         display: block;
         position: absolute;
@@ -162,7 +163,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         color: var(--tick-color);
       }
       .lineup__slot[data-tick$="h"]:after {
-        color: var(--tick-highlight-color);
+        color: var(--tick-highlight-color) !important;
       }
       .lineup:last-child .lineup__header,
       .lineup:last-child .lineup__slot {
@@ -170,14 +171,15 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       }
       .lineup__event {
         position: absolute;
-        left: calc(var(--slot-width) * 3 + var(--padding) / 2);
-        width: calc(var(--slot-width) * 4);
+        z-index: 1;
         background-color: var(--hc-background-color);
         padding: calc(var(--padding) / 2);
         border-radius: 4px;
         cursor: pointer;
         overflow: hidden;
-        border: 1px solid var(--tick-color);
+        border: 1px solid var(--tick-highlight-color);
+        width: calc(var(--slot-width) * attr(data-slots));
+        transition: all 0.2s ease-in-out;
       }
       .lineup__event:hover {
         width: max-content;
@@ -198,6 +200,14 @@ function renderProgram({ lineups, startAt, endAt, events }) {
               <div class="lineup__header">
                 <h2>${lineup.name}</h2>
                 <p>${lineup.desc}</p>
+                ${lineUpEvents(lineup, events).map(
+                  (event) =>
+                    html`
+                      <div class="lineup__event" data-slots=${6}>
+                        ${event.title}
+                      </div>
+                    `
+                )}
               </div>
               <div class="lineup__content">
                 ${makeTimeline(startAt, endAt, 15).map(
@@ -205,20 +215,6 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                     html`
                       <div class="lineup__slot" data-tick=${makeTick(time)}>
                         &nbsp;
-                      </div>
-                    `
-                )}
-                ${lineUpEvents(lineup, events).map(
-                  (event) =>
-                    html`
-                      <div
-                        class="lineup__event"
-                        style=${`
-                          left: calc(var(--slot-width) * ${1});
-                          width: calc(var(--slot-width) * ${5});
-                        `}
-                      >
-                        ${event.title}
                       </div>
                     `
                 )}
