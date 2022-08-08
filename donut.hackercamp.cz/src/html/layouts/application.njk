@@ -33,14 +33,17 @@
     <a href="https://www.hlidacshopu.cz/zpracovani-osobnich-udaju/">Zpracování osobních údajů</a></p>
 </footer>
 
+<script type="module">
+  import { init as initHeader } from "/assets/esm/header.js";
+  import { init as initLayout } from "/assets/esm/layout.js";
+
+  initHeader({ profile: document.getElementById("hc-header__profile") });
+  initLayout({ snackbar: document.getElementById("hc-snackbar") });
+</script>
+
+<mwc-snackbar id="hc-snackbar"></mwc-snackbar>
+
 {% block javascript %}{% endblock %}
 
-<script type="module">
-  import {init} from "/assets/esm/header.js";
-
-  init({
-    profile: document.getElementById("hc-header__profile")
-  })
-</script>
 </body>
 </html>
