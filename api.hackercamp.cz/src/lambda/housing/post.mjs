@@ -30,6 +30,7 @@ function saveAttendee(dynamo, data) {
 }
 
 function sendSlackMessage(submittedBy, item) {
+  console.log({ event: "Sending Slack message", submittedBy, item });
   const message =
     submittedBy === item.slackID
       ? `Super! Právě sis vybral svoje ubytko na Campu.
