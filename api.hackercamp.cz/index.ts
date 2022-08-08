@@ -82,6 +82,7 @@ export const createRoutes = ({
           environment: {
             variables: {
               private_key: config.get("private-key"),
+              slack_bot_token: config.get("slack-bot-token"),
             },
           },
         },
