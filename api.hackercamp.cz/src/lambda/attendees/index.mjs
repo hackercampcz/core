@@ -54,7 +54,7 @@ export async function handler(event) {
   console.log({ method: "GET", params });
   const year = parseInt(params.year, 10);
   if (params.slackID) {
-    return withCORS_(response(await getAttendee(dynamo, slackID, year)));
+    return withCORS_(response(await getAttendee(dynamo, params.slackID, year)));
   }
-  return response(await getAttendees(dynamo, year));
+  return withCORS_(response(await getAttendees(dynamo, year)));
 }
