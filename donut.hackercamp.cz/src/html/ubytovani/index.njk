@@ -140,24 +140,11 @@
     border: 0 none;
     padding: 2px 8px;
     border: 1px solid #c4c4c4;
-    background-color: #fff;
-
-    /* background-color: var(--hc-background-color);
-    background-image: var(--hc-background-image, none);
-    color: var(--hc-color); */
+    background-color: var(--hc-background-color);
   }
   input:not([type="radio"]):disabled {
-    background-color: #f2f2f2;
+    background-color: var(--hc-background-color);
   }
-
-  @media (prefers-color-scheme: dark) {
-    select, input:not([type="radio"]) {
-    }
-    input:not([type="radio"]):disabled {
-      background-color: lightgray;
-    }
-  }
-
 
   .placements h3 {
     margin-bottom: 8px;
