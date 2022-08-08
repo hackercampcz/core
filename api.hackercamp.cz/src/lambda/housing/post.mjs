@@ -38,16 +38,19 @@ const housing = new Map([
   ["glamping", "v Glamping stanu"],
   ["cottage", "v chatce"],
   ["nearby", "v okolí"],
+  ["house", "v domku"],
 ]);
 
-const placement = p => p === "custom" ? "" : ` ${p}`;
+const placement = (p) => (p === "custom" ? "" : ` ${p}`);
 
 function sendSlackMessage(submittedBy, item) {
   console.log({ event: "Sending Slack message", submittedBy, item });
   const message =
     submittedBy === item.slackID
       ? `Super! Právě sis vybral svoje ubytko na Campu.
-Držíme Ti místo ${housing.get(item.housing)}${placement(item.housingPlacement)}, jak sis přál.
+Držíme Ti místo ${housing.get(item.housing)}${placement(
+          item.housingPlacement
+        )}, jak sis přál.
 
 Potřebuješ to změnit? Stačí si <https://donut.hackercamp.cz/|upravit ve svém profilu>, ale pozor, jen do 15.8!
 Pak už to půjde jen po osobní domluvě s Pájou.
@@ -58,8 +61,8 @@ Tvoje Hacker Camp Crew`
       : `Gratulujeme, milý hackere,
 
 Právě ti někdo zamluvil ubytko na Campu. Tvoje poděkování si zaslouží <@${submittedBy}>.
-Takže teď Ti držíme místo v ${housing.get(item.housing)} ${placement(item.housingPlacement)}.
-Chceš si zkontrolovat, co to znamená? Koukni na svůj profil s ubytkem.
+Takže teď Ti držíme místo ${housing.get(item.housing)}${placement(item.housingPlacement)}.
+Chceš si zkontrolovat, co to znamená? Koukni na <https://donut.hackercamp.cz/ubytovani/|svůj profil s ubytkem>.
 
 Máš bydlení bez práce! Super. Užij si ušetřené minuty na fajn relax, nebo milá slova tomu, kdo Ti pomohl :)
 
