@@ -30,3 +30,15 @@
     </div>
   </div>
 {% endblock %}
+
+{% block javascript %}
+<script type="module">
+  import { main } from "/assets/esm/profile.js";
+
+  main({
+    profile: {{ profile | dump(8) | safe }},
+    attendee: {{ attendee | dump(8) | safe }},
+    env: {{ build | dump(8) |safe }},
+  })
+</script>
+{% endblock %}
