@@ -3,8 +3,8 @@
   "dependencies": {
     "@adobe/helix-fetch": "3.1.2",
     "@aws-sdk/client-dynamodb": "3.145.0",
-    "@aws-sdk/client-sqs": "3.142.0",
-    "@aws-sdk/util-dynamodb": "3.142.0",
+    "@aws-sdk/client-sqs": "3.145.0",
+    "@aws-sdk/util-dynamodb": "3.145.0",
     "@hackercamp/lib": "workspace:lib",
     "fast-xml-parser": "4.0.9",
     "jsonwebtoken": "8.5.1"
