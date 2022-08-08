@@ -50,7 +50,7 @@ async function dispatchMessageByType(message) {
  * @param {SQSEvent} event
  * @returns {Promise<void>}
  */
-async function handler(event) {
+export async function handler(event) {
   for (const record of event.Records) {
     const message = JSON.parse(record.body);
     await dispatchMessageByType(message);
