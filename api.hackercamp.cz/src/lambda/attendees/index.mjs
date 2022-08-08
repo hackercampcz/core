@@ -42,9 +42,9 @@ async function getAttendee(dynamo, slackID, year) {
 export async function handler(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    event.headers?.origin ?? "*"
+    event?.headers?.origin ?? "*"
   );
-  if (event.method === "OPTIONS") {
+  if (event.httpMethod === "OPTIONS") {
     return withCORS_({
       statusCode: 204,
       body: "",
