@@ -8,6 +8,7 @@ async function loadHousingData(apiBase) {
       fetch(`/housing/types.json`),
       fetch(`/housing/variants.json`),
       fetch(`/housing/backstage.json`),
+      // FIXME: Hardcoded year 👇
       fetch(new URL(`housing?year=2022`, apiBase).href, {
         headers: { Accept: "application/json" },
         credentials: "include",

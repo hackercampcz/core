@@ -3,6 +3,7 @@ import { html } from "lit-html";
 import { defAtom } from "@thi.ng/atom";
 import { classMap } from "lit-html/directives/class-map.js";
 import * as rollbar from "./lib/rollbar.js";
+import { objectWalk } from "./lib/object.js";
 
 const SLOT_MINUTES = 15;
 
@@ -10,45 +11,8 @@ const state = defAtom({
   view: renderProgram,
   startAt: new Date(`2020-09-01T14:00:00`),
   endAt: new Date(`2020-09-04T14:00:00`),
-  lineups: [
-    { name: "Mainframe", desc: "Lorem ipsum do ro faso lobortis ipsum" },
-    {
-      name: "Basecamp",
-      desc: "Donec euismod nisi eu, consectetur, lobortis ipsum.",
-    },
-    {
-      name: "Backend",
-      desc: "Consectetur adipiscing elit.",
-    },
-    {
-      name: "Peopleware",
-      desc: "Donec euismodnisi eu, consectetur, lobortis ipsum. Donec euismod nisi eu, consectetur, lobortis ipsum. Donec euismod nisi eu, consectetur, lobortis ipsum.",
-    },
-    {
-      name: "WoodStack",
-      desc: "Donec euismod nisi eu, consectetur, lobortis ipsum.",
-    },
-    {
-      name: "Doprovodný program",
-      desc: "Donec euismod nisi eu, consectetur, lobortis ipsum.",
-    },
-  ],
-  events: [
-    {
-      id: "ev1",
-      lineup: "Mainframe",
-      startAt: new Date(`2020-09-01T14:00:00`),
-      endAt: new Date(`2020-09-01T14:45:00`),
-      title: "Zahájení campu",
-    },
-    {
-      id: "ev3",
-      lineup: "Peopleware",
-      startAt: new Date(`2020-09-01T16:30:00`),
-      endAt: new Date(`2020-09-01T17:45:00`),
-      title: "Hra: Nahoněnou",
-    },
-  ],
+  lineups: [],
+  events: [],
 });
 const transact = (fn) => state.swap(fn);
 
@@ -74,7 +38,7 @@ function makeTick(time) {
 function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
   const diff = time.getTime() - startAt.getTime();
   const perMinutes = minutes * 60 * 1000;
-  const steps = Math.floor(diff / perMinutes);
+  const steps = diff / perMinutes;
   return steps;
 }
 
@@ -83,9 +47,6 @@ function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
  * @param {defAtom} state
  */
 function renderProgram({ lineups, startAt, endAt, events }) {
-  // get css var from dom js
-  // getComputedStyle(element).getPropertyValue('--color-font-general');
-
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.name);
 
@@ -111,6 +72,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
           --tick-highlight-color: #888;
         }
       }
+      /* media min */
       .program__header {
         box-sizing: border-box;
         padding: var(--padding);
@@ -118,12 +80,23 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       .program__content {
         max-width: 100vw;
         overflow-x: auto;
-        padding: var(--padding) 0;
       }
       @media (min-width: 600px) {
         .program {
           --head-width: calc(100vw / 3);
+          --slot-width: calc(100vw / 6 / 3);
+        }
+      }
+      @media (min-width: 900px) {
+        .program {
+          --head-width: calc(100vw / 4);
           --slot-width: calc(100vw / 6 / 4);
+        }
+      }
+      @media (min-width: 1600px) {
+        .program {
+          --head-width: calc(100vw / 6);
+          --slot-width: calc(100vw / 6 / 6);
         }
       }
 
@@ -138,9 +111,12 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         min-width: var(--head-width);
         background-color: var(--hc-background-color);
         box-sizing: border-box;
-        padding: calc(var(--padding));
+        padding: calc(var(--padding) / 2);
         border-top: 1px solid var(--tick-color);
         border-right: 1px solid var(--tick-highlight-color);
+      }
+      @media (min-width: 600px) {
+        padding: calc(var(--padding) * 1.5);
       }
       .lineup__timeline {
         display: flex;
@@ -158,9 +134,8 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       .lineup__slot:nth-child(4n) {
         border-right: 1px solid var(--tick-highlight-color);
       }
-      /* first and every odd */
       .lineup:nth-child(2n + 1) .lineup__slot:after {
-        content: attr(id);
+        content: attr(data-tick);
         display: block;
         position: absolute;
         width: 100%;
@@ -170,7 +145,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         font-size: 12px;
         color: var(--tick-color);
       }
-      .lineup__slot[id$="h"]:after {
+      .lineup__slot[data-tick$="h"]:after {
         color: var(--tick-highlight-color) !important;
       }
       .lineup:last-child .lineup__info,
@@ -187,15 +162,43 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         z-index: 1;
         background-color: var(--hc-background-color);
         box-sizing: border-box;
-        padding: calc(var(--padding) / 2);
+        padding: calc(var(--padding) / 4);
         border-radius: 4px;
         cursor: pointer;
         overflow: hidden;
         border: 1px solid var(--tick-highlight-color);
         transition: all 0.2s ease-in-out;
+        font-size: 12px;
       }
-      .lineup__event:hover {
-        /* width: max-content; */
+      .lineup__event pre {
+        line-break: auto;
+        word-break: break-word;
+        white-space: break-spaces;
+        margin: 0;
+        line-height: 1.2;
+      }
+      .lineup__event pre.highlight {
+        font-weight: bold;
+        font-size: 120%;
+      }
+      @media (min-width: 400px) {
+        .lineup__event {
+          font-size: 12px;
+        }
+      }
+      @media (min-width: 800px) {
+        .lineup__event {
+          font-size: 14px;
+        }
+      }
+      @media (min-width: 1600px) {
+        .lineup__event {
+          font-size: 15px;
+        }
+      }
+      .lineup__event:hover,
+      .lineup__event:active {
+        width: max-content;
       }
     </style>
     <div class="program">
@@ -206,7 +209,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
           nisi eu, consectetur, lobortis ipsum.
         </p>
       </div>
-      <div class="program__content">
+      <div class="program__content" id="lineups">
         ${lineups.map(
           (lineup) => html`
             <div class="lineup">
@@ -228,10 +231,16 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                           width: calc(${eventDurationInSlots(
                             event
                           )} * var(--slot-width) - 8px);
-                          top: 25%;
+                          top: ${event._top};
                         `}
                       >
-                        ${event.title}
+                        <pre
+                          style=${`font-weight: ${
+                            event.level > 100 ? "bold" : "normal"
+                          }; font-size: ${event.level || 100}%`}
+                        >
+${event.title}</pre
+                        >
                       </div>
                     `
                 )}
@@ -240,7 +249,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                 ${makeTimeline(startAt, endAt, 15).map(
                   (time) =>
                     html`
-                      <div class="lineup__slot" id=${makeTick(time)}>
+                      <div class="lineup__slot" data-tick=${makeTick(time)}>
                         &nbsp;
                       </div>
                     `
@@ -254,12 +263,67 @@ function renderProgram({ lineups, startAt, endAt, events }) {
   `;
 }
 
+async function fetchLineups(apiHost) {
+  // TODO: use API to get events 👇
+  // const response = await fetch(new URL(`program/?year=2022`, apiHost).href, {
+  const response = await fetch("/program/lineups.json?year=2022", {
+    headers: { Accept: "application/json" },
+    credentials: "include",
+  });
+
+  const data = await response.json();
+  return data;
+}
+
+async function fetchEvents(apiHost) {
+  // TODO: use API to get events 👇
+  // const response = await fetch(new URL(`program/?year=2022`, apiHost).href, {
+  const response = await fetch("/program/events.json?year=2022", {
+    headers: { Accept: "application/json" },
+    credentials: "include",
+  });
+
+  const data = await response.json();
+  return data;
+}
+
+const isoDateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
+
+function isISODateTime(date) {
+  return typeof date === "string" && isoDateTimeRegex.test(date);
+}
+
+function instatializeDates(input) {
+  const output = structuredClone(input);
+  objectWalk(output, (value, key, obj) => {
+    if (isISODateTime(value)) {
+      obj[key] = new Date(value);
+    }
+  });
+  return output;
+}
+
 export async function main({ rootElement, env }) {
   rollbar.init(env);
   initRenderLoop(state, rootElement);
 
-  const dateFrom = new Date("2022-09-01T14:00");
-  const dateTo = new Date("2022-09-04T14:00");
-  const ticks = (dateTo - dateFrom) / 1000 / 60 / 15;
+  const { startAt, endAt } = state.deref();
+  const ticks = (endAt - startAt) / 1000 / 60 / 15;
   transact((x) => Object.assign(x, { slots: Array.from({ length: ticks }) }));
+
+  try {
+    const lineups = await fetchLineups(env["api-host"]);
+    transact((x) => Object.assign(x, { lineups: instatializeDates(lineups) }));
+  } catch (o_O) {
+    console.error(o_O);
+    alert("Chyba při načítání lineupů\n" + o_O);
+  }
+
+  try {
+    const events = await fetchEvents(env["api-host"]);
+    transact((x) => Object.assign(x, { events: instatializeDates(events) }));
+  } catch (o_O) {
+    console.error(o_O);
+    alert("Chyba při načítání eventů\n" + o_O);
+  }
 }

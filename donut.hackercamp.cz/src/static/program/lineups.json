@@ -1,0 +1,27 @@
+[
+  { "name": "Organizační", "desc": "Hacker Camp informace." },
+  {
+    "name": "Mainframe",
+    "desc": "Byznys, life."
+  },
+  {
+    "name": "Basecamp",
+    "desc": "Data. Devs."
+  },
+  {
+    "name": "Backend",
+    "desc": "Workshopy, co nepotřebují projektor."
+  },
+  {
+    "name": "Peopleware",
+    "desc": "Sport a relax."
+  },
+  {
+    "name": "WoodStack",
+    "desc": "Hudební stage / program."
+  },
+  {
+    "name": "Doprovodný program",
+    "desc": "Děje se v areálu."
+  }
+]
