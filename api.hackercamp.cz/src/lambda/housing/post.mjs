@@ -52,7 +52,7 @@ Držíme Ti místo ${housing.get(item.housing)}${placement(
           item.housingPlacement
         )}, jak sis přál.
 
-Potřebuješ to změnit? Stačí si <https://donut.hackercamp.cz/|upravit ve svém profilu>, ale pozor, jen do 15.8!
+Potřebuješ to změnit? Stačí si <https://donut.hackercamp.cz/|upravit ve svém profilu>, ale pozor, jen do 21. 8.!
 Pak už to půjde jen po osobní domluvě s Pájou.
 
 Vidíme se v září na Sobeňáku,
@@ -66,7 +66,7 @@ Chceš si zkontrolovat, co to znamená? Koukni na <https://donut.hackercamp.cz/u
 
 Máš bydlení bez práce! Super. Užij si ušetřené minuty na fajn relax, nebo milá slova tomu, kdo Ti pomohl :)
 
-Potřebuješ to změnit? Stačí si <https://donut.hackercamp.cz/|upravit ve svém profilu>, ale pozor, jen do 15.8!
+Potřebuješ to změnit? Stačí si <https://donut.hackercamp.cz/|upravit ve svém profilu>, ale pozor, jen do 21. 8.!
 Pak už to půjde jen po osobní domluvě s Pájou.
 
 Vidíme se v září na Sobeňáku,
