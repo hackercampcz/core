@@ -154,7 +154,13 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
   const hackersListElement = document.createElement("datalist");
   hackersListElement.id = "hackers";
 
-  for (const { slackID, name, company, housing, housingPlacement } of hackers) {
+  for (const {
+    slackID,
+    name,
+    company,
+    housing,
+    housingPlacement,
+  } of hackers.sort((a, b) => a.name.localeCompare(b.name))) {
     const isHomeless = !housingPlacement;
     const inlineValue = inlineHackerName({ name, company });
 
