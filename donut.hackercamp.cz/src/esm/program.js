@@ -4,6 +4,8 @@ import { defAtom } from "@thi.ng/atom";
 import { classMap } from "lit-html/directives/class-map.js";
 import * as rollbar from "./lib/rollbar.js";
 
+const SLOT_MINUTES = 15;
+
 const state = defAtom({
   view: renderProgram,
   startAt: new Date(`2020-09-01T14:00:00`),
@@ -16,11 +18,11 @@ const state = defAtom({
     },
     {
       name: "Backend",
-      desc: "Consectetur adipiscing elit. Donec euismodnisi eu, consectetur, lobortis ipsum.",
+      desc: "Consectetur adipiscing elit.",
     },
     {
       name: "Peopleware",
-      desc: "Lorum ipsum dolor sit amet, consectetur adipiscing elit.",
+      desc: "Donec euismodnisi eu, consectetur, lobortis ipsum. Donec euismod nisi eu, consectetur, lobortis ipsum. Donec euismod nisi eu, consectetur, lobortis ipsum.",
     },
     {
       name: "WoodStack",
@@ -50,7 +52,7 @@ const state = defAtom({
 });
 const transact = (fn) => state.swap(fn);
 
-function makeTimeline(startAt, endAt, minutes = 15) {
+function makeTimeline(startAt, endAt, minutes = SLOT_MINUTES) {
   const times = [];
   const diff = endAt.getTime() - startAt.getTime();
   const perMinutes = minutes * 60 * 1000;
@@ -62,17 +64,18 @@ function makeTimeline(startAt, endAt, minutes = 15) {
   return times;
 }
 
-function getSlotNumber(time, minutes = 15) {}
-
 function makeTick(time) {
-  // return time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
   if (time.getMinutes() === 0) {
-    // return time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
     return `${time.getHours()}h`;
   } else {
     return `${time.getMinutes()}m`;
   }
+}
+function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
+  const diff = time.getTime() - startAt.getTime();
+  const perMinutes = minutes * 60 * 1000;
+  const steps = Math.floor(diff / perMinutes);
+  return steps;
 }
 
 /**
@@ -85,6 +88,10 @@ function renderProgram({ lineups, startAt, endAt, events }) {
 
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.name);
+
+  const eventStartAtSlot = (event) => getSlotNumber(startAt, event.startAt);
+  const eventDurationInSlots = (event) =>
+    getSlotNumber(startAt, event.endAt) - getSlotNumber(startAt, event.startAt);
 
   return html`
     <style>
@@ -125,8 +132,9 @@ function renderProgram({ lineups, startAt, endAt, events }) {
        */
       .lineup {
         display: flex;
+        position: relative;
       }
-      .lineup__header {
+      .lineup__info {
         min-width: var(--head-width);
         background-color: var(--hc-background-color);
         box-sizing: border-box;
@@ -134,10 +142,10 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         border-top: 1px solid var(--tick-color);
         border-right: 1px solid var(--tick-highlight-color);
       }
-      .lineup__content {
+      .lineup__timeline {
         display: flex;
         align-items: center;
-        position: relative;
+        padding-right: var(--slot-width);
       }
       .lineup__slot {
         width: var(--slot-width);
@@ -152,7 +160,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       }
       /* first and every odd */
       .lineup:nth-child(2n + 1) .lineup__slot:after {
-        content: attr(data-tick);
+        content: attr(id);
         display: block;
         position: absolute;
         width: 100%;
@@ -162,27 +170,32 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         font-size: 12px;
         color: var(--tick-color);
       }
-      .lineup__slot[data-tick$="h"]:after {
+      .lineup__slot[id$="h"]:after {
         color: var(--tick-highlight-color) !important;
       }
-      .lineup:last-child .lineup__header,
+      .lineup:last-child .lineup__info,
       .lineup:last-child .lineup__slot {
         border-bottom: 1px solid var(--tick-color);
+      }
+      .lineup__eventsline {
+        position: relative;
+        width: 0;
+        padding: var(--padding) 0;
       }
       .lineup__event {
         position: absolute;
         z-index: 1;
         background-color: var(--hc-background-color);
+        box-sizing: border-box;
         padding: calc(var(--padding) / 2);
         border-radius: 4px;
         cursor: pointer;
         overflow: hidden;
         border: 1px solid var(--tick-highlight-color);
-        width: calc(var(--slot-width) * attr(data-slots));
         transition: all 0.2s ease-in-out;
       }
       .lineup__event:hover {
-        width: max-content;
+        /* width: max-content; */
       }
     </style>
     <div class="program">
@@ -197,23 +210,37 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         ${lineups.map(
           (lineup) => html`
             <div class="lineup">
-              <div class="lineup__header">
+              <div class="lineup__info">
                 <h2>${lineup.name}</h2>
                 <p>${lineup.desc}</p>
+              </div>
+              <div class="lineup__eventsline">
                 ${lineUpEvents(lineup, events).map(
                   (event) =>
                     html`
-                      <div class="lineup__event" data-slots=${6}>
+                      <div
+                        class="lineup__event"
+                        id=${event.id}
+                        style=${`
+                          left: calc(${eventStartAtSlot(
+                            event
+                          )} * var(--slot-width) + 4px);
+                          width: calc(${eventDurationInSlots(
+                            event
+                          )} * var(--slot-width) - 8px);
+                          top: 25%;
+                        `}
+                      >
                         ${event.title}
                       </div>
                     `
                 )}
               </div>
-              <div class="lineup__content">
+              <div class="lineup__timeline">
                 ${makeTimeline(startAt, endAt, 15).map(
                   (time) =>
                     html`
-                      <div class="lineup__slot" data-tick=${makeTick(time)}>
+                      <div class="lineup__slot" id=${makeTick(time)}>
                         &nbsp;
                       </div>
                     `
