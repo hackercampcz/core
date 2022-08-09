@@ -41,7 +41,7 @@ createGoogleMxRecords("hckr.camp");
 createTxtRecord(
   "hckr-google-site-verification",
   "hckr.camp",
-  "google-site-verification=ZPwDOXETfpTUVRkNge-bejcAHnlXhlm14LSpOWsOZsA"
+  "google-site-verification=DsAlbVX0oPkg6-3STev856iJg08e5u19lKd36cct5is"
 );
 
 const hostedZone = getHostedZone(domain);
