@@ -35,6 +35,23 @@ export function movedPermanently(location) {
   };
 }
 
+/**
+ * @param {string} location
+ * @param {Record<string, boolean | number | string>} [headers]
+ * @returns {APIGatewayProxyResult}
+ */
+export function found(location, headers) {
+  return {
+    statusCode: 302,
+    headers: Object.assign({ Location: location }, headers),
+    body: "",
+  };
+}
+
+/**
+ * @param {string} location
+ * @returns {APIGatewayProxyResult}
+ */
 export function seeOther(location) {
   return {
     statusCode: 303,
@@ -66,6 +83,9 @@ export function notFound(body = { error: "Data not found" }) {
   };
 }
 
+/**
+ * @returns {APIGatewayProxyResult}
+ */
 export function unprocessableEntity() {
   return {
     statusCode: 422,

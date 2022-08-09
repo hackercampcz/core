@@ -1,4 +1,4 @@
-import { response, withCORS } from "../http.mjs";
+import { found, response, withCORS } from "../http.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
@@ -17,7 +17,7 @@ export async function handler(event) {
   const sameSite = origin.includes("localhost") ? "None" : "Strict";
   const expired = new Date(0).toUTCString();
   return withCORS_(
-    response("", {
+    found(origin, {
       "Set-Cookie": `hc-id=; Expires=${expired}; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
     })
   );
