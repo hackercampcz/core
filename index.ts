@@ -34,7 +34,7 @@ createGoogleMxRecords(domain);
 createTxtRecord(
   "google-site-verification",
   domain,
-  "google-site-verification=eIaBVqhznPV-0AAEEbFJN82j3w063w_tW0-DUZWX5C0"
+  "google-site-verification=KBiUM11RTkIHm4ZpDtFuUUrEXLSsARgSBVTvQCMA0N0"
 );
 
 createGoogleMxRecords("hckr.camp");
