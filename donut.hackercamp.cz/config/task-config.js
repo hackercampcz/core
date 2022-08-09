@@ -83,6 +83,13 @@ module.exports = {
     swDest: projectPath(pathConfig.dest, "sw.js"),
     globDirectory: pathConfig.dest,
     globPatterns: ["**/*.html", "assets/**/*.{js,mjs,css}"],
+    globIgnores: [
+      "hackers/*",
+      "admin/*",
+      "ubytovani/*",
+      "program/*",
+      "registrace/*",
+    ],
   },
 
   production: {
