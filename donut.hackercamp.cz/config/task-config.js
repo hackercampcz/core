@@ -84,11 +84,11 @@ module.exports = {
     globDirectory: pathConfig.dest,
     globPatterns: ["**/*.html", "assets/**/*.{js,mjs,css}"],
     globIgnores: [
-      "hackers/*",
-      "admin/*",
-      "ubytovani/*",
-      "program/*",
-      "registrace/*",
+      "hackers/**/*.html",
+      "admin/**/*.html",
+      "ubytovani/**/*.html",
+      "program/**/*.html",
+      "registrace/**/*.html",
     ],
   },
 
