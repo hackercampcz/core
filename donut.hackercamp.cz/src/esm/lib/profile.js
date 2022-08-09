@@ -12,14 +12,14 @@ export function signIn({
   return slackProfile;
 }
 
-export function signOut() {
+export function signOut(apiURL) {
   localStorage.removeItem("hc:id_token");
   localStorage.removeItem("hc:contact");
   localStorage.removeItem("slack:id_token");
   localStorage.removeItem("slack:access_token");
   localStorage.removeItem("slack:profile");
   window.dispatchEvent(new Event("hc:profile"));
-  location.assign("/");
+  fetch(apiURL("auth/sign-out")).then(() => location.assign("/"));
 }
 
 export function getContact() {

@@ -17,7 +17,8 @@ async function loadHousingData(apiBase) {
     const [housing, types, variants, backstage, hackers] = await Promise.all(
       responses.map((resp) => {
         if (!resp.ok) {
-          if (resp.status === 401) signOut();
+          if (resp.status === 401)
+            signOut((path) => new URL(path, apiBase).href);
           else throw new Error(`${resp.status}: ${resp.statusText}`);
         }
         return resp.json();

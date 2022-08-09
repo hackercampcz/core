@@ -143,7 +143,7 @@ export async function main({ searchParams, slackButton, env }) {
     searchParams.get("state") === "not-authenticated"
   ) {
     setReturnUrl(searchParams.has("returnUrl"));
-    signOut();
+    signOut(apiURL);
   }
 
   if (isSignedIn()) {

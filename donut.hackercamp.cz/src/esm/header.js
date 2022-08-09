@@ -6,6 +6,7 @@ import { initRenderLoop } from "./lib/renderer.js";
 import * as workbox from "./lib/workbox.js";
 
 const state = defAtom({
+  apiURL: () => "",
   profile: null,
   idPopupVisible: false,
   view: renderProfile,
@@ -26,6 +27,7 @@ function headerProfile({ name, picture }, togglePopup) {
 }
 
 function headerProfilePopup({ name, picture }, signOut) {
+  const { apiURL } = state.deref();
   return html`
     <div class="hc-popup">
       <ul>
@@ -38,7 +40,10 @@ function headerProfilePopup({ name, picture }, signOut) {
           </div>
         </li>
         <li>
-          <button class="hc-btn hc-btn__sign-out" @click="${() => signOut()}">
+          <button
+            class="hc-btn hc-btn__sign-out"
+            @click="${() => signOut(apiURL)}"
+          >
             Odhlásit se
           </button>
         </li>
@@ -74,10 +79,27 @@ function loadProfile() {
   return state.swap((x) => Object.assign(x, { profile }));
 }
 
-export async function init({ profile: root }) {
-  workbox.init(() => {
-    // TODO: show notification about update
+export async function init({ profile: root, env }) {
+  workbox.init((wb) => () => {
+    if (globalThis.snackbar) {
+      const snackbar = globalThis.snackbar;
+      snackbar.labelText = "Je k dispozici nová verze.";
+      snackbar.timeoutMs = -1;
+      const update = () => {
+        wb.addEventListener("controlling", () => location.reload(), true);
+        wb.messageSkipWaiting();
+      };
+      render(
+        html`<mwc-button slot="action" @click="${update}"
+          >AKTUALIZOVAT</mwc-button
+        >`,
+        snackbar
+      );
+      snackbar.show();
+    }
   });
+  const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
+  state.swap((x) => Object.assign({}, x, { apiURL }));
   initRenderLoop(state, root);
   loadProfile();
   window.addEventListener("hc:profile", loadProfile);
