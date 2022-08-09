@@ -1,27 +1,37 @@
 [
-  { "name": "Organizační", "desc": "Hacker Camp informace." },
   {
+    "id": "liorg",
+    "name": "Organizační",
+    "description": "Hacker Camp informace."
+  },
+  {
+    "id": "limain",
     "name": "Mainframe",
-    "desc": "Byznys, life."
+    "description": "Byznys, life."
   },
   {
+    "id": "libase",
     "name": "Basecamp",
-    "desc": "Data. Devs."
+    "description": "Data. Devs."
   },
   {
+    "id": "liback",
     "name": "Backend",
-    "desc": "Workshopy, co nepotřebují projektor."
+    "description": "Workshopy, co nepotřebují projektor."
   },
   {
+    "id": "lipeep",
     "name": "Peopleware",
-    "desc": "Sport a relax."
+    "description": "Sport a relax."
   },
   {
+    "id": "liwood",
     "name": "WoodStack",
-    "desc": "Hudební stage / program."
+    "description": "Hudební stage / program."
   },
   {
+    "id": "lia10g",
     "name": "Doprovodný program",
-    "desc": "Děje se v areálu."
+    "description": "Děje se v areálu."
   }
 ]

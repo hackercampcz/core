@@ -42,13 +42,41 @@ function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
   return steps;
 }
 
+function showModalDialog(id) {
+  const element = document.getElementById(id);
+  element.showModal();
+  element.querySelector("button[name=close]").addEventListener("click", () => {
+    element.close();
+  });
+}
+
+function formatEventTimeInfo(event) {
+  return html`Začíná v
+    <strong
+      >${event.startAt.toLocaleDateString([], {
+        weekday: "long",
+      })}
+      ${event.startAt.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}</strong
+    >
+    a končí v
+    <strong
+      >${event.endAt.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      })}</strong
+    >.`;
+}
+
 /**
  *
  * @param {defAtom} state
  */
 function renderProgram({ lineups, startAt, endAt, events }) {
   const lineUpEvents = (lineup, events) =>
-    events.filter((event) => event.lineup === lineup.name);
+    events.filter((event) => event.lineup === lineup.id);
 
   const eventStartAtSlot = (event) => getSlotNumber(startAt, event.startAt);
   const eventDurationInSlots = (event) =>
@@ -60,7 +88,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
        * top level container
        */
       .program {
-        --padding: var(--mdc-layout-grid-margin-desktop, 24px);
+        --spacing: var(--mdc-layout-grid-margin-desktop, 24px);
         --head-width: calc(100vw * 2 / 3);
         --slot-width: calc(100vw / 2.5 / 4);
         --tick-color: #eee;
@@ -75,7 +103,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       /* media min */
       .program__header {
         box-sizing: border-box;
-        padding: var(--padding);
+        padding: var(--spacing);
       }
       .program__content {
         max-width: 100vw;
@@ -111,12 +139,12 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         min-width: var(--head-width);
         background-color: var(--hc-background-color);
         box-sizing: border-box;
-        padding: calc(var(--padding) / 2);
+        padding: calc(var(--spacing) / 2);
         border-top: 1px solid var(--tick-color);
         border-right: 1px solid var(--tick-highlight-color);
       }
       @media (min-width: 600px) {
-        padding: calc(var(--padding) * 1.5);
+        padding: calc(var(--spacing) * 1.5);
       }
       .lineup__timeline {
         display: flex;
@@ -155,14 +183,14 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       .lineup__eventsline {
         position: relative;
         width: 0;
-        padding: var(--padding) 0;
+        padding: var(--spacing) 0;
       }
       .lineup__event {
         position: absolute;
         z-index: 1;
         background-color: var(--hc-background-color);
         box-sizing: border-box;
-        padding: calc(var(--padding) / 4);
+        padding: calc(var(--spacing) / 4);
         border-radius: 4px;
         cursor: pointer;
         overflow: hidden;
@@ -200,6 +228,19 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       .lineup__event:active {
         width: max-content;
       }
+
+      dialog button[name="close"] {
+        display: block;
+        margin: var(--spacing) auto 0 auto;
+        background-color: var(--hc-background-color);
+        color: var(--hc-text-color);
+        border: 1px solid var(--hc-text-color);
+        border-radius: 2px;
+        padding: calc(var(--spacing) / 2);
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+      }
     </style>
     <div class="program">
       <div class="program__header">
@@ -213,10 +254,21 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         ${lineups.map(
           (lineup) => html`
             <div class="lineup">
-              <div class="lineup__info">
+              <div
+                class="lineup__info"
+                @click=${() => {
+                  showModalDialog(`lineup-detail-${lineup.id}`);
+                }}
+              >
                 <h2>${lineup.name}</h2>
-                <p>${lineup.desc}</p>
+                <p>${lineup.description}</p>
               </div>
+              <dialog id="lineup-detail-${lineup.id}">
+                <h1>${lineup.name}</h1>
+                <p>${lineup.description}</p>
+                <p>Tady by toho mělo bejt víc.</p>
+                <button name="close">Zavřít</button>
+              </dialog>
               <div class="lineup__eventsline">
                 ${lineUpEvents(lineup, events).map(
                   (event) =>
@@ -233,15 +285,26 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                           )} * var(--slot-width) - 8px);
                           top: ${event._top};
                         `}
+                        @click=${() => {
+                          showModalDialog(`event-detail-${event.id}`);
+                        }}
                       >
                         <pre
                           style=${`font-weight: ${
                             event.level > 100 ? "bold" : "normal"
                           }; font-size: ${event.level || 100}%`}
-                        >
-${event.title}</pre
-                        >
+                        // eslint-disable-next-line prettier/prettier
+                        >${event.title}</pre>
                       </div>
+                      <dialog id="event-detail-${event.id}">
+                        <h1>${event.title}</h1>
+                        <p>
+                          ${formatEventTimeInfo(event)}
+                          <code>${lineup.name}</code><br>
+                        </p>
+                        <p>${event.description}</p>
+                        <button name="close">Zavřít</button>
+                      </dialog>
                     `
                 )}
               </div>
@@ -287,9 +350,8 @@ async function fetchEvents(apiHost) {
   return data;
 }
 
-const isoDateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
-
 function isISODateTime(date) {
+  const isoDateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
   return typeof date === "string" && isoDateTimeRegex.test(date);
 }
 
