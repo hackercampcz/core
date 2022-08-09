@@ -49,6 +49,11 @@ export const createRoutes = ({
             },
           },
         },
+        authSignOut: {
+          httpMethod: "GET",
+          path: "/auth/sign-out",
+          fileName: "auth/sign-out.mjs",
+        },
         contacts: {
           httpMethod: "GET",
           path: "/contacts",
