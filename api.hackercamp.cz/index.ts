@@ -53,6 +53,11 @@ export const createRoutes = ({
           httpMethod: "GET",
           path: "/auth/sign-out",
           fileName: "auth/sign-out.mjs",
+          environment: {
+            variables: {
+              hostname: config.get("donut-domain"),
+            },
+          },
         },
         contacts: {
           httpMethod: "GET",

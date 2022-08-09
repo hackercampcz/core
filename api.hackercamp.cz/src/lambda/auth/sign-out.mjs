@@ -8,7 +8,7 @@ import { found, response, withCORS } from "../http.mjs";
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const origin = event.headers.origin;
+  const origin = event.headers?.origin ?? event.headers?.referer ?? `https://${process.env.hostname}/`;
   const withCORS_ = withCORS(["GET", "OPTIONS"], origin, {
     allowCredentials: true,
   });
