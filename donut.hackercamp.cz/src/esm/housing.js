@@ -185,9 +185,7 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
 
     if (!inputElement) continue;
 
-    if (inputElement.list) {
-      inputElement.value = inlineValue;
-    }
+    inputElement.value = inlineValue;
 
     if (slackID === hacker.slackID) {
       inputElement.classList.add("me");
