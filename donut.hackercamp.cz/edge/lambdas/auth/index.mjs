@@ -17,6 +17,7 @@ export async function handler(event) {
   const request = event.Records[0].cf.request;
   const token = getToken(request.headers);
   const isValidToken = validateToken(token, secret);
+  console.log("Authorization", request.uri, Boolean(isValidToken));
   if (isValidToken) return request;
   return {
     status: "307",
