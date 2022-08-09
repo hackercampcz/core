@@ -1,5 +1,5 @@
 import { defAtom } from "@thi.ng/atom";
-import { html } from "lit-html";
+import { html, render } from "lit-html";
 import { when } from "lit-html/directives/when.js";
 import { signOut } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
