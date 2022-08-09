@@ -18,7 +18,6 @@ export function signOut(apiURL) {
   localStorage.removeItem("slack:id_token");
   localStorage.removeItem("slack:access_token");
   localStorage.removeItem("slack:profile");
-  window.dispatchEvent(new Event("hc:profile"));
   location.assign(apiURL("auth/sign-out"));
 }
 

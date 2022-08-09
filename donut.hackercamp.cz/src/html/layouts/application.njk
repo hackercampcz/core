@@ -37,7 +37,10 @@
   import { init as initHeader } from "/assets/esm/header.js";
   import { init as initLayout } from "/assets/esm/layout.js";
 
-  initHeader({ profile: document.getElementById("hc-header__profile") });
+  initHeader({
+    profile: document.getElementById("hc-header__profile"),
+    env: {{ build | dump(8) | safe }},
+  });
   initLayout({ snackbar: document.getElementById("hc-snackbar") });
 </script>
 
