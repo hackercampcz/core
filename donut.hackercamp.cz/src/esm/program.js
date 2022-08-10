@@ -8,6 +8,7 @@ import structuredClone from "@ungap/structured-clone";
 import { ref } from "lit/directives/ref.js";
 
 const SLOT_MINUTES = 15;
+const DAY_START_HOUR = 8;
 
 const state = defAtom({
   view: renderProgram,
@@ -37,32 +38,29 @@ function makeTick(time) {
     return `${time.getMinutes()}m`;
   }
 }
+
+function makeDayline(startAt, endAt, minutes = SLOT_MINUTES) {
+  const dayStart = new Date(
+    startAt.getFullYear(),
+    startAt.getMonth(),
+    startAt.getDate(),
+    DAY_START_HOUR
+  );
+  const dayEnd = new Date(
+    endAt.getFullYear(),
+    endAt.getMonth(),
+    endAt.getDate() + 1,
+    DAY_START_HOUR
+  );
+  const days = makeTimeline(dayStart, dayEnd, 24 * 60);
+  return days;
+}
+
 function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
   const diff = time.getTime() - startAt.getTime();
   const perMinutes = minutes * 60 * 1000;
   const steps = diff / perMinutes;
   return steps;
-}
-
-function makeAnchor(time, prefix = "") {
-  const shortDayName = time
-    .toLocaleDateString("en-GB", {
-      weekday: "short",
-    })
-    .toLowerCase();
-  const hours = time.toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-  });
-  const minutes = time.toLocaleTimeString("en-GB", {
-    minute: "2-digit",
-  });
-  return `${prefix}${shortDayName}${hours}${minutes}`;
-}
-
-function nthDay(date, n) {
-  const day = new Date(date);
-  day.setDate(day.getDate() + n);
-  return day;
 }
 
 function showModalDialog(id) {
@@ -107,6 +105,9 @@ function renderProgram({ lineups, startAt, endAt, events }) {
 
   return html`
     <style>
+      body {
+        overflow-anchor: none;
+      }
       /**
        * top level container
        */
@@ -162,7 +163,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       }
       .dayline {
         position: absolute;
-        top: calc(var(--spacing) / 2 * -1);
+        top: calc(var(--spacing) * -1);
         left: 0;
         right: 0;
         display: flex;
@@ -180,19 +181,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       }
       a.dayline__tick.--visible {
         font-weight: bold;
-      }
-
-      .anchorline {
-        display: flex;
-        align-items: center;
-        margin-left: var(--head-width);
-        width: max-content;
-        position: absolute;
-        top: -20vh;
-      }
-      .anchorline__tick {
-        width: var(--slot-width);
-        height: var(--slot-width);
+        font-size: 140%;
       }
 
       /**
@@ -219,6 +208,8 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         padding-right: var(--slot-width);
       }
       .lineup__slot {
+        display: block;
+        text-decoration: none;
         width: var(--slot-width);
         height: 100%;
         box-sizing: border-box;
@@ -321,7 +312,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
           Lorum ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
           nisi eu, consectetur, lobortis ipsum.
         </p>
-        <button
+        <!-- <button
           class="hc-link hc-link--decorated"
           style="
             margin: var(--spacing) auto;
@@ -330,14 +321,25 @@ function renderProgram({ lineups, startAt, endAt, events }) {
           "
         >
           Přidat vlastní program
-        </button>
+        </button> -->
       </div>
       <div class="program__dayline">
         <div class="dayline">
-          ${makeTimeline(startAt, endAt, 24 * 60).map(
+          ${makeDayline(startAt, endAt).map(
             (day) =>
               html`
-                <a class="dayline__tick" href="#${makeAnchor(day)}">
+                <a
+                  class=${classMap({
+                    dayline__tick: true,
+                    '--visible': true
+                  })}
+                  href="#${day.toISOString()}"
+                  @click=${(event) => {
+                    const date = new Date(day);
+                    date.setHours(DAY_START_HOUR);
+                    scrollToDate(date);
+                  }}
+                >
                   ${day.toLocaleDateString([], { weekday: "long" })}
                 </a>
               `
@@ -348,32 +350,13 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         class="program__lineups"
         id="lineups"
         @scroll=${(event) => {
-          console.log(
-            event.target.offsetWidth,
-            event.target.scrollLeft,
-            event.target.scrollWidth
-          );
+          // console.log(
+          //   event.target.offsetWidth,
+          //   event.target.scrollLeft,
+          //   event.target.scrollWidth
+          // );
         }}
       >
-        <div
-          class="anchorline"
-          aria-hidden="true"
-          ${ref((element) => {
-            if (element) {
-              const { offsetTop } = element;
-              if (offsetTop) {
-                element.style.top = "-" + element.parentElement.offsetTop + "px";
-              }
-            }
-          })}
-        >
-          ${makeTimeline(startAt, endAt, 15).map(
-            (time) =>
-              html`
-                <div class="anchorline__tick" id=${makeAnchor(time)}></div>
-              `
-          )}
-        </div>
         ${lineups.map(
           (lineup) => html`
             <div class="lineup">
@@ -435,9 +418,16 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                 ${makeTimeline(startAt, endAt, 15).map(
                   (time) =>
                     html`
-                      <div class="lineup__slot" data-tick=${makeTick(time)}>
+                      <a
+                        class="lineup__slot"
+                        ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
+                        data-tick=${makeTick(time)}
+                        @click=${(event) => {
+                          console.log("add event?", time);
+                        }}
+                      >
                         &nbsp;
-                      </div>
+                      </a>
                     `
                 )}
               </div>
@@ -474,7 +464,8 @@ async function fetchEvents(apiHost) {
 }
 
 function isISODateTime(date) {
-  const isoDateTimeRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
+  const isoDateTimeRegex =
+    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d{3})?Z?$/;
   return typeof date === "string" && isoDateTimeRegex.test(date);
 }
 
@@ -516,14 +507,22 @@ export async function main({ rootElement, env }) {
     alert("Chyba při načítání eventů\n" + o_O);
   }
 
+  const scrollElement = document.getElementById("lineups");
+  window.getSlotWidth = () => scrollElement.querySelector(".lineup__slot").offsetWidth;
+  window.scrollToDate = (date) => {
+    const width = window.getSlotWidth();
+    const left = ((date - startAt) / 1000 / 60 / SLOT_MINUTES) * width;
+    scrollElement.scrollLeft = left;
+  };
+
   requestAnimationFrame(() => {
-    const today = new Date();
-    const tmp = location.hash;
-    location.hash = "";
-    if (Boolean(tmp)) {
-      location.hash = tmp;
-    } else if (today >= startAt && today <= endAt) {
-      location.hash = makeAnchor(today);
+    const param = location.hash.replace(/^#/, "");
+
+    if (isISODateTime(param)) {
+      console.log(param);
+      scrollToDate(new Date(param));
+    } else {
+      scrollToDate(new Date());
     }
   });
 }
