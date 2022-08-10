@@ -88,8 +88,81 @@ function renderPaidScreen() {
   `;
 }
 
+const housingToText = new Map([
+  ["own-car", "v tvém autě"],
+  ["own-caravan", "ve vlastním karavanu"],
+  ["open-air", "pod širákem nebo v hamace"],
+  ["own-tent", "ve stanu"],
+  ["glamping", "v Glamping stanu"],
+  ["cottage", "v chatce"],
+  ["nearby", "v okolí"],
+  ["house", "v domku"],
+]);
+const placement = (p) => (p === "custom" ? "" : ` ${p}`);
+function housingText(housing, housingPlacement) {
+  return html`<strong
+    >${housingToText.get(housing) + placement(housingPlacement)}</strong
+  >`;
+}
+
+function travelText(travel) {
+  switch (travel) {
+    case "carpool":
+      return html`
+        <p>
+          Chceš pomoci s nalezením odvozu na kemp? Můžeš se domluvit buď
+          <a href="https://hackercampworkspace.slack.com/archives/C0278R69JUQ"
+            >v kanále <code>#spolujizda</code></a
+          >
+          nebo se
+          <a
+            href="https://docs.google.com/spreadsheets/d/1EkthrK_s-5-xxWDHGNudz6PEJs15jk0Jd6UWyeipAAI/edit#gid=0"
+            >vyplnit v tabulce Spolujízda</a
+          >.
+        </p>
+      `;
+    case "free-car":
+      return html` <p>
+        Les na Sobeňáku má omezenou parkovací kapacitu, proto je potřeba zaplnit
+        auta co to jde. Je super, že nabízíš místo dalším hackerům. Můžete se
+        <a href="https://hackercampworkspace.slack.com/archives/C0278R69JUQ"
+          >domluvit v kanále <code>#spolujizda</code></a
+        >
+        nebo rovnou nabídnout své kapacity
+        <a
+          href="https://docs.google.com/spreadsheets/d/1EkthrK_s-5-xxWDHGNudz6PEJs15jk0Jd6UWyeipAAI/edit#gid=0"
+          >v tabulce Spolujízda</a
+        >.
+      </p>`;
+    default:
+      return null;
+  }
+}
+
+function renderHousedScreen({ housing, housingPlacement, travel }) {
+  return html`
+    <div>
+      <p>
+        Jsi ubytovaný ${housingText(housing, housingPlacement)}, jak sis přál.
+      </p>
+      <p>
+        Do <date datetime="2022-08-21">21. srpna</date> si ještě můžeš
+        <a class="hc-link" href="/ubytovani/">změnit ubytování</a>.
+      </p>
+      ${travelText(travel)}
+      <p>
+        Chceš se podívat, kdo už se na tebe těší? Tak tady je
+        <a href="/hackers/">seznam účastníků</a>.
+      </p>
+    </div>
+  `;
+}
+
 function renderIndex({ profile, contact, registration, attendee }) {
   console.log({ profile, contact, registration });
+  if (attendee?.housingPlacement) {
+    return renderHousedScreen(attendee);
+  }
   if (registration.paid || attendee?.ticketType === "crew") {
     return renderPaidScreen();
   }
