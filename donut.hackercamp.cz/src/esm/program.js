@@ -4,13 +4,15 @@ import { defAtom } from "@thi.ng/atom";
 import { classMap } from "lit-html/directives/class-map.js";
 import * as rollbar from "./lib/rollbar.js";
 import { objectWalk } from "./lib/object.js";
+import structuredClone from "@ungap/structured-clone";
+import { ref } from "lit/directives/ref.js";
 
 const SLOT_MINUTES = 15;
 
 const state = defAtom({
   view: renderProgram,
-  startAt: new Date(`2020-09-01T14:00:00`),
-  endAt: new Date(`2020-09-04T14:00:00`),
+  startAt: new Date(`2022-09-01T14:00:00`),
+  endAt: new Date(`2022-09-04T14:00:00`),
   lineups: [],
   events: [],
 });
@@ -40,6 +42,27 @@ function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
   const perMinutes = minutes * 60 * 1000;
   const steps = diff / perMinutes;
   return steps;
+}
+
+function makeAnchor(time, prefix = "") {
+  const shortDayName = time
+    .toLocaleDateString("en-GB", {
+      weekday: "short",
+    })
+    .toLowerCase();
+  const hours = time.toLocaleTimeString("en-GB", {
+    hour: "2-digit",
+  });
+  const minutes = time.toLocaleTimeString("en-GB", {
+    minute: "2-digit",
+  });
+  return `${prefix}${shortDayName}${hours}${minutes}`;
+}
+
+function nthDay(date, n) {
+  const day = new Date(date);
+  day.setDate(day.getDate() + n);
+  return day;
 }
 
 function showModalDialog(id) {
@@ -100,14 +123,16 @@ function renderProgram({ lineups, startAt, endAt, events }) {
           --tick-highlight-color: #888;
         }
       }
-      /* media min */
       .program__header {
         box-sizing: border-box;
         padding: var(--spacing);
+        margin-bottom: var(--spacing);
       }
-      .program__content {
+      .program__lineups {
         max-width: 100vw;
         overflow-x: auto;
+        scroll-behavior: smooth;
+        position: relative;
       }
       @media (min-width: 600px) {
         .program {
@@ -126,6 +151,48 @@ function renderProgram({ lineups, startAt, endAt, events }) {
           --head-width: calc(100vw / 6);
           --slot-width: calc(100vw / 6 / 6);
         }
+      }
+
+      /**
+       * Horizontal sticky pagination by days
+       */
+      .program__dayline {
+        position: relative;
+        padding-top: var(--spacing);
+      }
+      .dayline {
+        position: absolute;
+        top: calc(var(--spacing) / 2 * -1);
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      a.dayline__tick {
+        flex: 1;
+        text-decoration: none;
+        color: var(--hc-text-color);
+        text-align: center;
+      }
+      a.dayline__tick:hover {
+        text-decoration: underline;
+      }
+      a.dayline__tick.--visible {
+        font-weight: bold;
+      }
+
+      .anchorline {
+        display: flex;
+        align-items: center;
+        margin-left: var(--head-width);
+        width: max-content;
+        position: absolute;
+        top: -20vh;
+      }
+      .anchorline__tick {
+        width: var(--slot-width);
+        height: var(--slot-width);
       }
 
       /**
@@ -211,17 +278,17 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       }
       @media (min-width: 400px) {
         .lineup__event {
-          font-size: 12px;
+          font-size: 14px;
         }
       }
       @media (min-width: 800px) {
         .lineup__event {
-          font-size: 14px;
+          font-size: 16px;
         }
       }
       @media (min-width: 1600px) {
         .lineup__event {
-          font-size: 15px;
+          font-size: 18px;
         }
       }
       .lineup__event:hover,
@@ -241,6 +308,11 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         font-weight: bold;
         cursor: pointer;
       }
+
+      .timeline_tick {
+        position: absolute;
+        top: 0;
+      }
     </style>
     <div class="program">
       <div class="program__header">
@@ -249,8 +321,59 @@ function renderProgram({ lineups, startAt, endAt, events }) {
           Lorum ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
           nisi eu, consectetur, lobortis ipsum.
         </p>
+        <button
+          class="hc-link hc-link--decorated"
+          style="
+            margin: var(--spacing) auto;
+            display: block;
+            font-size: 120%;
+          "
+        >
+          Přidat vlastní program
+        </button>
       </div>
-      <div class="program__content" id="lineups">
+      <div class="program__dayline">
+        <div class="dayline">
+          ${makeTimeline(startAt, endAt, 24 * 60).map(
+            (day) =>
+              html`
+                <a class="dayline__tick" href="#${makeAnchor(day)}">
+                  ${day.toLocaleDateString([], { weekday: "long" })}
+                </a>
+              `
+          )}
+        </div>
+      </div>
+      <div
+        class="program__lineups"
+        id="lineups"
+        @scroll=${(event) => {
+          console.log(
+            event.target.offsetWidth,
+            event.target.scrollLeft,
+            event.target.scrollWidth
+          );
+        }}
+      >
+        <div
+          class="anchorline"
+          aria-hidden="true"
+          ${ref((element) => {
+            if (element) {
+              const { offsetTop } = element;
+              if (offsetTop) {
+                element.style.top = "-" + element.parentElement.offsetTop + "px";
+              }
+            }
+          })}
+        >
+          ${makeTimeline(startAt, endAt, 15).map(
+            (time) =>
+              html`
+                <div class="anchorline__tick" id=${makeAnchor(time)}></div>
+              `
+          )}
+        </div>
         ${lineups.map(
           (lineup) => html`
             <div class="lineup">
@@ -302,7 +425,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                           ${formatEventTimeInfo(event)}
                           <code>${lineup.name}</code><br>
                         </p>
-                        <p>${event.description}</p>
+                        <pre>${event.description}</pre>
                         <button name="close">Zavřít</button>
                       </dialog>
                     `
@@ -371,7 +494,11 @@ export async function main({ rootElement, env }) {
 
   const { startAt, endAt } = state.deref();
   const ticks = (endAt - startAt) / 1000 / 60 / 15;
-  transact((x) => Object.assign(x, { slots: Array.from({ length: ticks }) }));
+  transact((x) =>
+    Object.assign(x, {
+      slots: Array.from({ length: ticks }),
+    })
+  );
 
   try {
     const lineups = await fetchLineups(env["api-host"]);
@@ -388,4 +515,15 @@ export async function main({ rootElement, env }) {
     console.error(o_O);
     alert("Chyba při načítání eventů\n" + o_O);
   }
+
+  requestAnimationFrame(() => {
+    const today = new Date();
+    const tmp = location.hash;
+    location.hash = "";
+    if (Boolean(tmp)) {
+      location.hash = tmp;
+    } else if (today >= startAt && today <= endAt) {
+      location.hash = makeAnchor(today);
+    }
+  });
 }

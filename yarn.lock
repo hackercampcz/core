@@ -2253,6 +2253,7 @@ __metadata:
     "@thi.ng/transducers": 8.3.11
     "@typescript-eslint/eslint-plugin": 5.33.0
     "@typescript-eslint/parser": 5.33.0
+    "@ungap/structured-clone": ^1.0.1
     date-fns: 2.29.1
     eslint-plugin-promise: 6.0.0
     lit-html: 2.2.7
@@ -3600,6 +3601,13 @@ __metadata:
     "@typescript-eslint/types": 5.33.0
     eslint-visitor-keys: ^3.3.0
   checksum: d7e3653de6bac6841e6fcc54226b93ad6bdca4aa76ebe7d83459c016c3eebcc50d4f65ee713174bc267d765295b642d1927a778c5de707b8389e3fcc052aa4a1
+  languageName: node
+  linkType: hard
+
+"@ungap/structured-clone@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@ungap/structured-clone@npm:1.0.1"
+  checksum: cd614e038fa63dcd5da0070d9ed5214d74d1f72b04d88e884d5a6563bb77d52a566fdd26b889f09c534fb72ab1d6ad8efe6bb678a56a5ccd3f0d6946234d1113
   languageName: node
   linkType: hard
 
