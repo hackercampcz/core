@@ -143,7 +143,8 @@ function renderHousedScreen({ housing, housingPlacement, travel }) {
   return html`
     <div>
       <p>
-        Jsi ubytovaný ${housingText(housing, housingPlacement)}, jak sis přál.
+        Jsi ubytovaný ${housingText(housing, housingPlacement)}, dle tvého
+        výběru.
       </p>
       <p>
         Do <date datetime="2022-08-21">21. srpna</date> si ještě můžeš

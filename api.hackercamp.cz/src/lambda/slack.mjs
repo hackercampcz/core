@@ -21,7 +21,7 @@ function randomIndex(prev) {
 function getActions() {
   const a = randomIndex();
   const b = randomIndex(a);
-  return [actions[a], actions[b < 0 ? 0 : b]];
+  return [actions[a], actions[Math.max(b, 0)]];
 }
 
 function getTravel(travel) {
