@@ -138,6 +138,7 @@ function renderProgram({
   visibleDate,
   onLineupsScroll,
 }) {
+  console.log(visibleDate);
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.id);
 
@@ -175,7 +176,6 @@ function renderProgram({
         max-width: 100vw;
         overflow-x: auto;
         scroll-behavior: smooth;
-        position: relative;
       }
       @media (min-width: 600px) {
         .program {
@@ -201,11 +201,9 @@ function renderProgram({
        */
       .program__dayline {
         position: relative;
-        padding-top: var(--spacing);
       }
       .dayline {
-        padding: var(--spacing);
-        padding-bottom: calc(var(--spacing) / 2);
+        padding: calc(var(--spacing) / 2);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -229,7 +227,6 @@ function renderProgram({
        */
       .lineup {
         display: flex;
-        position: relative;
       }
       .lineup__info {
         min-width: var(--head-width);
@@ -238,6 +235,14 @@ function renderProgram({
         padding: calc(var(--spacing) / 2);
         border-top: 1px solid var(--tick-color);
         border-right: 1px solid var(--tick-highlight-color);
+        z-index: 2;
+      }
+      .lineup__sticky {
+        position: absolute;
+        box-sizing: border-box;
+        padding: calc(var(--spacing) / 2);
+        z-index: 1;
+        max-width: var(--head-width);
       }
       @media (min-width: 600px) {
         padding: calc(var(--spacing) * 1.5);
@@ -413,6 +418,15 @@ function renderProgram({
               >
                 <h2>${lineup.name}</h2>
                 <p>${lineup.description}</p>
+              </div>
+              <div
+                class="lineup__sticky"
+                @click=${() => {
+                  showModalDialog(`lineup-detail-${lineup.id}`);
+                }}
+                aria-hidden="true"
+              >
+                <h2>${lineup.name}</h2>
               </div>
               <dialog class="lineup__detail" id="lineup-detail-${lineup.id}">
                 <h1>${lineup.name}</h1>
