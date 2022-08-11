@@ -6,6 +6,7 @@ import * as rollbar from "./lib/rollbar.js";
 import { objectWalk } from "./lib/object.js";
 import structuredClone from "@ungap/structured-clone";
 import { ref } from "lit/directives/ref.js";
+import { debounce } from "./lib/function.js";
 
 const SLOT_MINUTES = 15;
 const DAY_START_HOUR = 8;
@@ -13,6 +14,7 @@ const DAY_START_HOUR = 8;
 const state = defAtom({
   view: renderProgram,
   startAt: new Date(`2022-09-01T14:00:00`),
+  visibleDate: new Date(`2022-09-01T14:00:00`),
   endAt: new Date(`2022-09-04T14:00:00`),
   lineups: [],
   events: [],
@@ -91,11 +93,38 @@ function formatEventTimeInfo(event) {
     >.`;
 }
 
+function getSlotWidth() {
+  const scrollElement = document.getElementById("lineups");
+  return scrollElement.querySelector(".lineup__slot").offsetWidth;
+}
+
+function scrollToDate(date) {
+  const { startAt } = state.deref();
+  const scrollElement = document.getElementById("lineups");
+  const time = (date - startAt) / 1000 / 60 / SLOT_MINUTES;
+  const left = time * getSlotWidth();
+  scrollElement.scrollLeft = left;
+};
+
+const debouncedTimelineScrollHandler = debounce((event) => {
+  const { startAt } = state.deref();
+  const visibleDate = new Date(startAt.getTime());
+  const minutesScrolledOut =
+    (event.target.scrollLeft / getSlotWidth()) * SLOT_MINUTES;
+  visibleDate.setMinutes(startAt.getMinutes() + minutesScrolledOut);
+
+  transact((x) =>
+    Object.assign(x, {
+      visibleDate,
+    })
+  );
+});
+
 /**
  *
  * @param {defAtom} state
  */
-function renderProgram({ lineups, startAt, endAt, events }) {
+function renderProgram({ lineups, startAt, endAt, events, visibleDate }) {
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.id);
 
@@ -162,10 +191,8 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         padding-top: var(--spacing);
       }
       .dayline {
-        position: absolute;
-        top: calc(var(--spacing) * -1);
-        left: 0;
-        right: 0;
+        padding: var(--spacing);
+        padding-bottom: calc(var(--spacing) / 2);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -181,7 +208,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       }
       a.dayline__tick.--visible {
         font-weight: bold;
-        font-size: 140%;
+        font-size: 120%;
       }
 
       /**
@@ -220,6 +247,20 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       .lineup__slot:nth-child(4n) {
         border-right: 1px solid var(--tick-highlight-color);
       }
+      .lineup:nth-child(2n) .lineup__slot:before {
+        content: attr(data-day);
+        display: block;
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        line-height: 1.4;
+        top: calc(var(--slot-width) / 2 - var(--spacing) / 2);
+        font-size: 12px;
+        color: var(--tick-color);
+      }
+      .lineup__slot[data-tick$="h"]:after {
+        color: var(--tick-highlight-color) !important;
+      }
       .lineup:nth-child(2n + 1) .lineup__slot:after {
         content: attr(data-tick);
         display: block;
@@ -256,7 +297,8 @@ function renderProgram({ lineups, startAt, endAt, events }) {
         transition: all 0.2s ease-in-out;
         font-size: 12px;
       }
-      .lineup__event pre {
+      .lineup__event pre,
+      .lineup__event + dialog pre {
         line-break: auto;
         word-break: break-word;
         white-space: break-spaces;
@@ -331,7 +373,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                 <a
                   class=${classMap({
                     dayline__tick: true,
-                    '--visible': true
+                    "--visible": visibleDate.getDate() === day.getDate(),
                   })}
                   href="#${day.toISOString()}"
                   @click=${(event) => {
@@ -349,13 +391,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
       <div
         class="program__lineups"
         id="lineups"
-        @scroll=${(event) => {
-          // console.log(
-          //   event.target.offsetWidth,
-          //   event.target.scrollLeft,
-          //   event.target.scrollWidth
-          // );
-        }}
+        @scroll=${debouncedTimelineScrollHandler}
       >
         ${lineups.map(
           (lineup) => html`
@@ -369,7 +405,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                 <h2>${lineup.name}</h2>
                 <p>${lineup.description}</p>
               </div>
-              <dialog id="lineup-detail-${lineup.id}">
+              <dialog class="lineup__detail" id="lineup-detail-${lineup.id}">
                 <h1>${lineup.name}</h1>
                 <p>${lineup.description}</p>
                 <p>Tady by toho mělo bejt víc.</p>
@@ -398,7 +434,7 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                         <pre
                           style=${`font-weight: ${
                             event.level > 100 ? "bold" : "normal"
-                          }; font-size: ${event.level || 100}%`}
+                          }; font-size: ${event.level || 100}%;`}
                         // eslint-disable-next-line prettier/prettier
                         >${event.title}</pre>
                       </div>
@@ -422,6 +458,9 @@ function renderProgram({ lineups, startAt, endAt, events }) {
                         class="lineup__slot"
                         ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
                         data-tick=${makeTick(time)}
+                        data-day=${time.toLocaleDateString([], {
+                          weekday: "short",
+                        })}
                         @click=${(event) => {
                           console.log("add event?", time);
                         }}
@@ -506,14 +545,6 @@ export async function main({ rootElement, env }) {
     console.error(o_O);
     alert("Chyba při načítání eventů\n" + o_O);
   }
-
-  const scrollElement = document.getElementById("lineups");
-  window.getSlotWidth = () => scrollElement.querySelector(".lineup__slot").offsetWidth;
-  window.scrollToDate = (date) => {
-    const width = window.getSlotWidth();
-    const left = ((date - startAt) / 1000 / 60 / SLOT_MINUTES) * width;
-    scrollElement.scrollLeft = left;
-  };
 
   requestAnimationFrame(() => {
     const param = location.hash.replace(/^#/, "");
