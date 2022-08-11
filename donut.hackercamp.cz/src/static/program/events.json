@@ -55,7 +55,7 @@
     "id":"ev7",
     "lineup": "liorg",
     "startAt": "2022-09-01T18:00:00",
-    "endAt": "2022-09-01T19:00:00",
+    "endAt": "2022-09-01T20:00:00",
     "title": "Ideální doba se nadlábnout",
     "_top": "46%"
   },
@@ -145,13 +145,191 @@
   },
   {
     "id": "ev18",
+    "lineup": "liorg",
+    "startAt": "2022-09-02T12:00:00",
+    "endAt": "2022-09-02T14:00:00",
+    "title": "Ideální doba se nadlábnout",
+    "_top": "49%"
+  },
+  {
+    "id": "ev19",
+    "lineup": "liorg",
+    "startAt": "2022-09-02T14:00:00",
+    "endAt": "2022-09-02T16:00:00",
+    "title": "Sejdeme se v mainfraime, program na další dvě hodniky + nové věci",
+    "_top": "48%"
+  },
+  {
+    "id": "ev20",
     "lineup": "limain",
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T16:00:00",
     "title": "Nakoukněte pod pokličku jiným oborům a odvětvím",
     "description": "Chirurgie\nHudba, akustika\nMěstská logistika\nCyklovýlety na 2 týdny\nKritické myšlení",
     "_top": "23%",
+    "level": 110,
+    "type": "topic"
+  },
+  {
+    "id": "ev21",
+    "lineup": "libase",
+    "startAt": "2022-09-02T14:00:00",
+    "endAt": "2022-09-02T16:00:00",
+    "title": "Frontend talks",
+    "description": "",
+    "_top": "13%",
     "level": 110
+  },
+  {
+    "id": "ev22",
+    "lineup": "liwood",
+    "startAt": "2022-09-02T14:00:00",
+    "endAt": "2022-09-02T16:00:00",
+    "title": "DJ workshop",
+    "description": "Vyzkoušejte si, co vše musí DJ zvládnout - budem mít různé mixáky a technologie.",
+    "_top": "33%",
+    "level": 100
+  },
+  {
+    "id": "ev23",
+    "lineup": "lia10g",
+    "startAt": "2022-09-02T14:00:00",
+    "endAt": "2022-09-02T16:00:00",
+    "title": "Mastermind skupina s Daliborem",
+    "level": 110,
+    "_top": "48%"
+  },
+  {
+    "id": "ev24",
+    "lineup": "liorg",
+    "startAt": "2022-09-02T16:00:00",
+    "endAt": "2022-09-02T18:00:00",
+    "title": "Sejdeme se v mainfraime, program na další dvě hodniky + nové věci",
+    "_top": "36%"
+  },
+  {
+    "id": "ev25",
+    "lineup": "limain",
+    "startAt": "2022-09-02T16:00:00",
+    "endAt": "2022-09-02T18:00:00",
+    "title": "NGOs + udržitelnost",
+    "description": "",
+    "_top": "18%",
+    "level": 110,
+    "type": "topic"
+  },
+  {
+    "id": "ev26",
+    "lineup": "libase",
+    "startAt": "2022-09-02T16:00:00",
+    "endAt": "2022-09-02T18:00:00",
+    "title": "New tech - AI, VR, NFTs in your business",
+    "description": "",
+    "_top": "32%",
+    "level": 110,
+    "type": "topic"
+  },
+  {
+    "id": "ev27",
+    "lineup": "liback",
+    "startAt": "2022-09-02T16:00:00",
+    "endAt": "2022-09-02T18:00:00",
+    "title": "Lockpicking workshop",
+    "description": "",
+    "_top": "41%",
+    "level": 110
+  },
+  {
+    "id": "ev28",
+    "lineup": "lia10g",
+    "startAt": "2022-09-02T16:00:00",
+    "endAt": "2022-09-02T18:00:00",
+    "title": "Poriadok v hlave s Poldem",
+    "level": 110,
+    "_top": "37%"
+  },
+  {
+    "id":"ev29",
+    "lineup": "liorg",
+    "startAt": "2022-09-02T18:00:00",
+    "endAt": "2022-09-02T20:00:00",
+    "title": "Ideální doba se nadlábnout",
+    "_top": "29%"
+  },
+  {
+    "id":"ev30",
+    "lineup": "liwood",
+    "startAt": "2022-09-02T19:00:00",
+    "endAt": "2022-09-02T20:00:00",
+    "title": "Tady něco bude",
+    "_top": "19%",
+    "level": 110
+  },
+  {
+    "id": "ev31",
+    "lineup": "limain",
+    "startAt": "2022-09-02T20:10:00",
+    "endAt": "2022-09-02T20:49:00",
+    "title": "Slam poetry / standup",
+    "description": "",
+    "_top": "21%",
+    "level": 110
+  },
+  {
+    "id": "ev32",
+    "lineup": "liwood",
+    "startAt": "2022-09-02T20:50:00",
+    "endAt": "2022-09-02T22:00:00",
+    "title": "Ventolín",
+    "description": "",
+    "_top": "44%",
+    "level": 120
+  },
+  {
+    "id": "ev33",
+    "lineup": "liorg",
+    "startAt": "2022-09-02T22:00:00",
+    "endAt": "2022-09-02T24:00:00",
+    "title": "Oheň",
+    "description": "",
+    "_top": "47%",
+    "level": 110
+  },
+  {
+    "id": "ev34",
+    "lineup": "limain",
+    "startAt": "2022-09-02T22:10:00",
+    "endAt": "2022-09-02T24:00:00",
+    "title": "Z prdele slajdy (Jirka)",
+    "description": "",
+    "_top": "34%",
+    "level": 110
+  },
+  {
+    "id": "ev35",
+    "lineup": "lia10g",
+    "startAt": "2022-09-02T23:10:00",
+    "endAt": "2022-09-03T02:00:00",
+    "title": "Jungle stage release",
+    "description": "",
+    "_top": "21%",
+    "level": 110
+  },
+  {
+    "id": "ev33",
+    "lineup": "liorg",
+    "startAt": "2022-09-03T00:00:00",
+    "endAt": "2022-09-03T02:00:00",
+    "title": "pomalý přesun do lesa",
+    "description": "",
+    "_top": "13%"
+  },
+  {
+    "id": "ev34",
+    "lineup": "liorg",
+    "startAt": "2022-09-03T02:00:00",
+    "endAt": "2022-09-03T08:00:00",
+    "title": "Noční klid :)",
+    "_top": "36%"
   }
-
 ]
