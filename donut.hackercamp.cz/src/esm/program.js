@@ -123,7 +123,7 @@ function handleLineupsScroll(event) {
 }
 
 function handleBodyScroll(event) {
- console.log(event)
+  console.log(event);
 }
 
 /**
@@ -138,7 +138,6 @@ function renderProgram({
   visibleDate,
   onLineupsScroll,
 }) {
-  console.log(visibleDate);
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.id);
 
@@ -235,17 +234,20 @@ function renderProgram({
         padding: calc(var(--spacing) / 2);
         border-top: 1px solid var(--tick-color);
         border-right: 1px solid var(--tick-highlight-color);
-        z-index: 2;
-      }
-      .lineup__sticky {
-        position: absolute;
-        box-sizing: border-box;
-        padding: calc(var(--spacing) / 2);
-        z-index: 1;
-        max-width: var(--head-width);
+        z-index: 3;
       }
       @media (min-width: 600px) {
         padding: calc(var(--spacing) * 1.5);
+      }
+      .lineup__sticky {
+        position: absolute;
+        margin: calc(var(--spacing) / 2);
+        z-index: 2;
+        font-size: 12px;
+        left: 0;
+        text-decoration: none;
+        background: var(--hc-background-image);
+        padding: 8px;
       }
       .lineup__timeline {
         display: flex;
@@ -412,6 +414,7 @@ function renderProgram({
             <div class="lineup">
               <div
                 class="lineup__info"
+                data-name=${lineup.name}
                 @click=${() => {
                   showModalDialog(`lineup-detail-${lineup.id}`);
                 }}
@@ -419,15 +422,14 @@ function renderProgram({
                 <h2>${lineup.name}</h2>
                 <p>${lineup.description}</p>
               </div>
-              <div
+              <a
                 class="lineup__sticky"
-                @click=${() => {
+                @click=${(event) => {
+                  event.preventDefault();
                   showModalDialog(`lineup-detail-${lineup.id}`);
                 }}
-                aria-hidden="true"
+                >${lineup.name}</a
               >
-                <h2>${lineup.name}</h2>
-              </div>
               <dialog class="lineup__detail" id="lineup-detail-${lineup.id}">
                 <h1>${lineup.name}</h1>
                 <p>${lineup.description}</p>
@@ -581,7 +583,6 @@ export async function main({ rootElement, env }) {
     const param = location.hash.replace(/^#/, "");
 
     if (isISODateTime(param)) {
-      console.log(param);
       scrollToDate(new Date(param));
     } else {
       scrollToDate(new Date());
