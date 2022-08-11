@@ -15,6 +15,7 @@ const state = defAtom({
   view: renderProgram,
   startAt: new Date(`2022-09-01T14:00:00`),
   visibleDate: new Date(`2022-09-01T14:00:00`),
+  onLineupsScroll: () => {},
   endAt: new Date(`2022-09-04T14:00:00`),
   lineups: [],
   events: [],
@@ -104,13 +105,14 @@ function scrollToDate(date) {
   const time = (date - startAt) / 1000 / 60 / SLOT_MINUTES;
   const left = time * getSlotWidth();
   scrollElement.scrollLeft = left;
-};
+}
 
-const debouncedTimelineScrollHandler = debounce((event) => {
+function handleLineupsScroll(event) {
   const { startAt } = state.deref();
   const visibleDate = new Date(startAt.getTime());
   const minutesScrolledOut =
     (event.target.scrollLeft / getSlotWidth()) * SLOT_MINUTES;
+
   visibleDate.setMinutes(startAt.getMinutes() + minutesScrolledOut);
 
   transact((x) =>
@@ -118,13 +120,24 @@ const debouncedTimelineScrollHandler = debounce((event) => {
       visibleDate,
     })
   );
-});
+}
+
+function handleBodyScroll(event) {
+ console.log(event)
+}
 
 /**
  *
  * @param {defAtom} state
  */
-function renderProgram({ lineups, startAt, endAt, events, visibleDate }) {
+function renderProgram({
+  lineups,
+  startAt,
+  endAt,
+  events,
+  visibleDate,
+  onLineupsScroll,
+}) {
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.id);
 
@@ -388,11 +401,7 @@ function renderProgram({ lineups, startAt, endAt, events, visibleDate }) {
           )}
         </div>
       </div>
-      <div
-        class="program__lineups"
-        id="lineups"
-        @scroll=${debouncedTimelineScrollHandler}
-      >
+      <div class="program__lineups" id="lineups" @scroll=${onLineupsScroll}>
         ${lineups.map(
           (lineup) => html`
             <div class="lineup">
@@ -545,6 +554,14 @@ export async function main({ rootElement, env }) {
     console.error(o_O);
     alert("Chyba při načítání eventů\n" + o_O);
   }
+
+  transact((x) =>
+    Object.assign(x, {
+      onLineupsScroll: debounce(handleLineupsScroll),
+    })
+  );
+
+  document.body.addEventListener("scroll", debounce(handleBodyScroll));
 
   requestAnimationFrame(() => {
     const param = location.hash.replace(/^#/, "");
