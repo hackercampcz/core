@@ -123,7 +123,19 @@ function handleLineupsScroll(event) {
 }
 
 function handleBodyScroll(event) {
-  console.log(event);
+  const lineupsElement = document.querySelector("#lineups");
+  const daylineElement = document.querySelector(".dayline");
+  if (!daylineElement) {
+    return;
+  }
+  const { y } = lineupsElement.getBoundingClientRect();
+  const { height } = daylineElement.getBoundingClientRect();
+  daylineElement.parentElement.style.height = `${height}px`;
+  if (document.body.scrollTop + height > y) {
+    daylineElement.style.position = "fixed";
+  } else {
+    daylineElement.style.position = "initial";
+  }
 }
 
 /**
@@ -206,6 +218,14 @@ function renderProgram({
         display: flex;
         align-items: center;
         justify-content: center;
+
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--hc-background-color);
+        background-image: var(--hc-background-image, none);
+        z-index: 4;
+        border-bottom: 1px solid var(--tick-color);
       }
       a.dayline__tick {
         flex: 1;
@@ -235,6 +255,9 @@ function renderProgram({
         border-top: 1px solid var(--tick-color);
         border-right: 1px solid var(--tick-highlight-color);
         z-index: 3;
+        min-height: 10rem;
+        display: flex;
+        flex-direction: column;
       }
       @media (min-width: 600px) {
         padding: calc(var(--spacing) * 1.5);
@@ -315,7 +338,7 @@ function renderProgram({
         overflow: hidden;
         border: 1px solid var(--tick-highlight-color);
         transition: all 0.2s ease-in-out;
-        font-size: 12px;
+        font-size: 14px;
       }
       .lineup__event pre,
       .lineup__event + dialog pre {
@@ -347,6 +370,12 @@ function renderProgram({
       .lineup__event:hover,
       .lineup__event:active {
         width: max-content;
+      }
+
+      :where(.lineup__detail, .event__detail) h1 {
+        margin: calc(var(--spacing) / 2) 0 var(--spacing) 0;
+        font-size: 2rem;
+        line-height: 1.2;
       }
 
       dialog button[name="close"] {
@@ -463,7 +492,9 @@ function renderProgram({
                         // eslint-disable-next-line prettier/prettier
                         >${event.title}</pre>
                       </div>
-                      <dialog id="event-detail-${event.id}">
+                      <dialog class="event__detail" id="event-detail-${
+                        event.id
+                      }">
                         <h1>${event.title}</h1>
                         <p>
                           ${formatEventTimeInfo(event)}
@@ -577,7 +608,7 @@ export async function main({ rootElement, env }) {
     })
   );
 
-  document.body.addEventListener("scroll", debounce(handleBodyScroll));
+  document.addEventListener("scroll", debounce(handleBodyScroll));
 
   requestAnimationFrame(() => {
     const param = location.hash.replace(/^#/, "");
