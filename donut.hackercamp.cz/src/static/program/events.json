@@ -90,7 +90,7 @@
     "startAt": "2022-09-01T22:00:00",
     "endAt": "2022-09-01T24:00:00",
     "title": "Zrní zahraje u Ohně!",
-    "_top": "38%",
+    "_top": "8%",
     "level": 110
   },
   {
@@ -157,7 +157,7 @@
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T16:00:00",
     "title": "Sejdeme se v mainfraime, program na další dvě hodniky + nové věci",
-    "_top": "48%"
+    "_top": "8%"
   },
   {
     "id": "ev20",
@@ -165,8 +165,7 @@
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T16:00:00",
     "title": "Nakoukněte pod pokličku jiným oborům a odvětvím",
-    "description": "Chirurgie\nHudba, akustika\nMěstská logistika\nCyklovýlety na 2 týdny\nKritické myšlení",
-    "_top": "23%",
+    "description": "14:10 Chirurgie\n14:20 Hudba, akustika\n14:30 Městská logistika\n14:40 Cyklovýlety na 2 týdny\n14:50 Kritické myšlení",
     "level": 110,
     "type": "topic"
   },
@@ -177,7 +176,6 @@
     "endAt": "2022-09-02T16:00:00",
     "title": "Frontend talks",
     "description": "",
-    "_top": "13%",
     "level": 110,
     "type": "topic"
   },
@@ -215,7 +213,6 @@
     "endAt": "2022-09-02T18:00:00",
     "title": "NGOs + udržitelnost",
     "description": "",
-    "_top": "18%",
     "level": 110,
     "type": "topic"
   },
@@ -226,7 +223,6 @@
     "endAt": "2022-09-02T18:00:00",
     "title": "New tech - AI, VR, NFTs in your business",
     "description": "",
-    "_top": "32%",
     "level": 110,
     "type": "topic"
   },
@@ -356,8 +352,8 @@
     "endAt": "2022-09-03T12:00:00",
     "title": "Netradiční koníčky",
     "description": "potápění, létání (Havry)\nOkruhy (Michal)\nVideo-stroies - Tom + Mišo",
-    "_top": "16%",
-    "level": 110
+    "level": 110,
+    "type": "topic"
   },
   {
     "id": "ev40",

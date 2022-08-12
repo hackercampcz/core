@@ -69,10 +69,12 @@ function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
 function showModalDialog(id) {
   const element = document.getElementById(id);
   element.showModal();
+  // TODO: change hash to allow events sharing
   document.body.classList.add("has-open-dialog");
   element.querySelector("button[name=close]").addEventListener("click", () => {
     document.body.classList.remove("has-open-dialog");
     element.close();
+    // TODO: remove hash from url and add time of visible date
   });
 }
 
@@ -395,9 +397,14 @@ function renderProgram({
         cursor: pointer;
       }
 
-      .timeline_tick {
-        position: absolute;
-        top: 0;
+      .program__beside {
+        box-size: border-box;
+        padding: calc(var(--spacing));
+      }
+
+      ul {
+        margin: var(--spacing) 0;
+        padding: 0;
       }
     </style>
     <div class="program">
@@ -469,7 +476,7 @@ function renderProgram({
                 <p>Tady by toho mělo bejt víc.</p>
                 <a
                   class="hc-link hc-link--decorated"
-                  style="padding: calc(var(--spacing) / 2);"
+                  style="padding: calc(var(--spacing) / 4);"
                   @click=${() => {
                     showModalDialog("add-event");
                   }}
@@ -505,6 +512,35 @@ function renderProgram({
                           }; font-size: ${event.level || 100}%;`}
                         // eslint-disable-next-line prettier/prettier
                         >${event.title}</pre>
+                        <div style="display: flex;">
+                          ${when(
+                            event.type === "topic",
+                            () => html`
+                              ${when(
+                                event.description,
+                                () => html`<pre
+                                  style="font-size: small; margin-bottom: calc(var(--spacing) / 4);"
+                                >
+${event.description}</pre
+                                >`
+                              )}
+                              <div
+                                style="text-align: center; flex: 1; align-self: flex-end; margin: calc(var(--spacing) / 4);"
+                              >
+                                <a
+                                  class="hc-link hc-link--decorated"
+                                  style="font-size: small; padding: calc(var(--spacing) / 4);"
+                                  @click=${(event) => {
+                                    event.preventDefault();
+                                    showModalDialog("add-event");
+                                  }}
+                                >
+                                  Zapojit se
+                                </a>
+                              </div>
+                            `
+                          )}
+                        </div>
                       </div>
                       <dialog class="event__detail" id="event-detail-${
                         event.id
@@ -521,7 +557,7 @@ function renderProgram({
                             <p>
                               <a
                                 class="hc-link hc-link--decorated"
-                                style="padding: calc(var(--spacing) / 2);"
+                                style="padding: calc(var(--spacing) / 4);"
                                 @click=${(event) => {
                                   event.preventDefault();
                                   showModalDialog("add-event");
@@ -561,6 +597,24 @@ function renderProgram({
             </div>
           `
         )}
+      </div>
+      <div class="program__beside">
+        <h2>Další program</h2>
+        <p>Bez pevného času.</p>
+        <ul>
+          <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
+          <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
+          <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
+        </ul>
+        <a
+          class="hc-link hc-link--decorated"
+          style="padding: calc(var(--spacing) / 4)"
+          @click=${() => {
+            showModalDialog("add-event");
+          }}
+        >
+          Přidat událost
+        </a>
       </div>
       <dialog id="add-event">
         <form id="add">
