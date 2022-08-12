@@ -2256,7 +2256,7 @@ __metadata:
     "@ungap/structured-clone": ^1.0.1
     date-fns: 2.29.1
     eslint-plugin-promise: 6.0.0
-    lit-html: 2.2.7
+    lit-html: 2.3.0
     marked: 4.0.18
     ramda: 0.28.0
     rollbar: 2.25.1
@@ -9374,12 +9374,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:2.2.7":
-  version: 2.2.7
-  resolution: "lit-html@npm:2.2.7"
+"lit-html@npm:2.3.0":
+  version: 2.3.0
+  resolution: "lit-html@npm:2.3.0"
   dependencies:
     "@types/trusted-types": ^2.0.2
-  checksum: 77e3dda068a93de06251d5147b5f67df07902202e397f5f504ad99fb3b5ef7201668af294484fd99850618453251e5d7cfd4ea7e7355a79b4c1d9f4b432f204a
+  checksum: 71b86f28461c61e1bf595a605409e4ce79edd2f70257e365899cddf64902c4879d4a05619a8f5026847046e92e26739a1e10e9460b3967e5974387ec10991723
   languageName: node
   linkType: hard
 
