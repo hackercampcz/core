@@ -69,7 +69,9 @@ function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
 function showModalDialog(id) {
   const element = document.getElementById(id);
   element.showModal();
+  document.body.classList.add("has-open-dialog");
   element.querySelector("button[name=close]").addEventListener("click", () => {
+    document.body.classList.remove("has-open-dialog");
     element.close();
   });
 }
