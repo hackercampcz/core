@@ -5,7 +5,7 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { attributes } from "@hackercamp/lib/attendee.mjs";
+import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
 
@@ -38,7 +38,7 @@ function createAttendee(dynamo, contact, record) {
         Object.assign(
           {},
           selectKeys(contact, new Set(["slackID", "name", "image", "slug"])),
-          selectKeys(record, attributes)
+          selectKeys(record, attributes, mapper)
         )
       ),
     })

@@ -6,7 +6,7 @@ import {
 import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
-import { attributes } from "@hackercamp/lib/attendee.mjs";
+import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
 import {
   internalError,
   notFound,
@@ -59,7 +59,8 @@ async function createAttendee({ id, profile, name }, record) {
             name: profile.real_name,
             image: profile.image_512,
           },
-          selectKeys(record, attributes)
+          selectKeys(record, attributes, mapper
+          )
         ),
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
