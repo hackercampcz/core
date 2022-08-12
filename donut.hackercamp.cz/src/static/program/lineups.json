@@ -2,36 +2,48 @@
   {
     "id": "liorg",
     "name": "Organizační",
-    "description": "Hacker Camp informace."
+    "description": "Co se ještě děje na campu a máš vědět. Snídaně, jídlo, noční klid :)"
   },
   {
     "id": "limain",
     "name": "Mainframe",
-    "description": "Byznys, life."
+    "description": "Byznys. Life. Hacks.\nNGOs. Stories.\nStandUps. ZPrdeleSlidy.",
+    "detail": "Naše hlavní stage. Najdeš ji ve velkém šapito. Je to místo, kde se na začátku každého dne i bloku potkáme, abychom shrnuli nejbližsí program, poslechli si další spontální nápady na aktivity.\nObsahově tu najdeš všechno, jen ne devs a data talky :)"
   },
   {
     "id": "libase",
     "name": "Basecamp",
-    "description": "Data. Devs."
+    "description": "Data. Devs.\nBI. Code.",
+    "detail": "I devs a data témata si zasluží krásnou krytou stage. Letošní novinka: Okodom. Pojme až stovku posluchačů. Bude mít techniku na pododlnou projekci za každého počasí. Ideální místo pro všechna data a vývojářská témata."
   },
   {
     "id": "liback",
     "name": "Backend",
-    "description": "Workshopy, co nepotřebují projektor."
+    "description": "Workshop zone. \nPro ty, co nepotřebují projektor.",
+    "detail": "Náš stan za food zónou, kam se pohodlně vejdou workshopy a diskuse pro cca 20-30 lidí. Tady najdeš maximálně flipchart, místo k sezení a možná i stůl dáme. Projektor, nebo internet tady fakt nečekej. Super místo pro diskuse ve větším počtu, nebo workshop, kde se od sebe táborníci a tábornice můžou něco nového naučit, společně vymyslet,...."
   },
   {
     "id": "lipeep",
     "name": "Peopleware",
-    "description": "Sport a relax."
+    "description": "Sport. Relax.\n",
+    "detail": "Tohle vlastně není konkrétní stage. Spíš info pro Tebe, kde, kdy a jak se tu spolu s dalšími sportovně vyřádit. Od chillu u rybníka, po ranní výběhy, jógy, po zdravotní procházky na Prahu :)"
   },
   {
     "id": "liwood",
     "name": "WoodStack",
-    "description": "Hudební stage / program."
+    "description": "Kapely. Fesťák.\n",
+    "detail": "Přesně tady čekej Ventolína, MidiLidi i další velké či menší hvězdy. Profi nazvučená a osvětlená stage, co se postará o festivalový zážitek. \nJen letos musíme s hudební produkcí končit už ve 22:00. O to víc si ji užijeme, že? :)"
+  },
+  {
+    "id": "lijungle",
+    "name": "Jungle Release",
+    "description": "DJs. Noční program.\nLoď. Les.\n",
+    "detail": "DJs z řad hackerů. Budou hrát na lodi vedle Woodstacku. Ale Jungle Release má i svoje typické místo v lese, kam se přesune hudební produkce pro ty, kterým nestačí oheň a kytara. I tady je line-up hvězdný, tak si ho nenechte ujít."
   },
   {
     "id": "lia10g",
     "name": "Doprovodný program",
-    "description": "Děje se v areálu."
+    "description": "Hry. Kvízi. Konzultace.\nFun & Others.\n",
+    "detail": "By hackers for hackers."
   }
 ]

@@ -176,6 +176,7 @@ function renderProgram({
         --slot-width: calc(100vw / 2.5 / 4);
         --tick-color: #eee;
         --tick-highlight-color: #aaa;
+        --max-dialog-width: 800px;
       }
       @media (prefers-color-scheme: dark) {
         .program {
@@ -207,7 +208,7 @@ function renderProgram({
       }
       @media (min-width: 1600px) {
         .program {
-          --info-width: calc(100vw / 6);
+          --info-width: calc(100vw / 5);
           --slot-width: calc(100vw / 6 / 6);
         }
       }
@@ -260,13 +261,14 @@ function renderProgram({
         border-top: 1px solid var(--tick-color);
         border-right: 1px solid var(--tick-highlight-color);
         z-index: 3;
-        min-height: 10rem;
         display: flex;
         flex-direction: column;
         cursor: pointer;
       }
-      @media (min-width: 600px) {
-        padding: calc(var(--spacing) * 1.5);
+      @media (min-width: 1200px) {
+        .lineup__info {
+          padding: calc(var(--spacing));
+        }
       }
       .lineup__sticky {
         position: absolute;
@@ -347,7 +349,8 @@ function renderProgram({
         font-size: 14px;
       }
       .lineup__event pre,
-      .lineup__event + dialog pre {
+      .lineup__event + dialog pre,
+      .lineup__info pre {
         line-break: auto;
         word-break: break-word;
         white-space: break-spaces;
@@ -359,17 +362,20 @@ function renderProgram({
         font-size: 120%;
       }
       @media (min-width: 400px) {
-        .lineup__event {
+        .lineup__event,
+        .lineup__info {
           font-size: 14px;
         }
       }
       @media (min-width: 800px) {
-        .lineup__event {
+        .lineup__event,
+        .lineup__info  {
           font-size: 16px;
         }
       }
       @media (min-width: 1600px) {
-        .lineup__event {
+        .lineup__event,
+        .lineup__info  {
           font-size: 18px;
         }
       }
@@ -382,6 +388,10 @@ function renderProgram({
         margin: calc(var(--spacing) / 2) 0 var(--spacing) 0;
         font-size: 2rem;
         line-height: 1.2;
+      }
+
+      dialog {
+        max-width: var(--max-dialog-width);
       }
 
       dialog button[name="close"] {
@@ -406,13 +416,25 @@ function renderProgram({
         margin: var(--spacing) 0;
         padding: 0;
       }
+
+      .lineup:first-child {
+        font-style: italic;
+      }
+      .lineup:first-child .lineup__event {
+        border: 1px solid var(--tick-color);
+        background-color: var(--hc-background-color);
+        background-image: var(--hc-background-image, none);
+      }
     </style>
     <div class="program">
       <div class="program__header">
         <h1>Program</h1>
         <p>
-          Lorum ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
-          nisi eu, consectetur, lobortis ipsum.
+          Hacker Camp bude jen takový, jaký si ho uděláme. Tady najdeš program a
+          aktivity, co už táborníci zapsali. Další aktivty přibývají a některé
+          mohou hackeři jen nahlásit na začátku každého bloku před Mainframe.
+          Zkrátka: Porgram se může a bude měnit za chodu :) Takže se těš a
+          sleduj co se děje online i offline.
         </p>
         <a
           class="hc-link hc-link--decorated"
@@ -422,7 +444,7 @@ function renderProgram({
             showModalDialog("add-event");
           }}
         >
-          Přidat svoji událost
+          Zapoj se do programu
         </a>
       </div>
       <div class="program__dayline">
@@ -460,7 +482,7 @@ function renderProgram({
                 }}
               >
                 <h2>${lineup.name}</h2>
-                <p>${lineup.description}</p>
+                <pre>${lineup.description}</pre>
               </div>
               <a
                 class="lineup__sticky"
@@ -472,8 +494,8 @@ function renderProgram({
               >
               <dialog class="lineup__detail" id="lineup-detail-${lineup.id}">
                 <h1>${lineup.name}</h1>
-                <p>${lineup.description}</p>
-                <p>Tady by toho mělo bejt víc.</p>
+                <p><pre>${lineup.description}</pre></p>
+                <p><pre>${lineup.detail}</pre></p>
                 <a
                   class="hc-link hc-link--decorated"
                   style="padding: calc(var(--spacing) / 4);"
@@ -492,6 +514,7 @@ function renderProgram({
                     html`
                       <div
                         class="lineup__event"
+                        data-lineup=${lineup.id}
                         id=${event.id}
                         style=${`
                           left: calc(${eventStartAtSlot(
@@ -600,7 +623,7 @@ ${event.description}</pre
       </div>
       <div class="program__beside">
         <h2>Další program</h2>
-        <p>Bez pevného času.</p>
+        <p>Nejen přednáškami, workshopy, hudbou a sportem živ je hacker. Na campu se toho děje mnohem víc. Můžeš si vyzkoušet zajímavé hry -> živé, deskovky, karty, playstationy. Pár z vás nabízí one-one povídání, kvízi, sekání dřeva a spoustu dalšího. Tady najdete vše pohromadě.</p>
         <ul>
           <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
           <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
