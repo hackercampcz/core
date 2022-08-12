@@ -160,9 +160,15 @@ code {
 }
 
 
-
-.hc-navbar__right {
-  display: none;
+@media screen and (max-width: 600px) {
+  .hc-navbar__right {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    display: flex;
+    left: 8px;
+    justify-content: right;
+  }
 }
 
 @media screen and (min-width: 600px) {

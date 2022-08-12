@@ -30,6 +30,12 @@ button.hc-header__profile-photo:hover {
   background-clip: padding-box;
 }
 
+.hc-header__profile-name a:link,
+.hc-header__profile-name a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+
 .hc-popup {
   width: 16rem;
   position: absolute;

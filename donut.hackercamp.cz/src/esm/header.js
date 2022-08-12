@@ -1,12 +1,13 @@
 import { defAtom } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import { when } from "lit-html/directives/when.js";
-import { signOut } from "./lib/profile.js";
+import { getContact, signOut } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as workbox from "./lib/workbox.js";
 
 const state = defAtom({
   apiURL: () => "",
+  contact: null,
   profile: null,
   idPopupVisible: false,
   view: renderProfile,
@@ -26,18 +27,28 @@ function headerProfile({ name, picture }, togglePopup) {
   `;
 }
 
-function headerProfilePopup({ name, picture }, signOut) {
+function headerProfilePopup({ name, picture, slug }, signOut) {
   const { apiURL } = state.deref();
   return html`
     <div class="hc-popup">
       <ul>
         <li>
           <div class="hc-header__profile-photo">
-            <img alt="${name}" src="${picture}" width="48" height="48" />
+            <a href="/hackers/${slug}">
+              <img alt="${name}" src="${picture}" width="48" height="48" />
+            </a>
           </div>
           <div class="hc-header__profile-name">
-            <strong>${name}</strong>
+            <a href="/hackers/${slug}">
+              <strong>${name}</strong>
+            </a>
           </div>
+        </li>
+        <li>
+          <a href="/hackers/">Seznam účastníků</a>
+        </li>
+        <li>
+          <a href="https://www.hackercamp.cz/faq/">Často kladené dotazy</a>
         </li>
         <li>
           <button
@@ -52,16 +63,16 @@ function headerProfilePopup({ name, picture }, signOut) {
   `;
 }
 
-function header(profile, isPopupVisible, togglePopup) {
+function header(profile, contact, isPopupVisible, togglePopup) {
   return html`
     ${headerProfile(profile, togglePopup)}
     ${when(isPopupVisible, () => headerProfilePopup(profile, signOut))}
   `;
 }
 
-function renderProfile({ profile, isPopupVisible }) {
+function renderProfile({ profile, contact, isPopupVisible }) {
   if (!profile) return;
-  return header(profile, isPopupVisible, () => {
+  return header(profile, contact, isPopupVisible, () => {
     state.swap((x) =>
       Object.assign({}, x, { isPopupVisible: !isPopupVisible })
     );
@@ -76,7 +87,10 @@ function getProfile() {
 
 function loadProfile() {
   const profile = getProfile();
-  return state.swap((x) => Object.assign(x, { profile }));
+  const contact = getContact();
+  if (!profile && !contact) return;
+
+  return state.swap((x) => Object.assign(x, { profile, contact }));
 }
 
 export async function init({ profile: root, env }) {
