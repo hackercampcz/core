@@ -169,7 +169,7 @@ function renderProgram({
        */
       .program {
         --spacing: var(--mdc-layout-grid-margin-desktop, 24px);
-        --head-width: calc(100vw * 2 / 3);
+        --info-width: calc(100vw * 2 / 3);
         --slot-width: calc(100vw / 2.5 / 4);
         --tick-color: #eee;
         --tick-highlight-color: #aaa;
@@ -192,19 +192,19 @@ function renderProgram({
       }
       @media (min-width: 600px) {
         .program {
-          --head-width: calc(100vw / 3);
+          --info-width: calc(100vw / 3);
           --slot-width: calc(100vw / 6 / 3);
         }
       }
       @media (min-width: 900px) {
         .program {
-          --head-width: calc(100vw / 4);
+          --info-width: calc(100vw / 4);
           --slot-width: calc(100vw / 6 / 4);
         }
       }
       @media (min-width: 1600px) {
         .program {
-          --head-width: calc(100vw / 6);
+          --info-width: calc(100vw / 6);
           --slot-width: calc(100vw / 6 / 6);
         }
       }
@@ -250,7 +250,7 @@ function renderProgram({
         display: flex;
       }
       .lineup__info {
-        min-width: var(--head-width);
+        min-width: var(--info-width);
         background-color: var(--hc-background-color);
         box-sizing: border-box;
         padding: calc(var(--spacing) / 2);
@@ -260,6 +260,7 @@ function renderProgram({
         min-height: 10rem;
         display: flex;
         flex-direction: column;
+        cursor: pointer;
       }
       @media (min-width: 600px) {
         padding: calc(var(--spacing) * 1.5);
@@ -405,16 +406,16 @@ function renderProgram({
           Lorum ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod
           nisi eu, consectetur, lobortis ipsum.
         </p>
-        <!-- <button
+        <a
           class="hc-link hc-link--decorated"
-          style="
-            margin: var(--spacing) auto;
-            display: block;
-            font-size: 120%;
-          "
+          style="font-size: 120%;"
+          @click=${(event) => {
+            event.preventDefault();
+            showModalDialog("add-event");
+          }}
         >
-          Přidat vlastní program
-        </button> -->
+          Přidat svůj událost
+        </a>
       </div>
       <div class="program__dayline">
         <div class="dayline">
@@ -465,6 +466,16 @@ function renderProgram({
                 <h1>${lineup.name}</h1>
                 <p>${lineup.description}</p>
                 <p>Tady by toho mělo bejt víc.</p>
+                <a
+                  class="hc-link hc-link--decorated"
+                  style="padding: calc(var(--spacing) / 2);"
+                  @click=${() => {
+                    showModalDialog("add-event");
+                  }}
+                >
+                  Přidat událost
+                </a>
+                <hr />
                 <button name="close">Zavřít</button>
               </dialog>
               <div class="lineup__eventsline">
