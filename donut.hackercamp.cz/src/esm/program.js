@@ -5,8 +5,8 @@ import { classMap } from "lit-html/directives/class-map.js";
 import * as rollbar from "./lib/rollbar.js";
 import { objectWalk } from "./lib/object.js";
 import structuredClone from "@ungap/structured-clone";
-import { ref } from "lit/directives/ref.js";
-import { debounce } from "./lib/function.js";
+import { when } from "lit/directives/when.js";
+import { throttle } from "./lib/function.js";
 
 const SLOT_MINUTES = 15;
 const DAY_START_HOUR = 8;
@@ -116,6 +116,7 @@ function handleLineupsScroll(event) {
     (event.target.scrollLeft / getSlotWidth()) * SLOT_MINUTES;
 
   visibleDate.setMinutes(startAt.getMinutes() + minutesScrolledOut);
+  location.hash = `#${visibleDate.toISOString()}`;
 
   transact((x) =>
     Object.assign(x, {
@@ -414,7 +415,7 @@ function renderProgram({
             showModalDialog("add-event");
           }}
         >
-          Přidat svůj událost
+          Přidat svoji událost
         </a>
       </div>
       <div class="program__dayline">
@@ -514,6 +515,24 @@ function renderProgram({
                           <code>${lineup.name}</code><br>
                         </p>
                         <pre>${event.description}</pre>
+                        ${when(
+                          event.type === "topic",
+                          () => html`
+                            <p>
+                              <a
+                                class="hc-link hc-link--decorated"
+                                style="padding: calc(var(--spacing) / 2);"
+                                @click=${(event) => {
+                                  event.preventDefault();
+                                  showModalDialog("add-event");
+                                }}
+                              >
+                                Zapojit se
+                              </a>
+                              <hr />
+                            </p>
+                          `
+                        )}
                         <button name="close">Zavřít</button>
                       </dialog>
                     `
@@ -679,11 +698,11 @@ export async function main({ rootElement, env }) {
 
   transact((x) =>
     Object.assign(x, {
-      onLineupsScroll: debounce(handleLineupsScroll),
+      onLineupsScroll: throttle(handleLineupsScroll),
     })
   );
 
-  document.addEventListener("scroll", debounce(handleBodyScroll));
+  document.addEventListener("scroll", throttle(handleBodyScroll));
 
   requestAnimationFrame(() => {
     const param = location.hash.replace(/^#/, "");

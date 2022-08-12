@@ -178,7 +178,8 @@
     "title": "Frontend talks",
     "description": "",
     "_top": "13%",
-    "level": 110
+    "level": 110,
+    "type": "topic"
   },
   {
     "id": "ev22",
