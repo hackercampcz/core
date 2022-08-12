@@ -297,7 +297,7 @@ function renderProgram({
         width: 100%;
         text-align: center;
         line-height: 1.4;
-        top: calc(var(--slot-width) / 2 - var(--spacing) / 2);
+        top: 0;
         font-size: 12px;
         color: var(--tick-color);
       }
@@ -518,7 +518,7 @@ function renderProgram({
                           weekday: "short",
                         })}
                         @click=${(event) => {
-                          console.log("add event?", time);
+                          showModalDialog("add-event");
                         }}
                       >
                         &nbsp;
@@ -530,6 +530,66 @@ function renderProgram({
           `
         )}
       </div>
+      <dialog id="add-event">
+        <form id="add">
+          <h2>Přidat událost</h2>
+          <p>
+            V každé aktivitě respektujeme základní pravidlo: Hacker Camp je z
+            principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš
+            propagovat a nabízet jen pokud to obohatí samotnou akci.
+          </p>
+          <div class="field field--block">
+            <label for="activity">
+              Jakou aktivitu sis pro táborníky připravil?
+            </label>
+            <textarea id="activity" name="activity" rows="5"></textarea>
+          </div>
+          <div class="field field--block">
+            <label for="activity-crew">
+              Kdo všechno s Tebou bude aktivitu zařízovat?
+              <span
+                >Vypiš nám sem všechna jména a dej nám telefonní číslo a mail na
+                toho, s kým můžeme případně řešit.</span
+              >
+            </label>
+            <textarea
+              id="activity-crew"
+              name="activityCrew"
+              rows="5"
+            ></textarea>
+          </div>
+          <div class="field field--block">
+            <label for="activity-place">
+              Potřebuješ k tomu nějaké speciální zázemí?
+              <span
+                >Například zásuvku, elektriku, internet, klidné zákoutí…</span
+              >
+            </label>
+            <textarea
+              id="activity-place"
+              name="activityPlace"
+              rows="3"
+            ></textarea>
+          </div>
+          <button type="submit" class="hc-button">Odeslat</button>
+          <!-- <h1>Přidat vlastní program</h1>
+        <p>
+          V každé aktivitě respektujeme základní pravidlo: Hacker Camp je z
+          principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš
+          propagovat a nabízet jen pokud to obohatí samotnou akci.
+        </p>
+        <label>
+          <span>Headlajn</span>
+          <input type="text" name="title" placeholder="Název akce" />
+        </label>
+        <label>
+          <span>Popis</span>
+          <textarea name="description" placeholder="Popis akce"></textarea>
+        </label> -->
+        </form>
+        <hr />
+        <button name="close">Zavřít</button>
+      </dialog>
     </div>
   `;
 }
@@ -601,6 +661,8 @@ export async function main({ rootElement, env }) {
     console.error(o_O);
     alert("Chyba při načítání eventů\n" + o_O);
   }
+
+  // Manual and auto scroll trought the program features
 
   transact((x) =>
     Object.assign(x, {

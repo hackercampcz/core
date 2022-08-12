@@ -131,7 +131,7 @@
     "lineup": "limain",
     "startAt": "2022-09-02T10:00:00",
     "endAt": "2022-09-02T11:00:00",
-    "title": "Ofiko zhájení dne. Máte program? A mohla bych ho vidět?",
+    "title": "Ofiko zahájení dne. Máte program? A mohla bych ho vidět?",
     "_top": "8%"
   },
   {
@@ -316,20 +316,107 @@
     "level": 110
   },
   {
-    "id": "ev33",
+    "id": "ev36",
     "lineup": "liorg",
     "startAt": "2022-09-03T00:00:00",
     "endAt": "2022-09-03T02:00:00",
-    "title": "pomalý přesun do lesa",
+    "title": "Pomalý přesun do lesa",
     "description": "",
     "_top": "13%"
   },
   {
-    "id": "ev34",
+    "id": "ev36a",
     "lineup": "liorg",
     "startAt": "2022-09-03T02:00:00",
     "endAt": "2022-09-03T08:00:00",
-    "title": "Noční klid :)",
+    "title": "Noční klid :) a jakékoliv noční pokračování v lese",
+    "_top": "29%"
+  },
+  {
+    "id": "ev37",
+    "lineup": "liorg",
+    "startAt": "2022-09-03T08:00:00",
+    "endAt": "2022-09-03T10:00:00",
+    "title": "Čas si dát kafe, snídani, ranní sprchu, výběh",
+    "_top": "24%"
+  },
+  {
+    "id": "ev38",
+    "lineup": "liorg",
+    "startAt": "2022-09-03T10:00:00",
+    "endAt": "2022-09-03T11:00:00",
+    "title": "Ofiko zahájení dne - nabídka, zda má někdo něco dalšího do programu",
+    "_top": "12%"
+  },
+  {
+    "id": "ev39",
+    "lineup": "limain",
+    "startAt": "2022-09-03T10:00:00",
+    "endAt": "2022-09-03T12:00:00",
+    "title": "Netradiční koníčky",
+    "description": "potápění, létání (Havry)\nOkruhy (Michal)\nVideo-stroies - Tom + Mišo",
+    "_top": "16%",
+    "level": 110
+  },
+  {
+    "id": "ev40",
+    "lineup": "libase",
+    "startAt": "2022-09-03T10:00:00",
+    "endAt": "2022-09-03T12:00:00",
+    "title": "Sustainable code",
+    "_top": "22%",
+    "level": 110
+  },
+  {
+    "id": "ev41",
+    "lineup": "lia10g",
+    "startAt": "2022-09-03T10:00:00",
+    "endAt": "2022-09-03T12:00:00",
+    "title": "Poriadok v hlave s Poldem",
+    "level": 110,
+    "_top": "22%"
+  },
+  {
+    "id":"ev42",
+    "lineup": "liorg",
+    "startAt": "2022-09-03T12:00:00",
+    "endAt": "2022-09-03T14:00:00",
+    "title": "Ideální doba se nadlábnout",
+    "_top": "39%"
+  },
+  {
+    "id": "ev43",
+    "lineup": "liorg",
+    "startAt": "2022-09-03T14:00:00",
+    "endAt": "2022-09-03T16:00:00",
+    "title": "Sejdeme se v mainfraime, program na další dvě hodniky + nové věci",
     "_top": "36%"
+  },
+  {
+    "id": "ev44",
+    "lineup": "limain",
+    "startAt": "2022-09-03T14:00:00",
+    "endAt": "2022-09-03T16:00:00",
+    "title": "Bio-hacking / life hacking",
+    "description": "Preperství a cestování (Míla F.)\nAlexythimie",
+    "level": 110
+  },
+  {
+    "id": "ev45",
+    "lineup": "libase",
+    "startAt": "2022-09-03T14:00:00",
+    "endAt": "2022-09-03T16:00:00",
+    "title": "BI + Data",
+    "description": "\n",
+    "level": 110
+  },
+  {
+    "id": "ev46",
+    "lineup": "lia10g",
+    "startAt": "2022-09-03T14:00:00",
+    "endAt": "2022-09-03T16:00:00",
+    "title": "Mastermind skupina s Daliborem",
+    "level": 110,
+    "_top": "28%"
   }
 ]

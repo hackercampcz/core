@@ -21,6 +21,142 @@
     display: flex;
     flex-direction: column;
   }
+
+    form#add {
+      max-width: 40em;
+    }
+
+    form#add h2 {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    form#add p.disclaimer {
+      text-align: center;
+      font-size: 14px;
+      padding: 24px;
+    }
+
+    form#add section {
+      margin-bottom: 24px;
+    }
+
+    form#add section p {
+      text-align: center;
+    }
+
+    form#add h3 {
+      font-size: 16px;
+    }
+
+    .section-story {
+      font-size: 14px;
+    }
+
+    form#add input,
+    form#add select {
+      font-family: var(--hc-font-family);
+      font-size: 16px;
+      letter-spacing: 0;
+      line-height: 1.5;
+      font-kerning: normal;
+      font-variant-numeric: lining-nums slashed-zero;
+      font-variant-ligatures: common-ligatures contextual;
+      -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
+      font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
+      -webkit-text-size-adjust: 100%;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
+    }
+
+    form#add .field {
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 4px;
+      flex: 1;
+    }
+
+    form#add [aria-hidden="true"] {
+      display: none;
+    }
+
+    form#add .field label {
+      flex: 1;
+      padding-top: 4px;
+      padding-bottom: 2px;
+    }
+
+    form#add .field input,
+    form#add .field textarea,
+    form#add .field select {
+      flex: 2;
+      font-size: 16px;
+      padding: 4px;
+    }
+
+    form#add .field select {
+      min-height: 36px;
+    }
+
+    form#add .field--block {
+      margin-bottom: 16px;
+    }
+
+    form#add .group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (min-width: 490px) {
+      form#add .group {
+        gap: 8px;
+        flex-direction: row;
+      }
+    }
+
+    form#add .question {
+      text-align: center;
+      padding-top: 12px;
+    }
+
+    form#add .question input {
+      width: 16px;
+      height: 16px;
+    }
+
+    form#add .choose {
+      display: flex;
+    }
+
+    form#add .choose:not(:last-child) {
+      margin-bottom: 24px;
+    }
+
+    form#add .choose input {
+      width: 16px;
+      height: 16px;
+    }
+
+    form#add .choose > label,
+    form#add .choose > div {
+      padding-left: 8px;
+      display: block;
+      flex: 1;
+    }
+
+    form#add .choose input:not(:checked) + div .patron-allowance {
+      display: none;
+    }
+
+    form#add .choose .patron-allowance input {
+      width: 120px;
+    }
+
+    form#add label span {
+      display: block;
+      font-size: 14px;
+    }
 </style>
 <script src="https://cdn.jsdelivr.net/gh/nuxodin/dialog-polyfill@x.x.x/dialog.min.js" type="module"></script>
 {% endblock %}
