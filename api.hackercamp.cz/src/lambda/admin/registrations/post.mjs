@@ -1,6 +1,11 @@
-import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBClient,
+  PutItemCommand,
+  UpdateItemCommand,
+} from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import { accepted, internalError, readPayload, seeOther } from "../../http.mjs";
+import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -16,7 +21,7 @@ const db = new DynamoDBClient({});
 async function optout(db, { email, year }) {
   return db.send(
     new PutItemCommand({
-      TableName: "hc-optouts",
+      TableName: process.env.db_table_optouts,
       Item: marshall(
         { email, year },
         {
@@ -24,6 +29,22 @@ async function optout(db, { email, year }) {
           removeUndefinedValues: true,
         }
       ),
+    })
+  );
+}
+
+async function approve(db, { email, year, referral }) {
+  return db.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_attendees,
+      Key: marshall(
+        { email, year },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
+      UpdateExpression: "SET referral = :referral",
+      ExpressionAttributeValues: marshall({
+        ":referral": referral,
+      }),
     })
   );
 }
@@ -36,6 +57,16 @@ async function processRequest(db, data) {
   switch (data.command) {
     case "optout":
       await optout(db, data.params);
+      break;
+    case "approve":
+      await approve(db, data.params);
+      await sendEmailWithTemplate({
+        token: process.env.postmark_token,
+        templateId: Template.HackerApproved,
+        data: {},
+        from: "Hacker Camp Crew <team@hackercamp.cz>",
+        to: data.params.email,
+      });
       break;
   }
 }

@@ -11,6 +11,7 @@ export const Template = {
   VolunteerSlackInvite: 28672994,
   SlackInvite: 28750357,
   AttendeesInfoMail: 28768871,
+  HackerApproved: 28848093,
 };
 
 export async function sendEmailWithTemplate({

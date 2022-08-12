@@ -8,7 +8,7 @@ import * as post from "./post.mjs";
 
 async function checkAuthorization(event) {
   const token = getToken(event.headers);
-  const privateKey = process.env["private_key"];
+  const privateKey = process.env.private_key;
   const isAuthorized = await authorize("admin", token, privateKey);
   if (!isAuthorized) throw Error("Unauthorized");
 }

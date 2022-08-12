@@ -13,7 +13,7 @@ async function getOptOuts(year) {
   console.log("Loading opt-outs");
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-optouts",
+      TableName: process.env.db_table_optouts,
       ProjectionExpression: "email",
       FilterExpression: "#y = :y",
       ExpressionAttributeNames: { "#y": "year" },
@@ -49,7 +49,7 @@ async function getHackersRegistrations(year) {
   console.log("Loading hackers data", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-registrations",
+      TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "#ts < :ts AND attribute_not_exists(invoiced)",
       ExpressionAttributeNames: { "#ts": "timestamp" },
@@ -68,7 +68,7 @@ async function getWaitingListRegistrations(year) {
   console.log("Loading waiting list data", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-registrations",
+      TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
         "firstTime = :true AND attribute_not_exists(invoiced) AND (attribute_not_exists(referral) OR attribute_type(referral, :null))",
@@ -85,7 +85,7 @@ async function getInvoicedRegistrations(year) {
   console.log("Loading invoiced registrations", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-registrations",
+      TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
         "attribute_exists(invoiced) AND attribute_not_exists(paid)",
@@ -98,7 +98,7 @@ async function getPaidRegistrations(year) {
   console.log("Loading paid registrations", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-registrations",
+      TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "attribute_exists(paid)",
     })
