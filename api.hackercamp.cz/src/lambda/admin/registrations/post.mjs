@@ -36,7 +36,7 @@ async function optout(db, { email, year }) {
 async function approve(db, { email, year, referral }) {
   return db.send(
     new UpdateItemCommand({
-      TableName: process.env.db_table_attendees,
+      TableName: process.env.db_table_registrations,
       Key: marshall(
         { email, year },
         { removeUndefinedValues: true, convertEmptyValues: true }
