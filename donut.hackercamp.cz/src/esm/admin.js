@@ -6,7 +6,7 @@ import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
 import * as marked from "marked";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
-import { setReturnUrl } from "./lib/profile.js";
+import { getContact, setReturnUrl } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 
@@ -29,7 +29,15 @@ const transact = (fn) => state.swap(fn);
 
 const optout = (email) =>
   confirm("Opravdu chcete táborníka vyřadit?") &&
-  createOptout(email, state.deref().apiHost);
+  createOptOut(email, state.deref().apiHost);
+
+function optin(email) {
+  const { apiHost, contact } = state.deref();
+  return (
+    confirm("Opravdu chcete táborníka potvrdit?") &&
+    createOptIn(email, contact.slackID, apiHost)
+  );
+}
 
 const formatDateTime = (x) =>
   x?.toLocaleString("cs", { dateStyle: "short", timeStyle: "short" }) ?? null;
@@ -138,7 +146,7 @@ function chips(
   `;
 }
 
-function detailTemplate(detail) {
+function detailTemplate({ detail, selectedView }) {
   if (!detail) return null;
   return html`
     <div class="hc-card hc-master-detail__detail"">
@@ -173,17 +181,57 @@ function detailTemplate(detail) {
             d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
           />
         </svg></a>
-        <button
-          class="hc-action-button"
-          title="Opt out"
-          @click="${() => optout(detail.email)}">
-          <svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24"
-               height="24px" viewBox="0 0 24 24" width="24px"
-               fill="var(--hc-text-color)">
-            <g><rect fill="none" height="24" width="24"/></g>
-            <g><path d="M14,8c0-2.21-1.79-4-4-4S6,5.79,6,8s1.79,4,4,4S14,10.21,14,8z M17,10v2h6v-2H17z M2,18v2h16v-2c0-2.66-5.33-4-8-4 S2,15.34,2,18z"/></g>
-          </svg>
-        </button>
+        ${when(
+          selectedView !== "paid",
+          () => html`
+            <button
+              class="hc-action-button"
+              title="Opt out"
+              @click="${() => optout(detail.email)}"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                enable-background="new 0 0 24 24"
+                height="24px"
+                viewBox="0 0 24 24"
+                width="24px"
+                fill="var(--hc-text-color)"
+              >
+                <g><rect fill="none" height="24" width="24" /></g>
+                <g>
+                  <path
+                    d="M14,8c0-2.21-1.79-4-4-4S6,5.79,6,8s1.79,4,4,4S14,10.21,14,8z M17,10v2h6v-2H17z M2,18v2h16v-2c0-2.66-5.33-4-8-4 S2,15.34,2,18z"
+                  />
+                </g>
+              </svg>
+            </button>
+          `
+        )}
+        ${when(
+          selectedView === "waitingList",
+          () => html`
+            <button
+              class="hc-action-button"
+              title="Opt in"
+              @click="${() => optin(detail.email)}"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 0 24 24"
+                width="24px"
+                fill="var(--hc-text-color)"
+              >
+                <g><rect fill="none" height="24" width="24" /></g>
+                <g>
+                  <path
+                    d="M13,8c0-2.21-1.79-4-4-4S5,5.79,5,8s1.79,4,4,4S13,10.21,13,8z M15,10v2h3v3h2v-3h3v-2h-3V7h-2v3H15z M1,18v2h16v-2 c0-2.66-5.33-4-8-4S1,15.34,1,18z"
+                  />
+                </g>
+              </svg>
+            </button>
+          `
+        )}
       </div>
       ${when(
         detail.inviter,
@@ -380,7 +428,7 @@ function registrationsTemplate(state) {
           `
         )}
       </div>
-      ${when(detail, () => detailTemplate(detail))}
+      ${when(detail, () => detailTemplate({ detail, selectedView }))}
     </div>
   `;
 }
@@ -401,7 +449,7 @@ async function fetchData(selectedView, apiHost) {
   return { unauthorized: true };
 }
 
-async function createOptout(email, apiHost) {
+async function executeCommand(apiHost, command, params) {
   const resource = new URL("admin/registrations", apiHost).href;
   const resp = await fetch(resource, {
     method: "POST",
@@ -410,14 +458,26 @@ async function createOptout(email, apiHost) {
       ["Content-Type", "application/json"],
     ],
     body: JSON.stringify({
-      command: "optout",
-      params: { email, year: 2022 },
+      command: command,
+      params: params,
     }),
     credentials: "include",
     referrerPolicy: "no-referrer",
   });
   if (!resp.ok) throw new Error(resp.status);
   location.reload();
+}
+
+function createOptOut(email, apiHost) {
+  return executeCommand(apiHost, "optout", { email, year: 2022 });
+}
+
+function createOptIn(email, slackID, apiHost) {
+  return executeCommand(apiHost, "approve", {
+    email,
+    referral: slackID,
+    year: 2022,
+  });
 }
 
 /**
@@ -437,7 +497,12 @@ function loadData(searchParams, apiHost) {
 
 export async function main({ appRoot, searchParams, env }) {
   rollbar.init(env);
-  state.resetIn("apiHost", env["api-host"]);
+  state.swap((x) =>
+    Object.assign({}, x, {
+      apiHost: env["api-host"],
+      contact: getContact(),
+    })
+  );
   initRenderLoop(state, appRoot);
   loadData(searchParams, env["api-host"]);
 }
