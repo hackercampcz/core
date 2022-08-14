@@ -27,7 +27,7 @@ function headerProfile({ name, picture }, togglePopup) {
   `;
 }
 
-function headerProfilePopup({ name, picture, slug }, signOut) {
+function headerProfilePopup({ name, image, slug }, signOut) {
   const { apiURL } = state.deref();
   return html`
     <div class="hc-popup">
@@ -35,7 +35,7 @@ function headerProfilePopup({ name, picture, slug }, signOut) {
         <li>
           <div class="hc-header__profile-photo">
             <a href="/hackers/${slug}">
-              <img alt="${name}" src="${picture}" width="48" height="48" />
+              <img alt="${name}" src="${image}" width="48" height="48" />
             </a>
           </div>
           <div class="hc-header__profile-name">
@@ -64,9 +64,10 @@ function headerProfilePopup({ name, picture, slug }, signOut) {
 }
 
 function header(profile, contact, isPopupVisible, togglePopup) {
+  console.log({ headerProfile: contact });
   return html`
     ${headerProfile(profile, togglePopup)}
-    ${when(isPopupVisible, () => headerProfilePopup(profile, signOut))}
+    ${when(isPopupVisible, () => headerProfilePopup(contact, signOut))}
   `;
 }
 
