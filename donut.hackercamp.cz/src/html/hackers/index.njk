@@ -2,8 +2,17 @@
 
 {% block content %}
   <style>
-    .hc-profile-list {
+    :root {
       --card-width: 192px;
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        --card-width: calc(100vw / 2 - 24px);
+      }
+    }
+
+    .hc-profile-list {
       list-style-type: none;
       display: grid;
       grid-template-columns: repeat(auto-fill, var(--card-width));
@@ -12,25 +21,30 @@
       padding: 0;
       max-width: 100%;
     }
+
     .hc-profile--card {
       width: var(--card-width);
       box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.07);
       padding-bottom: 8px;
       font-size: 14px;
     }
-    .hc-profile--card>a {
+
+    .hc-profile--card > a {
       text-decoration: none;
     }
+
     .hc-profile--card img {
       width: 100%;
       height: auto;
     }
+
     .hc-profile__name,
-    .hc-profile__company{
+    .hc-profile__company {
       display: block;
       color: var(--hc-text-color);
       margin: 8px 8px 0;
     }
+
     .hc-profile__name {
       font-weight: bold;
     }
@@ -45,15 +59,15 @@
             {% set profile = hacker[1] %}
             {% set attendee = hacker[2] %}
             {% if attendee.ticketType == "crew" %}
-            <li class="hc-profile hc-profile--card">
-              <a href="/hackers/{{ slug }}">
-                <div>
-                  <img alt="" src="{{ attendee.image }}" width="192" height="192" />
-                  <span class="hc-profile__name">{{ attendee.name }}</span>
-                  <span class="hc-profile__company">{{ attendee.company if attendee.company }}</span>
-                </div>
-              </a>
-            </li>
+              <li class="hc-profile hc-profile--card">
+                <a href="/hackers/{{ slug }}">
+                  <div>
+                    <img alt="" src="{{ attendee.image }}" width="192" height="192"/>
+                    <span class="hc-profile__name">{{ attendee.name }}</span>
+                    <span class="hc-profile__company">{{ attendee.company if attendee.company }}</span>
+                  </div>
+                </a>
+              </li>
             {% endif %}
           {% endfor %}
         </ul>
@@ -66,22 +80,22 @@
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         <h2>Účastníci 2022</h2>
         <ul class="hc-profile-list">
-        {% for hacker in hackers %}
-          {% set slug = hacker[0] %}
-          {% set profile = hacker[1] %}
-          {% set attendee = hacker[2] %}
-          {% if attendee.ticketType != "crew" %}
-            <li class="hc-profile hc-profile--card">
-              <a href="/hackers/{{ slug }}">
-                <div>
-                  <img alt="" src="{{ attendee.image }}" width="192" height="192" loading="lazy" />
-                  <span class="hc-profile__name">{{ attendee.name }}</span>
-                  <span class="hc-profile__company">{{ attendee.company if attendee.company }}</span>
-                </div>
-              </a>
-            </li>
-          {% endif %}
-        {% endfor %}
+          {% for hacker in hackers %}
+            {% set slug = hacker[0] %}
+            {% set profile = hacker[1] %}
+            {% set attendee = hacker[2] %}
+            {% if attendee.ticketType != "crew" %}
+              <li class="hc-profile hc-profile--card">
+                <a href="/hackers/{{ slug }}">
+                  <div>
+                    <img alt="" src="{{ attendee.image }}" width="192" height="192" loading="lazy"/>
+                    <span class="hc-profile__name">{{ attendee.name }}</span>
+                    <span class="hc-profile__company">{{ attendee.company if attendee.company }}</span>
+                  </div>
+                </a>
+              </li>
+            {% endif %}
+          {% endfor %}
         </ul>
       </div>
     </div>
