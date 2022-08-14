@@ -99,7 +99,7 @@ export async function handler(event) {
             ok: true,
             idToken,
             slackToken: data["id_token"],
-            slackProfile: profile,
+            slackProfile: Object.assign({}, profile, user),
             slackAccessToken: data["access_token"],
           },
           {
