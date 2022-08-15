@@ -12,8 +12,14 @@ code {
 .hc-action-button {
   -webkit-appearance: none;
   border: none;
-  background-color: var(--hc-background-color);
+  background-color: transparent;
   padding: 0;
+  display: inline-block;
+
+  &:hover,
+  &:active {
+    --hc-text-color: var(--hc-heading-color);
+  }
 }
 
 .mdc-evolution-chip {

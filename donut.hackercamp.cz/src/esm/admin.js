@@ -39,6 +39,12 @@ function optin(email) {
   );
 }
 
+function invoiced(email) {
+  const { apiHost } = state.deref();
+  const invoiceId = prompt("Zadejte ID faktury");
+  return markAsInvoiced([email], invoiceId, apiHost);
+}
+
 const formatDateTime = (x) =>
   x?.toLocaleString("cs", { dateStyle: "short", timeStyle: "short" }) ?? null;
 const sortBy = (attr, x) =>
@@ -156,6 +162,7 @@ function detailTemplate({ detail, selectedView }) {
       <p>${detail.company}</p>
       <div class="hc-detail__tools">
         <a
+          class="hc-action-button"
           href="mailto:${detail.email}"
           title="Napsat ${detail.email}""><svg
         xmlns="http://www.w3.org/2000/svg"
@@ -169,6 +176,7 @@ function detailTemplate({ detail, selectedView }) {
         />
       </svg></a>
         <a
+          class="hc-action-button"
           href="tel:${detail.phone.replace(" ", "")}"
           title="Zavolat ${detail.phone}"><svg
           xmlns="http://www.w3.org/2000/svg"
@@ -182,7 +190,7 @@ function detailTemplate({ detail, selectedView }) {
           />
         </svg></a>
         ${when(
-          selectedView !== "paid",
+          selectedView !== View.paid,
           () => html`
             <button
               class="hc-action-button"
@@ -191,7 +199,6 @@ function detailTemplate({ detail, selectedView }) {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                enable-background="new 0 0 24 24"
                 height="24px"
                 viewBox="0 0 24 24"
                 width="24px"
@@ -208,7 +215,7 @@ function detailTemplate({ detail, selectedView }) {
           `
         )}
         ${when(
-          selectedView === "waitingList",
+          selectedView === View.waitingList,
           () => html`
             <button
               class="hc-action-button"
@@ -228,6 +235,29 @@ function detailTemplate({ detail, selectedView }) {
                     d="M13,8c0-2.21-1.79-4-4-4S5,5.79,5,8s1.79,4,4,4S13,10.21,13,8z M15,10v2h3v3h2v-3h3v-2h-3V7h-2v3H15z M1,18v2h16v-2 c0-2.66-5.33-4-8-4S1,15.34,1,18z"
                   />
                 </g>
+              </svg>
+            </button>
+          `
+        )}
+        ${when(
+          selectedView === View.confirmed,
+          () => html`
+            <button
+              class="hc-action-button"
+              title="Vyfakturováno"
+              @click="${() => invoiced(detail.email)}"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 0 24 24"
+                width="24px"
+                fill="var(--hc-text-color)"
+              >
+                <rect fill="none" height="24" width="24" />
+                <path
+                  d="M13.17,4L18,8.83V20H6V4H13.17 M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2L14,2z M15,11h-4v1h3 c0.55,0,1,0.45,1,1v3c0,0.55-0.45,1-1,1h-1v1h-2v-1H9v-2h4v-1h-3c-0.55,0-1-0.45-1-1v-3c0-0.55,0.45-1,1-1h1V8h2v1h2V11z"
+                />
               </svg>
             </button>
           `
@@ -326,6 +356,7 @@ function tableTemplate(data, { timeHeader, timeAttr }) {
               <td>${formatDateTime(new Date(row[timeAttr]))}</td>
               <td>
                 <a
+                  class="hc-action-button"
                   href="mailto:${row.email}"
                   title="Napsat ${row.email}""><svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -339,6 +370,7 @@ function tableTemplate(data, { timeHeader, timeAttr }) {
                   />
                 </svg></a>
                 <a
+                  class="hc-action-button"
                   href="tel:${row.phone.replace(" ", "")}"
                   title="Zavolat ${row.phone}"><svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -449,6 +481,12 @@ async function fetchData(selectedView, apiHost) {
   return { unauthorized: true };
 }
 
+/**
+ * @param {string} apiHost
+ * @param {string} command
+ * @param {Record<string, any>} params
+ * @returns {Promise<void>}
+ */
 async function executeCommand(apiHost, command, params) {
   const resource = new URL("admin/registrations", apiHost).href;
   const resp = await fetch(resource, {
@@ -465,23 +503,47 @@ async function executeCommand(apiHost, command, params) {
     referrerPolicy: "no-referrer",
   });
   if (!resp.ok) throw new Error(resp.status);
-  location.reload();
 }
 
+/**
+ * @param {string} email
+ * @param {string} apiHost
+ * @returns {Promise<void>}
+ */
 function createOptOut(email, apiHost) {
-  return executeCommand(apiHost, "optout", { email, year: 2022 });
+  return executeCommand(apiHost, "optout", { email, year: 2022 }).then(() =>
+    location.reload()
+  );
 }
 
+/**
+ * @param {string} email
+ * @param {string} slackID
+ * @param {string} apiHost
+ * @returns {Promise<void>}
+ */
 function createOptIn(email, slackID, apiHost) {
   return executeCommand(apiHost, "approve", {
     email,
     referral: slackID,
     year: 2022,
-  });
+  }).then(() => location.reload());
 }
 
 /**
- *
+ * @param {string[]} emails
+ * @param {string} invoiceId
+ * @param {string} apiHost
+ * @returns {Promise<void>}
+ */
+function markAsInvoiced(emails, invoiceId, apiHost) {
+  return executeCommand(apiHost, "invoiced", {
+    registrations: emails.map((email) => ({ email, year: 2022 })),
+    invoiceId,
+  }).then(() => location.reload());
+}
+
+/**
  * @param {URLSearchParams} searchParams
  * @param {string} apiHost
  */
