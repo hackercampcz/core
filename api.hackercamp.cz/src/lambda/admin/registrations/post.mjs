@@ -4,6 +4,7 @@ import {
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
+import { fetchInvoice } from "../../fakturoid.mjs";
 import { accepted, internalError, readPayload, seeOther } from "../../http.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
 
@@ -49,6 +50,35 @@ async function approve(db, { email, year, referral }) {
   );
 }
 
+async function invoiced(db, { registrations, invoiceId }) {
+  const { fakturoid_token: token } = process.env;
+  const { created_at: invoiced, id } = await fetchInvoice(token, invoiceId);
+  for (const key of registrations) {
+    console.log({
+      event: "Marking registration as invoiced",
+      invoiceId,
+      ...key,
+    });
+    await db.send(
+      new UpdateItemCommand({
+        TableName: process.env.db_table_registrations,
+        Key: marshall(key, {
+          removeUndefinedValues: true,
+          convertEmptyValues: true,
+        }),
+        UpdateExpression: "SET invoice_id = :invoice_id, invoiced = :invoiced",
+        ExpressionAttributeValues: marshall(
+          { ":invoice_id": id, ":invoiced": invoiced },
+          {
+            removeUndefinedValues: true,
+            convertEmptyValues: true,
+          }
+        ),
+      })
+    );
+  }
+}
+
 /**
  * @param {DynamoDBClient} db
  * @param {*} data
@@ -67,6 +97,9 @@ async function processRequest(db, data) {
         from: "Hacker Camp Crew <team@hackercamp.cz>",
         to: data.params.email,
       });
+      break;
+    case "invoiced":
+      await invoiced(db, data.params);
       break;
   }
 }

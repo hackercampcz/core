@@ -112,6 +112,7 @@ export const createRoutes = ({
               db_table_registrations: registrationsDataTable,
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
+              fakturoid_token: config.get("fakturoid-token"),
             },
           },
         },
