@@ -40,7 +40,7 @@ async function authenticate({ searchParams, apiURL }) {
 
 async function setDonutProfileUrl(user, token, slug) {
   const profile = await slack.getSlackProfile(user, token);
-  if (!profile.fields.Xf039UMCJC1G?.value) {
+  if (!profile?.fields?.Xf039UMCJC1G?.value) {
     await setSlackProfile(user, token, {
       name: "Xf039UMCJC1G",
       value: `https://donut.hackercamp.cz/hackers/${slug}/`,
