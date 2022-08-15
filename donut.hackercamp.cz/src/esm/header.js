@@ -27,7 +27,11 @@ function headerProfile({ name, picture }, togglePopup) {
   `;
 }
 
-function headerProfilePopup({ name, image, slug }, { is_admin }, signOut) {
+function headerProfilePopup(contact, profile, signOut) {
+  const name = contact?.name ?? profile.name;
+  const image = contact?.image ?? profile.picture;
+  const slug = contact?.slug ?? "";
+  const { is_admin } = profile;
   const { apiURL } = state.deref();
   return html`
     <div class="hc-popup">
