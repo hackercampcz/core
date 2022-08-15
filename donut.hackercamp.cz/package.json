@@ -14,7 +14,7 @@
     "@material/layout-grid": "14.0.0",
     "@material/mwc-button": "0.27.0",
     "@material/mwc-snackbar": "0.27.0",
-    "@thi.ng/atom": "5.1.12",
+    "@thi.ng/atom": "5.1.13",
     "@thi.ng/transducers": "8.3.11",
     "@ungap/structured-clone": "1.0.1",
     "date-fns": "2.29.1",
