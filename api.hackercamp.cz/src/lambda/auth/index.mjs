@@ -68,7 +68,7 @@ async function getUsersInfo(user, token) {
 export async function handler(event) {
   const params = getPayload(event);
   console.log({ headers: event.headers });
-  const origin = event.headers.origin ?? process.env.hostname;
+  const origin = event.headers?.origin ?? event.headers?.Origin ?? `https://${process.env.hostname}`;
   const { resp, data } = await getJWT(params.code, process.env, origin);
   const withCORS_ = withCORS(["POST", "OPTIONS"], origin, {
     allowCredentials: true,
