@@ -177,6 +177,15 @@ function renderIndex({ profile, contact, registration, attendee }) {
         Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
         <a href="/hackers/">seznam účastníků</a>.
       </p>
+      <p>
+        Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
+        e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
+        <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
+          ><code>@rarous</code></a
+        >
+        nebo e-mail na <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a
+        on to dá do pořádku.
+      </p>
     `;
   }
   return html`
