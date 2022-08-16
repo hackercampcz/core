@@ -30,12 +30,12 @@ async function authenticate({ searchParams, apiURL }) {
     body: new URLSearchParams({ code }),
     credentials: "include",
   });
-  const data = await resp.json();
-  if (resp.ok && data.ok) {
-    return signIn(data);
-  } else {
-    throw new Error("Authentication error", { cause: data });
+  if (resp.ok) {
+    const data = await resp.json();
+    if (data.ok) return signIn(data);
   }
+  const data = await resp.text();
+  throw new Error("Authentication error", { cause: data });
 }
 
 async function setDonutProfileUrl(user, token, slug) {
@@ -221,9 +221,14 @@ export async function main({ searchParams, slackButton, env }) {
   }
 
   if (isSignedIn()) {
-    const profile = getSlackProfile();
-    const year = 2022;
-    await loadData(profile, year, apiURL);
+    try {
+      const profile = getSlackProfile();
+      const year = 2022;
+      await loadData(profile, year, apiURL);
+    } catch (e) {
+      console.error(e);
+      signOut(apiURL);
+    }
   }
 
   if (searchParams.has("returnUrl")) {
@@ -236,6 +241,7 @@ export async function main({ searchParams, slackButton, env }) {
       handleReturnUrl();
     } catch (e) {
       console.error(e);
+      signOut(apiURL);
     }
   }
 }
