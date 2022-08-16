@@ -165,8 +165,24 @@ async function onTeamJoin({ user }) {
   const { email } = user.profile;
   console.log({ event: "Team join", email });
   const registration = await getRegistration(email, 2022);
-  if (!registration) {
+  if (!registration?.paid) {
     console.log({ event: "Registration not found", email });
+    await Promise.all([
+      createContact(user),
+      postChatMessage(
+        user.id,
+        `Ahoj, táborníku,
+
+Vítej v našem slacku. Začátek září se blíží. Snad se těšíš stejně jako my.
+
+Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají.
+
+Nejspíše ses sem dostals dříve než bys měls. Na další kroky budeš muset počkat,
+až ti přijde faktura a ty ji zaplatíš. :) Zatím užívej naší komunitu!
+
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
+      ),
+    ]);
     return notFound();
   }
   await Promise.all([
