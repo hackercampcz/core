@@ -152,6 +152,39 @@ function chips(
   `;
 }
 
+const ticketName = new Map([
+  ["nonprofit", "Táborník z neziskovky"],
+  ["hacker", "Hacker"],
+  ["hacker-plus", "Hacker filantrop"],
+  ["hacker-patron", "Patron Campu"],
+]);
+
+const ticketPrice = new Map([
+  ["nonprofit", 2500],
+  ["hacker", 5000],
+  ["hacker-plus", 7500],
+  ["hacker-patron", 7500],
+]);
+
+const formatMoney = (x) =>
+  x
+    ?.toLocaleString("cs", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    })
+    ?.replace(/,00/g, ",-") ?? null;
+
+function ticketDetail({ ticketType, patronAllowance }) {
+  const allowance = patronAllowance ? parseInt(patronAllowance) : 0;
+  const price = ticketPrice.get(ticketType) + allowance;
+  return html`
+    <p>
+      Lístek: <strong>${ticketName.get(ticketType)}</strong>
+      <data value="${price} CZK"><code>${formatMoney(price)} Kč</code></data>
+    </p>
+  `;
+}
+
 function detailTemplate({ detail, selectedView }) {
   if (!detail) return null;
   return html`
@@ -263,6 +296,7 @@ function detailTemplate({ detail, selectedView }) {
           `
         )}
       </div>
+    ${ticketDetail(detail)}
       ${when(
         detail.inviter,
         () => html`<p>Pozval ho <strong>${detail.inviter}</strong></p>`
