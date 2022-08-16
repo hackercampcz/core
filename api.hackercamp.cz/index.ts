@@ -422,4 +422,3 @@ interface RouteArgs {
   environment?: lambda.FunctionEnvironment;
   memorySize?: number;
 }
-export { getHeader } from "./src/lambda/http.mjs";
