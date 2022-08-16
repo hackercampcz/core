@@ -21,6 +21,7 @@ export async function sendEmailWithTemplate({
   from,
   to,
 }) {
+  console.log({ event: "Sending mail", to, templateId });
   const resp = await fetch("https://api.postmarkapp.com/email/withTemplate", {
     method: "POST",
     headers: {

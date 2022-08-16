@@ -10,17 +10,18 @@ import * as post from "./post.mjs";
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
+  const withCORS_ = withCORS(
+    ["GET", "POST", "OPTIONS"],
+    event.headers["origin"]
+  );
   switch (event.httpMethod) {
     case "GET":
-      return get.handler(event);
+      return get.handler(event).then((x) => withCORS_(x));
     case "POST":
-      return post.handler(event);
+      return post.handler(event).then(x => withCORS_(x));
     case "OPTIONS":
-      return withCORS(["GET", "POST", "OPTIONS"])({
-        statusCode: 204,
-        body: "",
-      });
+      return withCORS_({ statusCode: 204, body: "" });
     default:
-      return { statusCode: 405, body: "Method Not Allowed" };
+      return withCORS_({ statusCode: 405, body: "Method Not Allowed" });
   }
 }
