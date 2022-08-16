@@ -8,6 +8,7 @@ import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
 import {
+  getHeader,
   internalError,
   notFound,
   readPayload,
@@ -59,8 +60,7 @@ async function createAttendee({ id, profile, name }, record) {
             name: profile.real_name,
             image: profile.image_512,
           },
-          selectKeys(record, attributes, mapper
-          )
+          selectKeys(record, attributes, mapper)
         ),
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
@@ -226,7 +226,10 @@ function dispatchByType(event) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
+  const withCORS_ = withCORS(
+    ["POST", "OPTIONS"],
+    getHeader(event.headers, "Origin")
+  );
   try {
     const payload = readPayload(event);
     // TODO: push this to queue instead

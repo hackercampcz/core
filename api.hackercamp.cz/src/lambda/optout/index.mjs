@@ -1,6 +1,12 @@
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { accepted, internalError, readPayload, withCORS } from "../http.mjs";
+import {
+  accepted,
+  getHeader,
+  internalError,
+  readPayload,
+  withCORS,
+} from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -13,7 +19,10 @@ const db = new DynamoDBClient({});
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers?.origin ?? "*");
+  const withCORS_ = withCORS(
+    ["POST", "OPTIONS"],
+    getHeader(event?.headers, "Origin") ?? "*"
+  );
 
   try {
     const { email, year } = readPayload(event);

@@ -1,5 +1,5 @@
 import { checkAuthorization } from "../auth.mjs";
-import { unauthorized, withCORS } from "../http.mjs";
+import { getHeader, unauthorized, withCORS } from "../http.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
 
@@ -13,7 +13,7 @@ import * as post from "./post.mjs";
 export async function handler(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    event?.headers?.origin ?? "*",
+    getHeader(event?.headers, "Origin") ?? "*",
     { allowCredentials: true }
   );
   try {

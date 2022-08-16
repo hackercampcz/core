@@ -4,7 +4,7 @@ import {
   GetItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { response, withCORS } from "../http.mjs";
+import { getHeader, response, withCORS } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -42,7 +42,7 @@ async function getAttendee(dynamo, slackID, year) {
 export async function handler(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    event?.headers?.origin ?? "*"
+    getHeader(event?.headers, "Origin") ?? "*"
   );
   if (event.httpMethod === "OPTIONS") {
     return withCORS_({

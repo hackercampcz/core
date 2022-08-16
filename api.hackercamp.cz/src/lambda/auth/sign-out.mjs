@@ -1,4 +1,4 @@
-import { found, response, withCORS } from "../http.mjs";
+import { found, getHeader, response, withCORS } from "../http.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
@@ -8,7 +8,10 @@ import { found, response, withCORS } from "../http.mjs";
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const origin = event.headers?.origin ?? event.headers?.referer ?? `https://${process.env.hostname}/`;
+  const origin =
+    getHeader(event.headers, "Origin") ??
+    getHeader(event.headers, "Referer") ??
+    `https://${process.env.hostname}/`;
   const withCORS_ = withCORS(["GET", "OPTIONS"], origin, {
     allowCredentials: true,
   });

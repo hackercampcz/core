@@ -1,7 +1,13 @@
 import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { checkAuthorization } from "../auth.mjs";
-import { notFound, response, unauthorized, withCORS } from "../http.mjs";
+import {
+  getHeader,
+  notFound,
+  response,
+  unauthorized,
+  withCORS,
+} from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -29,7 +35,7 @@ async function getContact(dynamo, slackID, email) {
 export async function handler(event) {
   const withCORS_ = withCORS(
     ["GET", "OPTIONS"],
-    event?.headers?.origin ?? "*",
+    getHeader(event?.headers, "Origin") ?? "*",
     { allowCredentials: true }
   );
   try {

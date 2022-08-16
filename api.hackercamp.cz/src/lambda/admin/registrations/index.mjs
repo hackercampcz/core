@@ -1,5 +1,5 @@
 import { getToken, authorize } from "@hackercamp/lib/auth.mjs";
-import { unauthorized, withCORS } from "../../http.mjs";
+import { getHeader, unauthorized, withCORS } from "../../http.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
 
@@ -20,7 +20,7 @@ async function checkAuthorization(event) {
 export async function handler(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    event?.headers?.origin ?? "*",
+    getHeader(event?.headers, "Origin") ?? "*",
     { allowCredentials: true }
   );
   try {

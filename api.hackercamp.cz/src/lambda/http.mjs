@@ -143,11 +143,12 @@ export function readPayload(event) {
     ? Buffer.from(event.body, "base64").toString("utf-8")
     : event.body;
 
-  if (event.headers["content-type"] === "application/json") {
-    return JSON.parse(body);
-  }
-  if (event.headers["Content-Type"] === "application/json") {
+  if (getHeader(event.headers, "Content-Type") === "application/json") {
     return JSON.parse(body);
   }
   return Object.fromEntries(new URLSearchParams(body).entries());
+}
+
+export function getHeader(headers, name) {
+  return headers?.[name] ?? headers?.[name.toLowerCase()];
 }

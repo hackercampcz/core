@@ -1,5 +1,11 @@
 import { getCompanyDetails } from "../ares.mjs";
-import { internalError, notFound, response, withCORS } from "../http.mjs";
+import {
+  getHeader,
+  internalError,
+  notFound,
+  response,
+  withCORS,
+} from "../http.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
@@ -9,7 +15,10 @@ import { internalError, notFound, response, withCORS } from "../http.mjs";
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const withCORS_ = withCORS(["GET", "OPTIONS"], event.headers["origin"]);
+  const withCORS_ = withCORS(
+    ["GET", "OPTIONS"],
+    getHeader(event?.headers, "Origin")
+  );
   console.log("QS", event.queryStringParameters);
   const { ico } = event.queryStringParameters;
 

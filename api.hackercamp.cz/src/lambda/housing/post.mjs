@@ -2,7 +2,13 @@ import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
-import { accepted, internalError, readPayload, seeOther } from "../http.mjs";
+import {
+  accepted,
+  getHeader,
+  internalError,
+  readPayload,
+  seeOther,
+} from "../http.mjs";
 import { postChatMessage } from "../slack.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -61,7 +67,9 @@ Tvoje Hacker Camp Crew`
       : `Gratulujeme, milý hackere,
 
 Právě ti někdo zamluvil ubytko na Campu. Tvoje poděkování si zaslouží <@${submittedBy}>.
-Takže teď Ti držíme místo ${housing.get(item.housing)}${placement(item.housingPlacement)}.
+Takže teď Ti držíme místo ${housing.get(item.housing)}${placement(
+          item.housingPlacement
+        )}.
 Chceš si zkontrolovat, co to znamená? Koukni na <https://donut.hackercamp.cz/ubytovani/|svůj profil s ubytkem>.
 
 Máš bydlení bez práce! Super. Užij si ušetřené minuty na fajn relax, nebo milá slova tomu, kdo Ti pomohl :)
@@ -91,7 +99,7 @@ export async function handler(event) {
       await saveAttendee(dynamo, Object.assign({ year }, item));
       await sendSlackMessage(submittedBy, item);
     }
-    if (event.headers.Accept === "application/json") {
+    if (getHeader(event.headers, "Accept") === "application/json") {
       return accepted();
     }
     return seeOther();

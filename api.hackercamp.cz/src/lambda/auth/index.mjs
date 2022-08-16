@@ -1,6 +1,6 @@
 import { fetch } from "@adobe/helix-fetch";
 import * as jwt from "jsonwebtoken";
-import { response, unauthorized, withCORS } from "../http.mjs";
+import { getHeader, response, unauthorized, withCORS } from "../http.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
@@ -16,7 +16,7 @@ function readBody(event) {
 
 function getPayload(event) {
   const payload = readBody(event);
-  if (event.headers["Content-Type"] === "application/json") {
+  if (getHeader(event.headers, "Content-Type") === "application/json") {
     return JSON.parse(payload);
   }
   return Object.fromEntries(new URLSearchParams(payload).entries());
@@ -67,8 +67,8 @@ async function getUsersInfo(user, token) {
  */
 export async function handler(event) {
   const params = getPayload(event);
-  console.log({ headers: event.headers });
-  const origin = event.headers?.origin ?? event.headers?.Origin ?? `https://${process.env.hostname}`;
+  const origin =
+    getHeader(event.headers, "Origin") ?? `https://${process.env.hostname}`;
   const { resp, data } = await getJWT(params.code, process.env, origin);
   const withCORS_ = withCORS(["POST", "OPTIONS"], origin, {
     allowCredentials: true,
@@ -81,6 +81,11 @@ export async function handler(event) {
     } = await getUsersInfo(profile.sub, token);
 
     if (resp.ok && profile.ok) {
+      console.log({
+        event: "Logged in",
+        email: profile.email,
+        slackID: profile.sub,
+      });
       const payload = {
         expiresIn: "6h",
         audience: "https://donut.hackercamp.cz/",

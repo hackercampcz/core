@@ -5,6 +5,7 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import {
+  getHeader,
   internalError,
   notFound,
   readPayload,
@@ -25,7 +26,10 @@ const db = new DynamoDBClient({});
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  const withCORS_ = withCORS(["POST", "OPTIONS"], event.headers["origin"]);
+  const withCORS_ = withCORS(
+    ["POST", "OPTIONS"],
+    getHeader(event.headers, "Origin")
+  );
 
   try {
     const payload = readPayload(event);
