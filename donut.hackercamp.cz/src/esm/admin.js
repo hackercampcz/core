@@ -190,7 +190,7 @@ function detailTemplate({ detail, selectedView }) {
   return html`
     <div class="hc-card hc-master-detail__detail"">
       <h2 style="display: flex;align-items: center;gap: 12px;">
-        <span>${detail.firstName} ${detail.lastName}</span>
+        <span>${detail.firstName}&nbsp;${detail.lastName}</span>
         ${ticketBadge.get(detail.ticketType)}</h2>
       <p>${detail.company}</p>
       <div class="hc-detail__tools">
