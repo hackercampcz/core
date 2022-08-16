@@ -18,7 +18,7 @@ export async function handler(event) {
     case "GET":
       return get.handler(event).then((x) => withCORS_(x));
     case "POST":
-      return post.handler(event).then(x => withCORS_(x));
+      return post.handler(event).then((x) => withCORS_(x));
     case "OPTIONS":
       return withCORS_({ statusCode: 204, body: "" });
     default:
