@@ -14,3 +14,8 @@ export function init(env) {
     },
   });
 }
+
+export function error(err) {
+  console.error(err);
+  Rollbar.error(err);
+}

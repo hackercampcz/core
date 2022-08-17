@@ -7,6 +7,7 @@ import { objectWalk } from "./lib/object.js";
 import structuredClone from "@ungap/structured-clone";
 import { when } from "lit/directives/when.js";
 import { throttle } from "./lib/function.js";
+import { showModalDialog } from "./modal-dialog.js";
 
 const SLOT_MINUTES = 15;
 const DAY_START_HOUR = 8;
@@ -64,18 +65,6 @@ function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
   const perMinutes = minutes * 60 * 1000;
   const steps = diff / perMinutes;
   return steps;
-}
-
-function showModalDialog(id) {
-  const element = document.getElementById(id);
-  element.showModal();
-  // TODO: change hash to allow events sharing
-  document.body.classList.add("has-open-dialog");
-  element.querySelector("button[name=close]").addEventListener("click", () => {
-    document.body.classList.remove("has-open-dialog");
-    element.close();
-    // TODO: remove hash from url and add time of visible date
-  });
 }
 
 function formatEventTimeInfo(event) {
@@ -144,7 +133,7 @@ function handleBodyScroll(event) {
 }
 
 /**
- *
+ * TODO: split me?
  * @param {defAtom} state
  */
 function renderProgram({
@@ -357,6 +346,9 @@ function renderProgram({
         margin: 0;
         line-height: 1.2;
       }
+      .lineup__info pre {
+        line-height: 1.5;
+      }
       .lineup__event pre.highlight {
         font-weight: bold;
         font-size: 120%;
@@ -369,13 +361,13 @@ function renderProgram({
       }
       @media (min-width: 800px) {
         .lineup__event,
-        .lineup__info  {
+        .lineup__info {
           font-size: 16px;
         }
       }
       @media (min-width: 1600px) {
         .lineup__event,
-        .lineup__info  {
+        .lineup__info {
           font-size: 18px;
         }
       }
@@ -424,6 +416,27 @@ function renderProgram({
         border: 1px solid var(--tick-color);
         background-color: var(--hc-background-color);
         background-image: var(--hc-background-image, none);
+      }
+      .event-type {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing);
+      }
+      .event-type .hc-card p {
+        text-align: left;
+        margin-top: var(--spacing);
+      }
+      .event-type .hc-link--decorated {
+        display: block;
+        width: auto;
+        position: relative;
+      }
+      .event-type .hc-link--decorated::after {
+        content: "⇨";
+        display: block;
+        float: right;
+        font-size: 32px;
+        line-height: calc(16px * 1.5);
       }
     </style>
     <div class="program">
@@ -503,7 +516,7 @@ function renderProgram({
                     showModalDialog("add-event");
                   }}
                 >
-                  Přidat událost
+                  Zapoj se do programu
                 </a>
                 <hr />
                 <button name="close">Zavřít</button>
@@ -623,7 +636,12 @@ ${event.description}</pre
       </div>
       <div class="program__beside">
         <h2>Další program</h2>
-        <p>Nejen přednáškami, workshopy, hudbou a sportem živ je hacker. Na campu se toho děje mnohem víc. Můžeš si vyzkoušet zajímavé hry -> živé, deskovky, karty, playstationy. Pár z vás nabízí one-one povídání, kvízi, sekání dřeva a spoustu dalšího. Tady najdete vše pohromadě.</p>
+        <p>
+          Nejen přednáškami, workshopy, hudbou a sportem živ je hacker. Na campu
+          se toho děje mnohem víc. Můžeš si vyzkoušet zajímavé hry -> živé,
+          deskovky, karty, playstationy. Pár z vás nabízí one-one povídání,
+          kvízi, sekání dřeva a spoustu dalšího. Tady najdete vše pohromadě.
+        </p>
         <ul>
           <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
           <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
@@ -636,18 +654,43 @@ ${event.description}</pre
             showModalDialog("add-event");
           }}
         >
-          Přidat událost
+          Zapoj se do programu
         </a>
       </div>
       <dialog id="add-event">
-        <form id="add">
-          <h2>Přidat událost</h2>
-          <p>
-            V každé aktivitě respektujeme základní pravidlo: Hacker Camp je z
-            principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš
-            propagovat a nabízet jen pokud to obohatí samotnou akci.
-          </p>
-          <div class="field field--block">
+        <form>
+          <h2>Jakým způsobem se do programu zapojíš?</h2>
+          <section class="event-type">
+            <div class="hc-card hc-card--decorated">
+              <h3>Talk / Přednáška / Diskuse</h3>
+              <div>
+                <p>Byznys. Life. NGOs. BioHacks. Byznys stories</p>
+                <a class="hc-link--decorated" href="#">Mainframe</a>
+              </div>
+              <div>
+                <p>Data. Dev. Hacks.</p>
+                <a class="hc-link--decorated" href="#">Basecamp</a>
+              </div>
+            </div>
+            <div class="hc-card hc-card--decorated">
+              <h3>Workshop</h3>
+              <a class="hc-link--decorated" href="#">Backend</a>
+            </div>
+            <div class="hc-card hc-card--decorated">
+              <h3>Sport / Meditace</h3>
+              <a class="hc-link--decorated" href="#">PeopleWare</a>
+            </div>
+            <div class="hc-card hc-card--decorated">
+              <h3>Hudební program</h3>
+              <a class="hc-link--decorated" href="#">WoodStack /<br>Jungle release</a>
+            </div>
+            <div class="hc-card hc-card--decorated">
+              <h3>Další / jiný doprovodný program</h3>
+              <a class="hc-link--decorated" href="#">Doprovodný program</a>
+            </div>
+          </section>
+
+          <!-- <div class="field field--block">
             <label for="activity">
               Jakou aktivitu sis pro táborníky připravil?
             </label>
@@ -679,8 +722,8 @@ ${event.description}</pre
               name="activityPlace"
               rows="3"
             ></textarea>
-          </div>
-          <button type="submit" class="hc-button">Odeslat</button>
+          </div> -->
+          <!-- <button type="submit" class="hc-button">Odeslat</button> -->
           <!-- <h1>Přidat vlastní program</h1>
         <p>
           V každé aktivitě respektujeme základní pravidlo: Hacker Camp je z
@@ -759,7 +802,7 @@ export async function main({ rootElement, env }) {
     const lineups = await fetchLineups(env["api-host"]);
     transact((x) => Object.assign(x, { lineups: instatializeDates(lineups) }));
   } catch (o_O) {
-    console.error(o_O);
+    rollbar.error(o_O);
     alert("Chyba při načítání lineupů\n" + o_O);
   }
 
@@ -767,7 +810,7 @@ export async function main({ rootElement, env }) {
     const events = await fetchEvents(env["api-host"]);
     transact((x) => Object.assign(x, { events: instatializeDates(events) }));
   } catch (o_O) {
-    console.error(o_O);
+    rollbar.error(o_O);
     alert("Chyba při načítání eventů\n" + o_O);
   }
 

@@ -1,7 +1,6 @@
 import { html, render } from "lit-html";
 import { ticketBadge } from "./lib/attendee.js";
 import * as rollbar from "./lib/rollbar.js";
-import { getSlackProfile } from "./lib/slack.js";
 
 const supporters = new Set(["hacker-plus", "hacker-patron"]);
 const labels = new Map([

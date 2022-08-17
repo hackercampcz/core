@@ -1,5 +1,5 @@
 import { defAtom } from "@thi.ng/atom";
-import { html, render } from "lit-html";
+import { html } from "lit-html";
 import {
   getSlackAccessToken,
   getSlackProfile,
