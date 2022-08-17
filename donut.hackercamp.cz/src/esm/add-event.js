@@ -65,6 +65,7 @@ export function renderTalk({ apiUrl, profile, year }) {
       <input type="hidden" name="type" value="talk" />
       <input type="hidden" name="slackID" value=${profile.sud} />
       <input type="hidden" name="year" value=${year} />
+      <input type="hidden" name="referer" value="/program" />
       <div class="field">
         <label for="title">Název přednášky, anotace </label>
         <input id="title" name="title" type="text" required />
