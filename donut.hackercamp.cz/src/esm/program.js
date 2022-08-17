@@ -8,6 +8,8 @@ import structuredClone from "@ungap/structured-clone";
 import { when } from "lit/directives/when.js";
 import { throttle } from "./lib/function.js";
 import { showModalDialog } from "./modal-dialog.js";
+import { init as initAddEventDialog } from "./add-event.js";
+import { getSlackProfile } from "./lib/profile.js";
 
 const SLOT_MINUTES = 15;
 const DAY_START_HOUR = 8;
@@ -20,6 +22,7 @@ const state = defAtom({
   endAt: new Date(`2022-09-04T14:00:00`),
   lineups: [],
   events: [],
+  profile: {},
 });
 const transact = (fn) => state.swap(fn);
 
@@ -143,6 +146,8 @@ function renderProgram({
   events,
   visibleDate,
   onLineupsScroll,
+  apiUrl,
+  profile,
 }) {
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.id);
@@ -165,7 +170,7 @@ function renderProgram({
         --slot-width: calc(100vw / 2.5 / 4);
         --tick-color: #eee;
         --tick-highlight-color: #aaa;
-        --max-dialog-width: 800px;
+        --dialog-width: 800px;
       }
       @media (prefers-color-scheme: dark) {
         .program {
@@ -383,7 +388,7 @@ function renderProgram({
       }
 
       dialog {
-        max-width: var(--max-dialog-width);
+        width: var(--dialog-width);
       }
 
       dialog button[name="close"] {
@@ -454,6 +459,10 @@ function renderProgram({
           style="font-size: 120%;"
           @click=${(event) => {
             event.preventDefault();
+            initAddEventDialog(document.getElementById("add-event"), {
+              apiUrl,
+              profile,
+            });
             showModalDialog("add-event");
           }}
         >
@@ -507,12 +516,16 @@ function renderProgram({
               >
               <dialog class="lineup__detail" id="lineup-detail-${lineup.id}">
                 <h1>${lineup.name}</h1>
-                <p><pre>${lineup.description}</pre></p>
-                <p><pre>${lineup.detail}</pre></p>
+                <p>${lineup.description}</p>
+                <p>${lineup.detail}</p>
                 <a
                   class="hc-link hc-link--decorated"
                   style="padding: calc(var(--spacing) / 4);"
                   @click=${() => {
+                    initAddEventDialog(document.getElementById("add-event"), {
+                      apiUrl,
+                      profile,
+                    });
                     showModalDialog("add-event");
                   }}
                 >
@@ -568,6 +581,10 @@ ${event.description}</pre
                                   style="font-size: small; padding: calc(var(--spacing) / 4);"
                                   @click=${(event) => {
                                     event.preventDefault();
+                                    initAddEventDialog(
+                                      document.getElementById("add-event"),
+                                      { apiUrl, profile }
+                                    );
                                     showModalDialog("add-event");
                                   }}
                                 >
@@ -596,6 +613,10 @@ ${event.description}</pre
                                 style="padding: calc(var(--spacing) / 4);"
                                 @click=${(event) => {
                                   event.preventDefault();
+                                  initAddEventDialog(
+                                    document.getElementById("add-event"),
+                                    { apiUrl, profile }
+                                  );
                                   showModalDialog("add-event");
                                 }}
                               >
@@ -622,6 +643,12 @@ ${event.description}</pre
                           weekday: "short",
                         })}
                         @click=${(event) => {
+                          initAddEventDialog(
+                            document.getElementById("add-event", {
+                              apiUrl,
+                              profile,
+                            })
+                          );
                           showModalDialog("add-event");
                         }}
                       >
@@ -657,98 +684,12 @@ ${event.description}</pre
           Zapoj se do programu
         </a>
       </div>
-      <dialog id="add-event">
-        <form>
-          <h2>Jakým způsobem se do programu zapojíš?</h2>
-          <section class="event-type">
-            <div class="hc-card hc-card--decorated">
-              <h3>Talk / Přednáška / Diskuse</h3>
-              <div>
-                <p>Byznys. Life. NGOs. BioHacks. Byznys stories</p>
-                <a class="hc-link--decorated" href="#">Mainframe</a>
-              </div>
-              <div>
-                <p>Data. Dev. Hacks.</p>
-                <a class="hc-link--decorated" href="#">Basecamp</a>
-              </div>
-            </div>
-            <div class="hc-card hc-card--decorated">
-              <h3>Workshop</h3>
-              <a class="hc-link--decorated" href="#">Backend</a>
-            </div>
-            <div class="hc-card hc-card--decorated">
-              <h3>Sport / Meditace</h3>
-              <a class="hc-link--decorated" href="#">PeopleWare</a>
-            </div>
-            <div class="hc-card hc-card--decorated">
-              <h3>Hudební program</h3>
-              <a class="hc-link--decorated" href="#">WoodStack /<br>Jungle release</a>
-            </div>
-            <div class="hc-card hc-card--decorated">
-              <h3>Další / jiný doprovodný program</h3>
-              <a class="hc-link--decorated" href="#">Doprovodný program</a>
-            </div>
-          </section>
-
-          <!-- <div class="field field--block">
-            <label for="activity">
-              Jakou aktivitu sis pro táborníky připravil?
-            </label>
-            <textarea id="activity" name="activity" rows="5"></textarea>
-          </div>
-          <div class="field field--block">
-            <label for="activity-crew">
-              Kdo všechno s Tebou bude aktivitu zařízovat?
-              <span
-                >Vypiš nám sem všechna jména a dej nám telefonní číslo a mail na
-                toho, s kým můžeme případně řešit.</span
-              >
-            </label>
-            <textarea
-              id="activity-crew"
-              name="activityCrew"
-              rows="5"
-            ></textarea>
-          </div>
-          <div class="field field--block">
-            <label for="activity-place">
-              Potřebuješ k tomu nějaké speciální zázemí?
-              <span
-                >Například zásuvku, elektriku, internet, klidné zákoutí…</span
-              >
-            </label>
-            <textarea
-              id="activity-place"
-              name="activityPlace"
-              rows="3"
-            ></textarea>
-          </div> -->
-          <!-- <button type="submit" class="hc-button">Odeslat</button> -->
-          <!-- <h1>Přidat vlastní program</h1>
-        <p>
-          V každé aktivitě respektujeme základní pravidlo: Hacker Camp je z
-          principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš
-          propagovat a nabízet jen pokud to obohatí samotnou akci.
-        </p>
-        <label>
-          <span>Headlajn</span>
-          <input type="text" name="title" placeholder="Název akce" />
-        </label>
-        <label>
-          <span>Popis</span>
-          <textarea name="description" placeholder="Popis akce"></textarea>
-        </label> -->
-        </form>
-        <hr />
-        <button name="close">Zavřít</button>
-      </dialog>
+      <dialog id="add-event"></dialog>
     </div>
   `;
 }
 
 async function fetchLineups(apiHost) {
-  // TODO: use API to get events 👇
-  // const response = await fetch(new URL(`program/?year=2022`, apiHost).href, {
   const response = await fetch("/program/lineups.json?year=2022", {
     headers: { Accept: "application/json" },
     credentials: "include",
@@ -789,6 +730,10 @@ function instatializeDates(input) {
 export async function main({ rootElement, env }) {
   rollbar.init(env);
   initRenderLoop(state, rootElement);
+
+  transact((x) =>
+    Object.assign(x, { apiUrl: env["api-host"], profile: getSlackProfile() })
+  );
 
   const { startAt, endAt } = state.deref();
   const ticks = (endAt - startAt) / 1000 / 60 / 15;
