@@ -160,7 +160,9 @@ function renderHousedScreen({ housing, housingPlacement, travel }) {
 }
 
 function renderIndex({ profile, contact, registration, attendee }) {
-  console.log({ profile, contact, registration });
+  if (!(profile || registration || attendee)) {
+    return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
+  }
   if (attendee?.housingPlacement) {
     return renderHousedScreen(attendee);
   }
@@ -246,6 +248,7 @@ export async function main({ searchParams, slackButton, env }) {
 
   if (searchParams.has("code")) {
     try {
+      state.swap((x) => Object.assign({}, x));
       await authenticate({ searchParams, apiURL });
       handleReturnUrl();
     } catch (e) {
