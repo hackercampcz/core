@@ -4,6 +4,9 @@ import { initRenderLoop } from "./lib/renderer.js";
 
 export const state = defAtom({
   view: renderAddEvent,
+  year: 2022,
+  apiUrl: "",
+  profile: {},
 });
 const transact = (fn) => state.swap(fn);
 
@@ -54,13 +57,14 @@ export function renderAddEvent() {
   `;
 }
 
-export function renderTalk({ apiUrl, profile }) {
+export function renderTalk({ apiUrl, profile, year }) {
   return html`
     <h2>Talk / Přednáška / Diskuse</h2>
     <p>Byznys. Life. NGOs. BioHacks. Byznys stories</p>
     <form method="post" action="${apiUrl}program">
       <input type="hidden" name="type" value="talk" />
       <input type="hidden" name="slackID" value=${profile.sud} />
+      <input type="hidden" name="year" value=${year} />
       <div class="field">
         <label for="title">Název přednášky, anotace </label>
         <input id="title" name="title" type="text" required />
