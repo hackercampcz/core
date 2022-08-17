@@ -96,6 +96,17 @@ export const createRoutes = ({
             },
           },
         },
+        program: {
+          httpMethod: "ANY",
+          path: "/program",
+          fileName: "program/index.mjs",
+          environment: {
+            variables: {
+              private_key: config.get("private-key"),
+              slack_bot_token: config.get("slack-bot-token"),
+            },
+          },
+        },
         optout: {
           httpMethod: "POST",
           path: "/optout",
