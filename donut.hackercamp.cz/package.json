@@ -17,7 +17,7 @@
     "@thi.ng/atom": "5.1.13",
     "@thi.ng/transducers": "8.3.12",
     "@ungap/structured-clone": "1.0.1",
-    "date-fns": "2.29.1",
+    "date-fns": "2.29.2",
     "lit-html": "2.3.0",
     "marked": "4.0.18",
     "ramda": "0.28.0",
