@@ -17,6 +17,7 @@ const View = {
   hackers: "hackers",
   waitingList: "waitingList",
   optouts: "optouts",
+  attendees: "attendees",
 };
 
 const state = defAtom({
@@ -48,7 +49,7 @@ function invoiced(email) {
 const formatDateTime = (x) =>
   x?.toLocaleString("cs", { dateStyle: "short", timeStyle: "short" }) ?? null;
 const sortBy = (attr, x) =>
-  x.sort((a, b) => -1 * a[attr].localeCompare(b[attr]));
+  x.sort((a, b) => (a[attr] ? -1 * a[attr].localeCompare(b[attr]) : -1));
 
 function chip({ text, count, selected, view }) {
   return html`
@@ -100,7 +101,7 @@ function chip({ text, count, selected, view }) {
 
 function chips(
   view,
-  { hackers, waitingList, confirmed, invoiced, paid, optouts }
+  { hackers, waitingList, confirmed, invoiced, paid, optouts, attendees }
 ) {
   return html`
     <div
@@ -111,6 +112,12 @@ function chips(
       aria-multiselectable="false"
     >
       <span class="mdc-evolution-chip-set__chips" role="presentation">
+        ${chip({
+          text: "Účastníci",
+          count: attendees,
+          selected: view === View.attendees,
+          view: View.attendees,
+        })}
         ${chip({
           text: "Zaplacení",
           count: paid,
@@ -208,20 +215,22 @@ function detailTemplate({ detail, selectedView }) {
           d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
         />
       </svg></a>
-        <a
-          class="hc-action-button"
-          href="tel:${detail.phone.replace(" ", "")}"
-          title="Zavolat ${detail.phone}"><svg
-          xmlns="http://www.w3.org/2000/svg"
-          height="24"
-          width="24"
-        >
-          <path d="M0 0h24v24H0z" fill="none"/>
-          <path
-            fill="var(--hc-text-color)"
-            d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
-          />
-        </svg></a>
+        ${when(
+          detail.phone,
+          () => html`
+            <a
+              class="hc-action-button"
+              href="tel:${detail.phone.replace(" ", "")}"
+              title="Zavolat ${detail.phone}"
+              ><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+                <path d="M0 0h24v24H0z" fill="none" />
+                <path
+                  fill="var(--hc-text-color)"
+                  d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
+                /></svg
+            ></a>
+          `
+        )}
         ${when(
           selectedView !== View.paid,
           () => html`
@@ -385,9 +394,11 @@ function tableTemplate(data, { timeHeader, timeAttr }) {
           (row) => html`
             <tr
               @click="${renderDetail(row)}">
-              <td>${row.firstName} ${row.lastName}</td>
+              <td>${row.name}</td>
               <td>${row.company}</td>
-              <td>${formatDateTime(new Date(row[timeAttr]))}</td>
+              <td>${
+                row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""
+              }</td>
               <td>
                 <a
                   class="hc-action-button"
@@ -403,20 +414,26 @@ function tableTemplate(data, { timeHeader, timeAttr }) {
                     d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
                   />
                 </svg></a>
-                <a
-                  class="hc-action-button"
-                  href="tel:${row.phone.replace(" ", "")}"
-                  title="Zavolat ${row.phone}"><svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    width="24"
-                  >
-                    <path d="M0 0h24v24H0z" fill="none"/>
-                    <path
-                      fill="var(--hc-text-color)"
-                      d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
-                    />
-                  </svg></a>
+                ${when(
+                  row.phone,
+                  () => html`
+                    <a
+                      class="hc-action-button"
+                      href="tel:${row.phone.replace(" ", "")}"
+                      title="Zavolat ${row.phone}"
+                      ><svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24"
+                        width="24"
+                      >
+                        <path d="M0 0h24v24H0z" fill="none" />
+                        <path
+                          fill="var(--hc-text-color)"
+                          d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
+                        /></svg
+                    ></a>
+                  `
+                )}
               </td>
             </tr>
           `
@@ -452,8 +469,9 @@ function unauthorized() {
 }
 
 const timeColumn = new Map([
-  [View.paid, { timeHeader: "Čas zaplacení", timeAttr: View.paid }],
-  [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: View.paid }],
+  [View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
+  [View.attendees, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
+  [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }],
 ]);
 
 function registrationsTemplate(state) {
@@ -483,7 +501,14 @@ function registrationsTemplate(state) {
               `;
             }
             return tableTemplate(
-              sortBy(timeColumnSettings.timeAttr, data),
+              sortBy(
+                timeColumnSettings.timeAttr,
+                data.map((x) =>
+                  Object.assign({}, x, {
+                    name: x.name ?? `${x.firstName} ${x.lastName}`,
+                  })
+                )
+              ),
               timeColumnSettings
             );
           }),
