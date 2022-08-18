@@ -452,8 +452,8 @@ function unauthorized() {
 }
 
 const timeColumn = new Map([
-  [View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
-  [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }],
+  [View.paid, { timeHeader: "Čas zaplacení", timeAttr: View.paid }],
+  [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: View.paid }],
 ]);
 
 function registrationsTemplate(state) {
