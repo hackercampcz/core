@@ -136,7 +136,7 @@ export function renderTalk({ apiUrl, profile, year, lineup = "" }) {
           <input id="buddy" name="buddy" type="text" />
         </div>
       </div>
-      <button type="submit" class="hc-button">Odeslat to</button>
+      ${renderFormFooterButtons()}
     </form>
   `;
 }
@@ -172,7 +172,7 @@ export function renderWorkshop({ apiUrl, profile, year, lineup = "" }) {
           <input id="buddy" name="buddy" type="text" />
         </div>
       </div>
-      <button type="submit" class="hc-button">Odeslat to</button>
+      ${renderFormFooterButtons()}
     </form>
   `;
 }
@@ -216,7 +216,7 @@ export function renderSport({ apiUrl, profile, year, lineup = "" }) {
         >
         <input id="palce" name="palce" type="text" required />
       </div>
-      <button type="submit" class="hc-button">Odeslat to</button>
+      ${renderFormFooterButtons()}
     </form>
   `;
 }
@@ -257,7 +257,7 @@ export function renderMusic({ apiUrl, profile, year }) {
           <input id="buddy" name="buddy" type="text" />
         </div>
       </div>
-      <button type="submit" class="hc-button">Odeslat to</button>
+      ${renderFormFooterButtons()}
     </form>
   `;
 }
@@ -303,8 +303,16 @@ export function renderOther({ apiUrl, profile, year }) {
         >
         <input id="palce" name="palce" type="text" required />
       </div>
-      <button type="submit" class="hc-button">Odeslat to</button>
+      ${renderFormFooterButtons()}
     </form>
+  `;
+}
+
+function renderFormFooterButtons() {
+  return html`
+    <button type="submit" class="hc-button">Odeslat to</button>
+    <hr />
+    <button name="close" type="reset">Zavřít</button>
   `;
 }
 
