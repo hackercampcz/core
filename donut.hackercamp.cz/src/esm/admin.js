@@ -164,6 +164,8 @@ const ticketName = new Map([
   ["hacker", "Hacker"],
   ["hacker-plus", "Hacker filantrop"],
   ["hacker-patron", "Patron Campu"],
+  ["volunteer", "Dobrovolník"],
+  ["crew", "Crew"],
 ]);
 
 const ticketPrice = new Map([
@@ -171,6 +173,8 @@ const ticketPrice = new Map([
   ["hacker", 5000],
   ["hacker-plus", 7500],
   ["hacker-patron", 7500],
+  ["volunteer", 0],
+  ["crew", 0],
 ]);
 
 const formatMoney = (x) =>
