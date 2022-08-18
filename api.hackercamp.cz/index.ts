@@ -287,11 +287,23 @@ export function createDB({ slackQueueUrl }) {
     billingMode: "PAY_PER_REQUEST",
   });
 
+  const program = new aws.dynamodb.Table(hcName("program"), {
+    name: hcName("program"),
+    hashKey: "id",
+    rangeKey: "lineup",
+    attributes: [
+      { name: "id", type: "S" },
+      { name: "lineup", type: "S" },
+    ],
+    billingMode: "PAY_PER_REQUEST",
+  });
+
   return pulumi.Output.create({
     registrationsDataTable: registrations.name,
     contactsDataTable: contacts.name,
     optOutsDataTable: optOuts.name,
     attendeesDataTable: attendees.name,
+    programDataTable: program.name,
   });
 }
 
