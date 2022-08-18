@@ -8,7 +8,7 @@ import structuredClone from "@ungap/structured-clone";
 import { when } from "lit/directives/when.js";
 import { throttle } from "./lib/function.js";
 import { showModalDialog } from "./modal-dialog.js";
-import { init as initAddEventDialog } from "./add-event.js";
+import { init as renderAddEventDialog } from "./add-event.js";
 import { getSlackProfile } from "./lib/profile.js";
 
 const SLOT_MINUTES = 15;
@@ -459,7 +459,7 @@ function renderProgram({
           style="font-size: 120%;"
           @click=${(event) => {
             event.preventDefault();
-            initAddEventDialog(document.getElementById("add-event"), {
+            renderAddEventDialog(document.getElementById("add-event"), {
               apiUrl,
               profile,
             });
@@ -518,19 +518,26 @@ function renderProgram({
                 <h1>${lineup.name}</h1>
                 <p>${lineup.description}</p>
                 <p>${lineup.detail}</p>
-                <a
-                  class="hc-link hc-link--decorated"
-                  style="padding: calc(var(--spacing) / 4);"
-                  @click=${() => {
-                    initAddEventDialog(document.getElementById("add-event"), {
-                      apiUrl,
-                      profile,
-                    });
-                    showModalDialog("add-event");
-                  }}
-                >
-                  Zapoj se do programu
-                </a>
+                ${when(
+                  lineup.id !== "liorg",
+                  () => html`<a
+                    class="hc-link hc-link--decorated"
+                    style="padding: calc(var(--spacing) / 4);"
+                    @click=${() => {
+                      renderAddEventDialog(
+                        document.getElementById("add-event"),
+                        {
+                          apiUrl,
+                          profile,
+                          lineupId: lineup.id,
+                        }
+                      );
+                      showModalDialog("add-event");
+                    }}
+                  >
+                    Zapoj se do programu
+                  </a> `
+                )}
                 <hr />
                 <button name="close">Zavřít</button>
               </dialog>
@@ -581,7 +588,7 @@ ${event.description}</pre
                                   style="font-size: small; padding: calc(var(--spacing) / 4);"
                                   @click=${(event) => {
                                     event.preventDefault();
-                                    initAddEventDialog(
+                                    renderAddEventDialog(
                                       document.getElementById("add-event"),
                                       { apiUrl, profile }
                                     );
@@ -613,7 +620,7 @@ ${event.description}</pre
                                 style="padding: calc(var(--spacing) / 4);"
                                 @click=${(event) => {
                                   event.preventDefault();
-                                  initAddEventDialog(
+                                  renderAddEventDialog(
                                     document.getElementById("add-event"),
                                     { apiUrl, profile }
                                   );
@@ -643,7 +650,7 @@ ${event.description}</pre
                           weekday: "short",
                         })}
                         @click=${(event) => {
-                          initAddEventDialog(
+                          renderAddEventDialog(
                             document.getElementById("add-event", {
                               apiUrl,
                               profile,
