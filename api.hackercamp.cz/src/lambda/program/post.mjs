@@ -68,7 +68,7 @@ export async function handler(event) {
     console.log({ method: "POST", data, submittedBy, year });
     const attendee = await getAttendee(dynamo, submittedBy, parseInt(year, 10));
     if (!attendee) return notFound();
-    const events = new Map(attendee.events.map((e) => [e.id, e]))
+    const events = new Map(attendee.events?.map((e) => [e.id, e]))
       .set(data.id, data)
       .values();
     await saveAttendee(dynamo, { slackID: submittedBy, year, events });
