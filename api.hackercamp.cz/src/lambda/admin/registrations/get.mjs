@@ -29,7 +29,7 @@ async function getAttendees(year) {
     new ScanCommand({
       TableName: "hc-attendees",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#yr > :yr",
+      FilterExpression: "#yr = :yr",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         { ":yr": year },
