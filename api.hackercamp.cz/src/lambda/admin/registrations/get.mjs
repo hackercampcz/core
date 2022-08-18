@@ -23,6 +23,23 @@ async function getOptOuts(year) {
   return new Set(res.Items.map((x) => x.email.S));
 }
 
+async function getAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "#yr > :yr",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        { ":yr": year },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
 async function getConfirmedHackersRegistrations(year) {
   console.log("Loading confirmed hackers data", { year });
   const res = await db.send(
@@ -142,6 +159,7 @@ export async function handler(event) {
     ]);
     if (type === "optouts") return response(Array.from(optouts));
     if (!data) return notFound();
+    if (type === "attendees") return response(data);
     return response(data.filter((x) => !optouts.has(x.email)));
   } catch (err) {
     console.error(err);
