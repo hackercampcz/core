@@ -137,6 +137,8 @@ function getData(type, year) {
       return getWaitingListRegistrations(year);
     case "optouts":
       return null;
+    case "attendees":
+      return getAttendees(year);
     default:
       throw new Error(`Unknown type ${type}`);
   }
