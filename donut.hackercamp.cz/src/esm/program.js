@@ -8,7 +8,7 @@ import structuredClone from "@ungap/structured-clone";
 import { when } from "lit/directives/when.js";
 import { throttle } from "./lib/function.js";
 import { showModalDialog } from "./modal-dialog.js";
-import { init as renderAddEventDialog } from "./add-event.js";
+import { renderInit as renderAddEventDialog } from "./add-event.js";
 import { getSlackProfile } from "./lib/profile.js";
 
 const SLOT_MINUTES = 15;
@@ -590,7 +590,7 @@ ${event.description}</pre
                                     event.preventDefault();
                                     renderAddEventDialog(
                                       document.getElementById("add-event"),
-                                      { apiUrl, profile }
+                                      { apiUrl, profile, lineupId: lineup.id }
                                     );
                                     showModalDialog("add-event");
                                   }}
@@ -622,7 +622,7 @@ ${event.description}</pre
                                   event.preventDefault();
                                   renderAddEventDialog(
                                     document.getElementById("add-event"),
-                                    { apiUrl, profile }
+                                    { apiUrl, profile, lineupId: lineup.id }
                                   );
                                   showModalDialog("add-event");
                                 }}
@@ -654,6 +654,7 @@ ${event.description}</pre
                             document.getElementById("add-event", {
                               apiUrl,
                               profile,
+                              lineupId: lineup.id,
                             })
                           );
                           showModalDialog("add-event");
@@ -685,6 +686,11 @@ ${event.description}</pre
           class="hc-link hc-link--decorated"
           style="padding: calc(var(--spacing) / 4)"
           @click=${() => {
+            renderAddEventDialog(document.getElementById("add-event"), {
+              apiUrl,
+              profile,
+              lineupId: "liother"
+            });
             showModalDialog("add-event");
           }}
         >

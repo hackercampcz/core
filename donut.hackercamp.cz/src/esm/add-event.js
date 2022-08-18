@@ -14,13 +14,13 @@ const HEADER_BY_LINEUP = new Map([
   ["", html`<em>nah.</em>`],
   [
     "limain",
-    html`<h2>Talk / Přednáška / Diskuse</h2>
+    html`<h2>Mainframe</h2>
       <p>Data. Dev. Hacks.</p>`,
   ],
   [
     "libase",
     html`<h2>Basecamp</h2>
-      <p>Byznys. Life. NGOs. BioHacks. Byznys stories</p>`,
+      <p>Data. Devs. BI. Code.</p>`,
   ],
   [
     "liback",
@@ -36,6 +36,10 @@ const HEADER_BY_LINEUP = new Map([
     "liwood",
     html`<h2>WoodStack / Jungle release</h2>
       <p>Hudební program</p>`,
+  ],
+  [
+    "lijungle",
+    html`<h2>Jungle release</h2><p>Hudební program</p>`,
   ],
   [
     "liother",
@@ -345,14 +349,14 @@ function renderAddEvent({ lineupId, profile, year, apiUrl }) {
       <input type="hidden" name="slackID" value=${profile.sud} />
       <input type="hidden" name="year" value=${year} />
       ${fieldsHtml}
+      <button type="submit" class="hc-button">Odeslat to</button>
     </form>
-    <button type="submit" class="hc-button">Odeslat to</button>
     <hr />
     <button name="close" type="reset">Zavřít</button>
   `;
 }
 
-export function init(rootElement, { apiUrl, profile, lineupId }) {
+export function renderInit(rootElement, { apiUrl, profile, lineupId }) {
   initRenderLoop(state, rootElement);
   const view = lineupId ? renderAddEvent : renderSignpost;
   transact((x) => Object.assign(x, { view, apiUrl, profile, lineupId }));
