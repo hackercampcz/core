@@ -44,9 +44,7 @@ function saveAttendee(dynamo, data) {
       Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
       UpdateExpression: "SET events = :events",
       ExpressionAttributeValues: marshall(
-        {
-          ":events": data.events,
-        },
+        { ":events": Array.from(data.events) },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
     })
