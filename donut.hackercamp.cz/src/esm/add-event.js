@@ -3,7 +3,7 @@ import { html } from "lit-html";
 import { initRenderLoop } from "./lib/renderer.js";
 
 export const state = defAtom({
-  view: renderAddEvent,
+  view: renderAddEventForm,
   year: 2022,
   apiUrl: "",
   profile: {},
@@ -39,7 +39,8 @@ const HEADER_BY_LINEUP = new Map([
   ],
   [
     "lijungle",
-    html`<h2>Jungle release</h2><p>Hudební program</p>`,
+    html`<h2>Jungle release</h2>
+      <p>Hudební program</p>`,
   ],
   [
     "liother",
@@ -52,7 +53,7 @@ const FIELDS_BY_LINEUP = new Map([
   ["", html`<em>nah.</em>`, ""],
   [
     "limain",
-    html`
+    ({ startAt, endAt }) => html`
       <div class="field">
         <label for="title">Název přednášky, anotace </label>
         <input id="title" name="title" type="text" required />
@@ -71,43 +72,26 @@ const FIELDS_BY_LINEUP = new Map([
           />
         </div>
         <div class="field" style="flex: 2">
-          <label for="buddy">Parťák (nepovinnej)</label>
-          <input id="buddy" name="buddy" type="text" />
-        </div>
-      </div>
-    `,
-  ],
-  [
-    "libase",
-    html`
-      <div class="field">
-        <label for="title">Název workshopu, anotace </label>
-        <input id="title" name="title" type="text" required />
-      </div>
-      <div class="group">
-        <div class="field">
-          <label for="duration">Délka v minutách</label>
+          <label for="preferred-time">Preferovaný čas</label>
           <input
-            id="duration"
-            name="duration"
-            type="number"
-            min="15"
-            max="120"
-            value="90"
-            required
+            id="preferred-time"
+            name="preferredTime"
+            type="datetime-local"
+            min=${startAt.toISOString().replace("Z", "")}
+            max=${endAt.toISOString().replace("Z", "")}
           />
         </div>
-        <div class="field" style="flex: 2">
-          <label for="buddy">Parťák (nepovinnej)</label>
-          <input id="buddy" name="buddy" type="text" />
-        </div>
+      </div>
+      <div class="field">
+        <label for="buddy">Parťák (nepovinnej)</label>
+        <input id="buddy" name="buddy" type="text" />
       </div>
     `,
   ],
-  ["limain", html`<em>copy of libase.</em>`],
+  ["libase", () => html`<em>copy of limain.</em>`],
   [
     "liback",
-    html`
+    () => html`
       <div class="field">
         <label for="title">Název workshopu, anotace </label>
         <input id="title" name="title" type="text" required />
@@ -134,7 +118,7 @@ const FIELDS_BY_LINEUP = new Map([
   ],
   [
     "liother",
-    html`
+    () => html`
       <div class="field">
         <label for="title"
           >Název aktivity, anotace (co si pod tím představit)</label
@@ -143,7 +127,7 @@ const FIELDS_BY_LINEUP = new Map([
       </div>
       <div class="group">
         <div class="field">
-          <label for="duration">Délka</label>
+          <label for="duration">Délka (minuty)</label>
           <input
             id="duration"
             name="duration"
@@ -174,7 +158,7 @@ const FIELDS_BY_LINEUP = new Map([
   ["lijungle", html`<em>liwood copy</em>`],
   [
     "lipeep",
-    html` <div class="field">
+    () => html` <div class="field">
         <label for="title"
           >Název aktivity, anotace (co si pod tím představit)</label
         >
@@ -207,7 +191,7 @@ const FIELDS_BY_LINEUP = new Map([
   ],
   [
     "liwood",
-    html`
+    () => html`
       <div class="field">
         <label for="name">DJ name / umělecké jméno</label>
         <input id="name" name="name" type="text" required />
@@ -220,7 +204,7 @@ const FIELDS_BY_LINEUP = new Map([
       </div>
       <div class="group">
         <div class="field">
-          <label for="duration">Délka</label>
+          <label for="duration">Délka v minutách</label>
           <input
             id="duration"
             name="duration"
@@ -240,7 +224,7 @@ const FIELDS_BY_LINEUP = new Map([
   ],
 ]);
 FIELDS_BY_LINEUP.set("lijungle", FIELDS_BY_LINEUP.get("liwood"));
-FIELDS_BY_LINEUP.set("limain", FIELDS_BY_LINEUP.get("libase"));
+FIELDS_BY_LINEUP.set("libase", FIELDS_BY_LINEUP.get("limain"));
 
 export function renderSignpost() {
   return html`
@@ -256,7 +240,10 @@ export function renderSignpost() {
             @click=${(event) => {
               event.preventDefault();
               transact((x) =>
-                Object.assign(x, { view: renderAddEvent, lineupId: "limain" })
+                Object.assign(x, {
+                  view: renderAddEventForm,
+                  lineupId: "limain",
+                })
               );
             }}
             >Mainframe</a
@@ -270,7 +257,10 @@ export function renderSignpost() {
             @click=${(event) => {
               event.preventDefault();
               transact((x) =>
-                Object.assign(x, { view: renderAddEvent, lineupId: "libase" })
+                Object.assign(x, {
+                  view: renderAddEventForm,
+                  lineupId: "libase",
+                })
               );
             }}
             >Basecamp</a
@@ -285,7 +275,7 @@ export function renderSignpost() {
           @click=${(event) => {
             event.preventDefault();
             transact((x) =>
-              Object.assign(x, { view: renderAddEvent, lineupId: "liback" })
+              Object.assign(x, { view: renderAddEventForm, lineupId: "liback" })
             );
           }}
           >Backend</a
@@ -299,7 +289,7 @@ export function renderSignpost() {
           @click=${(event) => {
             event.preventDefault();
             transact((x) =>
-              Object.assign(x, { view: renderAddEvent, lineupId: "lipeep" })
+              Object.assign(x, { view: renderAddEventForm, lineupId: "lipeep" })
             );
           }}
           >PeopleWare</a
@@ -313,7 +303,7 @@ export function renderSignpost() {
           @click=${(event) => {
             event.preventDefault();
             transact((x) =>
-              Object.assign(x, { view: renderAddEvent, lineupId: "liwood" })
+              Object.assign(x, { view: renderAddEventForm, lineupId: "liwood" })
             );
           }}
           >WoodStack /<br />Jungle release</a
@@ -327,7 +317,10 @@ export function renderSignpost() {
           @click=${(event) => {
             event.preventDefault();
             transact((x) =>
-              Object.assign(x, { view: renderAddEvent, lineupId: "liother" })
+              Object.assign(x, {
+                view: renderAddEventForm,
+                lineupId: "liother",
+              })
             );
           }}
           >Doprovodný program</a
@@ -339,9 +332,17 @@ export function renderSignpost() {
   `;
 }
 
-function renderAddEvent({ lineupId, profile, year, apiUrl }) {
-  const headHtml = HEADER_BY_LINEUP.get(lineupId);
-  const fieldsHtml = FIELDS_BY_LINEUP.get(lineupId);
+export function renderAddEventForm({
+  lineupId,
+  profile,
+  year,
+  apiUrl,
+  header,
+  startAt,
+  endAt,
+}) {
+  const headHtml = header ?? HEADER_BY_LINEUP.get(lineupId);
+  const fieldsHtml = FIELDS_BY_LINEUP.get(lineupId)({ startAt, endAt });
   return html`
     ${headHtml}
     <form method="post" action="${apiUrl}program">
@@ -351,13 +352,24 @@ function renderAddEvent({ lineupId, profile, year, apiUrl }) {
       ${fieldsHtml}
       <button type="submit" class="hc-button">Odeslat to</button>
     </form>
-    <hr />
-    <button name="close" type="reset">Zavřít</button>
   `;
 }
 
-export function renderInit(rootElement, { apiUrl, profile, lineupId }) {
+export function renderInit(
+  rootElement,
+  { apiUrl, profile, lineupId, header, startAt, endAt }
+) {
   initRenderLoop(state, rootElement);
-  const view = lineupId ? renderAddEvent : renderSignpost;
-  transact((x) => Object.assign(x, { view, apiUrl, profile, lineupId }));
+  const view = lineupId ? renderAddEventForm : renderSignpost;
+  transact((x) =>
+    Object.assign(x, {
+      header,
+      view,
+      apiUrl,
+      profile,
+      lineupId,
+      startAt,
+      endAt,
+    })
+  );
 }

@@ -23,6 +23,7 @@ const state = defAtom({
   lineups: [],
   events: [],
   profile: {},
+  year: 2022,
 });
 const transact = (fn) => state.swap(fn);
 
@@ -148,6 +149,7 @@ function renderProgram({
   onLineupsScroll,
   apiUrl,
   profile,
+  year,
 }) {
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.id);
@@ -155,6 +157,18 @@ function renderProgram({
   const eventStartAtSlot = (event) => getSlotNumber(startAt, event.startAt);
   const eventDurationInSlots = (event) =>
     getSlotNumber(startAt, event.endAt) - getSlotNumber(startAt, event.startAt);
+
+  const renderAndShowAddEventForm = (lineupId) => {
+    renderAddEventDialog(document.getElementById("add-event-form"), {
+      apiUrl,
+      profile,
+      lineupId,
+      startAt,
+      endAt,
+    });
+    // mby closwe previous modal here
+    showModalDialog("add-event");
+  };
 
   return html`
     <style>
@@ -459,11 +473,7 @@ function renderProgram({
           style="font-size: 120%;"
           @click=${(event) => {
             event.preventDefault();
-            renderAddEventDialog(document.getElementById("add-event"), {
-              apiUrl,
-              profile,
-            });
-            showModalDialog("add-event");
+            renderAndShowAddEventForm();
           }}
         >
           Zapoj se do programu
@@ -523,16 +533,9 @@ function renderProgram({
                   () => html`<a
                     class="hc-link hc-link--decorated"
                     style="padding: calc(var(--spacing) / 4);"
-                    @click=${() => {
-                      renderAddEventDialog(
-                        document.getElementById("add-event"),
-                        {
-                          apiUrl,
-                          profile,
-                          lineupId: lineup.id,
-                        }
-                      );
-                      showModalDialog("add-event");
+                    @click=${(event) => {
+                      event.preventDefault();
+                      renderAndShowAddEventForm(lineup.id);
                     }}
                   >
                     Zapoj se do programu
@@ -588,11 +591,6 @@ ${event.description}</pre
                                   style="font-size: small; padding: calc(var(--spacing) / 4);"
                                   @click=${(event) => {
                                     event.preventDefault();
-                                    renderAddEventDialog(
-                                      document.getElementById("add-event"),
-                                      { apiUrl, profile, lineupId: lineup.id }
-                                    );
-                                    showModalDialog("add-event");
                                   }}
                                 >
                                   Zapojit se
@@ -620,11 +618,7 @@ ${event.description}</pre
                                 style="padding: calc(var(--spacing) / 4);"
                                 @click=${(event) => {
                                   event.preventDefault();
-                                  renderAddEventDialog(
-                                    document.getElementById("add-event"),
-                                    { apiUrl, profile, lineupId: lineup.id }
-                                  );
-                                  showModalDialog("add-event");
+                                  renderAndShowAddEventForm(lineup.id);
                                 }}
                               >
                                 Zapojit se
@@ -650,14 +644,8 @@ ${event.description}</pre
                           weekday: "short",
                         })}
                         @click=${(event) => {
-                          renderAddEventDialog(
-                            document.getElementById("add-event", {
-                              apiUrl,
-                              profile,
-                              lineupId: lineup.id,
-                            })
-                          );
-                          showModalDialog("add-event");
+                          event.preventDefault();
+                          renderAndShowAddEventForm(lineup.id);
                         }}
                       >
                         &nbsp;
@@ -685,19 +673,19 @@ ${event.description}</pre
         <a
           class="hc-link hc-link--decorated"
           style="padding: calc(var(--spacing) / 4)"
-          @click=${() => {
-            renderAddEventDialog(document.getElementById("add-event"), {
-              apiUrl,
-              profile,
-              lineupId: "liother"
-            });
-            showModalDialog("add-event");
+          @click=${(event) => {
+            event.preventDefault();
+            renderAndShowAddEventForm("liother");
           }}
         >
           Zapoj se do programu
         </a>
       </div>
-      <dialog id="add-event"></dialog>
+      <dialog id="add-event">
+        <div id="add-event-form"></div>
+        <hr />
+        <button name="close" type="reset">Zavřít</button>
+      </dialog>
     </div>
   `;
 }
