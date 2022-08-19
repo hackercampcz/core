@@ -44,7 +44,7 @@ function saveAttendee(dynamo, data) {
       Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
       UpdateExpression: "SET events = :events",
       ExpressionAttributeValues: marshall(
-        { ":events": Array.from(data.events) },
+        { ":events": data.events },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
     })
@@ -66,9 +66,11 @@ export async function handler(event) {
     console.log({ method: "POST", data, submittedBy, year });
     const attendee = await getAttendee(dynamo, submittedBy, parseInt(year, 10));
     if (!attendee) return notFound();
-    const events = new Map(attendee.events?.map((e) => [e.id, e]))
-      .set(data.id, data)
-      .values();
+    const events = Array.from(
+      new Map(attendee.events?.map((e) => [e.id, e]))
+        .set(data.id, data)
+        .values()
+    );
     await saveAttendee(dynamo, { slackID: submittedBy, year, events });
     return seeOther(getHeader(event.headers, "Referer"));
   } catch (err) {
