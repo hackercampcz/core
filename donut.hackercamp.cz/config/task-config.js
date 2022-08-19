@@ -25,6 +25,19 @@ async function getAttendees() {
   return resp.json();
 }
 
+/**
+ * @param {Date|null} x
+ * @returns {string|null}
+ */
+const formatDateTime = (x) =>
+  x?.toLocaleString("cs", {
+    weekday: "short",
+    day: "numeric",
+    month: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+  }) ?? null;
+
 module.exports = {
   images: true,
   cloudinary: true,
@@ -38,7 +51,13 @@ module.exports = {
     collections: ["build", "images", "hackers"],
     nunjucksRender: {
       filters: {
-        year: () => new Date().getFullYear(),
+        year() {
+          return new Date().getFullYear();
+        },
+        formatDateTime(s) {
+          const date = new Date(s);
+          return formatDateTime(date);
+        },
       },
     },
   },

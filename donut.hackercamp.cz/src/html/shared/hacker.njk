@@ -3,20 +3,29 @@
 {% set profile = item[1] %}
 {% set attendee = item[2] %}
 
+{% block title %}{{ attendee.name }} - Profil hackera{% endblock %}
+
 {% block head %}
   <link rel="stylesheet" href="/assets/css/profile.css">
   <script src="https://cdn.jsdelivr.net/gh/nuxodin/dialog-polyfill@x.x.x/dialog.min.js" type="module"></script>
 {% endblock %}
 
+{%  macro lineup(x) %}
+  <code>
+    {{ "Organizační" if x === "liorg" }}
+    {{ "Mainframe" if x === "limain" }}
+    {{ "Basecamp" if x === "libase" }}
+    {{ "Backend" if x === "liback" }}
+    {{ "Peopleware" if x === "lipeep" }}
+    {{ "WoodStack" if x === "liwood" }}
+    {{ "Jungle Release" if x === "lijungle" }}
+  </code>
+{% endmacro %}
+
 {% block content %}
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
       <article class="hc-profile mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <h1>{{ profile.real_name }}</h1>
-        {% if attendee.company %}<h2>{{ attendee.company }}</h2>{% endif %}
-        <p>Na Slacku jako&nbsp;<a href="https://hackercampworkspace.slack.com/team/{{ attendee.slackID }}"><code>@{{ profile.display_name or profile.real_name }}</code></a></p>
-        {% if profile.title %}<p>{{ profile.title }}</p>{% endif %}
-        <div>{{ profile.status_text }}</div>
         <div class="hc-profile__photo">
           <img
             alt="photo"
@@ -27,22 +36,40 @@
             width="162"
             height="162">
         </div>
-        <p>
-          <a href="#get-involved" class="js-open-modal hc-link hc-link--decorated">
-            Zapoj se do programu
-          </a>
+        <h1>{{ profile.real_name }}</h1>
+        {% if attendee.company %}<h2>{{ attendee.company }}</h2>{% endif %}
+        <p>Na Slacku jako&nbsp;<a
+            href="https://hackercampworkspace.slack.com/team/{{ attendee.slackID }}"><code>@{{ profile.display_name or profile.real_name }}</code></a>
         </p>
+        {% if profile.title %}<p>{{ profile.title }}</p>{% endif %}
+        <div>{{ profile.status_text }}</div>
       </article>
+      {% if attendee.events %}
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <h2>Kde bude</h2>
+        </div>
+        {% for event in attendee.events %}
+          <div class="mdc-layout-grid__cell">
+            <div class="hc-card">
+              <h3>{{ event.title }}</h3>
+              <p>
+                <code>{{ lineup(event.lineup) }}</code> -
+                <time datetime="{{ event.preferredTime }}">{{ event.preferredTime | formatDateTime }}</time>
+              </p>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
     </div>
   </div>
 {% endblock %}
 
 {% block javascript %}
 <script type="module">
-  import { main } from "/assets/esm/profile.js";
+  import {main} from "/assets/esm/profile.js";
 
   main({
-    profile: {{ profile | dump(8) | safe }},
+  profile: {{ profile | dump(8) | safe }},
     attendee: {{ attendee | dump(8) | safe }},
     env: {{ build | dump(8) |safe }},
   })

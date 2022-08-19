@@ -63,6 +63,7 @@ export async function handler(event) {
     const submittedBy = payload["https://slack.com/user_id"];
     const year = parseInt(data.year, 10);
     delete data.year;
+    delete data.slackID;
     console.log({ method: "POST", data, submittedBy, year });
     const attendee = await getAttendee(dynamo, submittedBy, parseInt(year, 10));
     if (!attendee) return notFound();
@@ -70,7 +71,7 @@ export async function handler(event) {
       new Map(attendee.events?.map((e) => [e.id, e]))
         .set(data.id, data)
         .values()
-    );
+    ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
     await saveAttendee(dynamo, { slackID: submittedBy, year, events });
     return seeOther(getHeader(event.headers, "Referer"));
   } catch (err) {
