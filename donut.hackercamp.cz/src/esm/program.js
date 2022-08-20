@@ -152,13 +152,14 @@ function renderProgram({
   const eventDurationInSlots = (event) =>
     getSlotNumber(startAt, event.endAt) - getSlotNumber(startAt, event.startAt);
 
-  const renderAndShowAddEventForm = (lineupId) => {
+  const renderAndShowAddEventForm = (lineupId, { preferredTime } = {}) => {
     renderAddEventDialog(document.getElementById("add-event-form"), {
       apiUrl,
       profile,
       lineupId,
       startAt,
       endAt,
+      preferredTime,
     });
     // mby closwe previous modal here
     showModalDialog("add-event");
@@ -644,7 +645,10 @@ ${event.description}</pre
                         data-day=${formatShortDayName(time)}
                         @click=${(event) => {
                           event.preventDefault();
-                          renderAndShowAddEventForm(lineup.id);
+                          console.log(lineup, time);
+                          renderAndShowAddEventForm(lineup.id, {
+                            preferredTime: time,
+                          });
                         }}
                       >
                         &nbsp;

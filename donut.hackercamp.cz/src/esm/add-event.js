@@ -53,7 +53,7 @@ const FIELDS_BY_LINEUP = new Map([
   ["", html`<em>nah.</em>`, ""],
   [
     "limain",
-    ({ startAt, endAt }) => html`
+    ({ startAt, endAt, preferredTime }) => html`
       <div class="field">
         <label for="title">Název přednášky, anotace </label>
         <input id="title" name="title" type="text" required />
@@ -77,6 +77,7 @@ const FIELDS_BY_LINEUP = new Map([
             id="preferred-time"
             name="preferredTime"
             type="datetime-local"
+            .value=${preferredTime?.toISOString().replace("Z", "")}
             min=${startAt.toISOString().replace("Z", "")}
             max=${endAt.toISOString().replace("Z", "")}
           />
@@ -91,7 +92,7 @@ const FIELDS_BY_LINEUP = new Map([
   ["libase", () => html`<em>copy of limain.</em>`],
   [
     "liback",
-    () => html`
+    ({ startAt, endAt, preferredTime }) => html`
       <div class="field">
         <label for="title">Název workshopu, anotace </label>
         <input id="title" name="title" type="text" required />
@@ -110,6 +111,17 @@ const FIELDS_BY_LINEUP = new Map([
           />
         </div>
         <div class="field" style="flex: 2">
+          <label for="preferred-time">Preferovaný čas</label>
+          <input
+            id="preferred-time"
+            name="preferredTime"
+            type="datetime-local"
+            value=${preferredTime?.toISOString().replace("Z", "")}
+            min=${startAt.toISOString().replace("Z", "")}
+            max=${endAt.toISOString().replace("Z", "")}
+          />
+        </div>
+        <div class="field" style="flex: 2">
           <label for="buddy">Parťák (nepovinnej)</label>
           <input id="buddy" name="buddy" type="text" />
         </div>
@@ -118,7 +130,7 @@ const FIELDS_BY_LINEUP = new Map([
   ],
   [
     "liother",
-    () => html`
+    ({ startAt, endAt, preferredTime }) => html`
       <div class="field">
         <label for="title"
           >Název aktivity, anotace (co si pod tím představit)</label
@@ -136,6 +148,17 @@ const FIELDS_BY_LINEUP = new Map([
             max="120"
             value="60"
             required
+          />
+        </div>
+        <div class="field" style="flex: 2">
+          <label for="preferred-time">Preferovaný čas</label>
+          <input
+            id="preferred-time"
+            name="preferredTime"
+            type="datetime-local"
+            value=${preferredTime?.toISOString().replace("Z", "")}
+            min=${startAt.toISOString().replace("Z", "")}
+            max=${endAt.toISOString().replace("Z", "")}
           />
         </div>
         <div class="field" style="flex: 2">
@@ -340,9 +363,10 @@ export function renderAddEventForm({
   header,
   startAt,
   endAt,
+  preferredTime,
 }) {
   const headHtml = header ?? HEADER_BY_LINEUP.get(lineupId);
-  const fieldsHtml = FIELDS_BY_LINEUP.get(lineupId)({ startAt, endAt });
+  const fieldsHtml = FIELDS_BY_LINEUP.get(lineupId)({ startAt, endAt, preferredTime });
   return html`
     ${headHtml}
     <form method="post" action="${apiUrl}program">
@@ -357,7 +381,7 @@ export function renderAddEventForm({
 
 export function renderInit(
   rootElement,
-  { apiUrl, profile, lineupId, header, startAt, endAt }
+  { apiUrl, profile, lineupId, header, startAt, endAt, preferredTime }
 ) {
   initRenderLoop(state, rootElement);
   const view = lineupId ? renderAddEventForm : renderSignpost;
@@ -370,6 +394,7 @@ export function renderInit(
       lineupId,
       startAt,
       endAt,
+      preferredTime,
     })
   );
 }
