@@ -130,6 +130,100 @@ function handleBodyScroll(event) {
   }
 }
 
+function eventTemplate(
+  lineup,
+  event,
+  eventStartAtSlot,
+  eventDurationInSlots,
+  renderAndShowAddEventForm
+) {
+  const durationInSlots = eventDurationInSlots(event);
+  return html`
+    <div
+      class="${classMap({
+        lineup__event: true,
+        "lineup__event--narrow":
+          durationInSlots === 1 && event.title?.length > 3,
+        [`lineup__event--${event.type}`]: event.type,
+      })}"
+      data-lineup=${lineup.id}
+      id=${event.id}
+      style=${`
+        --slot-start: ${eventStartAtSlot(event)};
+        --slot-duration: ${durationInSlots};
+        --slot-top-offset: ${event._top ?? 0};
+      `}
+      @click=${() => {
+        showModalDialog(`event-detail-${event.id}`);
+      }}
+    >
+      <pre
+        style=${`
+          font-weight: ${event.level > 100 ? "bold" : "normal"};
+          font-size: ${event.level || 100}%;
+        `}
+      >
+${event.title}</pre
+      >
+      <div style="display: flex;">
+        ${when(
+          event.type === "topic",
+          () => html`
+            ${when(
+              event.description,
+              () => html`<pre
+                style="font-size: small; margin-bottom: calc(var(--spacing) / 4);"
+              >
+${event.description}</pre
+              >`
+            )}
+            <div
+              style="text-align: center; flex: 1; align-self: flex-end; margin: calc(var(--spacing) / 4);"
+            >
+              <a
+                class="hc-link hc-link--decorated"
+                style="font-size: small; padding: calc(var(--spacing) / 4);"
+                @click=${(event) => {
+                  event.preventDefault();
+                }}
+              >
+                Zapojit se
+              </a>
+            </div>
+          `
+        )}
+      </div>
+    </div>
+    <dialog class="event__detail" id="event-detail-${event.id}">
+      <h1>${event.title}</h1>
+      <p>
+        ${formatEventTimeInfo(event)}
+        <code>${lineup.name}</code><br />
+      </p>
+      <pre>${event.description}</pre>
+      ${when(
+        event.type === "topic",
+        () => html`
+          <p>
+            <a
+              class="hc-link hc-link--decorated"
+              style="padding: calc(var(--spacing) / 4);"
+              @click=${(event) => {
+                event.preventDefault();
+                renderAndShowAddEventForm(lineup.id);
+              }}
+            >
+              Zapojit se
+            </a>
+            <hr />
+          </p>
+        `
+      )}
+      <button name="close">Zavřít</button>
+    </dialog>
+  `;
+}
+
 /**
  * TODO: split me?
  * @param {defAtom} state
@@ -359,7 +453,24 @@ function renderProgram({
         border: 1px solid var(--tick-highlight-color);
         transition: all 0.2s ease-in-out;
         font-size: 14px;
+        left: calc(var(--slot-start) * var(--slot-width) + 4px);
+        width: calc(var(--slot-duration) * var(--slot-width) - 8px);
+        top: var(--slot-top-offset);
       }
+
+      .lineup__event.lineup__event--org {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-color: transparent;
+        pointer-events: fill;
+      }
+      .lineup__event.lineup__event--narrow {
+        writing-mode: vertical-lr;
+        font-size: 80%;
+      }
+
       .lineup__event pre,
       .lineup__event + dialog pre,
       .lineup__info pre {
@@ -394,10 +505,12 @@ function renderProgram({
           font-size: 18px;
         }
       }
+      /*
       .lineup__event:hover,
       .lineup__event:active {
         width: max-content;
       }
+       */
 
       :where(.lineup__detail, .event__detail) h1 {
         margin: calc(var(--spacing) / 2) 0 var(--spacing) 0;
@@ -547,91 +660,14 @@ function renderProgram({
                 <button name="close">Zavřít</button>
               </dialog>
               <div class="lineup__eventsline">
-                ${lineUpEvents(lineup, events).map(
-                  (event) =>
-                    html`
-                      <div
-                        class="lineup__event"
-                        data-lineup=${lineup.id}
-                        id=${event.id}
-                        style=${`
-                          left: calc(${eventStartAtSlot(
-                            event
-                          )} * var(--slot-width) + 4px);
-                          width: calc(${eventDurationInSlots(
-                            event
-                          )} * var(--slot-width) - 8px);
-                          top: ${event._top};
-                        `}
-                        @click=${() => {
-                          showModalDialog(`event-detail-${event.id}`);
-                        }}
-                      >
-                        <pre
-                          style=${`font-weight: ${
-                            event.level > 100 ? "bold" : "normal"
-                          }; font-size: ${event.level || 100}%;`}
-                        // eslint-disable-next-line prettier/prettier
-                        >${event.title}</pre>
-                        <div style="display: flex;">
-                          ${when(
-                            event.type === "topic",
-                            () => html`
-                              ${when(
-                                event.description,
-                                () => html`<pre
-                                  style="font-size: small; margin-bottom: calc(var(--spacing) / 4);"
-                                >
-${event.description}</pre
-                                >`
-                              )}
-                              <div
-                                style="text-align: center; flex: 1; align-self: flex-end; margin: calc(var(--spacing) / 4);"
-                              >
-                                <a
-                                  class="hc-link hc-link--decorated"
-                                  style="font-size: small; padding: calc(var(--spacing) / 4);"
-                                  @click=${(event) => {
-                                    event.preventDefault();
-                                  }}
-                                >
-                                  Zapojit se
-                                </a>
-                              </div>
-                            `
-                          )}
-                        </div>
-                      </div>
-                      <dialog class="event__detail" id="event-detail-${
-                        event.id
-                      }">
-                        <h1>${event.title}</h1>
-                        <p>
-                          ${formatEventTimeInfo(event)}
-                          <code>${lineup.name}</code><br>
-                        </p>
-                        <pre>${event.description}</pre>
-                        ${when(
-                          event.type === "topic",
-                          () => html`
-                            <p>
-                              <a
-                                class="hc-link hc-link--decorated"
-                                style="padding: calc(var(--spacing) / 4);"
-                                @click=${(event) => {
-                                  event.preventDefault();
-                                  renderAndShowAddEventForm(lineup.id);
-                                }}
-                              >
-                                Zapojit se
-                              </a>
-                              <hr />
-                            </p>
-                          `
-                        )}
-                        <button name="close">Zavřít</button>
-                      </dialog>
-                    `
+                ${lineUpEvents(lineup, events).map((event) =>
+                  eventTemplate(
+                    lineup,
+                    event,
+                    eventStartAtSlot,
+                    eventDurationInSlots,
+                    renderAndShowAddEventForm
+                  )
                 )}
               </div>
               <div class="lineup__timeline">
