@@ -107,15 +107,16 @@
     "title": "Dobré ráno, čas si dát kafe, snídani, ranní sprchu, výběh a tak"
   },
   {
-    "id": "ev16",
+    "id": "start-day-2",
     "lineup": "limain",
     "startAt": "2022-09-02T10:00:00",
     "endAt": "2022-09-02T10:15:00",
-    "title": "Ofiko zahájení dne.",
-    "description": "Máte program? A mohla bych ho vidět?"
+    "title": "Zahájení dne",
+    "description": "Máte program? A mohla bych ho vidět?",
+    "type": "org"
   },
   {
-    "id": "ev16",
+    "id": "start-day-2",
     "lineup": "liback",
     "startAt": "2022-09-02T10:00:00",
     "endAt": "2022-09-02T10:15:00",
@@ -124,7 +125,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev16",
+    "id": "start-day-2",
     "lineup": "libase",
     "startAt": "2022-09-02T10:00:00",
     "endAt": "2022-09-02T10:15:00",
@@ -133,7 +134,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev16",
+    "id": "start-day-2",
     "lineup": "lipeep",
     "startAt": "2022-09-02T10:00:00",
     "endAt": "2022-09-02T10:15:00",
@@ -142,7 +143,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev16",
+    "id": "start-day-2",
     "lineup": "liwood",
     "startAt": "2022-09-02T10:00:00",
     "endAt": "2022-09-02T10:15:00",
@@ -151,7 +152,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev16",
+    "id": "start-day-2",
     "lineup": "lijungle",
     "startAt": "2022-09-02T10:00:00",
     "endAt": "2022-09-02T10:15:00",
@@ -160,7 +161,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev16",
+    "id": "start-day-2",
     "lineup": "liother",
     "startAt": "2022-09-02T10:00:00",
     "endAt": "2022-09-02T10:15:00",
@@ -189,14 +190,14 @@
     "type": "topic"
   },
   {
-    "id": "ev18",
+    "id": "lunch-day-2",
     "lineup": "liorg",
     "startAt": "2022-09-02T12:00:00",
     "endAt": "2022-09-02T14:00:00",
     "title": "Ideální doba se nadlábnout"
   },
   {
-    "id": "ev18",
+    "id": "lunch-day-2",
     "lineup": "limain",
     "startAt": "2022-09-02T12:00:00",
     "endAt": "2022-09-02T14:00:00",
@@ -204,7 +205,7 @@
     "type": "org"
   },
   {
-    "id": "ev18",
+    "id": "lunch-day-2",
     "lineup": "libase",
     "startAt": "2022-09-02T12:00:00",
     "endAt": "2022-09-02T14:00:00",
@@ -219,15 +220,16 @@
     "title": "Sejdeme se v mainfraime, program na další dvě hodniky + nové věci"
   },
   {
-    "id": "ev19",
+    "id": "start-block1-day-2",
     "lineup": "limain",
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T14:15:00",
     "title": "Zahájení bloku",
-    "description": "Máte program? A mohla bych ho vidět?"
+    "description": "Máte program? A mohla bych ho vidět?",
+    "type": "org"
   },
   {
-    "id": "ev19",
+    "id": "start-block1-day-2",
     "lineup": "liback",
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T14:15:00",
@@ -236,7 +238,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev19",
+    "id": "start-block1-day-2",
     "lineup": "libase",
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T14:15:00",
@@ -245,7 +247,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev19",
+    "id": "start-block1-day-2",
     "lineup": "lipeep",
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T14:15:00",
@@ -254,7 +256,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev19",
+    "id": "start-block1-day-2",
     "lineup": "liwood",
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T14:15:00",
@@ -263,7 +265,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev19",
+    "id": "start-block1-day-2",
     "lineup": "lijungle",
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T14:15:00",
@@ -272,7 +274,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev19",
+    "id": "start-block1-day-2",
     "lineup": "liother",
     "startAt": "2022-09-02T14:00:00",
     "endAt": "2022-09-02T14:15:00",
@@ -301,12 +303,12 @@
     "type": "topic"
   },
   {
-    "id": "ev22",
+    "id": "dj-workshop",
     "lineup": "lijungle",
     "startAt": "2022-09-02T14:15:00",
     "endAt": "2022-09-02T16:00:00",
     "title": "DJ workshop",
-    "description": "Vyzkoušejte si, co vše musí DJ zvládnout - budem mít různé mixáky a technologie.",
+    "description": "Přijďte si vyzkoušet různou DJ techniku a seznámit se základními principy hraní.",
     "level": 110
   },
   {
@@ -325,7 +327,16 @@
     "title": "Sejdeme se v mainfraime, program na další dvě hodniky + nové věci"
   },
   {
-    "id": "ev24",
+    "id": "start-block2-day-2",
+    "lineup": "limain",
+    "startAt": "2022-09-02T16:00:00",
+    "endAt": "2022-09-02T16:15:00",
+    "title": "Zahájení bloku",
+    "description": "Máte program? A mohla bych ho vidět?",
+    "type": "org"
+  },
+  {
+    "id": "start-block2-day-2",
     "lineup": "liback",
     "startAt": "2022-09-02T16:00:00",
     "endAt": "2022-09-02T16:15:00",
@@ -334,7 +345,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev24",
+    "id": "start-block2-day-2",
     "lineup": "libase",
     "startAt": "2022-09-02T16:00:00",
     "endAt": "2022-09-02T16:15:00",
@@ -343,7 +354,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev24",
+    "id": "start-block2-day-2",
     "lineup": "lipeep",
     "startAt": "2022-09-02T16:00:00",
     "endAt": "2022-09-02T16:15:00",
@@ -352,7 +363,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev24",
+    "id": "start-block2-day-2",
     "lineup": "liwood",
     "startAt": "2022-09-02T16:00:00",
     "endAt": "2022-09-02T16:15:00",
@@ -361,7 +372,7 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev24",
+    "id": "start-block2-day-2",
     "lineup": "lijungle",
     "startAt": "2022-09-02T16:00:00",
     "endAt": "2022-09-02T16:15:00",
@@ -370,21 +381,13 @@
     "description": "Sync na Mainstage"
   },
   {
-    "id": "ev24",
+    "id": "start-block2-day-2",
     "lineup": "liother",
     "startAt": "2022-09-02T16:00:00",
     "endAt": "2022-09-02T16:15:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
-  },
-  {
-    "id": "ev24",
-    "lineup": "limain",
-    "startAt": "2022-09-02T16:00:00",
-    "endAt": "2022-09-02T16:15:00",
-    "title": "Začátek bloku",
-    "description": "Máte program? A mohla bych ho vidět?"
   },
   {
     "id": "ev25",

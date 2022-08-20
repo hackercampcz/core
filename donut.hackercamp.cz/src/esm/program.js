@@ -349,7 +349,7 @@ function renderProgram({
       a.dayline__tick:hover {
         text-decoration: underline;
       }
-      a.dayline__tick.--visible {
+      a.dayline__tick.dayline__tick--visible {
         font-weight: bold;
         font-size: 120%;
       }
@@ -459,11 +459,12 @@ function renderProgram({
       }
 
       .lineup__event.lineup__event--org {
-        height: 100%;
+        top: 2px;
+        height: calc(100% - 2px);
         display: flex;
         align-items: center;
         justify-content: center;
-        border-color: transparent;
+        border-color: var(--hc-background-color);
         pointer-events: fill;
       }
       .lineup__event.lineup__event--narrow {
@@ -580,7 +581,7 @@ function renderProgram({
           Hacker Camp bude jen takový, jaký si ho uděláme. Tady najdeš program a
           aktivity, co už táborníci zapsali. Další aktivty přibývají a některé
           mohou hackeři jen nahlásit na začátku každého bloku před Mainframe.
-          Zkrátka: Porgram se může a bude měnit za chodu :) Takže se těš a
+          Zkrátka: Program se může a bude měnit za chodu :) Takže se těš a
           sleduj co se děje online i offline.
         </p>
         <a
@@ -602,10 +603,11 @@ function renderProgram({
                 <a
                   class=${classMap({
                     dayline__tick: true,
-                    "--visible": visibleDate.getDate() === day.getDate(),
+                    "dayline__tick--visible":
+                      visibleDate.getDate() === day.getDate(),
                   })}
                   href="#${day.toISOString()}"
-                  @click=${(event) => {
+                  @click=${() => {
                     const date = new Date(day);
                     date.setHours(DAY_START_HOUR);
                     scrollToDate(date);
