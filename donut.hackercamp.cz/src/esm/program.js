@@ -151,17 +151,15 @@ function eventTemplate(
       style=${`
         --slot-start: ${eventStartAtSlot(event)};
         --slot-duration: ${durationInSlots};
-        --slot-top-offset: ${event._top ?? 0};
+        --slot-top-offset: ${event._top ?? "calc(var(--spacing) / 4)"};
       `}
-      @click=${() => {
-        showModalDialog(`event-detail-${event.id}`);
-      }}
+      @click=${() => showModalDialog(`event-detail-${event.id}`)}
     >
       <pre
-        style=${`
+        style="${`
           font-weight: ${event.level > 100 ? "bold" : "normal"};
           font-size: ${event.level || 100}%;
-        `}
+        `}"
       >
 ${event.title}</pre
       >
@@ -171,11 +169,13 @@ ${event.title}</pre
           () => html`
             ${when(
               event.description,
-              () => html`<pre
-                style="font-size: small; margin-bottom: calc(var(--spacing) / 4);"
-              >
+              () => html`
+                <pre
+                  style="font-size: small; margin-bottom: calc(var(--spacing) / 4);"
+                >
 ${event.description}</pre
-              >`
+                >
+              `
             )}
             <div
               style="text-align: center; flex: 1; align-self: flex-end; margin: calc(var(--spacing) / 4);"
@@ -183,9 +183,7 @@ ${event.description}</pre
               <a
                 class="hc-link hc-link--decorated"
                 style="font-size: small; padding: calc(var(--spacing) / 4);"
-                @click=${(event) => {
-                  event.preventDefault();
-                }}
+                @click=${(event) => event.preventDefault()}
               >
                 Zapojit se
               </a>
@@ -226,7 +224,7 @@ ${event.description}</pre
 
 /**
  * TODO: split me?
- * @param {defAtom} state
+ * @param {Atom} state
  */
 function renderProgram({
   lineups,
@@ -466,6 +464,9 @@ function renderProgram({
         justify-content: center;
         border-color: var(--hc-background-color);
         pointer-events: fill;
+      }
+      .lineup__event.lineup__event--topic {
+        height: calc(100% - 8px);
       }
       .lineup__event.lineup__event--narrow {
         writing-mode: vertical-lr;
