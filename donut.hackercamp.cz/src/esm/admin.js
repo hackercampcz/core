@@ -1,3 +1,4 @@
+import { formatMoney } from "@hackercamp/lib/format.mjs";
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
@@ -176,14 +177,6 @@ const ticketPrice = new Map([
   ["volunteer", 0],
   ["crew", 0],
 ]);
-
-const formatMoney = (x) =>
-  x
-    ?.toLocaleString("cs", {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })
-    ?.replace(/,00/g, ",-") ?? null;
 
 function ticketDetail({ ticketType, patronAllowance }) {
   const allowance = patronAllowance ? parseInt(patronAllowance) : 0;

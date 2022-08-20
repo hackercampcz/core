@@ -5,6 +5,11 @@ import { classMap } from "lit-html/directives/class-map.js";
 import * as rollbar from "./lib/rollbar.js";
 import { objectWalk } from "./lib/object.js";
 import structuredClone from "@ungap/structured-clone";
+import {
+  formatTime,
+  formatLongDayName,
+  formatShortDayName,
+} from "@hackercamp/lib/format.mjs";
 import { when } from "lit/directives/when.js";
 import { throttle } from "./lib/function.js";
 import { showModalDialog } from "./modal-dialog.js";
@@ -16,10 +21,10 @@ const DAY_START_HOUR = 8;
 
 const state = defAtom({
   view: renderProgram,
-  startAt: new Date(`2022-09-01T14:00:00`),
-  visibleDate: new Date(`2022-09-01T14:00:00`),
+  startAt: new Date("2022-09-01T14:00:00"),
+  visibleDate: new Date("2022-09-01T14:00:00"),
   onLineupsScroll: () => {},
-  endAt: new Date(`2022-09-04T14:00:00`),
+  endAt: new Date("2022-09-04T14:00:00"),
   lineups: [],
   events: [],
   profile: {},
@@ -74,21 +79,10 @@ function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
 function formatEventTimeInfo(event) {
   return html`Začíná v
     <strong
-      >${event.startAt.toLocaleDateString([], {
-        weekday: "long",
-      })}
-      ${event.startAt.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      })}</strong
+      >${formatLongDayName(event.startAt)} ${formatTime(event.startAt)}</strong
     >
     a končí v
-    <strong
-      >${event.endAt.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      })}</strong
-    >.`;
+    <strong>${formatTime(event.endAt)}</strong>.`;
 }
 
 function getSlotWidth() {
@@ -179,12 +173,22 @@ function renderProgram({
        * top level container
        */
       .program {
-        --spacing: var(--mdc-layout-grid-margin-desktop, 24px);
+        --spacing: var(--mdc-layout-grid-margin-phone, 16px);
         --info-width: calc(100vw * 2 / 3);
         --slot-width: calc(100vw / 2.5 / 4);
         --tick-color: #eee;
         --tick-highlight-color: #aaa;
         --dialog-width: 800px;
+      }
+      @media screen and (min-width: 480px) and (max-width: 839px) {
+        .program {
+          --spacing: var(--mdc-layout-grid-margin-tablet, 16px);
+        }
+      }
+      @media screen and (min-width: 840px) {
+        .program {
+          --spacing: var(--mdc-layout-grid-margin-desktop, 24px);
+        }
       }
       @media (prefers-color-scheme: dark) {
         .program {
@@ -349,7 +353,6 @@ function renderProgram({
         background-color: var(--hc-background-color);
         box-sizing: border-box;
         padding: calc(var(--spacing) / 4);
-        border-radius: 4px;
         cursor: pointer;
         overflow: hidden;
         border: 1px solid var(--tick-highlight-color);
@@ -411,10 +414,8 @@ function renderProgram({
         background-color: var(--hc-background-color);
         color: var(--hc-text-color);
         border: 1px solid var(--hc-text-color);
-        border-radius: 2px;
         padding: calc(var(--spacing) / 2);
-        font-size: 14px;
-        font-weight: bold;
+        font: 700 14px var(--hc-font-family);
         cursor: pointer;
       }
 
@@ -496,7 +497,7 @@ function renderProgram({
                     scrollToDate(date);
                   }}
                 >
-                  ${day.toLocaleDateString([], { weekday: "long" })}
+                  ${formatLongDayName(day)}
                 </a>
               `
           )}
@@ -640,9 +641,7 @@ ${event.description}</pre
                         class="lineup__slot"
                         ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
                         data-tick=${makeTick(time)}
-                        data-day=${time.toLocaleDateString([], {
-                          weekday: "short",
-                        })}
+                        data-day=${formatShortDayName(time)}
                         @click=${(event) => {
                           event.preventDefault();
                           renderAndShowAddEventForm(lineup.id);
