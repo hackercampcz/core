@@ -2264,7 +2264,7 @@ __metadata:
     date-fns: 2.29.2
     eslint-plugin-promise: 6.0.0
     lit-html: 2.3.1
-    marked: 4.0.18
+    marked: 4.0.19
     ramda: 0.28.0
     rollbar: 2.25.1
     web-types-lit: 0.1.0
@@ -9798,7 +9798,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:4.0.18, marked@npm:^4.0.18":
+"marked@npm:4.0.19":
+  version: 4.0.19
+  resolution: "marked@npm:4.0.19"
+  bin:
+    marked: bin/marked.js
+  checksum: 0521f3c6a06a078b91ec5b6754f939e7be1a621e1a7c1e85d4e6a4eb7848e798275566b38dea05ea8a57e85d557fbc9edad4f3fa3e8b494a371133b9ba2fb720
+  languageName: node
+  linkType: hard
+
+"marked@npm:^4.0.18":
   version: 4.0.18
   resolution: "marked@npm:4.0.18"
   bin:
