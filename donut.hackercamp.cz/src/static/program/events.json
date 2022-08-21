@@ -1,6 +1,6 @@
 [
   {
-    "id": "ev1",
+    "id": "org-arrival",
     "lineup": "liorg",
     "startAt": "2022-09-01T14:00:00",
     "endAt": "2022-09-01T19:50:00",
@@ -112,7 +112,7 @@
     "type": "org"
   },
   {
-    "id":"ev7",
+    "id":"org-dinner-day-1",
     "lineup": "liorg",
     "startAt": "2022-09-01T18:00:00",
     "endAt": "2022-09-01T20:00:00",
@@ -126,23 +126,23 @@
     "title": "Oheň a pečení buřtů"
   },
   {
-    "id":"ev8",
+    "id":"disco-dating",
     "lineup": "libase",
     "startAt": "2022-09-01T17:15:00",
     "endAt": "2022-09-01T18:45:00",
-    "title": "Disco seznamka",
+    "title": "Disco seznamka 💃🏻🕺🏼🪩",
     "description": "Seznamovací atmosféru podpoří Alessio Busta v DJ setu",
     "_top": "50%"
   },
   {
-    "id": "ev9",
+    "id": "dj-quip",
     "lineup": "liwood",
     "startAt": "2022-09-01T19:00:00",
     "endAt": "2022-09-01T20:00:00",
     "title": "DJ Quip"
   },
   {
-    "id": "ev10",
+    "id": "headliner-day-1",
     "lineup": "liwood",
     "startAt": "2022-09-01T20:50:00",
     "endAt": "2022-09-01T22:00:00",
@@ -150,7 +150,7 @@
     "level": 140
   },
   {
-    "id": "ev11",
+    "id": "woodstack-day-1",
     "lineup": "liwood",
     "startAt": "2022-09-01T22:00:00",
     "endAt": "2022-09-01T24:00:00",
@@ -167,14 +167,14 @@
     "level": 120
   },
   {
-    "id": "ev14",
+    "id": "org-night-day-1",
     "lineup": "liorg",
     "startAt": "2022-09-01T24:00:00",
     "endAt": "2022-09-02T08:00:00",
     "title": "Noční klid :)"
   },
   {
-    "id": "ev15",
+    "id": "org-morning-day-2",
     "lineup": "liorg",
     "startAt": "2022-09-02T08:00:00",
     "endAt": "2022-09-02T10:00:00",
