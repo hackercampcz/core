@@ -162,7 +162,7 @@
     "lineup": "lijungle",
     "startAt": "2022-09-01T22:00:00",
     "endAt": "2022-09-02T05:00:00",
-    "title": "Open decks",
+    "title": "Open decks 🎚🎛🎚💻🔊",
     "description": "DJs z řad táborníků",
     "level": 120
   },
@@ -591,7 +591,7 @@
     "lineup": "liwood",
     "startAt": "2022-09-02T22:00:00",
     "endAt": "2022-09-03T05:00:00",
-    "title": "S kytarou u ohně",
+    "title": "S kytarou u ohně 🔥🪵🎸",
     "description": "",
     "level": 110
   },
@@ -600,12 +600,12 @@
     "lineup": "lijungle",
     "startAt": "2022-09-02T22:00:00",
     "endAt": "2022-09-03T05:00:00",
-    "title": "Open decks",
+    "title": "Open decks \uD83C\uDF9A\uD83C\uDF9B\uD83C\uDF9A\uD83D\uDCBB\uD83D\uDD0A",
     "description": "DJs z řad táborníků",
     "level": 110
   },
   {
-    "id": "jungle-day-2",
+    "id": "org-jungle-day-2",
     "lineup": "liorg",
     "startAt": "2022-09-03T00:00:00",
     "endAt": "2022-09-03T02:00:00",
@@ -961,9 +961,7 @@
     "lineup": "liorg",
     "startAt": "2022-09-03T22:00:00",
     "endAt": "2022-09-03T24:00:00",
-    "title": "Oheň",
-    "description": "",
-    "level": 110
+    "title": "Oheň"
   },
   {
     "id": "jungle-day-3",
@@ -977,7 +975,7 @@
     "id": "end-day-3",
     "lineup": "limain",
     "startAt": "2022-09-04T00:00:00",
-    "endAt": "2022-09-04T10:00:00",
+    "endAt": "2022-09-04T08:00:00",
     "title": "💤",
     "description": "užijte si okolní program",
     "type": "org"
@@ -986,7 +984,7 @@
     "id": "off-day-3",
     "lineup": "libase",
     "startAt": "2022-09-03T18:00:00",
-    "endAt": "2022-09-04T10:00:00",
+    "endAt": "2022-09-04T08:00:00",
     "title": "💤",
     "description": "užijte si okolní program",
     "type": "org"
@@ -1039,7 +1037,7 @@
     "lineup": "liwood",
     "startAt": "2022-09-03T22:00:00",
     "endAt": "2022-09-04T05:00:00",
-    "title": "S kytarou u ohně",
+    "title": "S kytarou u ohně \uD83D\uDD25\uD83E\uDEB5\uD83C\uDFB8",
     "description": "",
     "level": 110
   },
@@ -1057,8 +1055,40 @@
     "lineup": "lijungle",
     "startAt": "2022-09-03T22:00:00",
     "endAt": "2022-09-04T05:00:00",
-    "title": "Open decks",
+    "title": "Open decks \uD83C\uDF9A\uD83C\uDF9B\uD83C\uDF9A\uD83D\uDCBB\uD83D\uDD0A",
     "description": "DJs z řad táborníků",
     "level": 120
+  },
+  {
+    "id": "org-night-silence-day-3",
+    "lineup": "liorg",
+    "startAt": "2022-09-04T02:00:00",
+    "endAt": "2022-09-04T08:00:00",
+    "title": "Noční klid :) a jakékoliv noční pokračování v lese"
+  },
+  {
+    "id": "org-morning-day-4",
+    "lineup": "liorg",
+    "startAt": "2022-09-04T08:00:00",
+    "endAt": "2022-09-04T12:00:00",
+    "title": "Čas si dát kafe, snídani, ranní sprchu, sbalit se, vystřízlivět, rozloučit se a vyrazit domů..."
+  },
+  {
+    "id": "org-morning-day-4",
+    "lineup": "limain",
+    "startAt": "2022-09-04T08:00:00",
+    "endAt": "2022-09-04T12:00:00",
+    "title": "🍵 🥐 😎 👋 🚗",
+    "description": "ránko",
+    "type": "org"
+  },
+  {
+    "id": "org-morning-day-4",
+    "lineup": "libase",
+    "startAt": "2022-09-04T08:00:00",
+    "endAt": "2022-09-04T12:00:00",
+    "title": "☕️ 🍳 🎒 ✌️ \uD83D\uDE8C",
+    "description": "ránko",
+    "type": "org"
   }
 ]
