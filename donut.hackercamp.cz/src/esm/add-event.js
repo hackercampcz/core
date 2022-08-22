@@ -350,8 +350,6 @@ export function renderSignpost() {
         >
       </div>
     </section>
-    <hr />
-    <button name="close">Zavřít</button>
   `;
 }
 

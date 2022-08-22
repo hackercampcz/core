@@ -114,22 +114,6 @@ function handleLineupsScroll(event) {
   );
 }
 
-function handleBodyScroll(event) {
-  const lineupsElement = document.querySelector("#lineups");
-  const daylineElement = document.querySelector(".dayline");
-  if (!daylineElement) {
-    return;
-  }
-  const { y } = lineupsElement.getBoundingClientRect();
-  const { height } = daylineElement.getBoundingClientRect();
-  daylineElement.parentElement.style.height = `${height}px`;
-  if (document.body.scrollTop + height > y) {
-    daylineElement.style.position = "fixed";
-  } else {
-    daylineElement.style.position = "initial";
-  }
-}
-
 function eventTemplate(
   lineup,
   event,
@@ -170,24 +154,11 @@ ${event.title}</pre
             ${when(
               event.description,
               () => html`
-                <pre
-                  style="font-size: small; margin-bottom: calc(var(--spacing) / 4);"
-                >
+                <pre style="margin-bottom: calc(var(--spacing) / 4);">
 ${event.description}</pre
                 >
               `
             )}
-            <div
-              style="text-align: center; flex: 1; align-self: flex-end; margin: calc(var(--spacing) / 4);"
-            >
-              <a
-                class="hc-link hc-link--decorated"
-                style="font-size: small; padding: calc(var(--spacing) / 4);"
-                @click=${(event) => event.preventDefault()}
-              >
-                Zapojit se
-              </a>
-            </div>
           `
         )}
       </div>
@@ -235,7 +206,6 @@ function renderProgram({
   onLineupsScroll,
   apiUrl,
   profile,
-  year,
 }) {
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.id);
@@ -298,6 +268,7 @@ function renderProgram({
         max-width: 100vw;
         overflow-x: auto;
         scroll-behavior: smooth;
+        font-size: 16px;
       }
       @media (min-width: 600px) {
         .program {
@@ -322,7 +293,9 @@ function renderProgram({
        * Horizontal sticky pagination by days
        */
       .program__dayline {
-        position: relative;
+        position: sticky;
+        top: 0;
+        z-index: 4;
       }
       .dayline {
         padding: calc(var(--spacing) / 2);
@@ -464,6 +437,7 @@ function renderProgram({
         justify-content: center;
         border-color: var(--hc-background-color);
         pointer-events: fill;
+        opacity: 0.8;
       }
       .lineup__event.lineup__event--topic {
         height: calc(100% - 8px);
@@ -471,6 +445,19 @@ function renderProgram({
       .lineup__event.lineup__event--narrow {
         writing-mode: vertical-lr;
         font-size: 80%;
+      }
+      .lineup__event.lineup__event--narrow pre {
+        line-height: 1;
+      }
+      @media (min-width: 800px) {
+        .lineup__event.lineup__event--narrow {
+          font-size: 100%;
+        }
+      }
+      @media (min-width: 1024px) {
+        .lineup__event.lineup__event--narrow {
+          font-size: 110%;
+        }
       }
 
       .lineup__event pre,
@@ -552,6 +539,9 @@ function renderProgram({
         border: 1px solid var(--tick-color);
         background-color: var(--hc-background-color);
         background-image: var(--hc-background-image, none);
+      }
+      .lineup:first-child .lineup__slot {
+        pointer-events: none;
       }
       .event-type {
         display: flex;
@@ -707,11 +697,6 @@ function renderProgram({
           deskovky, karty, playstationy. Pár z vás nabízí one-one povídání,
           kvízi, sekání dřeva a spoustu dalšího. Tady najdete vše pohromadě.
         </p>
-        <ul>
-          <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
-          <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
-          <li>Pepa Pekař pořádá: Sochej z chlepa.</li>
-        </ul>
         <a
           class="hc-link hc-link--decorated"
           style="padding: calc(var(--spacing) / 4)"
@@ -809,8 +794,6 @@ export async function main({ rootElement, env }) {
       onLineupsScroll: throttle(handleLineupsScroll),
     })
   );
-
-  document.addEventListener("scroll", throttle(handleBodyScroll));
 
   requestAnimationFrame(() => {
     const param = location.hash.replace(/^#/, "");
