@@ -159,7 +159,7 @@ function renderHousedScreen({ housing, housingPlacement, travel }) {
   `;
 }
 
-function renderIndex({ profile, contact, registration, attendee }) {
+function renderIndex({ profile, registration, attendee }) {
   if (!(profile || registration || attendee)) {
     return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
   }
@@ -215,7 +215,11 @@ async function loadData(profile, year, apiURL) {
     Object.assign({}, x, { profile, contact, registration, attendee })
   );
   setContact(contact);
-  setDonutProfileUrl(profile.sub, getSlackAccessToken(), contact.slug);
+  try {
+    await setDonutProfileUrl(profile.sub, getSlackAccessToken(), contact.slug);
+  } catch (err) {
+    rollbar.error(err);
+  }
 }
 
 export async function main({ searchParams, slackButton, env }) {

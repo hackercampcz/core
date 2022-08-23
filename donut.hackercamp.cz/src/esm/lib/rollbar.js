@@ -15,6 +15,11 @@ export function init(env) {
   });
 }
 
+export function info(...args) {
+  console.info(...args);
+  Rollbar.info(...args);
+}
+
 export function error(err) {
   console.error(err);
   Rollbar.error(err);
