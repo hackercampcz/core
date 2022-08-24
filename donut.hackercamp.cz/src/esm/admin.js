@@ -167,6 +167,7 @@ const ticketName = new Map([
   ["hacker-patron", "Patron Campu"],
   ["volunteer", "Dobrovolník"],
   ["crew", "Crew"],
+  ["staff", "Ostatní"],
 ]);
 
 const ticketPrice = new Map([
@@ -176,6 +177,7 @@ const ticketPrice = new Map([
   ["hacker-patron", 7500],
   ["volunteer", 0],
   ["crew", 0],
+  ["staff", 0],
 ]);
 
 function ticketDetail({ ticketType, patronAllowance }) {

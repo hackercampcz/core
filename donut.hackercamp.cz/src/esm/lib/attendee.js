@@ -162,4 +162,5 @@ export const ticketBadge = new Map([
     />`,
   ],
   ["volunteer", html``],
+  ["staff", html``],
 ]);
