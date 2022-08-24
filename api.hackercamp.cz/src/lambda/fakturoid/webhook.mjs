@@ -21,6 +21,48 @@ import {
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
+async function markAsPaid(registrations, paid_at, invoice_id) {
+  for (const registration of registrations) {
+    console.log({ event: "Marking as paid", ...registration });
+    await db.send(
+      new UpdateItemCommand({
+        TableName: "hc-registrations",
+        Key: registration,
+        UpdateExpression: "SET paid = :paid",
+        ExpressionAttributeValues: marshall({
+          ":paid": new Date(paid_at).toISOString(),
+        }),
+      })
+    );
+    console.log({
+      event: "Invoice marked as paid",
+      invoice_id,
+      ...registration,
+    });
+  }
+}
+
+async function markAsCancelled(registrations, paid_at, invoice_id) {
+  for (const registration of registrations) {
+    console.log({ event: "Marking as canceled", ...registration });
+    await db.send(
+      new UpdateItemCommand({
+        TableName: "hc-registrations",
+        Key: registration,
+        UpdateExpression: "SET cancelled = :now",
+        ExpressionAttributeValues: marshall({
+          ":now": new Date(paid_at).toISOString(),
+        }),
+      })
+    );
+    console.log({
+      event: "Invoice marked as cancelled",
+      invoice_id,
+      ...registration,
+    });
+  }
+}
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
@@ -55,23 +97,11 @@ export async function handler(event) {
       console.log({ event: "Registrations not found", invoice_id });
       return withCORS_(notFound());
     }
-    for (const registration of registrations) {
-      console.log({ event: "Marking as paid", ...registration });
-      await db.send(
-        new UpdateItemCommand({
-          TableName: "hc-registrations",
-          Key: registration,
-          UpdateExpression: "SET paid = :paid",
-          ExpressionAttributeValues: marshall({
-            ":paid": new Date(paid_at).toISOString(),
-          }),
-        })
-      );
-      console.log({
-        event: "Invoice marked as paid",
-        invoice_id,
-        ...registration,
-      });
+
+    if (payload.total < 0) {
+      await markAsCancelled(registrations, paid_at, invoice_id);
+    } else {
+      await markAsPaid(registrations, paid_at, invoice_id);
     }
     return withCORS_(response({}));
   } catch (err) {
