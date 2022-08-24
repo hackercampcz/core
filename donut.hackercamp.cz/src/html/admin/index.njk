@@ -44,6 +44,15 @@
     .hc-master-detail__list thead {
       position: sticky;
       top: 0;
+      border-bottom: none;
+    }
+    .hc-master-detail__list thead th::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      border-bottom: 3px double #ddd;
     }
 
     @media screen and (max-width: 479px) {
