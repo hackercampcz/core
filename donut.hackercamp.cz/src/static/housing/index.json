@@ -56,6 +56,6 @@
   { "type": "house", "placement": "Pokoj č. 20 (VK)", "capacity": 4, "variant": "red" },
   { "type": "house", "placement": "Pokoj č. 21 (VK)", "capacity": 6, "variant": "red" },
   { "type": "house", "placement": "Pokoj č. 22 (VK)", "capacity": 2, "variant": "red" },
-  { "type": "house", "placement": "Pokoj č. 23 (CHK)", "capacity": 6, "variant": "red" },
+  { "type": "house", "placement": "Pokoj č. 23 (CHK)", "capacity": 4, "variant": "red" },
   { "type": "house", "placement": "Pokoj č. 24 (CHK)", "capacity": 6, "variant": "red" }
 ]
