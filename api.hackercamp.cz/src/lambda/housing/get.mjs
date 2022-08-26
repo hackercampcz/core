@@ -1,7 +1,7 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
-import { response } from "../http.mjs";
+import {notFound, response} from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -44,5 +44,7 @@ async function getAttendees(dynamo, year) {
 export async function handler(event) {
   const params = Object.assign({ year: "2022" }, event.queryStringParameters);
   console.log({ method: "GET", params });
-  return response(await getAttendees(dynamo, parseInt(params.year, 10)));
+  const data = await getAttendees(dynamo, parseInt(params.year, 10));
+  if (!data.length) return notFound();
+  return response(data);
 }
