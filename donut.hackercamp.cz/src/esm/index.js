@@ -84,6 +84,10 @@ function renderPaidScreen() {
         ubytování.
       </p>
       <a class="hc-link--decorated" href="/ubytovani/">Vybrat si ubytování</a>
+      <p>
+        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
+        brzy si budeš moct zadat vlastní návrhy.
+      </p>
     </div>
   `;
 }
@@ -146,14 +150,14 @@ function renderHousedScreen({ housing, housingPlacement, travel }) {
         Jsi ubytovaný ${housingText(housing, housingPlacement)}, dle tvého
         výběru.
       </p>
-      <p>
-        Do <date datetime="2022-08-21">21. srpna</date> si ještě můžeš
-        <a class="hc-link" href="/ubytovani/">změnit ubytování</a>.
-      </p>
       ${travelText(travel)}
       <p>
         Chceš se podívat, kdo už se na tebe těší? Tak tady je
         <a href="/hackers/">seznam účastníků</a>.
+      </p>
+      <p>
+        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
+        brzy si budeš moct zadat vlastní návrhy.
       </p>
     </div>
   `;
@@ -183,6 +187,10 @@ function renderIndex({ profile, registration, attendee }) {
       <p>
         Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
         <a href="/hackers/">seznam účastníků</a>.
+      </p>
+      <p>
+        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a po
+        zaplacení si budeš moct zadat vlastní návrhy.
       </p>
       <p>
         Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi

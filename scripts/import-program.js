@@ -5,7 +5,9 @@ const dynamo = createClient();
 
 async function main({}) {
   const text = await Deno.readTextFile("./data/import-program.json");
-  const data = JSON.parse(text).map((x) => Object.assign(x, { year: 2022 }));
+  const data = JSON.parse(text).map((x) =>
+    Object.assign(x, { year: 2022, _id: crypto.randomUUID() })
+  );
 
   for (const event of data) {
     await dynamo.putItem({ TableName: "hc-program", Item: event });
