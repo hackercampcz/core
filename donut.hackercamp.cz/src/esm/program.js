@@ -1,20 +1,20 @@
-import { initRenderLoop } from "./lib/renderer.js";
-import { html } from "lit-html";
-import { defAtom } from "@thi.ng/atom";
-import { classMap } from "lit-html/directives/class-map.js";
-import * as rollbar from "./lib/rollbar.js";
-import { objectWalk } from "./lib/object.js";
-import structuredClone from "@ungap/structured-clone";
 import {
-  formatTime,
   formatLongDayName,
   formatShortDayName,
+  formatTime,
 } from "@hackercamp/lib/format.mjs";
+import { defAtom } from "@thi.ng/atom";
+import structuredClone from "@ungap/structured-clone";
+import { html } from "lit-html";
+import { classMap } from "lit-html/directives/class-map.js";
 import { when } from "lit/directives/when.js";
-import { throttle } from "./lib/function.js";
-import { showModalDialog } from "./modal-dialog.js";
 import { renderInit as renderAddEventDialog } from "./add-event.js";
+import { throttle } from "./lib/function.js";
+import { objectWalk } from "./lib/object.js";
 import { getSlackProfile } from "./lib/profile.js";
+import { initRenderLoop } from "./lib/renderer.js";
+import * as rollbar from "./lib/rollbar.js";
+import { showModalDialog } from "./modal-dialog.js";
 
 const SLOT_MINUTES = 15;
 const DAY_START_HOUR = 8;
@@ -23,12 +23,13 @@ const state = defAtom({
   view: renderProgram,
   startAt: new Date("2022-09-01T14:00:00"),
   visibleDate: new Date("2022-09-01T14:00:00"),
-  onLineupsScroll: () => {},
+  onLineupsScroll() {},
   endAt: new Date("2022-09-04T14:00:00"),
   lineups: [],
   events: [],
   profile: {},
   year: 2022,
+  featureToggles: {},
 });
 const transact = (fn) => state.swap(fn);
 
@@ -121,6 +122,8 @@ function eventTemplate(
   eventDurationInSlots,
   renderAndShowAddEventForm
 ) {
+  const { featureToggles } = state.deref();
+  const { fullProgram } = featureToggles;
   const durationInSlots = eventDurationInSlots(event);
   return html`
     <div
@@ -148,7 +151,7 @@ function eventTemplate(
 ${event.title}</pre
       >
       ${when(
-        event.type === "topic",
+        fullProgram && event.type === "topic",
         () => html`
           ${(event.speakers || []).map(
             (speaker) =>
@@ -175,7 +178,7 @@ ${event.title}</pre
       </p>
       <pre>${event.description}</pre>
       ${when(
-        event.type === "topic",
+        fullProgram && event.type === "topic",
         () => html`
           <p>
             <a
@@ -210,7 +213,9 @@ function renderProgram({
   onLineupsScroll,
   apiUrl,
   profile,
+  featureToggles,
 }) {
+  const { fullProgram } = featureToggles;
   const lineUpEvents = (lineup, events) =>
     events.filter((event) => event.lineup === lineup.id);
 
@@ -599,16 +604,21 @@ function renderProgram({
           Zkrátka: Program se může a bude měnit za chodu :) Takže se těš a
           sleduj co se děje online i offline.
         </p>
-        <a
-          class="hc-link hc-link--decorated"
-          style="font-size: 120%;"
-          @click=${(event) => {
-            event.preventDefault();
-            renderAndShowAddEventForm();
-          }}
-        >
-          Zapoj se do programu
-        </a>
+        ${when(
+          fullProgram,
+          () => html`
+            <a
+              class="hc-link hc-link--decorated"
+              style="font-size: 120%;"
+              @click=${(event) => {
+                event.preventDefault();
+                renderAndShowAddEventForm();
+              }}
+            >
+              Zapoj se do programu
+            </a>
+          `
+        )}
       </div>
       <div class="program__dayline">
         <div class="dayline">
@@ -661,7 +671,7 @@ function renderProgram({
                 <p>${lineup.description}</p>
                 <p>${lineup.detail}</p>
                 ${when(
-                  lineup.id !== "liorg",
+                  fullProgram && lineup.id !== "liorg",
                   () => html`<a
                     class="hc-link hc-link--decorated"
                     style="padding: calc(var(--spacing) / 4);"
@@ -688,25 +698,30 @@ function renderProgram({
                 )}
               </div>
               <div class="lineup__timeline">
-                ${makeTimeline(startAt, endAt, 15).map(
-                  (time) =>
-                    html`
-                      <a
+                ${makeTimeline(startAt, endAt, 15).map((time) =>
+                  fullProgram
+                    ? html`
+                        <a
+                          class="lineup__slot"
+                          ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
+                          data-tick=${makeTick(time)}
+                          data-day=${formatShortDayName(time)}
+                          @click=${(event) => {
+                            event.preventDefault();
+                            console.log(lineup, time);
+                            renderAndShowAddEventForm(lineup.id, {
+                              preferredTime: time,
+                            });
+                          }}
+                        >
+                          &nbsp;
+                        </a>
+                      `
+                    : html`<span
                         class="lineup__slot"
-                        ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
                         data-tick=${makeTick(time)}
                         data-day=${formatShortDayName(time)}
-                        @click=${(event) => {
-                          event.preventDefault();
-                          console.log(lineup, time);
-                          renderAndShowAddEventForm(lineup.id, {
-                            preferredTime: time,
-                          });
-                        }}
-                      >
-                        &nbsp;
-                      </a>
-                    `
+                      ></span>`
                 )}
               </div>
             </div>
@@ -721,16 +736,21 @@ function renderProgram({
           deskovky, karty, playstationy. Pár z vás nabízí one-one povídání,
           kvízi, sekání dřeva a spoustu dalšího. Tady najdete vše pohromadě.
         </p>
-        <a
-          class="hc-link hc-link--decorated"
-          style="padding: calc(var(--spacing) / 4)"
-          @click=${(event) => {
-            event.preventDefault();
-            renderAndShowAddEventForm("liother");
-          }}
-        >
-          Zapoj se do programu
-        </a>
+        ${when(
+          fullProgram,
+          () => html`
+            <a
+              class="hc-link hc-link--decorated"
+              style="padding: calc(var(--spacing) / 4)"
+              @click=${(event) => {
+                event.preventDefault();
+                renderAndShowAddEventForm("liother");
+              }}
+            >
+              Zapoj se do programu
+            </a>
+          `
+        )}
       </div>
       <dialog id="add-event">
         <div id="add-event-form"></div>
@@ -742,31 +762,33 @@ function renderProgram({
 }
 
 async function fetchLineups(apiHost) {
-  const response = await fetch("/program/lineups.json?year=2022", {
+  const { year } = state.deref();
+  const params = new URLSearchParams({ year });
+  const resp = await fetch(`/program/lineups.json?${params}`, {
     headers: { Accept: "application/json" },
     credentials: "include",
   });
 
-  const data = await response.json();
-  return data;
+  return resp.json();
 }
 
 async function fetchEvents(apiHost) {
-  // TODO: use API to get events 👇
-  // const response = await fetch(new URL(`program/?year=2022`, apiHost).href, {
-  const response = await fetch("/program/events.json?year=2022", {
+  const { featureToggles, year } = state.deref();
+  const params = new URLSearchParams({ year });
+  const endpoint = featureToggles.fullProgram
+    ? `/program/events.json?${params}`
+    : new URL(`program/?${params}`, apiHost).href;
+  const resp = await fetch(endpoint, {
     headers: { Accept: "application/json" },
     credentials: "include",
   });
-
-  const data = await response.json();
-  return data;
+  return resp.json();
 }
 
-function isISODateTime(date) {
-  const isoDateTimeRegex =
-    /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?(\.\d{3})?Z?$/;
-  return typeof date === "string" && isoDateTimeRegex.test(date);
+const isoDateTimeRegex =
+  /^(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)$/;
+function isISODateTime(value) {
+  return typeof value === "string" && isoDateTimeRegex.test(value);
 }
 
 function instatializeDates(input) {
@@ -784,7 +806,11 @@ export async function main({ rootElement, env }) {
   initRenderLoop(state, rootElement);
 
   transact((x) =>
-    Object.assign(x, { apiUrl: env["api-host"], profile: getSlackProfile() })
+    Object.assign(x, {
+      apiUrl: env["api-host"],
+      profile: getSlackProfile(),
+      featureToggles: { fullProgram: env["feature-toggle/full-program"] },
+    })
   );
 
   const { startAt, endAt } = state.deref();
@@ -800,7 +826,8 @@ export async function main({ rootElement, env }) {
     transact((x) => Object.assign(x, { lineups: instatializeDates(lineups) }));
   } catch (o_O) {
     rollbar.error(o_O);
-    alert("Chyba při načítání lineupů\n" + o_O);
+    snackbar.labelText = "Chyba při načítání lineupů";
+    snackbar.show();
   }
 
   try {
@@ -808,7 +835,8 @@ export async function main({ rootElement, env }) {
     transact((x) => Object.assign(x, { events: instatializeDates(events) }));
   } catch (o_O) {
     rollbar.error(o_O);
-    alert("Chyba při načítání eventů\n" + o_O);
+    snackbar.labelText = "Chyba při načítání eventů";
+    snackbar.show();
   }
 
   // Manual and auto scroll trought the program features

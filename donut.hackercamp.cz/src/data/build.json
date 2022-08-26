@@ -5,5 +5,6 @@
   "hostname": "localhost:3000",
   "api-host": "https://api.hackercamp.cz/v1/",
   "slack/client-id": "1990816352820.3334586910531",
-  "rollbar/access-token": "a1f80d94b33346c1baf8e5be27ae5646"
+  "rollbar/access-token": "a1f80d94b33346c1baf8e5be27ae5646",
+  "feature-toggle/full-program": true
 }
