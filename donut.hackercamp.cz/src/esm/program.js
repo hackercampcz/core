@@ -147,21 +147,25 @@ function eventTemplate(
       >
 ${event.title}</pre
       >
-      <div style="display: flex;">
-        ${when(
-          event.type === "topic",
-          () => html`
-            ${when(
-              event.description,
-              () => html`
-                <pre style="margin-bottom: calc(var(--spacing) / 4);">
-${event.description}</pre
-                >
+      ${when(
+        event.type === "topic",
+        () => html`
+          ${(event.speakers || []).map(
+            (speaker) =>
+              html`
+                <figure class="speaker speaker--photo">
+                  <img
+                    alt="${speaker.name}"
+                    src="${speaker.picture}"
+                    width="100%"
+                    height="100%"
+                  />
+                </figure>
               `
-            )}
-          `
-        )}
-      </div>
+          )}
+          <figure class="speaker speaker--add">+</figure>
+        `
+      )}
     </div>
     <dialog class="event__detail" id="event-detail-${event.id}">
       <h1>${event.title}</h1>
@@ -418,7 +422,7 @@ function renderProgram({
         z-index: 1;
         background-color: var(--hc-background-color);
         box-sizing: border-box;
-        padding: calc(var(--spacing) / 4);
+        padding: calc(var(--spacing) / 2);
         cursor: pointer;
         overflow: hidden;
         border: 1px solid var(--tick-highlight-color);
@@ -441,6 +445,9 @@ function renderProgram({
       }
       .lineup__event.lineup__event--topic {
         height: calc(100% - 8px);
+      }
+      .lineup__event.lineup__event--topic pre {
+        margin-bottom: calc(var(--spacing) / 4);
       }
       .lineup__event.lineup__event--narrow {
         writing-mode: vertical-lr;
@@ -494,12 +501,6 @@ function renderProgram({
           font-size: 18px;
         }
       }
-      /*
-      .lineup__event:hover,
-      .lineup__event:active {
-        width: max-content;
-      }
-       */
 
       :where(.lineup__detail, .event__detail) h1 {
         margin: calc(var(--spacing) / 2) 0 var(--spacing) 0;
@@ -543,6 +544,7 @@ function renderProgram({
       .lineup:first-child .lineup__slot {
         pointer-events: none;
       }
+
       .event-type {
         display: flex;
         flex-direction: column;
@@ -563,6 +565,28 @@ function renderProgram({
         float: right;
         font-size: 32px;
         line-height: calc(16px * 1.5);
+      }
+
+      figure.speaker {
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        margin: 0;
+        overflow: hidden;
+        background-image: var(--hc-gradient-btn);
+        background-size: 200% 100%;
+        padding: 2px;
+        float: left;
+        margin: calc(var(--spacing) / 4) calc(var(--spacing) / 4) 0 0;
+      }
+      figure.speaker img {
+        border-radius: 50%;
+      }
+      figure.speaker.speaker--add {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 200%;
       }
     </style>
     <div class="program">

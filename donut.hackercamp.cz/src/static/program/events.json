@@ -251,7 +251,11 @@
     "title": "Biohacking",
     "description": "Šraky, Míla Formánek, Bolek Kerouš",
     "level": 110,
-    "type": "topic"
+    "type": "topic",
+    "speakers": [
+      { "sub": "121232", "picture": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03URCQNMU2-00983dc5012b-512", "name": "Ondřej Zoubek" },
+      { "sub": "131322", "picture": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03U1766R0F-b686175664c5-512", "name": "Martin Holečko" }
+    ]
   },
   {
     "id": "ev17",
@@ -261,7 +265,12 @@
     "title": "User centric topics",
     "description": "Baru Obračajová, Ondřej Zoubek",
     "level": 110,
-    "type": "topic"
+    "type": "topic",
+    "speakers": [
+      { "sub": "321413", "picture": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03TWPUL1KN-7869e9238d9f-512", "name": "Tereza Jandáčková" },
+      { "sub": "421421", "picture": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03TNAB52K0-g583bcf76466-512", "name": "David Grudl" },
+      { "sub": "412412", "picture": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03T63QJBN3-636b3db7dc7e-512", "name": "Patrik Raš" }
+    ]
   },
   {
     "id": "workshop-1",
