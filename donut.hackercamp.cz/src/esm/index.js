@@ -159,6 +159,11 @@ function renderHousedScreen({ housing, housingPlacement, travel }) {
   `;
 }
 
+const freeTickets = new Set(["crew", "staff"]);
+function canSelectHousing(registration, attendee) {
+  return registration.paid || freeTickets.has(attendee?.ticketType);
+}
+
 function renderIndex({ profile, registration, attendee }) {
   if (!(profile || registration || attendee)) {
     return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
@@ -166,7 +171,7 @@ function renderIndex({ profile, registration, attendee }) {
   if (attendee?.housingPlacement) {
     return renderHousedScreen(attendee);
   }
-  if (registration.paid || attendee?.ticketType === "crew") {
+  if (canSelectHousing(registration, attendee)) {
     return renderPaidScreen();
   }
   if (registration && !registration.paid) {
