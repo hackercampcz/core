@@ -292,10 +292,10 @@ export function createDB({ slackQueueUrl }) {
 
   const program = new aws.dynamodb.Table(hcName("program"), {
     name: hcName("program"),
-    hashKey: "id",
+    hashKey: "_id",
     rangeKey: "year",
     attributes: [
-      { name: "id", type: "S" },
+      { name: "_id", type: "S" },
       { name: "year", type: "N" },
     ],
     billingMode: "PAY_PER_REQUEST",
