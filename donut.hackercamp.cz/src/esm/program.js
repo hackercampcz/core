@@ -156,7 +156,7 @@ ${event.title}</pre
                 <figure class="speaker speaker--photo">
                   <img
                     alt="${speaker.name}"
-                    src="${speaker.picture}"
+                    src="${speaker.image}"
                     width="100%"
                     height="100%"
                   />
