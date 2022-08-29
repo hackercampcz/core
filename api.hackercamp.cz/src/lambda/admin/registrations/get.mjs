@@ -47,7 +47,7 @@ async function getHackerAttendees(year) {
       TableName: "hc-attendees",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "#yr = :yr AND ticketType NOT IN (:crew, :staff, :volunteer)",
+        "#yr = :yr AND NOT (ticketType IN (:crew, :staff, :volunteer))",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         {
