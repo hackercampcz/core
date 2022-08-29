@@ -432,6 +432,67 @@ function registratioDetailTemplate({ detail, selectedView }) {
   `;
 }
 
+const lineupText = new Map([
+  ["liorg", "Organizační"],
+  ["limain", "Mainframe"],
+  ["libase", "Basecamp"],
+  ["liback", "Backend"],
+  ["lipeep", "Peopleware"],
+  ["liwood", "WoodStack"],
+  ["lijungle", "Jungle Release"],
+]);
+function lineup(x) {
+  return html`<code>${lineupText.get(x)}</code>`;
+}
+
+function attendeeDetailTemplate({ detail }) {
+  if (!detail) return null;
+  return html`
+    <div class="hc-card hc-master-detail__detail"">
+      <h2 style="display: flex;align-items: center;gap: 12px;">
+        <span>${detail.name}</span>
+        ${ticketBadge.get(detail.ticketType)}</h2>
+      <p>${detail.company}</p>
+      <div class="hc-detail__tools">
+        <a
+          class="hc-action-button"
+          href="mailto:${detail.email}"
+          title="Napsat ${detail.email}""><svg
+        xmlns="http://www.w3.org/2000/svg"
+        height="24"
+        width="24"
+      >
+        <path d="M0 0h24v24H0z" fill="none"/>
+        <path
+          fill="var(--hc-text-color)"
+          d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+        />
+      </svg></a>
+      </div>
+      ${ticketDetail(detail)}
+      <p>Ubytování: <strong>${
+        housing.get(detail.housing) ?? "Ještě si nevybral"
+      }</strong></p>
+      <p>Doprava: <strong>${
+        travel.get(detail.travel) ?? "Ještě si nevybral"
+      }</strong></p>
+        ${detail.events?.map(
+          (event) => html`
+            <div>
+              <h3>${event.title}</h3>
+              <p>
+                <code>${lineup(event.lineup)}</code> -
+                <time datetime="${event.preferredTime}"
+                  >${formatDateTime(new Date(event.preferredTime))}</time
+                >
+              </p>
+            </div>
+          `
+        )}
+    </div>
+  `;
+}
+
 const renderDetail = (detail) => () =>
   transact((x) => Object.assign(x, { detail }));
 
@@ -491,6 +552,51 @@ function registrationsTableTemplate(data, { timeHeader, timeAttr }) {
                     ></a>
                   `
                 )}
+              </td>
+            </tr>
+          `
+        )}
+      </tbody>
+    </table>
+  `;
+}
+
+function attendeesTableTemplate(data) {
+  return html`
+    <table>
+      <thead>
+        <tr>
+          <th>Jméno</th>
+          <th>Společnost</th>
+          <th>Typ lístku</th>
+          <th>Zaplaceno</th>
+          <th>Akce</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(
+          (row) => html`
+            <tr
+              @click="${renderDetail(row)}">
+              <td>${row.name}</td>
+              <td>${row.company}</td>
+              <td>${ticketName.get(row.ticketType)}</td>
+              <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
+              <td>
+                <a
+                  class="hc-action-button"
+                  href="mailto:${row.email}"
+                  title="Napsat ${row.email}""><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  width="24"
+                >
+                  <path d="M0 0h24v24H0z" fill="none"/>
+                  <path
+                    fill="var(--hc-text-color)"
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                  />
+                </svg></a>
               </td>
             </tr>
           `
@@ -596,17 +702,7 @@ function attendeesTemplate(state) {
         ${until(
           data?.then((data) => {
             if (data.unauthorized) return unauthorized();
-            return attendeeTableTemplate(
-              sortBy(
-                timeColumnSettings.timeAttr,
-                data.map((x) =>
-                  Object.assign({}, x, {
-                    name: x.name ?? `${x.firstName} ${x.lastName}`,
-                  })
-                )
-              ),
-              timeColumnSettings
-            );
+            return attendeesTableTemplate(sortBy("paid", data));
           }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -615,7 +711,7 @@ function attendeesTemplate(state) {
           `
         )}
       </div>
-      ${when(detail, () => attendeeDetailTemplate({ detail, selectedView }))}
+      ${when(detail, () => attendeeDetailTemplate({ detail }))}
     </div>
   `;
 }
