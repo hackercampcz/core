@@ -59,8 +59,13 @@ function invoiced(email) {
 
 const formatDateTime = (x) =>
   x?.toLocaleString("cs", { dateStyle: "short", timeStyle: "short" }) ?? null;
-const sortBy = (attr, x) =>
-  x.sort((a, b) => (a[attr] ? -1 * a[attr].localeCompare(b[attr]) : -1));
+
+function sortBy(attr, x, { asc } = {}) {
+  const direction = asc ? 1 : -1;
+  return x.sort((a, b) =>
+    a[attr] ? direction * a[attr].localeCompare(b[attr]) : direction
+  );
+}
 
 function chip({ text, count, selected, view }) {
   return html`
@@ -440,6 +445,7 @@ const lineupText = new Map([
   ["lipeep", "Peopleware"],
   ["liwood", "WoodStack"],
   ["lijungle", "Jungle Release"],
+  ["liother", "Další aktivity"],
 ]);
 function lineup(x) {
   return html`<code>${lineupText.get(x)}</code>`;
@@ -771,7 +777,62 @@ function housingTemplate(state) {
           data?.then((data) => {
             if (data.unauthorized) return unauthorized();
             return housingTable(sortBy("housing", data));
-          })
+          }),
+          html`
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+              <p style="padding: 16px">Načítám data&hellip;</p>
+            </div>
+          `
+        )}
+      </div>
+    </div>
+  `;
+}
+
+function programTable(data) {
+  return html`
+    <table>
+      <thead>
+        <tr>
+          <th>Jméno</th>
+          <th>Stage</th>
+          <th>Začátek</th>
+          <th>Konec</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(
+          (row) => html`
+            <tr>
+              <td>${row.title}</td>
+              <td>${lineup(row.lineup)}</td>
+              <td>
+                ${row.startAt ? formatDateTime(new Date(row.startAt)) : null}
+              </td>
+              <td>${row.endAt ? formatDateTime(new Date(row.endAt)) : null}</td>
+            </tr>
+          `
+        )}
+      </tbody>
+    </table>
+  `;
+}
+
+function programTemplate(state) {
+  const { data } = state;
+  return html`
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <div class="hc-card">
+        ${until(
+          data?.then((data) => {
+            if (data.unauthorized) return unauthorized();
+            return programTable(sortBy("startAt", data, { asc: true }));
+          }),
+          html`
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+              <p style="padding: 16px">Načítám data&hellip;</p>
+            </div>
+          `
         )}
       </div>
     </div>
@@ -798,7 +859,14 @@ function renderView(state) {
   const { selectedView } = state;
   if (registrationViews.has(selectedView)) return registrationsTemplate(state);
   if (attendeeView.has(selectedView)) return attendeesTemplate(state);
-  if (View.housing === selectedView) return housingTemplate(state);
+  switch (selectedView) {
+    case View.housing:
+      return housingTemplate(state);
+    case View.program:
+      return programTemplate(state);
+    default:
+      return html`Pohled do neznáma`;
+  }
 }
 
 const endpointForView = new Map([
