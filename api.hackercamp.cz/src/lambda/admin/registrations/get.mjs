@@ -128,9 +128,9 @@ async function getHousing(year) {
     new ScanCommand({
       TableName: "hc-attendees",
       ProjectionExpression:
-        "name, company, email, housing, housingPlacement, ticketType",
+        "#n, company, email, housing, housingPlacement, ticketType",
       FilterExpression: "#yr = :yr",
-      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeNames: { "#yr": "year", "#n": "name" },
       ExpressionAttributeValues: marshall(
         { ":yr": year },
         { removeUndefinedValues: true }
