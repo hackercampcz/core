@@ -122,6 +122,23 @@ async function getVolunteerAttendees(year) {
   );
   return res.Items.map((x) => unmarshall(x));
 }
+async function getHousing(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      ProjectionExpression:
+        "name, company, email, housing, housingPlacement, ticketType",
+      FilterExpression: "#yr = :yr",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        { ":yr": year },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
 
 async function getConfirmedHackersRegistrations(year) {
   console.log("Loading confirmed hackers data", { year });
@@ -230,6 +247,8 @@ function getData(type, year) {
       return getVolunteerAttendees(year);
     case "hackerAttendees":
       return getHackerAttendees(year);
+    case "housing":
+      return getHousing(year);
     default:
       throw new Error(`Unknown type ${type}`);
   }
