@@ -2,15 +2,15 @@
   {
     "id": "org-arrival",
     "lineup": "liorg",
-    "startAt": "2022-09-01T14:00:00",
-    "endAt": "2022-09-01T19:50:00",
+    "startAt": "2022-09-01T14:00:00.000+02:00",
+    "endAt": "2022-09-01T18:00:00.000+02:00",
     "title": "Příjezdy a registrace"
   },
   {
     "id": "start-day-1",
     "lineup": "limain",
-    "startAt": "2022-09-01T17:00:00",
-    "endAt": "2022-09-01T17:15:00",
+    "startAt": "2022-09-01T17:00:00.000+02:00",
+    "endAt": "2022-09-01T17:15:00.000+02:00",
     "title": "Zahájení campu",
     "description": "Potkáme sa na Mainframe a řekneme si prvních pár slov k campu",
     "type": "org"
@@ -18,8 +18,8 @@
   {
     "id": "start-day-1",
     "lineup": "liback",
-    "startAt": "2022-09-01T17:00:00",
-    "endAt": "2022-09-01T17:15:00",
+    "startAt": "2022-09-01T17:00:00.000+02:00",
+    "endAt": "2022-09-01T17:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -27,8 +27,8 @@
   {
     "id": "start-day-1",
     "lineup": "libase",
-    "startAt": "2022-09-01T17:00:00",
-    "endAt": "2022-09-01T17:15:00",
+    "startAt": "2022-09-01T17:00:00.000+02:00",
+    "endAt": "2022-09-01T17:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -36,8 +36,8 @@
   {
     "id": "start-day-1",
     "lineup": "lipeep",
-    "startAt": "2022-09-01T17:00:00",
-    "endAt": "2022-09-01T17:15:00",
+    "startAt": "2022-09-01T17:00:00.000+02:00",
+    "endAt": "2022-09-01T17:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -45,8 +45,8 @@
   {
     "id": "start-day-1",
     "lineup": "liwood",
-    "startAt": "2022-09-01T17:00:00",
-    "endAt": "2022-09-01T17:15:00",
+    "startAt": "2022-09-01T17:00:00.000+02:00",
+    "endAt": "2022-09-01T17:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -54,8 +54,8 @@
   {
     "id": "start-day-1",
     "lineup": "lijungle",
-    "startAt": "2022-09-01T17:00:00",
-    "endAt": "2022-09-01T17:15:00",
+    "startAt": "2022-09-01T17:00:00.000+02:00",
+    "endAt": "2022-09-01T17:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -63,8 +63,8 @@
   {
     "id": "start-day-1",
     "lineup": "liother",
-    "startAt": "2022-09-01T17:00:00",
-    "endAt": "2022-09-01T17:15:00",
+    "startAt": "2022-09-01T17:00:00.000+02:00",
+    "endAt": "2022-09-01T17:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -72,32 +72,32 @@
   {
     "id": "ev4",
     "lineup": "limain",
-    "startAt": "2022-09-01T17:15:00",
-    "endAt": "2022-09-01T17:30:00",
+    "startAt": "2022-09-01T17:15:00.000+02:00",
+    "endAt": "2022-09-01T17:30:00.000+02:00",
     "title": "Seznamovací kolečko",
     "description": "Hravou formou pojďme poznat, kdo na campu je a odkud přijel"
   },
   {
     "id": "ev5",
     "lineup": "libase",
-    "startAt": "2022-09-01T17:30:00",
-    "endAt": "2022-09-01T18:30:00",
+    "startAt": "2022-09-01T17:30:00.000+02:00",
+    "endAt": "2022-09-01T18:30:00.000+02:00",
     "title": "Seznamovací hry",
     "description": "Spíš pro hravější extroverty, co se nebojí vydat do nepoznaných vod (Ženďa & Jan Bleha)"
   },
   {
     "id": "ev6",
     "lineup": "limain",
-    "startAt": "2022-09-01T17:30:00",
-    "endAt": "2022-09-01T18:30:00",
+    "startAt": "2022-09-01T17:30:00.000+02:00",
+    "endAt": "2022-09-01T18:30:00.000+02:00",
     "title": "Speed Networking",
     "description": "Spíš povídání (témata navedou poznávání) (Ir)"
   },
   {
     "id": "off-day-1",
     "lineup": "limain",
-    "startAt": "2022-09-01T18:30:00",
-    "endAt": "2022-09-02T10:00:00",
+    "startAt": "2022-09-01T18:30:00.000+02:00",
+    "endAt": "2022-09-02T10:00:00.000+02:00",
     "title": "💤",
     "description": "užijte si okolní program",
     "type": "org"
@@ -105,8 +105,8 @@
   {
     "id": "off-day-1",
     "lineup": "libase",
-    "startAt": "2022-09-01T18:45:00",
-    "endAt": "2022-09-02T10:00:00",
+    "startAt": "2022-09-01T18:45:00.000+02:00",
+    "endAt": "2022-09-02T10:00:00.000+02:00",
     "title": "💤",
     "description": "užijte si okolní program",
     "type": "org"
@@ -114,22 +114,22 @@
   {
     "id":"org-dinner-day-1",
     "lineup": "liorg",
-    "startAt": "2022-09-01T18:00:00",
-    "endAt": "2022-09-01T20:00:00",
+    "startAt": "2022-09-01T18:00:00.000+02:00",
+    "endAt": "2022-09-01T20:00:00.000+02:00",
     "title": "Ideální doba se nadlábnout"
   },
   {
     "id":"fire-day-1",
     "lineup": "liorg",
-    "startAt": "2022-09-01T20:00:00",
-    "endAt": "2022-09-02T04:00:00",
+    "startAt": "2022-09-01T20:00:00.000+02:00",
+    "endAt": "2022-09-02T04:00:00.000+02:00",
     "title": "Oheň a pečení buřtů"
   },
   {
     "id":"disco-dating",
     "lineup": "libase",
-    "startAt": "2022-09-01T17:15:00",
-    "endAt": "2022-09-01T18:45:00",
+    "startAt": "2022-09-01T17:15:00.000+02:00",
+    "endAt": "2022-09-01T18:45:00.000+02:00",
     "title": "Disco seznamka 💃🏻🕺🏼🪩",
     "description": "Seznamovací atmosféru podpoří Alessio Busta v DJ setu",
     "_top": "50%"
@@ -137,31 +137,31 @@
   {
     "id": "dj-quip",
     "lineup": "liwood",
-    "startAt": "2022-09-01T19:00:00",
-    "endAt": "2022-09-01T20:00:00",
+    "startAt": "2022-09-01T19:00:00.000+02:00",
+    "endAt": "2022-09-01T20:00:00.000+02:00",
     "title": "DJ Quip"
   },
   {
     "id": "headliner-day-1",
     "lineup": "liwood",
-    "startAt": "2022-09-01T20:50:00",
-    "endAt": "2022-09-01T22:00:00",
+    "startAt": "2022-09-01T20:50:00.000+02:00",
+    "endAt": "2022-09-01T22:00:00.000+02:00",
     "title": "Márdi & Pítrs",
     "level": 140
   },
   {
     "id": "woodstack-day-1",
     "lineup": "liwood",
-    "startAt": "2022-09-01T22:00:00",
-    "endAt": "2022-09-01T24:00:00",
+    "startAt": "2022-09-01T22:00:00.000+02:00",
+    "endAt": "2022-09-01T24:00:00.000+02:00",
     "title": "Zrní zahraje u Ohně!",
     "level": 140
   },
   {
     "id": "jungle-day-1",
     "lineup": "lijungle",
-    "startAt": "2022-09-01T22:00:00",
-    "endAt": "2022-09-02T05:00:00",
+    "startAt": "2022-09-01T22:00:00.000+02:00",
+    "endAt": "2022-09-02T05:00:00.000+02:00",
     "title": "Open decks 🎚🎛🎚💻🔊",
     "description": "DJs z řad táborníků",
     "level": 120
@@ -169,22 +169,22 @@
   {
     "id": "org-night-day-1",
     "lineup": "liorg",
-    "startAt": "2022-09-01T24:00:00",
-    "endAt": "2022-09-02T08:00:00",
+    "startAt": "2022-09-01T24:00:00.000+02:00",
+    "endAt": "2022-09-02T08:00:00.000+02:00",
     "title": "Noční klid :)"
   },
   {
     "id": "org-morning-day-2",
     "lineup": "liorg",
-    "startAt": "2022-09-02T08:00:00",
-    "endAt": "2022-09-02T10:00:00",
+    "startAt": "2022-09-02T08:00:00.000+02:00",
+    "endAt": "2022-09-02T10:00:00.000+02:00",
     "title": "Dobré ráno, čas si dát kafe, snídani, ranní sprchu, výběh a tak"
   },
   {
     "id": "start-day-2",
     "lineup": "limain",
-    "startAt": "2022-09-02T10:00:00",
-    "endAt": "2022-09-02T10:15:00",
+    "startAt": "2022-09-02T10:00:00.000+02:00",
+    "endAt": "2022-09-02T10:15:00.000+02:00",
     "title": "Zahájení dne",
     "description": "Máte program? A mohla bych ho vidět?",
     "type": "org"
@@ -192,8 +192,8 @@
   {
     "id": "start-day-2",
     "lineup": "liback",
-    "startAt": "2022-09-02T10:00:00",
-    "endAt": "2022-09-02T10:15:00",
+    "startAt": "2022-09-02T10:00:00.000+02:00",
+    "endAt": "2022-09-02T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -201,8 +201,8 @@
   {
     "id": "start-day-2",
     "lineup": "libase",
-    "startAt": "2022-09-02T10:00:00",
-    "endAt": "2022-09-02T10:15:00",
+    "startAt": "2022-09-02T10:00:00.000+02:00",
+    "endAt": "2022-09-02T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -210,8 +210,8 @@
   {
     "id": "start-day-2",
     "lineup": "lipeep",
-    "startAt": "2022-09-02T10:00:00",
-    "endAt": "2022-09-02T10:15:00",
+    "startAt": "2022-09-02T10:00:00.000+02:00",
+    "endAt": "2022-09-02T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -219,8 +219,8 @@
   {
     "id": "start-day-2",
     "lineup": "liwood",
-    "startAt": "2022-09-02T10:00:00",
-    "endAt": "2022-09-02T10:15:00",
+    "startAt": "2022-09-02T10:00:00.000+02:00",
+    "endAt": "2022-09-02T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -228,8 +228,8 @@
   {
     "id": "start-day-2",
     "lineup": "lijungle",
-    "startAt": "2022-09-02T10:00:00",
-    "endAt": "2022-09-02T10:15:00",
+    "startAt": "2022-09-02T10:00:00.000+02:00",
+    "endAt": "2022-09-02T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -237,8 +237,8 @@
   {
     "id": "start-day-2",
     "lineup": "liother",
-    "startAt": "2022-09-02T10:00:00",
-    "endAt": "2022-09-02T10:15:00",
+    "startAt": "2022-09-02T10:00:00.000+02:00",
+    "endAt": "2022-09-02T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -246,8 +246,8 @@
   {
     "id": "ev17",
     "lineup": "limain",
-    "startAt": "2022-09-02T10:15:00",
-    "endAt": "2022-09-02T12:00:00",
+    "startAt": "2022-09-02T10:15:00.000+02:00",
+    "endAt": "2022-09-02T12:00:00.000+02:00",
     "title": "Biohacking",
     "description": "Šraky, Míla Formánek, Bolek Kerouš",
     "level": 110,
@@ -260,8 +260,8 @@
   {
     "id": "ev17",
     "lineup": "libase",
-    "startAt": "2022-09-02T10:15:00",
-    "endAt": "2022-09-02T12:00:00",
+    "startAt": "2022-09-02T10:15:00.000+02:00",
+    "endAt": "2022-09-02T12:00:00.000+02:00",
     "title": "User centric topics",
     "description": "Baru Obračajová, Ondřej Zoubek",
     "level": 110,
@@ -275,39 +275,39 @@
   {
     "id": "workshop-1",
     "lineup": "liback",
-    "startAt": "2022-09-02T10:15:00",
-    "endAt": "2022-09-02T12:00:00",
+    "startAt": "2022-09-02T10:15:00.000+02:00",
+    "endAt": "2022-09-02T12:00:00.000+02:00",
     "title": "Legal",
     "description": "Starupy, investice, ESOP - povídání nejen s právníky (Tomáš Ditrych, Novalia)"
   },
   {
     "id": "lunch-day-2",
     "lineup": "liorg",
-    "startAt": "2022-09-02T12:00:00",
-    "endAt": "2022-09-02T14:00:00",
+    "startAt": "2022-09-02T12:00:00.000+02:00",
+    "endAt": "2022-09-02T14:00:00.000+02:00",
     "title": "Ideální doba se nadlábnout"
   },
   {
     "id": "lunch-day-2",
     "lineup": "limain",
-    "startAt": "2022-09-02T12:00:00",
-    "endAt": "2022-09-02T14:00:00",
+    "startAt": "2022-09-02T12:00:00.000+02:00",
+    "endAt": "2022-09-02T14:00:00.000+02:00",
     "title": "🍽 ☕️",
     "type": "org"
   },
   {
     "id": "lunch-day-2",
     "lineup": "libase",
-    "startAt": "2022-09-02T12:00:00",
-    "endAt": "2022-09-02T14:00:00",
+    "startAt": "2022-09-02T12:00:00.000+02:00",
+    "endAt": "2022-09-02T14:00:00.000+02:00",
     "title": "🍽 ☕️",
     "type": "org"
   },
   {
     "id": "start-block1-day-2",
     "lineup": "limain",
-    "startAt": "2022-09-02T14:00:00",
-    "endAt": "2022-09-02T14:15:00",
+    "startAt": "2022-09-02T14:00:00.000+02:00",
+    "endAt": "2022-09-02T14:15:00.000+02:00",
     "title": "Zahájení bloku",
     "description": "Máte program? A mohla bych ho vidět?",
     "type": "org"
@@ -315,8 +315,8 @@
   {
     "id": "start-block1-day-2",
     "lineup": "liback",
-    "startAt": "2022-09-02T14:00:00",
-    "endAt": "2022-09-02T14:15:00",
+    "startAt": "2022-09-02T14:00:00.000+02:00",
+    "endAt": "2022-09-02T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -324,8 +324,8 @@
   {
     "id": "start-block1-day-2",
     "lineup": "libase",
-    "startAt": "2022-09-02T14:00:00",
-    "endAt": "2022-09-02T14:15:00",
+    "startAt": "2022-09-02T14:00:00.000+02:00",
+    "endAt": "2022-09-02T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -333,8 +333,8 @@
   {
     "id": "start-block1-day-2",
     "lineup": "lipeep",
-    "startAt": "2022-09-02T14:00:00",
-    "endAt": "2022-09-02T14:15:00",
+    "startAt": "2022-09-02T14:00:00.000+02:00",
+    "endAt": "2022-09-02T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -342,8 +342,8 @@
   {
     "id": "start-block1-day-2",
     "lineup": "liwood",
-    "startAt": "2022-09-02T14:00:00",
-    "endAt": "2022-09-02T14:15:00",
+    "startAt": "2022-09-02T14:00:00.000+02:00",
+    "endAt": "2022-09-02T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -351,8 +351,8 @@
   {
     "id": "start-block1-day-2",
     "lineup": "lijungle",
-    "startAt": "2022-09-02T14:00:00",
-    "endAt": "2022-09-02T14:15:00",
+    "startAt": "2022-09-02T14:00:00.000+02:00",
+    "endAt": "2022-09-02T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -360,8 +360,8 @@
   {
     "id": "start-block1-day-2",
     "lineup": "liother",
-    "startAt": "2022-09-02T14:00:00",
-    "endAt": "2022-09-02T14:15:00",
+    "startAt": "2022-09-02T14:00:00.000+02:00",
+    "endAt": "2022-09-02T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -369,8 +369,8 @@
   {
     "id": "ev20",
     "lineup": "limain",
-    "startAt": "2022-09-02T14:15:00",
-    "endAt": "2022-09-02T16:00:00",
+    "startAt": "2022-09-02T14:15:00.000+02:00",
+    "endAt": "2022-09-02T16:00:00.000+02:00",
     "title": "Nakoukněte pod pokličku jiným oborům a odvětvím",
     "description": "Vítek Šoural (hudba), Ondřej Krátký (městká logistika), Michal Jirků (energetika), Petr Boroš (hudba), John Doe (chirurgie)",
     "level": 110,
@@ -379,8 +379,8 @@
   {
     "id": "ev21",
     "lineup": "libase",
-    "startAt": "2022-09-02T14:15:00",
-    "endAt": "2022-09-02T16:00:00",
+    "startAt": "2022-09-02T14:15:00.000+02:00",
+    "endAt": "2022-09-02T16:00:00.000+02:00",
     "title": "Frontend talks",
     "description": "Tomáš Belada, Filip Suk",
     "level": 110,
@@ -389,16 +389,16 @@
   {
     "id": "workshop-2",
     "lineup": "liback",
-    "startAt": "2022-09-02T14:15:00",
-    "endAt": "2022-09-02T16:00:00",
+    "startAt": "2022-09-02T14:15:00.000+02:00",
+    "endAt": "2022-09-02T16:00:00.000+02:00",
     "title": "Reálnost autonomie týmu",
     "description": "Diskuze do jaké míry a v jakém prostředí jde dosáhnout autonomie dev týmu (Lukáš Putna)"
   },
   {
     "id": "dj-workshop",
     "lineup": "lijungle",
-    "startAt": "2022-09-02T14:15:00",
-    "endAt": "2022-09-02T16:00:00",
+    "startAt": "2022-09-02T14:15:00.000+02:00",
+    "endAt": "2022-09-02T16:00:00.000+02:00",
     "title": "DJ workshop",
     "description": "Přijďte si vyzkoušet různou DJ techniku a seznámit se základními principy hraní.",
     "level": 110
@@ -406,16 +406,16 @@
   {
     "id": "ev23",
     "lineup": "liother",
-    "startAt": "2022-09-02T14:15:00",
-    "endAt": "2022-09-02T16:00:00",
+    "startAt": "2022-09-02T14:15:00.000+02:00",
+    "endAt": "2022-09-02T16:00:00.000+02:00",
     "title": "Mastermind skupina s Daliborem",
     "level": 110
   },
   {
     "id": "start-block2-day-2",
     "lineup": "limain",
-    "startAt": "2022-09-02T16:00:00",
-    "endAt": "2022-09-02T16:15:00",
+    "startAt": "2022-09-02T16:00:00.000+02:00",
+    "endAt": "2022-09-02T16:15:00.000+02:00",
     "title": "Zahájení bloku",
     "description": "Máte program? A mohla bych ho vidět?",
     "type": "org"
@@ -423,8 +423,8 @@
   {
     "id": "start-block2-day-2",
     "lineup": "liback",
-    "startAt": "2022-09-02T16:00:00",
-    "endAt": "2022-09-02T16:15:00",
+    "startAt": "2022-09-02T16:00:00.000+02:00",
+    "endAt": "2022-09-02T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -432,8 +432,8 @@
   {
     "id": "start-block2-day-2",
     "lineup": "libase",
-    "startAt": "2022-09-02T16:00:00",
-    "endAt": "2022-09-02T16:15:00",
+    "startAt": "2022-09-02T16:00:00.000+02:00",
+    "endAt": "2022-09-02T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -441,8 +441,8 @@
   {
     "id": "start-block2-day-2",
     "lineup": "lipeep",
-    "startAt": "2022-09-02T16:00:00",
-    "endAt": "2022-09-02T16:15:00",
+    "startAt": "2022-09-02T16:00:00.000+02:00",
+    "endAt": "2022-09-02T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -450,8 +450,8 @@
   {
     "id": "start-block2-day-2",
     "lineup": "liwood",
-    "startAt": "2022-09-02T16:00:00",
-    "endAt": "2022-09-02T16:15:00",
+    "startAt": "2022-09-02T16:00:00.000+02:00",
+    "endAt": "2022-09-02T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -459,8 +459,8 @@
   {
     "id": "start-block2-day-2",
     "lineup": "lijungle",
-    "startAt": "2022-09-02T16:00:00",
-    "endAt": "2022-09-02T16:15:00",
+    "startAt": "2022-09-02T16:00:00.000+02:00",
+    "endAt": "2022-09-02T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -468,8 +468,8 @@
   {
     "id": "start-block2-day-2",
     "lineup": "liother",
-    "startAt": "2022-09-02T16:00:00",
-    "endAt": "2022-09-02T16:15:00",
+    "startAt": "2022-09-02T16:00:00.000+02:00",
+    "endAt": "2022-09-02T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -477,18 +477,18 @@
   {
     "id": "ev25",
     "lineup": "limain",
-    "startAt": "2022-09-02T16:15:00",
-    "endAt": "2022-09-02T18:00:00",
-    "title": "NGOs + udržitelnost",
-    "description": "TBA",
+    "startAt": "2022-09-02T16:15:00.000+02:00",
+    "endAt": "2022-09-02T18:00:00.000+02:00",
+    "title": "Kultura a udržitelnost",
+    "description": "Martin Poliačik, Míla Formánek",
     "level": 110,
     "type": "topic"
   },
   {
     "id": "ev26",
     "lineup": "libase",
-    "startAt": "2022-09-02T16:15:00",
-    "endAt": "2022-09-02T18:00:00",
+    "startAt": "2022-09-02T16:15:00.000+02:00",
+    "endAt": "2022-09-02T18:00:00.000+02:00",
     "title": "New tech",
     "description": "AI, VR, NFTs in your business",
     "level": 110,
@@ -497,31 +497,31 @@
   {
     "id": "ev27",
     "lineup": "liback",
-    "startAt": "2022-09-02T16:15:00",
-    "endAt": "2022-09-02T18:00:00",
+    "startAt": "2022-09-02T16:15:00.000+02:00",
+    "endAt": "2022-09-02T18:00:00.000+02:00",
     "title": "Lockpicking workshop",
     "description": "Opakování loňského, velmi úspěšného, dobývání zámků (TunaSec)"
   },
   {
     "id":"dinner-day-2",
     "lineup": "liorg",
-    "startAt": "2022-09-02T18:00:00",
-    "endAt": "2022-09-02T20:00:00",
+    "startAt": "2022-09-02T18:00:00.000+02:00",
+    "endAt": "2022-09-02T20:00:00.000+02:00",
     "title": "Ideální doba se nadlábnout"
   },
   {
     "id": "dinner-day-2",
     "lineup": "limain",
-    "startAt": "2022-09-02T18:00:00",
-    "endAt": "2022-09-02T20:10:00",
+    "startAt": "2022-09-02T18:00:00.000+02:00",
+    "endAt": "2022-09-02T20:10:00.000+02:00",
     "title": "🍽 ☕️",
     "type": "org"
   },
   {
     "id": "off-day-2",
     "lineup": "libase",
-    "startAt": "2022-09-02T18:00:00",
-    "endAt": "2022-09-03T10:00:00",
+    "startAt": "2022-09-02T18:00:00.000+02:00",
+    "endAt": "2022-09-03T10:00:00.000+02:00",
     "title": "💤",
     "description": "užijte si okolní program",
     "type": "org"
@@ -529,23 +529,23 @@
   {
     "id":"workshop-8",
     "lineup": "liother",
-    "startAt": "2022-09-02T18:00:00",
-    "endAt": "2022-09-02T19:00:00",
+    "startAt": "2022-09-02T18:00:00.000+02:00",
+    "endAt": "2022-09-02T19:00:00.000+02:00",
     "title": "Broušení nožů",
     "description": "Přineste si vlastní nůž a Petr Severa vám ukáže jak ho správně nabrousit!"
   },
   {
     "id":"ev30",
     "lineup": "liwood",
-    "startAt": "2022-09-02T19:00:00",
-    "endAt": "2022-09-02T20:00:00",
+    "startAt": "2022-09-02T19:00:00.000+02:00",
+    "endAt": "2022-09-02T20:00:00.000+02:00",
     "title": "Prostor pro hacker umělce"
   },
   {
     "id": "night-day-2",
     "lineup": "limain",
-    "startAt": "2022-09-02T20:10:00",
-    "endAt": "2022-09-02T20:49:00",
+    "startAt": "2022-09-02T20:10:00.000+02:00",
+    "endAt": "2022-09-02T20:49:00.000+02:00",
     "title": "Slam poetry / standup",
     "description": "",
     "level": 110
@@ -553,8 +553,8 @@
   {
     "id": "bar-day-2",
     "lineup": "limain",
-    "startAt": "2022-09-02T20:50:00",
-    "endAt": "2022-09-02T22:10:00",
+    "startAt": "2022-09-02T20:50:00.000+02:00",
+    "endAt": "2022-09-02T22:10:00.000+02:00",
     "title": "🍻 🥂 🥃️",
     "description": "pauza na občerstvení u baru",
     "type": "org"
@@ -562,8 +562,8 @@
   {
     "id": "end-day-2",
     "lineup": "limain",
-    "startAt": "2022-09-03T00:00:00",
-    "endAt": "2022-09-03T10:00:00",
+    "startAt": "2022-09-03T00:00:00.000+02:00",
+    "endAt": "2022-09-03T10:00:00.000+02:00",
     "title": "💤",
     "description": "užijte si okolní program",
     "type": "org"
@@ -571,8 +571,8 @@
   {
     "id": "headliner-day-2",
     "lineup": "liwood",
-    "startAt": "2022-09-02T20:50:00",
-    "endAt": "2022-09-02T22:00:00",
+    "startAt": "2022-09-02T20:50:00.000+02:00",
+    "endAt": "2022-09-02T22:00:00.000+02:00",
     "title": "Ventolin",
     "description": "",
     "level": 160
@@ -580,8 +580,8 @@
   {
     "id": "fire-day-2",
     "lineup": "liorg",
-    "startAt": "2022-09-02T22:00:00",
-    "endAt": "2022-09-02T24:00:00",
+    "startAt": "2022-09-02T22:00:00.000+02:00",
+    "endAt": "2022-09-02T24:00:00.000+02:00",
     "title": "Oheň",
     "description": "",
     "level": 110
@@ -589,8 +589,8 @@
   {
     "id": "slides-day-2",
     "lineup": "limain",
-    "startAt": "2022-09-02T22:10:00",
-    "endAt": "2022-09-02T24:00:00",
+    "startAt": "2022-09-02T22:10:00.000+02:00",
+    "endAt": "2022-09-02T24:00:00.000+02:00",
     "title": "Z prdele slajdy",
     "description": "",
     "level": 120
@@ -598,8 +598,8 @@
   {
     "id": "woodstack-day-2",
     "lineup": "liwood",
-    "startAt": "2022-09-02T22:00:00",
-    "endAt": "2022-09-03T05:00:00",
+    "startAt": "2022-09-02T22:00:00.000+02:00",
+    "endAt": "2022-09-03T05:00:00.000+02:00",
     "title": "S kytarou u ohně 🔥🪵🎸",
     "description": "",
     "level": 110
@@ -607,8 +607,8 @@
   {
     "id": "jungle-day-2",
     "lineup": "lijungle",
-    "startAt": "2022-09-02T22:00:00",
-    "endAt": "2022-09-03T05:00:00",
+    "startAt": "2022-09-02T22:00:00.000+02:00",
+    "endAt": "2022-09-03T05:00:00.000+02:00",
     "title": "Open decks \uD83C\uDF9A\uD83C\uDF9B\uD83C\uDF9A\uD83D\uDCBB\uD83D\uDD0A",
     "description": "DJs z řad táborníků",
     "level": 110
@@ -616,30 +616,30 @@
   {
     "id": "org-jungle-day-2",
     "lineup": "liorg",
-    "startAt": "2022-09-03T00:00:00",
-    "endAt": "2022-09-03T02:00:00",
+    "startAt": "2022-09-03T00:00:00.000+02:00",
+    "endAt": "2022-09-03T02:00:00.000+02:00",
     "title": "Pomalý přesun do lesa",
     "description": ""
   },
   {
     "id": "ev36a",
     "lineup": "liorg",
-    "startAt": "2022-09-03T02:00:00",
-    "endAt": "2022-09-03T08:00:00",
+    "startAt": "2022-09-03T02:00:00.000+02:00",
+    "endAt": "2022-09-03T08:00:00.000+02:00",
     "title": "Noční klid :) a jakékoliv noční pokračování v lese"
   },
   {
     "id": "ev37",
     "lineup": "liorg",
-    "startAt": "2022-09-03T08:00:00",
-    "endAt": "2022-09-03T10:00:00",
+    "startAt": "2022-09-03T08:00:00.000+02:00",
+    "endAt": "2022-09-03T10:00:00.000+02:00",
     "title": "Čas si dát kafe, snídani, ranní sprchu, výběh"
   },
   {
     "id": "start-day-3",
     "lineup": "limain",
-    "startAt": "2022-09-03T10:00:00",
-    "endAt": "2022-09-03T10:15:00",
+    "startAt": "2022-09-03T10:00:00.000+02:00",
+    "endAt": "2022-09-03T10:15:00.000+02:00",
     "title": "Zahájení dne",
     "description": "Máte program? A mohla bych ho vidět?",
     "type": "org"
@@ -647,8 +647,8 @@
   {
     "id": "start-day-3",
     "lineup": "liback",
-    "startAt": "2022-09-03T10:00:00",
-    "endAt": "2022-09-03T10:15:00",
+    "startAt": "2022-09-03T10:00:00.000+02:00",
+    "endAt": "2022-09-03T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -656,8 +656,8 @@
   {
     "id": "start-day-3",
     "lineup": "libase",
-    "startAt": "2022-09-03T10:00:00",
-    "endAt": "2022-09-03T10:15:00",
+    "startAt": "2022-09-03T10:00:00.000+02:00",
+    "endAt": "2022-09-03T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -665,8 +665,8 @@
   {
     "id": "start-day-3",
     "lineup": "lipeep",
-    "startAt": "2022-09-03T10:00:00",
-    "endAt": "2022-09-03T10:15:00",
+    "startAt": "2022-09-03T10:00:00.000+02:00",
+    "endAt": "2022-09-03T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -674,8 +674,8 @@
   {
     "id": "start-day-3",
     "lineup": "liwood",
-    "startAt": "2022-09-03T10:00:00",
-    "endAt": "2022-09-03T10:15:00",
+    "startAt": "2022-09-03T10:00:00.000+02:00",
+    "endAt": "2022-09-03T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -683,8 +683,8 @@
   {
     "id": "start-day-3",
     "lineup": "lijungle",
-    "startAt": "2022-09-03T10:00:00",
-    "endAt": "2022-09-03T10:15:00",
+    "startAt": "2022-09-03T10:00:00.000+02:00",
+    "endAt": "2022-09-03T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -692,8 +692,8 @@
   {
     "id": "start-day-3",
     "lineup": "liother",
-    "startAt": "2022-09-03T10:00:00",
-    "endAt": "2022-09-03T10:15:00",
+    "startAt": "2022-09-03T10:00:00.000+02:00",
+    "endAt": "2022-09-03T10:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -701,8 +701,8 @@
   {
     "id": "ev39",
     "lineup": "limain",
-    "startAt": "2022-09-03T10:15:00",
-    "endAt": "2022-09-03T12:00:00",
+    "startAt": "2022-09-03T10:15:00.000+02:00",
+    "endAt": "2022-09-03T12:00:00.000+02:00",
     "title": "Live your dreams",
     "description": "potápění, létání (Havry)\nZávody na okruhu (Michal Bláha)\nCyklo výlety (Kryštof Řeháček)\nPraha-Hanoi na motorce (Tom)\nDo Dánska s rodinou (Mišo)",
     "level": 110,
@@ -711,8 +711,8 @@
   {
     "id": "ev40",
     "lineup": "libase",
-    "startAt": "2022-09-03T10:15:00",
-    "endAt": "2022-09-03T12:00:00",
+    "startAt": "2022-09-03T10:15:00.000+02:00",
+    "endAt": "2022-09-03T12:00:00.000+02:00",
     "title": "Sustainable code",
     "description":"Aleš Roubíček, Marek Trunkát",
     "type": "topic",
@@ -721,39 +721,39 @@
   {
     "id": "workshop-3",
     "lineup": "liback",
-    "startAt": "2022-09-03T10:15:00",
-    "endAt": "2022-09-03T12:00:00",
+    "startAt": "2022-09-03T10:15:00.000+02:00",
+    "endAt": "2022-09-03T12:00:00.000+02:00",
     "title": "Workshop zvládání náročných rozhovorů",
     "description": "(Jakub Korbela)"
   },
   {
     "id":"lunch-day-3",
     "lineup": "liorg",
-    "startAt": "2022-09-03T12:00:00",
-    "endAt": "2022-09-03T14:00:00",
+    "startAt": "2022-09-03T12:00:00.000+02:00",
+    "endAt": "2022-09-03T14:00:00.000+02:00",
     "title": "Ideální doba se nadlábnout"
   },
   {
     "id": "lunch-day-3",
     "lineup": "limain",
-    "startAt": "2022-09-03T12:00:00",
-    "endAt": "2022-09-03T14:00:00",
+    "startAt": "2022-09-03T12:00:00.000+02:00",
+    "endAt": "2022-09-03T14:00:00.000+02:00",
     "title": "🍽 ☕️",
     "type": "org"
   },
   {
     "id": "lunch-day-3",
     "lineup": "libase",
-    "startAt": "2022-09-03T12:00:00",
-    "endAt": "2022-09-03T14:00:00",
+    "startAt": "2022-09-03T12:00:00.000+02:00",
+    "endAt": "2022-09-03T14:00:00.000+02:00",
     "title": "🍽 ☕️",
     "type": "org"
   },
   {
     "id": "start-block-2-day-3",
     "lineup": "limain",
-    "startAt": "2022-09-03T14:00:00",
-    "endAt": "2022-09-03T14:15:00",
+    "startAt": "2022-09-03T14:00:00.000+02:00",
+    "endAt": "2022-09-03T14:15:00.000+02:00",
     "title": "Zahájení bloku",
     "description": "Máte program? A mohla bych ho vidět?",
     "type": "org"
@@ -761,8 +761,8 @@
   {
     "id": "start-block-2-day-3",
     "lineup": "liback",
-    "startAt": "2022-09-03T14:00:00",
-    "endAt": "2022-09-03T14:15:00",
+    "startAt": "2022-09-03T14:00:00.000+02:00",
+    "endAt": "2022-09-03T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -770,8 +770,8 @@
   {
     "id": "start-block-2-day-3",
     "lineup": "libase",
-    "startAt": "2022-09-03T14:00:00",
-    "endAt": "2022-09-03T14:15:00",
+    "startAt": "2022-09-03T14:00:00.000+02:00",
+    "endAt": "2022-09-03T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -779,8 +779,8 @@
   {
     "id": "start-block-2-day-3",
     "lineup": "lipeep",
-    "startAt": "2022-09-03T14:00:00",
-    "endAt": "2022-09-03T14:15:00",
+    "startAt": "2022-09-03T14:00:00.000+02:00",
+    "endAt": "2022-09-03T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -788,8 +788,8 @@
   {
     "id": "start-block-2-day-3",
     "lineup": "liwood",
-    "startAt": "2022-09-03T14:00:00",
-    "endAt": "2022-09-03T14:15:00",
+    "startAt": "2022-09-03T14:00:00.000+02:00",
+    "endAt": "2022-09-03T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -797,8 +797,8 @@
   {
     "id": "start-block-2-day-3",
     "lineup": "lijungle",
-    "startAt": "2022-09-03T14:00:00",
-    "endAt": "2022-09-03T14:15:00",
+    "startAt": "2022-09-03T14:00:00.000+02:00",
+    "endAt": "2022-09-03T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -806,8 +806,8 @@
   {
     "id": "start-block-2-day-3",
     "lineup": "liother",
-    "startAt": "2022-09-03T14:00:00",
-    "endAt": "2022-09-03T14:15:00",
+    "startAt": "2022-09-03T14:00:00.000+02:00",
+    "endAt": "2022-09-03T14:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -815,18 +815,18 @@
   {
     "id": "ev44b",
     "lineup": "limain",
-    "startAt": "2022-09-03T14:15:00",
-    "endAt": "2022-09-03T16:00:00",
-    "title": "Firemní kultura, marketing, kreativita",
-    "description": "Míla Fomránek, Martin Poliačik, Filip Kirschner, Dominik Dědíček, Barbora Zachová, Jiří Nečas",
+    "startAt": "2022-09-03T14:15:00.000+02:00",
+    "endAt": "2022-09-03T16:00:00.000+02:00",
+    "title": "Firemní kultura, hiring, marketing",
+    "description": "Filip Kirschner, Barbora Zachová, Jiří Nečas",
     "level": 110,
     "type": "topic"
   },
   {
     "id": "bi-data",
     "lineup": "libase",
-    "startAt": "2022-09-03T14:15:00",
-    "endAt": "2022-09-03T16:00:00",
+    "startAt": "2022-09-03T14:15:00.000+02:00",
+    "endAt": "2022-09-03T16:00:00.000+02:00",
     "title": "BI + Data",
     "description": "Matyáš Lustig, Jakub Štogr",
     "level": 110,
@@ -835,8 +835,8 @@
   {
     "id": "start-block-3-day-3",
     "lineup": "limain",
-    "startAt": "2022-09-03T16:00:00",
-    "endAt": "2022-09-03T16:15:00",
+    "startAt": "2022-09-03T16:00:00.000+02:00",
+    "endAt": "2022-09-03T16:15:00.000+02:00",
     "title": "Zahájení bloku",
     "description": "Máte program? A mohla bych ho vidět?",
     "type": "org"
@@ -844,8 +844,8 @@
   {
     "id": "start-block-3-day-3",
     "lineup": "liback",
-    "startAt": "2022-09-03T16:00:00",
-    "endAt": "2022-09-03T16:15:00",
+    "startAt": "2022-09-03T16:00:00.000+02:00",
+    "endAt": "2022-09-03T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -853,8 +853,8 @@
   {
     "id": "start-block-3-day-3",
     "lineup": "libase",
-    "startAt": "2022-09-03T16:00:00",
-    "endAt": "2022-09-03T16:15:00",
+    "startAt": "2022-09-03T16:00:00.000+02:00",
+    "endAt": "2022-09-03T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -862,8 +862,8 @@
   {
     "id": "start-block-3-day-3",
     "lineup": "lipeep",
-    "startAt": "2022-09-03T16:00:00",
-    "endAt": "2022-09-03T16:15:00",
+    "startAt": "2022-09-03T16:00:00.000+02:00",
+    "endAt": "2022-09-03T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -871,8 +871,8 @@
   {
     "id": "start-block-3-day-3",
     "lineup": "liwood",
-    "startAt": "2022-09-03T16:00:00",
-    "endAt": "2022-09-03T16:15:00",
+    "startAt": "2022-09-03T16:00:00.000+02:00",
+    "endAt": "2022-09-03T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -880,8 +880,8 @@
   {
     "id": "start-block-3-day-3",
     "lineup": "lijungle",
-    "startAt": "2022-09-03T16:00:00",
-    "endAt": "2022-09-03T16:15:00",
+    "startAt": "2022-09-03T16:00:00.000+02:00",
+    "endAt": "2022-09-03T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -889,8 +889,8 @@
   {
     "id": "start-block-3-day-3",
     "lineup": "liother",
-    "startAt": "2022-09-03T16:00:00",
-    "endAt": "2022-09-03T16:15:00",
+    "startAt": "2022-09-03T16:00:00.000+02:00",
+    "endAt": "2022-09-03T16:15:00.000+02:00",
     "title": "⬆",
     "type": "org",
     "description": "Sync na Mainstage"
@@ -898,8 +898,8 @@
   {
     "id": "devops",
     "lineup": "libase",
-    "startAt": "2022-09-03T16:15:00",
-    "endAt": "2022-09-03T18:00:00",
+    "startAt": "2022-09-03T16:15:00.000+02:00",
+    "endAt": "2022-09-03T18:00:00.000+02:00",
     "title": "DevOps",
     "description": "Pavel Kebka, Tomáš Bartek, Tomáš Růžička",
     "level": 110,
@@ -908,39 +908,39 @@
   {
     "id": "workshop-4",
     "lineup": "liback",
-    "startAt": "2022-09-03T16:15:00",
-    "endAt": "2022-09-03T17:00:00",
+    "startAt": "2022-09-03T16:15:00.000+02:00",
+    "endAt": "2022-09-03T17:00:00.000+02:00",
     "title": "LEGO stavebnice a Leadership",
     "description": "Workshop(Luboš Malý)"
   },
   {
     "id": "workshop-5",
     "lineup": "liback",
-    "startAt": "2022-09-03T17:15:00",
-    "endAt": "2022-09-03T18:00:00",
+    "startAt": "2022-09-03T17:15:00.000+02:00",
+    "endAt": "2022-09-03T18:00:00.000+02:00",
     "title": "Příprava startupového pitch decku",
     "description": "Workshop (Matouš Paleček)"
   },
   {
     "id":"dinner-day-3",
     "lineup": "liorg",
-    "startAt": "2022-09-03T18:00:00",
-    "endAt": "2022-09-03T20:00:00",
+    "startAt": "2022-09-03T18:00:00.000+02:00",
+    "endAt": "2022-09-03T20:00:00.000+02:00",
     "title": "Ideální doba se nadlábnout"
   },
   {
     "id": "dinner-day-3",
     "lineup": "limain",
-    "startAt": "2022-09-03T18:00:00",
-    "endAt": "2022-09-03T20:10:00",
+    "startAt": "2022-09-03T18:00:00.000+02:00",
+    "endAt": "2022-09-03T20:10:00.000+02:00",
     "title": "🍽 ☕️",
     "type": "org"
   },
   {
     "id": "night-day-3",
     "lineup": "limain",
-    "startAt": "2022-09-03T20:10:00",
-    "endAt": "2022-09-03T20:49:00",
+    "startAt": "2022-09-03T20:10:00.000+02:00",
+    "endAt": "2022-09-03T20:49:00.000+02:00",
     "title": "Slam poetry / standup",
     "description": "",
     "level": 110
@@ -948,8 +948,8 @@
   {
     "id": "bar-day-3",
     "lineup": "limain",
-    "startAt": "2022-09-03T20:50:00",
-    "endAt": "2022-09-03T22:10:00",
+    "startAt": "2022-09-03T20:50:00.000+02:00",
+    "endAt": "2022-09-03T22:10:00.000+02:00",
     "title": "🍻 🥂 🥃️",
     "description": "pauza na občerstvení u baru",
     "type": "org"
@@ -957,23 +957,23 @@
   {
     "id": "fire-day-3",
     "lineup": "liorg",
-    "startAt": "2022-09-03T22:00:00",
-    "endAt": "2022-09-03T24:00:00",
+    "startAt": "2022-09-03T22:00:00.000+02:00",
+    "endAt": "2022-09-03T24:00:00.000+02:00",
     "title": "Oheň"
   },
   {
     "id": "jungle-day-3",
     "lineup": "liorg",
-    "startAt": "2022-09-04T00:00:00",
-    "endAt": "2022-09-04T02:00:00",
+    "startAt": "2022-09-04T00:00:00.000+02:00",
+    "endAt": "2022-09-04T02:00:00.000+02:00",
     "title": "Pomalý přesun do lesa",
     "description": ""
   },
   {
     "id": "end-day-3",
     "lineup": "limain",
-    "startAt": "2022-09-04T00:00:00",
-    "endAt": "2022-09-04T08:00:00",
+    "startAt": "2022-09-04T00:00:00.000+02:00",
+    "endAt": "2022-09-04T08:00:00.000+02:00",
     "title": "💤",
     "description": "užijte si okolní program",
     "type": "org"
@@ -981,8 +981,8 @@
   {
     "id": "off-day-3",
     "lineup": "libase",
-    "startAt": "2022-09-03T18:00:00",
-    "endAt": "2022-09-04T08:00:00",
+    "startAt": "2022-09-03T18:00:00.000+02:00",
+    "endAt": "2022-09-04T08:00:00.000+02:00",
     "title": "💤",
     "description": "užijte si okolní program",
     "type": "org"
@@ -990,32 +990,32 @@
   {
     "id": "workshop-6",
     "lineup": "liback",
-    "startAt": "2022-09-03T14:15:00",
-    "endAt": "2022-09-03T15:00:00",
+    "startAt": "2022-09-03T14:15:00.000+02:00",
+    "endAt": "2022-09-03T15:00:00.000+02:00",
     "title": "Jak skrze komunity řešit úplně všechno",
     "description": "Workshop (Daniel Franc)"
   },
   {
     "id": "workshop-7",
     "lineup": "liback",
-    "startAt": "2022-09-03T15:15:00",
-    "endAt": "2022-09-03T16:00:00",
+    "startAt": "2022-09-03T15:15:00.000+02:00",
+    "endAt": "2022-09-03T16:00:00.000+02:00",
     "title": "Storytelling, schůzky, design, leadership...",
     "description": "Workshop (Lukáš Pitter)"
   },
   {
     "id": "ev46",
     "lineup": "liother",
-    "startAt": "2022-09-03T14:15:00",
-    "endAt": "2022-09-03T15:45:00",
+    "startAt": "2022-09-03T14:15:00.000+02:00",
+    "endAt": "2022-09-03T15:45:00.000+02:00",
     "title": "Mastermind skupina",
     "description": "(Dalibor Pulkert)"
   },
   {
     "id": "ev47",
     "lineup": "limain",
-    "startAt": "2022-09-03T16:15:00",
-    "endAt": "2022-09-03T18:00:00",
+    "startAt": "2022-09-03T16:15:00.000+02:00",
+    "endAt": "2022-09-03T18:00:00.000+02:00",
     "title": "Digitalizace českého státu",
     "description": "Ivan B., Michal Bláha, Eva Pavlíková, Dita Formánková, Tomáš Havryluk",
     "level": 120,
@@ -1024,8 +1024,8 @@
   {
     "id": "headliner-day-3",
     "lineup": "liwood",
-    "startAt": "2022-09-03T20:50:00",
-    "endAt": "2022-09-03T22:00:00",
+    "startAt": "2022-09-03T20:50:00.000+02:00",
+    "endAt": "2022-09-03T22:00:00.000+02:00",
     "title": "Midi Lidi",
     "description": "",
     "level": 160
@@ -1033,8 +1033,8 @@
   {
     "id": "woodstack-day-3",
     "lineup": "liwood",
-    "startAt": "2022-09-03T22:00:00",
-    "endAt": "2022-09-04T05:00:00",
+    "startAt": "2022-09-03T22:00:00.000+02:00",
+    "endAt": "2022-09-04T05:00:00.000+02:00",
     "title": "S kytarou u ohně \uD83D\uDD25\uD83E\uDEB5\uD83C\uDFB8",
     "description": "",
     "level": 110
@@ -1042,8 +1042,8 @@
   {
     "id": "slides-day-3",
     "lineup": "limain",
-    "startAt": "2022-09-03T22:10:00",
-    "endAt": "2022-09-03T24:00:00",
+    "startAt": "2022-09-03T22:10:00.000+02:00",
+    "endAt": "2022-09-03T24:00:00.000+02:00",
     "title": "Z prdele slajdy",
     "description": "",
     "level": 120
@@ -1051,8 +1051,8 @@
   {
     "id": "jungle-day-3",
     "lineup": "lijungle",
-    "startAt": "2022-09-03T22:00:00",
-    "endAt": "2022-09-04T05:00:00",
+    "startAt": "2022-09-03T22:00:00.000+02:00",
+    "endAt": "2022-09-04T05:00:00.000+02:00",
     "title": "Open decks \uD83C\uDF9A\uD83C\uDF9B\uD83C\uDF9A\uD83D\uDCBB\uD83D\uDD0A",
     "description": "DJs z řad táborníků",
     "level": 120
@@ -1060,22 +1060,22 @@
   {
     "id": "org-night-silence-day-3",
     "lineup": "liorg",
-    "startAt": "2022-09-04T02:00:00",
-    "endAt": "2022-09-04T08:00:00",
+    "startAt": "2022-09-04T02:00:00.000+02:00",
+    "endAt": "2022-09-04T08:00:00.000+02:00",
     "title": "Noční klid :) a jakékoliv noční pokračování v lese"
   },
   {
     "id": "org-morning-day-4",
     "lineup": "liorg",
-    "startAt": "2022-09-04T08:00:00",
-    "endAt": "2022-09-04T12:00:00",
+    "startAt": "2022-09-04T08:00:00.000+02:00",
+    "endAt": "2022-09-04T12:00:00.000+02:00",
     "title": "Čas si dát kafe, snídani, ranní sprchu, sbalit se, vystřízlivět, rozloučit se a vyrazit domů..."
   },
   {
     "id": "org-morning-day-4",
     "lineup": "limain",
-    "startAt": "2022-09-04T08:00:00",
-    "endAt": "2022-09-04T12:00:00",
+    "startAt": "2022-09-04T08:00:00.000+02:00",
+    "endAt": "2022-09-04T12:00:00.000+02:00",
     "title": "🍵 🥐 😎 👋 🚗",
     "description": "ránko",
     "type": "org"
@@ -1083,8 +1083,8 @@
   {
     "id": "org-morning-day-4",
     "lineup": "libase",
-    "startAt": "2022-09-04T08:00:00",
-    "endAt": "2022-09-04T12:00:00",
+    "startAt": "2022-09-04T08:00:00.000+02:00",
+    "endAt": "2022-09-04T12:00:00.000+02:00",
     "title": "☕️ 🍳 🎒 ✌️ \uD83D\uDE8C",
     "description": "ránko",
     "type": "org"
