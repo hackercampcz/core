@@ -54,7 +54,6 @@ async function getCrewAttendees(year) {
   const res = await db.send(
     new ScanCommand({
       TableName: process.env.db_table_attendees,
-      Select: "ALL_ATTRIBUTES",
       FilterExpression: "#yr = :yr AND ticketType = :crew",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
@@ -74,7 +73,6 @@ async function getStaffAttendees(year) {
   const res = await db.send(
     new ScanCommand({
       TableName: process.env.db_table_attendees,
-      Select: "ALL_ATTRIBUTES",
       FilterExpression: "#yr = :yr AND ticketType = :staff",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
@@ -94,7 +92,6 @@ async function getVolunteerAttendees(year) {
   const res = await db.send(
     new ScanCommand({
       TableName: process.env.db_table_attendees,
-      Select: "ALL_ATTRIBUTES",
       FilterExpression: "#yr = :yr AND ticketType = :volunteer",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
@@ -137,14 +134,9 @@ export async function handler(event) {
     event.queryStringParameters
   );
   try {
-    const [optouts, data] = await Promise.all([
-      getOptOuts(year),
-      getData(type, year),
-    ]);
-    if (type === "optouts") return response(Array.from(optouts));
+    const data = await getData(type, year);
     if (!data) return notFound();
-    if (type === "attendees") return response(data);
-    return response(data.filter((x) => !optouts.has(x.email)));
+    return response(data);
   } catch (err) {
     console.error(err);
     return internalError();
