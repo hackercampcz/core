@@ -40,6 +40,89 @@ async function getAttendees(year) {
   return res.Items.map((x) => unmarshall(x));
 }
 
+async function getHackerAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression:
+        "#yr = :yr, ticketType NOT IN (:crew, :staff, :volunteer)",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        {
+          ":yr": year,
+          ":crew": "crew",
+          ":staff": "staff",
+          ":volunteer": "volunteer",
+        },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
+async function getCrewAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "#yr = :yr, ticketType = :crew",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        {
+          ":yr": year,
+          ":crew": "crew",
+        },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
+async function getStaffAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "#yr = :yr, ticketType = :staff",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        {
+          ":yr": year,
+          ":staff": "staff",
+        },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
+async function getVolunteerAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "#yr = :yr, ticketType = :volunteer",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        {
+          ":yr": year,
+          ":volunteer": "volunteer",
+        },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
 async function getConfirmedHackersRegistrations(year) {
   console.log("Loading confirmed hackers data", { year });
   const res = await db.send(
@@ -139,6 +222,14 @@ function getData(type, year) {
       return null;
     case "attendees":
       return getAttendees(year);
+    case "crewAttendees":
+      return getCrewAttendees(year);
+    case "staffAttendees":
+      return getStaffAttendees(year);
+    case "volunteerAttendees":
+      return getVolunteerAttendees(year);
+    case "hackerAttendees":
+      return getHackerAttendees(year);
     default:
       throw new Error(`Unknown type ${type}`);
   }
