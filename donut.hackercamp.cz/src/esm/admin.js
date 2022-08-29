@@ -445,7 +445,7 @@ const lineupText = new Map([
   ["lipeep", "Peopleware"],
   ["liwood", "WoodStack"],
   ["lijungle", "Jungle Release"],
-  ["liother", "Další aktivity"],
+  ["liother", "Doprovodné aktivity"],
 ]);
 function lineup(x) {
   return html`<code>${lineupText.get(x)}</code>`;
@@ -795,6 +795,7 @@ function programTable(data) {
       <thead>
         <tr>
           <th>Jméno</th>
+          <th>Typ</th>
           <th>Stage</th>
           <th>Začátek</th>
           <th>Konec</th>
@@ -805,6 +806,7 @@ function programTable(data) {
           (row) => html`
             <tr>
               <td>${row.title}</td>
+              <td>${row.type}</td>
               <td>${lineup(row.lineup)}</td>
               <td>
                 ${row.startAt ? formatDateTime(new Date(row.startAt)) : null}
