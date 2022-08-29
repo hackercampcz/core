@@ -2228,9 +2228,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@material/mwc-drawer": ^0.27.0
-    "@material/mwc-icon-button": ^0.27.0
-    "@material/mwc-list": ^0.27.0
     "@pulumi/aws": 5.13.0
     "@pulumi/awsx": 0.40.0
     "@pulumi/pulumi": 3.38.0
@@ -2258,6 +2255,9 @@ __metadata:
     "@material/chips": 14.0.0
     "@material/layout-grid": 14.0.0
     "@material/mwc-button": 0.27.0
+    "@material/mwc-drawer": 0.27.0
+    "@material/mwc-icon-button": 0.27.0
+    "@material/mwc-list": 0.27.0
     "@material/mwc-snackbar": 0.27.0
     "@thi.ng/atom": 5.1.14
     "@thi.ng/transducers": 8.3.13
@@ -2668,7 +2668,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/mwc-drawer@npm:^0.27.0":
+"@material/mwc-drawer@npm:0.27.0":
   version: 0.27.0
   resolution: "@material/mwc-drawer@npm:0.27.0"
   dependencies:
@@ -2682,7 +2682,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/mwc-icon-button@npm:^0.27.0":
+"@material/mwc-icon-button@npm:0.27.0":
   version: 0.27.0
   resolution: "@material/mwc-icon-button@npm:0.27.0"
   dependencies:
@@ -2703,7 +2703,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/mwc-list@npm:^0.27.0":
+"@material/mwc-list@npm:0.27.0":
   version: 0.27.0
   resolution: "@material/mwc-list@npm:0.27.0"
   dependencies:
