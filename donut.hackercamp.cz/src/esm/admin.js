@@ -801,9 +801,24 @@ function renderView(state) {
   if (View.housing === selectedView) return housingTemplate(state);
 }
 
+const endpointForView = new Map([
+  [View.paid, "registrations"],
+  [View.invoiced, "registrations"],
+  [View.confirmed, "registrations"],
+  [View.hackers, "registrations"],
+  [View.optouts, "registrations"],
+  [View.crewAttendees, "attendees"],
+  [View.hackerAttendees, "attendees"],
+  [View.volunteerAttendees, "attendees"],
+  [View.staffAttendees, "attendees"],
+  [View.program, "program"],
+  [View.housing, "housing"],
+]);
+
 async function fetchData(selectedView, apiHost) {
   const params = new URLSearchParams({ type: selectedView });
-  const resource = new URL(`admin/registrations?${params}`, apiHost).href;
+  const endpoint = endpointForView.get(selectedView);
+  const resource = new URL(`admin/${endpoint}?${params}`, apiHost).href;
   const resp = await fetch(resource, { credentials: "include" });
   if (resp.ok) return resp.json();
   return { unauthorized: true };

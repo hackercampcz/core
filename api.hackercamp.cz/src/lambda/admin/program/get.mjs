@@ -23,6 +23,123 @@ async function getOptOuts(year) {
   return new Set(res.Items.map((x) => x.email.S));
 }
 
+async function getAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "#yr = :yr",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        { ":yr": year },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
+async function getHackerAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression:
+        "#yr = :yr AND NOT (ticketType IN (:crew, :staff, :volunteer))",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        {
+          ":yr": year,
+          ":crew": "crew",
+          ":staff": "staff",
+          ":volunteer": "volunteer",
+        },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
+async function getCrewAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "#yr = :yr AND ticketType = :crew",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        {
+          ":yr": year,
+          ":crew": "crew",
+        },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
+async function getStaffAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "#yr = :yr AND ticketType = :staff",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        {
+          ":yr": year,
+          ":staff": "staff",
+        },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
+async function getVolunteerAttendees(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      Select: "ALL_ATTRIBUTES",
+      FilterExpression: "#yr = :yr AND ticketType = :volunteer",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        {
+          ":yr": year,
+          ":volunteer": "volunteer",
+        },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+async function getHousing(year) {
+  console.log("Loading attendees", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      ProjectionExpression:
+        "#n, company, email, housing, housingPlacement, ticketType",
+      FilterExpression: "#yr = :yr",
+      ExpressionAttributeNames: { "#yr": "year", "#n": "name" },
+      ExpressionAttributeValues: marshall(
+        { ":yr": year },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
 async function getConfirmedHackersRegistrations(year) {
   console.log("Loading confirmed hackers data", { year });
   const res = await db.send(
@@ -120,6 +237,18 @@ function getData(type, year) {
       return getWaitingListRegistrations(year);
     case "optouts":
       return null;
+    case "attendees":
+      return getAttendees(year);
+    case "crewAttendees":
+      return getCrewAttendees(year);
+    case "staffAttendees":
+      return getStaffAttendees(year);
+    case "volunteerAttendees":
+      return getVolunteerAttendees(year);
+    case "hackerAttendees":
+      return getHackerAttendees(year);
+    case "housing":
+      return getHousing(year);
     default:
       throw new Error(`Unknown type ${type}`);
   }
@@ -142,6 +271,7 @@ export async function handler(event) {
     ]);
     if (type === "optouts") return response(Array.from(optouts));
     if (!data) return notFound();
+    if (type === "attendees") return response(data);
     return response(data.filter((x) => !optouts.has(x.email)));
   } catch (err) {
     console.error(err);
