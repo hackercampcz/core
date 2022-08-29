@@ -127,6 +127,7 @@
   main({
     searchParams: new URLSearchParams(location.search),
     appRoot: document.getElementById("app-root"),
+    viewTitle: document.getElementById("view-title"),
     env: {{ build | dump(8) | safe }}
   });
   const drawer = document.getElementById("drawer");

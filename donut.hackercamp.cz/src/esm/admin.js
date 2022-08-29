@@ -972,7 +972,20 @@ function loadData(searchParams, apiHost) {
   );
 }
 
-export async function main({ appRoot, searchParams, env }) {
+const endpointName = new Map([
+  ["registrations", "Registrace"],
+  ["attendees", "Účastníci"],
+  ["housing", "Ubytování"],
+  ["program", "Program"],
+]);
+
+function changeTitle(viewTitle, searchParams) {
+  const view = searchParams.get("view") ?? View.paid;
+  const endpoint = endpointForView.get(view);
+  viewTitle.textContent = endpointName.get(endpoint);
+}
+
+export async function main({ appRoot, searchParams, env, viewTitle }) {
   rollbar.init(env);
   state.swap((x) =>
     Object.assign({}, x, {
@@ -981,5 +994,6 @@ export async function main({ appRoot, searchParams, env }) {
     })
   );
   initRenderLoop(state, appRoot, { keepContent: true });
+  changeTitle(viewTitle, searchParams);
   loadData(searchParams, env["api-host"]);
 }
