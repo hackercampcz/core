@@ -121,12 +121,47 @@ export const createRoutes = ({
           fileName: "admin/registrations/index.mjs",
           environment: {
             variables: {
-              db_table_attendees: attendeesDataTable,
               db_table_optouts: optOutsDataTable,
               db_table_registrations: registrationsDataTable,
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
               fakturoid_token: config.get("fakturoid-token"),
+            },
+          },
+        },
+        adminAttendees: {
+          httpMethod: "ANY",
+          path: "/admin/attendees",
+          fileName: "admin/attendees/index.mjs",
+          environment: {
+            variables: {
+              db_table_attendees: attendeesDataTable,
+              private_key: config.get("private-key"),
+              postmark_token: config.get("postmark-token"),
+            },
+          },
+        },
+        adminHousing: {
+          httpMethod: "ANY",
+          path: "/admin/housing",
+          fileName: "admin/housing/index.mjs",
+          environment: {
+            variables: {
+              db_table_attendees: attendeesDataTable,
+              private_key: config.get("private-key"),
+              postmark_token: config.get("postmark-token"),
+            },
+          },
+        },
+        adminProgram: {
+          httpMethod: "ANY",
+          path: "/admin/program",
+          fileName: "admin/program/index.mjs",
+          environment: {
+            variables: {
+              db_table_program: programDataTable,
+              private_key: config.get("private-key"),
+              postmark_token: config.get("postmark-token"),
             },
           },
         },

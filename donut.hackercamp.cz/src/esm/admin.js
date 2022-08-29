@@ -807,6 +807,7 @@ const endpointForView = new Map([
   [View.confirmed, "registrations"],
   [View.hackers, "registrations"],
   [View.optouts, "registrations"],
+  [View.waitingList, "registrations"],
   [View.crewAttendees, "attendees"],
   [View.hackerAttendees, "attendees"],
   [View.volunteerAttendees, "attendees"],

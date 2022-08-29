@@ -13,7 +13,7 @@ async function getProgram(year) {
   console.log("Loading program", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-program",
+      TableName: process.env.db_table_program,
       FilterExpression: "#yr = :yr",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(

@@ -13,7 +13,7 @@ async function getHousing(year) {
   console.log("Loading housing", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-attendees",
+      TableName: process.env.db_table_attendees,
       ProjectionExpression:
         "#n, company, email, housing, housingPlacement, ticketType",
       FilterExpression: "#yr = :yr",

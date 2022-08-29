@@ -13,7 +13,7 @@ async function getAttendees(year) {
   console.log("Loading attendees", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-attendees",
+      TableName: process.env.db_table_attendees,
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "#yr = :yr",
       ExpressionAttributeNames: { "#yr": "year" },
@@ -30,7 +30,7 @@ async function getHackerAttendees(year) {
   console.log("Loading attendees", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-attendees",
+      TableName: process.env.db_table_attendees,
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
         "#yr = :yr AND NOT (ticketType IN (:crew, :staff, :volunteer))",
@@ -53,7 +53,7 @@ async function getCrewAttendees(year) {
   console.log("Loading attendees", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-attendees",
+      TableName: process.env.db_table_attendees,
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "#yr = :yr AND ticketType = :crew",
       ExpressionAttributeNames: { "#yr": "year" },
@@ -73,7 +73,7 @@ async function getStaffAttendees(year) {
   console.log("Loading attendees", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-attendees",
+      TableName: process.env.db_table_attendees,
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "#yr = :yr AND ticketType = :staff",
       ExpressionAttributeNames: { "#yr": "year" },
@@ -93,7 +93,7 @@ async function getVolunteerAttendees(year) {
   console.log("Loading attendees", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-attendees",
+      TableName: process.env.db_table_attendees,
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "#yr = :yr AND ticketType = :volunteer",
       ExpressionAttributeNames: { "#yr": "year" },

@@ -27,7 +27,7 @@ async function getConfirmedHackersRegistrations(year) {
   console.log("Loading confirmed hackers data", { year });
   const res = await db.send(
     new ScanCommand({
-      TableName: "hc-registrations",
+      TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
         "#ts > :ts AND attribute_not_exists(invoiced) AND (firstTime = :false OR (attribute_exists(referral) AND attribute_type(referral, :string)))",
