@@ -47,7 +47,7 @@ async function getHackerAttendees(year) {
       TableName: "hc-attendees",
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "#yr = :yr, ticketType NOT IN (:crew, :staff, :volunteer)",
+        "#yr = :yr AND ticketType NOT IN (:crew, :staff, :volunteer)",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         {
@@ -69,7 +69,7 @@ async function getCrewAttendees(year) {
     new ScanCommand({
       TableName: "hc-attendees",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#yr = :yr, ticketType = :crew",
+      FilterExpression: "#yr = :yr AND ticketType = :crew",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         {
@@ -89,7 +89,7 @@ async function getStaffAttendees(year) {
     new ScanCommand({
       TableName: "hc-attendees",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#yr = :yr, ticketType = :staff",
+      FilterExpression: "#yr = :yr AND ticketType = :staff",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         {
@@ -109,7 +109,7 @@ async function getVolunteerAttendees(year) {
     new ScanCommand({
       TableName: "hc-attendees",
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#yr = :yr, ticketType = :volunteer",
+      FilterExpression: "#yr = :yr AND ticketType = :volunteer",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         {
