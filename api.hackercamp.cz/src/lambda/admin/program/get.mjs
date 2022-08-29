@@ -10,11 +10,11 @@ import { response, internalError, notFound } from "../../http.mjs";
 const db = new DynamoDBClient({});
 
 async function getProgram(year) {
-  console.log("Loading program", { year });
+  console.log("Loading approved program", { year });
   const res = await db.send(
     new ScanCommand({
       TableName: process.env.db_table_program,
-      FilterExpression: "#yr = :yr",
+      FilterExpression: "#yr = :yr AND attribute_exists(approved)",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         { ":yr": year },

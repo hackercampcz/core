@@ -5,8 +5,14 @@ const dynamo = createClient();
 
 async function main({}) {
   const text = await Deno.readTextFile("./data/import-program.json");
+  const now = new Date().toISOString();
   const data = JSON.parse(text).map((x) =>
-    Object.assign(x, { year: 2022, _id: crypto.randomUUID() })
+    Object.assign(x, {
+      year: 2022,
+      _id: crypto.randomUUID(),
+      approved: now,
+      approvedBy: "U0202S9SB1T",
+    })
   );
 
   for (const event of data) {
