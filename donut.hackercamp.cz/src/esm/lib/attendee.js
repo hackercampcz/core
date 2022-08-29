@@ -5,8 +5,10 @@ export const housing = new Map([
   ["own-caravan", "Přiveze si vlastní karavan, ve kterém chce spát"],
   ["open-air", "Bude spát pod širákem nebo v hamace"],
   ["own-tent", "Bude spát ve stanu"],
+  ["tent", "Bude spát v Glamping stanu"],
   ["glamping", "Bude spát v Glamping stanu"],
   ["cottage", "Bude spát v chatce"],
+  ["house", "Bude spát v domečku"],
   ["nearby", "Využije možnost ubytování v okolí"],
 ]);
 

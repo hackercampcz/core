@@ -3,27 +3,35 @@
 {% block title %}Administrace Hacker Campu{% endblock %}
 
 {% block head %}
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Material+Icons&display=block" as="style"
+        type="text/css">
   <style>
     #top {
       padding-top: 62px;
     }
+
     table {
       font-size: 14px;
       border-collapse: collapse;
     }
+
     th, td {
       padding: 8px;
     }
+
     thead {
       background-color: var(--hc-background-color);
       border-bottom: 3px double #ddd;
     }
+
     thead th {
       text-align: left;
     }
+
     tbody tr:hover {
       background-color: var(--hc-row-highlight);
     }
+
     tbody td {
       border-bottom: 1px solid #ddd;
     }
@@ -46,6 +54,7 @@
       top: 0;
       border-bottom: none;
     }
+
     .hc-master-detail__list thead th::after {
       content: "";
       position: absolute;
@@ -79,10 +88,37 @@
       }
     }
   </style>
+
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Material+Icons&amp;display=block"
+  />
 {% endblock %}
 
 {% block content %}
-  <div id="app-root"></div>
+  <mwc-drawer id="drawer" type="dismissible" style="margin-top: 2em">
+    <mwc-list>
+      <mwc-list-item><a href="/admin/?view=attendees">Účastníci</a></mwc-list-item>
+      <mwc-list-item><a href="/admin/?view=paid">Registrace</a></mwc-list-item>
+      <mwc-list-item><a href="/admin/?view=program">Program</a></mwc-list-item>
+      <mwc-list-item><a href="/admin/?view=housing">Ubytování</a></mwc-list-item>
+    </mwc-list>
+    <div class="mdc-layout-grid" slot="appContent">
+      <div id="app-root" class="mdc-layout-grid__inner">
+        <div
+          class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+          style="display:flex; align-items: center; gap: 1em"
+        >
+          <mwc-icon-button
+            slot="navigationIcon"
+            icon="menu"
+            id="drawer-button"
+          ></mwc-icon-button>
+          <h2 id="view-title">Administrace</h2>
+        </div>
+      </div>
+    </div>
+  </mwc-drawer>
 {% endblock %}
 
 {% block javascript %}
@@ -93,5 +129,8 @@
     appRoot: document.getElementById("app-root"),
     env: {{ build | dump(8) | safe }}
   });
+  const drawer = document.getElementById("drawer");
+  const drawerBtn = document.getElementById("drawer-button");
+  drawerBtn.addEventListener("click", () => { drawer.open = !drawer.open; });
 </script>
 {% endblock %}

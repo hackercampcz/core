@@ -25,14 +25,16 @@ export function renderScheduler() {
  * @param {Atom} state
  * @param {HTMLElement} root
  */
-export function initRenderLoop(state, root) {
+export function initRenderLoop(state, root, { keepContent } = {}) {
   const scheduleRendering = renderScheduler();
   state.addWatch("render", (id, prev, curr) => {
     const { view } = curr;
     if (typeof view !== "function") return;
     scheduleRendering({
       preFirstRender() {
-        root.innerHTML = null;
+        if (!keepContent) {
+          root.innerHTML = null;
+        }
       },
       render() {
         render(view(curr), root);

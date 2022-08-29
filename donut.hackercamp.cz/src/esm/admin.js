@@ -1,4 +1,8 @@
 import { formatMoney } from "@hackercamp/lib/format.mjs";
+import "@material/mwc-drawer/mwc-drawer.js";
+import "@material/mwc-icon-button/mwc-icon-button.js";
+import "@material/mwc-list/mwc-list.js";
+import "@material/mwc-list/mwc-list-item.js";
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
@@ -19,6 +23,12 @@ const View = {
   waitingList: "waitingList",
   optouts: "optouts",
   attendees: "attendees",
+  hackerAttendees: "hackerAttendees",
+  staffAttendees: "staffAttendees",
+  crewAttendees: "crewAttendees",
+  volunteerAttendees: "volunteerAttendees",
+  housing: "housing",
+  program: "program",
 };
 
 const state = defAtom({
@@ -100,9 +110,9 @@ function chip({ text, count, selected, view }) {
   `;
 }
 
-function chips(
+function registrationsChips(
   view,
-  { hackers, waitingList, confirmed, invoiced, paid, optouts, attendees }
+  { hackers, waitingList, confirmed, invoiced, paid, optouts }
 ) {
   return html`
     <div
@@ -113,12 +123,6 @@ function chips(
       aria-multiselectable="false"
     >
       <span class="mdc-evolution-chip-set__chips" role="presentation">
-        ${chip({
-          text: "Účastníci",
-          count: attendees,
-          selected: view === View.attendees,
-          view: View.attendees,
-        })}
         ${chip({
           text: "Zaplacení",
           count: paid,
@@ -160,6 +164,60 @@ function chips(
   `;
 }
 
+function attendeesChips(
+  view,
+  {
+    attendees,
+    crewAttendees,
+    staffAttendees,
+    volunteerAttendees,
+    hackerAttendees,
+  }
+) {
+  return html`
+    <div
+      class="mdc-evolution-chip-set"
+      role="grid"
+      id="filters"
+      aria-orientation="horizontal"
+      aria-multiselectable="false"
+    >
+      <span class="mdc-evolution-chip-set__chips" role="presentation">
+        ${chip({
+          text: "Všichni",
+          count: attendees,
+          selected: view === View.attendees,
+          view: View.attendees,
+        })}
+        ${chip({
+          text: "Hackeři",
+          count: hackerAttendees,
+          selected: view === View.hackerAttendees,
+          view: View.hackerAttendees,
+        })}
+        ${chip({
+          text: "Dobrovolníci",
+          count: volunteerAttendees,
+          selected: view === View.volunteerAttendees,
+          view: View.volunteerAttendees,
+        })}
+        ${chip({
+          text: "Ostatní",
+          count: staffAttendees,
+          selected: view === View.staffAttendees,
+          view: View.staffAttendees,
+        })}
+        ${chip({
+          text: "Crew",
+          count: crewAttendees,
+          selected: view === View.crewAttendees,
+          view: View.crewAttendees,
+        })}
+      </span>
+    </div>
+  `;
+}
+
 const ticketName = new Map([
   ["nonprofit", "Táborník z neziskovky"],
   ["hacker", "Hacker"],
@@ -191,7 +249,7 @@ function ticketDetail({ ticketType, patronAllowance }) {
   `;
 }
 
-function detailTemplate({ detail, selectedView }) {
+function registratioDetailTemplate({ detail, selectedView }) {
   if (!detail) return null;
   return html`
     <div class="hc-card hc-master-detail__detail"">
@@ -377,7 +435,7 @@ function detailTemplate({ detail, selectedView }) {
 const renderDetail = (detail) => () =>
   transact((x) => Object.assign(x, { detail }));
 
-function tableTemplate(data, { timeHeader, timeAttr }) {
+function registrationsTableTemplate(data, { timeHeader, timeAttr }) {
   return html`
     <table>
       <thead>
@@ -477,7 +535,7 @@ function registrationsTemplate(state) {
   const { data, selectedView, detail } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${chips(selectedView, {
+      ${registrationsChips(selectedView, {
         [selectedView]: data?.then((data) => data.length),
       })}
     </div>
@@ -499,7 +557,7 @@ function registrationsTemplate(state) {
                 </ul>
               `;
             }
-            return tableTemplate(
+            return registrationsTableTemplate(
               sortBy(
                 timeColumnSettings.timeAttr,
                 data.map((x) =>
@@ -518,17 +576,133 @@ function registrationsTemplate(state) {
           `
         )}
       </div>
-      ${when(detail, () => detailTemplate({ detail, selectedView }))}
+      ${when(detail, () => registratioDetailTemplate({ detail, selectedView }))}
     </div>
   `;
 }
 
-function renderView(state) {
+function attendeesTemplate(state) {
+  const { data, selectedView, detail } = state;
   return html`
-    <div id="top" class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">${registrationsTemplate(state)}</div>
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      ${attendeesChips(selectedView, {
+        [selectedView]: data?.then((data) => data.length),
+      })}
+    </div>
+    <div
+      class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+    >
+      <div class="hc-card hc-master-detail__list">
+        ${until(
+          data?.then((data) => {
+            if (data.unauthorized) return unauthorized();
+            return attendeeTableTemplate(
+              sortBy(
+                timeColumnSettings.timeAttr,
+                data.map((x) =>
+                  Object.assign({}, x, {
+                    name: x.name ?? `${x.firstName} ${x.lastName}`,
+                  })
+                )
+              ),
+              timeColumnSettings
+            );
+          }),
+          html`
+            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+              <p style="padding: 16px">Načítám data&hellip;</p>
+            </div>
+          `
+        )}
+      </div>
+      ${when(detail, () => attendeeDetailTemplate({ detail, selectedView }))}
     </div>
   `;
+}
+
+function housingTable(data) {
+  return html`
+    <table style="width: 100%">
+      <thead>
+        <tr>
+          <th>Jméno</th>
+          <th>Společnost</th>
+          <th>Typ lístku</th>
+          <th>Ubytování</th>
+          <th>Umístění</th>
+          <th>Akce</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.map(
+          (row) => html`
+            <tr>
+              <td>${row.name}</td>
+              <td>${row.company}</td>
+              <td>${ticketName.get(row.ticketType)}</td>
+              <td>${housing.get(row.housing) ?? "Ještě si nevybral"}</td>
+              <td>${row.housingPlacement}</td>
+              <td>
+                <a
+                  class="hc-action-button"
+                  href="mailto:${row.email}"
+                  title="Napsat ${row.email}""><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="24"
+                  width="24"
+                >
+                  <path d="M0 0h24v24H0z" fill="none"/>
+                  <path
+                    fill="var(--hc-text-color)"
+                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                  />
+                </svg></a>
+              </td>
+            </tr>
+          `
+        )}
+      </tbody>
+    </table>
+  `;
+}
+
+function housingTemplate(state) {
+  const { data } = state;
+  return html`
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <div class="hc-card">
+        ${until(
+          data?.then((data) => {
+            if (data.unauthorized) return unauthorized();
+            return housingTable(sortBy("housing", data));
+          })
+        )}
+      </div>
+    </div>
+  `;
+}
+
+const registrationViews = new Set([
+  View.paid,
+  View.invoiced,
+  View.confirmed,
+  View.hackers,
+  View.waitingList,
+  View.optouts,
+]);
+const attendeeView = new Set([
+  View.attendees,
+  View.hackerAttendees,
+  View.staffAttendees,
+  View.crewAttendees,
+  View.volunteerAttendees,
+]);
+
+function renderView(state) {
+  const { selectedView } = state;
+  if (registrationViews.has(selectedView)) return registrationsTemplate(state);
+  if (attendeeView.has(selectedView)) return attendeesTemplate(state);
+  if (View.housing === selectedView) return housingTemplate(state);
 }
 
 async function fetchData(selectedView, apiHost) {
@@ -623,6 +797,6 @@ export async function main({ appRoot, searchParams, env }) {
       contact: getContact(),
     })
   );
-  initRenderLoop(state, appRoot);
+  initRenderLoop(state, appRoot, { keepContent: true });
   loadData(searchParams, env["api-host"]);
 }
