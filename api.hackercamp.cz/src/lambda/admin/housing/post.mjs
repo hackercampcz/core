@@ -4,7 +4,6 @@ import {
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { fetchInvoice } from "../../fakturoid.mjs";
 import {
   accepted,
   getHeader,
