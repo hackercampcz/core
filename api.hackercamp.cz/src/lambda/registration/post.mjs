@@ -41,8 +41,15 @@ function getEditUrl(isNewbee, id) {
  */
 export async function handler(event) {
   try {
-    const { email, year, firstTime, ...rest } = readPayload(event);
+    let { email, year, firstTime, ...rest } = readPayload(event);
     const isNewbee = firstTime === "1";
+    email = email.trim().toLowerCase();
+    year = parseInt(year, 10);
+    rest = Object.fromEntries(
+      Object.entries(rest)
+        .map(([k, v]) => [k, v?.trim()])
+        .filter(([k, v]) => Boolean(v))
+    );
     const id = crypto.randomBytes(20).toString("hex");
     console.log({ event: "Put registration", email, year, isNewbee, ...rest });
     const editUrl = getEditUrl(isNewbee, id);
@@ -54,7 +61,7 @@ export async function handler(event) {
           Item: marshall(
             {
               email,
-              year: parseInt(year, 10),
+              year,
               firstTime: isNewbee,
               ...rest,
               id,
