@@ -141,13 +141,13 @@ function eventTemplate({
           [`lineup__event--${event.type}`]: event.type,
         })}"
         data-lineup=${lineup.id}
-        id=${event.id}
+        id=${event.id || event._id}
         style=${`
         --slot-start: ${eventStartAtSlot(event)};
         --slot-duration: ${durationInSlots};
         --slot-top-offset: ${event._top ?? "calc(var(--spacing) / 4)"};
       `}
-        @click=${() => showModalDialog(`event-detail-${event.id}`)}
+        @click=${() => showModalDialog(`event-detail-${event.id || event._id}`)}
       >
         <p
           style="${`
@@ -182,7 +182,7 @@ function eventTemplate({
         )}
       </div>`
     )}
-    <dialog class="event__detail" id="event-detail-${event.id}">
+    <dialog class="event__detail" id="event-detail-${event.id || event._id}">
       <h1>${event.title}</h1>
       ${when(
         !event.topic,
@@ -212,7 +212,7 @@ function eventTemplate({
         () => html`
           <div class="people-list">
             ${(topicEvents || []).map(
-              ({ id, title, people = [] }) => html`
+              ({ id, _id, title, people = [] }) => html`
                 <figure class="speaker speaker--full">
                   ${people.map(
                     ({ name, image }) => html`<img
@@ -227,7 +227,7 @@ function eventTemplate({
                     @click=${(e) => {
                       e.preventDefault();
 
-                      showModalDialog(`event-detail-${id}`);
+                      showModalDialog(`event-detail-${id || _id}`);
                     }}
                     >${title}</a
                   >
@@ -241,7 +241,7 @@ function eventTemplate({
             @click=${(_event) => {
               _event.preventDefault();
               renderAndShowAddEventForm(lineup.id, {
-                selectedTopic: event.id,
+                selectedTopic: event.id || event._id,
               });
             }}
           >
