@@ -497,14 +497,14 @@ function renderProgram({
       .lineup__event.lineup__event--topic {
         height: calc(100% - 8px);
       }
-      .lineup__event.lineup__event--topic pre {
+      .lineup__event.lineup__event--topic p {
         margin-bottom: calc(var(--spacing) / 4);
       }
       .lineup__event.lineup__event--narrow {
         writing-mode: vertical-lr;
         font-size: 80%;
       }
-      .lineup__event.lineup__event--narrow pre {
+      .lineup__event.lineup__event--narrow p {
         line-height: 1;
       }
       @media (min-width: 800px) {
@@ -518,21 +518,14 @@ function renderProgram({
         }
       }
 
-      .lineup__event pre,
-      .lineup__event + dialog pre,
+      .lineup__event p,
+      .lineup__event + dialog p,
       .lineup__info pre {
-        line-break: auto;
-        word-break: break-word;
-        white-space: break-spaces;
         margin: 0;
         line-height: 1.2;
       }
       .lineup__info pre {
         line-height: 1.5;
-      }
-      .lineup__event pre.highlight {
-        font-weight: bold;
-        font-size: 120%;
       }
       @media (min-width: 400px) {
         .lineup__event,
