@@ -1,10 +1,12 @@
 import {
   DeleteItemCommand,
   DynamoDBClient,
+  GetItemCommand,
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
-import { marshall } from "@aws-sdk/util-dynamodb";
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
 import {
   accepted,
   getHeader,
@@ -60,6 +62,45 @@ function approveEvent(db, { event_id, year }, slackID) {
   );
 }
 
+async function getAttendee(dynamo, slackID, year) {
+  console.log({ event: "Get attendee", slackID, year });
+  const result = await dynamo.send(
+    new GetItemCommand({
+      TableName: process.env.db_table_attendees,
+      ProjectionExpression: "events",
+      Key: marshall(
+        { slackID, year },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
+    })
+  );
+  return result.Item ? unmarshall(result.Item) : null;
+}
+
+function saveAttendee(dynamo, data) {
+  console.log({ event: "Save attendee", data });
+  return dynamo.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_attendees,
+      Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
+      UpdateExpression: "SET events = :events",
+      ExpressionAttributeValues: marshall(
+        { ":events": data.events },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
+    })
+  );
+}
+
+async function deleteAttendeeEvents(db, { event_id, year, people }) {
+  for (const slackID of people) {
+    const attendee = await getAttendee(db, slackID, year);
+    if (!attendee.events?.length) continue;
+    attendee.events = attendee.events?.filter((x) => x._id !== event_id);
+    await saveAttendee(db, attendee);
+  }
+}
+
 /**
  * @param {DynamoDBClient} db
  * @param {*} data
@@ -70,6 +111,7 @@ async function processRequest(db, data, slackID) {
     case "approve":
       return approveEvent(db, data.params, slackID);
     case "delete":
+      await deleteAttendeeEvents(db, data.params);
       return deleteEvent(db, data.params);
   }
 }

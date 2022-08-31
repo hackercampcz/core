@@ -52,10 +52,11 @@ function invoiced(email) {
   return markAsInvoiced([email], invoiceId, apiHost);
 }
 
-function deleteEvent(event_id) {
+function deleteEvent(event_id, people) {
   const { apiHost } = state.deref();
   return (
-    confirm("Opravdu chceš event smazat?") && event.remove(event_id, apiHost)
+    confirm("Opravdu chceš event smazat?") &&
+    event.remove(event_id, people, apiHost)
   );
 }
 
@@ -865,7 +866,11 @@ function programTable(data) {
                 <button
                   class="hc-action-button"
                   title="Smazat event"
-                  @click="${() => deleteEvent(row._id)}"
+                  @click="${() =>
+                    deleteEvent(
+                      row._id,
+                      row.people?.map((x) => x.slackID) ?? []
+                    )}"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

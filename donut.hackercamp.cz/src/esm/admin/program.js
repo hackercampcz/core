@@ -17,9 +17,10 @@ export function approve(event_id, apiHost) {
  * @param {string} apiHost
  * @returns {Promise<void>}
  */
-export function remove(event_id, apiHost) {
+export function remove(event_id, people, apiHost) {
   return executeCommand(apiHost, Endpoint.program, "delete", {
     event_id,
+    people,
     year: 2022,
   }).then(() => location.reload());
 }
