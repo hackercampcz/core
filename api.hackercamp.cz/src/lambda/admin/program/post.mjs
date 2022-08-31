@@ -88,7 +88,7 @@ export async function handler(event) {
     if (getHeader(event.headers, "Accept") === "application/json") {
       return accepted();
     }
-    return seeOther();
+    return seeOther(getHeader(event.headers, "Referer"));
   } catch (err) {
     console.error(err);
     return internalError();

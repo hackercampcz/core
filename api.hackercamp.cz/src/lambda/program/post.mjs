@@ -58,7 +58,10 @@ async function createEvent(dynamo, data) {
   return dynamo.send(
     new PutItemCommand({
       TableName: process.env.db_table_program,
-      Item: marshall(data),
+      Item: marshall(data, {
+        removeUndefinedValues: true,
+        convertEmptyValues: true,
+      }),
     })
   );
 }
@@ -79,6 +82,12 @@ export async function handler(event) {
     data._id = data._id ?? crypto.randomUUID();
     data.year = year;
     delete data.slackID;
+    delete data.buddy; // TODO: handle cooperators
+    data = Object.fromEntries(
+      Object.entries(data)
+        .map(([k, v]) => [k, v?.trim()])
+        .filter(([k, v]) => Boolean(v))
+    );
     if (freeStages.has(data.lineup)) {
       data.approved = new Date().toISOString();
       data.approvedBy = submittedBy;
@@ -92,6 +101,7 @@ export async function handler(event) {
         .values()
     ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
     await saveAttendee(dynamo, { slackID: submittedBy, year, events });
+    data.people = [selectKeys(attendee, new Set(["slackID", "image", "slug"]))];
     await createEvent(dynamo, data);
     return seeOther(getHeader(event.headers, "Referer"));
   } catch (err) {
