@@ -95,7 +95,7 @@ export async function handler(event) {
     }
     if (sanitizedData.duration && sanitizedData.startAt) {
       const duration = parseInt(sanitizedData.duration, 10) * 60 * 1000;
-      const startTime = new Date(sanitizedData.startAt).getTime();
+      const startTime = Date.parse(sanitizedData.startAt + sanitizedData.timezone);
       sanitizedData.endAt = new Date(startTime + duration).toISOString();
     }
     console.log({ method: "POST", data: sanitizedData, submittedBy, year });
