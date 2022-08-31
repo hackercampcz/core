@@ -28,7 +28,8 @@ async function getAttendee(dynamo, slackID, year) {
   const result = await dynamo.send(
     new GetItemCommand({
       TableName: process.env.db_table_attendees,
-      ProjectionExpression: "slackID, image, slug, name, events",
+      ProjectionExpression: "slackID, image, slug, #name, events",
+      ExpressionAttributeNames: { "#name": "name" },
       Key: marshall(
         { slackID, year },
         { removeUndefinedValues: true, convertEmptyValues: true }
@@ -102,11 +103,7 @@ export async function handler(event) {
     ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
     await saveAttendee(dynamo, { slackID: submittedBy, year, events });
     sanitizedData.people = [
-      selectKeys(
-        attendee,
-        new Set(["slackID", "image", "slug", "name"]),
-        ([k, v]) => [k === "name" ? "fullName" : k, v]
-      ),
+      selectKeys(attendee, new Set(["slackID", "image", "slug", "name"])),
     ];
     await createEvent(dynamo, sanitizedData);
     return seeOther(getHeader(event.headers, "Referer"));
