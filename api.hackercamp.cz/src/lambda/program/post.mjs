@@ -101,7 +101,7 @@ export async function handler(event) {
         .values()
     ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
     await saveAttendee(dynamo, { slackID: submittedBy, year, events });
-    sanitizedData.people = [selectKeys(attendee, new Set(["slackID", "image", "slug"]))];
+    sanitizedData.people = [selectKeys(attendee, new Set(["slackID", "image", "slug", "name"]))];
     await createEvent(dynamo, sanitizedData);
     return seeOther(getHeader(event.headers, "Referer"));
   } catch (err) {
