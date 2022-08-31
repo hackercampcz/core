@@ -28,7 +28,7 @@ async function getAttendee(dynamo, slackID, year) {
   const result = await dynamo.send(
     new GetItemCommand({
       TableName: process.env.db_table_attendees,
-      ProjectionExpression: "events",
+      ProjectionExpression: "slackID, image, slug, name, events",
       Key: marshall(
         { slackID, year },
         { removeUndefinedValues: true, convertEmptyValues: true }
