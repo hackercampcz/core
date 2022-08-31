@@ -794,28 +794,33 @@ function programTable(data) {
               </td>
               <td>${row.endAt ? formatDateTime(new Date(row.endAt)) : null}</td>
               <td style="white-space: nowrap;">
-                <button
-                  class="hc-action-button"
-                  title="Schválit event"
-                  @click="${() => {}}"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24px"
-                    viewBox="0 0 24 24"
-                    width="24px"
-                    fill="var(--hc-text-color)"
-                  >
-                    <path d="M0 0h24v24H0V0z" fill="none" />
-                    <path
-                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10zM5 7V5h14v2H5zm5.56 10.46l5.93-5.93-1.06-1.06-4.87 4.87-2.11-2.11-1.06 1.06z"
-                    />
-                  </svg>
-                </button>
+                ${when(
+                  !row.approved,
+                  () => html`
+                    <button
+                      class="hc-action-button"
+                      title="Schválit event"
+                      @click="${() => approveEvent(row._id)}"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="24px"
+                        viewBox="0 0 24 24"
+                        width="24px"
+                        fill="var(--hc-text-color)"
+                      >
+                        <path d="M0 0h24v24H0V0z" fill="none" />
+                        <path
+                          d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10zM5 7V5h14v2H5zm5.56 10.46l5.93-5.93-1.06-1.06-4.87 4.87-2.11-2.11-1.06 1.06z"
+                        />
+                      </svg>
+                    </button>
+                  `
+                )}
                 <button
                   class="hc-action-button"
                   title="Upravit event"
-                  @click="${() => approveEvent(row._id)}"
+                  @click="${() => {}}"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
