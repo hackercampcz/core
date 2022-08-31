@@ -798,6 +798,7 @@ function programTable(data) {
     <table style="width: 100%;">
       <thead>
         <tr>
+          <th>ID</th>
           <th>Jméno</th>
           <th>Typ</th>
           <th>Stage</th>
@@ -810,6 +811,7 @@ function programTable(data) {
         ${data.map(
           (row) => html`
             <tr>
+              <td><code>${row.id}</code></td>
               <td
                 style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis"
               >

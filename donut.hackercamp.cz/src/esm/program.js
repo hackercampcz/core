@@ -160,7 +160,7 @@ function eventTemplate({
           ${event.title}
         </p>
         ${when(
-          fullProgram && event.type === "topic" && event.people?.length,
+          event.type === "topic" && event.people?.length,
           () => html`
             <div class="people-list">
               ${event.people.map(
@@ -208,7 +208,7 @@ function eventTemplate({
       )}
       <p>${event.description}</p>
       ${when(
-        fullProgram && event.type === "topic",
+        event.type === "topic",
         () => html`
           <div class="people-list">
             ${(topicEvents || []).map(
@@ -275,10 +275,7 @@ function renderProgram({
   onLineupsScroll,
   apiUrl,
   profile,
-  featureToggles,
 }) {
-  const { fullProgram } = featureToggles;
-
   const eventStartAtSlot = (event) => getSlotNumber(startAt, event.startAt);
   const eventDurationInSlots = (event) =>
     getSlotNumber(startAt, event.endAt) - getSlotNumber(startAt, event.startAt);
@@ -693,21 +690,17 @@ function renderProgram({
           Zkrátka: Program se může a bude měnit za chodu :) Takže se těš a
           sleduj co se děje online i offline.
         </p>
-        ${when(
-          fullProgram,
-          () => html`
-            <a
-              class="hc-link hc-link--decorated"
-              style="font-size: 120%;"
-              @click=${(event) => {
-                event.preventDefault();
-                renderAndShowAddEventForm();
-              }}
-            >
-              Zapoj se do programu
-            </a>
-          `
-        )}
+
+        <a
+          class="hc-link hc-link--decorated"
+          style="font-size: 120%;"
+          @click=${(event) => {
+            event.preventDefault();
+            renderAndShowAddEventForm();
+          }}
+        >
+          Zapoj se do programu
+        </a>
       </div>
       <div class="program__dayline">
         <div class="dayline">
@@ -760,7 +753,7 @@ function renderProgram({
                 <p>${lineup.description}</p>
                 <p>${lineup.detail}</p>
                 ${when(
-                  fullProgram && lineup.id !== "liorg",
+                  lineup.id !== "liorg",
                   () => html`<a
                     class="hc-link hc-link--decorated"
                     style="padding: calc(var(--spacing) / 4);"
@@ -788,31 +781,26 @@ function renderProgram({
                 )}
               </div>
               <div class="lineup__timeline">
-                ${makeTimeline(startAt, endAt, 15).map((time) =>
-                  fullProgram
-                    ? html`
-                        <a
-                          class="lineup__slot"
-                          ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
-                          data-tick=${makeTick(time)}
-                          data-day=${formatShortDayName(time)}
-                          @click=${(event) => {
-                            // timezone hotfix
-                            time.setHours(time.getHours() + 2);
-                            event.preventDefault();
-                            renderAndShowAddEventForm(lineup.id, {
-                              preferredTime: time,
-                            });
-                          }}
-                        >
-                          &nbsp;
-                        </a>
-                      `
-                    : html`<span
+                ${makeTimeline(startAt, endAt, 15).map(
+                  (time) =>
+                    html`
+                      <a
                         class="lineup__slot"
+                        ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
                         data-tick=${makeTick(time)}
                         data-day=${formatShortDayName(time)}
-                      ></span>`
+                        @click=${(event) => {
+                          event.preventDefault();
+                          // timezone hotfix
+                          time.setHours(time.getHours() + 2);
+                          renderAndShowAddEventForm(lineup.id, {
+                            preferredTime: time,
+                          });
+                        }}
+                      >
+                        &nbsp;
+                      </a>
+                    `
                 )}
               </div>
             </div>
@@ -827,21 +815,16 @@ function renderProgram({
           deskovky, karty, playstationy. Pár z vás nabízí one-one povídání,
           kvízi, sekání dřeva a spoustu dalšího. Tady najdete vše pohromadě.
         </p>
-        ${when(
-          fullProgram,
-          () => html`
-            <a
-              class="hc-link hc-link--decorated"
-              style="padding: calc(var(--spacing) / 4)"
-              @click=${(event) => {
-                event.preventDefault();
-                renderAndShowAddEventForm("liother");
-              }}
-            >
-              Zapoj se do programu
-            </a>
-          `
-        )}
+        <a
+          class="hc-link hc-link--decorated"
+          style="padding: calc(var(--spacing) / 4)"
+          @click=${(event) => {
+            event.preventDefault();
+            renderAndShowAddEventForm("liother");
+          }}
+        >
+          Zapoj se do programu
+        </a>
       </div>
       <dialog id="add-event">
         <div id="add-event-form"></div>
@@ -864,12 +847,9 @@ async function fetchLineups(apiHost) {
 }
 
 async function fetchEvents(apiHost) {
-  const { featureToggles, year } = state.deref();
+  const { year } = state.deref();
   const params = new URLSearchParams({ year });
-  const endpoint =
-    featureToggles.fullProgram && false
-      ? `/program/events.json?${params}`
-      : new URL(`program/?${params}`, apiHost).href;
+  const endpoint = new URL(`program/?${params}`, apiHost).href;
   const resp = await fetch(endpoint, {
     headers: { Accept: "application/json" },
     credentials: "include",
