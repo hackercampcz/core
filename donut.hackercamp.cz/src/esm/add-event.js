@@ -83,6 +83,14 @@ const FIELDS_BY_LINEUP = new Map([
           )}
         </select>
       </div>
+      ${when(
+        selectedTopic,
+        () =>
+          html`<p style="font-style: italic;">
+            ${lineupTopicEvents.find(({ id }) => id === selectedTopic)
+              ?.description}
+          </p>`
+      )}
       <div style=${`display: ${selectedTopic ? "block" : "none"}`}>
         <div class="field">
           <label for="title">Název přednášky, anotace </label>
@@ -232,11 +240,10 @@ const FIELDS_BY_LINEUP = new Map([
           />
         </div>
       </div>
-
-        <div class="field">
-          <label for="buddy">Parťák (nepovinnej)</label>
-          <input id="buddy" name="buddy" type="text" />
-        </div>
+      <div class="field">
+        <label for="buddy">Parťák (nepovinnej)</label>
+        <input id="buddy" name="buddy" type="text" />
+      </div>
       <div class="field">
         <label for="palce"
           >Místo, kde se sejdete / kde se aktivta bude kontat</label
@@ -273,6 +280,10 @@ const FIELDS_BY_LINEUP = new Map([
           )}
         </select>
       </div>
+      <p>
+        ${lineupTopicEvents.find(({ id }) => id === selectedTopic.id)
+          ?.description}
+      </p>
       <div style=${`display: ${selectedTopic ? "block" : "none"}`}>
         <div class="field">
           <label for="name">DJ name / umělecké jméno</label>
