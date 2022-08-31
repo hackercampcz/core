@@ -151,10 +151,10 @@ function eventTemplate(
 ${event.title}</pre
       >
       ${when(
-        fullProgram && event.type === "topic" && event.speakers?.length,
+        fullProgram && event.type === "topic" && event.people?.length,
         () => html`
-          <div class="speakers-list">
-            ${event.speakers.map(
+          <div class="people-list">
+            ${event.people.map(
               (speaker) =>
                 html`
                   <figure class="speaker speaker--photo">
@@ -178,16 +178,26 @@ ${event.title}</pre
         ${formatEventTimeInfo(event)}
         <code>${lineup.name}</code><br />
       </p>
-      <pre>${event.description}</pre>
+      <p><pre>${event.description}</pre></p>
       ${when(
         fullProgram && event.type === "topic",
         () => html`
-          <p>
+          <div class="people-list">
+            ${event.people?.map(
+              ({ slackID, name, image }) => html`
+                <figure class="speaker speaker--full">
+                  <img width="100%" height="100%" alt=${name} src=${image} />
+                  ${name}
+                </figure>
+              `
+            )}
+          </div>
+
             <a
               class="hc-link hc-link--decorated"
               style="padding: calc(var(--spacing) / 4);"
               @click=${(_event) => {
-                console.log(event)
+                console.log(event);
                 _event.preventDefault();
                 renderAndShowAddEventForm(lineup.id, {
                   selectedTopic: event.id,
@@ -196,8 +206,8 @@ ${event.title}</pre
             >
               Zapojit se
             </a>
-            <hr />
-          </p>
+
+          <hr />
         `
       )}
       <button name="close">Zavřít</button>
@@ -582,11 +592,24 @@ function renderProgram({
         line-height: calc(16px * 1.5);
       }
 
-      .speakers-list {
-        padding: calc(var(--spacing) / 2) 0;
+      .people-list {
+      }
+      .people-list:after {
+        content: "";
+        display: block;
+        clear: both;
       }
 
       figure.speaker {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: calc(var(--spacing) / 4);
+        float: left;
+        margin: calc(var(--spacing) / 4) calc(var(--spacing) / 4) 0 0;
+      }
+      figure.speaker img {
         border-radius: 50%;
         width: 32px;
         height: 32px;
@@ -595,18 +618,26 @@ function renderProgram({
         background-image: var(--hc-gradient-btn);
         background-size: 200% 100%;
         padding: 2px;
-        float: left;
-        margin: calc(var(--spacing) / 4) calc(var(--spacing) / 4) 0 0;
-        color: var(--hc-background-color);
-      }
-      figure.speaker img {
         border-radius: 50%;
+        color: var(--hc-background-color);
       }
       figure.speaker.speaker--add {
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 200%;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        overflow: hidden;
+        background-image: var(--hc-gradient-btn);
+        background-size: 200% 100%;
+        padding: 2px;
+        border-radius: 50%;
+      }
+      figure.speaker.speaker--full {
+        width: auto;
+        margin: calc(var(--spacing) / 2) var(--spacing) calc(var(--spacing) / 2)  0;
       }
     </style>
     <div class="program">
