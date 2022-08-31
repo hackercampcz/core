@@ -192,21 +192,19 @@ ${event.title}</pre
               `
             )}
           </div>
-
-            <a
-              class="hc-link hc-link--decorated"
-              style="padding: calc(var(--spacing) / 4);"
-              @click=${(_event) => {
-                console.log(event);
-                _event.preventDefault();
-                renderAndShowAddEventForm(lineup.id, {
-                  selectedTopic: event.id,
-                });
-              }}
-            >
-              Zapojit se
-            </a>
-
+          <a
+            class="hc-link hc-link--decorated"
+            style="padding: calc(var(--spacing) / 4);"
+            @click=${(_event) => {
+              console.log(event);
+              _event.preventDefault();
+              renderAndShowAddEventForm(lineup.id, {
+                selectedTopic: event.id,
+              });
+            }}
+          >
+            Zapojit se
+          </a>
           <hr />
         `
       )}
@@ -240,7 +238,7 @@ function renderProgram({
 
   const renderAndShowAddEventForm = (
     lineupId,
-    { preferredTime, selectedTopic } = {}
+    { preferredTime, selectedTopic = null } = {}
   ) => {
     renderAddEventDialog(document.getElementById("add-event-form"), {
       apiUrl,
@@ -634,10 +632,12 @@ function renderProgram({
         background-size: 200% 100%;
         padding: 2px;
         border-radius: 50%;
+        color: var(--hc-background-color);
       }
       figure.speaker.speaker--full {
         width: auto;
-        margin: calc(var(--spacing) / 2) var(--spacing) calc(var(--spacing) / 2)  0;
+        margin: calc(var(--spacing) / 2) var(--spacing) calc(var(--spacing) / 2)
+          0;
       }
     </style>
     <div class="program">

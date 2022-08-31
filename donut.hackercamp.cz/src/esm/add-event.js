@@ -69,7 +69,6 @@ const FIELDS_BY_LINEUP = new Map([
           name="topic"
           type="text"
           required
-          .value=${selectedTopic}
           style="font-weight: bold;"
           @change=${(event) => {
             transact((x) =>
@@ -77,7 +76,9 @@ const FIELDS_BY_LINEUP = new Map([
             );
           }}
         >
-          <option value="" disabled selected>Vyberte vaše téma</option>
+          <option value="" disabled ?selected=${!selectedTopic}>
+            Vyberte vaše téma
+          </option>
           ${lineupTopicEvents.map(
             (topic) => html`<option value=${topic.id}>${topic.title}</option>`
           )}
@@ -93,8 +94,17 @@ const FIELDS_BY_LINEUP = new Map([
       )}
       <div style=${`display: ${selectedTopic ? "block" : "none"}`}>
         <div class="field">
-          <label for="title">Název přednášky, anotace </label>
+          <label for="title">Název přednášky</label>
           <input id="title" name="title" type="text" required />
+        </div>
+        <div class="field">
+          <label for="annotation">Anotace aneb rozepíšeš se víc?</label>
+          <textarea
+            id="annotation"
+            name="annotation"
+            type="text"
+            rows="5"
+          ></textarea>
         </div>
         <div class="group">
           <div class="field">
@@ -114,6 +124,7 @@ const FIELDS_BY_LINEUP = new Map([
           <label for="buddy">Parťák (nepovinnej)</label>
           <input id="buddy" name="buddy" type="text" />
         </div>
+        <button type="submit" class="hc-button">Odeslat to</button>
       </div>
     `,
   ],
@@ -122,8 +133,17 @@ const FIELDS_BY_LINEUP = new Map([
     "liback",
     ({ startAt, endAt, preferredTime }) => html`
       <div class="field">
-        <label for="title">Název workshopu, anotace </label>
+        <label for="title">Název workshopu </label>
         <input id="title" name="title" type="text" required />
+      </div>
+      <div class="field">
+        <label for="annotation">Anotace aneb rozepíšeš se víc?</label>
+        <textarea
+          id="annotation"
+          name="annotation"
+          type="text"
+          rows="4"
+        ></textarea>
       </div>
       <div class="group">
         <div class="field">
@@ -154,6 +174,7 @@ const FIELDS_BY_LINEUP = new Map([
         <label for="buddy">Parťák (nepovinnej)</label>
         <input id="buddy" name="buddy" type="text" />
       </div>
+      <button type="submit" class="hc-button">Odeslat to</button>
     `,
   ],
   [
@@ -164,6 +185,15 @@ const FIELDS_BY_LINEUP = new Map([
           >Název aktivity, anotace (co si pod tím představit)</label
         >
         <input id="title" name="title" type="text" required />
+      </div>
+      <div class="field">
+        <label for="annotation">Anotace aneb co si pod tím představit?</label>
+        <textarea
+          id="annotation"
+          name="annotation"
+          type="text"
+          rows="4"
+        ></textarea>
       </div>
       <div class="group">
         <div class="field">
@@ -204,16 +234,25 @@ const FIELDS_BY_LINEUP = new Map([
         >
         <input id="palce" name="palce" type="text" required />
       </div>
+      <button type="submit" class="hc-button">Odeslat to</button>
     `,
   ],
   ["lijungle", html`<em>liwood copy</em>`],
   [
     "lipeep",
-    ({ preferredTime, startAt, endAt }) => html` <div class="field">
-        <label for="title"
-          >Název aktivity, anotace (co si pod tím představit)</label
-        >
+    ({ preferredTime, startAt, endAt }) => html`
+      <div class="field">
+        <label for="title">Název aktivity</label>
         <input id="title" name="title" type="text" required />
+      </div>
+      <div class="field">
+        <label for="annotation">Anotace aneb co si pod tím představit?</label>
+        <textarea
+          id="annotation"
+          name="annotation"
+          type="text"
+          rows="4"
+        ></textarea>
       </div>
       <div class="group">
         <div class="field">
@@ -249,7 +288,9 @@ const FIELDS_BY_LINEUP = new Map([
           >Místo, kde se sejdete / kde se aktivta bude kontat</label
         >
         <input id="palce" name="palce" type="text" required />
-      </div>`,
+      </div>
+      <button type="submit" class="hc-button">Odeslat to</button>
+    `,
   ],
   [
     "liwood",
@@ -268,7 +309,9 @@ const FIELDS_BY_LINEUP = new Map([
             );
           }}
         >
-          <option value="" disabled selected>Vyberte vaše téma</option>
+          <option value="" disabled ?selected=${!selectedTopic}>
+            Vyberte vaše téma
+          </option>
           ${lineupTopicEvents.map(
             (topic) =>
               html`<option
@@ -281,8 +324,7 @@ const FIELDS_BY_LINEUP = new Map([
         </select>
       </div>
       <p>
-        ${lineupTopicEvents.find(({ id }) => id === selectedTopic.id)
-          ?.description}
+        ${lineupTopicEvents.find(({ id }) => id === selectedTopic)?.description}
       </p>
       <div style=${`display: ${selectedTopic ? "block" : "none"}`}>
         <div class="field">
@@ -313,6 +355,7 @@ const FIELDS_BY_LINEUP = new Map([
             <input id="buddy" name="buddy" type="text" />
           </div>
         </div>
+        <button type="submit" class="hc-button">Odeslat to</button>
       </div>
     `,
   ],
@@ -478,7 +521,6 @@ export function renderAddEventForm({
       )}
       <input type="hidden" name="year" value=${year} />
       ${fieldsHtml}
-      <button type="submit" class="hc-button">Odeslat to</button>
     </form>
   `;
 }
