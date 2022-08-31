@@ -55,39 +55,67 @@ const FIELDS_BY_LINEUP = new Map([
   ["", html`<em>nah.</em>`, ""],
   [
     "limain",
-    ({ startAt, endAt, preferredTime }) => html`
+    ({
+      startAt,
+      endAt,
+      preferredTime,
+      lineupTopicEvents,
+      selectedTopic,
+    }) => html`
       <div class="field">
-        <label for="title">Název přednášky, anotace </label>
-        <input id="title" name="title" type="text" required />
+        <label for="topic">Téma přednášky / talku</label>
+        <select
+          id="topic"
+          name="topic"
+          type="text"
+          required
+          style="font-weight: bold;"
+          @change=${(event) => {
+            transact((x) =>
+              Object.assign(x, { selectedTopic: event.target.value })
+            );
+          }}
+        >
+          <option value="" disabled selected>Vyberte vaše téma</option>
+          ${lineupTopicEvents.map(
+            (topic) => html`<option value=${topic.id}>${topic.title}</option>`
+          )}
+        </select>
       </div>
-      <div class="group">
+      <div style=${`display: ${selectedTopic ? "block" : "none"}`}>
         <div class="field">
-          <label for="duration">Délka talku v minutách</label>
-          <input
-            id="duration"
-            name="duration"
-            type="number"
-            min="15"
-            max="120"
-            value="15"
-            required
-          />
+          <label for="title">Název přednášky, anotace </label>
+          <input id="title" name="title" type="text" required />
         </div>
-        <div class="field" style="flex: 2">
-          <label for="preferred-time">Preferovaný čas</label>
-          <input
-            id="preferred-time"
-            name="preferredTime"
-            type="datetime-local"
-            .value=${preferredTime?.toISOString().replace("Z", "")}
-            min=${startAt.toISOString().replace("Z", "")}
-            max=${endAt.toISOString().replace("Z", "")}
-          />
+        <div class="group">
+          <div class="field">
+            <label for="duration">Délka talku v minutách</label>
+            <input
+              id="duration"
+              name="duration"
+              type="number"
+              min="15"
+              max="120"
+              value="15"
+              required
+            />
+          </div>
+          <div class="field" style="flex: 2">
+            <label for="preferred-time">Preferovaný čas</label>
+            <input
+              id="preferred-time"
+              name="preferredTime"
+              type="datetime-local"
+              .value=${preferredTime?.toISOString().replace("Z", "")}
+              min=${startAt.toISOString().replace("Z", "")}
+              max=${endAt.toISOString().replace("Z", "")}
+            />
+          </div>
         </div>
-      </div>
-      <div class="field">
-        <label for="buddy">Parťák (nepovinnej)</label>
-        <input id="buddy" name="buddy" type="text" />
+        <div class="field">
+          <label for="buddy">Parťák (nepovinnej)</label>
+          <input id="buddy" name="buddy" type="text" />
+        </div>
       </div>
     `,
   ],
@@ -369,12 +397,18 @@ export function renderAddEventForm({
   endAt,
   preferredTime,
   hackers = [],
+  events = [],
+  selectedTopic,
 }) {
   const headHtml = header ?? HEADER_BY_LINEUP.get(lineupId);
   const fieldsHtml = FIELDS_BY_LINEUP.get(lineupId)({
     startAt,
     endAt,
     preferredTime,
+    lineupTopicEvents: events.filter(
+      ({ lineup, type }) => lineup === lineupId && type === "topic"
+    ),
+    selectedTopic,
   });
 
   return html`
@@ -418,7 +452,8 @@ export async function renderInit(
     startAt,
     endAt,
     preferredTime,
-    hijackHacker = false,
+    hijackHacker = false, // mby change to hackers[] that are passed
+    events = [],
   }
 ) {
   initRenderLoop(state, rootElement);
@@ -434,6 +469,7 @@ export async function renderInit(
       startAt,
       endAt,
       preferredTime,
+      events,
     })
   );
 

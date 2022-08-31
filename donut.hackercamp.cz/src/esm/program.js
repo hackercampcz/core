@@ -231,6 +231,7 @@ function renderProgram({
       startAt,
       endAt,
       preferredTime,
+      events,
     });
     // mby closwe previous modal here
     showModalDialog("add-event");
