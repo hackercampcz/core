@@ -166,8 +166,8 @@ function eventTemplate({
                       <img
                         alt="${speaker.name}"
                         src="${speaker.image}"
-                        width="100%"
-                        height="100%"
+                        width="32"
+                        height="32"
                       />
                     </figure>
                   `
@@ -185,7 +185,22 @@ function eventTemplate({
         () => html`<p>
           ${formatEventTimeInfo(event)}
           <code>${lineup.name}</code><br />
-        </p>`
+        </p>`,
+        () =>
+          html` <div class="people-list">
+            ${event.people.map(
+              (speaker) => html` <figure class="speaker speaker--full">
+                <img
+                  alt="${speaker.name}"
+                  src="${speaker.image}"
+                  width="32"
+                  height="32"
+                />
+                ${speaker.name}
+                ${when(speaker.company, () => html`z ${speaker.company}`)}
+              </figure>`
+            )}
+          </div>`
       )}
       <p>${event.description}</p>
       ${when(
@@ -520,7 +535,6 @@ function renderProgram({
       }
 
       .lineup__event p,
-      .lineup__event + dialog p,
       .lineup__info pre {
         margin: 0;
         line-height: 1.2;

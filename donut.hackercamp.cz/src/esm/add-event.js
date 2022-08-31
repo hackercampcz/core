@@ -473,10 +473,6 @@ export function renderSignpost() {
   `;
 }
 
-function handleHackerChanged(event) {
-  console.log(event.target.value);
-}
-
 export function renderAddEventForm({
   lineupId,
   profile,
@@ -513,7 +509,6 @@ export function renderAddEventForm({
             name="slackID"
             type="search"
             value=${profile.sub}
-            @change=${handleHackerChanged}
           />
           <datalist id="hackers">
             ${hackers.map(
