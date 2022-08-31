@@ -103,6 +103,7 @@ export const createRoutes = ({
           fileName: "program/index.mjs",
           environment: {
             variables: {
+              db_table_attendees: attendeesDataTable,
               db_table_program: programDataTable,
               private_key: config.get("private-key"),
               slack_bot_token: config.get("slack-bot-token"),
