@@ -795,7 +795,7 @@ function housingTemplate(state) {
 
 function programTable(data) {
   return html`
-    <table>
+    <table style="width: 100%;">
       <thead>
         <tr>
           <th>Jméno</th>
