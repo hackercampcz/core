@@ -85,7 +85,7 @@ export async function handler(event) {
     delete data.buddy; // TODO: handle cooperators
     const sanitizedData = Object.fromEntries(
       Object.entries(data)
-        .map(([k, v]) => [k, v?.trim()])
+        .map(([k, v]) => [k, v?.trim ? v?.trim() : v])
         .filter(([k, v]) => Boolean(v))
     );
     if (freeStages.has(sanitizedData.lineup)) {
@@ -101,7 +101,9 @@ export async function handler(event) {
         .values()
     ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
     await saveAttendee(dynamo, { slackID: submittedBy, year, events });
-    sanitizedData.people = [selectKeys(attendee, new Set(["slackID", "image", "slug", "name"]))];
+    sanitizedData.people = [
+      selectKeys(attendee, new Set(["slackID", "image", "slug", "name"])),
+    ];
     await createEvent(dynamo, sanitizedData);
     return seeOther(getHeader(event.headers, "Referer"));
   } catch (err) {
