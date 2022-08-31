@@ -401,7 +401,8 @@
     "endAt": "2022-09-02T16:00:00.000+02:00",
     "title": "DJ workshop",
     "description": "Přijďte si vyzkoušet různou DJ techniku a seznámit se základními principy hraní.",
-    "level": 110
+    "level": 110,
+    "type": "topic"
   },
   {
     "id": "ev23",

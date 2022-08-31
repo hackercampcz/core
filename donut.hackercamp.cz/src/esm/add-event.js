@@ -41,7 +41,7 @@ const HEADER_BY_LINEUP = new Map([
   ],
   [
     "lijungle",
-    html`<h2>Jungle release</h2>
+    html`<h2>WoodStack / Jungle release</h2>
       <p>Hudební program</p>`,
   ],
   [
@@ -69,6 +69,7 @@ const FIELDS_BY_LINEUP = new Map([
           name="topic"
           type="text"
           required
+          .value=${selectedTopic}
           style="font-weight: bold;"
           @change=${(event) => {
             transact((x) =>
@@ -98,17 +99,6 @@ const FIELDS_BY_LINEUP = new Map([
               max="120"
               value="15"
               required
-            />
-          </div>
-          <div class="field" style="flex: 2">
-            <label for="preferred-time">Preferovaný čas</label>
-            <input
-              id="preferred-time"
-              name="preferredTime"
-              type="datetime-local"
-              .value=${preferredTime?.toISOString().replace("Z", "")}
-              min=${startAt.toISOString().replace("Z", "")}
-              max=${endAt.toISOString().replace("Z", "")}
             />
           </div>
         </div>
@@ -151,10 +141,10 @@ const FIELDS_BY_LINEUP = new Map([
             max=${endAt.toISOString().replace("Z", "")}
           />
         </div>
-        <div class="field" style="flex: 2">
-          <label for="buddy">Parťák (nepovinnej)</label>
-          <input id="buddy" name="buddy" type="text" />
-        </div>
+      </div>
+      <div class="field">
+        <label for="buddy">Parťák (nepovinnej)</label>
+        <input id="buddy" name="buddy" type="text" />
       </div>
     `,
   ],
@@ -191,10 +181,10 @@ const FIELDS_BY_LINEUP = new Map([
             max=${endAt.toISOString().replace("Z", "")}
           />
         </div>
-        <div class="field" style="flex: 2">
-          <label for="buddy">Parťák (nepovinnej)</label>
-          <input id="buddy" name="buddy" type="text" />
-        </div>
+      </div>
+      <div class="field">
+        <label for="buddy">Parťák (nepovinnej)</label>
+        <input id="buddy" name="buddy" type="text" />
       </div>
       <div class="field field--block">
         <label for="demands"> Máš specifické požadavky, aby to klaplo? </label>
@@ -211,7 +201,7 @@ const FIELDS_BY_LINEUP = new Map([
   ["lijungle", html`<em>liwood copy</em>`],
   [
     "lipeep",
-    () => html` <div class="field">
+    ({ preferredTime, startAt, endAt }) => html` <div class="field">
         <label for="title"
           >Název aktivity, anotace (co si pod tím představit)</label
         >
@@ -231,10 +221,22 @@ const FIELDS_BY_LINEUP = new Map([
           />
         </div>
         <div class="field" style="flex: 2">
+          <label for="preferred-time">Preferovaný čas</label>
+          <input
+            id="preferred-time"
+            name="preferredTime"
+            type="datetime-local"
+            .value=${preferredTime?.toISOString().replace("Z", "")}
+            min=${startAt.toISOString().replace("Z", "")}
+            max=${endAt.toISOString().replace("Z", "")}
+          />
+        </div>
+      </div>
+
+        <div class="field">
           <label for="buddy">Parťák (nepovinnej)</label>
           <input id="buddy" name="buddy" type="text" />
         </div>
-      </div>
       <div class="field">
         <label for="palce"
           >Místo, kde se sejdete / kde se aktivta bude kontat</label
@@ -244,33 +246,61 @@ const FIELDS_BY_LINEUP = new Map([
   ],
   [
     "liwood",
-    () => html`
+    ({ selectedTopic, lineupTopicEvents }) => html`
       <div class="field">
-        <label for="name">DJ name / umělecké jméno</label>
-        <input id="name" name="name" type="text" required />
+        <label for="topic">Téma přednášky / talku</label>
+        <select
+          id="topic"
+          name="topic"
+          type="text"
+          required
+          style="font-weight: bold;"
+          @change=${(event) => {
+            transact((x) =>
+              Object.assign(x, { selectedTopic: event.target.value })
+            );
+          }}
+        >
+          <option value="" disabled selected>Vyberte vaše téma</option>
+          ${lineupTopicEvents.map(
+            (topic) =>
+              html`<option
+                value=${topic.id}
+                ?selected=${selectedTopic === topic.id}
+              >
+                ${topic.title}
+              </option>`
+          )}
+        </select>
       </div>
-      <div class="field field--block">
-        <label for="performance">
-          Popiš svoje vystoupení (žánr, solo / kapela / hudební těleso)
-        </label>
-        <textarea id="performance" name="performance" rows="5"></textarea>
-      </div>
-      <div class="group">
+      <div style=${`display: ${selectedTopic ? "block" : "none"}`}>
         <div class="field">
-          <label for="duration">Délka v minutách</label>
-          <input
-            id="duration"
-            name="duration"
-            type="number"
-            min="15"
-            max="120"
-            value="60"
-            required
-          />
+          <label for="name">DJ name / umělecké jméno</label>
+          <input id="name" name="name" type="text" required />
         </div>
-        <div class="field" style="flex: 2">
-          <label for="buddy">Parťák (nepovinnej)</label>
-          <input id="buddy" name="buddy" type="text" />
+        <div class="field field--block">
+          <label for="performance">
+            Popiš svoje vystoupení (žánr, solo / kapela / hudební těleso)
+          </label>
+          <textarea id="performance" name="performance" rows="5"></textarea>
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="duration">Délka v minutách</label>
+            <input
+              id="duration"
+              name="duration"
+              type="number"
+              min="15"
+              max="120"
+              value="60"
+              required
+            />
+          </div>
+          <div class="field" style="flex: 2">
+            <label for="buddy">Parťák (nepovinnej)</label>
+            <input id="buddy" name="buddy" type="text" />
+          </div>
         </div>
       </div>
     `,
