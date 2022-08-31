@@ -97,6 +97,8 @@ async function deleteAttendeeEvents(db, { event_id, year, people }) {
     if (!slackID) continue;
     const attendee = await getAttendee(db, slackID, year);
     if (!attendee.events?.length) continue;
+    attendee.slackID = slackID;
+    attendee.year = year;
     attendee.events = attendee.events?.filter((x) => x._id !== event_id);
     await saveAttendee(db, attendee);
   }
