@@ -93,6 +93,11 @@ export async function handler(event) {
       sanitizedData.approved = new Date().toISOString();
       sanitizedData.approvedBy = submittedBy;
     }
+    if (sanitizedData.duration && sanitizedData.startAt) {
+      const duration = parseInt(sanitizedData.duration, 10) * 60 * 1000;
+      const startTime = new Date(sanitizedData.startAt).getTime();
+      sanitizedData.endAt = new Date(startTime + duration);
+    }
     console.log({ method: "POST", data: sanitizedData, submittedBy, year });
     const attendee = await getAttendee(dynamo, submittedBy, year);
     if (!attendee) return notFound();
