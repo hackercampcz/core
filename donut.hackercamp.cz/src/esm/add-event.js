@@ -168,7 +168,7 @@ const FIELDS_BY_LINEUP = new Map([
           <label for="preferred-time">Preferovaný čas</label>
           <input
             id="preferred-time"
-            name="preferredTime"
+            name="startAt"
             type="datetime-local"
             value=${preferredTime?.toISOString().replace("Z", "")}
             min=${startAt.toISOString().replace("Z", "")}
@@ -218,7 +218,7 @@ const FIELDS_BY_LINEUP = new Map([
           <label for="preferred-time">Preferovaný čas</label>
           <input
             id="preferred-time"
-            name="preferredTime"
+            name="startAt"
             type="datetime-local"
             value=${preferredTime?.toISOString().replace("Z", "")}
             min=${startAt.toISOString().replace("Z", "")}
@@ -277,7 +277,7 @@ const FIELDS_BY_LINEUP = new Map([
           <label for="preferred-time">Preferovaný čas</label>
           <input
             id="preferred-time"
-            name="preferredTime"
+            name="startAt"
             type="datetime-local"
             .value=${preferredTime?.toISOString().replace("Z", "")}
             min=${startAt.toISOString().replace("Z", "")}

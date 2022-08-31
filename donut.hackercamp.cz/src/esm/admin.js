@@ -515,8 +515,8 @@ function attendeeDetailTemplate({ detail }) {
               <h3>${event.title}</h3>
               <p>
                 <code>${lineup(event.lineup)}</code> -
-                <time datetime="${event.preferredTime}"
-                  >${formatDateTime(new Date(event.preferredTime))}</time
+                <time datetime="${event.startAt}"
+                  >${formatDateTime(new Date(event.startAt))}</time
                 >
               </p>
             </div>

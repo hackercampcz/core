@@ -54,7 +54,7 @@
               <h3>{{ event.title }}</h3>
               <p>
                 <code>{{ lineup(event.lineup) }}</code> -
-                <time datetime="{{ event.preferredTime }}">{{ event.preferredTime | formatDateTime }}</time>
+                <time datetime="{{ event.startAt }}">{{ event.startAt | formatDateTime }}</time>
               </p>
             </div>
           </div>
