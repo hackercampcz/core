@@ -5,7 +5,19 @@ import { Endpoint, executeCommand } from "./common.js";
  * @param {string} apiHost
  * @returns {Promise<void>}
  */
-export function deleteEvent(event_id, apiHost) {
+export function approve(event_id, apiHost) {
+  return executeCommand(apiHost, Endpoint.program, "approve", {
+    event_id,
+    year: 2022,
+  }).then(() => location.reload());
+}
+
+/**
+ * @param {string} event_id
+ * @param {string} apiHost
+ * @returns {Promise<void>}
+ */
+export function remove(event_id, apiHost) {
   return executeCommand(apiHost, Endpoint.program, "delete", {
     event_id,
     year: 2022,

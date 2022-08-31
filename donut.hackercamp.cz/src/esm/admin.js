@@ -17,7 +17,7 @@ import {
   createOptOut,
   markAsInvoiced,
 } from "./admin/registrations.js";
-import { deleteEvent } from "./admin/program.js";
+import * as event from "./admin/program.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import { getContact, setReturnUrl } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
@@ -52,10 +52,17 @@ function invoiced(email) {
   return markAsInvoiced([email], invoiceId, apiHost);
 }
 
-function deleteEventDetail(event_id) {
+function deleteEvent(event_id) {
   const { apiHost } = state.deref();
   return (
-    confirm("Opravdu chceš event smazat?") && deleteEvent(event_id, apiHost)
+    confirm("Opravdu chceš event smazat?") && event.remove(event_id, apiHost)
+  );
+}
+
+function approveEvent(event_id) {
+  const { apiHost } = state.deref();
+  return (
+    confirm("Opravdu chceš event schválit?") && event.approve(event_id, apiHost)
   );
 }
 
@@ -775,18 +782,40 @@ function programTable(data) {
         ${data.map(
           (row) => html`
             <tr>
-              <td>${row.title}</td>
+              <td
+                style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis"
+              >
+                ${row.title}
+              </td>
               <td>${row.type}</td>
               <td>${lineup(row.lineup)}</td>
               <td>
                 ${row.startAt ? formatDateTime(new Date(row.startAt)) : null}
               </td>
               <td>${row.endAt ? formatDateTime(new Date(row.endAt)) : null}</td>
-              <td>
+              <td style="white-space: nowrap;">
+                <button
+                  class="hc-action-button"
+                  title="Schválit event"
+                  @click="${() => {}}"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 0 24 24"
+                    width="24px"
+                    fill="var(--hc-text-color)"
+                  >
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path
+                      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V9h14v10zM5 7V5h14v2H5zm5.56 10.46l5.93-5.93-1.06-1.06-4.87 4.87-2.11-2.11-1.06 1.06z"
+                    />
+                  </svg>
+                </button>
                 <button
                   class="hc-action-button"
                   title="Upravit event"
-                  @click="${() => {}}"
+                  @click="${() => approveEvent(row._id)}"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -804,7 +833,7 @@ function programTable(data) {
                 <button
                   class="hc-action-button"
                   title="Smazat event"
-                  @click="${() => deleteEventDetail(row._id)}"
+                  @click="${() => deleteEvent(row._id)}"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
