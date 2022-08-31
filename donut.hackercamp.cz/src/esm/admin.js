@@ -1,8 +1,9 @@
-import { formatMoney } from "@hackercamp/lib/format.mjs";
+import { formatDateTime, formatMoney } from "@hackercamp/lib/format.mjs";
+import { sortBy } from "@hackercamp/lib/array.mjs";
 import "@material/mwc-drawer/mwc-drawer.js";
 import "@material/mwc-icon-button/mwc-icon-button.js";
-import "@material/mwc-list/mwc-list.js";
 import "@material/mwc-list/mwc-list-item.js";
+import "@material/mwc-list/mwc-list.js";
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
@@ -10,26 +11,17 @@ import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
 import * as marked from "marked";
+import { Endpoint, unauthorized, View } from "./admin/common.js";
+import {
+  createOptIn,
+  createOptOut,
+  markAsInvoiced,
+} from "./admin/registrations.js";
+import { deleteEvent } from "./admin/program.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import { getContact, setReturnUrl } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
-
-const View = {
-  paid: "paid",
-  invoiced: "invoiced",
-  confirmed: "confirmed",
-  hackers: "hackers",
-  waitingList: "waitingList",
-  optouts: "optouts",
-  attendees: "attendees",
-  hackerAttendees: "hackerAttendees",
-  staffAttendees: "staffAttendees",
-  crewAttendees: "crewAttendees",
-  volunteerAttendees: "volunteerAttendees",
-  housing: "housing",
-  program: "program",
-};
 
 const state = defAtom({
   selectedView: View.paid,
@@ -39,31 +31,31 @@ const state = defAtom({
 
 const transact = (fn) => state.swap(fn);
 
-const optout = (email) =>
-  confirm("Opravdu chcete táborníka vyřadit?") &&
-  createOptOut(email, state.deref().apiHost);
+function optout(email) {
+  const { apiHost } = state.deref();
+  return (
+    confirm("Opravdu chceš táborníka vyřadit?") && createOptOut(email, apiHost)
+  );
+}
 
 function optin(email) {
   const { apiHost, contact } = state.deref();
   return (
-    confirm("Opravdu chcete táborníka potvrdit?") &&
+    confirm("Opravdu chceš táborníka potvrdit?") &&
     createOptIn(email, contact.slackID, apiHost)
   );
 }
 
 function invoiced(email) {
   const { apiHost } = state.deref();
-  const invoiceId = prompt("Zadejte ID faktury");
+  const invoiceId = prompt("Zadej ID faktury");
   return markAsInvoiced([email], invoiceId, apiHost);
 }
 
-const formatDateTime = (x) =>
-  x?.toLocaleString("cs", { dateStyle: "short", timeStyle: "short" }) ?? null;
-
-function sortBy(attr, x, { asc } = {}) {
-  const direction = asc ? 1 : -1;
-  return x.sort((a, b) =>
-    a[attr] ? direction * a[attr].localeCompare(b[attr]) : direction
+function deleteEventDetail(event_id) {
+  const { apiHost } = state.deref();
+  return (
+    confirm("Opravdu chceš event smazat?") && deleteEvent(event_id, apiHost)
   );
 }
 
@@ -254,7 +246,7 @@ function ticketDetail({ ticketType, patronAllowance }) {
   `;
 }
 
-function registratioDetailTemplate({ detail, selectedView }) {
+function registrationDetailTemplate({ detail, selectedView }) {
   if (!detail) return null;
   return html`
     <div class="hc-card hc-master-detail__detail"">
@@ -612,31 +604,6 @@ function attendeesTableTemplate(data) {
   `;
 }
 
-function unauthorized() {
-  return html`<p style="padding: 16px">
-      Nemáte oprávnění pro tuto sekci. Pokud si myslíte, že je mít máte,
-      klikněte na následující tlačítko a potvrďte požadovaná oprávnění:
-    </p>
-    <div style="padding: 16px">
-      <a
-        href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F"
-      >
-        <img
-          alt="Add to Slack"
-          height="40"
-          width="139"
-          src="https://platform.slack-edge.com/img/add_to_slack.png"
-          @click="${() => {
-            setReturnUrl(location.href);
-          }}"
-          srcset="
-            https://platform.slack-edge.com/img/add_to_slack.png    1x,
-            https://platform.slack-edge.com/img/add_to_slack@2x.png 2x
-          "
-      /></a>
-    </div>`;
-}
-
 const timeColumn = new Map([
   [View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
   [View.attendees, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
@@ -688,7 +655,9 @@ function registrationsTemplate(state) {
           `
         )}
       </div>
-      ${when(detail, () => registratioDetailTemplate({ detail, selectedView }))}
+      ${when(detail, () =>
+        registrationDetailTemplate({ detail, selectedView })
+      )}
     </div>
   `;
 }
@@ -799,6 +768,7 @@ function programTable(data) {
           <th>Stage</th>
           <th>Začátek</th>
           <th>Konec</th>
+          <th>Akce</th>
         </tr>
       </thead>
       <tbody>
@@ -812,6 +782,44 @@ function programTable(data) {
                 ${row.startAt ? formatDateTime(new Date(row.startAt)) : null}
               </td>
               <td>${row.endAt ? formatDateTime(new Date(row.endAt)) : null}</td>
+              <td>
+                <button
+                  class="hc-action-button"
+                  title="Upravit event"
+                  @click="${() => {}}"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 0 24 24"
+                    width="24px"
+                    fill="var(--hc-text-color)"
+                  >
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path
+                      d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"
+                    />
+                  </svg>
+                </button>
+                <button
+                  class="hc-action-button"
+                  title="Smazat event"
+                  @click="${() => deleteEventDetail(row._id)}"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 0 24 24"
+                    width="24px"
+                    fill="var(--hc-text-color)"
+                  >
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path
+                      d="M14.12 10.47L12 12.59l-2.13-2.12-1.41 1.41L10.59 14l-2.12 2.12 1.41 1.41L12 15.41l2.12 2.12 1.41-1.41L13.41 14l2.12-2.12zM15.5 4l-1-1h-5l-1 1H5v2h14V4zM6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9z"
+                    />
+                  </svg>
+                </button>
+              </td>
             </tr>
           `
         )}
@@ -872,19 +880,19 @@ function renderView(state) {
 }
 
 const endpointForView = new Map([
-  [View.paid, "registrations"],
-  [View.invoiced, "registrations"],
-  [View.confirmed, "registrations"],
-  [View.hackers, "registrations"],
-  [View.optouts, "registrations"],
-  [View.waitingList, "registrations"],
-  [View.attendees, "attendees"],
-  [View.crewAttendees, "attendees"],
-  [View.hackerAttendees, "attendees"],
-  [View.volunteerAttendees, "attendees"],
-  [View.staffAttendees, "attendees"],
-  [View.program, "program"],
-  [View.housing, "housing"],
+  [View.paid, Endpoint.registrations],
+  [View.invoiced, Endpoint.registrations],
+  [View.confirmed, Endpoint.registrations],
+  [View.hackers, Endpoint.registrations],
+  [View.optouts, Endpoint.registrations],
+  [View.waitingList, Endpoint.registrations],
+  [View.attendees, Endpoint.attendees],
+  [View.crewAttendees, Endpoint.attendees],
+  [View.hackerAttendees, Endpoint.attendees],
+  [View.volunteerAttendees, Endpoint.attendees],
+  [View.staffAttendees, Endpoint.attendees],
+  [View.program, Endpoint.program],
+  [View.housing, Endpoint.housing],
 ]);
 
 async function fetchData(selectedView, apiHost) {
@@ -894,68 +902,6 @@ async function fetchData(selectedView, apiHost) {
   const resp = await fetch(resource, { credentials: "include" });
   if (resp.ok) return resp.json();
   return { unauthorized: true };
-}
-
-/**
- * @param {string} apiHost
- * @param {string} command
- * @param {Record<string, any>} params
- * @returns {Promise<void>}
- */
-async function executeCommand(apiHost, command, params) {
-  const resource = new URL("admin/registrations", apiHost).href;
-  const resp = await fetch(resource, {
-    method: "POST",
-    headers: [
-      ["Accept", "application/json"],
-      ["Content-Type", "application/json"],
-    ],
-    body: JSON.stringify({
-      command: command,
-      params: params,
-    }),
-    credentials: "include",
-    referrerPolicy: "no-referrer",
-  });
-  if (!resp.ok) throw new Error(resp.status);
-}
-
-/**
- * @param {string} email
- * @param {string} apiHost
- * @returns {Promise<void>}
- */
-function createOptOut(email, apiHost) {
-  return executeCommand(apiHost, "optout", { email, year: 2022 }).then(() =>
-    location.reload()
-  );
-}
-
-/**
- * @param {string} email
- * @param {string} slackID
- * @param {string} apiHost
- * @returns {Promise<void>}
- */
-function createOptIn(email, slackID, apiHost) {
-  return executeCommand(apiHost, "approve", {
-    email,
-    referral: slackID,
-    year: 2022,
-  }).then(() => location.reload());
-}
-
-/**
- * @param {string[]} emails
- * @param {string} invoiceId
- * @param {string} apiHost
- * @returns {Promise<void>}
- */
-function markAsInvoiced(emails, invoiceId, apiHost) {
-  return executeCommand(apiHost, "invoiced", {
-    registrations: emails.map((email) => ({ email, year: 2022 })),
-    invoiceId,
-  }).then(() => location.reload());
 }
 
 /**
@@ -973,10 +919,10 @@ function loadData(searchParams, apiHost) {
 }
 
 const endpointName = new Map([
-  ["registrations", "Registrace"],
-  ["attendees", "Účastníci"],
-  ["housing", "Ubytování"],
-  ["program", "Program"],
+  [Endpoint.registrations, "Registrace"],
+  [Endpoint.attendees, "Účastníci"],
+  [Endpoint.housing, "Ubytování"],
+  [Endpoint.program, "Program"],
 ]);
 
 function changeTitle(viewTitle, searchParams) {

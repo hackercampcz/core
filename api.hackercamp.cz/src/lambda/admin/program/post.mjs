@@ -1,4 +1,5 @@
 import {
+  DeleteItemCommand,
   DynamoDBClient,
   PutItemCommand,
   UpdateItemCommand,
@@ -22,11 +23,26 @@ const db = new DynamoDBClient({});
 
 /**
  * @param {DynamoDBClient} db
+ * @param {{event_id: string, year: number}} data
+ */
+function deleteEvent(db, { event_id, year }) {
+  console.log({ event: "Delete event", event_id, year });
+  return db.send(
+    new DeleteItemCommand({
+      TableName: process.env.db_table_program,
+      Key: marshall({ _id: event_id, year }),
+    })
+  );
+}
+
+/**
+ * @param {DynamoDBClient} db
  * @param {*} data
  */
 async function processRequest(db, data) {
   switch (data.command) {
-    // TODO: do something useful
+    case "delete":
+      return deleteEvent(db, data.params);
   }
 }
 
