@@ -83,26 +83,26 @@ export async function handler(event) {
     data.year = year;
     delete data.slackID;
     delete data.buddy; // TODO: handle cooperators
-    data = Object.fromEntries(
+    const sanitizedData = Object.fromEntries(
       Object.entries(data)
         .map(([k, v]) => [k, v?.trim()])
         .filter(([k, v]) => Boolean(v))
     );
-    if (freeStages.has(data.lineup)) {
-      data.approved = new Date().toISOString();
-      data.approvedBy = submittedBy;
+    if (freeStages.has(sanitizedData.lineup)) {
+      sanitizedData.approved = new Date().toISOString();
+      sanitizedData.approvedBy = submittedBy;
     }
-    console.log({ method: "POST", data, submittedBy, year });
+    console.log({ method: "POST", data: sanitizedData, submittedBy, year });
     const attendee = await getAttendee(dynamo, submittedBy, year);
     if (!attendee) return notFound();
     const events = Array.from(
       new Map(attendee.events?.map((e) => [e._id, e]))
-        .set(data._id, data)
+        .set(sanitizedData._id, sanitizedData)
         .values()
     ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
     await saveAttendee(dynamo, { slackID: submittedBy, year, events });
-    data.people = [selectKeys(attendee, new Set(["slackID", "image", "slug"]))];
-    await createEvent(dynamo, data);
+    sanitizedData.people = [selectKeys(attendee, new Set(["slackID", "image", "slug"]))];
+    await createEvent(dynamo, sanitizedData);
     return seeOther(getHeader(event.headers, "Referer"));
   } catch (err) {
     console.error(err);
