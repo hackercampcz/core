@@ -521,6 +521,7 @@ export function renderAddEventForm({
         () => html`<input type="hidden" name="slackID" value=${profile.sub} />`
       )}
       <input type="hidden" name="year" value=${year} />
+      <input type="hidden" name="timezone" value="+02:00" />
       ${fieldsHtml}
     </form>
   `;
