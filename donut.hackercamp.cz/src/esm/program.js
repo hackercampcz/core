@@ -149,6 +149,8 @@ function eventTemplate({
           style="${`
           font-weight: ${event.level > 100 ? "bold" : "normal"};
           font-size: ${event.level || 100}%;
+          margin: 0;
+          line-height: 1.1;
         `}"
         >
           ${event.title}
