@@ -222,6 +222,33 @@ function attendeesChips(
   `;
 }
 
+function programChips(view, { program, programApproval }) {
+  return html`
+    <div
+      class="mdc-evolution-chip-set"
+      role="grid"
+      id="filters"
+      aria-orientation="horizontal"
+      aria-multiselectable="false"
+    >
+      <span class="mdc-evolution-chip-set__chips" role="presentation">
+        ${chip({
+          text: "Schváleno",
+          count: program,
+          selected: view === View.program,
+          view: View.program,
+        })}
+        ${chip({
+          text: "Ke schválení",
+          count: programApproval,
+          selected: view === View.programApproval,
+          view: View.programApproval,
+        })}
+      </span>
+    </div>
+  `;
+}
+
 const ticketName = new Map([
   ["nonprofit", "Táborník z neziskovky"],
   ["hacker", "Hacker"],
@@ -863,8 +890,13 @@ function programTable(data) {
 }
 
 function programTemplate(state) {
-  const { data } = state;
+  const { data, selectedView } = state;
   return html`
+    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      ${programChips(selectedView, {
+        [selectedView]: data?.then((data) => data.length),
+      })}
+    </div>
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       <div class="hc-card">
         ${until(
@@ -891,7 +923,7 @@ const registrationViews = new Set([
   View.waitingList,
   View.optouts,
 ]);
-const attendeeView = new Set([
+const attendeeViews = new Set([
   View.attendees,
   View.hackerAttendees,
   View.staffAttendees,
@@ -899,15 +931,16 @@ const attendeeView = new Set([
   View.volunteerAttendees,
 ]);
 
+const programViews = new Set(["program", "programApproval"]);
+
 function renderView(state) {
   const { selectedView } = state;
   if (registrationViews.has(selectedView)) return registrationsTemplate(state);
-  if (attendeeView.has(selectedView)) return attendeesTemplate(state);
+  if (attendeeViews.has(selectedView)) return attendeesTemplate(state);
+  if (programViews.has(selectedView)) return programTemplate(state);
   switch (selectedView) {
     case View.housing:
       return housingTemplate(state);
-    case View.program:
-      return programTemplate(state);
     default:
       return html`Pohled do neznáma`;
   }
@@ -926,6 +959,7 @@ const endpointForView = new Map([
   [View.volunteerAttendees, Endpoint.attendees],
   [View.staffAttendees, Endpoint.attendees],
   [View.program, Endpoint.program],
+  [View.programApproval, Endpoint.program],
   [View.housing, Endpoint.housing],
 ]);
 

@@ -33,6 +33,7 @@ export const View = {
   volunteerAttendees: "volunteerAttendees",
   housing: "housing",
   program: "program",
+  programApproval: "programApproval",
 };
 
 export const Endpoint = {

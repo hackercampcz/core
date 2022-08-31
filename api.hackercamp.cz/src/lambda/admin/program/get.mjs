@@ -24,11 +24,29 @@ async function getProgram(year) {
   );
   return res.Items.map((x) => unmarshall(x));
 }
+
+async function getApprovalQueue(year) {
+  console.log("Loading approved program", { year });
+  const res = await db.send(
+    new ScanCommand({
+      TableName: process.env.db_table_program,
+      FilterExpression: "#yr = :yr AND attribute_not_exists(approved)",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        { ":yr": year },
+        { removeUndefinedValues: true }
+      ),
+    })
+  );
+  return res.Items.map((x) => unmarshall(x));
+}
+
 function getData(type, year) {
   switch (type) {
     case "program":
       return getProgram(year);
-    // TODO: events to approve
+    case "programApproval":
+      return getApprovalQueue(year);
     default:
       throw new Error(`Unknown type ${type}`);
   }
