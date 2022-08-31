@@ -1,6 +1,8 @@
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { initRenderLoop } from "./lib/renderer.js";
+import * as rollbar from "./lib/rollbar.js";
+import { when } from "lit/directives/when.js";
 
 export const state = defAtom({
   view: renderAddEventForm,
@@ -353,6 +355,10 @@ export function renderSignpost() {
   `;
 }
 
+function handleHackerChanged(event) {
+  console.log(event.target.value);
+}
+
 export function renderAddEventForm({
   lineupId,
   profile,
@@ -362,14 +368,39 @@ export function renderAddEventForm({
   startAt,
   endAt,
   preferredTime,
+  hackers = [],
 }) {
   const headHtml = header ?? HEADER_BY_LINEUP.get(lineupId);
-  const fieldsHtml = FIELDS_BY_LINEUP.get(lineupId)({ startAt, endAt, preferredTime });
+  const fieldsHtml = FIELDS_BY_LINEUP.get(lineupId)({
+    startAt,
+    endAt,
+    preferredTime,
+  });
+
   return html`
     ${headHtml}
     <form method="post" action="${apiUrl}program">
       <input type="hidden" name="lineup" value=${lineupId} />
-      <input type="hidden" name="slackID" value=${profile.sud} />
+      ${when(
+        hackers.length,
+        () => html`<div class="field">
+          <input
+            list="hackers"
+            name="slackID"
+            type="search"
+            value=${profile.sub}
+            @change=${handleHackerChanged}
+          />
+          <datalist id="hackers">
+            ${hackers.map(
+              (hacker) => html`
+                <option value=${hacker.slackID}>${hacker.name}</option>
+              `
+            )}
+          </datalist>
+        </div>`,
+        () => html`<input type="hidden" name="slackID" value=${profile.sub} />`
+      )}
       <input type="hidden" name="year" value=${year} />
       ${fieldsHtml}
       <button type="submit" class="hc-button">Odeslat to</button>
@@ -377,12 +408,22 @@ export function renderAddEventForm({
   `;
 }
 
-export function renderInit(
+export async function renderInit(
   rootElement,
-  { apiUrl, profile, lineupId, header, startAt, endAt, preferredTime }
+  {
+    apiUrl,
+    profile,
+    lineupId,
+    header,
+    startAt,
+    endAt,
+    preferredTime,
+    hijackHacker = false,
+  }
 ) {
   initRenderLoop(state, rootElement);
   const view = lineupId ? renderAddEventForm : renderSignpost;
+
   transact((x) =>
     Object.assign(x, {
       header,
@@ -395,4 +436,23 @@ export function renderInit(
       preferredTime,
     })
   );
+
+  if (hijackHacker) {
+    try {
+      const response = await fetch(`${apiUrl}housing?year=2022`, {
+        headers: { Accept: "application/json" },
+        credentials: "include",
+      });
+      const housing = await response.json();
+      const hackers = housing.map(({ name, slackID }) => ({
+        name,
+        slackID,
+      }));
+      transact((x) => Object.assign(x, { hackers }));
+    } catch (o_O) {
+      rollbar.error(o_O);
+      snackbar.labelText = "Chyba při načítání hackerů";
+      snackbar.show();
+    }
+  }
 }
