@@ -275,9 +275,13 @@ function renderProgram({
 }) {
   const { fullProgram } = featureToggles;
 
-  const eventStartAtSlot = (event) => getSlotNumber(startAt, event.startAt);
+  const eventStartAtSlot = (event) =>
+    event.topic ? 0 : getSlotNumber(startAt, event.startAt);
   const eventDurationInSlots = (event) =>
-    getSlotNumber(startAt, event.endAt) - getSlotNumber(startAt, event.startAt);
+    event.topic
+      ? 0
+      : getSlotNumber(startAt, event.endAt) -
+        getSlotNumber(startAt, event.startAt);
 
   const renderAndShowAddEventForm = (
     lineupId,
@@ -857,9 +861,10 @@ async function fetchLineups(apiHost) {
 async function fetchEvents(apiHost) {
   const { featureToggles, year } = state.deref();
   const params = new URLSearchParams({ year });
-  const endpoint = featureToggles.fullProgram
-    ? `/program/events.json?${params}`
-    : new URL(`program/?${params}`, apiHost).href;
+  const endpoint =
+    featureToggles.fullProgram && false
+      ? `/program/events.json?${params}`
+      : new URL(`program/?${params}`, apiHost).href;
   const resp = await fetch(endpoint, {
     headers: { Accept: "application/json" },
     credentials: "include",
