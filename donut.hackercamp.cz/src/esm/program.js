@@ -71,6 +71,9 @@ function makeDayline(startAt, endAt, minutes = SLOT_MINUTES) {
 }
 
 function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
+  if (!startAt || !time) {
+    return 0;
+  }
   const diff = time.getTime() - startAt.getTime();
   const perMinutes = minutes * 60 * 1000;
   const steps = diff / perMinutes;
@@ -275,13 +278,9 @@ function renderProgram({
 }) {
   const { fullProgram } = featureToggles;
 
-  const eventStartAtSlot = (event) =>
-    event.topic ? 0 : getSlotNumber(startAt, event.startAt);
+  const eventStartAtSlot = (event) => getSlotNumber(startAt, event.startAt);
   const eventDurationInSlots = (event) =>
-    event.topic
-      ? 0
-      : getSlotNumber(startAt, event.endAt) -
-        getSlotNumber(startAt, event.startAt);
+    getSlotNumber(startAt, event.endAt) - getSlotNumber(startAt, event.startAt);
 
   const renderAndShowAddEventForm = (
     lineupId,
