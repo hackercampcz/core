@@ -74,6 +74,7 @@ function getSlotNumber(startAt, time, minutes = SLOT_MINUTES) {
   if (!startAt || !time) {
     return 0;
   }
+
   const diff = time.getTime() - startAt.getTime();
   const perMinutes = minutes * 60 * 1000;
   const steps = diff / perMinutes;
@@ -793,6 +794,8 @@ function renderProgram({
                           data-tick=${makeTick(time)}
                           data-day=${formatShortDayName(time)}
                           @click=${(event) => {
+                            // timezone hotfix
+                            time.setHours(time.getHours() + 2);
                             event.preventDefault();
                             renderAndShowAddEventForm(lineup.id, {
                               preferredTime: time,
