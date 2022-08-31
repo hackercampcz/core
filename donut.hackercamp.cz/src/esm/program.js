@@ -178,10 +178,13 @@ function eventTemplate({
     )}
     <dialog class="event__detail" id="event-detail-${event.id}">
       <h1>${event.title}</h1>
-      <p>
-        ${formatEventTimeInfo(event)}
-        <code>${lineup.name}</code><br />
-      </p>
+      ${when(
+        !event.topic,
+        () => html`<p>
+          ${formatEventTimeInfo(event)}
+          <code>${lineup.name}</code><br />
+        </p>`
+      )}
       <p>${event.description}</p>
       ${when(
         fullProgram && event.type === "topic",
@@ -632,7 +635,7 @@ function renderProgram({
       }
       figure.speaker img {
         border-radius: 50%;
-        width: 32px;
+        min-width: 32px;
         height: 32px;
         margin: 0;
         overflow: hidden;
