@@ -545,6 +545,9 @@ function renderProgram({
       }
       .lineup__info pre {
         line-height: 1.5;
+        line-break: auto;
+        word-break: break-word;
+        white-space: break-spaces;
       }
       @media (min-width: 400px) {
         .lineup__event,
