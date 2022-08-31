@@ -96,7 +96,7 @@ export async function handler(event) {
     if (sanitizedData.duration && sanitizedData.startAt) {
       const duration = parseInt(sanitizedData.duration, 10) * 60 * 1000;
       const startTime = new Date(sanitizedData.startAt).getTime();
-      sanitizedData.endAt = new Date(startTime + duration);
+      sanitizedData.endAt = new Date(startTime + duration).toISOString();
     }
     console.log({ method: "POST", data: sanitizedData, submittedBy, year });
     const attendee = await getAttendee(dynamo, submittedBy, year);
