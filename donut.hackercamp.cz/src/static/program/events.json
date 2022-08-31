@@ -249,11 +249,34 @@
     "startAt": "2022-09-02T10:15:00.000+02:00",
     "endAt": "2022-09-02T12:00:00.000+02:00",
     "title": "Biohacking",
-    "description": "Šraky, Míla Formánek, Bolek Kerouš",
+    "description": "Rozeberme téma biohacking na cimprcampr.",
     "level": 110,
     "type": "topic",
     "people": [
-      { "slackID": "121232", "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03URCQNMU2-00983dc5012b-512", "name": "Ondřej Zoubek" },
+    ]
+  },
+  {
+    "id": "biohacking-slot-1",
+    "topic": "biohacking",
+    "lineup": "limain",
+    "startAt": "2022-09-02T10:15:00.000+02:00",
+    "endAt": "2022-09-02T12:00:00.000+02:00",
+    "title": "Není BIO jako bio",
+    "description": "Chci vám ukázat, co si představuju pd slovy bio a hacking.",
+    "people": [
+      { "slackID": "121232", "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03URCQNMU2-00983dc5012b-512", "name": "Ondřej Zoubek" }
+    ]
+  },
+
+  {
+    "id": "biohacking-slot-1",
+    "topic": "biohacking",
+    "lineup": "limain",
+    "startAt": "2022-09-02T10:15:00.000+02:00",
+    "endAt": "2022-09-02T12:00:00.000+02:00",
+    "title": "Jak 100 hodin nespat",
+    "description": "Ukážu vám, co pomocí přírodních látek dokáže vaše tělo.",
+    "people": [
       { "slackID": "131322", "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03U1766R0F-b686175664c5-512", "name": "Martin Holečko" }
     ]
   },

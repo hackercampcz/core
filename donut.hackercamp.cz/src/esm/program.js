@@ -115,79 +115,98 @@ function handleLineupsScroll(event) {
   );
 }
 
-function eventTemplate(
+function eventTemplate({
   lineup,
   event,
+  topicEvents,
   eventStartAtSlot,
   eventDurationInSlots,
-  renderAndShowAddEventForm
-) {
+  renderAndShowAddEventForm,
+}) {
   const { featureToggles } = state.deref();
   const { fullProgram } = featureToggles;
   const durationInSlots = eventDurationInSlots(event);
   return html`
-    <div
-      class="${classMap({
-        lineup__event: true,
-        "lineup__event--narrow":
-          durationInSlots === 1 && event.title?.length > 3,
-        [`lineup__event--${event.type}`]: event.type,
-      })}"
-      data-lineup=${lineup.id}
-      id=${event.id}
-      style=${`
+    ${when(
+      !event.topic,
+      () => html`<div
+        class="${classMap({
+          lineup__event: true,
+          "lineup__event--narrow":
+            durationInSlots === 1 && event.title?.length > 3,
+          [`lineup__event--${event.type}`]: event.type,
+        })}"
+        data-lineup=${lineup.id}
+        id=${event.id}
+        style=${`
         --slot-start: ${eventStartAtSlot(event)};
         --slot-duration: ${durationInSlots};
         --slot-top-offset: ${event._top ?? "calc(var(--spacing) / 4)"};
       `}
-      @click=${() => showModalDialog(`event-detail-${event.id}`)}
-    >
-      <pre
-        style="${`
+        @click=${() => showModalDialog(`event-detail-${event.id}`)}
+      >
+        <p
+          style="${`
           font-weight: ${event.level > 100 ? "bold" : "normal"};
           font-size: ${event.level || 100}%;
         `}"
-      >
-${event.title}</pre
-      >
-      ${when(
-        fullProgram && event.type === "topic" && event.people?.length,
-        () => html`
-          <div class="people-list">
-            ${event.people.map(
-              (speaker) =>
-                html`
-                  <figure class="speaker speaker--photo">
-                    <img
-                      alt="${speaker.name}"
-                      src="${speaker.image}"
-                      width="100%"
-                      height="100%"
-                    />
-                  </figure>
-                `
-            )}
-            <figure class="speaker speaker--add">+</figure>
-          </div>
-        `
-      )}
-    </div>
+        >
+          ${event.title}
+        </p>
+        ${when(
+          fullProgram && event.type === "topic" && event.people?.length,
+          () => html`
+            <div class="people-list">
+              ${event.people.map(
+                (speaker) =>
+                  html`
+                    <figure class="speaker speaker--photo">
+                      <img
+                        alt="${speaker.name}"
+                        src="${speaker.image}"
+                        width="100%"
+                        height="100%"
+                      />
+                    </figure>
+                  `
+              )}
+              <figure class="speaker speaker--add">+</figure>
+            </div>
+          `
+        )}
+      </div>`
+    )}
     <dialog class="event__detail" id="event-detail-${event.id}">
       <h1>${event.title}</h1>
       <p>
         ${formatEventTimeInfo(event)}
         <code>${lineup.name}</code><br />
       </p>
-      <p><pre>${event.description}</pre></p>
+      <p>${event.description}</p>
       ${when(
         fullProgram && event.type === "topic",
         () => html`
           <div class="people-list">
-            ${event.people?.map(
-              ({ slackID, name, image }) => html`
+            ${(topicEvents || []).map(
+              ({ id, title, people = [] }) => html`
                 <figure class="speaker speaker--full">
-                  <img width="100%" height="100%" alt=${name} src=${image} />
-                  ${name}
+                  ${people.map(
+                    ({ name, image }) => html`<img
+                      width="32"
+                      height="32"
+                      alt=${name}
+                      src=${image}
+                    />`
+                  )}
+                  <a
+                    href="#"
+                    @click=${(e) => {
+                      e.preventDefault();
+
+                      showModalDialog(`event-detail-${id}`);
+                    }}
+                    >${title}</a
+                  >
                 </figure>
               `
             )}
@@ -196,7 +215,6 @@ ${event.title}</pre
             class="hc-link hc-link--decorated"
             style="padding: calc(var(--spacing) / 4);"
             @click=${(_event) => {
-              console.log(event);
               _event.preventDefault();
               renderAndShowAddEventForm(lineup.id, {
                 selectedTopic: event.id,
@@ -211,6 +229,13 @@ ${event.title}</pre
       <button name="close">Zavřít</button>
     </dialog>
   `;
+}
+
+function lineUpEvents(lineup, events) {
+  return events.filter((event) => event.lineup === lineup.id);
+}
+function topicEvents({ id }, events) {
+  return events.filter(({ topic }) => topic && topic === id);
 }
 
 /**
@@ -229,8 +254,6 @@ function renderProgram({
   featureToggles,
 }) {
   const { fullProgram } = featureToggles;
-  const lineUpEvents = (lineup, events) =>
-    events.filter((event) => event.lineup === lineup.id);
 
   const eventStartAtSlot = (event) => getSlotNumber(startAt, event.startAt);
   const eventDurationInSlots = (event) =>
@@ -734,13 +757,14 @@ function renderProgram({
               </dialog>
               <div class="lineup__eventsline">
                 ${lineUpEvents(lineup, events).map((event) =>
-                  eventTemplate(
+                  eventTemplate({
                     lineup,
                     event,
+                    topicEvents: topicEvents(event, events),
                     eventStartAtSlot,
                     eventDurationInSlots,
-                    renderAndShowAddEventForm
-                  )
+                    renderAndShowAddEventForm,
+                  })
                 )}
               </div>
               <div class="lineup__timeline">
@@ -754,7 +778,6 @@ function renderProgram({
                           data-day=${formatShortDayName(time)}
                           @click=${(event) => {
                             event.preventDefault();
-                            console.log(lineup, time);
                             renderAndShowAddEventForm(lineup.id, {
                               preferredTime: time,
                             });
@@ -847,6 +870,19 @@ function instatializeDates(input) {
   return output;
 }
 
+function joinTopicPeople(events) {
+  const output = structuredClone(events);
+  for (let event of output) {
+    if (event.type === "topic") {
+      event.people = [
+        ...(event.people || []),
+        ...topicEvents(event, events).flatMap(({ people }) => people),
+      ];
+    }
+  }
+  return output;
+}
+
 export async function main({ rootElement, env }) {
   rollbar.init(env);
   initRenderLoop(state, rootElement);
@@ -878,7 +914,9 @@ export async function main({ rootElement, env }) {
 
   try {
     const events = await fetchEvents(env["api-host"]);
-    transact((x) => Object.assign(x, { events: instatializeDates(events) }));
+    transact((x) =>
+      Object.assign(x, { events: joinTopicPeople(instatializeDates(events)) })
+    );
   } catch (o_O) {
     rollbar.error(o_O);
     snackbar.labelText = "Chyba při načítání eventů";

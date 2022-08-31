@@ -98,10 +98,10 @@ const FIELDS_BY_LINEUP = new Map([
           <input id="title" name="title" type="text" required />
         </div>
         <div class="field">
-          <label for="annotation">Anotace aneb rozepíšeš se víc?</label>
+          <label for="description">Anotace aneb rozepíšeš se víc?</label>
           <textarea
-            id="annotation"
-            name="annotation"
+            id="description"
+            name="description"
             type="text"
             rows="5"
           ></textarea>
@@ -137,10 +137,10 @@ const FIELDS_BY_LINEUP = new Map([
         <input id="title" name="title" type="text" required />
       </div>
       <div class="field">
-        <label for="annotation">Anotace aneb rozepíšeš se víc?</label>
+        <label for="description">Anotace aneb rozepíšeš se víc?</label>
         <textarea
-          id="annotation"
-          name="annotation"
+          id="description"
+          name="description"
           type="text"
           rows="4"
         ></textarea>
@@ -187,10 +187,10 @@ const FIELDS_BY_LINEUP = new Map([
         <input id="title" name="title" type="text" required />
       </div>
       <div class="field">
-        <label for="annotation">Anotace aneb co si pod tím představit?</label>
+        <label for="description">Anotace aneb co si pod tím představit?</label>
         <textarea
-          id="annotation"
-          name="annotation"
+          id="description"
+          name="description"
           type="text"
           rows="4"
         ></textarea>
@@ -246,10 +246,10 @@ const FIELDS_BY_LINEUP = new Map([
         <input id="title" name="title" type="text" required />
       </div>
       <div class="field">
-        <label for="annotation">Anotace aneb co si pod tím představit?</label>
+        <label for="description">Anotace aneb co si pod tím představit?</label>
         <textarea
-          id="annotation"
-          name="annotation"
+          id="description"
+          name="description"
           type="text"
           rows="4"
         ></textarea>
