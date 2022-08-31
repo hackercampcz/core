@@ -495,6 +495,7 @@ export async function renderInit(
     preferredTime,
     hijackHacker = false, // mby change to hackers[] that are passed
     events = [],
+    selectedTopic,
   }
 ) {
   initRenderLoop(state, rootElement);
@@ -511,6 +512,7 @@ export async function renderInit(
       endAt,
       preferredTime,
       events,
+      selectedTopic,
     })
   );
 

@@ -151,22 +151,24 @@ function eventTemplate(
 ${event.title}</pre
       >
       ${when(
-        fullProgram && event.type === "topic",
+        fullProgram && event.type === "topic" && event.speakers?.length,
         () => html`
-          ${(event.speakers || []).map(
-            (speaker) =>
-              html`
-                <figure class="speaker speaker--photo">
-                  <img
-                    alt="${speaker.name}"
-                    src="${speaker.image}"
-                    width="100%"
-                    height="100%"
-                  />
-                </figure>
-              `
-          )}
-          <figure class="speaker speaker--add">+</figure>
+          <div class="speakers-list">
+            ${event.speakers.map(
+              (speaker) =>
+                html`
+                  <figure class="speaker speaker--photo">
+                    <img
+                      alt="${speaker.name}"
+                      src="${speaker.image}"
+                      width="100%"
+                      height="100%"
+                    />
+                  </figure>
+                `
+            )}
+            <figure class="speaker speaker--add">+</figure>
+          </div>
         `
       )}
     </div>
@@ -184,9 +186,12 @@ ${event.title}</pre
             <a
               class="hc-link hc-link--decorated"
               style="padding: calc(var(--spacing) / 4);"
-              @click=${(event) => {
-                event.preventDefault();
-                renderAndShowAddEventForm(lineup.id);
+              @click=${(_event) => {
+                console.log(event)
+                _event.preventDefault();
+                renderAndShowAddEventForm(lineup.id, {
+                  selectedTopic: event.id,
+                });
               }}
             >
               Zapojit se
@@ -223,7 +228,10 @@ function renderProgram({
   const eventDurationInSlots = (event) =>
     getSlotNumber(startAt, event.endAt) - getSlotNumber(startAt, event.startAt);
 
-  const renderAndShowAddEventForm = (lineupId, { preferredTime } = {}) => {
+  const renderAndShowAddEventForm = (
+    lineupId,
+    { preferredTime, selectedTopic } = {}
+  ) => {
     renderAddEventDialog(document.getElementById("add-event-form"), {
       apiUrl,
       profile,
@@ -232,6 +240,7 @@ function renderProgram({
       endAt,
       preferredTime,
       events,
+      selectedTopic,
     });
     // mby closwe previous modal here
     showModalDialog("add-event");
@@ -573,6 +582,10 @@ function renderProgram({
         line-height: calc(16px * 1.5);
       }
 
+      .speakers-list {
+        padding: calc(var(--spacing) / 2) 0;
+      }
+
       figure.speaker {
         border-radius: 50%;
         width: 32px;
@@ -584,6 +597,7 @@ function renderProgram({
         padding: 2px;
         float: left;
         margin: calc(var(--spacing) / 4) calc(var(--spacing) / 4) 0 0;
+        color: var(--hc-background-color);
       }
       figure.speaker img {
         border-radius: 50%;
