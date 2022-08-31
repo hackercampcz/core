@@ -111,6 +111,7 @@ async function processRequest(db, data, slackID) {
     case "approve":
       return approveEvent(db, data.params, slackID);
     case "delete":
+      console.log({ event: "Deleting event", event_id: data.params.event_id });
       await deleteAttendeeEvents(db, data.params);
       return deleteEvent(db, data.params);
   }
