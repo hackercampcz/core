@@ -44,6 +44,8 @@ createTxtRecord(
   "google-site-verification=DsAlbVX0oPkg6-3STev856iJg08e5u19lKd36cct5is"
 );
 
+// TODO: slack-domain-verification=GGg8FlpfnfuznZITUfCuicVigdiJEo9q5nXA3sgM
+
 const hostedZone = getHostedZone(domain);
 new aws.route53.Record(`${domain}/txt-records-postmark-dkim`, {
   name: pulumi.interpolate`20220529092104pm._domainkey.${hostedZone.name}`,
@@ -59,6 +61,13 @@ new aws.route53.Record(`${domain}/cname-record-postmark-bounce`, {
   type: "CNAME",
   zoneId: pulumi.interpolate`${hostedZone.zoneId}`,
   records: ["pm.mtasv.net"],
+  ttl: 3600,
+});
+new aws.route53.Record(`${domain}/cname-google-recovery`, {
+  name: pulumi.interpolate`google288bf0ca4bf89f6a.${hostedZone.name}`,
+  type: "CNAME",
+  zoneId: pulumi.interpolate`${hostedZone.zoneId}`,
+  records: ["google.com"],
   ttl: 3600,
 });
 
