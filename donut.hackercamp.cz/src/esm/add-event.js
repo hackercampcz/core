@@ -80,7 +80,13 @@ const FIELDS_BY_LINEUP = new Map([
             Vyberte vaše téma
           </option>
           ${lineupTopicEvents.map(
-            (topic) => html`<option value=${topic.id}>${topic.title}</option>`
+            (topic) =>
+              html`<option
+                value=${topic.id}
+                ?selected=${selectedTopic && selectedTopic === topic.id}
+              >
+                ${topic.title}
+              </option>`
           )}
         </select>
       </div>
@@ -316,7 +322,7 @@ const FIELDS_BY_LINEUP = new Map([
             (topic) =>
               html`<option
                 value=${topic.id}
-                ?selected=${selectedTopic === topic.id}
+                ?selected=${selectedTopic && selectedTopic === topic.id}
               >
                 ${topic.title}
               </option>`

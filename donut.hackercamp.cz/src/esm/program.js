@@ -218,7 +218,7 @@ function eventTemplate({
           </div>
           <a
             class="hc-link hc-link--decorated"
-            style="padding: calc(var(--spacing) / 4);"
+            style="margin: calc(var(--spacing) / 2) 0; padding: calc(var(--spacing) / 4);"
             @click=${(_event) => {
               _event.preventDefault();
               renderAndShowAddEventForm(lineup.id, {
@@ -503,6 +503,7 @@ function renderProgram({
       .lineup__event.lineup__event--narrow {
         writing-mode: vertical-lr;
         font-size: 80%;
+        padding: 4px;
       }
       .lineup__event.lineup__event--narrow p {
         line-height: 1;
