@@ -56,9 +56,6 @@ const FIELDS_BY_LINEUP = new Map([
   [
     "limain",
     ({
-      startAt,
-      endAt,
-      preferredTime,
       lineupTopicEvents,
       selectedTopic,
     }) => html`
@@ -137,7 +134,7 @@ const FIELDS_BY_LINEUP = new Map([
   ["libase", () => html`<em>copy of limain.</em>`],
   [
     "liback",
-    ({ startAt, endAt, preferredTime }) => html`
+    ({ campStartAt, campEndAt, preferredTime }) => html`
       <div class="field">
         <label for="title">Název workshopu </label>
         <input id="title" name="title" type="text" required />
@@ -171,8 +168,8 @@ const FIELDS_BY_LINEUP = new Map([
             name="startAt"
             type="datetime-local"
             value=${preferredTime?.toISOString().replace("Z", "")}
-            min=${startAt.toISOString().replace("Z", "")}
-            max=${endAt.toISOString().replace("Z", "")}
+            min=${campStartAt.toISOString().replace("Z", "")}
+            max=${campEndAt.toISOString().replace("Z", "")}
           />
         </div>
       </div>
@@ -185,7 +182,7 @@ const FIELDS_BY_LINEUP = new Map([
   ],
   [
     "liother",
-    ({ startAt, endAt, preferredTime }) => html`
+    ({ campStartAt, campEndAt, preferredTime }) => html`
       <div class="field">
         <label for="title"
           >Název aktivity, anotace (co si pod tím představit)</label
@@ -221,8 +218,8 @@ const FIELDS_BY_LINEUP = new Map([
             name="startAt"
             type="datetime-local"
             value=${preferredTime?.toISOString().replace("Z", "")}
-            min=${startAt.toISOString().replace("Z", "")}
-            max=${endAt.toISOString().replace("Z", "")}
+            min=${campStartAt.toISOString().replace("Z", "")}
+            max=${campEndAt.toISOString().replace("Z", "")}
           />
         </div>
       </div>
@@ -246,7 +243,7 @@ const FIELDS_BY_LINEUP = new Map([
   ["lijungle", html`<em>liwood copy</em>`],
   [
     "lipeep",
-    ({ preferredTime, startAt, endAt }) => html`
+    ({ preferredTime, campStartAt, campEndAt }) => html`
       <div class="field">
         <label for="title">Název aktivity</label>
         <input id="title" name="title" type="text" required />
@@ -280,8 +277,8 @@ const FIELDS_BY_LINEUP = new Map([
             name="startAt"
             type="datetime-local"
             .value=${preferredTime?.toISOString().replace("Z", "")}
-            min=${startAt.toISOString().replace("Z", "")}
-            max=${endAt.toISOString().replace("Z", "")}
+            min=${campStartAt.toISOString().replace("Z", "")}
+            max=${campEndAt.toISOString().replace("Z", "")}
           />
         </div>
       </div>
@@ -479,8 +476,8 @@ export function renderAddEventForm({
   year,
   apiUrl,
   header,
-  startAt,
-  endAt,
+  campStartAt,
+  campEndAt,
   preferredTime,
   hackers = [],
   events = [],
@@ -488,8 +485,8 @@ export function renderAddEventForm({
 }) {
   const headHtml = header ?? HEADER_BY_LINEUP.get(lineupId);
   const fieldsHtml = FIELDS_BY_LINEUP.get(lineupId)({
-    startAt,
-    endAt,
+    campStartAt,
+    campEndAt,
     preferredTime,
     lineupTopicEvents: events.filter(
       ({ lineup, type }) => lineup === lineupId && type === "topic"
@@ -534,8 +531,7 @@ export async function renderInit(
     profile,
     lineupId,
     header,
-    startAt,
-    endAt,
+    startAt: campStartAt,
     preferredTime,
     hijackHacker = false, // mby change to hackers[] that are passed
     events = [],
@@ -552,8 +548,7 @@ export async function renderInit(
       apiUrl,
       profile,
       lineupId,
-      startAt,
-      endAt,
+      campStartAt,
       preferredTime,
       events,
       selectedTopic,
