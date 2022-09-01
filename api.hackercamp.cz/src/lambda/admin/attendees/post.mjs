@@ -3,6 +3,7 @@ import {
   PutItemCommand,
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import {
   accepted,
@@ -20,13 +21,33 @@ import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
+function editAttendee(db, data) {
+  console.log({ event: "Save attendee", data });
+  return db.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_attendees,
+      Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
+      UpdateExpression: "SET note = :note, nfcTronID = :nfcTronID, edited = :now",
+      ExpressionAttributeValues: marshall(
+        {
+          ":note": data.note,
+          ":nfcTronID": data.nfcTronID,
+          ":now": new Date().toISOString(),
+        },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
+    })
+  );
+}
+
 /**
  * @param {DynamoDBClient} db
  * @param {*} data
  */
 async function processRequest(db, data) {
   switch (data.command) {
-    // TODO: do something useful
+    case "edit":
+      return editAttendee(db, data.params);
   }
 }
 
