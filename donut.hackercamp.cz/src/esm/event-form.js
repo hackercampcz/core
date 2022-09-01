@@ -5,14 +5,40 @@ import * as rollbar from "./lib/rollbar.js";
 import { when } from "lit/directives/when.js";
 
 export const state = defAtom({
-  view: renderAddEventForm,
+  view: signpostTemplate,
   year: 2022,
-  apiUrl: "",
+  apiHost: "",
   profile: {},
 });
 const transact = (fn) => state.swap(fn);
 
-const HEADER_BY_LINEUP = new Map([
+const eventFormStyles = html`
+  <style>
+    .event-type {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing);
+    }
+    .event-type .hc-card p {
+      text-align: left;
+      margin-top: var(--spacing);
+    }
+    .event-type .hc-link--decorated {
+      display: block;
+      width: auto;
+      position: relative;
+    }
+    .event-type .hc-link--decorated::after {
+      content: "⇨";
+      display: block;
+      float: right;
+      font-size: 32px;
+      line-height: calc(16px * 1.5);
+    }
+  </style>
+`;
+
+const lineupHeadersTemplates = new Map([
   ["", html`<em>nah.</em>`],
   [
     "limain",
@@ -51,14 +77,11 @@ const HEADER_BY_LINEUP = new Map([
   ],
 ]);
 
-const FIELDS_BY_LINEUP = new Map([
+const lineupsFiledsTemplates = new Map([
   ["", html`<em>nah.</em>`, ""],
   [
     "limain",
-    ({
-      lineupTopicEvents,
-      selectedTopic,
-    }) => html`
+    ({ lineupTopicEvents, selectedTopic }) => html`
       <div class="field">
         <label for="topic">Téma přednášky / talku</label>
         <select
@@ -362,12 +385,27 @@ const FIELDS_BY_LINEUP = new Map([
       </div>
     `,
   ],
+  [
+    "liorg",
+    ({ selectedTopic, lineupTopicEvents }) => html`<em>copy of liother</em>`,
+  ],
 ]);
-FIELDS_BY_LINEUP.set("lijungle", FIELDS_BY_LINEUP.get("liwood"));
-FIELDS_BY_LINEUP.set("libase", FIELDS_BY_LINEUP.get("limain"));
+lineupsFiledsTemplates.set("lijungle", lineupsFiledsTemplates.get("liwood"));
+lineupsFiledsTemplates.set("libase", lineupsFiledsTemplates.get("limain"));
+lineupsFiledsTemplates.set("liorg", lineupsFiledsTemplates.get("liotherview"));
 
-export function renderSignpost() {
+function showLineupEventForm(lineupId) {
+  transact((x) =>
+    Object.assign(x, {
+      view: eventFormTemplate,
+      lineupId,
+    })
+  );
+}
+
+export function signpostTemplate() {
   return html`
+    ${eventFormStyles}
     <h2>Jakým způsobem se do programu zapojíš?</h2>
     <section class="event-type">
       <div class="hc-card hc-card--decorated">
@@ -379,12 +417,7 @@ export function renderSignpost() {
             href="#"
             @click=${(event) => {
               event.preventDefault();
-              transact((x) =>
-                Object.assign(x, {
-                  view: renderAddEventForm,
-                  lineupId: "limain",
-                })
-              );
+              showLineupEventForm("limain");
             }}
             >Mainframe</a
           >
@@ -396,12 +429,7 @@ export function renderSignpost() {
             href="#"
             @click=${(event) => {
               event.preventDefault();
-              transact((x) =>
-                Object.assign(x, {
-                  view: renderAddEventForm,
-                  lineupId: "libase",
-                })
-              );
+              showLineupEventForm("libase");
             }}
             >Basecamp</a
           >
@@ -414,9 +442,7 @@ export function renderSignpost() {
           href="#"
           @click=${(event) => {
             event.preventDefault();
-            transact((x) =>
-              Object.assign(x, { view: renderAddEventForm, lineupId: "liback" })
-            );
+            showLineupEventForm("liback");
           }}
           >Backend</a
         >
@@ -428,9 +454,7 @@ export function renderSignpost() {
           href="#"
           @click=${(event) => {
             event.preventDefault();
-            transact((x) =>
-              Object.assign(x, { view: renderAddEventForm, lineupId: "lipeep" })
-            );
+            showLineupEventForm("lipeep");
           }}
           >PeopleWare</a
         >
@@ -442,9 +466,7 @@ export function renderSignpost() {
           href="#"
           @click=${(event) => {
             event.preventDefault();
-            transact((x) =>
-              Object.assign(x, { view: renderAddEventForm, lineupId: "liwood" })
-            );
+            showLineupEventForm("liwood");
           }}
           >WoodStack /<br />Jungle release</a
         >
@@ -456,12 +478,7 @@ export function renderSignpost() {
           href="#"
           @click=${(event) => {
             event.preventDefault();
-            transact((x) =>
-              Object.assign(x, {
-                view: renderAddEventForm,
-                lineupId: "liother",
-              })
-            );
+            showLineupEventForm("liother");
           }}
           >Doprovodný program</a
         >
@@ -470,11 +487,11 @@ export function renderSignpost() {
   `;
 }
 
-export function renderAddEventForm({
+export function eventFormTemplate({
   lineupId,
   profile,
   year,
-  apiUrl,
+  apiHost,
   header,
   campStartAt,
   campEndAt,
@@ -483,8 +500,8 @@ export function renderAddEventForm({
   events = [],
   selectedTopic,
 }) {
-  const headHtml = header ?? HEADER_BY_LINEUP.get(lineupId);
-  const fieldsHtml = FIELDS_BY_LINEUP.get(lineupId)({
+  const headHtml = header ?? lineupHeadersTemplates.get(lineupId);
+  const fieldsHtml = lineupsFiledsTemplates.get(lineupId)({
     campStartAt,
     campEndAt,
     preferredTime,
@@ -495,15 +512,17 @@ export function renderAddEventForm({
   });
 
   return html`
-    ${headHtml}
-    <form method="post" action="${apiUrl}program">
+    ${eventFormStyles} ${headHtml}
+    <form method="post" action="${apiHost}program">
       <input type="hidden" name="lineup" value=${lineupId} />
       ${when(
         hackers.length,
         () => html`<div class="field">
+          <label for="slackID">Hacker (SlackID)</label>
           <input
             list="hackers"
             name="slackID"
+            id="slackID"
             type="search"
             value=${profile.sub}
           />
@@ -524,14 +543,15 @@ export function renderAddEventForm({
   `;
 }
 
-export async function renderInit(
+export async function renderEventForm(
   rootElement,
   {
-    apiUrl,
+    apiHost,
     profile,
     lineupId,
     header,
-    startAt: campStartAt,
+    campStartAt,
+    campEndAt,
     preferredTime,
     hijackHacker = false, // mby change to hackers[] that are passed
     events = [],
@@ -539,16 +559,17 @@ export async function renderInit(
   }
 ) {
   initRenderLoop(state, rootElement);
-  const view = lineupId ? renderAddEventForm : renderSignpost;
+  const view = lineupId ? eventFormTemplate : signpostTemplate;
 
   transact((x) =>
     Object.assign(x, {
       header,
       view,
-      apiUrl,
+      apiHost,
       profile,
       lineupId,
       campStartAt,
+      campEndAt,
       preferredTime,
       events,
       selectedTopic,
@@ -557,7 +578,7 @@ export async function renderInit(
 
   if (hijackHacker) {
     try {
-      const response = await fetch(`${apiUrl}housing?year=2022`, {
+      const response = await fetch(new URL(`housing?year=2022`, apiHost).href, {
         headers: { Accept: "application/json" },
         credentials: "include",
       });

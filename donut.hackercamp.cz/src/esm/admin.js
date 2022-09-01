@@ -19,14 +19,18 @@ import {
 } from "./admin/registrations.js";
 import * as event from "./admin/program.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
-import { getContact, setReturnUrl } from "./lib/profile.js";
+import { getContact, getSlackProfile } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
+import { renderEventForm } from "./event-form.js";
+import { showModalDialog } from "./modal-dialog.js";
 
 const state = defAtom({
   selectedView: View.paid,
   view: renderView,
   apiHost: null,
+  campStartAt: new Date("2022-09-01T14:00:00"),
+  campEndAt: new Date("2022-09-04T14:00:00"),
 });
 
 const transact = (fn) => state.swap(fn);
@@ -857,7 +861,9 @@ function programTable(data) {
                 <button
                   class="hc-action-button"
                   title="Upravit event"
-                  @click="${() => {}}"
+                  @click=${() => {
+                    showEditEventModalDialog(row);
+                  }}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -903,6 +909,36 @@ function programTable(data) {
   `;
 }
 
+function programModalDialog() {
+  return html`
+    <dialog id="program-modal">
+      <div id="program-modal-root">nah</div>
+      <hr />
+      <button name="close" type="reset">Zavřít</button>
+    </dialog>
+  `;
+}
+
+async function showEditEventModalDialog(event) {
+  const { campStartAt,campEndAt,  apiHost, data } = state.deref();
+  const root = document.getElementById("program-modal-root");
+
+console.log(event)
+  renderEventForm(root, {
+    apiHost,
+    profile: getSlackProfile(),
+    lineupId: event.lineup,
+    // header,
+    campStartAt,
+    campEndAt,
+    // preferredTime,
+    hijackHacker: true,
+    events: await data,
+    selectedTopic: event.topic,
+  });
+  showModalDialog("program-modal");
+}
+
 function programTemplate(state) {
   const { data, selectedView } = state;
   return html`
@@ -916,7 +952,10 @@ function programTemplate(state) {
         ${until(
           data?.then((data) => {
             if (data.unauthorized) return unauthorized();
-            return programTable(sortBy("startAt", data, { asc: true }));
+            return [
+              programTable(sortBy("startAt", data, { asc: true })),
+              programModalDialog(),
+            ];
           }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -1024,4 +1063,5 @@ export async function main({ appRoot, searchParams, env, viewTitle }) {
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, searchParams);
   loadData(searchParams, env["api-host"]);
+  // initAddEventRenderLoop();
 }

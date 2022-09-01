@@ -8,7 +8,7 @@ import structuredClone from "@ungap/structured-clone";
 import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
 import { when } from "lit/directives/when.js";
-import { renderInit as renderAddEventDialog } from "./add-event.js";
+import { renderEventForm } from "./event-form.js";
 import { throttle } from "./lib/function.js";
 import { objectWalk } from "./lib/object.js";
 import { getSlackProfile } from "./lib/profile.js";
@@ -21,10 +21,10 @@ const DAY_START_HOUR = 8;
 
 const state = defAtom({
   view: renderProgram,
-  startAt: new Date("2022-09-01T14:00:00"),
+  campStartAt: new Date("2022-09-01T14:00:00"),
   visibleDate: new Date("2022-09-01T14:00:00"),
   onLineupsScroll() {},
-  endAt: new Date("2022-09-04T14:00:00"),
+  campEndAt: new Date("2022-09-04T14:00:00"),
   lineups: [],
   events: [],
   profile: {},
@@ -96,20 +96,20 @@ function getSlotWidth() {
 }
 
 function scrollToDate(date) {
-  const { startAt } = state.deref();
+  const { campStartAt } = state.deref();
   const scrollElement = document.getElementById("lineups");
-  const time = (date - startAt) / 1000 / 60 / SLOT_MINUTES;
+  const time = (date - campStartAt) / 1000 / 60 / SLOT_MINUTES;
   const left = time * getSlotWidth();
   scrollElement.scrollLeft = left;
 }
 
 function handleLineupsScroll(event) {
-  const { startAt } = state.deref();
-  const visibleDate = new Date(startAt.getTime());
+  const { campStartAt } = state.deref();
+  const visibleDate = new Date(campStartAt.getTime());
   const minutesScrolledOut =
     (event.target.scrollLeft / getSlotWidth()) * SLOT_MINUTES;
 
-  visibleDate.setMinutes(startAt.getMinutes() + minutesScrolledOut);
+  visibleDate.setMinutes(campStartAt.getMinutes() + minutesScrolledOut);
   location.hash = `#${visibleDate.toISOString()}`;
 
   transact((x) =>
@@ -127,8 +127,6 @@ function eventTemplate({
   eventDurationInSlots,
   renderAndShowAddEventForm,
 }) {
-  const { featureToggles } = state.deref();
-  const { fullProgram } = featureToggles;
   const durationInSlots = eventDurationInSlots(event);
   return html`
     ${when(
@@ -268,28 +266,29 @@ function topicEvents({ id }, events) {
  */
 function renderProgram({
   lineups,
-  startAt,
-  endAt,
+  campStartAt,
+  campEndAt,
   events,
   visibleDate,
   onLineupsScroll,
-  apiUrl,
+  apiHost,
   profile,
 }) {
-  const eventStartAtSlot = (event) => getSlotNumber(startAt, event.startAt);
+  const eventStartAtSlot = (event) => getSlotNumber(campStartAt, event.startAt);
   const eventDurationInSlots = (event) =>
-    getSlotNumber(startAt, event.endAt) - getSlotNumber(startAt, event.startAt);
+    getSlotNumber(campStartAt, event.endAt) -
+    getSlotNumber(campStartAt, event.startAt);
 
   const renderAndShowAddEventForm = (
     lineupId,
     { preferredTime, selectedTopic = null } = {}
   ) => {
-    renderAddEventDialog(document.getElementById("add-event-form"), {
-      apiUrl,
+    renderEventForm(document.getElementById("add-event-form"), {
+      apiHost,
       profile,
       lineupId,
-      startAt,
-      endAt,
+      campStartAt,
+      campEndAt,
       preferredTime,
       events,
       selectedTopic,
@@ -312,7 +311,6 @@ function renderProgram({
         --slot-width: calc(100vw / 2.5 / 4);
         --tick-color: #eee;
         --tick-highlight-color: #aaa;
-        --dialog-width: 800px;
       }
       @media screen and (min-width: 480px) and (max-width: 839px) {
         .program {
@@ -571,20 +569,6 @@ function renderProgram({
         line-height: 1.2;
       }
 
-      dialog {
-        width: var(--dialog-width);
-      }
-
-      dialog button[name="close"] {
-        display: block;
-        margin: var(--spacing) auto 0 auto;
-        background-color: var(--hc-background-color);
-        color: var(--hc-text-color);
-        border: 1px solid var(--hc-text-color);
-        padding: calc(var(--spacing) / 2);
-        font: 700 14px var(--hc-font-family);
-        cursor: pointer;
-      }
 
       .program__beside {
         box-size: border-box;
@@ -606,28 +590,6 @@ function renderProgram({
       }
       .lineup:first-child .lineup__slot {
         pointer-events: none;
-      }
-
-      .event-type {
-        display: flex;
-        flex-direction: column;
-        gap: var(--spacing);
-      }
-      .event-type .hc-card p {
-        text-align: left;
-        margin-top: var(--spacing);
-      }
-      .event-type .hc-link--decorated {
-        display: block;
-        width: auto;
-        position: relative;
-      }
-      .event-type .hc-link--decorated::after {
-        content: "⇨";
-        display: block;
-        float: right;
-        font-size: 32px;
-        line-height: calc(16px * 1.5);
       }
 
       .people-list {
@@ -704,7 +666,7 @@ function renderProgram({
       </div>
       <div class="program__dayline">
         <div class="dayline">
-          ${makeDayline(startAt, endAt).map(
+          ${makeDayline(campStartAt, campEndAt).map(
             (day) =>
               html`
                 <a
@@ -781,7 +743,7 @@ function renderProgram({
                 )}
               </div>
               <div class="lineup__timeline">
-                ${makeTimeline(startAt, endAt, 15).map(
+                ${makeTimeline(campStartAt, campEndAt, 15).map(
                   (time) =>
                     html`
                       <a
@@ -892,7 +854,7 @@ export async function main({ rootElement, env }) {
 
   transact((x) =>
     Object.assign(x, {
-      apiUrl: env["api-host"],
+      apiHost: env["api-host"],
       profile: getSlackProfile(),
       featureToggles: { fullProgram: env["feature-toggle/full-program"] },
     })
