@@ -331,11 +331,10 @@ async function loadData(profile, year, apiURL) {
   }
 }
 
-export async function main({ searchParams, slackButton, env }) {
+export async function main({ searchParams, rootElement, env }) {
   rollbar.init(env);
-  initRenderLoop(state, slackButton);
+  initRenderLoop(state, rootElement);
 
-  state.swap((x) => Object.assign(x, { apiHost: env["api-host"] }));
   const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
 
   if (
@@ -347,6 +346,7 @@ export async function main({ searchParams, slackButton, env }) {
   }
 
   if (isSignedIn()) {
+    state.swap((x) => Object.assign(x, { apiHost: env["api-host"] }));
     try {
       const profile = getSlackProfile();
       const year = 2022;
