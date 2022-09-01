@@ -10,11 +10,12 @@ import { classMap } from "lit-html/directives/class-map.js";
 import { when } from "lit/directives/when.js";
 import { renderEventForm } from "./event-form.js";
 import { throttle } from "./lib/function.js";
-import { objectWalk } from "./lib/object.js";
 import { getSlackProfile } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 import { showModalDialog } from "./modal-dialog.js";
+import { instatializeDates } from "./lib/object.js";
+import { isISODateTime } from "./lib/validation.js";
 
 const SLOT_MINUTES = 15;
 const DAY_START_HOUR = 8;
@@ -817,22 +818,6 @@ async function fetchEvents(apiHost) {
     credentials: "include",
   });
   return resp.json();
-}
-
-const isoDateTimeRegex =
-  /^(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d)|(\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d)$/;
-function isISODateTime(value) {
-  return typeof value === "string" && isoDateTimeRegex.test(value);
-}
-
-function instatializeDates(input) {
-  const output = structuredClone(input);
-  objectWalk(output, (value, key, obj) => {
-    if (isISODateTime(value)) {
-      obj[key] = new Date(value);
-    }
-  });
-  return output;
 }
 
 function joinTopicPeople(events) {

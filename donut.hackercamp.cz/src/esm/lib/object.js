@@ -1,3 +1,5 @@
+import { isISODateTime } from "./validation.js";
+
 /**
  * Executes a function on each of an objects own enumerable properties. The
  *  callback function will receive three arguments: the value of the current
@@ -50,4 +52,19 @@ export function objectWalk(obj, descentionFn, ascentionFn) {
     return obj;
   }
   return walk(obj);
+}
+
+/**
+ * Walks trough given object and calls new Date(value) if ISO date
+ * @param {Object} input object
+ * @returns
+ */
+export function instatializeDates(input) {
+  const output = structuredClone(input);
+  objectWalk(output, (value, key, obj) => {
+    if (isISODateTime(value)) {
+      obj[key] = new Date(value);
+    }
+  });
+  return output;
 }

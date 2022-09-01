@@ -81,7 +81,7 @@ const lineupsFiledsTemplates = new Map([
   ["", html`<em>nah.</em>`, ""],
   [
     "limain",
-    ({ lineupTopicEvents, selectedTopic }) => html`
+    ({ lineupTopicEvents, selectedTopic, editingEvent }) => html`
       <div class="field">
         <label for="topic">Téma přednášky / talku</label>
         <select
@@ -121,7 +121,13 @@ const lineupsFiledsTemplates = new Map([
       <div style=${`display: ${selectedTopic ? "block" : "none"}`}>
         <div class="field">
           <label for="title">Název přednášky</label>
-          <input id="title" name="title" type="text" required />
+          <input
+            id="title"
+            name="title"
+            type="text"
+            required
+            .value=${editingEvent?.title || ""}
+          />
         </div>
         <div class="field">
           <label for="description">Anotace aneb rozepíšeš se víc?</label>
@@ -130,6 +136,7 @@ const lineupsFiledsTemplates = new Map([
             name="description"
             type="text"
             rows="5"
+            .value=${editingEvent?.description.trim() || ""}
           ></textarea>
         </div>
         <div class="group">
@@ -141,14 +148,19 @@ const lineupsFiledsTemplates = new Map([
               type="number"
               min="15"
               max="120"
-              value="15"
+              .value=${editingEvent?.title || "15"}
               required
             />
           </div>
         </div>
         <div class="field">
           <label for="buddy">Parťák (nepovinnej)</label>
-          <input id="buddy" name="buddy" type="text" />
+          <input
+            id="buddy"
+            name="buddy"
+            type="text"
+            .value=${editingEvent?.buddy || ""}
+          />
         </div>
         <button type="submit" class="hc-button">Odeslat to</button>
       </div>
@@ -205,71 +217,106 @@ const lineupsFiledsTemplates = new Map([
   ],
   [
     "liother",
-    ({ campStartAt, campEndAt, preferredTime }) => html`
-      <div class="field">
-        <label for="title"
-          >Název aktivity, anotace (co si pod tím představit)</label
-        >
-        <input id="title" name="title" type="text" required />
-      </div>
-      <div class="field">
-        <label for="description">Anotace aneb co si pod tím představit?</label>
-        <textarea
-          id="description"
-          name="description"
-          type="text"
-          rows="4"
-        ></textarea>
-      </div>
-      <div class="group">
+    ({ campStartAt, campEndAt, preferredTime, editingEvent }) =>
+      console.log(editingEvent) ||
+      html`
         <div class="field">
-          <label for="duration">Délka (minuty)</label>
+          <label for="title"
+            >Název aktivity, anotace (co si pod tím představit)</label
+          >
           <input
-            id="duration"
-            name="duration"
-            type="number"
-            min="15"
-            max="120"
-            value="60"
+            id="title"
+            name="title"
+            type="text"
+            required
+            .value=${editingEvent?.title || ""}
+          />
+        </div>
+        <div class="field">
+          <label for="description"
+            >Anotace aneb co si pod tím představit?</label
+          >
+          <textarea
+            id="description"
+            name="description"
+            type="text"
+            rows="4"
+            .value=${editingEvent?.description || ""}
+          ></textarea>
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="duration">Délka (minuty)</label>
+            <input
+              id="duration"
+              name="duration"
+              type="number"
+              min="15"
+              max="120"
+              .value=${editingEvent?.duration || "60"}
+              required
+            />
+          </div>
+          <div class="field" style="flex: 2">
+            <label for="preferred-time">Preferovaný čas</label>
+            <input
+              id="preferred-time"
+              name="startAt"
+              type="datetime-local"
+              value=${preferredTime?.toISOString().replace("Z", "")}
+              min=${campStartAt.toISOString().replace("Z", "")}
+              max=${campEndAt.toISOString().replace("Z", "")}
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label for="buddy">Parťák (nepovinnej)</label>
+          <input
+            id="buddy"
+            name="buddy"
+            type="text"
+            .value=${editingEvent?.buddy || ""}
+          />
+        </div>
+        <div class="field field--block">
+          <label for="demands">
+            Máš specifické požadavky, aby to klaplo?
+          </label>
+          <textarea
+            id="demands"
+            name="demands"
+            rows="5"
+            .value=${editingEvent?.demands.trim() || ""}
+          ></textarea>
+        </div>
+        <div class="field">
+          <label for="place"
+            >Místo, kde se sejdete / kde se aktivta bude kontat</label
+          >
+          <input
+            id="place"
+            name="place"
+            type="text"
+            .value=${editingEvent?.place || ""}
             required
           />
         </div>
-        <div class="field" style="flex: 2">
-          <label for="preferred-time">Preferovaný čas</label>
-          <input
-            id="preferred-time"
-            name="startAt"
-            type="datetime-local"
-            value=${preferredTime?.toISOString().replace("Z", "")}
-            min=${campStartAt.toISOString().replace("Z", "")}
-            max=${campEndAt.toISOString().replace("Z", "")}
-          />
-        </div>
-      </div>
-      <div class="field">
-        <label for="buddy">Parťák (nepovinnej)</label>
-        <input id="buddy" name="buddy" type="text" />
-      </div>
-      <div class="field field--block">
-        <label for="demands"> Máš specifické požadavky, aby to klaplo? </label>
-        <textarea id="demands" name="demands" rows="5"></textarea>
-      </div>
-      <div class="field">
-        <label for="palce"
-          >Místo, kde se sejdete / kde se aktivta bude kontat</label
-        >
-        <input id="palce" name="palce" type="text" required />
-      </div>
-      <button type="submit" class="hc-button">Odeslat to</button>
-    `,
+        <button type="submit" class="hc-button">Odeslat to</button>
+      `,
   ],
   ["lijungle", html`<em>liwood copy</em>`],
   [
     "lipeep",
-    ({ preferredTime, campStartAt, campEndAt }) => html`
+    ({ preferredTime, campStartAt, campEndAt, editingEvent }) => html`
       <div class="field">
         <label for="title">Název aktivity</label>
-        <input id="title" name="title" type="text" required />
+        <input
+          id="title"
+          name="title"
+          type="text"
+          required
+          .value=${editingEvent?.title || ""}
+        />
       </div>
       <div class="field">
         <label for="description">Anotace aneb co si pod tím představit?</label>
@@ -278,6 +325,7 @@ const lineupsFiledsTemplates = new Map([
           name="description"
           type="text"
           rows="4"
+          .value=${editingEvent?.description.trim() || ""}
         ></textarea>
       </div>
       <div class="group">
@@ -289,7 +337,7 @@ const lineupsFiledsTemplates = new Map([
             type="number"
             min="15"
             max="120"
-            value="60"
+            value=${editingEvent?.description || "60"}
             required
           />
         </div>
@@ -307,13 +355,24 @@ const lineupsFiledsTemplates = new Map([
       </div>
       <div class="field">
         <label for="buddy">Parťák (nepovinnej)</label>
-        <input id="buddy" name="buddy" type="text" />
+        <input
+          id="buddy"
+          name="buddy"
+          type="text"
+          .value=${editingEvent?.buddy || "60"}
+        />
       </div>
       <div class="field">
-        <label for="palce"
+        <label for="place"
           >Místo, kde se sejdete / kde se aktivta bude kontat</label
         >
-        <input id="palce" name="palce" type="text" required />
+        <input
+          id="place"
+          name="place"
+          type="text"
+          required
+          .value=${editingEvent?.place || "60"}
+        />
       </div>
       <button type="submit" class="hc-button">Odeslat to</button>
     `,
@@ -387,12 +446,13 @@ const lineupsFiledsTemplates = new Map([
   ],
   [
     "liorg",
-    ({ selectedTopic, lineupTopicEvents }) => html`<em>copy of liother</em>`,
+    ({ selectedTopic, lineupTopicEvents, preferredTime }) =>
+      html`<em>copy of liother</em>`,
   ],
 ]);
 lineupsFiledsTemplates.set("lijungle", lineupsFiledsTemplates.get("liwood"));
 lineupsFiledsTemplates.set("libase", lineupsFiledsTemplates.get("limain"));
-lineupsFiledsTemplates.set("liorg", lineupsFiledsTemplates.get("liotherview"));
+lineupsFiledsTemplates.set("liorg", lineupsFiledsTemplates.get("liother"));
 
 function showLineupEventForm(lineupId) {
   transact((x) =>
@@ -499,6 +559,7 @@ export function eventFormTemplate({
   hackers = [],
   events = [],
   selectedTopic,
+  editingEvent,
 }) {
   const headHtml = header ?? lineupHeadersTemplates.get(lineupId);
   const fieldsHtml = lineupsFiledsTemplates.get(lineupId)({
@@ -509,12 +570,17 @@ export function eventFormTemplate({
       ({ lineup, type }) => lineup === lineupId && type === "topic"
     ),
     selectedTopic,
+    editingEvent,
   });
 
   return html`
     ${eventFormStyles} ${headHtml}
     <form method="post" action="${apiHost}program">
       <input type="hidden" name="lineup" value=${lineupId} />
+      ${when(
+        editingEvent,
+        () => html`<input type="hidden" name="_id" value=${editingEvent._id} />`
+      )}
       ${when(
         hackers.length,
         () => html`<div class="field">
@@ -556,6 +622,7 @@ export async function renderEventForm(
     hijackHacker = false, // mby change to hackers[] that are passed
     events = [],
     selectedTopic,
+    editingEvent,
   }
 ) {
   initRenderLoop(state, rootElement);
@@ -573,6 +640,7 @@ export async function renderEventForm(
       preferredTime,
       events,
       selectedTopic,
+      editingEvent,
     })
   );
 

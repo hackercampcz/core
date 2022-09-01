@@ -14,13 +14,20 @@ import { setSlackProfile } from "./lib/slack.js";
 import * as slack from "./lib/slack.js";
 import * as rollbar from "./lib/rollbar.js";
 import { initRenderLoop } from "./lib/renderer.js";
+import { when } from "lit-html/directives/when.js";
+import { lineupText } from "./admin.js";
+import { renderEventForm } from "./event-form.js";
+import { showModalDialog } from "./modal-dialog.js";
 
 const state = defAtom({
   attendee: null,
   contact: null,
   profile: null,
   registration: null,
+  program: null,
   view: renderIndex,
+  campStartAt: new Date("2022-09-01T14:00:00"),
+  campEndAt: new Date("2022-09-04T14:00:00"),
 });
 
 async function authenticate({ searchParams, apiURL }) {
@@ -73,6 +80,15 @@ async function getRegistration(slackID, email, year, apiUrl) {
 async function getAttendee(slackID, year, apiUrl) {
   const params = new URLSearchParams({ slackID, year });
   const resp = await fetch(apiUrl(`attendees?${params}`));
+  return resp.json();
+}
+
+async function getProgram(year, apiUrl) {
+  const params = new URLSearchParams({ year });
+  const resp = await fetch(apiUrl(`program?${params}`), {
+    headers: { Accept: "application/json" },
+    credentials: "include",
+  });
   return resp.json();
 }
 
@@ -143,22 +159,101 @@ function travelText(travel) {
   }
 }
 
-function renderHousedScreen({ housing, housingPlacement, travel }) {
+async function showEventModalDialog(editingEvent) {
+  const { apiHost, profile, campStartAt, campEndAt, program } = state.deref();
+  const root = document.getElementById("program-modal-root");
+  renderEventForm(root, {
+    apiHost,
+    profile,
+    lineupId: editingEvent?.lineup,
+    campStartAt,
+    campEndAt,
+    preferredTime: editingEvent ? new Date(editingEvent.startAt) : undefined,
+    events: program,
+    selectedTopic: editingEvent?.topic,
+    editingEvent,
+  });
+  showModalDialog("program-modal");
+}
+
+function housedCardTemplate({ housing, housingPlacement, travel }) {
+  return html` <div class="hc-card hc-card--decorated">
+    <p>
+      Jsi ubytovaný ${housingText(housing, housingPlacement)}, dle tvého výběru.
+    </p>
+    ${travelText(travel)}
+    <p>
+      Chceš se podívat, kdo už se na tebe těší? Tak tady je
+      <a href="/hackers/">seznam účastníků</a>.
+    </p>
+    <p>
+      Taky se můžeš podívat na <a href="/program/">předběžný program</a> a brzy
+      si budeš moct zadat vlastní návrhy.
+    </p>
+  </div>`;
+}
+function programCardTemplate({ events }) {
   return html`
-    <div>
-      <p>
-        Jsi ubytovaný ${housingText(housing, housingPlacement)}, dle tvého
-        výběru.
-      </p>
-      ${travelText(travel)}
-      <p>
-        Chceš se podívat, kdo už se na tebe těší? Tak tady je
-        <a href="/hackers/">seznam účastníků</a>.
-      </p>
-      <p>
-        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
-        brzy si budeš moct zadat vlastní návrhy.
-      </p>
+    <div class="hc-card hc-card--decorated">
+      <h2>Tvé zapojení do programu</h2>
+      ${when(
+        events.length,
+        () => html`
+          <ul style="list-style-type: none; text-align: left; padding: 0;">
+            ${events.map(
+              (event) =>
+                html`
+                  <li>
+                    <a
+                      style="text-decoration: none;"
+                      href="#"
+                      @click=${() => {
+                        showEventModalDialog(event);
+                      }}
+                    >
+                      ${event.title}
+                      (<code>${lineupText.get(event.lineup)}</code>) 👈
+                      <strong>upravit</strong>
+                    </a>
+                  </li>
+                `
+            )}
+          </ul>
+        `,
+        () => html` <p>Hacker Camp bude jen takový, jaký si ho uděláme.</p> `
+      )}
+      <div style="text-align: center">
+        <a
+          class="hc-link hc-link--decorated"
+          style="font-size: 120%;"
+          href="/program"
+        >
+          Přejít na program
+        </a>
+      </div>
+    </div>
+    <dialog id="program-modal">
+      <div id="program-modal-root">nah</div>
+      <hr />
+      <button name="close" type="reset">Zavřít</button>
+    </dialog>
+  `;
+}
+
+function renderDashboardScreen({
+  housing,
+  housingPlacement,
+  travel,
+  events = [],
+}) {
+  return html`
+    <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        ${programCardTemplate({ events })}
+      </div>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        ${housedCardTemplate({ housing, housingPlacement, travel })}
+      </div>
     </div>
   `;
 }
@@ -173,7 +268,7 @@ function renderIndex({ profile, registration, attendee }) {
     return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
   }
   if (attendee?.housingPlacement) {
-    return renderHousedScreen(attendee);
+    return renderDashboardScreen(attendee);
   }
   if (canSelectHousing(registration, attendee)) {
     return renderPaidScreen();
@@ -219,13 +314,14 @@ function renderIndex({ profile, registration, attendee }) {
 }
 
 async function loadData(profile, year, apiURL) {
-  const [contact, registration, attendee] = await Promise.all([
+  const [contact, registration, attendee, program] = await Promise.all([
     getContact(profile.sub, profile.email, apiURL),
     getRegistration(profile.sub, profile.email, year, apiURL),
     getAttendee(profile.sub, year, apiURL),
+    getProgram(year, apiURL),
   ]);
   state.swap((x) =>
-    Object.assign({}, x, { profile, contact, registration, attendee })
+    Object.assign({}, x, { profile, contact, registration, attendee, program })
   );
   setContact(contact);
   try {
@@ -238,6 +334,8 @@ async function loadData(profile, year, apiURL) {
 export async function main({ searchParams, slackButton, env }) {
   rollbar.init(env);
   initRenderLoop(state, slackButton);
+
+  state.swap((x) => Object.assign(x, { apiHost: env["api-host"] }));
   const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
 
   if (

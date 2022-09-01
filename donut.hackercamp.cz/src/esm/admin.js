@@ -24,6 +24,7 @@ import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 import { renderEventForm } from "./event-form.js";
 import { showModalDialog } from "./modal-dialog.js";
+import { instatializeDates } from "./lib/object.js";
 
 const state = defAtom({
   selectedView: View.paid,
@@ -468,7 +469,7 @@ function registrationDetailTemplate({ detail, selectedView }) {
   `;
 }
 
-const lineupText = new Map([
+export const lineupText = new Map([
   ["liorg", "Organizační"],
   ["limain", "Mainframe"],
   ["libase", "Basecamp"],
@@ -797,13 +798,6 @@ function housingTemplate(state) {
   `;
 }
 
-function programTableFilter(event) {
-  if (event.type === "org") {
-    return false;
-  }
-  return true;
-}
-
 function programTable(data) {
   return html`
     <table style="width: 100%;">
@@ -819,7 +813,7 @@ function programTable(data) {
         </tr>
       </thead>
       <tbody>
-        ${data.filter(programTableFilter).map(
+        ${data.map(
           (row) => html`
             <tr>
               <td><code>${row.id}</code></td>
@@ -920,23 +914,26 @@ function programModalDialog() {
 }
 
 async function showEditEventModalDialog(event) {
-  const { campStartAt,campEndAt,  apiHost, data } = state.deref();
+  const { campStartAt, campEndAt, apiHost, data } = state.deref();
   const root = document.getElementById("program-modal-root");
-
-console.log(event)
   renderEventForm(root, {
     apiHost,
     profile: getSlackProfile(),
     lineupId: event.lineup,
-    // header,
+    //header: adminEditEventHeaderTemplate(),
     campStartAt,
     campEndAt,
-    // preferredTime,
+    preferredTime: new Date(event.startAt),
     hijackHacker: true,
-    events: await data,
+    events: instatializeDates(await data),
     selectedTopic: event.topic,
+    editingEvent: event,
   });
   showModalDialog("program-modal");
+}
+
+function filterEvents(events) {
+  return events.filter(({ type }) => ["org"].includes(type) === false);
 }
 
 function programTemplate(state) {
@@ -953,7 +950,9 @@ function programTemplate(state) {
           data?.then((data) => {
             if (data.unauthorized) return unauthorized();
             return [
-              programTable(sortBy("startAt", data, { asc: true })),
+              programTable(
+                sortBy("startAt", filterEvents(data), { asc: true })
+              ),
               programModalDialog(),
             ];
           }),
