@@ -1,7 +1,9 @@
 import {
+  DeleteItemCommand,
   DynamoDBClient,
   GetItemCommand,
   PutItemCommand,
+  ScanCommand,
 } from "@aws-sdk/client-dynamodb";
 import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
@@ -96,6 +98,35 @@ async function getAttendee(slackID, year) {
   return resp.Item ? unmarshall(resp.Item) : null;
 }
 
+async function getAttendeeByEmail(email, year) {
+  console.log({ event: "Get attendee", year, email });
+  const resp = await db.send(
+    new ScanCommand({
+      TableName: "hc-attendees",
+      FilterExpression: "#email = :email and #year = :year",
+      ExpressionAttributeValues: marshall({
+        ":email": email,
+        ":year": year,
+      }),
+      ExpressionAttributeNames: {
+        "#email": "email",
+        "#year": "year",
+      },
+    })
+  );
+  return resp.Item ? unmarshall(resp.Item) : null;
+}
+
+async function deleteAttendee(slackID, year) {
+  console.log({ event: "Delete attendee", slackID, year });
+  return db.send(
+    new DeleteItemCommand({
+      TableName: "hc-attendees",
+      Key: marshall({ slackID, year }),
+    })
+  );
+}
+
 async function getRegistration(email, year) {
   console.log({ event: "Get registration", email, year });
   const resp = await db.send(
@@ -164,8 +195,33 @@ function enqueueSlackWelcomeMessage(user) {
 async function onTeamJoin({ user }) {
   const { email } = user.profile;
   console.log({ event: "Team join", email });
-  const registration = await getRegistration(email, 2022);
-  if (!registration?.paid) {
+  const [registration, attendee] = await Promise.all([
+    getRegistration(email, 2022),
+    getAttendeeByEmail(email, 2022),
+  ]);
+  if (attendee) {
+    await Promise.all([
+      deleteAttendee(attendee.slackID, attendee.year),
+      updateAttendee(
+        Object.assign({}, attendee, { slackID: user.id }),
+        user
+      ),
+      postChatMessage(
+        user.id,
+        `Ahoj, táborníku,
+
+Vítej v našem slacku. Začátek září se blíží. Snad se těšíš stejně jako my.
+
+Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají nejen v kanále #kdo_prijede_na_camp (za 15 min tě tam ohlásíme, tak šup).
+
+Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá. Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce. Nebo se můžeš kouknout, kde a jak zapojit své ruce k dílu → #hands_wanted.
+
+Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda. Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni. Důležité novinky najdeš v kanále #general.
+
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
+      ),
+    ]);
+  } else if (!registration?.paid) {
     console.log({ event: "Registration not found", email });
     await Promise.all([
       createContact(user),

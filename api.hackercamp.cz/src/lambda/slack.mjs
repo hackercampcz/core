@@ -67,6 +67,13 @@ export async function sendMessageToSlack(profile) {
 }
 
 export async function postChatMessage(channel, message) {
+  if (channel.startsWith("hc-")) {
+    console.log({
+      msg: "synthetic users can't receive slack messages",
+      channel,
+    });
+    return null;
+  }
   const resp = await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
     headers: {
