@@ -26,8 +26,14 @@ function editAttendee(db, data) {
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_attendees,
-      Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
-      UpdateExpression: "SET note = :note, nfcTronID = :nfcTronID, edited = :now",
+      Key: marshall(
+        selectKeys(data, new Set(["year", "slackID"]), ([k, v]) => [
+          k,
+          k === "year" ? parseInt(v, 10) : v,
+        ])
+      ),
+      UpdateExpression:
+        "SET note = :note, nfcTronID = :nfcTronID, edited = :now",
       ExpressionAttributeValues: marshall(
         {
           ":note": data.note,
