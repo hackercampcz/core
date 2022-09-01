@@ -804,7 +804,9 @@ function programTable(data) {
       <thead>
         <tr>
           <th>ID</th>
+          <th>Název</th>
           <th>Jméno</th>
+          <th>Téma</th>
           <th>Typ</th>
           <th>Stage</th>
           <th>Začátek</th>
@@ -816,12 +818,14 @@ function programTable(data) {
         ${data.map(
           (row) => html`
             <tr>
-              <td><code>${row.id}</code></td>
+              <td>${when(row.id, () => html`<code>${row.id}</code>`)}</td>
               <td
                 style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis"
               >
                 ${row.title}
               </td>
+              <td>${row.people?.[0].name}</td>
+              <td>${when(row.topic, () => html`<code>${row.topic}</code>`)}</td>
               <td>${row.type}</td>
               <td>${lineup(row.lineup)}</td>
               <td>
