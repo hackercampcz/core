@@ -150,13 +150,13 @@ async function processRequest(db, data, slackID) {
       return deleteEvent(db, data.params);
     case "edit":
       const year = parseInt(data.year, 10);
-      const attendee = await getAttendee(dynamo, slackID, year);
+      const attendee = await getAttendee(db, slackID, year);
       const events = Array.from(
         new Map(attendee.events?.map((e) => [e._id, e]))
           .set(sanitizedData._id, sanitizedData)
           .values()
       ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
-      await saveAttendee(dynamo, { slackID, year, events });
+      await saveAttendee(db, { slackID, year, events });
       return editEvent(db, data.params);
   }
 }
