@@ -72,6 +72,11 @@ function approveEvent(event_id) {
   );
 }
 
+function editEvent(event_id, updates) {
+  const { apiHost } = state.deref();
+  return event.edit(event_id, apiHost, updates);
+}
+
 function chip({ text, count, selected, view }) {
   return html`
     <span
@@ -932,6 +937,12 @@ async function showEditEventModalDialog(event) {
     events: instatializeDates(await data),
     selectedTopic: event.topic,
     editingEvent: event,
+    onEventSubmit: (_event) => {
+      _event.preventDefault(); // super important here
+      const data = new FormData(_event.target);
+      const json = Object.fromEntries(data.entries());
+      editEvent(event._id, json);
+    },
   });
   showModalDialog("program-modal");
 }

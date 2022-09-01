@@ -90,6 +90,7 @@ const lineupsFiledsTemplates = new Map([
           type="text"
           required
           style="font-weight: bold;"
+          ?disabled=${Boolean(editingEvent)}
           @change=${(event) => {
             transact((x) =>
               Object.assign(x, { selectedTopic: event.target.value })
@@ -118,7 +119,9 @@ const lineupsFiledsTemplates = new Map([
               ?.description}
           </p>`
       )}
-      <div style=${`display: ${selectedTopic ? "block" : "none"}`}>
+      <div
+        style=${`display: ${selectedTopic || editingEvent ? "block" : "none"}`}
+      >
         <div class="field">
           <label for="title">Název přednášky</label>
           <input
@@ -136,7 +139,7 @@ const lineupsFiledsTemplates = new Map([
             name="description"
             type="text"
             rows="5"
-            .value=${editingEvent?.description.trim() || ""}
+            .value=${editingEvent?.description || ""}
           ></textarea>
         </div>
         <div class="group">
@@ -286,7 +289,7 @@ const lineupsFiledsTemplates = new Map([
             id="demands"
             name="demands"
             rows="5"
-            .value=${editingEvent?.demands.trim() || ""}
+            .value=${editingEvent?.demands || ""}
           ></textarea>
         </div>
         <div class="field">
@@ -325,7 +328,7 @@ const lineupsFiledsTemplates = new Map([
           name="description"
           type="text"
           rows="4"
-          .value=${editingEvent?.description.trim() || ""}
+          .value=${editingEvent?.description || ""}
         ></textarea>
       </div>
       <div class="group">
@@ -379,7 +382,7 @@ const lineupsFiledsTemplates = new Map([
   ],
   [
     "liwood",
-    ({ selectedTopic, lineupTopicEvents }) => html`
+    ({ selectedTopic, lineupTopicEvents, editingEvent }) => html`
       <div class="field">
         <label for="topic">Téma přednášky / talku</label>
         <select
@@ -388,6 +391,7 @@ const lineupsFiledsTemplates = new Map([
           type="text"
           required
           style="font-weight: bold;"
+          ?disabled=${Boolean(editingEvent)}
           @change=${(event) => {
             transact((x) =>
               Object.assign(x, { selectedTopic: event.target.value })
@@ -411,7 +415,9 @@ const lineupsFiledsTemplates = new Map([
       <p>
         ${lineupTopicEvents.find(({ id }) => id === selectedTopic)?.description}
       </p>
-      <div style=${`display: ${selectedTopic ? "block" : "none"}`}>
+      <div
+        style=${`display: ${selectedTopic || editingEvent ? "block" : "none"}`}
+      >
         <div class="field">
           <label for="name">DJ name / umělecké jméno</label>
           <input id="name" name="name" type="text" required />
@@ -560,6 +566,7 @@ export function eventFormTemplate({
   events = [],
   selectedTopic,
   editingEvent,
+  onEventSubmit = () => {},
 }) {
   const headHtml = header ?? lineupHeadersTemplates.get(lineupId);
   const fieldsHtml = lineupsFiledsTemplates.get(lineupId)({
@@ -575,14 +582,14 @@ export function eventFormTemplate({
 
   return html`
     ${eventFormStyles} ${headHtml}
-    <form method="post" action="${apiHost}program">
+    <form method="post" action="${apiHost}program" @submit=${onEventSubmit}>
       <input type="hidden" name="lineup" value=${lineupId} />
       ${when(
         editingEvent,
         () => html`<input type="hidden" name="_id" value=${editingEvent._id} />`
       )}
       ${when(
-        hackers.length,
+        hackers.length && false,
         () => html`<div class="field">
           <label for="slackID">Hacker (SlackID)</label>
           <input
@@ -623,6 +630,7 @@ export async function renderEventForm(
     events = [],
     selectedTopic,
     editingEvent,
+    onEventSubmit,
   }
 ) {
   initRenderLoop(state, rootElement);
@@ -641,6 +649,7 @@ export async function renderEventForm(
       events,
       selectedTopic,
       editingEvent,
+      onEventSubmit,
     })
   );
 

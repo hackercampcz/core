@@ -76,7 +76,8 @@ function editEvent(db, { event_id, year, ...updates }) {
         { convertEmptyValues: true, removeUndefinedValues: true }
       ),
       UpdateExpression:
-        "SET title = :title, description = :desc, place = :place, startAt = :startAt, duration = :duration, demands = :demands",
+        "SET title = :title, description = :desc, place = :place, startAt = :startAt, #duration = :duration, demands = :demands",
+      ExpressionAttributeNames: { "#duration": "duration" },
       ExpressionAttributeValues: marshall(
         {
           ":title": updates.title,
