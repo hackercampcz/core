@@ -62,6 +62,36 @@ function approveEvent(db, { event_id, year }, slackID) {
   );
 }
 
+/**
+ * @param {DynamoDBClient} db
+ * @param {{event_id: string, year: number}} data
+ */
+function editEvent(db, { event_id, year, ...updates }) {
+  console.log({ event: "Edit event", event_id, year });
+  return db.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_program,
+      Key: marshall(
+        { _id: event_id, year },
+        { convertEmptyValues: true, removeUndefinedValues: true }
+      ),
+      UpdateExpression:
+        "SET title = :title, description = :desc, place = :place, startAt = :startAt, duration = :duration, demands = :demands",
+      ExpressionAttributeValues: marshall(
+        {
+          ":title": updates.title,
+          ":desc": updates.description,
+          ":place": updates.place,
+          ":startAt": updates.startAt,
+          ":duration": updates.duration,
+          ":demands": updates.demands,
+        },
+        { convertEmptyValues: true, removeUndefinedValues: true }
+      ),
+    })
+  );
+}
+
 async function getAttendee(dynamo, slackID, year) {
   console.log({ event: "Get attendee", slackID, year });
   const result = await dynamo.send(
@@ -117,6 +147,8 @@ async function processRequest(db, data, slackID) {
       console.log({ event: "Deleting event", event_id: data.params.event_id });
       await deleteAttendeeEvents(db, data.params);
       return deleteEvent(db, data.params);
+    case "edit":
+      return editEvent(db, data.params);
   }
 }
 
