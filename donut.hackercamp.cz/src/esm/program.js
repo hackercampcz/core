@@ -207,6 +207,10 @@ function eventTemplate({
       )}
       <p>${event.description}</p>
       ${when(
+        event.place,
+        () => html`<p><strong>Kde to bude:</strong> ${event.place}</p>`
+      )}
+      ${when(
         event.type === "topic",
         () => html`
           <div class="people-list">
@@ -569,7 +573,6 @@ function renderProgram({
         font-size: 2rem;
         line-height: 1.2;
       }
-
 
       .program__beside {
         box-size: border-box;
