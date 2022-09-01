@@ -151,13 +151,26 @@ async function processRequest(db, data, slackID) {
     case "edit":
       const year = parseInt(data.params.year, 10);
       const attendee = await getAttendee(db, slackID, year);
+      const sanitizedData = Object.fromEntries(
+        Object.entries(data.params)
+          .map(([k, v]) => [k, v?.trim ? v?.trim() : v])
+          .filter(([k, v]) => Boolean(v))
+      );
+      sanitizedData.year = year;
+      if (sanitizedData.duration && sanitizedData.startAt) {
+        const duration = parseInt(sanitizedData.duration, 10) * 60 * 1000;
+        const startTime = Date.parse(
+          sanitizedData.startAt + sanitizedData.timezone
+        );
+        sanitizedData.endAt = new Date(startTime + duration).toISOString();
+      }
       const events = Array.from(
         new Map(attendee.events?.map((e) => [e._id, e]))
           .set(sanitizedData._id, sanitizedData)
           .values()
       ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
       await saveAttendee(db, { slackID, year, events });
-      return editEvent(db, data.params);
+      return editEvent(db, sanitizedData);
   }
 }
 
