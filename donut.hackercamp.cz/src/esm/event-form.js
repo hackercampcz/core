@@ -90,7 +90,7 @@ const lineupsFiledsTemplates = new Map([
           type="text"
           required
           style="font-weight: bold;"
-          ?disabled=${Boolean(editingEvent)}
+          ?readonly=${Boolean(editingEvent?.topic)}
           @change=${(event) => {
             transact((x) =>
               Object.assign(x, { selectedTopic: event.target.value })
@@ -391,7 +391,7 @@ const lineupsFiledsTemplates = new Map([
           type="text"
           required
           style="font-weight: bold;"
-          ?disabled=${Boolean(editingEvent)}
+          ?readonly=${Boolean(editingEvent?.topic)}
           @change=${(event) => {
             transact((x) =>
               Object.assign(x, { selectedTopic: event.target.value })
