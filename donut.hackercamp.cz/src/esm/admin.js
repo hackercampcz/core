@@ -18,6 +18,7 @@ import {
   markAsInvoiced,
 } from "./admin/registrations.js";
 import * as event from "./admin/program.js";
+import * as attendees from "./admin/attendees.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import { getContact, getSlackProfile } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
@@ -117,7 +118,7 @@ function chip({ text, count, selected, view }) {
         <span class="mdc-evolution-chip__text-label"
           >${text}
           ${until(
-            count?.then((x) => html`<data value="${x}">${x}</data>`, "")
+            count?.then((x) => html` <data value="${x}">${x}</data>`, "")
           )}</span
         >
       </a>
@@ -295,15 +296,16 @@ function registrationDetailTemplate({ detail, selectedView }) {
   if (!detail) return null;
   return html`
     <div class="hc-card hc-master-detail__detail"">
-      <h2 style="display: flex;align-items: center;gap: 12px;">
-        <span>${detail.firstName}&nbsp;${detail.lastName}</span>
-        ${ticketBadge.get(detail.ticketType)}</h2>
-      <p>${detail.company}</p>
-      <div class="hc-detail__tools">
-        <a
-          class="hc-action-button"
-          href="mailto:${detail.email}"
-          title="Napsat ${detail.email}""><svg
+    <h2 style="display: flex;align-items: center;gap: 12px;">
+      <span>${detail.firstName}&nbsp;${detail.lastName}</span>
+      ${ticketBadge.get(detail.ticketType)}</h2>
+    <p>${detail.company}</p>
+    <div class="hc-detail__tools">
+      <a
+        class="hc-action-button"
+        href="mailto:${detail.email}"
+        title="Napsat ${detail.email}"">
+      <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24"
         width="24"
@@ -313,163 +315,170 @@ function registrationDetailTemplate({ detail, selectedView }) {
           fill="var(--hc-text-color)"
           d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
         />
-      </svg></a>
-        ${when(
-          detail.phone,
-          () => html`
-            <a
-              class="hc-action-button"
-              href="tel:${detail.phone.replace(" ", "")}"
-              title="Zavolat ${detail.phone}"
-              ><svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
-                <path d="M0 0h24v24H0z" fill="none" />
-                <path
-                  fill="var(--hc-text-color)"
-                  d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
-                /></svg
-            ></a>
-          `
-        )}
-        ${when(
-          selectedView !== View.paid,
-          () => html`
-            <button
-              class="hc-action-button"
-              title="Opt out"
-              @click="${() => optout(detail.email)}"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 0 24 24"
-                width="24px"
-                fill="var(--hc-text-color)"
-              >
-                <g><rect fill="none" height="24" width="24" /></g>
-                <g>
-                  <path
-                    d="M14,8c0-2.21-1.79-4-4-4S6,5.79,6,8s1.79,4,4,4S14,10.21,14,8z M17,10v2h6v-2H17z M2,18v2h16v-2c0-2.66-5.33-4-8-4 S2,15.34,2,18z"
-                  />
-                </g>
-              </svg>
-            </button>
-          `
-        )}
-        ${when(
-          selectedView === View.waitingList,
-          () => html`
-            <button
-              class="hc-action-button"
-              title="Opt in"
-              @click="${() => optin(detail.email)}"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 0 24 24"
-                width="24px"
-                fill="var(--hc-text-color)"
-              >
-                <g><rect fill="none" height="24" width="24" /></g>
-                <g>
-                  <path
-                    d="M13,8c0-2.21-1.79-4-4-4S5,5.79,5,8s1.79,4,4,4S13,10.21,13,8z M15,10v2h3v3h2v-3h3v-2h-3V7h-2v3H15z M1,18v2h16v-2 c0-2.66-5.33-4-8-4S1,15.34,1,18z"
-                  />
-                </g>
-              </svg>
-            </button>
-          `
-        )}
-        ${when(
-          selectedView === View.confirmed,
-          () => html`
-            <button
-              class="hc-action-button"
-              title="Vyfakturováno"
-              @click="${() => invoiced(detail.email)}"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="24px"
-                viewBox="0 0 24 24"
-                width="24px"
-                fill="var(--hc-text-color)"
-              >
-                <rect fill="none" height="24" width="24" />
-                <path
-                  d="M13.17,4L18,8.83V20H6V4H13.17 M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2L14,2z M15,11h-4v1h3 c0.55,0,1,0.45,1,1v3c0,0.55-0.45,1-1,1h-1v1h-2v-1H9v-2h4v-1h-3c-0.55,0-1-0.45-1-1v-3c0-0.55,0.45-1,1-1h1V8h2v1h2V11z"
-                />
-              </svg>
-            </button>
-          `
-        )}
-      </div>
-    ${ticketDetail(detail)}
+      </svg>
+      </a>
       ${when(
-        detail.inviter,
-        () => html`<p>Pozval ho <strong>${detail.inviter}</strong></p>`
-      )}
-      <p>Ubytování: <strong>${
-        housing.get(detail.housing) ?? "Ještě si nevybral"
-      }</strong></p>
-      <p>Doprava: <strong>${
-        travel.get(detail.travel) ?? "Ještě si nevybral"
-      }</strong></p>
-      ${when(
-        detail.activity,
+        detail.phone,
         () => html`
-          <h3>Aktivita</h3>
-          ${unsafeHTML(marked.parse(detail.activity))}
-          ${when(
-            detail.activityCrew,
-            () => html`<p>Parťáci: ${detail.activityCrew}</p>`
-          )}
-          ${when(
-            detail.activityPlace,
-            () => html`<p>Zázemí: ${detail.activityPlace}</p>`
-          )}
-        `
-      )}
-      ${when(
-        detail.invRecipient === "1",
-        () => html`
-          <p>
-            Faturovat za něj bude
-            <a href="mailto:${detail.invRecipientEmail}"
-              >${detail.invRecipientFirstname} ${detail.invRecipientLastname}</a
-            >
-            <a href="tel:${detail.invRecipientPhone}"
-              >${detail.invRecipientPhone}</a
-            >
-          </p>
-        `
-      )}
-      ${when(
-        detail.invAddress,
-        () => html`
-          <address
-            style="border: 1px solid #ddd; padding: 16px; font-size: 14px;"
+          <a
+            class="hc-action-button"
+            href="tel:${detail.phone.replace(" ", "")}"
+            title="Zavolat ${detail.phone}"
           >
-            <h3>Fakturační údaje</h3>
-            <p>${detail.invName}</p>
-            <p>${detail.invAddress}</p>
-            ${when(
-              detail.invEmail || detail["invoice-contact"],
-              () => html`
-                <p>
-                  E-mail:
-                  <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
-                </p>
-              `
-            )}
-            <p>
-              ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
-              ${when(detail.invVatNo, () => html`DIČ: ${detail.invVatNo}`)}
-            </p>
-            ${when(detail.invText, () => html`<p>${detail.invText}</p>`)}
-          </address>
+            <svg xmlns="http://www.w3.org/2000/svg" height="24" width="24">
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path
+                fill="var(--hc-text-color)"
+                d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
+              />
+            </svg>
+          </a>
         `
       )}
+      ${when(
+        selectedView !== View.paid,
+        () => html`
+          <button
+            class="hc-action-button"
+            title="Opt out"
+            @click="${() => optout(detail.email)}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 0 24 24"
+              width="24px"
+              fill="var(--hc-text-color)"
+            >
+              <g>
+                <rect fill="none" height="24" width="24" />
+              </g>
+              <g>
+                <path
+                  d="M14,8c0-2.21-1.79-4-4-4S6,5.79,6,8s1.79,4,4,4S14,10.21,14,8z M17,10v2h6v-2H17z M2,18v2h16v-2c0-2.66-5.33-4-8-4 S2,15.34,2,18z"
+                />
+              </g>
+            </svg>
+          </button>
+        `
+      )}
+      ${when(
+        selectedView === View.waitingList,
+        () => html`
+          <button
+            class="hc-action-button"
+            title="Opt in"
+            @click="${() => optin(detail.email)}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 0 24 24"
+              width="24px"
+              fill="var(--hc-text-color)"
+            >
+              <g>
+                <rect fill="none" height="24" width="24" />
+              </g>
+              <g>
+                <path
+                  d="M13,8c0-2.21-1.79-4-4-4S5,5.79,5,8s1.79,4,4,4S13,10.21,13,8z M15,10v2h3v3h2v-3h3v-2h-3V7h-2v3H15z M1,18v2h16v-2 c0-2.66-5.33-4-8-4S1,15.34,1,18z"
+                />
+              </g>
+            </svg>
+          </button>
+        `
+      )}
+      ${when(
+        selectedView === View.confirmed,
+        () => html`
+          <button
+            class="hc-action-button"
+            title="Vyfakturováno"
+            @click="${() => invoiced(detail.email)}"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 0 24 24"
+              width="24px"
+              fill="var(--hc-text-color)"
+            >
+              <rect fill="none" height="24" width="24" />
+              <path
+                d="M13.17,4L18,8.83V20H6V4H13.17 M14,2H6C4.9,2,4,2.9,4,4v16c0,1.1,0.9,2,2,2h12c1.1,0,2-0.9,2-2V8L14,2L14,2z M15,11h-4v1h3 c0.55,0,1,0.45,1,1v3c0,0.55-0.45,1-1,1h-1v1h-2v-1H9v-2h4v-1h-3c-0.55,0-1-0.45-1-1v-3c0-0.55,0.45-1,1-1h1V8h2v1h2V11z"
+              />
+            </svg>
+          </button>
+        `
+      )}
+    </div>
+    ${ticketDetail(detail)}
+    ${when(
+      detail.inviter,
+      () => html`<p>Pozval ho <strong>${detail.inviter}</strong></p>`
+    )}
+    <p>Ubytování: <strong>${
+      housing.get(detail.housing) ?? "Ještě si nevybral"
+    }</strong></p>
+    <p>Doprava: <strong>${
+      travel.get(detail.travel) ?? "Ještě si nevybral"
+    }</strong></p>
+    ${when(
+      detail.activity,
+      () => html`
+        <h3>Aktivita</h3>
+        ${unsafeHTML(marked.parse(detail.activity))}
+        ${when(
+          detail.activityCrew,
+          () => html`<p>Parťáci: ${detail.activityCrew}</p>`
+        )}
+        ${when(
+          detail.activityPlace,
+          () => html`<p>Zázemí: ${detail.activityPlace}</p>`
+        )}
+      `
+    )}
+    ${when(
+      detail.invRecipient === "1",
+      () => html`
+        <p>
+          Faturovat za něj bude
+          <a href="mailto:${detail.invRecipientEmail}"
+            >${detail.invRecipientFirstname} ${detail.invRecipientLastname}</a
+          >
+          <a href="tel:${detail.invRecipientPhone}"
+            >${detail.invRecipientPhone}</a
+          >
+        </p>
+      `
+    )}
+    ${when(
+      detail.invAddress,
+      () => html`
+        <address
+          style="border: 1px solid #ddd; padding: 16px; font-size: 14px;"
+        >
+          <h3>Fakturační údaje</h3>
+          <p>${detail.invName}</p>
+          <p>${detail.invAddress}</p>
+          ${when(
+            detail.invEmail || detail["invoice-contact"],
+            () => html`
+              <p>
+                E-mail:
+                <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
+              </p>
+            `
+          )}
+          <p>
+            ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
+            ${when(detail.invVatNo, () => html`DIČ: ${detail.invVatNo}`)}
+          </p>
+          ${when(detail.invText, () => html`<p>${detail.invText}</p>`)}
+        </address>
+      `
+    )}
     </div>
   `;
 }
@@ -484,6 +493,7 @@ export const lineupText = new Map([
   ["lijungle", "Jungle Release"],
   ["liother", "Doprovodné aktivity"],
 ]);
+
 function lineup(x) {
   return html`<code>${lineupText.get(x)}</code>`;
 }
@@ -492,15 +502,16 @@ function attendeeDetailTemplate({ detail }) {
   if (!detail) return null;
   return html`
     <div class="hc-card hc-master-detail__detail"">
-      <h2 style="display: flex;align-items: center;gap: 12px;">
-        <span>${detail.name}</span>
-        ${ticketBadge.get(detail.ticketType)}</h2>
-      <p>${detail.company}</p>
-      <div class="hc-detail__tools">
-        <a
-          class="hc-action-button"
-          href="mailto:${detail.email}"
-          title="Napsat ${detail.email}""><svg
+    <h2 style="display: flex;align-items: center;gap: 12px;">
+      <span>${detail.name}</span>
+      ${ticketBadge.get(detail.ticketType)}</h2>
+    <p>${detail.company}</p>
+    <div class="hc-detail__tools">
+      <a
+        class="hc-action-button"
+        href="mailto:${detail.email}"
+        title="Napsat ${detail.email}"">
+      <svg
         xmlns="http://www.w3.org/2000/svg"
         height="24"
         width="24"
@@ -510,28 +521,71 @@ function attendeeDetailTemplate({ detail }) {
           fill="var(--hc-text-color)"
           d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
         />
-      </svg></a>
-      </div>
-      ${ticketDetail(detail)}
-      <p>Ubytování: <strong>${
-        housing.get(detail.housing) ?? "Ještě si nevybral"
-      }</strong></p>
-      <p>Doprava: <strong>${
-        travel.get(detail.travel) ?? "Ještě si nevybral"
-      }</strong></p>
+      </svg>
+      </a>
+      <button
+        class="hc-action-button"
+        title="Upravit účastníka"
+        @click="${() => showModalDialog("attendee-modal")}">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          height="24px"
+          viewBox="0 0 24 24"
+          width="24px"
+          fill="var(--hc-text-color)"
+        >
+          <path d="M0 0h24v24H0V0z" fill="none" />
+          <path
+            d="M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z"
+          />
+        </svg>
+      </button>
+    </div>
+    ${ticketDetail(detail)}
+    <p>Ubytování: <strong>${
+      housing.get(detail.housing) ?? "Ještě si nevybral"
+    }</strong> ${when(
+    detail.housingPlacement,
+    () => html` - <em>${detail.housingPlacement}</em>`
+  )}</p>
+    <p>Doprava: <strong>${
+      travel.get(detail.travel) ?? "Ještě si nevybral"
+    }</strong></p>
+    ${when(
+      detail.nfcTronID,
+      () => html`<p>NFCtron ID: <code>${detail.nfcTronID}</code></p>`
+    )}
+    ${when(detail.note, () => html`<p>${detail.note}</p>`)}
+    ${when(
+      detail.events?.length,
+      () => html`
+        <h3>Program</h3>
         ${detail.events?.map(
           (event) => html`
-            <div>
-              <h3>${event.title}</h3>
+            <div
+              style="border: 1px solid var(--hc-text-color); padding: 8px 16px"
+            >
+              <h4>${event.title}</h4>
               <p>
-                <code>${lineup(event.lineup)}</code> -
-                <time datetime="${event.startAt}"
-                  >${formatDateTime(new Date(event.startAt))}</time
-                >
+                <code>${lineup(event.lineup)}</code>
+                ${when(event.topic, () => html`<code>${event.topic}</code>`)}
+                ${when(
+                  event.startAt,
+                  () => html`-
+                    <time datetime="${event.startAt}"
+                      >${formatDateTime(new Date(event.startAt))}
+                    </time>`
+                )}
               </p>
+              ${when(
+                event.description,
+                () => html`<p>${event.description}</p>`
+              )}
             </div>
           `
         )}
+      `
+    )}
     </div>
   `;
 }
@@ -553,51 +607,54 @@ function registrationsTableTemplate(data, { timeHeader, timeAttr }) {
       <tbody>
         ${data.map(
           (row) => html`
-            <tr
-              @click="${renderDetail(row)}">
-              <td>${row.name}</td>
-              <td>${row.company}</td>
-              <td>${
-                row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""
-              }</td>
-              <td>
-                <a
-                  class="hc-action-button"
-                  href="mailto:${row.email}"
-                  title="Napsat ${row.email}""><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24"
-                  width="24"
-                >
-                  <path d="M0 0h24v24H0z" fill="none"/>
-                  <path
-                    fill="var(--hc-text-color)"
-                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
-                  />
-                </svg></a>
-                ${when(
-                  row.phone,
-                  () => html`
-                    <a
-                      class="hc-action-button"
-                      href="tel:${row.phone.replace(" ", "")}"
-                      title="Zavolat ${row.phone}"
-                      ><svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="24"
-                        width="24"
-                      >
-                        <path d="M0 0h24v24H0z" fill="none" />
-                        <path
-                          fill="var(--hc-text-color)"
-                          d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
-                        /></svg
-                    ></a>
-                  `
-                )}
-              </td>
-            </tr>
-          `
+          <tr
+            @click="${renderDetail(row)}">
+            <td>${row.name}</td>
+            <td>${row.company}</td>
+            <td>${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
+            </td>
+            <td>
+              <a
+                class="hc-action-button"
+                href="mailto:${row.email}"
+                title="Napsat ${row.email}"">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                width="24"
+              >
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path
+                  fill="var(--hc-text-color)"
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+              </a>
+              ${when(
+                row.phone,
+                () => html`
+                  <a
+                    class="hc-action-button"
+                    href="tel:${row.phone.replace(" ", "")}"
+                    title="Zavolat ${row.phone}"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="24"
+                      width="24"
+                    >
+                      <path d="M0 0h24v24H0z" fill="none" />
+                      <path
+                        fill="var(--hc-text-color)"
+                        d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"
+                      />
+                    </svg>
+                  </a>
+                `
+              )}
+            </td>
+          </tr>
+        `
         )}
       </tbody>
     </table>
@@ -619,30 +676,32 @@ function attendeesTableTemplate(data) {
       <tbody>
         ${data.map(
           (row) => html`
-            <tr
-              @click="${renderDetail(row)}">
-              <td>${row.name}</td>
-              <td>${row.company}</td>
-              <td>${ticketName.get(row.ticketType)}</td>
-              <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
-              <td>
-                <a
-                  class="hc-action-button"
-                  href="mailto:${row.email}"
-                  title="Napsat ${row.email}""><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24"
-                  width="24"
-                >
-                  <path d="M0 0h24v24H0z" fill="none"/>
-                  <path
-                    fill="var(--hc-text-color)"
-                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
-                  />
-                </svg></a>
-              </td>
-            </tr>
-          `
+          <tr
+            @click="${renderDetail(row)}">
+            <td>${row.name}</td>
+            <td>${row.company}</td>
+            <td>${ticketName.get(row.ticketType)}</td>
+            <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
+            <td>
+              <a
+                class="hc-action-button"
+                href="mailto:${row.email}"
+                title="Napsat ${row.email}"">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                width="24"
+              >
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path
+                  fill="var(--hc-text-color)"
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+              </a>
+            </td>
+          </tr>
+        `
         )}
       </tbody>
     </table>
@@ -677,7 +736,7 @@ function registrationsTemplate(state) {
             if (selectedView === View.optouts) {
               return html`
                 <ul>
-                  ${data.map((x) => html`<li>${x}</li>`)}
+                  ${data.map((x) => html` <li>${x}</li>`)}
                 </ul>
               `;
             }
@@ -708,7 +767,13 @@ function registrationsTemplate(state) {
 }
 
 function attendeesTemplate(state) {
-  const { data, selectedView, detail } = state;
+  const { data, selectedView, detail, apiHost } = state;
+  const apiURL = (resource) => new URL(resource, apiHost).href;
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+    await attendees.edit(Object.fromEntries(form.entries()), apiHost);
+  };
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${attendeesChips(selectedView, {
@@ -731,7 +796,10 @@ function attendeesTemplate(state) {
           `
         )}
       </div>
-      ${when(detail, () => attendeeDetailTemplate({ detail }))}
+      ${when(detail, () => [
+        attendeeDetailTemplate({ detail }),
+        attendeeModalDialog({ detail, onSubmit, apiURL }),
+      ])}
     </div>
   `;
 }
@@ -752,30 +820,32 @@ function housingTable(data) {
       <tbody>
         ${data.map(
           (row) => html`
-            <tr>
-              <td>${row.name}</td>
-              <td>${row.company}</td>
-              <td>${ticketName.get(row.ticketType)}</td>
-              <td>${housing.get(row.housing) ?? "Ještě si nevybral"}</td>
-              <td>${row.housingPlacement}</td>
-              <td>
-                <a
-                  class="hc-action-button"
-                  href="mailto:${row.email}"
-                  title="Napsat ${row.email}""><svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  height="24"
-                  width="24"
-                >
-                  <path d="M0 0h24v24H0z" fill="none"/>
-                  <path
-                    fill="var(--hc-text-color)"
-                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
-                  />
-                </svg></a>
-              </td>
-            </tr>
-          `
+          <tr>
+            <td>${row.name}</td>
+            <td>${row.company}</td>
+            <td>${ticketName.get(row.ticketType)}</td>
+            <td>${housing.get(row.housing) ?? "Ještě si nevybral"}</td>
+            <td>${row.housingPlacement}</td>
+            <td>
+              <a
+                class="hc-action-button"
+                href="mailto:${row.email}"
+                title="Napsat ${row.email}"">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24"
+                width="24"
+              >
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path
+                  fill="var(--hc-text-color)"
+                  d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
+                />
+              </svg>
+              </a>
+            </td>
+          </tr>
+        `
         )}
       </tbody>
     </table>
@@ -916,6 +986,38 @@ function programModalDialog() {
   return html`
     <dialog id="program-modal">
       <div id="program-modal-root">nah</div>
+      <hr />
+      <button name="close" type="reset">Zavřít</button>
+    </dialog>
+  `;
+}
+
+function attendeeModalDialog({ detail, onSubmit, apiURL }) {
+  return html`
+    <dialog id="attendee-modal">
+      <div id="attendee-modal-root">
+        <form
+          method="post"
+          @submit="${onSubmit}"
+          action="${apiURL("admin/program")}"
+        >
+          <input type="hidden" name="year" value=${detail.year} />
+          <input type="hidden" name="slackID" value=${detail.slackID} />
+          <div class="field">
+            <label for="note">Poznámka</label>
+            <input id="note" name="note" value="${detail.note}" />
+          </div>
+          <div class="field">
+            <label for="nfc-tron-id">NFCtron ID</label>
+            <input
+              id="nfc-tron-id"
+              name="nfcTronID"
+              value="${detail.nfcTronID}"
+            />
+          </div>
+          <button type="submit" class="hc-button">Odeslat to</button>
+        </form>
+      </div>
       <hr />
       <button name="close" type="reset">Zavřít</button>
     </dialog>
