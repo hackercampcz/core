@@ -941,7 +941,11 @@ async function showEditEventModalDialog(event) {
       _event.preventDefault(); // super important here
       const data = new FormData(_event.target);
       const json = Object.fromEntries(data.entries());
-      editEvent(event._id, json);
+      editEvent(event._id, json).catch((error) => {
+        console.error(error);
+        window.snackbar.labelText = error.message;
+        window.snackbar.show();
+      });
     },
   });
   showModalDialog("program-modal");

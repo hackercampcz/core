@@ -72,7 +72,7 @@ function editEvent(db, { event_id, year, ...updates }) {
     new UpdateItemCommand({
       TableName: process.env.db_table_program,
       Key: marshall(
-        { _id: event_id, year },
+        { _id: event_id, year: parseInt(year, 10) },
         { convertEmptyValues: true, removeUndefinedValues: true }
       ),
       UpdateExpression:
@@ -149,6 +149,14 @@ async function processRequest(db, data, slackID) {
       await deleteAttendeeEvents(db, data.params);
       return deleteEvent(db, data.params);
     case "edit":
+      const year = parseInt(data.year, 10);
+      const attendee = await getAttendee(dynamo, slackID, year);
+      const events = Array.from(
+        new Map(attendee.events?.map((e) => [e._id, e]))
+          .set(sanitizedData._id, sanitizedData)
+          .values()
+      ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
+      await saveAttendee(dynamo, { slackID, year, events });
       return editEvent(db, data.params);
   }
 }
