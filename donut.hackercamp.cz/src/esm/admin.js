@@ -793,6 +793,13 @@ function housingTemplate(state) {
   `;
 }
 
+function programTableFilter(event) {
+  if (event.type === "org") {
+    return false;
+  }
+  return true;
+}
+
 function programTable(data) {
   return html`
     <table style="width: 100%;">
@@ -808,7 +815,7 @@ function programTable(data) {
         </tr>
       </thead>
       <tbody>
-        ${data.map(
+        ${data.filter(programTableFilter).map(
           (row) => html`
             <tr>
               <td><code>${row.id}</code></td>
