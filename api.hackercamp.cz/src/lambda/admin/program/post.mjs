@@ -84,7 +84,7 @@ function editEvent(db, { event_id, year, ...updates }) {
           ":desc": updates.description,
           ":place": updates.place,
           ":startAt": updates.startAt,
-          ":duration": updates.duration
+          ":duration": updates.duration,
         },
         { convertEmptyValues: true, removeUndefinedValues: true }
       ),
@@ -149,7 +149,7 @@ async function processRequest(db, data, slackID) {
       return deleteEvent(db, data.params);
     case "edit":
       const year = parseInt(data.params.year, 10);
-      const attendee = await getAttendee(db, slackID, year);
+      const attendee = await getAttendee(db, data.params.slackID, year);
       const sanitizedData = Object.fromEntries(
         Object.entries(data.params)
           .map(([k, v]) => [k, v?.trim ? v?.trim() : v])
@@ -168,7 +168,10 @@ async function processRequest(db, data, slackID) {
           .set(sanitizedData._id, sanitizedData)
           .values()
       ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
-      await saveAttendee(db, { slackID, year, events });
+      await saveAttendee(db, { year, events });
+      sanitizedData.people = [
+        selectKeys(attendee, new Set(["slackID", "image", "slug", "name"])),
+      ];
       return editEvent(db, sanitizedData);
   }
 }
