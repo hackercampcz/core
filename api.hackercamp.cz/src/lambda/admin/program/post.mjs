@@ -149,7 +149,7 @@ async function processRequest(db, data, slackID) {
       await deleteAttendeeEvents(db, data.params);
       return deleteEvent(db, data.params);
     case "edit":
-      const year = parseInt(data.year, 10);
+      const year = parseInt(data.params.year, 10);
       const attendee = await getAttendee(db, slackID, year);
       const events = Array.from(
         new Map(attendee.events?.map((e) => [e._id, e]))
