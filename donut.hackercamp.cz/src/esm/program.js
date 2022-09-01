@@ -158,40 +158,43 @@ function eventTemplate({
         >
           ${event.title}
         </p>
-        ${when(
-          event.type === "topic" && event.people?.length,
-          () => html`
-            <div class="people-list">
-              ${event.people.map(
-                (speaker) =>
-                  html`
-                    <figure class="speaker speaker--photo">
-                      <img
-                        alt="${speaker.name}"
-                        src="${speaker.image}"
-                        width="32"
-                        height="32"
-                      />
-                    </figure>
-                  `
-              )}
-              <figure class="speaker speaker--add">+</figure>
-            </div>
-          `
-        )}
+        <div class="people-list">
+          ${event.people?.map(
+            (speaker) =>
+              html`
+                <figure class="speaker speaker--photo">
+                  <img
+                    alt="${speaker.name}"
+                    src="${speaker.image}"
+                    width="32"
+                    height="32"
+                  />
+                </figure>
+              `
+          )}
+          ${when(
+            event.type === "topic" && event.people?.length,
+            () => html` <figure class="speaker speaker--add">+</figure> `
+          )}
+        </div>
       </div>`
     )}
     <dialog class="event__detail" id="event-detail-${event.id || event._id}">
       <h1>${event.title}</h1>
       ${when(
         !event.topic,
-        () => html`<p>
-          ${formatEventTimeInfo(event)}
-          <code>${lineup.name}</code><br />
-        </p>`,
-        () =>
-          html` <div class="people-list">
-            ${event.people.map(
+        () => html`
+          <p>
+            ${formatEventTimeInfo(event)}
+            <code>${lineup.name}</code><br />
+          </p>
+        `
+      )}
+      ${when(
+        event.type !== "topic",
+        () => html`
+          <div class="people-list">
+            ${event.people?.map(
               (speaker) => html` <figure class="speaker speaker--full">
                 <img
                   alt="${speaker.name}"
@@ -199,45 +202,48 @@ function eventTemplate({
                   width="32"
                   height="32"
                 />
-                ${speaker.name}
+                <a href=${`/hackers/${speaker.slug}`}>${speaker.name}</a>
                 ${when(speaker.company, () => html`z ${speaker.company}`)}
               </figure>`
             )}
-          </div>`
+          </div>
+        `
       )}
+
       <p>${event.description}</p>
       ${when(
         event.place,
         () => html`<p><strong>Kde to bude:</strong> ${event.place}</p>`
       )}
+
+      <div class="people-list">
+        ${(topicEvents || []).map(
+          ({ id, _id, title, people = [] }) => html`
+            <figure class="speaker speaker--full">
+              ${people.map(
+                ({ name, image }) => html`<img
+                  width="32"
+                  height="32"
+                  alt=${name}
+                  src=${image}
+                />`
+              )}
+              <a
+                href="#"
+                @click=${(e) => {
+                  e.preventDefault();
+
+                  showModalDialog(`event-detail-${id || _id}`);
+                }}
+                >${title}</a
+              >
+            </figure>
+          `
+        )}
+      </div>
       ${when(
         event.type === "topic",
         () => html`
-          <div class="people-list">
-            ${(topicEvents || []).map(
-              ({ id, _id, title, people = [] }) => html`
-                <figure class="speaker speaker--full">
-                  ${people.map(
-                    ({ name, image }) => html`<img
-                      width="32"
-                      height="32"
-                      alt=${name}
-                      src=${image}
-                    />`
-                  )}
-                  <a
-                    href="#"
-                    @click=${(e) => {
-                      e.preventDefault();
-
-                      showModalDialog(`event-detail-${id || _id}`);
-                    }}
-                    >${title}</a
-                  >
-                </figure>
-              `
-            )}
-          </div>
           <a
             class="hc-link hc-link--decorated"
             style="margin: calc(var(--spacing) / 2) 0; padding: calc(var(--spacing) / 4);"
