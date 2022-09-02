@@ -670,6 +670,7 @@ function attendeesTableTemplate(data) {
           <th>Společnost</th>
           <th>Typ lístku</th>
           <th>Zaplaceno</th>
+          <th>NFCtron</th>
           <th>Akce</th>
         </tr>
       </thead>
@@ -682,6 +683,7 @@ function attendeesTableTemplate(data) {
             <td>${row.company}</td>
             <td>${ticketName.get(row.ticketType)}</td>
             <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
+            <td>${row.nfcTronID}</td>
             <td>
               <a
                 class="hc-action-button"
