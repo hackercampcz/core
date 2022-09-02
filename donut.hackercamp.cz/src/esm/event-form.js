@@ -588,27 +588,11 @@ export function eventFormTemplate({
         editingEvent,
         () => html`<input type="hidden" name="_id" value=${editingEvent._id} />`
       )}
-      ${when(
-        hackers.length && false,
-        () => html`<div class="field">
-          <label for="slackID">Hacker (SlackID)</label>
-          <input
-            list="hackers"
-            name="slackID"
-            id="slackID"
-            type="search"
-            value=${profile.sub}
-          />
-          <datalist id="hackers">
-            ${hackers.map(
-              (hacker) => html`
-                <option value=${hacker.slackID}>${hacker.name}</option>
-              `
-            )}
-          </datalist>
-        </div>`,
-        () => html`<input type="hidden" name="slackID" value=${profile.sub} />`
-      )}
+      <input
+        type="hidden"
+        name="slackID"
+        .value=${editingEvent.slackID ?? profile.sub}
+      />
       <input type="hidden" name="year" value=${year} />
       <input type="hidden" name="timezone" value="+02:00" />
       ${fieldsHtml}
