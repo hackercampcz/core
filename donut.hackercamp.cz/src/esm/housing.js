@@ -197,8 +197,7 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
     }
     // do not disabled custom housing options
     else if (inputElement.type === "search") {
-      const profile = getSlackProfile();
-      inputElement.disabled = !profile.is_admin;
+      inputElement.disabled = true;
     }
   }
 
