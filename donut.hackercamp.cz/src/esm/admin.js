@@ -894,7 +894,7 @@ function programTable(data) {
       <tbody>
         ${data.map(
           (row) => html`
-            <tr>
+            <tr data-id="${row._id}">
               <td>${when(row.id, () => html`<code>${row.id}</code>`)}</td>
               <td
                 style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis"
