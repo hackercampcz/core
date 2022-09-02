@@ -168,7 +168,7 @@ async function processRequest(db, data, slackID) {
           .set(sanitizedData._id, sanitizedData)
           .values()
       ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
-      await saveAttendee(db, { year, events });
+      await saveAttendee(db, { year, events , slackID: sanitizedData.slackID });
       sanitizedData.people = [
         selectKeys(attendee, new Set(["slackID", "image", "slug", "name"])),
       ];
