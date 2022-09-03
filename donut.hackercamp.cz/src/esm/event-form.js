@@ -591,7 +591,7 @@ export function eventFormTemplate({
       <input
         type="hidden"
         name="slackID"
-        .value=${editingEvent.slackID ?? profile.sub}
+        .value=${editingEvent?.slackID ?? profile.sub}
       />
       <input type="hidden" name="year" value=${year} />
       <input type="hidden" name="timezone" value="+02:00" />
