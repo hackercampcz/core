@@ -280,13 +280,6 @@ workflows:
           site_name: donut.hackercamp.cz
           rollbar_access_token: 6ed48e07fedb43bb9767261178684740
           context: org-global
-          after_s3_sync:
-            - run:
-                name: Update MIME types
-                command: |
-                  aws s3 cp --exclude "*" --include "import-map.importmap" \
-                    --metadata-directive="REPLACE" --content-type="application/importmap+json; charset=utf-8" \
-                    --recursive s3://donut.hackercamp.cz/ s3://donut.hackercamp.cz/
           requires:
             - build-donut
           filters:
