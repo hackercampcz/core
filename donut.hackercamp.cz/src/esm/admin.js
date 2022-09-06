@@ -20,7 +20,13 @@ import {
 import * as event from "./admin/program.js";
 import * as attendees from "./admin/attendees.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
-import { getContact, getSlackProfile } from "./lib/profile.js";
+import {
+  getContact,
+  getSlackProfile,
+  setReturnUrl,
+  signOut,
+} from "./lib/profile.js";
+import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 import { renderEventForm } from "./event-form.js";
@@ -1142,9 +1148,22 @@ async function fetchData(selectedView, apiHost) {
   const params = new URLSearchParams({ type: selectedView });
   const endpoint = endpointForView.get(selectedView);
   const resource = new URL(`admin/${endpoint}?${params}`, apiHost).href;
-  const resp = await fetch(resource, { credentials: "include" });
-  if (resp.ok) return resp.json();
-  return { unauthorized: true };
+  const resp = await withAuthHandler(
+    fetch(resource, { credentials: "include" }),
+    {
+      onUnauthenticated() {
+        setReturnUrl(location.href);
+        return new Promise((resolve, reject) => {
+          signOut((path) => new URL(path, apiHost).href);
+          reject({ unauthenticated: true });
+        });
+      },
+      onUnauthorized() {
+        return Promise.reject({ unauthorized: true });
+      },
+    }
+  );
+  return resp.json();
 }
 
 /**

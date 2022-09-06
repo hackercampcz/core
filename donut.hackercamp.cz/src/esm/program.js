@@ -10,7 +10,8 @@ import { classMap } from "lit-html/directives/class-map.js";
 import { when } from "lit/directives/when.js";
 import { renderEventForm } from "./event-form.js";
 import { throttle } from "./lib/function.js";
-import { getSlackProfile } from "./lib/profile.js";
+import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
+import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 import { showModalDialog } from "./modal-dialog.js";
@@ -822,10 +823,21 @@ async function fetchEvents(apiHost) {
   const { year } = state.deref();
   const params = new URLSearchParams({ year });
   const endpoint = new URL(`program/?${params}`, apiHost).href;
-  const resp = await fetch(endpoint, {
-    headers: { Accept: "application/json" },
-    credentials: "include",
-  });
+  const resp = await withAuthHandler(
+    fetch(endpoint, {
+      headers: { Accept: "application/json" },
+      credentials: "include",
+    }),
+    {
+      onUnauthenticated() {
+        setReturnUrl(location.href);
+        return new Promise((resolve, reject) => {
+          signOut((path) => new URL(path, apiHost).href);
+          reject({ unauthenticated: true });
+        });
+      },
+    }
+  );
   return resp.json();
 }
 

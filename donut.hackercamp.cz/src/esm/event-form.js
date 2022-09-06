@@ -1,5 +1,7 @@
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
+import { setReturnUrl, signOut } from "./lib/profile.js";
+import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 import { when } from "lit/directives/when.js";
@@ -639,10 +641,22 @@ export async function renderEventForm(
 
   if (hijackHacker) {
     try {
-      const response = await fetch(new URL(`housing?year=2022`, apiHost).href, {
-        headers: { Accept: "application/json" },
-        credentials: "include",
-      });
+      const params = new URLSearchParams({ year: 2022 });
+      const response = await withAuthHandler(
+        fetch(new URL(`housing?${params}`, apiHost).href, {
+          headers: { Accept: "application/json" },
+          credentials: "include",
+        }),
+        {
+          onUnauthenticated() {
+            setReturnUrl(location.href);
+            return new Promise((resolve, reject) => {
+              signOut((path) => new URL(path, apiHost).href);
+              reject({ unauthenticated: true });
+            });
+          },
+        }
+      );
       const housing = await response.json();
       const hackers = housing.map(({ name, slackID }) => ({
         name,

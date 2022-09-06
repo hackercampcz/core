@@ -10,6 +10,7 @@ import {
   signIn,
   signOut,
 } from "./lib/profile.js";
+import { withAuthHandler } from "./lib/remoting.js";
 import { setSlackProfile } from "./lib/slack.js";
 import * as slack from "./lib/slack.js";
 import * as rollbar from "./lib/rollbar.js";
@@ -65,30 +66,68 @@ async function setDonutProfileUrl(user, token, slug) {
 
 async function getContact(slackID, email, apiUrl) {
   const params = new URLSearchParams({ slackID, email });
-  const resp = await fetch(apiUrl(`contacts?${params}`), {
-    credentials: "include",
-  });
+  const resp = await withAuthHandler(
+    fetch(apiUrl(`contacts?${params}`), {
+      credentials: "include",
+    }),
+    {
+      onUnauthenticated() {
+        setReturnUrl(location.href);
+        return new Promise((resolve, reject) => {
+          signOut(apiUrl);
+          reject({ unauthenticated: true });
+        });
+      },
+    }
+  );
   return resp.json();
 }
 
 async function getRegistration(slackID, email, year, apiUrl) {
   const params = new URLSearchParams({ slackID, email, year });
-  const resp = await fetch(apiUrl(`registration?${params}`));
+  const resp = await withAuthHandler(fetch(apiUrl(`registration?${params}`)), {
+    onUnauthenticated() {
+      setReturnUrl(location.href);
+      return new Promise((resolve, reject) => {
+        signOut(apiUrl);
+        reject({ unauthenticated: true });
+      });
+    },
+  });
   return resp.json();
 }
 
 async function getAttendee(slackID, year, apiUrl) {
   const params = new URLSearchParams({ slackID, year });
-  const resp = await fetch(apiUrl(`attendees?${params}`));
+  const resp = await withAuthHandler(fetch(apiUrl(`attendees?${params}`)), {
+    onUnauthenticated() {
+      setReturnUrl(location.href);
+      return new Promise((resolve, reject) => {
+        signOut(apiUrl);
+        reject({ unauthenticated: true });
+      });
+    },
+  });
   return resp.json();
 }
 
 async function getProgram(year, apiUrl) {
   const params = new URLSearchParams({ year });
-  const resp = await fetch(apiUrl(`program?${params}`), {
-    headers: { Accept: "application/json" },
-    credentials: "include",
-  });
+  const resp = await withAuthHandler(
+    fetch(apiUrl(`program?${params}`), {
+      headers: { Accept: "application/json" },
+      credentials: "include",
+    }),
+    {
+      onUnauthenticated() {
+        setReturnUrl(location.href);
+        return new Promise((resolve, reject) => {
+          signOut(apiUrl);
+          reject({ unauthenticated: true });
+        });
+      },
+    }
+  );
   return resp.json();
 }
 

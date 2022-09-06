@@ -1,21 +1,33 @@
 import { html } from "lit-html";
-import { setReturnUrl } from "../lib/profile.js";
+import { setReturnUrl, signOut } from "../lib/profile.js";
+import { withAuthHandler } from "../lib/remoting.js";
 
 export async function executeCommand(apiHost, endpoint, command, params) {
   const resource = new URL(`admin/${endpoint}`, apiHost).href;
-  const resp = await fetch(resource, {
-    method: "POST",
-    headers: [
-      ["Accept", "application/json"],
-      ["Content-Type", "application/json"],
-    ],
-    body: JSON.stringify({
-      command: command,
-      params: params,
+  const resp = await withAuthHandler(
+    fetch(resource, {
+      method: "POST",
+      headers: [
+        ["Accept", "application/json"],
+        ["Content-Type", "application/json"],
+      ],
+      body: JSON.stringify({
+        command: command,
+        params: params,
+      }),
+      credentials: "include",
+      referrerPolicy: "no-referrer",
     }),
-    credentials: "include",
-    referrerPolicy: "no-referrer",
-  });
+    {
+      onUnauthenticated() {
+        setReturnUrl(location.href);
+        return new Promise((resolve, reject) => {
+          signOut((path) => new URL(path, apiHost).href);
+          reject({ unauthenticated: true });
+        });
+      },
+    }
+  );
   if (!resp.ok) throw new Error(resp.status);
 }
 

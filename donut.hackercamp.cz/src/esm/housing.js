@@ -1,18 +1,31 @@
-import { getSlackProfile, signOut } from "./lib/profile.js";
+import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
+import { withAuthHandler } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
 
 async function loadHousingData(apiBase) {
   try {
+    const params = new URLSearchParams({ year: 2022 });
     const responses = await Promise.all([
       fetch(`/housing/index.json`),
       fetch(`/housing/types.json`),
       fetch(`/housing/variants.json`),
       fetch(`/housing/backstage.json`),
       // FIXME: Hardcoded year 👇
-      fetch(new URL(`housing?year=2022`, apiBase).href, {
-        headers: { Accept: "application/json" },
-        credentials: "include",
-      }),
+      withAuthHandler(
+        fetch(new URL(`housing?${params}`, apiBase).href, {
+          headers: { Accept: "application/json" },
+          credentials: "include",
+        }),
+        {
+          onUnauthenticated() {
+            setReturnUrl(location.href);
+            return new Promise((resolve, reject) => {
+              signOut((path) => new URL(path, apiBase).href);
+              reject({ unauthenticated: true });
+            });
+          },
+        }
+      ),
     ]);
     const [housing, types, variants, backstage, hackers] = await Promise.all(
       responses.map((resp) => {
@@ -312,6 +325,10 @@ function autoShowHousingOfMine({ formElement, selectElement }) {
 
 const HOUSING_INPUT_REGEX = /^(cottage|house|tent)\['(.+)'\]\[(\d+)\]$/;
 
+/**
+ *
+ * @param {HTMLFormElement} formElement
+ */
 function handlaFormaSubmita(formElement, { hackers, profile }) {
   formElement.addEventListener("submit", (event) => {
     event.preventDefault();
@@ -364,16 +381,27 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
   async function sendHousingData(data) {
     const body = JSON.stringify(data);
     console.info("Sending housing data to server...", body);
-    const response = await fetch(formElement.action, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body,
-      referrerPolicy: "no-referrer",
-    });
+    const response = await withAuthHandler(
+      fetch(formElement.action, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body,
+        referrerPolicy: "no-referrer",
+      }),
+      {
+        onUnauthenticated() {
+          setReturnUrl(location.href);
+          return new Promise((resolve, reject) => {
+            signOut((path) => new URL(path, formElement.action).href);
+            reject({ unauthenticated: true });
+          });
+        },
+      }
+    );
     if (!response.ok) {
       throw await response.text();
     }
