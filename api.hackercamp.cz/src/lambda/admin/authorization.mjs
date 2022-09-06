@@ -1,4 +1,4 @@
-import {authorize, getToken} from "@hackercamp/lib/auth.mjs";
+import { authorize, getToken } from "@hackercamp/lib/auth.mjs";
 
 /**
  * @param {APIGatewayProxyEvent} event

@@ -484,4 +484,3 @@ interface RouteArgs {
   environment?: lambda.FunctionEnvironment;
   memorySize?: number;
 }
-export { checkAuthorization } from "./src/lambda/admin/authorization.mjs";
