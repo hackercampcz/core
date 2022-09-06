@@ -1,17 +1,10 @@
-import { getToken, authorize } from "@hackercamp/lib/auth.mjs";
-import { getHeader, unauthorized, withCORS } from "../../http.mjs";
+import { checkAuthorization } from "../authorization.mjs";
+import { forbidden, getHeader, unauthorized, withCORS } from "../../http.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
-
-async function checkAuthorization(event) {
-  const token = getToken(event.headers);
-  const privateKey = process.env.private_key;
-  const isAuthorized = await authorize("admin", token, privateKey);
-  if (!isAuthorized) throw Error("Unauthorized");
-}
 
 /**
  * @param {APIGatewayProxyEvent} event
@@ -44,6 +37,7 @@ export async function handler(event) {
     }
   } catch (e) {
     console.error(e);
+    if (e.message === "Unauthorized") return withCORS_(forbidden());
     return withCORS_(
       unauthorized({
         "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,

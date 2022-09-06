@@ -73,6 +73,18 @@ export function unauthorized(headers = {}) {
 }
 
 /**
+ * @param {{[p: string]: boolean | number | string}|undefined} headers
+ * @returns {APIGatewayProxyResult}
+ */
+export function forbidden(headers = {}) {
+  return {
+    statusCode: 403,
+    body: "",
+    headers,
+  };
+}
+
+/**
  * @param {Record<string, any>} body
  * @returns {APIGatewayProxyResult}
  */
