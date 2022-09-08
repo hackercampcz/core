@@ -854,9 +854,16 @@ function joinTopicPeople(events) {
   return output;
 }
 
+/**
+ *
+ * @param {HTMLElement} rootElement
+ * @param env
+ * @returns {Promise<void>}
+ */
 export async function main({ rootElement, env }) {
   rollbar.init(env);
-  initRenderLoop(state, rootElement);
+  const shadow = rootElement.attachShadow({ mode: "closed" });
+  initRenderLoop(state, shadow);
 
   transact((x) =>
     Object.assign(x, {

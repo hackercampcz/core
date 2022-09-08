@@ -1,4 +1,5 @@
 import { defAtom } from "@thi.ng/atom";
+import { formatMoney } from "@hackercamp/lib/format.mjs";
 import { html } from "lit-html";
 import {
   getSlackAccessToken,
@@ -279,15 +280,61 @@ function programCardTemplate({ events }) {
   `;
 }
 
+function nfcTronTemplate(entries) {
+  if (!entries) return null;
+  const total = entries.reduce((acc, x) => acc + x.spent, 0);
+  return html`
+    <div class="hc-card hc-card--decorated">
+      <h3>Útrata na Hackercampu</h3>
+      <p>
+        <strong><data value="${total}">${formatMoney(total)}</data></strong>
+      </p>
+
+      ${entries.map(
+        (x) => html`
+          <div>
+            <p>
+              ${when(
+                x.vip || x.paid,
+                () =>
+                  html`<strong style="color: forestgreen">Zaplaceno</strong>`,
+                () => html`<strong style="color: darkred"
+                  >Nezaplaceno
+                  <data value="${x.spent}"
+                    >${formatMoney(x.spent)}</data
+                  ></strong
+                >`
+              )}
+
+              <a
+                href="https://pass.nfctron.com/receipt/${x.chipID}"
+                target="nfcTron"
+                >Účtenka</a
+              >
+            </p>
+          </div>
+        `
+      )}
+    </div>
+  `;
+}
+
 function renderDashboardScreen({
   housing,
   housingPlacement,
   travel,
   events = [],
+  nfcTronData,
 }) {
   return html`
     <div class="mdc-layout-grid__inner">
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        ${nfcTronTemplate(nfcTronData)}
+      </div>
+      <div
+        style="display:none"
+        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+      >
         ${programCardTemplate({ events })}
       </div>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">

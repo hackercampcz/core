@@ -23,7 +23,8 @@ export function renderScheduler() {
 /**
  * Initializes render loop reacting to state changes.
  * @param {Atom} state
- * @param {HTMLElement} root
+ * @param {ShadowRoot|HTMLElement} root
+ * @param {Boolean} keepContent
  */
 export function initRenderLoop(state, root, { keepContent } = {}) {
   const scheduleRendering = renderScheduler();
