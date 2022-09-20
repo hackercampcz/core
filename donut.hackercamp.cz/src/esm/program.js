@@ -348,6 +348,7 @@ function renderProgram({
       .program__lineups {
         max-width: 100vw;
         overflow-x: auto;
+        overflow-y: hidden;
         scroll-behavior: smooth;
         font-size: 16px;
       }
