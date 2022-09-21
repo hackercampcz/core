@@ -2238,7 +2238,7 @@ __metadata:
   resolution: "@hackercamp/core@workspace:."
   dependencies:
     "@pulumi/aws": 5.14.0
-    "@pulumi/awsx": 0.40.0
+    "@pulumi/awsx": 0.40.1
     "@pulumi/pulumi": 3.40.1
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=aadd932759b9908a4f8b0090df373ddea5148e67"
     "@topmonks/pulumi-aws": 2.2.4
@@ -3252,17 +3252,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/awsx@npm:0.40.0":
-  version: 0.40.0
-  resolution: "@pulumi/awsx@npm:0.40.0"
+"@pulumi/awsx@npm:0.40.1":
+  version: 0.40.1
+  resolution: "@pulumi/awsx@npm:0.40.1"
   dependencies:
     "@pulumi/docker": ^3.0.0
-    "@types/aws-lambda": ^8.10.23
+    "@types/aws-lambda": 8.10.93
     mime: ^2.0.0
   peerDependencies:
     "@pulumi/aws": ^5.0.0
     "@pulumi/pulumi": ^3.0.0
-  checksum: 2844209e9f2c32f9c3f639784f948decb3b6de1b9b03f6234edfc8e779c4cb5fb390dd82067bc279c6eff3d2c4381f767b076ddfc54828b958bf89100a17ebb9
+  checksum: 290c23b2353e6ae8b0421f0ace73cf342f7e299f8a264cc01eecb0419dc979251f8a3ce650deafdc780edad24e2b49b436965e635425506242f8c2f1a32b7c44
   languageName: node
   linkType: hard
 
@@ -3680,10 +3680,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/aws-lambda@npm:^8.10.23":
-  version: 8.10.95
-  resolution: "@types/aws-lambda@npm:8.10.95"
-  checksum: 82a696e924e9eb9201aaeeb74fa2a2ee49da6dd62278fc335ab4b48d51458d2eb6f5064c7a24f9b85d12c8a1a8786cbea10a6ee618a56221f413593d26ee21b0
+"@types/aws-lambda@npm:8.10.93":
+  version: 8.10.93
+  resolution: "@types/aws-lambda@npm:8.10.93"
+  checksum: 82eac08a9e1c77724708192ff5c487ffbef572d4dd3851908c56c8bd7f174dd3fa558090ff5c499e04c3e7afa0dc885fb8cf12cd1b1044542b55b17c61846d14
   languageName: node
   linkType: hard
 
