@@ -2268,7 +2268,7 @@ __metadata:
     "@material/mwc-list": 0.27.0
     "@material/mwc-snackbar": 0.27.0
     "@thi.ng/atom": 5.1.15
-    "@thi.ng/transducers": 8.3.14
+    "@thi.ng/transducers": 8.3.15
     "@typescript-eslint/eslint-plugin": 5.38.1
     "@typescript-eslint/parser": 5.38.1
     "@ungap/structured-clone": 1.0.1
@@ -3531,12 +3531,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/math@npm:^5.3.8":
-  version: 5.3.8
-  resolution: "@thi.ng/math@npm:5.3.8"
+"@thi.ng/math@npm:^5.3.9":
+  version: 5.3.9
+  resolution: "@thi.ng/math@npm:5.3.9"
   dependencies:
     "@thi.ng/api": ^8.4.2
-  checksum: d74a3b48510c03b8f3b27298a828ff830fba590f8486b2488a4d3d51749264d382e67b8eca42709debf9923b6717bd4054c387add9468daf2e0d853db6c68948
+  checksum: a505c2438472e64f81da356fca51d494119ad8199acf87dbf583d4a22b03705d26b23f8346e5f3d1a7638a5bf5f8cbbb2b1c0b8891a0de819356bd1ea27656df
   languageName: node
   linkType: hard
 
@@ -3563,9 +3563,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/transducers@npm:8.3.14":
-  version: 8.3.14
-  resolution: "@thi.ng/transducers@npm:8.3.14"
+"@thi.ng/transducers@npm:8.3.15":
+  version: 8.3.15
+  resolution: "@thi.ng/transducers@npm:8.3.15"
   dependencies:
     "@thi.ng/api": ^8.4.2
     "@thi.ng/arrays": ^2.3.6
@@ -3573,9 +3573,9 @@ __metadata:
     "@thi.ng/compare": ^2.1.12
     "@thi.ng/compose": ^2.1.13
     "@thi.ng/errors": ^2.2.0
-    "@thi.ng/math": ^5.3.8
+    "@thi.ng/math": ^5.3.9
     "@thi.ng/random": ^3.3.8
-  checksum: cf5aeedd65dcdf1e4d9ef1dbe7c221fe9950dbada141541b97624339562cc391e85d23af4c1c029da3bf83d7e5937496e08b02333474861d2862f998d848505d
+  checksum: 9832386009379188b1c99acdb428cbfd0afedfd66e686de2337e7bd1672dc0eeaa897ca4b8fd9764879e15f38619f299a58cfe2337d6331f7b2bf442b0014ee8
   languageName: node
   linkType: hard
 
