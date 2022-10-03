@@ -2267,7 +2267,7 @@ __metadata:
     "@material/mwc-icon-button": 0.27.0
     "@material/mwc-list": 0.27.0
     "@material/mwc-snackbar": 0.27.0
-    "@thi.ng/atom": 5.1.15
+    "@thi.ng/atom": 5.1.16
     "@thi.ng/transducers": 8.3.15
     "@typescript-eslint/eslint-plugin": 5.38.1
     "@typescript-eslint/parser": 5.38.1
@@ -3455,6 +3455,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@thi.ng/api@npm:^8.4.3":
+  version: 8.4.3
+  resolution: "@thi.ng/api@npm:8.4.3"
+  checksum: 5adb33b09fcac3a719f5ee95e49009b3f0991d480087992ffb2154c0fbfa4b635514f06483c0ef904faf22b7af4831ffb8f2ac22bcfedc15607b3162ffa65b6f
+  languageName: node
+  linkType: hard
+
 "@thi.ng/arrays@npm:^2.3.6":
   version: 2.3.6
   resolution: "@thi.ng/arrays@npm:2.3.6"
@@ -3469,16 +3476,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/atom@npm:5.1.15":
-  version: 5.1.15
-  resolution: "@thi.ng/atom@npm:5.1.15"
+"@thi.ng/atom@npm:5.1.16":
+  version: 5.1.16
+  resolution: "@thi.ng/atom@npm:5.1.16"
   dependencies:
-    "@thi.ng/api": ^8.4.2
-    "@thi.ng/equiv": ^2.1.10
-    "@thi.ng/errors": ^2.2.0
-    "@thi.ng/paths": ^5.1.15
+    "@thi.ng/api": ^8.4.3
+    "@thi.ng/equiv": ^2.1.11
+    "@thi.ng/errors": ^2.2.1
+    "@thi.ng/paths": ^5.1.16
     tslib: ^2.4.0
-  checksum: b88617597fa6096ae28b50d3c483bf973f912aad5e74d6136e4b0bd321b34e0973393d3da5a73171469e26e30e19a9b5583aa80fe96cc2e442b336e804e5b36b
+  checksum: 3819e4a6470bc22404886203106fe7110ccd40618aa586d91b4d0b9675190451df58da3b7fd74d6aba53b78991e9d87787993e7c33bcb617c2c23308546f75c7
   languageName: node
   linkType: hard
 
@@ -3488,6 +3495,15 @@ __metadata:
   dependencies:
     tslib: ^2.4.0
   checksum: 986c599f305c280ee07f8fc259004ef72d0c1285836c9c42442d64f09afd018b63c49e1f12e1cc8a3eb7c75332f95b36f6eb07bef094b0b8890b9170fa490567
+  languageName: node
+  linkType: hard
+
+"@thi.ng/checks@npm:^3.2.6":
+  version: 3.2.6
+  resolution: "@thi.ng/checks@npm:3.2.6"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: b29235850cf787d169bf39b8633cda4e350c9ea8cd9f50c7323ed5c50513a74aa2bb0535e6761bae2d8238eba0ae2ede15c4a03da584c7d9f6b8bd7eb3a29cf3
   languageName: node
   linkType: hard
 
@@ -3517,10 +3533,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@thi.ng/equiv@npm:^2.1.11":
+  version: 2.1.11
+  resolution: "@thi.ng/equiv@npm:2.1.11"
+  checksum: 07aaf3824dd008fbd9c7295d7300eda0ec0d8c00963b18fa5d1f921b5662ae986a0a7403934e6f804c5817aada9218ce60a659c96fa3fe04d9618924823fad1c
+  languageName: node
+  linkType: hard
+
 "@thi.ng/errors@npm:^2.2.0":
   version: 2.2.0
   resolution: "@thi.ng/errors@npm:2.2.0"
   checksum: 77154fa92d48fe73b6bcc199b01aeb978de38c0f55353a2e314c99a0fe2570f097a111ffbb2d05030bbbf9674de138fc0898b25dfec23bd233c88bd7c8bff71b
+  languageName: node
+  linkType: hard
+
+"@thi.ng/errors@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@thi.ng/errors@npm:2.2.1"
+  checksum: d5b4df61ce7c372892e72d0293ea25f61f6b64838de28275db998786d1b83e5331c50e79336247474df445df1c2187d0ae560c390f0157e34959d1c898bf3556
   languageName: node
   linkType: hard
 
@@ -3540,14 +3570,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/paths@npm:^5.1.15":
-  version: 5.1.15
-  resolution: "@thi.ng/paths@npm:5.1.15"
+"@thi.ng/paths@npm:^5.1.16":
+  version: 5.1.16
+  resolution: "@thi.ng/paths@npm:5.1.16"
   dependencies:
-    "@thi.ng/api": ^8.4.2
-    "@thi.ng/checks": ^3.2.5
-    "@thi.ng/errors": ^2.2.0
-  checksum: e2f02b0d6975674c6bff75e614d5c9561d6bd8c8df7098d8e2e3fe2654ad45d1d9dc4e2c1f5f344af16074a9f2b2e37a89dafe5be5eedf3d284a720672717621
+    "@thi.ng/api": ^8.4.3
+    "@thi.ng/checks": ^3.2.6
+    "@thi.ng/errors": ^2.2.1
+  checksum: e16ba766fa014a72a946d91c1425dcf64b96016bad25bdd6e31b4a7ddb1fcfa76fd65d86cdd6d22aabaefec2fe1b479476f3c28c7a3c2808bfbe994c661db6ec
   languageName: node
   linkType: hard
 
