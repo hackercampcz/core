@@ -2268,7 +2268,7 @@ __metadata:
     "@material/mwc-icon-button": 0.27.0
     "@material/mwc-list": 0.27.0
     "@material/mwc-snackbar": 0.27.0
-    "@thi.ng/atom": 5.1.16
+    "@thi.ng/atom": 5.1.17
     "@thi.ng/transducers": 8.3.16
     "@typescript-eslint/eslint-plugin": 5.39.0
     "@typescript-eslint/parser": 5.39.0
@@ -3470,16 +3470,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/atom@npm:5.1.16":
-  version: 5.1.16
-  resolution: "@thi.ng/atom@npm:5.1.16"
+"@thi.ng/atom@npm:5.1.17":
+  version: 5.1.17
+  resolution: "@thi.ng/atom@npm:5.1.17"
   dependencies:
     "@thi.ng/api": ^8.4.3
     "@thi.ng/equiv": ^2.1.11
-    "@thi.ng/errors": ^2.2.1
-    "@thi.ng/paths": ^5.1.16
+    "@thi.ng/errors": ^2.2.2
+    "@thi.ng/paths": ^5.1.17
     tslib: ^2.4.0
-  checksum: 3819e4a6470bc22404886203106fe7110ccd40618aa586d91b4d0b9675190451df58da3b7fd74d6aba53b78991e9d87787993e7c33bcb617c2c23308546f75c7
+  checksum: 61ea6fbc2e3527a669c3c803844b7a59557740da61c7207fb4994384240788d5af16d9b2e6f9a84d5a21ac4b45c1586bcc022ffe262ca8ffaf69bb4def1cb244
   languageName: node
   linkType: hard
 
@@ -3525,6 +3525,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@thi.ng/errors@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "@thi.ng/errors@npm:2.2.2"
+  checksum: a8144abc8c2aac7e1037e9cd3a889a87893e2bf0fc06da7ba76a463fdbba26b618ba560a3975a5f90e16437feee1a415b3cea840f428357905bbfac7739d3e8c
+  languageName: node
+  linkType: hard
+
 "@thi.ng/hex@npm:^2.2.1":
   version: 2.2.1
   resolution: "@thi.ng/hex@npm:2.2.1"
@@ -3541,14 +3548,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/paths@npm:^5.1.16":
-  version: 5.1.16
-  resolution: "@thi.ng/paths@npm:5.1.16"
+"@thi.ng/paths@npm:^5.1.17":
+  version: 5.1.17
+  resolution: "@thi.ng/paths@npm:5.1.17"
   dependencies:
     "@thi.ng/api": ^8.4.3
     "@thi.ng/checks": ^3.2.6
-    "@thi.ng/errors": ^2.2.1
-  checksum: e16ba766fa014a72a946d91c1425dcf64b96016bad25bdd6e31b4a7ddb1fcfa76fd65d86cdd6d22aabaefec2fe1b479476f3c28c7a3c2808bfbe994c661db6ec
+    "@thi.ng/errors": ^2.2.2
+  checksum: 7487fb090042da47b3134fa53d4534c91786ce9287d1d4d37a4ecdc04bceefd486f102aa3a6397de9aa778aac1ad3e381c1d336e32f35a6afc3adb405cc4f302
   languageName: node
   linkType: hard
 
