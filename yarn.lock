@@ -115,13 +115,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.190.0":
-  version: 3.190.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.190.0"
+"@aws-sdk/client-dynamodb@npm:3.192.0":
+  version: 3.192.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.192.0"
   dependencies:
     "@aws-crypto/sha256-browser": 2.0.0
     "@aws-crypto/sha256-js": 2.0.0
-    "@aws-sdk/client-sts": 3.190.0
+    "@aws-sdk/client-sts": 3.192.0
     "@aws-sdk/config-resolver": 3.190.0
     "@aws-sdk/credential-provider-node": 3.190.0
     "@aws-sdk/fetch-http-handler": 3.190.0
@@ -134,7 +134,7 @@ __metadata:
     "@aws-sdk/middleware-recursion-detection": 3.190.0
     "@aws-sdk/middleware-retry": 3.190.0
     "@aws-sdk/middleware-serde": 3.190.0
-    "@aws-sdk/middleware-signing": 3.190.0
+    "@aws-sdk/middleware-signing": 3.192.0
     "@aws-sdk/middleware-stack": 3.190.0
     "@aws-sdk/middleware-user-agent": 3.190.0
     "@aws-sdk/node-config-provider": 3.190.0
@@ -156,7 +156,7 @@ __metadata:
     "@aws-sdk/util-waiter": 3.190.0
     tslib: ^2.3.1
     uuid: ^8.3.2
-  checksum: d99a49ea2a71c585c53c91eb6a91584ced1b71ddb4d27c0fedd0604775ea6faf9867265fa17f54401fab9c46cf909c26b39f3e06f6dbec30873a3e8fbb183503
+  checksum: a600dd3a90315b699229058f19dc53761e3854b8fb40558c1f03c30074297498734832839dd465027ff5eebb1b6abd45a17663c1cd4fd3d189570c2b78b5ed5a
   languageName: node
   linkType: hard
 
@@ -284,6 +284,49 @@ __metadata:
     fast-xml-parser: 4.0.11
     tslib: ^2.3.1
   checksum: 5ba134369d80095ff1091464fb35e4ef52734ddf878e33035a474be495b914896aafb07168c14ed8616e38ccf9d5a2944d7aaf422e463e68169486b65522a7fa
+  languageName: node
+  linkType: hard
+
+"@aws-sdk/client-sts@npm:3.192.0":
+  version: 3.192.0
+  resolution: "@aws-sdk/client-sts@npm:3.192.0"
+  dependencies:
+    "@aws-crypto/sha256-browser": 2.0.0
+    "@aws-crypto/sha256-js": 2.0.0
+    "@aws-sdk/config-resolver": 3.190.0
+    "@aws-sdk/credential-provider-node": 3.190.0
+    "@aws-sdk/fetch-http-handler": 3.190.0
+    "@aws-sdk/hash-node": 3.190.0
+    "@aws-sdk/invalid-dependency": 3.190.0
+    "@aws-sdk/middleware-content-length": 3.190.0
+    "@aws-sdk/middleware-host-header": 3.190.0
+    "@aws-sdk/middleware-logger": 3.190.0
+    "@aws-sdk/middleware-recursion-detection": 3.190.0
+    "@aws-sdk/middleware-retry": 3.190.0
+    "@aws-sdk/middleware-sdk-sts": 3.192.0
+    "@aws-sdk/middleware-serde": 3.190.0
+    "@aws-sdk/middleware-signing": 3.192.0
+    "@aws-sdk/middleware-stack": 3.190.0
+    "@aws-sdk/middleware-user-agent": 3.190.0
+    "@aws-sdk/node-config-provider": 3.190.0
+    "@aws-sdk/node-http-handler": 3.190.0
+    "@aws-sdk/protocol-http": 3.190.0
+    "@aws-sdk/smithy-client": 3.190.0
+    "@aws-sdk/types": 3.190.0
+    "@aws-sdk/url-parser": 3.190.0
+    "@aws-sdk/util-base64-browser": 3.188.0
+    "@aws-sdk/util-base64-node": 3.188.0
+    "@aws-sdk/util-body-length-browser": 3.188.0
+    "@aws-sdk/util-body-length-node": 3.188.0
+    "@aws-sdk/util-defaults-mode-browser": 3.190.0
+    "@aws-sdk/util-defaults-mode-node": 3.190.0
+    "@aws-sdk/util-user-agent-browser": 3.190.0
+    "@aws-sdk/util-user-agent-node": 3.190.0
+    "@aws-sdk/util-utf8-browser": 3.188.0
+    "@aws-sdk/util-utf8-node": 3.188.0
+    fast-xml-parser: 4.0.11
+    tslib: ^2.3.1
+  checksum: d49b5a353e07ea3d88c1e771ce430584f6bc7d1f554978f1c09b2dc624124935a4eda53b9e05feb0f1fa6340ec52973e673b49415af8c152997f12822cc73c94
   languageName: node
   linkType: hard
 
@@ -554,6 +597,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/middleware-sdk-sts@npm:3.192.0":
+  version: 3.192.0
+  resolution: "@aws-sdk/middleware-sdk-sts@npm:3.192.0"
+  dependencies:
+    "@aws-sdk/middleware-signing": 3.192.0
+    "@aws-sdk/property-provider": 3.190.0
+    "@aws-sdk/protocol-http": 3.190.0
+    "@aws-sdk/signature-v4": 3.190.0
+    "@aws-sdk/types": 3.190.0
+    tslib: ^2.3.1
+  checksum: 726d565c457fb0a3d967cac505162a068904d00e18cc799a847aa88b8a48b285894fcbb862418a73c0b02c5e1cd39110e3aafebcaed5bf83415fc02ca21137d4
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/middleware-serde@npm:3.190.0":
   version: 3.190.0
   resolution: "@aws-sdk/middleware-serde@npm:3.190.0"
@@ -575,6 +632,20 @@ __metadata:
     "@aws-sdk/util-middleware": 3.190.0
     tslib: ^2.3.1
   checksum: a41c16077a930e36512abe4ee2c8ff4e481e0cd87725a1f2c3e5e97b8407ca404d0cb809649db0d2c9d02b1522f2cd624a8d9136fa5e1a1821999fa00c973284
+  languageName: node
+  linkType: hard
+
+"@aws-sdk/middleware-signing@npm:3.192.0":
+  version: 3.192.0
+  resolution: "@aws-sdk/middleware-signing@npm:3.192.0"
+  dependencies:
+    "@aws-sdk/property-provider": 3.190.0
+    "@aws-sdk/protocol-http": 3.190.0
+    "@aws-sdk/signature-v4": 3.190.0
+    "@aws-sdk/types": 3.190.0
+    "@aws-sdk/util-middleware": 3.190.0
+    tslib: ^2.3.1
+  checksum: 1423740a98491d389e56e00b0154904cd3d16f07bfdfe5e98fb8788d847fd1f18128d6ea5edebdc3c7d20a7f977fc023e936635dcc1df3311d526776f0d1bf62
   languageName: node
   linkType: hard
 
@@ -2229,7 +2300,7 @@ __metadata:
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
     "@adobe/helix-fetch": 3.1.2
-    "@aws-sdk/client-dynamodb": 3.190.0
+    "@aws-sdk/client-dynamodb": 3.192.0
     "@aws-sdk/client-sqs": 3.190.0
     "@aws-sdk/util-dynamodb": 3.190.0
     "@hackercamp/lib": "workspace:lib"
