@@ -115,9 +115,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.194.0":
-  version: 3.194.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.194.0"
+"@aws-sdk/client-dynamodb@npm:3.195.0":
+  version: 3.195.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.195.0"
   dependencies:
     "@aws-crypto/sha256-browser": 2.0.0
     "@aws-crypto/sha256-js": 2.0.0
@@ -128,6 +128,7 @@ __metadata:
     "@aws-sdk/hash-node": 3.193.0
     "@aws-sdk/invalid-dependency": 3.193.0
     "@aws-sdk/middleware-content-length": 3.193.0
+    "@aws-sdk/middleware-endpoint": 3.193.0
     "@aws-sdk/middleware-endpoint-discovery": 3.193.0
     "@aws-sdk/middleware-host-header": 3.193.0
     "@aws-sdk/middleware-logger": 3.193.0
@@ -149,6 +150,7 @@ __metadata:
     "@aws-sdk/util-body-length-node": 3.188.0
     "@aws-sdk/util-defaults-mode-browser": 3.193.0
     "@aws-sdk/util-defaults-mode-node": 3.193.0
+    "@aws-sdk/util-endpoints": 3.194.0
     "@aws-sdk/util-user-agent-browser": 3.193.0
     "@aws-sdk/util-user-agent-node": 3.193.0
     "@aws-sdk/util-utf8-browser": 3.188.0
@@ -156,7 +158,7 @@ __metadata:
     "@aws-sdk/util-waiter": 3.193.0
     tslib: ^2.3.1
     uuid: ^8.3.2
-  checksum: 65b8b257e6b569b426c581edb71fa5e2d85816bd777d475c62aa22af17381a748a9770ceb4d599332db5cfd0fd7484836a127d1e3716b268592a8908efe75241
+  checksum: 4daf4aa9347790bec38a628407415804d5df577359be9e7da9577956fca6f2f21ffaee3bd4dc4243231bc181ac883ae6f5b4a72f603b0ef9220291541dd985fe
   languageName: node
   linkType: hard
 
@@ -833,12 +835,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.194.0":
-  version: 3.194.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.194.0"
+"@aws-sdk/util-dynamodb@npm:3.195.0":
+  version: 3.195.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.195.0"
   dependencies:
     tslib: ^2.3.1
-  checksum: da256fd87d52776defefbf2e5e057d90a40e17f6f3f95e5287cb2e7a6bd03cb2634687e4cf263c9c1acd0404a3809283a37e25978211dfe31173eb79d7c6aec1
+  checksum: b048726dc83c2995cd773970d1dd056bb179182eb58c518a2a5142774d1134a60967f761227a71ddc7de61fcd67ad0b2429abf5b1813c709c6101a9ad03d29bf
   languageName: node
   linkType: hard
 
@@ -2259,9 +2261,9 @@ __metadata:
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
     "@adobe/helix-fetch": 3.1.2
-    "@aws-sdk/client-dynamodb": 3.194.0
+    "@aws-sdk/client-dynamodb": 3.195.0
     "@aws-sdk/client-sqs": 3.194.0
-    "@aws-sdk/util-dynamodb": 3.194.0
+    "@aws-sdk/util-dynamodb": 3.195.0
     "@hackercamp/lib": "workspace:lib"
     fast-xml-parser: 4.0.11
     jsonwebtoken: 8.5.1
