@@ -2276,7 +2276,7 @@ __metadata:
   dependencies:
     "@pulumi/aws": 5.18.0
     "@pulumi/awsx": 0.40.1
-    "@pulumi/pulumi": 3.43.1
+    "@pulumi/pulumi": 3.44.0
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=aadd932759b9908a4f8b0090df373ddea5148e67"
     "@topmonks/pulumi-aws": 2.2.4
     dotenv: 16.0.3
@@ -3306,9 +3306,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.43.1":
-  version: 3.43.1
-  resolution: "@pulumi/pulumi@npm:3.43.1"
+"@pulumi/pulumi@npm:3.44.0":
+  version: 3.44.0
+  resolution: "@pulumi/pulumi@npm:3.44.0"
   dependencies:
     "@grpc/grpc-js": ~1.3.8
     "@logdna/tail-file": ^2.0.6
@@ -3333,7 +3333,7 @@ __metadata:
     ts-node: ^7.0.1
     typescript: ~3.8.3
     upath: ^1.1.0
-  checksum: 76bdbd1c2c87d797920122ca769ff0a3ab2bbda8b4afb3ebe5f7201a2594d1291140f9b813d308f909d8a3d2b6c8c85bd0522aade37726b7f22826b820ddb78b
+  checksum: 0267bd60b53716537b3d48ec3e7b81b5e5377cd44d0b26f2a12784f2b887ba4943fa5d0e67388b2223e9c81b86309988fbb1e0bfaa05bb97a35c28433175078f
   languageName: node
   linkType: hard
 
