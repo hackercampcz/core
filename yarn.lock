@@ -115,15 +115,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.195.0":
-  version: 3.195.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.195.0"
+"@aws-sdk/client-dynamodb@npm:3.196.0":
+  version: 3.196.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.196.0"
   dependencies:
     "@aws-crypto/sha256-browser": 2.0.0
     "@aws-crypto/sha256-js": 2.0.0
-    "@aws-sdk/client-sts": 3.194.0
+    "@aws-sdk/client-sts": 3.196.0
     "@aws-sdk/config-resolver": 3.193.0
-    "@aws-sdk/credential-provider-node": 3.193.0
+    "@aws-sdk/credential-provider-node": 3.196.0
     "@aws-sdk/fetch-http-handler": 3.193.0
     "@aws-sdk/hash-node": 3.193.0
     "@aws-sdk/invalid-dependency": 3.193.0
@@ -150,7 +150,7 @@ __metadata:
     "@aws-sdk/util-body-length-node": 3.188.0
     "@aws-sdk/util-defaults-mode-browser": 3.193.0
     "@aws-sdk/util-defaults-mode-node": 3.193.0
-    "@aws-sdk/util-endpoints": 3.194.0
+    "@aws-sdk/util-endpoints": 3.196.0
     "@aws-sdk/util-user-agent-browser": 3.193.0
     "@aws-sdk/util-user-agent-node": 3.193.0
     "@aws-sdk/util-utf8-browser": 3.188.0
@@ -158,19 +158,19 @@ __metadata:
     "@aws-sdk/util-waiter": 3.193.0
     tslib: ^2.3.1
     uuid: ^8.3.2
-  checksum: 4daf4aa9347790bec38a628407415804d5df577359be9e7da9577956fca6f2f21ffaee3bd4dc4243231bc181ac883ae6f5b4a72f603b0ef9220291541dd985fe
+  checksum: 1de2f774d9127fadc797e537c8b9d17b6bc0330647871514ca408ea7311a1673a49d93fb446dd499bda94ff61f704b33f8a75f9289567eee132ddf34ed178316
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.194.0":
-  version: 3.194.0
-  resolution: "@aws-sdk/client-sqs@npm:3.194.0"
+"@aws-sdk/client-sqs@npm:3.196.0":
+  version: 3.196.0
+  resolution: "@aws-sdk/client-sqs@npm:3.196.0"
   dependencies:
     "@aws-crypto/sha256-browser": 2.0.0
     "@aws-crypto/sha256-js": 2.0.0
-    "@aws-sdk/client-sts": 3.194.0
+    "@aws-sdk/client-sts": 3.196.0
     "@aws-sdk/config-resolver": 3.193.0
-    "@aws-sdk/credential-provider-node": 3.193.0
+    "@aws-sdk/credential-provider-node": 3.196.0
     "@aws-sdk/fetch-http-handler": 3.193.0
     "@aws-sdk/hash-node": 3.193.0
     "@aws-sdk/invalid-dependency": 3.193.0
@@ -198,20 +198,20 @@ __metadata:
     "@aws-sdk/util-body-length-node": 3.188.0
     "@aws-sdk/util-defaults-mode-browser": 3.193.0
     "@aws-sdk/util-defaults-mode-node": 3.193.0
-    "@aws-sdk/util-endpoints": 3.194.0
+    "@aws-sdk/util-endpoints": 3.196.0
     "@aws-sdk/util-user-agent-browser": 3.193.0
     "@aws-sdk/util-user-agent-node": 3.193.0
     "@aws-sdk/util-utf8-browser": 3.188.0
     "@aws-sdk/util-utf8-node": 3.188.0
     fast-xml-parser: 4.0.11
     tslib: ^2.3.1
-  checksum: db2aa2fae35e232c520f07346fddbc7b7c7ea6af3a06be9a6abec3b866fc81d263408c4de9918a41ff72a57c603fc88dd82c901f516f5f92a827ce3409c31b8c
+  checksum: 3204ce01e50df4f754e73edb806659a550131c4666fb31ab872863eea67c7561667da4a32a944040661f31e88b3f1c075b51a4df2f8eb9934c4f74c222df3e61
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sso@npm:3.193.0":
-  version: 3.193.0
-  resolution: "@aws-sdk/client-sso@npm:3.193.0"
+"@aws-sdk/client-sso@npm:3.196.0":
+  version: 3.196.0
+  resolution: "@aws-sdk/client-sso@npm:3.196.0"
   dependencies:
     "@aws-crypto/sha256-browser": 2.0.0
     "@aws-crypto/sha256-js": 2.0.0
@@ -220,6 +220,7 @@ __metadata:
     "@aws-sdk/hash-node": 3.193.0
     "@aws-sdk/invalid-dependency": 3.193.0
     "@aws-sdk/middleware-content-length": 3.193.0
+    "@aws-sdk/middleware-endpoint": 3.193.0
     "@aws-sdk/middleware-host-header": 3.193.0
     "@aws-sdk/middleware-logger": 3.193.0
     "@aws-sdk/middleware-recursion-detection": 3.193.0
@@ -239,23 +240,24 @@ __metadata:
     "@aws-sdk/util-body-length-node": 3.188.0
     "@aws-sdk/util-defaults-mode-browser": 3.193.0
     "@aws-sdk/util-defaults-mode-node": 3.193.0
+    "@aws-sdk/util-endpoints": 3.196.0
     "@aws-sdk/util-user-agent-browser": 3.193.0
     "@aws-sdk/util-user-agent-node": 3.193.0
     "@aws-sdk/util-utf8-browser": 3.188.0
     "@aws-sdk/util-utf8-node": 3.188.0
     tslib: ^2.3.1
-  checksum: 31506438b7dccfa74493a08cd93788f9e1ee5c1f715922257c98066ccc9c072e8f3cd452fde1320eca62d36c605b80d8d99ccc493a9a742969025e8e8fb561a1
+  checksum: b9b933144c56906b58c6069caedc2a32634254144dd4d8cfac771e43d05f167453fd13fbe2a7740a3c021fb9cc26419c01d049fa795b87a794cead1350452df6
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sts@npm:3.194.0":
-  version: 3.194.0
-  resolution: "@aws-sdk/client-sts@npm:3.194.0"
+"@aws-sdk/client-sts@npm:3.196.0":
+  version: 3.196.0
+  resolution: "@aws-sdk/client-sts@npm:3.196.0"
   dependencies:
     "@aws-crypto/sha256-browser": 2.0.0
     "@aws-crypto/sha256-js": 2.0.0
     "@aws-sdk/config-resolver": 3.193.0
-    "@aws-sdk/credential-provider-node": 3.193.0
+    "@aws-sdk/credential-provider-node": 3.196.0
     "@aws-sdk/fetch-http-handler": 3.193.0
     "@aws-sdk/hash-node": 3.193.0
     "@aws-sdk/invalid-dependency": 3.193.0
@@ -282,14 +284,14 @@ __metadata:
     "@aws-sdk/util-body-length-node": 3.188.0
     "@aws-sdk/util-defaults-mode-browser": 3.193.0
     "@aws-sdk/util-defaults-mode-node": 3.193.0
-    "@aws-sdk/util-endpoints": 3.194.0
+    "@aws-sdk/util-endpoints": 3.196.0
     "@aws-sdk/util-user-agent-browser": 3.193.0
     "@aws-sdk/util-user-agent-node": 3.193.0
     "@aws-sdk/util-utf8-browser": 3.188.0
     "@aws-sdk/util-utf8-node": 3.188.0
     fast-xml-parser: 4.0.11
     tslib: ^2.3.1
-  checksum: 03e935d6f603abe6d9edfd5e4b0efa329d7f3c4d59a5e81b2e6cdcdac03273cda9671c3b30fc0e3419899c4d29acd150c6f5035d7b6b22a2b30161cb50743706
+  checksum: 6fb26bfe846210d38cb3eed736029f59702bc30ef08b33a5e83301ea10cf16194bf47229a353bfb51c8ef2d7dd955ef9ff2df8e447b67868540187898498fb84
   languageName: node
   linkType: hard
 
@@ -330,37 +332,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/credential-provider-ini@npm:3.193.0":
-  version: 3.193.0
-  resolution: "@aws-sdk/credential-provider-ini@npm:3.193.0"
+"@aws-sdk/credential-provider-ini@npm:3.196.0":
+  version: 3.196.0
+  resolution: "@aws-sdk/credential-provider-ini@npm:3.196.0"
   dependencies:
     "@aws-sdk/credential-provider-env": 3.193.0
     "@aws-sdk/credential-provider-imds": 3.193.0
-    "@aws-sdk/credential-provider-sso": 3.193.0
+    "@aws-sdk/credential-provider-sso": 3.196.0
     "@aws-sdk/credential-provider-web-identity": 3.193.0
     "@aws-sdk/property-provider": 3.193.0
     "@aws-sdk/shared-ini-file-loader": 3.193.0
     "@aws-sdk/types": 3.193.0
     tslib: ^2.3.1
-  checksum: ea6ccf3ceec888d53e36b4bcc263346af46dcea97af7a798f489622d8491b258dda25708118d11934def624a60dacef00943aaf66c4bff98a9ea76e6032e37f9
+  checksum: c9e6850fc50c50e42e11439df4f37e937553f3797d3e6a8882bf1bc9dc9882ec0212a7353e4f1a41ab1aa3c7aef65a2e670a48631408272a31f0387c97c0ca87
   languageName: node
   linkType: hard
 
-"@aws-sdk/credential-provider-node@npm:3.193.0":
-  version: 3.193.0
-  resolution: "@aws-sdk/credential-provider-node@npm:3.193.0"
+"@aws-sdk/credential-provider-node@npm:3.196.0":
+  version: 3.196.0
+  resolution: "@aws-sdk/credential-provider-node@npm:3.196.0"
   dependencies:
     "@aws-sdk/credential-provider-env": 3.193.0
     "@aws-sdk/credential-provider-imds": 3.193.0
-    "@aws-sdk/credential-provider-ini": 3.193.0
+    "@aws-sdk/credential-provider-ini": 3.196.0
     "@aws-sdk/credential-provider-process": 3.193.0
-    "@aws-sdk/credential-provider-sso": 3.193.0
+    "@aws-sdk/credential-provider-sso": 3.196.0
     "@aws-sdk/credential-provider-web-identity": 3.193.0
     "@aws-sdk/property-provider": 3.193.0
     "@aws-sdk/shared-ini-file-loader": 3.193.0
     "@aws-sdk/types": 3.193.0
     tslib: ^2.3.1
-  checksum: 6811b11062d4cdd1790b2d04b7a223bf9fbcae7c93fee9a9d5c72654558cd790542c83b166b92d7c5458e3c1b4f5656bd23559b419ec12e4b2d4f0f063910a7d
+  checksum: eda207760ccbc1b4c56c1ce537a7b74cf9bb0cabbefa8ceeb4efe7ba42c59254770887c8aec05592dfbe3231fd365cd60a933e992a290d53202a67fc4b06ddd6
   languageName: node
   linkType: hard
 
@@ -376,16 +378,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/credential-provider-sso@npm:3.193.0":
-  version: 3.193.0
-  resolution: "@aws-sdk/credential-provider-sso@npm:3.193.0"
+"@aws-sdk/credential-provider-sso@npm:3.196.0":
+  version: 3.196.0
+  resolution: "@aws-sdk/credential-provider-sso@npm:3.196.0"
   dependencies:
-    "@aws-sdk/client-sso": 3.193.0
+    "@aws-sdk/client-sso": 3.196.0
     "@aws-sdk/property-provider": 3.193.0
     "@aws-sdk/shared-ini-file-loader": 3.193.0
     "@aws-sdk/types": 3.193.0
     tslib: ^2.3.1
-  checksum: a94962ce142cc0888fb7b0c6e66500fecdb89c58a6dc6f51d62be24b84fa83c10b0b26568063ba7f38b44044a479579d3b477989ff0fa6eaa52ed9c3bd2535cd
+  checksum: c891c1cd946a5efc4ea9cde626b45af360107e225ea158565a3249e8950825e660d3788aef29720bfac577eade08cfa58e291a881b6a5d2ae83f494d768e086c
   languageName: node
   linkType: hard
 
@@ -835,22 +837,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.195.0":
-  version: 3.195.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.195.0"
+"@aws-sdk/util-dynamodb@npm:3.196.0":
+  version: 3.196.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.196.0"
   dependencies:
     tslib: ^2.3.1
-  checksum: b048726dc83c2995cd773970d1dd056bb179182eb58c518a2a5142774d1134a60967f761227a71ddc7de61fcd67ad0b2429abf5b1813c709c6101a9ad03d29bf
+  checksum: 5ab161d0684f3254e9e9f07a717de29c952e98b8126fd437bf8db5ab6d744fc40d56397eb71005bcd02d541e6e25766066723bc11f92924d0d1c78edba3ba67b
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-endpoints@npm:3.194.0":
-  version: 3.194.0
-  resolution: "@aws-sdk/util-endpoints@npm:3.194.0"
+"@aws-sdk/util-endpoints@npm:3.196.0":
+  version: 3.196.0
+  resolution: "@aws-sdk/util-endpoints@npm:3.196.0"
   dependencies:
     "@aws-sdk/types": 3.193.0
     tslib: ^2.3.1
-  checksum: 936979698c152500989be3f7cf3ed81cf0d58334da8a06699915303fea798b6dd168bb7b2c4788e38e3bfd9d6e82643a7b4c3fa83acf8f99e027582edd733c5e
+  checksum: cb9a1ca07b383ffa2f65dcfbfd7c39df56c158dc67c270f85b95cd65826b40d91c54340202480b0b1015387825b9f8fa7fcaf3bee0d94596c1589a6e76c95096
   languageName: node
   linkType: hard
 
@@ -2261,9 +2263,9 @@ __metadata:
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
     "@adobe/helix-fetch": 3.1.2
-    "@aws-sdk/client-dynamodb": 3.195.0
-    "@aws-sdk/client-sqs": 3.194.0
-    "@aws-sdk/util-dynamodb": 3.195.0
+    "@aws-sdk/client-dynamodb": 3.196.0
+    "@aws-sdk/client-sqs": 3.196.0
+    "@aws-sdk/util-dynamodb": 3.196.0
     "@hackercamp/lib": "workspace:lib"
     fast-xml-parser: 4.0.11
     jsonwebtoken: 8.5.1
