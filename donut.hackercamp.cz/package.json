@@ -17,7 +17,7 @@
     "@material/mwc-icon-button": "0.27.0",
     "@material/mwc-list": "0.27.0",
     "@material/mwc-snackbar": "0.27.0",
-    "@thi.ng/atom": "5.1.19",
+    "@thi.ng/atom": "5.1.20",
     "@thi.ng/transducers": "8.3.19",
     "@ungap/structured-clone": "1.0.1",
     "date-fns": "2.29.3",
