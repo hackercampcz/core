@@ -10,7 +10,7 @@
   "dependencies": {
     "@pulumi/aws": "5.19.0",
     "@pulumi/awsx": "0.40.1",
-    "@pulumi/pulumi": "3.44.2",
+    "@pulumi/pulumi": "3.44.3",
     "@topmonks/pulumi-aws": "2.2.4"
   },
   "devDependencies": {
