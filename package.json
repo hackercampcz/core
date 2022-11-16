@@ -8,7 +8,7 @@
   "private": true,
   "packageManager": "yarn@3.3.0",
   "dependencies": {
-    "@pulumi/aws": "5.20.0",
+    "@pulumi/aws": "5.21.0",
     "@pulumi/awsx": "0.40.1",
     "@pulumi/pulumi": "3.46.1",
     "@topmonks/pulumi-aws": "2.2.4"
