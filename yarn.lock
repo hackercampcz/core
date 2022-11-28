@@ -2348,7 +2348,7 @@ __metadata:
     "@material/mwc-icon-button": 0.27.0
     "@material/mwc-list": 0.27.0
     "@material/mwc-snackbar": 0.27.0
-    "@thi.ng/atom": 5.1.22
+    "@thi.ng/atom": 5.1.23
     "@thi.ng/transducers": 8.3.23
     "@typescript-eslint/eslint-plugin": 5.44.0
     "@typescript-eslint/parser": 5.44.0
@@ -3529,6 +3529,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@thi.ng/api@npm:^8.5.0":
+  version: 8.5.0
+  resolution: "@thi.ng/api@npm:8.5.0"
+  checksum: 4f8c994721bca4d490e766938802029b8a259f81a43ebce93c4e5f40ee54c2d38d6abab34fb374883a43dc80f44725288710abf2d997b9558f228d36245fe478
+  languageName: node
+  linkType: hard
+
 "@thi.ng/arrays@npm:^2.4.2":
   version: 2.4.2
   resolution: "@thi.ng/arrays@npm:2.4.2"
@@ -3543,16 +3550,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/atom@npm:5.1.22":
-  version: 5.1.22
-  resolution: "@thi.ng/atom@npm:5.1.22"
+"@thi.ng/atom@npm:5.1.23":
+  version: 5.1.23
+  resolution: "@thi.ng/atom@npm:5.1.23"
   dependencies:
-    "@thi.ng/api": ^8.4.6
+    "@thi.ng/api": ^8.5.0
     "@thi.ng/equiv": ^2.1.13
     "@thi.ng/errors": ^2.2.4
-    "@thi.ng/paths": ^5.1.22
+    "@thi.ng/paths": ^5.1.23
     tslib: ^2.4.1
-  checksum: 9da6c16346a081abf28f2128974bcba3d776cceee9c4b0683f6b942558572e9604211878be719d563e92a428c5ad7c878fb5406019bd4e76f9425e42ae656d23
+  checksum: 0d61c024b7d0d912c5a32b9165290c5e7b2212c0639fbe1f7303c3157e2df65fd6b8e16738f029e2e3f08410cafcc9723c328dc9d707d8eeef4f772461d6c28c
   languageName: node
   linkType: hard
 
@@ -3614,14 +3621,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/paths@npm:^5.1.22":
-  version: 5.1.22
-  resolution: "@thi.ng/paths@npm:5.1.22"
+"@thi.ng/paths@npm:^5.1.23":
+  version: 5.1.23
+  resolution: "@thi.ng/paths@npm:5.1.23"
   dependencies:
-    "@thi.ng/api": ^8.4.6
+    "@thi.ng/api": ^8.5.0
     "@thi.ng/checks": ^3.3.3
     "@thi.ng/errors": ^2.2.4
-  checksum: 1469850e7c878f56db4fa2806ba152094fffbd6ee713265a570fbf0fbcd37c93df844a697977327e016d4da4c37810245bd928e8e7890875a468b50801aae03f
+  checksum: 1ecb31d933825e1e3229f6a0d56ea55b724cfa70be7c0e6dfab63ba9c292c06ca616927e1c03e4e0ed3117f8ab2761797cb43ea1ea4f998a62bed8c704c38f98
   languageName: node
   linkType: hard
 
