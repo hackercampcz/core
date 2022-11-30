@@ -24,7 +24,7 @@
     "lit-html": "2.4.0",
     "marked": "4.2.3",
     "ramda": "0.28.0",
-    "rollbar": "2.25.2",
+    "rollbar": "2.26.0",
     "workbox-window": "6.5.4"
   }
 }
