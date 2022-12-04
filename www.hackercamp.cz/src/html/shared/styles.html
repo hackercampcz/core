@@ -29,6 +29,33 @@
     );
   }
 
+  @supports (color: oklab(0% 0 0)) {
+    @media (color-gamut: p3) {
+      :root {
+        --hc-gradient: linear-gradient(
+          in oklab 90deg,
+          #ee771b -0.01%,
+          #e9444e 25.57%,
+          #e62271 42.71%,
+          #684997 78.9%,
+          #3e7abc 100.02%
+        );
+        --hc-gradient-btn: linear-gradient(
+          in oklab 90deg,
+          #ee771b -0.01%,
+          #e9444e 11.28%,
+          #e62271 24.31%,
+          #684997 36.29%,
+          #3e7abc 50%,
+          #684997 61.3%,
+          #e62271 74.84%,
+          #e9444e 88.39%,
+          #ee771b 100.02%
+        );
+      }
+    }
+  }
+
   @media (prefers-color-scheme: dark) {
     :root {
       --hc-background-color: #222;
