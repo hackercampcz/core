@@ -2328,7 +2328,7 @@ __metadata:
     eslint: 8.29.0
     eslint-config-prettier: 8.5.0
     eslint-plugin-prettier: 4.2.1
-    gulp-esbuild: 0.10.6
+    gulp-esbuild: 0.10.7
     gulp-mode: 1.1.0
     npm-run-all: 4.1.5
     prettier: 2.8.0
@@ -8192,14 +8192,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gulp-esbuild@npm:0.10.6":
-  version: 0.10.6
-  resolution: "gulp-esbuild@npm:0.10.6"
+"gulp-esbuild@npm:0.10.7":
+  version: 0.10.7
+  resolution: "gulp-esbuild@npm:0.10.7"
   dependencies:
     esbuild: ^0.15.10
     plugin-error: ^2.0.0
     vinyl: ^3.0.0
-  checksum: aa2ebfe523779f4199b34c7ea2b0c28cb443dfc88d96f4ab48b53766689ff31541f8a998b3a1ee6a800a8dd88f1b536918f0b3b5ca4bb65a5ba636e08b448afa
+  checksum: d236abc3baf7f1a7fc192a91c95e840d503985367e4dca705aa2bb303650041c9dd42b6c7f46208052a291cb40a23544b65b0cb8ef8d4f1dc59c4042b41f3b9d
   languageName: node
   linkType: hard
 
