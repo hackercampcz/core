@@ -19,7 +19,7 @@
     "dotenv-cli": "6.0.0",
     "esbuild": "0.15.18",
     "eslint": "8.31.0",
-    "eslint-config-prettier": "8.5.0",
+    "eslint-config-prettier": "8.6.0",
     "eslint-plugin-prettier": "4.2.1",
     "gulp-esbuild": "0.11.0",
     "gulp-mode": "1.1.0",
