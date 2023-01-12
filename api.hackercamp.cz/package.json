@@ -7,7 +7,7 @@
     "@aws-sdk/util-dynamodb": "3.245.0",
     "@hackercamp/lib": "workspace:lib",
     "fast-xml-parser": "4.0.13",
-    "jsonwebtoken": "8.5.1"
+    "jsonwebtoken": "9.0.0"
   },
   "packageManager": "yarn@3.3.1"
 }

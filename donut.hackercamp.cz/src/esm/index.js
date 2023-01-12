@@ -1,6 +1,9 @@
-import { defAtom } from "@thi.ng/atom";
 import { formatMoney } from "@hackercamp/lib/format.mjs";
+import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
+import { when } from "lit-html/directives/when.js";
+import { lineupText } from "./admin.js";
+import { renderEventForm } from "./event-form.js";
 import {
   getSlackAccessToken,
   getSlackProfile,
@@ -12,13 +15,11 @@ import {
   signOut,
 } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
-import { setSlackProfile } from "./lib/slack.js";
-import * as slack from "./lib/slack.js";
-import * as rollbar from "./lib/rollbar.js";
 import { initRenderLoop } from "./lib/renderer.js";
-import { when } from "lit-html/directives/when.js";
-import { lineupText } from "./admin.js";
-import { renderEventForm } from "./event-form.js";
+import * as rollbar from "./lib/rollbar.js";
+import { schedule } from "./lib/schedule.js";
+import * as slack from "./lib/slack.js";
+import { setSlackProfile } from "./lib/slack.js";
 import { showModalDialog } from "./modal-dialog.js";
 
 const state = defAtom({
@@ -28,8 +29,8 @@ const state = defAtom({
   registration: null,
   program: null,
   view: renderIndex,
-  campStartAt: new Date("2022-09-01T14:00:00"),
-  campEndAt: new Date("2022-09-04T14:00:00"),
+  campStartAt: new Date(),
+  campEndAt: new Date(),
 });
 
 async function authenticate({ searchParams, apiURL }) {
@@ -432,11 +433,16 @@ export async function main({ searchParams, rootElement, env }) {
   }
 
   if (isSignedIn()) {
-    state.swap((x) => Object.assign(x, { apiHost: env["api-host"] }));
+    state.swap((x) =>
+      Object.assign(
+        x,
+        { apiHost: env["api-host"], year: env.year },
+        schedule.get(env.year)
+      )
+    );
     try {
       const profile = getSlackProfile();
-      const year = 2022;
-      await loadData(profile, year, apiURL);
+      await loadData(profile, env.year, apiURL);
     } catch (e) {
       console.error(e);
       signOut(apiURL);

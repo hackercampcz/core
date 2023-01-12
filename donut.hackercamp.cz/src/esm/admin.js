@@ -30,6 +30,7 @@ import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 import { renderEventForm } from "./event-form.js";
+import { schedule } from "./lib/schedule.js";
 import { showModalDialog } from "./modal-dialog.js";
 import { instatializeDates } from "./lib/object.js";
 
@@ -37,8 +38,8 @@ const state = defAtom({
   selectedView: View.paid,
   view: renderView,
   apiHost: null,
-  campStartAt: new Date("2022-09-01T14:00:00"),
-  campEndAt: new Date("2022-09-04T14:00:00"),
+  campStartAt: new Date(),
+  campEndAt: new Date(),
 });
 
 const transact = (fn) => state.swap(fn);
@@ -1144,8 +1145,8 @@ const endpointForView = new Map([
   [View.housing, Endpoint.housing],
 ]);
 
-async function fetchData(selectedView, apiHost) {
-  const params = new URLSearchParams({ type: selectedView });
+async function fetchData({ selectedView, year }, apiHost) {
+  const params = new URLSearchParams({ type: selectedView, year });
   const endpoint = endpointForView.get(selectedView);
   const resource = new URL(`admin/${endpoint}?${params}`, apiHost).href;
   const resp = await withAuthHandler(
@@ -1169,13 +1170,14 @@ async function fetchData(selectedView, apiHost) {
 /**
  * @param {URLSearchParams} searchParams
  * @param {string} apiHost
+ * @param {number} year
  */
-function loadData(searchParams, apiHost) {
+function loadData(searchParams, apiHost, year) {
   const selectedView = searchParams.get("view") ?? View.paid;
   transact((x) =>
     Object.assign(x, {
       selectedView,
-      data: fetchData(selectedView, apiHost),
+      data: fetchData({ selectedView, year }, apiHost),
     })
   );
 }
@@ -1196,13 +1198,18 @@ function changeTitle(viewTitle, searchParams) {
 export async function main({ appRoot, searchParams, env, viewTitle }) {
   rollbar.init(env);
   state.swap((x) =>
-    Object.assign({}, x, {
-      apiHost: env["api-host"],
-      contact: getContact(),
-    })
+    Object.assign(
+      x,
+      {
+        apiHost: env["api-host"],
+        contact: getContact(),
+        year: env.year,
+      },
+      schedule.get(env.year)
+    )
   );
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, searchParams);
-  loadData(searchParams, env["api-host"]);
+  loadData(searchParams, env["api-host"], env.year);
   // initAddEventRenderLoop();
 }

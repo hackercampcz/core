@@ -7,33 +7,34 @@ import { defAtom } from "@thi.ng/atom";
 import structuredClone from "@ungap/structured-clone";
 import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
-import { when } from "lit/directives/when.js";
+import { when } from "lit-html/directives/when.js";
 import { renderEventForm } from "./event-form.js";
 import { throttle } from "./lib/function.js";
+import { instatializeDates } from "./lib/object.js";
 import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
-import { showModalDialog } from "./modal-dialog.js";
-import { instatializeDates } from "./lib/object.js";
+import { schedule } from "./lib/schedule.js";
 import { isISODateTime } from "./lib/validation.js";
+import { showModalDialog } from "./modal-dialog.js";
 
 const SLOT_MINUTES = 15;
 const DAY_START_HOUR = 8;
 
 const state = defAtom({
   view: renderProgram,
-  campStartAt: new Date("2022-09-01T14:00:00"),
-  visibleDate: new Date("2022-09-01T14:00:00"),
+  campStartAt: new Date(),
+  visibleDate: new Date(),
   onLineupsScroll() {},
-  campEndAt: new Date("2022-09-04T14:00:00"),
+  campEndAt: new Date(),
   lineups: [],
   events: [],
   profile: {},
-  year: 2022,
+  year: 0,
   featureToggles: {},
 });
-const transact = (fn) => state.swap(fn);
+const transact = (fn, state = state) => state.swap(fn);
 
 function makeTimeline(startAt, endAt, minutes = SLOT_MINUTES) {
   const times = [];
@@ -248,8 +249,8 @@ function eventTemplate({
           <a
             class="hc-link hc-link--decorated"
             style="margin: calc(var(--spacing) / 2) 0; padding: calc(var(--spacing) / 4);"
-            @click=${(_event) => {
-              _event.preventDefault();
+            @click=${(e) => {
+              e.preventDefault();
               renderAndShowAddEventForm(lineup.id, {
                 selectedTopic: event.id || event._id,
               });
@@ -305,7 +306,7 @@ function renderProgram({
       events,
       selectedTopic,
     });
-    // mby closwe previous modal here
+    // mby close previous modal here
     showModalDialog("add-event");
   };
 
@@ -668,8 +669,8 @@ function renderProgram({
         <a
           class="hc-link hc-link--decorated"
           style="font-size: 120%;"
-          @click=${(event) => {
-            event.preventDefault();
+          @click=${(e) => {
+            e.preventDefault();
             renderAndShowAddEventForm();
           }}
         >
@@ -716,8 +717,8 @@ function renderProgram({
               </div>
               <a
                 class="lineup__sticky"
-                @click=${(event) => {
-                  event.preventDefault();
+                @click=${(e) => {
+                  e.preventDefault();
                   showModalDialog(`lineup-detail-${lineup.id}`);
                 }}
                 >${lineup.name}</a
@@ -731,8 +732,8 @@ function renderProgram({
                   () => html`<a
                     class="hc-link hc-link--decorated"
                     style="padding: calc(var(--spacing) / 4);"
-                    @click=${(event) => {
-                      event.preventDefault();
+                    @click=${(e) => {
+                      e.preventDefault();
                       renderAndShowAddEventForm(lineup.id);
                     }}
                   >
@@ -763,8 +764,8 @@ function renderProgram({
                         ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
                         data-tick=${makeTick(time)}
                         data-day=${formatShortDayName(time)}
-                        @click=${(event) => {
-                          event.preventDefault();
+                        @click=${(e) => {
+                          e.preventDefault();
                           // timezone hotfix
                           time.setHours(time.getHours() + 2);
                           renderAndShowAddEventForm(lineup.id, {
@@ -792,8 +793,8 @@ function renderProgram({
         <a
           class="hc-link hc-link--decorated"
           style="padding: calc(var(--spacing) / 4)"
-          @click=${(event) => {
-            event.preventDefault();
+          @click=${(e) => {
+            e.preventDefault();
             renderAndShowAddEventForm("liother");
           }}
         >
@@ -812,6 +813,7 @@ function renderProgram({
 async function fetchLineups(apiHost) {
   const { year } = state.deref();
   const params = new URLSearchParams({ year });
+  // TODO: move to DB/API
   const resp = await fetch(`/program/lineups.json?${params}`, {
     headers: { Accept: "application/json" },
     credentials: "include",
@@ -844,7 +846,7 @@ async function fetchEvents(apiHost) {
 
 function joinTopicPeople(events) {
   const output = structuredClone(events);
-  for (let event of output) {
+  for (const event of output) {
     if (event.type === "topic") {
       event.people = [
         ...(event.people || []),
@@ -867,13 +869,19 @@ export async function main({ rootElement, env }) {
   initRenderLoop(state, shadow);
 
   transact((x) =>
-    Object.assign(x, {
-      apiHost: env["api-host"],
-      profile: getSlackProfile(),
-      featureToggles: { fullProgram: env["feature-toggle/full-program"] },
-    })
+    Object.assign(
+      x,
+      {
+        year: env.year,
+        apiHost: env["api-host"],
+        profile: getSlackProfile(),
+        featureToggles: { fullProgram: env["feature-toggle/full-program"] },
+      },
+      schedule.get(env.year)
+    )
   );
 
+  // TODO: check this code; seems it uses nonexistent state props
   const { startAt, endAt } = state.deref();
   const ticks = (endAt - startAt) / 1000 / 60 / 15;
   transact((x) =>
