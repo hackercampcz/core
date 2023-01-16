@@ -15,9 +15,9 @@ async function getOptOuts(year) {
     new ScanCommand({
       TableName: process.env.db_table_optouts,
       ProjectionExpression: "email",
-      FilterExpression: "#y = :y",
-      ExpressionAttributeNames: { "#y": "year" },
-      ExpressionAttributeValues: marshall({ ":y": year }),
+      FilterExpression: "#yr = :yr",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall({ ":yr": year }),
     })
   );
   return new Set(res.Items.map((x) => x.email.S));
@@ -30,12 +30,12 @@ async function getConfirmedHackersRegistrations(year) {
       TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "#ts > :ts AND attribute_not_exists(invoiced) AND (firstTime = :false OR (attribute_exists(referral) AND attribute_type(referral, :string)))",
-      ExpressionAttributeNames: { "#ts": "timestamp" },
+        "#yr > :yr AND attribute_not_exists(invoiced) AND (firstTime = :false OR (attribute_exists(referral) AND attribute_type(referral, :string)))",
+      ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         {
           ":false": false,
-          ":ts": "2022-05-31T00:00:00.000Z",
+          ":yr": year,
           ":string": "S",
         },
         { removeUndefinedValues: true }
@@ -51,12 +51,10 @@ async function getHackersRegistrations(year) {
     new ScanCommand({
       TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#ts < :ts AND attribute_not_exists(invoiced)",
-      ExpressionAttributeNames: { "#ts": "timestamp" },
+      FilterExpression: "#yr = :yr AND attribute_not_exists(invoiced)",
+      ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
-        {
-          ":ts": "2022-05-31T00:00:00.000Z",
-        },
+        { ":yr": year },
         { removeUndefinedValues: true }
       ),
     })
@@ -71,9 +69,10 @@ async function getWaitingListRegistrations(year) {
       TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "firstTime = :true AND attribute_not_exists(invoiced) AND (attribute_not_exists(referral) OR attribute_type(referral, :null))",
+        "#yr = :yr AND firstTime = :true AND attribute_not_exists(invoiced) AND (attribute_not_exists(referral) OR attribute_type(referral, :null))",
+      ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
-        { ":true": true, ":null": "NULL" },
+        { ":true": true, ":null": "NULL", ":yr": year },
         { removeUndefinedValues: true }
       ),
     })
@@ -88,7 +87,12 @@ async function getInvoicedRegistrations(year) {
       TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "attribute_exists(invoiced) AND attribute_not_exists(paid)",
+        "#yr = :yr AND attribute_exists(invoiced) AND attribute_not_exists(paid)",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        { ":yr": year },
+        { removeUndefinedValues: true }
+      ),
     })
   );
   return res.Items.map((x) => unmarshall(x));
@@ -100,7 +104,12 @@ async function getPaidRegistrations(year) {
     new ScanCommand({
       TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
-      FilterExpression: "attribute_exists(paid)",
+      FilterExpression: "#yr = :yr AND attribute_exists(paid)",
+      ExpressionAttributeNames: { "#yr": "year" },
+      ExpressionAttributeValues: marshall(
+        { ":yr": year },
+        { removeUndefinedValues: true }
+      ),
     })
   );
   return res.Items.map((x) => unmarshall(x));
