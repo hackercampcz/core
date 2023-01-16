@@ -279,18 +279,35 @@ const ticketName = new Map([
 ]);
 
 const ticketPrice = new Map([
-  ["nonprofit", 2500],
-  ["hacker", 5000],
-  ["hacker-plus", 7500],
-  ["hacker-patron", 7500],
-  ["volunteer", 0],
-  ["crew", 0],
-  ["staff", 0],
+  [
+    2022,
+    new Map([
+      ["nonprofit", 2500],
+      ["hacker", 5000],
+      ["hacker-plus", 7500],
+      ["hacker-patron", 7500],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0],
+    ]),
+  ],
+  [
+    2023,
+    new Map([
+      ["nonprofit", 3000],
+      ["hacker", 6000],
+      ["hacker-plus", 9000],
+      ["hacker-patron", 9000],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0],
+    ]),
+  ],
 ]);
 
-function ticketDetail({ ticketType, patronAllowance }) {
+function ticketDetail({ year, ticketType, patronAllowance }) {
   const allowance = patronAllowance ? parseInt(patronAllowance) : 0;
-  const price = ticketPrice.get(ticketType) + allowance;
+  const price = ticketPrice.get(year).get(ticketType) + allowance;
   return html`
     <p>
       Lístek: <strong>${ticketName.get(ticketType)}</strong>

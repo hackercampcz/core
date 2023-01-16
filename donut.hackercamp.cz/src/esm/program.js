@@ -19,6 +19,9 @@ import { schedule } from "./lib/schedule.js";
 import { isISODateTime } from "./lib/validation.js";
 import { showModalDialog } from "./modal-dialog.js";
 
+/** @typedef {import("@thi.ng/atom").IAtom} IAtom */
+/** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
+
 const SLOT_MINUTES = 15;
 const DAY_START_HOUR = 8;
 
@@ -34,7 +37,12 @@ const state = defAtom({
   year: 0,
   featureToggles: {},
 });
-const transact = (fn, state = state) => state.swap(fn);
+
+/**
+ * @param {SwapFn<T, T>} fn
+ * @param {IAtom<T>} [atom]
+ */
+const transact = (fn, atom = state) => atom.swap(fn);
 
 function makeTimeline(startAt, endAt, minutes = SLOT_MINUTES) {
   const times = [];
