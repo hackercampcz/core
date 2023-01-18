@@ -130,11 +130,11 @@ function getData(type, year) {
 export async function handler(event) {
   console.log("QS", event.queryStringParameters);
   const { type, year } = Object.assign(
-    { year: 2022 },
+    { year: "2022" },
     event.queryStringParameters
   );
   try {
-    const data = await getData(type, year);
+    const data = await getData(type, parseInt(year));
     if (!data) return notFound();
     return response(data);
   } catch (err) {
