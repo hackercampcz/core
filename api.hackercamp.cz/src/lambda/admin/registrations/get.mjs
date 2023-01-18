@@ -30,7 +30,7 @@ async function getConfirmedHackersRegistrations(year) {
       TableName: process.env.db_table_registrations,
       Select: "ALL_ATTRIBUTES",
       FilterExpression:
-        "#yr > :yr AND attribute_not_exists(invoiced) AND (firstTime = :false OR (attribute_exists(referral) AND attribute_type(referral, :string)))",
+        "#yr = :yr AND attribute_not_exists(invoiced) AND (firstTime = :false OR (attribute_exists(referral) AND attribute_type(referral, :string)))",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         {
