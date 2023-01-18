@@ -7,6 +7,11 @@ export const Template = {
   HackersReminder: 28432253,
   PlusOneInvitation: 28151070,
   VolunteerSlackInvite: 28672994,
+  SlackInvite: 28750357,
+  AttendeesInfoMail: 28768871,
+  LastYearHackersPush: 28896807,
+  ThisYearsHackersPush: 28896811,
+  Feedback: 29143589,
 };
 
 export async function sendEmailWithTemplate({

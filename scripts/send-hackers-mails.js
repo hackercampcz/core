@@ -4,39 +4,62 @@ import { sendEmailWithTemplate, Template } from "./postmark.js";
 
 const dynamo = createClient();
 
-async function getRegistrations() {
+async function getPaidRegistrations() {
   const result = await dynamo.scan({
     TableName: "hc-registrations",
-    Select: "ALL_ATTRIBUTES",
+    ProjectionExpression: "email",
+    FilterExpression:
+      "attribute_exists(invoiced) AND attribute_not_exists(cancelled)",
   });
-  return result.Items;
+  return result.Items.map((x) => x.email);
 }
 
-async function getContacts() {
+async function getAttendees() {
   const result = await dynamo.scan({
-    TableName: "hc-contacts",
-    Select: "ALL_ATTRIBUTES",
+    TableName: "hc-attendees",
+    ProjectionExpression: "email",
   });
-  return result.Items;
+  return result.Items.map((x) => x.email);
 }
+
+async function getOptOuts(year = 2022) {
+  const result = await dynamo.scan({
+    TableName: "hc-optouts",
+    ProjectionExpression: "email",
+    FilterExpression: "#y = :year",
+    ExpressionAttributeNames: {
+      "#y": "year",
+    },
+    ExpressionAttributeValues: {
+      ":year": year,
+    },
+  });
+  return result.Items.map((x) => x.email);
+}
+
+const ignoreList = new Set();
 
 async function main({ token }) {
-  const registrations = new Set((await getRegistrations()).map((x) => x.email));
-  const contacts = await getContacts();
-  const invitations = contacts
-    .filter((c) => registrations.has(c.email))
-    .map((c) => c.email);
+  const optOuts = await getOptOuts();
+  for (const email of optOuts) ignoreList.add(email);
+  const attendees = await getAttendees();
+  //const paidRegistrations = await getPaidRegistrations();
+  const registrations = new Set(attendees.filter((x) => !ignoreList.has(x)));
 
-  console.log(invitations.length);
-  return;
-  for (const email of invitations) {
+  //console.log(token);
+
+  //console.log(registrations);
+  console.log(registrations.size);
+  //return;
+  for (const email of registrations) {
     await sendEmailWithTemplate({
       token,
-      templateId: Template.HackerInvitationLate,
+      templateId: Template.Feedback,
       from: "Hacker Camp Crew <team@hackercamp.cz>",
       to: email,
       data: {},
     });
+    console.log(email, "sent");
   }
 }
 

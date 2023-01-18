@@ -1,5 +1,5 @@
 import { parse } from "https://deno.land/std@0.140.0/flags/mod.ts";
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
 
 const dynamo = createClient();
 

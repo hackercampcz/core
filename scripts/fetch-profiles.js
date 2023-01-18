@@ -1,5 +1,8 @@
 import { parse } from "https://deno.land/std@0.140.0/flags/mod.ts";
-import { writeCSVObjects } from "https://deno.land/x/csv/mod.ts";
+import { writeCSVObjects } from "https://deno.land/x/csv@v0.7.5/mod.ts";
+import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+
+const dynamo = createClient();
 
 async function main({ token }) {
   const skip = new Set(["slackbot", "jakub"]);
@@ -14,9 +17,16 @@ async function main({ token }) {
   const items = users.map((x) => ({
     email: x.profile.email,
     slackID: x.id,
+    slug: x.name,
     name: x.profile.real_name,
+    image: x.profile.image_512,
   }));
 
+  for (const contact of items) {
+    await dynamo.putItem({ TableName: "hc-contacts", Item: contact });
+  }
+
+  return;
   const header = Object.keys(items[0]);
   const f = await Deno.open("./data/contacts.csv", {
     write: true,
