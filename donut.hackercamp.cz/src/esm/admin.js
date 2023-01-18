@@ -35,6 +35,7 @@ import { showModalDialog } from "./modal-dialog.js";
 import { instatializeDates } from "./lib/object.js";
 
 const state = defAtom({
+  year: 2022,
   selectedView: View.paid,
   view: renderView,
   apiHost: null,
@@ -42,7 +43,7 @@ const state = defAtom({
   campEndAt: new Date(),
 });
 
-const transact = (fn) => state.swap(fn);
+const transact = (fn, atom = state) => atom.swap(fn);
 
 function optout(email) {
   const { apiHost } = state.deref();
@@ -85,7 +86,7 @@ function editEvent(event_id, updates) {
   return event.edit(event_id, apiHost, updates);
 }
 
-function chip({ text, count, selected, view }) {
+function chip({ text, count, selected, view, year }) {
   return html`
     <span
       class="${classMap({
@@ -102,7 +103,7 @@ function chip({ text, count, selected, view }) {
         role="option"
         aria-selected="${selected ? "true" : "false"}"
         tabindex="0"
-        href="?view=${view}"
+        href="?${new URLSearchParams({ view, year })}"}"
       >
         <span
           class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
@@ -135,6 +136,7 @@ function chip({ text, count, selected, view }) {
 
 function registrationsChips(
   view,
+  year,
   { hackers, waitingList, confirmed, invoiced, paid, optouts }
 ) {
   return html`
@@ -151,36 +153,42 @@ function registrationsChips(
           count: paid,
           selected: view === View.paid,
           view: View.paid,
+          year,
         })}
         ${chip({
           text: "Vyfakturovaní",
           count: invoiced,
           selected: view === View.invoiced,
           view: View.invoiced,
+          year,
         })}
         ${chip({
           text: "Potvrzení",
           count: confirmed,
           selected: view === View.confirmed,
           view: View.confirmed,
+          year,
         })}
         ${chip({
           text: "Nepotvrzení",
           count: hackers,
           selected: view === View.hackers,
           view: View.hackers,
+          year,
         })}
         ${chip({
           text: "Waiting list",
           count: waitingList,
           selected: view === View.waitingList,
           view: View.waitingList,
+          year,
         })}
         ${chip({
           text: "Opt-outs",
           count: optouts,
           selected: view === View.optouts,
           view: View.optouts,
+          year,
         })}
       </span>
     </div>
@@ -189,6 +197,7 @@ function registrationsChips(
 
 function attendeesChips(
   view,
+  year,
   {
     attendees,
     crewAttendees,
@@ -211,37 +220,42 @@ function attendeesChips(
           count: attendees,
           selected: view === View.attendees,
           view: View.attendees,
+          year,
         })}
         ${chip({
           text: "Hackeři",
           count: hackerAttendees,
           selected: view === View.hackerAttendees,
           view: View.hackerAttendees,
+          year,
         })}
         ${chip({
           text: "Dobrovolníci",
           count: volunteerAttendees,
           selected: view === View.volunteerAttendees,
           view: View.volunteerAttendees,
+          year,
         })}
         ${chip({
           text: "Ostatní",
           count: staffAttendees,
           selected: view === View.staffAttendees,
           view: View.staffAttendees,
+          year,
         })}
         ${chip({
           text: "Crew",
           count: crewAttendees,
           selected: view === View.crewAttendees,
           view: View.crewAttendees,
+          year,
         })}
       </span>
     </div>
   `;
 }
 
-function programChips(view, { program, programApproval }) {
+function programChips(view, year, { program, programApproval }) {
   return html`
     <div
       class="mdc-evolution-chip-set"
@@ -256,12 +270,14 @@ function programChips(view, { program, programApproval }) {
           count: program,
           selected: view === View.program,
           view: View.program,
+          year,
         })}
         ${chip({
           text: "Ke schválení",
           count: programApproval,
           selected: view === View.programApproval,
           view: View.programApproval,
+          year,
         })}
       </span>
     </div>
@@ -741,10 +757,10 @@ const timeColumn = new Map([
 ]);
 
 function registrationsTemplate(state) {
-  const { data, selectedView, detail } = state;
+  const { data, selectedView, detail, year } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${registrationsChips(selectedView, {
+      ${registrationsChips(selectedView, year, {
         [selectedView]: data?.then((data) => data.length),
       })}
     </div>
@@ -793,7 +809,7 @@ function registrationsTemplate(state) {
 }
 
 function attendeesTemplate(state) {
-  const { data, selectedView, detail, apiHost } = state;
+  const { data, selectedView, detail, apiHost, year } = state;
   const apiURL = (resource) => new URL(resource, apiHost).href;
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -802,7 +818,7 @@ function attendeesTemplate(state) {
   };
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${attendeesChips(selectedView, {
+      ${attendeesChips(selectedView, year, {
         [selectedView]: data?.then((data) => data.length),
       })}
     </div>
@@ -1084,10 +1100,10 @@ function filterEvents(events) {
 }
 
 function programTemplate(state) {
-  const { data, selectedView } = state;
+  const { data, selectedView, year } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${programChips(selectedView, {
+      ${programChips(selectedView, year, {
         [selectedView]: data?.then((data) => data.length),
       })}
     </div>
@@ -1185,12 +1201,11 @@ async function fetchData({ selectedView, year }, apiHost) {
 }
 
 /**
- * @param {URLSearchParams} searchParams
  * @param {string} apiHost
  * @param {number} year
+ * @param {string} selectedView
  */
-function loadData(searchParams, apiHost, year) {
-  const selectedView = searchParams.get("view") ?? View.paid;
+function loadData(apiHost, year, selectedView) {
   transact((x) =>
     Object.assign(x, {
       selectedView,
@@ -1206,27 +1221,24 @@ const endpointName = new Map([
   [Endpoint.program, "Program"],
 ]);
 
-function changeTitle(viewTitle, searchParams) {
-  const view = searchParams.get("view") ?? View.paid;
+function changeTitle(viewTitle, view) {
   const endpoint = endpointForView.get(view);
   viewTitle.textContent = endpointName.get(endpoint);
 }
 
 export async function main({ appRoot, searchParams, env, viewTitle }) {
   rollbar.init(env);
-  state.swap((x) =>
-    Object.assign(
-      x,
-      {
-        apiHost: env["api-host"],
-        contact: getContact(),
-        year: env.year,
-      },
-      schedule.get(env.year)
-    )
+
+  const year = searchParams.get("year") ?? env.year;
+  const selectedView = searchParams.get("view") ?? View.paid;
+  const apiHost = env["api-host"];
+  const contact = getContact();
+
+  transact((x) =>
+    Object.assign(x, { apiHost, year, contact }, schedule.get(year))
   );
   initRenderLoop(state, appRoot, { keepContent: true });
-  changeTitle(viewTitle, searchParams);
-  loadData(searchParams, env["api-host"], env.year);
+  changeTitle(viewTitle, selectedView);
+  loadData(apiHost, year, selectedView);
   // initAddEventRenderLoop();
 }
