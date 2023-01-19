@@ -5,10 +5,10 @@ import { Endpoint, executeCommand } from "./common.js";
  * @param {string} apiHost
  * @returns {Promise<void>}
  */
-export function createOptOut(email, apiHost) {
+export function createOptOut(email, year, apiHost) {
   return executeCommand(apiHost, Endpoint.registrations, "optout", {
     email,
-    year: 2022,
+    year,
   }).then(() => location.reload());
 }
 
@@ -18,11 +18,11 @@ export function createOptOut(email, apiHost) {
  * @param {string} apiHost
  * @returns {Promise<void>}
  */
-export function createOptIn(email, slackID, apiHost) {
+export function createOptIn(email, year, slackID, apiHost) {
   return executeCommand(apiHost, Endpoint.registrations, "approve", {
     email,
     referral: slackID,
-    year: 2022,
+    year,
   }).then(() => location.reload());
 }
 
@@ -32,9 +32,9 @@ export function createOptIn(email, slackID, apiHost) {
  * @param {string} apiHost
  * @returns {Promise<void>}
  */
-export function markAsInvoiced(emails, invoiceId, apiHost) {
+export function markAsInvoiced(emails, year, invoiceId, apiHost) {
   return executeCommand(apiHost, Endpoint.registrations, "invoiced", {
-    registrations: emails.map((email) => ({ email, year: 2022 })),
+    registrations: emails.map((email) => ({ email, year })),
     invoiceId,
   }).then(() => location.reload());
 }

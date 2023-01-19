@@ -37,8 +37,8 @@ const state = defAtom({
 });
 
 /**
- * @param {SwapFn} fn
- * @param {IAtom} atom
+ * @param {SwapFn<T, T>} fn
+ * @param {IAtom<T>} atom
  */
 const transact = (fn, atom = state) => atom.swap(fn);
 
@@ -373,7 +373,8 @@ function renderIndex({ profile, registration, attendee }) {
   if (canSelectHousing(registration, attendee)) {
     return renderPaidScreen();
   }
-  if (registration && !registration.paid) {
+  console.log(registration)
+  if (registration.year && !registration.paid) {
     return html`
       <p>
         Svoje ubytování si budeš moct vybrat až po zaplacení faktury. Tak
@@ -401,7 +402,7 @@ function renderIndex({ profile, registration, attendee }) {
   return html`
     <div>
       <p>
-        Nepropásni první ročník Hacker Campu, bude ještě lepší než ten nultý! A
+        Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A
         to i díky tobě.
       </p>
       <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>

@@ -84,7 +84,7 @@ function getData({ queryStringParameters }) {
   if (id) {
     return getRegistrationById(id);
   } else if (email && year && slackID) {
-    return getRegistrationByEmail(email, year, slackID);
+    return getRegistrationByEmail(email, parseInt(year), slackID);
   } else {
     return null;
   }

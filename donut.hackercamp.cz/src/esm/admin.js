@@ -46,24 +46,24 @@ const state = defAtom({
 const transact = (fn, atom = state) => atom.swap(fn);
 
 function optout(email) {
-  const { apiHost } = state.deref();
+  const { apiHost, year } = state.deref();
   return (
-    confirm("Opravdu chceš táborníka vyřadit?") && createOptOut(email, apiHost)
+    confirm("Opravdu chceš táborníka vyřadit?") && createOptOut(email, year, apiHost)
   );
 }
 
 function optin(email) {
-  const { apiHost, contact } = state.deref();
+  const { apiHost, year, contact } = state.deref();
   return (
     confirm("Opravdu chceš táborníka potvrdit?") &&
-    createOptIn(email, contact.slackID, apiHost)
+    createOptIn(email, year, contact.slackID, apiHost)
   );
 }
 
 function invoiced(email) {
-  const { apiHost } = state.deref();
+  const { apiHost, year } = state.deref();
   const invoiceId = prompt("Zadej ID faktury");
-  return markAsInvoiced([email], invoiceId, apiHost);
+  return markAsInvoiced([email], year, invoiceId, apiHost);
 }
 
 function deleteEvent(event_id, people) {
@@ -1229,7 +1229,7 @@ function changeTitle(viewTitle, view) {
 export async function main({ appRoot, searchParams, env, viewTitle }) {
   rollbar.init(env);
 
-  const year = searchParams.get("year") ?? env.year;
+  const year = parseInt(searchParams.get("year") ?? env.year);
   const selectedView = searchParams.get("view") ?? View.paid;
   const apiHost = env["api-host"];
   const contact = getContact();
