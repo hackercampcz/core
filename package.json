@@ -26,6 +26,9 @@
     "npm-run-all": "4.1.5",
     "prettier": "2.8.3"
   },
+  "resolutions": {
+    "@grpc/grpc-js": "1.8.4"
+  },
   "scripts": {
     "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid -- build --production",
     "build:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid -- build --production",
