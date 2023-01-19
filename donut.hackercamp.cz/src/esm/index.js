@@ -22,6 +22,9 @@ import * as slack from "./lib/slack.js";
 import { setSlackProfile } from "./lib/slack.js";
 import { showModalDialog } from "./modal-dialog.js";
 
+/** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
+/** @typedef {import("@thi.ng/atom").IAtom} IAtom */
+
 const state = defAtom({
   attendee: null,
   contact: null,
@@ -32,6 +35,12 @@ const state = defAtom({
   campStartAt: new Date(),
   campEndAt: new Date(),
 });
+
+/**
+ * @param {SwapFn} fn
+ * @param {IAtom} atom
+ */
+const transact = (fn, atom = state) => atom.swap(fn);
 
 async function authenticate({ searchParams, apiURL }) {
   const code = searchParams.get("code");
@@ -183,18 +192,20 @@ function travelText(travel) {
         </p>
       `;
     case "free-car":
-      return html` <p>
-        Les na Sobeňáku má omezenou parkovací kapacitu, proto je potřeba zaplnit
-        auta co to jde. Je super, že nabízíš místo dalším hackerům. Můžete se
-        <a href="https://hackercampworkspace.slack.com/archives/C0278R69JUQ"
-          >domluvit v kanále <code>#spolujizda</code></a
-        >
-        nebo rovnou nabídnout své kapacity
-        <a
-          href="https://docs.google.com/spreadsheets/d/1EkthrK_s-5-xxWDHGNudz6PEJs15jk0Jd6UWyeipAAI/edit#gid=0"
-          >v tabulce Spolujízda</a
-        >.
-      </p>`;
+      return html`
+        <p>
+          Les na Sobeňáku má omezenou parkovací kapacitu, proto je potřeba zaplnit
+          auta co to jde. Je super, že nabízíš místo dalším hackerům. Můžete se
+          <a href="https://hackercampworkspace.slack.com/archives/C0278R69JUQ"
+            >domluvit v kanále <code>#spolujizda</code></a
+          >
+          nebo rovnou nabídnout své kapacity
+          <a
+            href="https://docs.google.com/spreadsheets/d/1EkthrK_s-5-xxWDHGNudz6PEJs15jk0Jd6UWyeipAAI/edit#gid=0"
+            >v tabulce Spolujízda</a
+          >.
+        </p>
+      `;
     default:
       return null;
   }
@@ -218,20 +229,22 @@ async function showEventModalDialog(editingEvent) {
 }
 
 function housedCardTemplate({ housing, housingPlacement, travel }) {
-  return html` <div class="hc-card hc-card--decorated">
-    <p>
-      Jsi ubytovaný ${housingText(housing, housingPlacement)}, dle tvého výběru.
-    </p>
-    ${travelText(travel)}
-    <p>
-      Chceš se podívat, kdo už se na tebe těší? Tak tady je
-      <a href="/hackers/">seznam účastníků</a>.
-    </p>
-    <p>
-      Taky se můžeš podívat na <a href="/program/">předběžný program</a> a brzy
-      si budeš moct zadat vlastní návrhy.
-    </p>
-  </div>`;
+  return html`
+    <div class="hc-card hc-card--decorated">
+      <p>
+        Jsi ubytovaný ${housingText(housing, housingPlacement)}, dle tvého výběru.
+      </p>
+      ${travelText(travel)}
+      <p>
+        Chceš se podívat, kdo už se na tebe těší? Tak tady je
+        <a href="/hackers/">seznam účastníků</a>.
+      </p>
+      <p>
+        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a brzy
+        si budeš moct zadat vlastní návrhy.
+      </p>
+    </div>
+  `;
 }
 function programCardTemplate({ events }) {
   return html`
@@ -407,8 +420,8 @@ async function loadData(profile, year, apiURL) {
     getAttendee(profile.sub, year, apiURL),
     getProgram(year, apiURL),
   ]);
-  state.swap((x) =>
-    Object.assign({}, x, { profile, contact, registration, attendee, program })
+  transact((x) =>
+    Object.assign(x, { profile, contact, registration, attendee, program })
   );
   setContact(contact);
   try {
@@ -420,9 +433,12 @@ async function loadData(profile, year, apiURL) {
 
 export async function main({ searchParams, rootElement, env }) {
   rollbar.init(env);
+  const year = searchParams.get("year") ?? env.year;
+  const apiHost = env["api-host"];
+
   initRenderLoop(state, rootElement);
 
-  const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
+  const apiURL = (endpoint) => new URL(endpoint, apiHost).href;
 
   if (
     searchParams.has("returnUrl") &&
@@ -433,16 +449,12 @@ export async function main({ searchParams, rootElement, env }) {
   }
 
   if (isSignedIn()) {
-    state.swap((x) =>
-      Object.assign(
-        x,
-        { apiHost: env["api-host"], year: env.year },
-        schedule.get(env.year)
-      )
+    transact((x) =>
+      Object.assign(x, { apiHost, year }, schedule.get(year))
     );
     try {
       const profile = getSlackProfile();
-      await loadData(profile, env.year, apiURL);
+      await loadData(profile, year, apiURL);
     } catch (e) {
       console.error(e);
       signOut(apiURL);
@@ -455,7 +467,7 @@ export async function main({ searchParams, rootElement, env }) {
 
   if (searchParams.has("code")) {
     try {
-      state.swap((x) => Object.assign({}, x));
+      transact((x) => Object.assign({}, x));
       await authenticate({ searchParams, apiURL });
       handleReturnUrl();
     } catch (e) {

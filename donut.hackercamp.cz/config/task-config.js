@@ -12,6 +12,9 @@ async function getSlackProfiles(token) {
     headers: { Authorization: `Bearer ${token}` },
   });
   const data = await resp.json();
+  if (resp.status !== 200) {
+    console.log(data);
+  }
   return new Map(
     data.members
       .filter((x) => !(x.is_bot || skip.has(x.name)))
