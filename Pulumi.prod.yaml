@@ -17,6 +17,6 @@ config:
   hackercamp:slack-client-secret:
     secure: AAABAPOefxVCpWj0ILWHq9UKChjnqzVPwlwAm8auqjii5KzUfgdHI7dV386pv69MQYJO2VV5KuWucxwuOwM4+g==
   hackercamp:slack-incoming-webhook:
-    secure: AAABAJlhhvZ3Io/r1mkX6Yf8PKdic7uTfNwC/yCjXyKZtjISRoXmTLCOoC9jUdBZ1QnwlMoYEFJu7OsZQbZZikhqBp3oV3HASjekIRy0kdjIhTduMqD216krkTFJMB+zYbMswoKxDfqKFtpOzU3HDp4=
+    secure: AAABAG1uYVw8jL3J7xW6vyH0foRT5MJJm9QSrs/weKRHwhapwDGssqRhG8fprdJszWJICn1nGEycpL8qCvbaxvtWuaOFG6uNg+nhdnx17/XLNC+L4MPwIH6GjQKr4i3eJL/V5Ts0oCw+WcxtQ/Pze0A=
   hackercamp:web-domain: www.hackercamp.cz
   pulumi:template: aws-typescript

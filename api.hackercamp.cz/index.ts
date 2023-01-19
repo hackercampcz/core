@@ -186,7 +186,7 @@ export const createRoutes = ({
         },
         slackWebhook: {
           httpMethod: "POST",
-          path: "/slack/webhook",
+          path: "/webhooks/slack",
           fileName: "slack/webhook.mjs",
           environment: {
             variables: {
