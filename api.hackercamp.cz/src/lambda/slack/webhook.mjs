@@ -175,8 +175,8 @@ function updateContact(contact, user) {
   );
 }
 
-async function onUrlVerification(payload) {
-  return response({ challenge: payload.challenge });
+async function onUrlVerification({ challenge }) {
+  return response({ challenge });
 }
 
 function enqueueSlackWelcomeMessage(user) {
@@ -305,7 +305,7 @@ export async function handler(event) {
   try {
     const payload = readPayload(event);
     // TODO: push this to queue instead
-    return dispatchByType(payload.event).then((x) => withCORS_(x));
+    return dispatchByType(payload.event ?? payload).then((x) => withCORS_(x));
   } catch (err) {
     console.error(err);
     return withCORS_(internalError());
