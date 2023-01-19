@@ -5,6 +5,8 @@ config:
   hackercamp:donut-domain: donut.hackercamp.cz
   hackercamp:fakturoid-token:
     secure: AAABAO1IpF1r9MJvs/PAxvTotqlXlsg4dbWJsk5/51fWJCysxaDpWLoXNBerDjZTjBRQJGTAXszyFKJoKViR+KHz8Ywa/fNH
+  hackercamp:fakturoid-webhook-token:
+    secure: AAABABtVCcrrfoNz5vMiKPyHEEpSYXXOmrrT8DsT/c8aeJMocuIQ0GPjJOMYf+Ffd5eoSeAcOpkbQtVIjNw44vy60YYlNKYQaRxs9gKwubldaK13ircdx+/6TLIkIm7ok8fnv7NqrzTJj/LeF/vU3g==
   hackercamp:postmark-token:
     secure: AAABAF/Uwb6BOz5Iik1PbYzp+nvMR+VvkJw1T9l3V84G5htqzIgzTkDtA98Th9o1hB96Eg6rCrsmz5pXGx2ex0lo7NM=
   hackercamp:private-key:

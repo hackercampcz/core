@@ -22,7 +22,7 @@ export const createRoutes = ({
   optOutsDataTable,
   attendeesDataTable,
   programDataTable,
-}) =>
+}: Record<string, string>) =>
   new Map<string, Record<string, RouteArgs>>([
     [
       "v1",
@@ -176,8 +176,13 @@ export const createRoutes = ({
         },
         fakturoidWebhook: {
           httpMethod: "POST",
-          path: "/fakturoid/webhook",
+          path: "/webhooks/fakturoid",
           fileName: "fakturoid/webhook.mjs",
+          environment: {
+            variables: {
+              TOKEN: config.get("fakturoid-webhook-token"),
+            },
+          },
         },
         slackWebhook: {
           httpMethod: "POST",

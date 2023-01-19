@@ -9,7 +9,7 @@ import {
   internalError,
   notFound,
   readPayload,
-  response,
+  response, unauthorized,
   unprocessableEntity,
   withCORS,
 } from "../http.mjs";
@@ -72,6 +72,11 @@ export async function handler(event) {
     ["POST", "OPTIONS"],
     getHeader(event.headers, "Origin")
   );
+
+  const {token} = event.queryStringParameters;
+  if (token !== env.TOKEN) {
+    return withCORS_(unauthorized());
+  }
 
   try {
     const payload = readPayload(event);
