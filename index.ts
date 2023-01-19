@@ -24,10 +24,10 @@ registerAutoTags({
 
 const config = new pulumi.Config();
 
-const domain = config.get("domain") as string;
-const donutDomain = config.get("donut-domain") as string;
-const webDomain = config.get("web-domain") as string;
-const apiDomain = config.get("api-domain") as string;
+const domain = config.get("domain");
+const donutDomain = config.get("donut-domain");
+const webDomain = config.get("web-domain");
+const apiDomain = config.get("api-domain");
 
 createCertificate(donutDomain);
 createGoogleMxRecords(domain);

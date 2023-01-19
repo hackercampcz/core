@@ -22,7 +22,7 @@ export const createRoutes = ({
   optOutsDataTable,
   attendeesDataTable,
   programDataTable,
-}: Record<string, string>) =>
+}: Record<string, pulumi.Output<string>>) =>
   new Map<string, Record<string, RouteArgs>>([
     [
       "v1",
@@ -199,7 +199,7 @@ export const createRoutes = ({
     ],
   ]);
 
-function hcName(t: string, options?: any) {
+function hcName(t: string, options?: { stage?: string }) {
   const suffix = options?.stage ? `-${options.stage}` : "";
   return `hc-${t}${suffix}`;
 }
