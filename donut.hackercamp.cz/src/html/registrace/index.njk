@@ -610,6 +610,35 @@
       </div>
     </section>
     <section>
+      <h2>Drobné věci na závěr</h2>
+      <div class="hc-card">
+        <h3>Cheš tričko?</h3>
+        <p>V rámci aktivit si budeš moci vlastnoručně vytisknout tričko!
+          Pokud máš zájem, vyber si velikost, jakou máme objednat.</p>
+        <div class="choose">
+          <input type="checkbox" name="t-shirt" value="1" id="shirt"/>
+          <label for="shirt">Chci tričko</label>
+        </div>
+        <div class="field">
+          <label for="shirt-size">Velikost</label>
+          <select name="t-shirt-size" id="shirt-size" disabled>
+            <option value="">Vyber si</option>
+            <option value="S">Malé (S)</option>
+            <option value="M">Střední (M)</option>
+            <option value="L">Velké (L)</option>
+            <option value="XL">Ještě větší (XL)</option>
+          </select>
+        </div>
+      </div>
+      <script type="module">
+        const shirt = document.querySelector("#shirt");
+        const shirtSize = document.querySelector("#shirt-size");
+        shirt.addEventListener("change", (e) => {
+          shirtSize.disabled = !e.target.checked;
+        });
+      </script>
+    </section>
+    <section>
       <button type="submit" class="hc-button">
         Potvrdit a odeslat
       </button>
