@@ -232,6 +232,8 @@ jobs:
     executor: aws-cli/default
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
+      AWS_RETRY_MODE: standard
+      AWS_MAX_ATTEMPTS: 5
     steps:
       - checkout
       - attach_workspace:
