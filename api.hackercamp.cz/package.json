@@ -6,7 +6,7 @@
     "@aws-sdk/client-sqs": "3.264.0",
     "@aws-sdk/util-dynamodb": "3.264.0",
     "@hackercamp/lib": "workspace:lib",
-    "fast-xml-parser": "4.1.0",
+    "fast-xml-parser": "4.1.1",
     "jsonwebtoken": "9.0.0"
   },
   "packageManager": "yarn@3.4.1"
