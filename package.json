@@ -24,7 +24,7 @@
     "gulp-esbuild": "0.11.0",
     "gulp-mode": "1.1.0",
     "npm-run-all": "4.1.5",
-    "prettier": "2.8.3"
+    "prettier": "2.8.4"
   },
   "resolutions": {
     "@grpc/grpc-js": "1.8.7"
