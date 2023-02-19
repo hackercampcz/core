@@ -17,7 +17,7 @@
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=aadd932759b9908a4f8b0090df373ddea5148e67",
     "dotenv": "16.0.3",
     "dotenv-cli": "7.0.0",
-    "esbuild": "0.17.8",
+    "esbuild": "0.17.9",
     "eslint": "8.34.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-prettier": "4.2.1",
