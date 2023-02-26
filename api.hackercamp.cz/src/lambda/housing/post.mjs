@@ -61,7 +61,7 @@ Držíme Ti místo ${housing.get(item.housing)}${placement(
 Potřebuješ to změnit? Stačí si <https://donut.hackercamp.cz/|upravit ve svém profilu>, ale pozor, jen do 21. 8.!
 Pak už to půjde jen po osobní domluvě s Pájou.
 
-Vidíme se v září na Sobeňáku,
+Vidíme se na Sobeňáku,
 
 Tvoje Hacker Camp Crew`
       : `Gratulujeme, milý hackere,
@@ -74,10 +74,11 @@ Chceš si zkontrolovat, co to znamená? Koukni na <https://donut.hackercamp.cz/u
 
 Máš bydlení bez práce! Super. Užij si ušetřené minuty na fajn relax, nebo milá slova tomu, kdo Ti pomohl :)
 
-Potřebuješ to změnit? Stačí si <https://donut.hackercamp.cz/|upravit ve svém profilu>, ale pozor, jen do 21. 8.!
+Potřebuješ ubytko změnit? Stačí si <https://donut.hackercamp.cz/|upravit ve svém profilu>,
+ale pozor týden před akcí se ta možnost zavře!
 Pak už to půjde jen po osobní domluvě s Pájou.
 
-Vidíme se v září na Sobeňáku,
+Vidíme se na Sobeňáku,
 
 Tvoje Hacker Camp Crew`;
   return postChatMessage(item.slackID, message);

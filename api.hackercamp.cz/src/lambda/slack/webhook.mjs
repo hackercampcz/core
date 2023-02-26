@@ -210,13 +210,18 @@ async function onTeamJoin({ user }) {
         user.id,
         `Ahoj, táborníku,
 
-Vítej v našem slacku. Začátek září se blíží. Snad se těšíš stejně jako my.
+Vítej v našem slacku. Hacker Camp se blíží. Snad se těšíš stejně jako my.
 
-Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají nejen v kanále #kdo_prijede_na_camp (za 15 min tě tam ohlásíme, tak šup).
+Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají nejen
+v kanále #kdo_prijede_na_camp (za 15 min tě tam ohlásíme, tak šup).
 
-Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá. Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce. Nebo se můžeš kouknout, kde a jak zapojit své ruce k dílu → #hands_wanted.
+Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá.
+Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce.
+Nebo se můžeš kouknout, kde a jak zapojit své ruce k dílu → #hands_wanted.
 
-Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda. Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni. Důležité novinky najdeš v kanále #general.
+Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda.
+Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni.
+Důležité novinky najdeš v kanále #general.
 
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
       ),
@@ -229,7 +234,7 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
         user.id,
         `Ahoj, táborníku,
 
-Vítej v našem slacku. Začátek září se blíží. Snad se těšíš stejně jako my.
+Vítej v našem slacku. Hacker Camp se blíží. Snad se těšíš stejně jako my.
 
 Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají.
 
@@ -248,13 +253,18 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
       user.id,
       `Ahoj, táborníku,
 
-Vítej v našem slacku. Začátek září se blíží. Snad se těšíš stejně jako my.
+Vítej v našem slacku. Hacker Camp se blíží. Snad se těšíš stejně jako my.
 
-Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají nejen v kanále #kdo_prijede_na_camp (za 15 min tě tam ohlásíme, tak šup).
+Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají nejen
+v kanále #kdo_prijede_na_camp (za 15 min tě tam ohlásíme, tak šup).
 
-Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá. Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce. Nebo se můžeš kouknout, kde a jak zapojit své ruce k dílu → #hands_wanted.
+Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá.
+Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce.
+Nebo se můžeš kouknout, kde a jak zapojit své ruce k dílu → #hands_wanted.
 
-Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda. Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni. Důležité novinky najdeš v kanále #general.
+Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda.
+Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni.
+Důležité novinky najdeš v kanále #general.
 
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
     ),
