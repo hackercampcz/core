@@ -1,5 +1,4 @@
 const fs = require("fs");
-const { fetch } = require("@adobe/helix-fetch");
 const esbuild = require("gulp-esbuild");
 const mode = require("gulp-mode")();
 const projectPath = require("@topmonks/blendid/gulpfile.js/lib/projectPath.js");

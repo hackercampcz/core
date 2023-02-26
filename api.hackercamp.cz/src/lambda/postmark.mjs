@@ -1,4 +1,4 @@
-import { fetch } from "@adobe/helix-fetch";
+import { fetch } from "@adobe/fetch";
 
 export const Template = {
   NewRegistration: 28029948,

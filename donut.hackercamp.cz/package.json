@@ -2,7 +2,7 @@
   "name": "@hackercamp/donut",
   "packageManager": "yarn@3.4.1",
   "devDependencies": {
-    "@adobe/helix-fetch": "3.1.2",
+    "@adobe/fetch": "4.0.4",
     "@typescript-eslint/eslint-plugin": "5.53.0",
     "@typescript-eslint/parser": "5.53.0",
     "eslint-plugin-promise": "6.1.1",

@@ -1,4 +1,4 @@
-import { fetch } from "@adobe/helix-fetch";
+import { fetch } from "@adobe/fetch";
 import * as jwt from "jsonwebtoken";
 import { getHeader, response, unauthorized, withCORS } from "../http.mjs";
 

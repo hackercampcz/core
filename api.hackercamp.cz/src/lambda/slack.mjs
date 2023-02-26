@@ -1,4 +1,4 @@
-import { fetch } from "@adobe/helix-fetch";
+import { fetch } from "@adobe/fetch";
 
 const actions = [
   "Znáte se? → 😈",
