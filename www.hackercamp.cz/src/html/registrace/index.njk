@@ -702,13 +702,13 @@
           <label for="invoice-name">
             Jméno / název společnosti
           </label>
-          <input id="invoice-name" name="invName" type="text" placeholder="Kancelář prezidenta republiky"/>
+          <input id="invoice-name" name="invName" type="text" required placeholder="Kancelář prezidenta republiky"/>
         </div>
         <div class="field">
           <label for="invoice-address">
             Adresa (Ulice č.p., PSČ, Město)
           </label>
-          <input id="invoice-address" name="invAddress" type="text"
+          <input id="invoice-address" name="invAddress" type="text" required
                  placeholder="Hrad I. nádvoří 1, Hradčany, 119 08 Prague 1"/>
         </div>
         <div class="group">
@@ -747,13 +747,13 @@
             <label for="invoice-recipient-firstname">
               Jméno
             </label>
-            <input id="invoice-recipient-firstname" name="invRecipientFirstname" type="text"/>
+            <input id="invoice-recipient-firstname" name="invRecipientFirstname" type="text" required>
           </div>
           <div class="field">
             <label for="invoice-recipient-lastname">
               Příjmení
             </label>
-            <input id="invoice-recipient-lastname" name="invRecipientLastname" type="text"/>
+            <input id="invoice-recipient-lastname" name="invRecipientLastname" type="text" required>
           </div>
         </div>
         <div class="group">
@@ -761,7 +761,7 @@
             <label for="invoice-recipient-email">
               E-mail
             </label>
-            <input id="invoice-recipient-email" name="invRecipientEmail" type="email"/>
+            <input id="invoice-recipient-email" name="invRecipientEmail" type="email" required>
           </div>
           <div class="field">
             <label for="invoice-recipient-phone">
