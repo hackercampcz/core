@@ -104,7 +104,7 @@ jobs:
         type: string
         default: prod
     machine:
-      image: ubuntu-2004:2022.04.1
+      image: ubuntu-2204:2023.02.1
     resource_class: arm.medium
     environment:
       AWS_STS_REGIONAL_ENDPOINTS: regional
@@ -131,7 +131,7 @@ jobs:
         type: string
         default: prod
     machine:
-      image: ubuntu-2004:2022.04.1
+      image: ubuntu-2204:2023.02.1
     resource_class: arm.medium
     steps:
       - checkout
@@ -173,12 +173,13 @@ jobs:
         type: string
         default: ""
     machine:
-      image: ubuntu-2004:2022.04.1
+      image: ubuntu-2204:2023.02.1
     resource_class: arm.large
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
     steps:
       - checkout
+      - node/install
       - node/install-packages:
           pkg-manager: yarn-berry
       - read_build_envs
