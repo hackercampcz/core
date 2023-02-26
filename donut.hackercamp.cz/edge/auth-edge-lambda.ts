@@ -63,7 +63,7 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
         role: role.arn,
         timeout: 5,
         handler: "index.handler",
-        runtime: aws.lambda.Runtime.NodeJS16dX,
+        runtime: aws.lambda.Runtime.NodeJS18dX,
         code: buildAssets("auth/index.mjs"),
       },
       { provider: awsUsEast1 }

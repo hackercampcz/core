@@ -221,7 +221,7 @@ const getHandler = (
 ): aws.lambda.Function =>
   new aws.lambda.Function(name, {
     publish: true,
-    runtime: aws.lambda.Runtime.NodeJS16dX,
+    runtime: aws.lambda.Runtime.NodeJS18dX,
     architectures: ["arm64"],
     role: role.arn,
     handler: "index.handler",
