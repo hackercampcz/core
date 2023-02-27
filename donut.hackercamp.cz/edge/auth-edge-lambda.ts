@@ -50,6 +50,7 @@ export class AuthEdgeLambda extends pulumi.ComponentResource {
       lambdaBuilder.buildCodeAsset(path.join(__dirname, "lambdas", fileName), {
         minify: false,
         format: "esm",
+        external: ["@aws-sdk/client-secrets-manager"],
       });
 
     // Some resources _must_ be put in us-east-1, such as Lambda at Edge.
