@@ -3,11 +3,9 @@ import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestEvent } CloudFrontRequestEvent */
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestResult } CloudFrontRequestResult */
 
-const AWS = require("aws-sdk");
-const secretsManager = new AWS.SecretsManager({ region: "eu-central-1" });
-const { SecretString: secret } = await secretsManager
-  .getSecretValue({ SecretId: "HC-JWT-SECRET" })
-  .promise();
+import { SecretsManager } from "@aws-sdk/client-secrets-manager";
+const secretsManager = new SecretsManager({ region: "eu-central-1" });
+const { SecretString: secret } = await secretsManager.getSecretValue({ SecretId: "HC-JWT-SECRET" });
 
 /**
  * @param {CloudFrontRequestEvent} event
