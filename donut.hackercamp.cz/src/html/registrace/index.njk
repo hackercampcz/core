@@ -3,30 +3,30 @@
 {% block title %}Registrace pro Hackery{% endblock %}
 {% block head %}
   <style>
-    form#reg {
+    #reg {
       max-width: 40em;
     }
 
-    form#reg h2 {
+    #reg h2 {
       margin-left: auto;
       margin-right: auto;
     }
 
-    form#reg p.disclaimer {
+    #reg p.disclaimer {
       text-align: center;
       font-size: 14px;
       padding: 24px;
     }
 
-    form#reg section {
+    #reg section {
       margin-bottom: 24px;
     }
 
-    form#reg section p {
+    #reg section p {
       text-align: center;
     }
 
-    form#reg h3 {
+    #reg h3 {
       font-size: 16px;
     }
 
@@ -34,8 +34,8 @@
       font-size: 14px;
     }
 
-    form#reg input,
-    form#reg select {
+    #reg input,
+    #reg select {
       font-family: var(--hc-font-family);
       font-size: 16px;
       letter-spacing: 0;
@@ -51,90 +51,90 @@
       text-rendering: geometricPrecision;
     }
 
-    form#reg .field {
+    #reg .field {
       display: flex;
       flex-direction: column;
       padding-bottom: 4px;
       flex: 1;
     }
 
-    form#reg [aria-hidden="true"] {
+    #reg [aria-hidden="true"] {
       display: none;
     }
 
-    form#reg .field label {
+    #reg .field label {
       flex: 1;
       padding-top: 4px;
       padding-bottom: 2px;
     }
 
-    form#reg .field input,
-    form#reg .field textarea,
-    form#reg .field select {
+    #reg .field input,
+    #reg .field textarea,
+    #reg .field select {
       flex: 2;
       font-size: 16px;
       padding: 4px;
     }
 
-    form#reg .field select {
+    #reg .field select {
       min-height: 36px;
     }
 
-    form#reg .field--block {
+    #reg .field--block {
       margin-bottom: 16px;
     }
 
-    form#reg .group {
+    #reg .group {
       display: flex;
       flex-direction: column;
     }
 
     @media (min-width: 490px) {
-      form#reg .group {
+      #reg .group {
         gap: 8px;
         flex-direction: row;
       }
     }
 
-    form#reg .question {
+    #reg .question {
       text-align: center;
       padding-top: 12px;
     }
 
-    form#reg .question input {
+    #reg .question input {
       width: 16px;
       height: 16px;
     }
 
-    form#reg .choose {
+    #reg .choose {
       display: flex;
     }
 
-    form#reg .choose:not(:last-child) {
+    #reg .choose:not(:last-child) {
       margin-bottom: 24px;
     }
 
-    form#reg .choose input {
+    #reg .choose input {
       width: 16px;
       height: 16px;
     }
 
-    form#reg .choose > label,
-    form#reg .choose > div {
+    #reg .choose > label,
+    #reg .choose > div {
       padding-left: 8px;
       display: block;
       flex: 1;
     }
 
-    form#reg .choose input:not(:checked) + div .patron-allowance {
+    #reg .choose input:not(:checked) + div .patron-allowance {
       display: none;
     }
 
-    form#reg .choose .patron-allowance input {
+    #reg .choose .patron-allowance input {
       width: 120px;
     }
 
-    form#reg label span {
+    #reg label span {
       display: block;
       font-size: 14px;
     }
@@ -211,13 +211,13 @@
             <label for="firstname">
               Jméno
             </label>
-            <input id="firstname" name="firstName" type="text" autocomplete="given-name" required="required"/>
+            <input id="firstname" name="firstName" type="text" autocomplete="given-name" required>
           </div>
           <div class="field">
             <label for="lastname">
               Příjmení
             </label>
-            <input id="lastname" name="lastName" type="text" autocomplete="family-name" required="required"/>
+            <input id="lastname" name="lastName" type="text" autocomplete="family-name" required>
           </div>
         </div>
         <div class="group">
@@ -225,13 +225,13 @@
             <label for="email">
               E-mail
             </label>
-            <input id="email" name="email" type="email" autocomplete="email" required="required"/>
+            <input id="email" name="email" type="email" autocomplete="email" required>
           </div>
           <div class="field">
             <label for="phonenum">
               Telefon
             </label>
-            <input id="phonenum" name="phone" type="tel" autocomplete="tel" required="required"/>
+            <input id="phonenum" name="phone" type="tel" autocomplete="tel" required>
           </div>
         </div>
         <div class="field">
@@ -283,7 +283,7 @@
           <label for="plus-company">
             Jméno firmy
           </label>
-          <input id="plus-company" name="plusCompany" type="text" autocomplete="on"/>
+          <input id="plus-company" name="plusCompany" type="text" autocomplete="on">
         </div>
         <div class="field">
           <label for="plus-reason">
@@ -427,16 +427,32 @@
       </div>
     </section>
     <script type="module">
-      document.querySelector("input#email").addEventListener("blur", event => {
-        document.querySelector("input#invoice-email").setAttribute("placeholder", event.target.value);
+      function showSection(id) {
+        const section = document.getElementById(id);
+        section.removeAttribute("aria-hidden");
+        for (const input of section.querySelectorAll("[data-required]")) {
+          input.setAttribute("required", "required");
+        }
+      }
+      function hideSection(id) {
+        const section = document.getElementById(id);
+        section.setAttribute("aria-hidden", "true");
+        for (const input of section.querySelectorAll("[required]")) {
+          input.dataset.required = true;
+          input.removeAttribute("required");
+        }
+      }
+      hideSection("someone-else-will-pay");
+      document.querySelector("#email").addEventListener("blur", event => {
+        document.querySelector("#invoice-email").setAttribute("placeholder", event.target.value);
       });
-      document.querySelector("select#invoice-recipient").addEventListener("change", event => {
+      document.querySelector("#invoice-recipient").addEventListener("change", event => {
         if (event.target.value == 0) {
-          document.querySelector("#I-will-pay").removeAttribute("aria-hidden");
-          document.querySelector("#someone-else-will-pay").setAttribute("aria-hidden", "true");
+          showSection("I-will-pay");
+          hideSection("someone-else-will-pay");
         } else if (event.target.value == 1) {
-          document.querySelector("#I-will-pay").setAttribute("aria-hidden", "true");
-          document.querySelector("#someone-else-will-pay").removeAttribute("aria-hidden");
+          hideSection("I-will-pay");
+          showSection("someone-else-will-pay");
         }
       });
     </script>
@@ -647,7 +663,7 @@
     <input type="hidden" name="referral"/>
   </form>
   <script type="module">
-    const formElement = document.querySelector("form#reg");
+    const formElement = document.querySelector("#reg");
     const submitButtonElement = formElement.querySelector("button[type=submit]");
 
     const {searchParams} = new URL(location.href);
