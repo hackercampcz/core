@@ -11,7 +11,7 @@ function build(entrypoint: string, minify: boolean, format: "cjs" | "esm", exter
     format,
     charset: "utf8",
     platform: "node",
-    target: "node18",
+    target: "node18.12",
     mainFields: ["module", "main"],
     external,
     entryPoints: [entrypoint],
