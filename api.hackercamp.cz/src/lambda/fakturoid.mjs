@@ -1,5 +1,3 @@
-import { fetch } from "@adobe/fetch";
-
 const slug = "hackercampcrew";
 const email = "invoices@hackercamp.cz";
 const userAgent = "HackerCamp Donut (team@hackercamp.cz)";

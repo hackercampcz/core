@@ -1,5 +1,3 @@
-import { fetch } from "@adobe/fetch";
-
 const actions = [
   "Znáte se? → 😈",
   "Chceš se potkat na campu? → 🙋",

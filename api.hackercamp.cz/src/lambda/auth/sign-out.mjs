@@ -1,4 +1,4 @@
-import { found, getHeader, response, withCORS } from "../http.mjs";
+import { found, getHeader, withCORS } from "../http.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */

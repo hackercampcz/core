@@ -1,4 +1,3 @@
-import { fetch } from "@adobe/fetch";
 import xml from "fast-xml-parser";
 
 const parser = new xml.XMLParser();
