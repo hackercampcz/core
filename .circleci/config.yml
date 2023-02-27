@@ -22,6 +22,7 @@ commands:
     steps:
       - pulumi/login
       - run:
+          working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
       - run:
           name: Read S3 Bucket URI from Pulumi state for << parameters.site_name >>
@@ -41,6 +42,7 @@ commands:
     steps:
       - pulumi/login
       - run:
+          working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
       - run:
           name: Read HC_API_URL from Pulumi state
