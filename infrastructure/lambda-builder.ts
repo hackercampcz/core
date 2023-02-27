@@ -4,7 +4,12 @@ import { buildSync } from "esbuild";
 const requireShim = `import module from 'module';
 if (typeof globalThis.require == "undefined") globalThis.require = module.createRequire(import.meta.url);`;
 
-function build(entrypoint: string, minify: boolean, format: "cjs" | "esm", external) {
+function build(
+  entrypoint: string,
+  minify: boolean,
+  format: "cjs" | "esm",
+  external
+) {
   const result = buildSync({
     bundle: true,
     minify,
@@ -24,7 +29,11 @@ function build(entrypoint: string, minify: boolean, format: "cjs" | "esm", exter
 
 export function buildCodeAsset(
   entrypoint: string,
-  { minify, format, external }: { minify: boolean; format: "esm" | "cjs", external?: string[] } = {
+  {
+    minify,
+    format,
+    external,
+  }: { minify: boolean; format: "esm" | "cjs"; external?: string[] } = {
     minify: false,
     format: "cjs",
     external: [],

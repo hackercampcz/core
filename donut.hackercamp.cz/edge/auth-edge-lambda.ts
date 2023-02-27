@@ -2,7 +2,7 @@ import * as aws from "@pulumi/aws";
 import * as pulumi from "@pulumi/pulumi";
 import { createRole } from "@topmonks/pulumi-aws/lambdas/edge-role";
 import * as path from "path";
-import * as lambdaBuilder from "@hackercamp/core/lambda-builder";
+import * as lambdaBuilder from "@hackercamp/infrastructure/lambda-builder";
 
 export class AuthEdgeLambda extends pulumi.ComponentResource {
   private lambda: aws.lambda.Function;

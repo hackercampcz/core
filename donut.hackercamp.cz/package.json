@@ -10,6 +10,7 @@
     "web-types-lit": "0.1.0"
   },
   "dependencies": {
+    "@hackercamp/infrastructure": "workspace:infrastructure",
     "@hackercamp/lib": "workspace:lib",
     "@material/chips": "14.0.0",
     "@material/layout-grid": "14.0.0",
