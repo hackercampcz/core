@@ -26,11 +26,13 @@ commands:
           command: pulumi stack select << parameters.stack_name >>
       - run:
           name: Read S3 Bucket URI from Pulumi state for << parameters.site_name >>
+          working_directory: infrastructure
           command: |
             S3_BUCKET_URI=$(pulumi stack output websites | jq -rM  '.["<< parameters.site_name >>"] | .s3BucketUri | @text')
             echo "export AWS_S3_BUCKET=\"${S3_BUCKET_URI}\"" >> $BASH_ENV
       - run:
           name: Read Cloudfront ID from Pulumi state for << parameters.site_name >>
+          working_directory: infrastructure
           command: |
             CLOUDFRONT_ID=$(pulumi stack output websites | jq -rM  '.["<< parameters.site_name >>"] | .cloudFrontId | @text')
             echo "export AWS_CLOUDFRONT_DISTRIBUTION_ID=\"${CLOUDFRONT_ID}\"" >> $BASH_ENV
@@ -46,21 +48,25 @@ commands:
           command: pulumi stack select << parameters.stack_name >>
       - run:
           name: Read HC_API_URL from Pulumi state
+          working_directory: infrastructure
           command: |
             API_URL=$(pulumi stack output apiUrl)
             echo "export HC_API_URL=\"${API_URL}\"" >> $BASH_ENV
       - run:
           name: Read HC_SLACK_CLIENT_ID from Pulumi config
+          working_directory: infrastructure
           command: |
             SLACK_CLIENT_ID=$(pulumi config get slack-client-id)
             echo "export HC_SLACK_CLIENT_ID=\"${SLACK_CLIENT_ID}\"" >> $BASH_ENV
       - run:
           name: Read HC_DONUT_HOSTNAME from Pulumi config
+          working_directory: infrastructure
           command: |
             DONUT_HOSTNAME=$(pulumi config get donut-domain)
             echo "export HC_DONUT_HOSTNAME=\"${DONUT_HOSTNAME}\"" >> $BASH_ENV
       - run:
           name: Read HC_WEB_HOSTNAME from Pulumi config
+          working_directory: infrastructure
           command: |
             WEB_HOSTNAME=$(pulumi config get web-domain)
             echo "export HC_WEB_HOSTNAME=\"${WEB_HOSTNAME}\"" >> $BASH_ENV
