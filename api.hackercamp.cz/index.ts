@@ -210,6 +210,11 @@ const buildAssets = (fileName: string) =>
     {
       minify: false,
       format: "esm",
+      external: [
+        "@aws-sdk/client-dynamodb",
+        "@aws-sdk/util-dynamodb",
+        "@aws-sdk/client-sqs",
+      ]
     }
   );
 
