@@ -24,7 +24,7 @@ function build(entrypoint: string, minify: boolean, format: "cjs" | "esm", exter
 
 export function buildCodeAsset(
   entrypoint: string,
-  { minify, format, external }: { minify: boolean; format: "esm" | "cjs", external: [] } = {
+  { minify, format, external }: { minify: boolean; format: "esm" | "cjs", external?: [] } = {
     minify: false,
     format: "cjs",
     external: [],
