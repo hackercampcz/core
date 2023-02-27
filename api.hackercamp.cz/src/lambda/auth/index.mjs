@@ -1,4 +1,4 @@
-import * as jwt from "jsonwebtoken";
+import signJWT from "jsonwebtoken/sign.js";
 import { getHeader, response, unauthorized, withCORS } from "../http.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -94,7 +94,7 @@ export async function handler(event) {
         "https://slack.com/user_id": profile.sub,
         "https://slack.com/access_token": token,
       };
-      const idToken = jwt.sign(payload, process.env["private_key"]);
+      const idToken = signJWT(payload, process.env["private_key"]);
       delete profile.ok;
       // For local development we need to relax Cross site security
       const sameSite = origin.includes("localhost") ? "None" : "Strict";

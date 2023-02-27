@@ -1,11 +1,12 @@
+import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
 
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestEvent } CloudFrontRequestEvent */
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestResult } CloudFrontRequestResult */
 
-import { SecretsManager } from "@aws-sdk/client-secrets-manager";
-const secretsManager = new SecretsManager({ region: "eu-central-1" });
-const { SecretString: secret } = await secretsManager.getSecretValue({ SecretId: "HC-JWT-SECRET" });
+const secretsManager = new SecretsManagerClient({ region: "eu-central-1" });
+const getJWTSecret = new GetSecretValueCommand({ SecretId: "HC-JWT-SECRET" });
+const { SecretString: secret } = await secretsManager.send(getJWTSecret);
 
 /**
  * @param {CloudFrontRequestEvent} event
@@ -17,6 +18,10 @@ export async function handler(event) {
   const isValidToken = await validateToken(token, secret);
   console.log("Authorization", request.uri, Boolean(isValidToken));
   if (isValidToken) return request;
+  const query = new URLSearchParams({
+    state: "not-authenticated",
+    returnUrl: request.uri,
+  });
   return {
     status: "307",
     statusDescription: "Temporary Redirect",
@@ -24,10 +29,7 @@ export async function handler(event) {
       location: [
         {
           key: "location",
-          value: `https://donut.hackercamp.cz/?${new URLSearchParams({
-            state: "not-authenticated",
-            returnUrl: request.uri,
-          })}`,
+          value: `https://donut.hackercamp.cz/?${query}`,
         },
       ],
     },
