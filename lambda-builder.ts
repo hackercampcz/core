@@ -11,9 +11,9 @@ function build(entrypoint: string, minify: boolean, format: "cjs" | "esm", exter
     format,
     charset: "utf8",
     platform: "node",
-    target: "node16.14",
+    target: "node18",
     mainFields: ["module", "main"],
-    external: ["aws-sdk", ...external],
+    external,
     entryPoints: [entrypoint],
     banner: { js: format === "esm" ? requireShim : "" },
     treeShaking: true,
@@ -24,7 +24,7 @@ function build(entrypoint: string, minify: boolean, format: "cjs" | "esm", exter
 
 export function buildCodeAsset(
   entrypoint: string,
-  { minify, format, external }: { minify: boolean; format: "esm" | "cjs", external?: [] } = {
+  { minify, format, external }: { minify: boolean; format: "esm" | "cjs", external?: string[] } = {
     minify: false,
     format: "cjs",
     external: [],
