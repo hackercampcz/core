@@ -85,7 +85,7 @@ export async function createInvoice(data, token) {
         Authorization: `Basic ${basic}`,
         "User-Agent": "HackerCamp Donut (team@hackercamp.cz)",
       },
-      body: data,
+      body: JSON.stringify(data),
     }
   );
 }
@@ -108,7 +108,7 @@ export async function createSubject(data, token) {
         Authorization: `Basic ${basic}`,
         "User-Agent": "HackerCamp Donut (team@hackercamp.cz)",
       },
-      body: data,
+      body: JSON.stringify(data),
     }
   );
 }

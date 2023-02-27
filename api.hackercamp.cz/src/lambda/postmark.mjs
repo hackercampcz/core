@@ -26,13 +26,13 @@ export async function sendEmailWithTemplate({
       Accept: "application/json",
       "X-Postmark-Server-Token": token,
     },
-    body: {
+    body: JSON.stringify({
       TemplateId: templateId,
       TemplateModel: data,
       From: from,
       To: to,
       MessageStream: "outbound",
-    },
+    }),
   });
   if (!resp.ok) {
     console.error(await resp.json());
