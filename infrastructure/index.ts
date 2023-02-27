@@ -14,8 +14,8 @@ import {
   createDB,
   createQueues,
   createRoutes,
-} from "./api.hackercamp.cz";
-import { AuthEdgeLambda } from "./donut.hackercamp.cz/edge";
+} from "@hackercamp/api";
+import { AuthEdgeLambda } from "@hackercamp/donut/edge";
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),

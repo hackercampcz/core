@@ -1,0 +1,14 @@
+{
+  "name": "@hackercamp/infrastructure",
+  "main": "index.ts",
+  "version": "1.0.0",
+  "packageManager": "yarn@3.4.1",
+  "dependencies": {
+    "@hackercamp/api": "workspace:*",
+    "@hackercamp/donut": "workspace:*",
+    "@pulumi/aws": "5.30.0",
+    "@pulumi/awsx": "1.0.2",
+    "@pulumi/pulumi": "3.55.0",
+    "@topmonks/pulumi-aws": "2.3.0"
+  }
+}

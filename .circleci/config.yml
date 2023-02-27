@@ -115,10 +115,12 @@ jobs:
       - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
-          override-ci-command: yarn install --immutable
+          override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/donut @hackercamp/api
       - run:
+          working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
       - pulumi/update:
+          working_directory: infrastructure
           stack: << parameters.stack_name >>
           skip-preview: true
       - slack/notify:
@@ -141,10 +143,12 @@ jobs:
       - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
-          override-ci-command: yarn install --immutable
+          override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/donut @hackercamp/api
       - run:
+          working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
       - pulumi/preview:
+          working_directory: infrastructure
           stack: << parameters.stack_name >>
       - slack/notify:
           event: fail
@@ -185,6 +189,7 @@ jobs:
       - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
+          override-ci-command: yarn workspaces focus @hackercamp/core @hackercamp/donut @hackercamp/web
       - read_build_envs
       - run:
           name: Export build metadata

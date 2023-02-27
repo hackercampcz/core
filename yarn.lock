@@ -5,17 +5,6 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@adobe/fetch@npm:4.0.4":
-  version: 4.0.4
-  resolution: "@adobe/fetch@npm:4.0.4"
-  dependencies:
-    debug: 4.3.4
-    http-cache-semantics: 4.1.1
-    lru-cache: 7.17.0
-  checksum: 85bdc46db8053a51681cd92444673a978544b026fbe4d08e5c60aff7e0227936668398f0a557ee891c85e8dbedddf7e2de3e39c4804248badae0975c2fa539be
-  languageName: node
-  linkType: hard
-
 "@ampproject/remapping@npm:^2.1.0":
   version: 2.1.2
   resolution: "@ampproject/remapping@npm:2.1.2"
@@ -147,6 +136,50 @@ __metadata:
     tslib: ^2.3.1
     uuid: ^8.3.2
   checksum: dca76eb989e78078a3811ac2d5876c31bc3626185d93f5d71572cc7a179dfc8b65fcf6de3e4889b674c6f5d5cc994cc91b5351efbd025ee89bae0627663e78d0
+  languageName: node
+  linkType: hard
+
+"@aws-sdk/client-secrets-manager@npm:3.279.0":
+  version: 3.279.0
+  resolution: "@aws-sdk/client-secrets-manager@npm:3.279.0"
+  dependencies:
+    "@aws-crypto/sha256-browser": 3.0.0
+    "@aws-crypto/sha256-js": 3.0.0
+    "@aws-sdk/client-sts": 3.279.0
+    "@aws-sdk/config-resolver": 3.272.0
+    "@aws-sdk/credential-provider-node": 3.279.0
+    "@aws-sdk/fetch-http-handler": 3.272.0
+    "@aws-sdk/hash-node": 3.272.0
+    "@aws-sdk/invalid-dependency": 3.272.0
+    "@aws-sdk/middleware-content-length": 3.272.0
+    "@aws-sdk/middleware-endpoint": 3.272.0
+    "@aws-sdk/middleware-host-header": 3.278.0
+    "@aws-sdk/middleware-logger": 3.272.0
+    "@aws-sdk/middleware-recursion-detection": 3.272.0
+    "@aws-sdk/middleware-retry": 3.272.0
+    "@aws-sdk/middleware-serde": 3.272.0
+    "@aws-sdk/middleware-signing": 3.272.0
+    "@aws-sdk/middleware-stack": 3.272.0
+    "@aws-sdk/middleware-user-agent": 3.272.0
+    "@aws-sdk/node-config-provider": 3.272.0
+    "@aws-sdk/node-http-handler": 3.272.0
+    "@aws-sdk/protocol-http": 3.272.0
+    "@aws-sdk/smithy-client": 3.279.0
+    "@aws-sdk/types": 3.272.0
+    "@aws-sdk/url-parser": 3.272.0
+    "@aws-sdk/util-base64": 3.208.0
+    "@aws-sdk/util-body-length-browser": 3.188.0
+    "@aws-sdk/util-body-length-node": 3.208.0
+    "@aws-sdk/util-defaults-mode-browser": 3.279.0
+    "@aws-sdk/util-defaults-mode-node": 3.279.0
+    "@aws-sdk/util-endpoints": 3.272.0
+    "@aws-sdk/util-retry": 3.272.0
+    "@aws-sdk/util-user-agent-browser": 3.272.0
+    "@aws-sdk/util-user-agent-node": 3.272.0
+    "@aws-sdk/util-utf8": 3.254.0
+    tslib: ^2.3.1
+    uuid: ^8.3.2
+  checksum: d3b5d0b52a5db7b5c984901bffc45c9a105787bd76aea050bbfef60bda71d6faaf12ce4b16c6d9096246bfb5b4365c8235452debda8ffa255855d427d52876fe
   languageName: node
   linkType: hard
 
@@ -2600,29 +2633,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hackercamp/api@workspace:api.hackercamp.cz":
+"@hackercamp/api@workspace:*, @hackercamp/api@workspace:api.hackercamp.cz":
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@adobe/fetch": 4.0.4
     "@aws-sdk/client-dynamodb": 3.279.0
     "@aws-sdk/client-sqs": 3.279.0
     "@aws-sdk/util-dynamodb": 3.279.0
+    "@hackercamp/core": "workspace:*"
     "@hackercamp/lib": "workspace:lib"
+    eslint: 8.35.0
     fast-xml-parser: 4.1.3
     jsonwebtoken: 9.0.0
   languageName: unknown
   linkType: soft
 
-"@hackercamp/core@workspace:.":
+"@hackercamp/core@workspace:*, @hackercamp/core@workspace:.":
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@pulumi/aws": 5.30.0
-    "@pulumi/awsx": 1.0.2
-    "@pulumi/pulumi": 3.55.0
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=aadd932759b9908a4f8b0090df373ddea5148e67"
-    "@topmonks/pulumi-aws": 2.3.0
     dotenv: 16.0.3
     dotenv-cli: 7.0.0
     esbuild: 0.17.10
@@ -2636,11 +2666,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hackercamp/donut@workspace:donut.hackercamp.cz":
+"@hackercamp/donut@workspace:*, @hackercamp/donut@workspace:donut.hackercamp.cz":
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@adobe/fetch": 4.0.4
+    "@aws-sdk/client-secrets-manager": 3.279.0
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": 14.0.0
     "@material/layout-grid": 14.0.0
@@ -2655,6 +2685,7 @@ __metadata:
     "@typescript-eslint/parser": 5.53.0
     "@ungap/structured-clone": 1.0.2
     date-fns: 2.29.3
+    eslint: 8.35.0
     eslint-plugin-promise: 6.1.1
     lit-html: 2.6.1
     marked: 4.2.12
@@ -2662,6 +2693,19 @@ __metadata:
     rollbar: 2.26.1
     web-types-lit: 0.1.0
     workbox-window: 6.5.4
+  languageName: unknown
+  linkType: soft
+
+"@hackercamp/infrastructure@workspace:infrastructure":
+  version: 0.0.0-use.local
+  resolution: "@hackercamp/infrastructure@workspace:infrastructure"
+  dependencies:
+    "@hackercamp/api": "workspace:*"
+    "@hackercamp/donut": "workspace:*"
+    "@pulumi/aws": 5.30.0
+    "@pulumi/awsx": 1.0.2
+    "@pulumi/pulumi": 3.55.0
+    "@topmonks/pulumi-aws": 2.3.0
   languageName: unknown
   linkType: soft
 
@@ -6126,7 +6170,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:4.3.4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:~4.3.1, debug@npm:~4.3.2":
+"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4, debug@npm:~4.3.1, debug@npm:~4.3.2":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
   dependencies:
@@ -8663,13 +8707,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"http-cache-semantics@npm:4.1.1":
-  version: 4.1.1
-  resolution: "http-cache-semantics@npm:4.1.1"
-  checksum: 83ac0bc60b17a3a36f9953e7be55e5c8f41acc61b22583060e8dedc9dd5e3607c823a88d0926f9150e571f90946835c7fe150732801010845c72cd8bbff1a236
-  languageName: node
-  linkType: hard
-
 "http-cache-semantics@npm:^4.1.0":
   version: 4.1.0
   resolution: "http-cache-semantics@npm:4.1.0"
@@ -10066,13 +10103,6 @@ __metadata:
   version: 1.1.4
   resolution: "lower-case@npm:1.1.4"
   checksum: 1ca9393b5eaef94a64e3f89e38b63d15bc7182a91171e6ad1550f51d710ec941540a065b274188f2e6b4576110cc2d11b50bc4bb7c603a040ddeb1db4ca95197
-  languageName: node
-  linkType: hard
-
-"lru-cache@npm:7.17.0":
-  version: 7.17.0
-  resolution: "lru-cache@npm:7.17.0"
-  checksum: 28c2a98ad313b8d61beac1f08257b6f0ca990e39d24a9bc831030b6e209447cfb11c6d9d1a774282189bfc9609d1dfd17ebe485228dd68f7b96b6b9b7740894e
   languageName: node
   linkType: hard
 

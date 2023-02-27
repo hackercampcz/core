@@ -10,7 +10,7 @@ import {
   CustomDomainDistribution,
 } from "@topmonks/pulumi-aws";
 import * as path from "path";
-import * as lambdaBuilder from "../lambda-builder";
+import * as lambdaBuilder from "@hackercamp/core/lambda-builder";
 
 const config = new pulumi.Config();
 
