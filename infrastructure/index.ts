@@ -16,6 +16,8 @@ import {
   createRoutes,
 } from "@hackercamp/api";
 import { AuthEdgeLambda } from "@hackercamp/donut/edge";
+import { readTemplates } from "./communication";
+import * as postmark from "./postmark";
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),
@@ -80,6 +82,16 @@ new aws.secretsmanager.SecretVersion("hc-jwt-secret", {
   secretString: config.get("private-key"),
 });
 
+export const postmarkTemplates = {};
+
+for (const args of readTemplates("../communication/")) {
+  const template = new postmark.Template(
+    `postmark-template-${args.Name}`,
+    args
+  );
+  postmarkTemplates[args.Alias] = template.id;
+}
+
 const queues = createQueues();
 export const slackQueueUrl = queues.slackQueueUrl;
 
@@ -97,6 +109,7 @@ const routes = createRoutes({
   optOutsDataTable,
   attendeesDataTable,
   programDataTable,
+  postmarkTemplates,
 });
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = api.url.apply((x) => new URL("/v1/", x).href);

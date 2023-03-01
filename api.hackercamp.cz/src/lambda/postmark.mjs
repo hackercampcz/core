@@ -1,15 +1,14 @@
 export const Template = {
-  NewRegistration: 28029948,
-  PlusOneRegistration: 28062472,
-  HackerRegistration: 28062457,
-  HackerInvitation: 28120216,
+  HackerRegistration: parseInt(process.env["hc-hacker-registration"], 10),
+  NewRegistration: parseInt(process.env["hc-registration-new"], 10),
+  RegistrationApproved: parseInt(process.env["hc-registration-approved"], 10),
+  PlusOneInvitation: parseInt(process.env["hc-plus-one-invitation"], 10),
+  PlusOneRegistration: parseInt(process.env["hc-plus-one-registration"], 10),
+  SlackInvite: parseInt(process.env["hc-slack-invitation"], 10),
+  VolunteerSlackInvite:  parseInt(process.env["hc-volunteer-slack-invitation"], 10),
+  HackerInvitation:  parseInt(process.env["hc-hacker-invitation"], 10),
+  AttendeesInfoMail:  parseInt(process.env["hc-attendee-info"], 10),
   HackerInvitationLate: 28122158,
-  HackersReminder: 28432253,
-  PlusOneInvitation: 28151070,
-  VolunteerSlackInvite: 28672994,
-  SlackInvite: 28750357,
-  AttendeesInfoMail: 28768871,
-  HackerApproved: 28848093,
 };
 
 export async function sendEmailWithTemplate({

@@ -98,7 +98,7 @@ async function processRequest(db, data) {
       await approve(db, data.params);
       await sendEmailWithTemplate({
         token: process.env.postmark_token,
-        templateId: Template.HackerApproved,
+        templateId: Template.RegistrationApproved,
         data: {},
         from: "Hacker Camp Crew <team@hackercamp.cz>",
         to: data.params.email,

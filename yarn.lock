@@ -2707,6 +2707,8 @@ __metadata:
     "@pulumi/pulumi": 3.55.0
     "@topmonks/pulumi-aws": 2.3.0
     esbuild: 0.17.10
+    front-matter: ^4.0.2
+    marked: ^4.2.12
   languageName: unknown
   linkType: soft
 
@@ -7744,6 +7746,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"front-matter@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "front-matter@npm:4.0.2"
+  dependencies:
+    js-yaml: ^3.13.1
+  checksum: a5b4c36d75a820301ebf31db0f677332d189c4561903ab6853eaa0504b43634f98557dbf87752e09043dbd2c9dcc14b4bcf9151cb319c8ad7e26edb203c0cd23
+  languageName: node
+  linkType: hard
+
 "fs-extra@npm:3.0.1":
   version: 3.0.1
   resolution: "fs-extra@npm:3.0.1"
@@ -9538,7 +9549,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^3.10.0, js-yaml@npm:^3.14.0":
+"js-yaml@npm:^3.10.0, js-yaml@npm:^3.13.1, js-yaml@npm:^3.14.0":
   version: 3.14.1
   resolution: "js-yaml@npm:3.14.1"
   dependencies:
@@ -10246,7 +10257,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:4.2.12":
+"marked@npm:4.2.12, marked@npm:^4.2.12":
   version: 4.2.12
   resolution: "marked@npm:4.2.12"
   bin:

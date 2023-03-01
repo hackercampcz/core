@@ -22,7 +22,8 @@ export const createRoutes = ({
   optOutsDataTable,
   attendeesDataTable,
   programDataTable,
-}: Record<string, pulumi.Output<string>>) =>
+  postmarkTemplates,
+}: Record<string, any>) =>
   new Map<string, Record<string, RouteArgs>>([
     [
       "v1",
@@ -34,6 +35,7 @@ export const createRoutes = ({
           environment: {
             variables: {
               db_table_attendees: attendeesDataTable,
+              ...postmarkTemplates,
             },
           },
         },
@@ -47,6 +49,7 @@ export const createRoutes = ({
               private_key: config.get("private-key"),
               slack_client_id: config.get("slack-client-id"),
               slack_client_secret: config.get("slack-client-secret"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -57,6 +60,7 @@ export const createRoutes = ({
           environment: {
             variables: {
               hostname: config.get("donut-domain"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -70,6 +74,7 @@ export const createRoutes = ({
               hostname: config.get("web-domain"),
               donut: config.get("donut-domain"),
               private_key: config.get("private-key"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -83,6 +88,7 @@ export const createRoutes = ({
               donut: config.get("donut-domain"),
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -94,6 +100,7 @@ export const createRoutes = ({
             variables: {
               private_key: config.get("private-key"),
               slack_bot_token: config.get("slack-bot-token"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -107,6 +114,7 @@ export const createRoutes = ({
               db_table_program: programDataTable,
               private_key: config.get("private-key"),
               slack_bot_token: config.get("slack-bot-token"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -126,6 +134,7 @@ export const createRoutes = ({
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
               fakturoid_token: config.get("fakturoid-token"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -138,6 +147,7 @@ export const createRoutes = ({
               db_table_attendees: attendeesDataTable,
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -150,6 +160,7 @@ export const createRoutes = ({
               db_table_attendees: attendeesDataTable,
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -163,6 +174,7 @@ export const createRoutes = ({
               db_table_program: programDataTable,
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
+              ...postmarkTemplates,
             },
           },
         },
@@ -192,6 +204,7 @@ export const createRoutes = ({
             variables: {
               slack_queue_url: slackQueueUrl,
               slack_bot_token: config.get("slack-bot-token"),
+              ...postmarkTemplates,
             },
           },
         },
