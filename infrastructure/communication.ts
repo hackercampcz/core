@@ -1,7 +1,7 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { marked } from "marked";
 
+const { marked } = require("marked");
 const frontmatter = require("front-matter");
 
 export function* readTemplates(relPath) {
