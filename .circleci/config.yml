@@ -123,7 +123,7 @@ jobs:
       - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v1-machine-provision
+          cache-version: v2-machine-provision
           override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/donut @hackercamp/api @hackercamp/lib
       - run:
           working_directory: infrastructure
