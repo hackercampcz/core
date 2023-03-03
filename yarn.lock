@@ -2704,7 +2704,7 @@ __metadata:
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
     "@pulumi/aws": 5.30.0
     "@pulumi/awsx": 1.0.2
-    "@pulumi/pulumi": 3.55.0
+    "@pulumi/pulumi": 3.56.0
     "@topmonks/pulumi-aws": 2.3.0
     esbuild: 0.17.10
     front-matter: 4.0.2
@@ -3696,11 +3696,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.55.0":
-  version: 3.55.0
-  resolution: "@pulumi/pulumi@npm:3.55.0"
+"@pulumi/pulumi@npm:3.56.0":
+  version: 3.56.0
+  resolution: "@pulumi/pulumi@npm:3.56.0"
   dependencies:
-    "@grpc/grpc-js": ~1.3.8
+    "@grpc/grpc-js": ^1.3.8
     "@logdna/tail-file": ^2.0.6
     "@opentelemetry/api": ^1.2.0
     "@opentelemetry/exporter-zipkin": ^1.6.0
@@ -3723,7 +3723,7 @@ __metadata:
     ts-node: ^7.0.1
     typescript: ~3.8.3
     upath: ^1.1.0
-  checksum: 25f6c4ab6b498daba62f0dc7f97dd5d55fecc7200cc4832b1acab3f57b45fd9764e6c26bdf25fb0ad33568b3a8bc8c0e4ddc81cd2e1c98e4704375c467ec0e40
+  checksum: 98d6f7a1639e274d6b326b4d717d4d2bb8ef6a08dadbd42bd7a70f89c80a9af4d7711b9813e11b9682da36159048eac8816d9f01fe555eeb4c02d0fd46a687fc
   languageName: node
   linkType: hard
 
