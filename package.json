@@ -19,7 +19,7 @@
     "prettier": "2.8.4"
   },
   "resolutions": {
-    "@grpc/grpc-js": "1.8.11"
+    "@grpc/grpc-js": "1.8.12"
   },
   "scripts": {
     "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid -- build --production",
