@@ -2526,7 +2526,7 @@ __metadata:
     "@material/mwc-list": 0.27.0
     "@material/mwc-snackbar": 0.27.0
     "@thi.ng/atom": 5.1.32
-    "@thi.ng/transducers": 8.3.36
+    "@thi.ng/transducers": 8.3.37
     "@typescript-eslint/eslint-plugin": 5.54.1
     "@typescript-eslint/parser": 5.54.1
     "@ungap/structured-clone": 1.0.2
@@ -3844,9 +3844,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/transducers@npm:8.3.36":
-  version: 8.3.36
-  resolution: "@thi.ng/transducers@npm:8.3.36"
+"@thi.ng/transducers@npm:8.3.37":
+  version: 8.3.37
+  resolution: "@thi.ng/transducers@npm:8.3.37"
   dependencies:
     "@thi.ng/api": ^8.7.3
     "@thi.ng/arrays": ^2.5.7
@@ -3856,7 +3856,7 @@ __metadata:
     "@thi.ng/errors": ^2.2.12
     "@thi.ng/math": ^5.4.4
     "@thi.ng/random": ^3.3.26
-  checksum: 67e8bb84196ea224191551959b0c97841e439481a667e99fcd2c6476e71c498c9d969b77dc45eb3b9a2b6f0e6a2d3ab73b498da21e914d4765aac80dcde57f4b
+  checksum: 2c4e5dfbf4cf00ba7a2f55cf44450cfb1b6e8fe2393371176d0b8b596a6b421389343dcd96c72233e92735ac7a777bf321d58a83b2f7c90395013a8f5faa2fe7
   languageName: node
   linkType: hard
 
