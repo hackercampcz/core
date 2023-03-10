@@ -149,47 +149,47 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-secrets-manager@npm:3.288.0":
-  version: 3.288.0
-  resolution: "@aws-sdk/client-secrets-manager@npm:3.288.0"
+"@aws-sdk/client-secrets-manager@npm:3.289.0":
+  version: 3.289.0
+  resolution: "@aws-sdk/client-secrets-manager@npm:3.289.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
-    "@aws-sdk/client-sts": 3.288.0
-    "@aws-sdk/config-resolver": 3.287.0
-    "@aws-sdk/credential-provider-node": 3.288.0
-    "@aws-sdk/fetch-http-handler": 3.282.0
-    "@aws-sdk/hash-node": 3.272.0
-    "@aws-sdk/invalid-dependency": 3.272.0
-    "@aws-sdk/middleware-content-length": 3.282.0
-    "@aws-sdk/middleware-endpoint": 3.282.0
-    "@aws-sdk/middleware-host-header": 3.282.0
-    "@aws-sdk/middleware-logger": 3.288.0
-    "@aws-sdk/middleware-recursion-detection": 3.282.0
-    "@aws-sdk/middleware-retry": 3.287.0
-    "@aws-sdk/middleware-serde": 3.272.0
-    "@aws-sdk/middleware-signing": 3.282.0
-    "@aws-sdk/middleware-stack": 3.272.0
-    "@aws-sdk/middleware-user-agent": 3.282.0
-    "@aws-sdk/node-config-provider": 3.287.0
-    "@aws-sdk/node-http-handler": 3.282.0
-    "@aws-sdk/protocol-http": 3.282.0
-    "@aws-sdk/smithy-client": 3.279.0
-    "@aws-sdk/types": 3.272.0
-    "@aws-sdk/url-parser": 3.272.0
+    "@aws-sdk/client-sts": 3.289.0
+    "@aws-sdk/config-resolver": 3.289.0
+    "@aws-sdk/credential-provider-node": 3.289.0
+    "@aws-sdk/fetch-http-handler": 3.289.0
+    "@aws-sdk/hash-node": 3.289.0
+    "@aws-sdk/invalid-dependency": 3.289.0
+    "@aws-sdk/middleware-content-length": 3.289.0
+    "@aws-sdk/middleware-endpoint": 3.289.0
+    "@aws-sdk/middleware-host-header": 3.289.0
+    "@aws-sdk/middleware-logger": 3.289.0
+    "@aws-sdk/middleware-recursion-detection": 3.289.0
+    "@aws-sdk/middleware-retry": 3.289.0
+    "@aws-sdk/middleware-serde": 3.289.0
+    "@aws-sdk/middleware-signing": 3.289.0
+    "@aws-sdk/middleware-stack": 3.289.0
+    "@aws-sdk/middleware-user-agent": 3.289.0
+    "@aws-sdk/node-config-provider": 3.289.0
+    "@aws-sdk/node-http-handler": 3.289.0
+    "@aws-sdk/protocol-http": 3.289.0
+    "@aws-sdk/smithy-client": 3.289.0
+    "@aws-sdk/types": 3.289.0
+    "@aws-sdk/url-parser": 3.289.0
     "@aws-sdk/util-base64": 3.208.0
     "@aws-sdk/util-body-length-browser": 3.188.0
     "@aws-sdk/util-body-length-node": 3.208.0
-    "@aws-sdk/util-defaults-mode-browser": 3.279.0
-    "@aws-sdk/util-defaults-mode-node": 3.287.0
-    "@aws-sdk/util-endpoints": 3.272.0
-    "@aws-sdk/util-retry": 3.272.0
-    "@aws-sdk/util-user-agent-browser": 3.282.0
-    "@aws-sdk/util-user-agent-node": 3.287.0
+    "@aws-sdk/util-defaults-mode-browser": 3.289.0
+    "@aws-sdk/util-defaults-mode-node": 3.289.0
+    "@aws-sdk/util-endpoints": 3.289.0
+    "@aws-sdk/util-retry": 3.289.0
+    "@aws-sdk/util-user-agent-browser": 3.289.0
+    "@aws-sdk/util-user-agent-node": 3.289.0
     "@aws-sdk/util-utf8": 3.254.0
     tslib: ^2.3.1
     uuid: ^8.3.2
-  checksum: 12257a7bfffb79a2960518d27ee547b9faff02dc71b47ac705b07f2c0c0a00d8e054e7760868d6a3bb544202e6897fac8bbd5682407fa26fc2aa44ebc1325bde
+  checksum: e9ab2523918a74b7a693d2af9da2d81c4f2e8ad608068b79c464120e68a1e98ba39736d768a321236eb837e69215ae8db181f2beebc461eb0c921e7565b3db70
   languageName: node
   linkType: hard
 
@@ -3149,7 +3149,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-secrets-manager": 3.288.0
+    "@aws-sdk/client-secrets-manager": 3.289.0
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": 14.0.0
