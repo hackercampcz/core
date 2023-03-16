@@ -11,7 +11,7 @@ import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
 import * as marked from "marked";
-import { Endpoint, unauthorized, View } from "./admin/common.js";
+import {Endpoint, unauthorized, View} from "./admin/common.js";
 import {
   createOptIn,
   createOptOut,
@@ -167,13 +167,6 @@ function registrationsChips(
           count: confirmed,
           selected: view === View.confirmed,
           view: View.confirmed,
-          year,
-        })}
-        ${chip({
-          text: "Nepotvrzení",
-          count: hackers,
-          selected: view === View.hackers,
-          view: View.hackers,
           year,
         })}
         ${chip({
