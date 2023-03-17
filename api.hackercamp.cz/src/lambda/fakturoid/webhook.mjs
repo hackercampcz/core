@@ -13,6 +13,7 @@ import {
   unprocessableEntity,
   withCORS,
 } from "../http.mjs";
+import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -34,6 +35,13 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
         }),
       })
     );
+    await sendEmailWithTemplate({
+      token: process.env["postmark_token"],
+      templateId: Template.RegistrationPaid,
+      data: {},
+      from: "Hacker Camp Crew <team@hackercamp.cz>",
+      to: registration.email,
+    })
     console.log({
       event: "Invoice marked as paid",
       invoice_id,

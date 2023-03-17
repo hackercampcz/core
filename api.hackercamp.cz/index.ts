@@ -193,6 +193,7 @@ export const createRoutes = ({
           environment: {
             variables: {
               TOKEN: config.get("fakturoid-webhook-token"),
+              postmark_token: config.get("postmark-token"),
             },
           },
         },
@@ -227,7 +228,7 @@ const buildAssets = (fileName: string) =>
         "@aws-sdk/client-dynamodb",
         "@aws-sdk/util-dynamodb",
         "@aws-sdk/client-sqs",
-      ]
+      ],
     }
   );
 
