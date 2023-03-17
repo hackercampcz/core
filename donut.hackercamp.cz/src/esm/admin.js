@@ -11,7 +11,7 @@ import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
 import * as marked from "marked";
-import {Endpoint, unauthorized, View} from "./admin/common.js";
+import { Endpoint, unauthorized, View } from "./admin/common.js";
 import {
   createOptIn,
   createOptOut,
@@ -38,7 +38,7 @@ const state = defAtom({
   year: 2022,
   selectedView: View.paid,
   view: renderView,
-  apiHost: null,
+  apiHost: "",
   campStartAt: new Date(),
   campEndAt: new Date(),
 });
@@ -48,7 +48,8 @@ const transact = (fn, atom = state) => atom.swap(fn);
 function optout(email) {
   const { apiHost, year } = state.deref();
   return (
-    confirm("Opravdu chceš táborníka vyřadit?") && createOptOut(email, year, apiHost)
+    confirm("Opravdu chceš táborníka vyřadit?") &&
+    createOptOut(email, year, apiHost)
   );
 }
 
@@ -103,7 +104,7 @@ function chip({ text, count, selected, view, year }) {
         role="option"
         aria-selected="${selected ? "true" : "false"}"
         tabindex="0"
-        href="?${new URLSearchParams({ view, year })}"}"
+        href="?${new URLSearchParams({ view, year })}"
       >
         <span
           class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
@@ -126,7 +127,7 @@ function chip({ text, count, selected, view, year }) {
         <span class="mdc-evolution-chip__text-label"
           >${text}
           ${until(
-            count?.then((x) => html` <data value="${x}">${x}</data>`, "")
+            count?.then((x) => html`<data value="${x}">${x}</data>`, "")
           )}</span
         >
       </a>
@@ -137,7 +138,7 @@ function chip({ text, count, selected, view, year }) {
 function registrationsChips(
   view,
   year,
-  { hackers, waitingList, confirmed, invoiced, paid, optouts }
+  { waitingList, confirmed, invoiced, paid, optouts }
 ) {
   return html`
     <div
@@ -343,7 +344,7 @@ function registrationDetailTemplate({ detail, selectedView }) {
         height="24"
         width="24"
       >
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M0 0h24v24H0z" fill="none" />
         <path
           fill="var(--hc-text-color)"
           d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
@@ -549,7 +550,7 @@ function attendeeDetailTemplate({ detail }) {
         height="24"
         width="24"
       >
-        <path d="M0 0h24v24H0z" fill="none"/>
+        <path d="M0 0h24v24H0z" fill="none" />
         <path
           fill="var(--hc-text-color)"
           d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
@@ -656,7 +657,7 @@ function registrationsTableTemplate(data, { timeHeader, timeAttr }) {
                 height="24"
                 width="24"
               >
-                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M0 0h24v24H0z" fill="none" />
                 <path
                   fill="var(--hc-text-color)"
                   d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
@@ -727,7 +728,7 @@ function attendeesTableTemplate(data) {
                 height="24"
                 width="24"
               >
-                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M0 0h24v24H0z" fill="none" />
                 <path
                   fill="var(--hc-text-color)"
                   d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
@@ -871,7 +872,7 @@ function housingTable(data) {
                 height="24"
                 width="24"
               >
-                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M0 0h24v24H0z" fill="none" />
                 <path
                   fill="var(--hc-text-color)"
                   d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z"
@@ -969,9 +970,9 @@ function programTable(data) {
                 <button
                   class="hc-action-button"
                   title="Upravit event"
-                  @click=${() => {
+                  @click="${() => {
                     showEditEventModalDialog(row);
-                  }}
+                  }}"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1036,8 +1037,8 @@ function attendeeModalDialog({ detail, onSubmit, apiURL }) {
           @submit="${onSubmit}"
           action="${apiURL("admin/program")}"
         >
-          <input type="hidden" name="year" value=${detail.year} />
-          <input type="hidden" name="slackID" value=${detail.slackID} />
+          <input type="hidden" name="year" value="${detail.year}" />
+          <input type="hidden" name="slackID" value="${detail.slackID}" />
           <div class="field">
             <label for="note">Poznámka</label>
             <input id="note" name="note" value="${detail.note}" />
