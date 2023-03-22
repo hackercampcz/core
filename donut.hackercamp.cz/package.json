@@ -24,7 +24,7 @@
     "@ungap/structured-clone": "1.0.2",
     "date-fns": "2.29.3",
     "lit-html": "2.7.0",
-    "marked": "4.2.12",
+    "marked": "4.3.0",
     "ramda": "0.28.0",
     "rollbar": "2.26.1",
     "workbox-window": "6.5.4"
