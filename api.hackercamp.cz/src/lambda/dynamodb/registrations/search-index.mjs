@@ -6,9 +6,6 @@ import { fromJS } from "immutable";
 /** @typedef {import("aws-lambda").DynamoDBStreamEvent} DynamoDBStreamEvent */
 /** @typedef {import("algoliasearch").SearchIndex} SearchIndex */
 
-const crewReferrals = new Set([
-]);
-
 const keysToIndex = new Set([
   "year",
   "email",
@@ -33,6 +30,19 @@ function openAlgoliaIndex() {
   return algolia.initIndex(algolia_index_name);
 }
 
+let getCrewReferralsCache = null;
+
+async function getCrewReferrals() {
+  if (getCrewReferralsCache?.size) return getCrewReferralsCache;
+  const resp = await fetch(
+    "https://slack.com/api/usergroups.users.list?usergroup=S03EQ1LLYCC",
+    { headers: { Authorization: `Bearer ${process.env.slack_bot_token}` } }
+  );
+  const { users } = await resp.json();
+  getCrewReferralsCache = new Set(users);
+  return getCrewReferralsCache;
+}
+
 /**
  * @param {DynamoDBStreamEvent} event
  * @param {SearchIndex} searchIndex
@@ -53,6 +63,7 @@ async function deleteRemovedItems(event, searchIndex) {
  * @param {SearchIndex} searchIndex
  */
 async function updateProductsIndex(event, searchIndex) {
+  const crewReferrals = await getCrewReferrals();
   const updatedProducts = event.Records.filter((x) => x.eventName !== "REMOVE")
     .map((x) => [
       fromJS(selectKeys(unmarshall(x.dynamodb.NewImage), keysToIndex)),

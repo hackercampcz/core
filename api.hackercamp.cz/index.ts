@@ -339,6 +339,7 @@ export function createDB({ slackQueueUrl }) {
             algolia_app_id: config.get("algolia-app-id"),
             algolia_admin_key: config.get("algolia-admin-key"),
             algolia_index_name: config.get("algolia-index-name"),
+            slack_bot_token: config.get("slack-bot-token"),
           },
         },
       }
