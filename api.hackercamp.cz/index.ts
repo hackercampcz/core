@@ -327,6 +327,24 @@ export function createDB({ slackQueueUrl }) {
     ),
     { startingPosition: "LATEST" }
   );
+  registrations.onEvent(
+    "search-indexing",
+    getTableEventHandler(
+      "search-indexing",
+      "registrations/search-index.mjs",
+      defaultLambdaRole,
+      {
+        environment: {
+          variables: {
+            algolia_app_id: config.get("algolia-app-id"),
+            algolia_admin_key: config.get("algolia-admin-key"),
+            algolia_index_name: config.get("algolia-index-name"),
+          },
+        },
+      }
+    ),
+    { startingPosition: "LATEST" }
+  );
 
   const contacts = new aws.dynamodb.Table(hcName("contacts"), {
     name: hcName("contacts"),
