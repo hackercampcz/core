@@ -89,7 +89,8 @@ for (const args of readTemplates("../communication/")) {
     `postmark-template-${args.Name}`,
     args
   );
-  postmarkTemplates[args.Alias] = template.id;
+  const key = args.Alias.replace("-", "_");
+  postmarkTemplates[key] = template.id;
 }
 
 const queues = createQueues();
