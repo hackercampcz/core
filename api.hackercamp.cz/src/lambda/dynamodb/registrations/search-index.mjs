@@ -1,5 +1,6 @@
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
+import { getRegistrationProjection } from "@hackercamp/lib/search.mjs";
 import createSearchClient from "algoliasearch";
 import { fromJS } from "immutable";
 
@@ -73,35 +74,7 @@ async function updateProductsIndex(event, searchIndex) {
     ])
     .filter(([n, o]) => !n.equals(o))
     .map(([n]) => n.toJS())
-    .map(
-      ({
-         year,
-         firstName,
-         lastName,
-         timestamp,
-         invoiced,
-         paid,
-         firstTime,
-         referral,
-         ...rest
-       }) =>
-        Object.assign(rest, {
-          objectID: `${year}-${rest.email}`,
-          name: `${firstName} ${lastName}`,
-          createdAt: new Date(timestamp).getTime(),
-          _tags: [
-            year.toString(),
-            (!invoiced && !firstTime) || crewReferrals.has(referral)
-              ? "confirmed"
-              : null,
-            invoiced && !paid ? "invoiced" : null,
-            paid ? "paid" : null,
-            firstTime && !invoiced && !crewReferrals.has(referral)
-              ? "waitingList"
-              : null
-          ].filter(Boolean)
-        })
-    );
+    .map(getRegistrationProjection(crewReferrals));
   if (updatedProducts.length > 0) {
     console.log({
       event: "Updating products index",
