@@ -89,7 +89,7 @@ for (const args of readTemplates("../communication/")) {
     `postmark-template-${args.Name}`,
     args
   );
-  const key = args.Alias.replace("-", "_");
+  const key = args.Alias.replace(/-/g, "_");
   postmarkTemplates[key] = template.id;
 }
 
