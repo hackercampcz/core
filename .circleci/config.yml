@@ -116,6 +116,7 @@ jobs:
     resource_class: arm.medium
     environment:
       AWS_STS_REGIONAL_ENDPOINTS: regional
+      ROLLBAR_ACCESS_TOKEN: 3bfe96c3b97941d9acff53c6913b9ccc
     steps:
       - checkout
       - pulumi/login
@@ -132,6 +133,7 @@ jobs:
           working_directory: infrastructure
           stack: << parameters.stack_name >>
           skip-preview: true
+      - rollbar/notify_deploy
       - slack/notify:
           event: fail
           template: basic_fail_1
