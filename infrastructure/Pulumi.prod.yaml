@@ -1,9 +1,11 @@
 config:
   aws:region: eu-central-1
+  hackercamp:algolia-admin-key:
+    secure: AAABAA4XNdpHjMZ20VgptK68AwCpeF6ODv8IvQL4L7fLpZvRJkEDFk3g8+g7hNZ1Gh8rnRN6cgUc6tJuQejI1w==
   hackercamp:algolia-app-id: J77BFM3PLE
   hackercamp:algolia-index-name: hc-registrations
   hackercamp:algolia-search-key:
-    secure: AAABAJ6WrmjCoxFR5vhPmd9g2jFgxSYtiiJmRtJGGk2ihzfSdfsy8BHmq5nv6AMjYX8BefBBSig6Zl4pI5o3Dg==
+    secure: AAABAHscEyAGxDlFeEALF4xcitOWcrr5do2A79y4O0lDekbIa5jNQJX/qo89o2Yx1/iEVxewaVc4n4twoNfA4Q==
   hackercamp:api-domain: api.hackercamp.cz
   hackercamp:domain: hackercamp.cz
   hackercamp:donut-domain: donut.hackercamp.cz
