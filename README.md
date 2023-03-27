@@ -9,5 +9,5 @@
 This is repository with https://www.hackercamp.cz/ website and https://donut.hackercamp.cz/ companion application
 for registered hackers.
 
-Hacker Camp Donut is application that requieres Slack integration for user Sign In and other functionality.
+Hacker Camp Donut is application that requires Slack integration for user Sign In and other functionality.
 
