@@ -14,6 +14,11 @@ import * as lambdaBuilder from "@hackercamp/infrastructure/lambda-builder";
 
 const config = new pulumi.Config();
 
+const algoliaEnv = {
+  algolia_app_id: config.get("algolia-app-id"),
+  algolia_admin_key: config.get("algolia-admin-key"),
+  algolia_index_name: config.get("algolia-index-name"),
+};
 const rollbar_access_token = config.require("rollbar-access-token");
 
 export const createRoutes = ({
@@ -149,6 +154,7 @@ export const createRoutes = ({
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
               fakturoid_token: config.get("fakturoid-token"),
+              ...algoliaEnv,
               ...postmarkTemplates,
             },
           },
@@ -363,10 +369,8 @@ export function createDB({ slackQueueUrl }) {
         environment: {
           variables: {
             rollbar_access_token,
-            algolia_app_id: config.get("algolia-app-id"),
-            algolia_admin_key: config.get("algolia-admin-key"),
-            algolia_index_name: config.get("algolia-index-name"),
             slack_bot_token: config.get("slack-bot-token"),
+            ...algoliaEnv,
           },
         },
       }

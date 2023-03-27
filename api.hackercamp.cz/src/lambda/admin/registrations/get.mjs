@@ -1,13 +1,25 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import createSearchClient from "algoliasearch";
 import { response, internalError, notFound } from "../../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
+/** @typedef { import("algoliasearch").SearchIndex } SearchIndex */
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
+
+/**
+ * @returns {SearchIndex}
+ */
+function openAlgoliaIndex() {
+  const { algolia_app_id, algolia_search_key, algolia_index_name } =
+    process.env;
+  const client = createSearchClient(algolia_app_id, algolia_search_key);
+  return client.initIndex(algolia_index_name);
+}
 
 async function getOptOuts(year) {
   console.log("Loading opt-outs");
@@ -23,8 +35,18 @@ async function getOptOuts(year) {
   return new Set(res.Items.map((x) => x.email.S));
 }
 
-async function getConfirmedHackersRegistrations(year) {
+/**
+ *
+ * @param {SearchIndex} index
+ * @param {number} year
+ * @returns {Promise<Record<string, any>[]>}
+ */
+async function getConfirmedRegistrations(index, year) {
   console.log("Loading confirmed hackers data", { year });
+  const { hits, ...searchResult } = await index.search("", {
+    tagFilters: [year.toString(), "confirmed"],
+  });
+  console.log({ hits, searchResult });
   const res = await db.send(
     new ScanCommand({
       TableName: process.env.db_table_registrations,
@@ -116,9 +138,10 @@ async function getPaidRegistrations(year) {
 }
 
 function getData(type, year) {
+  const index = openAlgoliaIndex();
   switch (type) {
     case "confirmed":
-      return getConfirmedHackersRegistrations(year);
+      return getConfirmedRegistrations(index, year);
     case "hackers":
       return getHackersRegistrations(year);
     case "invoiced":
