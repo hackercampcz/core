@@ -3,8 +3,8 @@
   "packageManager": "yarn@3.5.0",
   "devDependencies": {
     "@aws-sdk/client-secrets-manager": "3.299.0",
-    "@typescript-eslint/eslint-plugin": "5.56.0",
-    "@typescript-eslint/parser": "5.56.0",
+    "@typescript-eslint/eslint-plugin": "5.57.0",
+    "@typescript-eslint/parser": "5.57.0",
     "eslint": "8.36.0",
     "eslint-plugin-promise": "6.1.1",
     "web-types-lit": "0.1.0"
