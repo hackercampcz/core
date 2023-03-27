@@ -36,7 +36,7 @@ async function getOptOuts(year) {
       ExpressionAttributeValues: marshall({ ":yr": year }),
     })
   );
-  return new Set(res.Items.map((x) => x.email.S));
+  return res.Items.map((x) => x.email.S);
 }
 
 /**
@@ -62,130 +62,57 @@ async function getItemsFromDB(db, hits) {
     .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp));
 }
 
+// searchResult: {
+//     nbHits: 40,
+//     page: 0,
+//     nbPages: 2,
+//     hitsPerPage: 20,
+//     exhaustiveNbHits: true,
+//     exhaustiveTypo: true,
+//     exhaustive: { nbHits: true, typo: true },
+//     query: '',
+//     params: 'tagFilters=%5B%222023%22%2C%22confirmed%22%5D',
+//     renderingContent: {},
+//     processingTimeMS: 1,
+//     processingTimingsMS: { getIdx: [Object], request: [Object], total: 1 },
+//     serverTimeMS: 2
+//   }
+
 /**
  *
  * @param {SearchIndex} index
+ * @param {string} tag
  * @param {number} year
  * @param {number} page
  * @returns {Promise<Record<string, any>[]>}
  */
-async function getConfirmedRegistrations(index, year, page) {
-  console.log("Loading confirmed hackers data", { year, page });
+async function getRegistrations(index, tag, year, page) {
+  console.log(`Loading ${tag} registrations`, { year, page });
   const { hits, ...searchResult } = await index.search("", {
     attributesToRetrieve: ["year", "email"],
-    tagFilters: [year.toString(), "confirmed"],
+    tagFilters: [year.toString(), tag],
     // TODO: make page size reasonably small
     hitsPerPage: 300,
-    page
+    page,
   });
-  // searchResult: {
-  //     nbHits: 40,
-  //     page: 0,
-  //     nbPages: 2,
-  //     hitsPerPage: 20,
-  //     exhaustiveNbHits: true,
-  //     exhaustiveTypo: true,
-  //     exhaustive: { nbHits: true, typo: true },
-  //     query: '',
-  //     params: 'tagFilters=%5B%222023%22%2C%22confirmed%22%5D',
-  //     renderingContent: {},
-  //     processingTimeMS: 1,
-  //     processingTimingsMS: { getIdx: [Object], request: [Object], total: 1 },
-  //     serverTimeMS: 2
-  //   }
-  const res = await getItemsFromDB(db, hits);
-  // TODO: pagination
-  return res;
+
+  const items = await getItemsFromDB(db, hits);
+  return {
+    items,
+    page,
+    pages: searchResult.nbPages,
+    total: searchResult.nbHits,
+  };
 }
 
-async function getHackersRegistrations(year) {
-  console.log("Loading hackers data", { year });
-  const res = await db.send(
-    new ScanCommand({
-      TableName: process.env.db_table_registrations,
-      Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#yr = :yr AND attribute_not_exists(invoiced)",
-      ExpressionAttributeNames: { "#yr": "year" },
-      ExpressionAttributeValues: marshall(
-        { ":yr": year },
-        { removeUndefinedValues: true }
-      ),
-    })
-  );
-  return res.Items.map((x) => unmarshall(x));
-}
-
-async function getWaitingListRegistrations(year) {
-  console.log("Loading waiting list data", { year });
-  const res = await db.send(
-    new ScanCommand({
-      TableName: process.env.db_table_registrations,
-      Select: "ALL_ATTRIBUTES",
-      FilterExpression:
-        "#yr = :yr AND firstTime = :true AND attribute_not_exists(invoiced) AND (attribute_not_exists(referral) OR attribute_type(referral, :null))",
-      ExpressionAttributeNames: { "#yr": "year" },
-      ExpressionAttributeValues: marshall(
-        { ":true": true, ":null": "NULL", ":yr": year },
-        { removeUndefinedValues: true }
-      ),
-    })
-  );
-  return res.Items.map((x) => unmarshall(x));
-}
-
-async function getInvoicedRegistrations(year) {
-  console.log("Loading invoiced registrations", { year });
-  const res = await db.send(
-    new ScanCommand({
-      TableName: process.env.db_table_registrations,
-      Select: "ALL_ATTRIBUTES",
-      FilterExpression:
-        "#yr = :yr AND attribute_exists(invoiced) AND attribute_not_exists(paid)",
-      ExpressionAttributeNames: { "#yr": "year" },
-      ExpressionAttributeValues: marshall(
-        { ":yr": year },
-        { removeUndefinedValues: true }
-      ),
-    })
-  );
-  return res.Items.map((x) => unmarshall(x));
-}
-
-async function getPaidRegistrations(year) {
-  console.log("Loading paid registrations", { year });
-  const res = await db.send(
-    new ScanCommand({
-      TableName: process.env.db_table_registrations,
-      Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#yr = :yr AND attribute_exists(paid)",
-      ExpressionAttributeNames: { "#yr": "year" },
-      ExpressionAttributeValues: marshall(
-        { ":yr": year },
-        { removeUndefinedValues: true }
-      ),
-    })
-  );
-  return res.Items.map((x) => unmarshall(x));
-}
-
+/**
+ * @param {string} type
+ * @param {number} year
+ * @param {number} page
+ */
 function getData(type, year, page) {
   const index = openAlgoliaIndex();
-  switch (type) {
-    case "confirmed":
-      return getConfirmedRegistrations(index, year, page);
-    case "hackers":
-      return getHackersRegistrations(year);
-    case "invoiced":
-      return getInvoicedRegistrations(year);
-    case "paid":
-      return getPaidRegistrations(year);
-    case "waitingList":
-      return getWaitingListRegistrations(year);
-    case "optouts":
-      return null;
-    default:
-      throw new Error(`Unknown type ${type}`);
-  }
+  return getRegistrations(index, type, year, page);
 }
 
 /**
@@ -199,13 +126,13 @@ export async function handler(event) {
     event.queryStringParameters
   );
   try {
-    const [optouts, data] = await Promise.all([
-      getOptOuts(parseInt(year)),
-      getData(type, parseInt(year), parseInt(page)),
-    ]);
-    if (type === "optouts") return response(Array.from(optouts));
-    if (!data) return notFound();
-    return response(data.filter((x) => !optouts.has(x.email)));
+    if (type === "optouts") {
+      const optouts = await getOptOuts(year);
+      return response(optouts);
+    }
+    const data = await getData(type, parseInt(year), parseInt(page));
+    if (!data.total) return notFound();
+    return response(data.items);
   } catch (err) {
     console.error(err);
     return internalError();
