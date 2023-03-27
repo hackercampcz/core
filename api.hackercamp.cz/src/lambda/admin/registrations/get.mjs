@@ -62,29 +62,12 @@ async function getItemsFromDB(db, hits) {
     .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp));
 }
 
-// searchResult: {
-//     nbHits: 40,
-//     page: 0,
-//     nbPages: 2,
-//     hitsPerPage: 20,
-//     exhaustiveNbHits: true,
-//     exhaustiveTypo: true,
-//     exhaustive: { nbHits: true, typo: true },
-//     query: '',
-//     params: 'tagFilters=%5B%222023%22%2C%22confirmed%22%5D',
-//     renderingContent: {},
-//     processingTimeMS: 1,
-//     processingTimingsMS: { getIdx: [Object], request: [Object], total: 1 },
-//     serverTimeMS: 2
-//   }
-
 /**
  *
  * @param {SearchIndex} index
  * @param {string} tag
  * @param {number} year
  * @param {number} page
- * @returns {Promise<Record<string, any>[]>}
  */
 async function getRegistrations(index, tag, year, page) {
   console.log(`Loading ${tag} registrations`, { year, page });
@@ -106,16 +89,6 @@ async function getRegistrations(index, tag, year, page) {
 }
 
 /**
- * @param {string} type
- * @param {number} year
- * @param {number} page
- */
-function getData(type, year, page) {
-  const index = openAlgoliaIndex();
-  return getRegistrations(index, type, year, page);
-}
-
-/**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
@@ -129,6 +102,8 @@ export async function handler(event) {
     const optouts = await getOptOuts(parseInt(year));
     return response(optouts);
   }
-  const data = await getData(type, parseInt(year), parseInt(page));
-  return response(data.items);
+
+  const index = openAlgoliaIndex();
+  const data = await getRegistrations(index, type, parseInt(year), parseInt(page));
+  return response(data);
 }
