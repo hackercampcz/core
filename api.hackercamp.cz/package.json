@@ -1,9 +1,9 @@
 {
   "name": "@hackercamp/api",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.299.0",
-    "@aws-sdk/client-sqs": "3.299.0",
-    "@aws-sdk/util-dynamodb": "3.299.0",
+    "@aws-sdk/client-dynamodb": "3.300.0",
+    "@aws-sdk/client-sqs": "3.300.0",
+    "@aws-sdk/util-dynamodb": "3.300.0",
     "@hackercamp/infrastructure": "workspace:infrastructure",
     "@hackercamp/lib": "workspace:lib",
     "algoliasearch": "^4.16.0",
