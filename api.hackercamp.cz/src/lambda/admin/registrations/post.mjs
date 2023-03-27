@@ -115,15 +115,10 @@ async function processRequest(db, data) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  try {
-    const data = readPayload(event);
-    await processRequest(db, data);
-    if (getHeader(event.headers, "Accept") === "application/json") {
-      return accepted();
-    }
-    return seeOther(getHeader(event.headers, "Referer"));
-  } catch (err) {
-    console.error(err);
-    return internalError();
+  const data = readPayload(event);
+  await processRequest(db, data);
+  if (getHeader(event.headers, "Accept") === "application/json") {
+    return accepted();
   }
+  return seeOther(getHeader(event.headers, "Referer"));
 }

@@ -125,16 +125,10 @@ export async function handler(event) {
     { year: "2022", page: "0" },
     event.queryStringParameters
   );
-  try {
-    if (type === "optouts") {
-      const optouts = await getOptOuts(year);
-      return response(optouts);
-    }
-    const data = await getData(type, parseInt(year), parseInt(page));
-    if (!data.total) return notFound();
-    return response(data.items);
-  } catch (err) {
-    console.error(err);
-    return internalError();
+  if (type === "optouts") {
+    const optouts = await getOptOuts(year);
+    return response(optouts);
   }
+  const data = await getData(type, parseInt(year), parseInt(page));
+  return response(data.items);
 }
