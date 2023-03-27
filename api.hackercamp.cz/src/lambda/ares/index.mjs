@@ -6,15 +6,17 @@ import {
   response,
   withCORS,
 } from "../http.mjs";
+import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
 
+const rollbar = Rollbar.init({ lambdaName: "ares" });
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
-export async function handler(event) {
+export async function ares(event) {
   const withCORS_ = withCORS(
     ["GET", "OPTIONS"],
     getHeader(event?.headers, "Origin")
@@ -27,7 +29,9 @@ export async function handler(event) {
     if (!data) return withCORS_(notFound());
     return withCORS_(response(data));
   } catch (err) {
-    console.error(err);
+    rollbar.error(err);
     return withCORS_(internalError());
   }
 }
+
+export const handler = rollbar.lambdaHandler(ares);

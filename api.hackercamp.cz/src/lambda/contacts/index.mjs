@@ -8,12 +8,14 @@ import {
   unauthorized,
   withCORS,
 } from "../http.mjs";
+import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
 
 const dynamo = new DynamoDBClient({});
+const rollbar = Rollbar.init({ lambdaName: "contacts" });
 
 async function getContact(dynamo, slackID, email) {
   const resp = await dynamo.send(
@@ -32,7 +34,7 @@ async function getContact(dynamo, slackID, email) {
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
-export async function handler(event) {
+export async function contacts(event) {
   const withCORS_ = withCORS(
     ["GET", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*",
@@ -45,8 +47,8 @@ export async function handler(event) {
     const contact = await getContact(dynamo, params.slackID, params.email);
     if (!contact) return withCORS_(notFound());
     return withCORS_(response(contact));
-  } catch (ex) {
-    console.error(ex);
+  } catch (err) {
+    rollbar.error(err);
     return withCORS_(
       unauthorized({
         "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
@@ -54,3 +56,5 @@ export async function handler(event) {
     );
   }
 }
+
+export const handler = rollbar.lambdaHandler(contacts);

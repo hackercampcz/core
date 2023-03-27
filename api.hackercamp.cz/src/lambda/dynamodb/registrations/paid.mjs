@@ -8,11 +8,14 @@ import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
+import Rollbar from "../../rollbar.mjs";
 
 /** @typedef { import("aws-lambda").DynamoDBStreamEvent } DynamoDBStreamEvent */
 
 const dynamo = new DynamoDBClient({});
 const queue = new SQSClient({});
+
+const rollbar = Rollbar.init({ lambdaName: "dynamodb-paid-registrations" });
 
 async function getContact(dynamodb, email) {
   console.log({ event: "Get contact", email });
@@ -69,7 +72,11 @@ function enqueueSlackWelcomeMessage(user) {
   );
 }
 
-async function handlePaidRegistrations(event) {
+/**
+ * @param {DynamoDBStreamEvent} event
+ * @returns {Promise<void>}
+ */
+async function paidRegistrations(event) {
   const newlyPaidRegistrations = event.Records.filter(
     (x) => x.eventName === "MODIFY"
   )
@@ -94,10 +101,4 @@ async function handlePaidRegistrations(event) {
   }
 }
 
-/**
- * @param {DynamoDBStreamEvent} event
- * @returns {Promise<void>}
- */
-export async function handler(event) {
-  await handlePaidRegistrations(event);
-}
+export const handler = rollbar.lambdaHandler(paidRegistrations);

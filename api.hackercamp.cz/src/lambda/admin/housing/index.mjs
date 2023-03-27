@@ -2,15 +2,19 @@ import { forbidden, getHeader, unauthorized, withCORS } from "../../http.mjs";
 import { checkAuthorization } from "../authorization.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
+import Rollbar from "../../rollbar.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
+
+
+const rollbar = Rollbar.init({ lambdaName: "admin-housing" });
 
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
-export async function handler(event) {
+export async function housing(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*",
@@ -35,9 +39,9 @@ export async function handler(event) {
           body: "Method Not Allowed",
         });
     }
-  } catch (e) {
-    console.error(e);
-    if (e.message === "Unauthorized") return withCORS_(forbidden());
+  } catch (err) {
+    rollbar.error(err);
+    if (err.message === "Unauthorized") return withCORS_(forbidden());
     return withCORS_(
       unauthorized({
         "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
@@ -45,3 +49,5 @@ export async function handler(event) {
     );
   }
 }
+
+export const handler = rollbar.lambdaHandler(housing);

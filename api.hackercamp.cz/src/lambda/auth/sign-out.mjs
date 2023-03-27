@@ -1,13 +1,15 @@
 import { found, getHeader, withCORS } from "../http.mjs";
+import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
 
+const rollbar = Rollbar.init({ lambdaName: "auth-signout" });
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
-export async function handler(event) {
+export async function signOut(event) {
   const origin =
     getHeader(event.headers, "Origin") ??
     getHeader(event.headers, "Referer") ??
@@ -25,3 +27,5 @@ export async function handler(event) {
     })
   );
 }
+
+export const handler = rollbar.lambdaHandler(signOut);

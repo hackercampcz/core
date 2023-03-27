@@ -3,9 +3,12 @@ import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { getRegistrationProjection } from "@hackercamp/lib/search.mjs";
 import createSearchClient from "algoliasearch";
 import { fromJS } from "immutable";
+import Rollbar from "../../rollbar.mjs";
 
 /** @typedef {import("aws-lambda").DynamoDBStreamEvent} DynamoDBStreamEvent */
 /** @typedef {import("algoliasearch").SearchIndex} SearchIndex */
+
+const rollbar = Rollbar.init({ lambdaName: "dynamodb-reindex-registrations" });
 
 const keysToIndex = new Set([
   "year",
@@ -88,7 +91,7 @@ async function updateProductsIndex(event, searchIndex) {
  * @param {DynamoDBStreamEvent} event
  * @returns {Promise<void>}
  */
-async function handleIndexUpdate(event) {
+async function indexUpdate(event) {
   const searchIndex = openAlgoliaIndex();
   await Promise.all([
     deleteRemovedItems(event, searchIndex),
@@ -96,4 +99,4 @@ async function handleIndexUpdate(event) {
   ]);
 }
 
-export const handler = handleIndexUpdate;
+export const handler = rollbar.lambdaHandler(indexUpdate);

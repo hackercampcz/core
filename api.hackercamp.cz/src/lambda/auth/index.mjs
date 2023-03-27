@@ -1,8 +1,11 @@
 import signJWT from "jsonwebtoken/sign.js";
 import { getHeader, response, unauthorized, withCORS } from "../http.mjs";
+import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
+
+const rollbar = Rollbar.init({ lambdaName: "auth" });
 
 /**
  * @param {APIGatewayProxyEvent} event
@@ -64,7 +67,7 @@ async function getUsersInfo(user, token) {
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
-export async function handler(event) {
+export async function auth(event) {
   const params = getPayload(event);
   const origin =
     getHeader(event.headers, "Origin") ?? `https://${process.env.hostname}`;
@@ -122,3 +125,6 @@ export async function handler(event) {
     })
   );
 }
+
+
+export const handler = rollbar.lambdaHandler(auth);

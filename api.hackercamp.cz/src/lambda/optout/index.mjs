@@ -7,6 +7,7 @@ import {
   readPayload,
   withCORS,
 } from "../http.mjs";
+import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -14,11 +15,13 @@ import {
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
+const rollbar = Rollbar.init({ lambdaName: "optout" });
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
-export async function handler(event) {
+export async function optout(event) {
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*"
@@ -46,7 +49,9 @@ export async function handler(event) {
     );
     return withCORS_(accepted());
   } catch (err) {
-    console.error(err);
+    rollbar.error(err);
     return withCORS_(internalError());
   }
 }
+
+export const handler = rollbar.lambdaHandler(optout);

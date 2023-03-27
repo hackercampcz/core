@@ -19,6 +19,7 @@ import {
   withCORS,
 } from "../http.mjs";
 import { postChatMessage } from "../slack.mjs";
+import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -27,6 +28,7 @@ import { postChatMessage } from "../slack.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 const queue = new SQSClient({});
+const rollbar = Rollbar.init({ lambdaName: "slack-webhook" });
 
 function createContact({ id, profile, name }) {
   console.log({ event: "Create contact", slackID: id });
@@ -307,7 +309,7 @@ function dispatchByType(event) {
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
-export async function handler(event) {
+export async function slackWebhook(event) {
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
     getHeader(event.headers, "Origin")
@@ -317,7 +319,9 @@ export async function handler(event) {
     // TODO: push this to queue instead
     return dispatchByType(payload.event ?? payload).then((x) => withCORS_(x));
   } catch (err) {
-    console.error(err);
+    rollbar.error(err);
     return withCORS_(internalError());
   }
 }
+
+export const handler = rollbar.lambdaHandler(slackWebhook);

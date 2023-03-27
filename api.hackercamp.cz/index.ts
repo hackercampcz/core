@@ -14,6 +14,8 @@ import * as lambdaBuilder from "@hackercamp/infrastructure/lambda-builder";
 
 const config = new pulumi.Config();
 
+const rollbar_access_token = config.require("rollbar-access-token");
+
 export const createRoutes = ({
   slackQueueUrl,
   // TODO: inject table names to lambdas
@@ -34,6 +36,7 @@ export const createRoutes = ({
           fileName: "attendees/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               db_table_attendees: attendeesDataTable,
               ...postmarkTemplates,
             },
@@ -45,6 +48,7 @@ export const createRoutes = ({
           fileName: "auth/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               hostname: config.get("donut-domain"),
               private_key: config.get("private-key"),
               slack_client_id: config.get("slack-client-id"),
@@ -59,6 +63,7 @@ export const createRoutes = ({
           fileName: "auth/sign-out.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               hostname: config.get("donut-domain"),
               ...postmarkTemplates,
             },
@@ -70,6 +75,7 @@ export const createRoutes = ({
           fileName: "contacts/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               db_table_contacts: contactsDataTable,
               hostname: config.get("web-domain"),
               donut: config.get("donut-domain"),
@@ -84,6 +90,7 @@ export const createRoutes = ({
           fileName: "registration/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               hostname: config.get("web-domain"),
               donut: config.get("donut-domain"),
               private_key: config.get("private-key"),
@@ -98,6 +105,7 @@ export const createRoutes = ({
           fileName: "housing/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               private_key: config.get("private-key"),
               slack_bot_token: config.get("slack-bot-token"),
               ...postmarkTemplates,
@@ -110,6 +118,7 @@ export const createRoutes = ({
           fileName: "program/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               db_table_attendees: attendeesDataTable,
               db_table_program: programDataTable,
               private_key: config.get("private-key"),
@@ -122,6 +131,11 @@ export const createRoutes = ({
           httpMethod: "POST",
           path: "/optout",
           fileName: "optout/index.mjs",
+          environment: {
+            variables: {
+              rollbar_access_token,
+            },
+          },
         },
         adminRegistrations: {
           httpMethod: "ANY",
@@ -129,6 +143,7 @@ export const createRoutes = ({
           fileName: "admin/registrations/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               db_table_optouts: optOutsDataTable,
               db_table_registrations: registrationsDataTable,
               private_key: config.get("private-key"),
@@ -144,6 +159,7 @@ export const createRoutes = ({
           fileName: "admin/attendees/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               db_table_attendees: attendeesDataTable,
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
@@ -157,6 +173,7 @@ export const createRoutes = ({
           fileName: "admin/housing/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               db_table_attendees: attendeesDataTable,
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
@@ -170,6 +187,7 @@ export const createRoutes = ({
           fileName: "admin/program/index.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               db_table_attendees: attendeesDataTable,
               db_table_program: programDataTable,
               private_key: config.get("private-key"),
@@ -185,6 +203,11 @@ export const createRoutes = ({
           requiredParameters: [{ in: "query", name: "ico" }],
           cache: { ttl: 3600 },
           memorySize: 512,
+          environment: {
+            variables: {
+              rollbar_access_token,
+            },
+          },
         },
         fakturoidWebhook: {
           httpMethod: "POST",
@@ -192,6 +215,7 @@ export const createRoutes = ({
           fileName: "fakturoid/webhook.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               TOKEN: config.get("fakturoid-webhook-token"),
               postmark_token: config.get("postmark-token"),
             },
@@ -203,6 +227,7 @@ export const createRoutes = ({
           fileName: "slack/webhook.mjs",
           environment: {
             variables: {
+              rollbar_access_token,
               slack_queue_url: slackQueueUrl,
               slack_bot_token: config.get("slack-bot-token"),
               ...postmarkTemplates,
@@ -319,6 +344,7 @@ export function createDB({ slackQueueUrl }) {
       {
         environment: {
           variables: {
+            rollbar_access_token,
             slack_queue_url: slackQueueUrl,
             postmark_token: config.get("postmark-token"),
           },
@@ -336,6 +362,7 @@ export function createDB({ slackQueueUrl }) {
       {
         environment: {
           variables: {
+            rollbar_access_token,
             algolia_app_id: config.get("algolia-app-id"),
             algolia_admin_key: config.get("algolia-admin-key"),
             algolia_index_name: config.get("algolia-index-name"),
@@ -438,6 +465,7 @@ export function createQueues() {
     getSQSHandler("slack", "slack/handler.mjs", defaultRole, {
       environment: {
         variables: {
+          rollbar_access_token,
           slack_announcement_url: config.get("slack-incoming-webhook"),
         },
       },

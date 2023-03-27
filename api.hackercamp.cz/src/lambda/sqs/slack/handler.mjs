@@ -1,10 +1,12 @@
 import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { sendMessageToSlack } from "../../slack.mjs";
+import Rollbar from "../../rollbar.mjs";
 
 /** @typedef { import("aws-lambda").SQSEvent } SQSEvent */
 
 const db = new DynamoDBClient({});
+const rollbar = Rollbar.init({ lambdaName: "sqs-slack" });
 
 async function getAttendee(slackID, year) {
   console.log({ event: "Get attendee", year, slackID });
@@ -50,9 +52,11 @@ async function dispatchMessageByType(message) {
  * @param {SQSEvent} event
  * @returns {Promise<void>}
  */
-export async function handler(event) {
+export async function sqsSlack(event) {
   for (const record of event.Records) {
     const message = JSON.parse(record.body);
     await dispatchMessageByType(message);
   }
 }
+
+export const handler = rollbar.lambdaHandler(sqsSlack);

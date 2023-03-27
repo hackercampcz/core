@@ -14,6 +14,7 @@ import {
   withCORS,
 } from "../http.mjs";
 import { sendEmailWithTemplate, Template } from "../postmark.mjs";
+import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -21,6 +22,7 @@ import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
+const rollbar = Rollbar.init({ lambdaName: "fakturoid-webhook" });
 
 async function markAsPaid(registrations, paid_at, invoice_id) {
   for (const registration of registrations) {
@@ -75,7 +77,7 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
-export async function handler(event) {
+export async function fakturoidWebhook(event) {
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
     getHeader(event.headers, "Origin")
@@ -118,7 +120,9 @@ export async function handler(event) {
     }
     return withCORS_(response({}));
   } catch (err) {
-    console.error(err);
+    rollbar.error(err);
     return withCORS_(internalError());
   }
 }
+
+export const handler = rollbar.lambdaHandler(fakturoidWebhook);
