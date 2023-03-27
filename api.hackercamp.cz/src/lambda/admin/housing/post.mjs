@@ -25,8 +25,10 @@ const db = new DynamoDBClient({});
  * @param {*} data
  */
 async function processRequest(db, data) {
-  switch (data.command) {
+  switch (
+    data.command
     // TODO: do something useful
+  ) {
   }
 }
 

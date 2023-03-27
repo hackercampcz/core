@@ -7,7 +7,6 @@ import Rollbar from "../../rollbar.mjs";
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
 
-
 const rollbar = Rollbar.init({ lambdaName: "admin-housing" });
 
 /**

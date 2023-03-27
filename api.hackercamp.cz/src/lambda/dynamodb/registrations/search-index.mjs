@@ -20,7 +20,7 @@ const keysToIndex = new Set([
   "invoiced",
   "paid",
   "firstTime",
-  "referral"
+  "referral",
 ]);
 
 function openAlgoliaClient() {
@@ -73,7 +73,7 @@ async function updateProductsIndex(event, searchIndex) {
       fromJS(selectKeys(unmarshall(x.dynamodb.NewImage), keysToIndex)),
       x.dynamodb.OldImage
         ? fromJS(selectKeys(unmarshall(x.dynamodb.OldImage), keysToIndex))
-        : null
+        : null,
     ])
     .filter(([n, o]) => !n.equals(o))
     .map(([n]) => n.toJS())
@@ -81,7 +81,7 @@ async function updateProductsIndex(event, searchIndex) {
   if (updatedProducts.length > 0) {
     console.log({
       event: "Updating products index",
-      updatedProducts: updatedProducts.map((x) => x.objectID)
+      updatedProducts: updatedProducts.map((x) => x.objectID),
     });
     await searchIndex.saveObjects(updatedProducts);
   }
@@ -95,7 +95,7 @@ async function indexUpdate(event) {
   const searchIndex = openAlgoliaIndex();
   await Promise.all([
     deleteRemovedItems(event, searchIndex),
-    updateProductsIndex(event, searchIndex)
+    updateProductsIndex(event, searchIndex),
   ]);
 }
 

@@ -126,5 +126,4 @@ export async function auth(event) {
   );
 }
 
-
 export const handler = rollbar.lambdaHandler(auth);

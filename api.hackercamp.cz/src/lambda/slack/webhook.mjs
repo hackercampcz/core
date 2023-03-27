@@ -204,10 +204,7 @@ async function onTeamJoin({ user }) {
   if (attendee) {
     await Promise.all([
       deleteAttendee(attendee.slackID, attendee.year),
-      updateAttendee(
-        Object.assign({}, attendee, { slackID: user.id }),
-        user
-      ),
+      updateAttendee(Object.assign({}, attendee, { slackID: user.id }), user),
       postChatMessage(
         user.id,
         `Ahoj, táborníku,

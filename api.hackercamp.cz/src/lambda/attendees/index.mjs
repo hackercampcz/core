@@ -61,5 +61,4 @@ export async function attendees(event) {
   return withCORS_(response(await getAttendees(dynamo, year)));
 }
 
-
 export const handler = rollbar.lambdaHandler(attendees);

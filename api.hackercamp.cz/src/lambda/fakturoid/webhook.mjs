@@ -9,7 +9,8 @@ import {
   internalError,
   notFound,
   readPayload,
-  response, unauthorized,
+  response,
+  unauthorized,
   unprocessableEntity,
   withCORS,
 } from "../http.mjs";
@@ -43,7 +44,7 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
       data: {},
       from: "Hacker Camp Crew <team@hackercamp.cz>",
       to: registration.email,
-    })
+    });
     console.log({
       event: "Invoice marked as paid",
       invoice_id,
@@ -83,7 +84,7 @@ export async function fakturoidWebhook(event) {
     getHeader(event.headers, "Origin")
   );
 
-  const {token} = event.queryStringParameters;
+  const { token } = event.queryStringParameters;
   if (token !== env.TOKEN) {
     return withCORS_(unauthorized());
   }
