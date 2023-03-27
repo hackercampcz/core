@@ -49,7 +49,7 @@ async function getItemsFromDB(db, hits) {
   if (hits.length === 0) return [];
   const tableName = process.env.db_table_registrations;
   const keys = hits.map(({ year, email }) => ({
-    year: { N: year },
+    year: { N: year.toString() },
     email: { S: email },
   }));
   const result = await db.send(
