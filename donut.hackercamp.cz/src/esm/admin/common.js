@@ -1,6 +1,10 @@
 import { html } from "lit-html";
 import { setReturnUrl, signOut } from "../lib/profile.js";
 import { withAuthHandler } from "../lib/remoting.js";
+import { classMap } from "lit-html/directives/class-map.js";
+import { until } from "lit-html/directives/until.js";
+import { lineupText } from "./program.js";
+import { formatMoney } from "@hackercamp/lib/format.mjs";
 
 export async function executeCommand(apiHost, endpoint, command, params) {
   const resource = new URL(`admin/${endpoint}`, apiHost).href;
@@ -78,4 +82,103 @@ export function unauthorized() {
           "
       /></a>
     </div>`;
+}
+
+export const ticketName = new Map([
+  ["nonprofit", "Táborník z neziskovky"],
+  ["hacker", "Hacker"],
+  ["hacker-plus", "Hacker filantrop"],
+  ["hacker-patron", "Patron Campu"],
+  ["volunteer", "Dobrovolník"],
+  ["crew", "Crew"],
+  ["staff", "Ostatní"],
+]);
+export const ticketPrice = new Map([
+  [
+    2022,
+    new Map([
+      ["nonprofit", 2500],
+      ["hacker", 5000],
+      ["hacker-plus", 7500],
+      ["hacker-patron", 7500],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0],
+    ]),
+  ],
+  [
+    2023,
+    new Map([
+      ["nonprofit", 3000],
+      ["hacker", 6000],
+      ["hacker-plus", 9000],
+      ["hacker-patron", 9000],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0],
+    ]),
+  ],
+]);
+
+export function chip({ text, count, selected, view, year }) {
+  return html`
+    <span
+      class="${classMap({
+        "mdc-evolution-chip": true,
+        "mdc-evolution-chip--selectable": true,
+        "mdc-evolution-chip--filter": true,
+        "hc-chip": true,
+        "hc-chip--selected": selected,
+      })}"
+      role="presentation"
+    >
+      <a
+        class="mdc-evolution-chip__action mdc-evolution-chip__action--primary"
+        role="option"
+        aria-selected="${selected ? "true" : "false"}"
+        tabindex="0"
+        href="?${new URLSearchParams({ view, year })}"
+      >
+        <span
+          class="mdc-evolution-chip__ripple mdc-evolution-chip__ripple--primary"
+        ></span>
+        <span class="mdc-evolution-chip__graphic">
+          <span class="mdc-evolution-chip__checkmark">
+            <svg
+              class="mdc-evolution-chip__checkmark-svg"
+              viewBox="-2 -3 30 30"
+            >
+              <path
+                class="mdc-evolution-chip__checkmark-path"
+                fill="none"
+                stroke="black"
+                d="M1.73,12.91 8.1,19.28 22.79,4.59"
+              />
+            </svg>
+          </span>
+        </span>
+        <span class="mdc-evolution-chip__text-label"
+          >${text}
+          ${until(
+            count?.then((x) => html`<data value="${x}">${x}</data>`, "")
+          )}</span
+        >
+      </a>
+    </span>
+  `;
+}
+
+export function lineup(x) {
+  return html`<code>${lineupText.get(x)}</code>`;
+}
+
+export function ticketDetail({ year, ticketType, patronAllowance }) {
+  const allowance = patronAllowance ? parseInt(patronAllowance) : 0;
+  const price = ticketPrice.get(year).get(ticketType) + allowance;
+  return html`
+    <p>
+      Lístek: <strong>${ticketName.get(ticketType)}</strong>
+      <data value="${price} CZK"><code>${formatMoney(price)} Kč</code></data>
+    </p>
+  `;
 }

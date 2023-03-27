@@ -37,8 +37,8 @@ export function initRenderLoop(state, root, { keepContent } = {}) {
           root.innerHTML = null;
         }
       },
-      render() {
-        render(view(curr), root);
+      async render() {
+        render(await view(curr), root);
       },
     });
   });
