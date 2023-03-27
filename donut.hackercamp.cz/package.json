@@ -20,7 +20,7 @@
     "@material/mwc-list": "0.27.0",
     "@material/mwc-snackbar": "0.27.0",
     "@thi.ng/atom": "5.1.34",
-    "@thi.ng/transducers": "8.4.0",
+    "@thi.ng/transducers": "8.4.1",
     "@ungap/structured-clone": "1.0.2",
     "date-fns": "2.29.3",
     "lit-html": "2.7.0",
