@@ -2,7 +2,6 @@ import { formatMoney } from "@hackercamp/lib/format.mjs";
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { when } from "lit-html/directives/when.js";
-import { lineupText } from "./admin.js";
 import { renderEventForm } from "./event-form.js";
 import {
   getSlackAccessToken,
@@ -21,6 +20,7 @@ import { schedule } from "./lib/schedule.js";
 import * as slack from "./lib/slack.js";
 import { setSlackProfile } from "./lib/slack.js";
 import { showModalDialog } from "./modal-dialog.js";
+import { lineupText } from "./admin/program.js";
 
 /** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
@@ -194,8 +194,9 @@ function travelText(travel) {
     case "free-car":
       return html`
         <p>
-          Les na Sobeňáku má omezenou parkovací kapacitu, proto je potřeba zaplnit
-          auta co to jde. Je super, že nabízíš místo dalším hackerům. Můžete se
+          Les na Sobeňáku má omezenou parkovací kapacitu, proto je potřeba
+          zaplnit auta co to jde. Je super, že nabízíš místo dalším hackerům.
+          Můžete se
           <a href="https://hackercampworkspace.slack.com/archives/C0278R69JUQ"
             >domluvit v kanále <code>#spolujizda</code></a
           >
@@ -232,7 +233,8 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
   return html`
     <div class="hc-card hc-card--decorated">
       <p>
-        Jsi ubytovaný ${housingText(housing, housingPlacement)}, dle tvého výběru.
+        Jsi ubytovaný ${housingText(housing, housingPlacement)}, dle tvého
+        výběru.
       </p>
       ${travelText(travel)}
       <p>
@@ -240,8 +242,8 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
         <a href="/hackers/">seznam účastníků</a>.
       </p>
       <p>
-        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a brzy
-        si budeš moct zadat vlastní návrhy.
+        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
+        brzy si budeš moct zadat vlastní návrhy.
       </p>
     </div>
   `;
@@ -384,7 +386,10 @@ function renderIndex({ profile, registration, attendee }) {
         Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
         <a href="/hackers/">seznam účastníků</a>.
       </p>
-      <p>Chceš někoho pozvat? Pošli mu tento link: <a href="${referralLink}"><code>${referralLink}</code></a></p>
+      <p>
+        Chceš někoho pozvat? Pošli mu tento link:
+        <a href="${referralLink}"><code>${referralLink}</code></a>
+      </p>
       <p>
         Taky se můžeš podívat na <a href="/program/">předběžný program</a> a po
         zaplacení si budeš moct zadat vlastní návrhy.
@@ -403,15 +408,18 @@ function renderIndex({ profile, registration, attendee }) {
   return html`
     <div>
       <p>
-        Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A
-        to i díky tobě.
+        Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to i
+        díky tobě.
       </p>
       <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>
       <p>
         Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
         <a href="/hackers/">seznam účastníků</a>.
       </p>
-      <p>Chceš někoho pozvat? Pošli mu tento link: <a href="${referralLink}"><code>${referralLink}</code></a></p>
+      <p>
+        Chceš někoho pozvat? Pošli mu tento link:
+        <a href="${referralLink}"><code>${referralLink}</code></a>
+      </p>
     </div>
   `;
 }
@@ -452,9 +460,7 @@ export async function main({ searchParams, rootElement, env }) {
   }
 
   if (isSignedIn()) {
-    transact((x) =>
-      Object.assign(x, { apiHost, year }, schedule.get(year))
-    );
+    transact((x) => Object.assign(x, { apiHost, year }, schedule.get(year)));
     try {
       const profile = getSlackProfile();
       await loadData(profile, year, apiURL);
