@@ -126,7 +126,7 @@ export async function handler(event) {
     event.queryStringParameters
   );
   if (type === "optouts") {
-    const optouts = await getOptOuts(year);
+    const optouts = await getOptOuts(parseInt(year));
     return response(optouts);
   }
   const data = await getData(type, parseInt(year), parseInt(page));
