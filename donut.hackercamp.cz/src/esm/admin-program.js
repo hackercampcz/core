@@ -1,4 +1,4 @@
-import { chip, lineup, unauthorized, View } from "./admin/common.js";
+import { chip, unauthorized, View } from "./admin/common.js";
 import { html } from "lit-html";
 import { when } from "lit-html/directives/when.js";
 import { formatDateTime } from "@hackercamp/lib/format.mjs";
@@ -53,6 +53,10 @@ export function programModalDialog() {
       <button name="close" type="reset">Zavřít</button>
     </dialog>
   `;
+}
+
+export function lineup(x) {
+  return html`<code>${lineupText.get(x)}</code>`;
 }
 
 function programTable(

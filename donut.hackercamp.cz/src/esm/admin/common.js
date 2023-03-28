@@ -3,7 +3,6 @@ import { setReturnUrl, signOut } from "../lib/profile.js";
 import { withAuthHandler } from "../lib/remoting.js";
 import { classMap } from "lit-html/directives/class-map.js";
 import { until } from "lit-html/directives/until.js";
-import { lineupText } from "./program.js";
 import { formatMoney } from "@hackercamp/lib/format.mjs";
 
 export async function executeCommand(apiHost, endpoint, command, params) {
@@ -166,10 +165,6 @@ export function chip({ text, count, selected, view, year }) {
       </a>
     </span>
   `;
-}
-
-export function lineup(x) {
-  return html`<code>${lineupText.get(x)}</code>`;
 }
 
 export function ticketDetail({ year, ticketType, patronAllowance }) {
