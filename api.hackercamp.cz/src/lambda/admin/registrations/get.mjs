@@ -56,7 +56,7 @@ function resultsCount(indexName, year, tag) {
     indexName,
     query: "",
     params: {
-      tagFilters: [year, tag],
+      tagFilters: [year.toString(), tag],
       attributesToRetrieve: [],
       responseFields: ["nbHits"],
     },
