@@ -10,20 +10,9 @@ import { response, internalError, notFound } from "../../http.mjs";
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
-/** @typedef { import("algoliasearch").SearchIndex } SearchIndex */
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
-
-/**
- * @returns {SearchIndex}
- */
-function openAlgoliaIndex() {
-  const { algolia_app_id, algolia_search_key, algolia_index_name } =
-    process.env;
-  const client = createSearchClient(algolia_app_id, algolia_search_key);
-  return client.initIndex(algolia_index_name);
-}
 
 async function getOptOuts(year) {
   console.log("Loading opt-outs");
@@ -62,22 +51,50 @@ async function getItemsFromDB(db, hits) {
     .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp));
 }
 
+function resultsCount(indexName, year, tag) {
+  return {
+    indexName,
+    query: "",
+    params: {
+      tagFilters: [year, tag],
+      attributesToRetrieve: [],
+      responseFields: ["nbHits"],
+    },
+  };
+}
+
 /**
  *
- * @param {SearchIndex} index
  * @param {string} tag
  * @param {number} year
  * @param {number} page
  */
-async function getRegistrations(index, tag, year, page) {
+async function getRegistrations(tag, year, page) {
+  const { algolia_app_id, algolia_search_key, algolia_index_name } =
+    process.env;
+  const client = createSearchClient(algolia_app_id, algolia_search_key);
+
   console.log(`Loading ${tag} registrations`, { year, page });
-  const { hits, ...searchResult } = await index.search("", {
-    attributesToRetrieve: ["year", "email"],
-    tagFilters: [year.toString(), tag],
-    // TODO: make page size reasonably small
-    hitsPerPage: 300,
-    page,
-  });
+  const { result } = await client.multipleQueries([
+    {
+      indexName: algolia_index_name,
+      query: "",
+      params: {
+        attributesToRetrieve: ["year", "email"],
+        tagFilters: [year.toString(), tag],
+        // TODO: make page size reasonably small
+        hitsPerPage: 300,
+        page,
+      },
+    },
+    resultsCount(algolia_index_name, year, "paid"),
+    resultsCount(algolia_index_name, year, "invoiced"),
+    resultsCount(algolia_index_name, year, "confirmed"),
+    resultsCount(algolia_index_name, year, "waitingList"),
+  ]);
+
+  const [{ hits, ...searchResult }, ...counts] = result;
+  const [paid, invoiced, confirmed, waitingList] = counts.map((x) => x.nbHits);
 
   const items = await getItemsFromDB(db, hits);
   return {
@@ -85,6 +102,7 @@ async function getRegistrations(index, tag, year, page) {
     page,
     pages: searchResult.nbPages,
     total: searchResult.nbHits,
+    counts: { paid, invoiced, confirmed, waitingList },
   };
 }
 
@@ -103,7 +121,10 @@ export async function handler(event) {
     return response(optouts);
   }
 
-  const index = openAlgoliaIndex();
-  const data = await getRegistrations(index, type, parseInt(year), parseInt(page));
+  const data = await getRegistrations(
+    type,
+    parseInt(year),
+    parseInt(page)
+  );
   return response(data);
 }
