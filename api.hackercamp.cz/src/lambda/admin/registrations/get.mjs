@@ -75,7 +75,7 @@ async function getRegistrations(tag, year, page) {
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
   console.log(`Loading ${tag} registrations`, { year, page });
-  const { result } = await client.multipleQueries([
+  const { results } = await client.multipleQueries([
     {
       indexName: algolia_index_name,
       query: "",
@@ -93,7 +93,7 @@ async function getRegistrations(tag, year, page) {
     resultsCount(algolia_index_name, year, "waitingList"),
   ]);
 
-  const [{ hits, ...searchResult }, ...counts] = result;
+  const [{ hits, ...searchResult }, ...counts] = results;
   const [paid, invoiced, confirmed, waitingList] = counts.map((x) => x.nbHits);
 
   const items = await getItemsFromDB(db, hits);
