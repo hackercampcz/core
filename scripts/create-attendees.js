@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std@0.140.0/flags/mod.ts";
+import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
 import { sendEmailWithTemplate, Template } from "./postmark.js";
 
@@ -47,8 +47,7 @@ async function getExistingSlackAccounts(token) {
   );
 
   const idsByEmail = new Map(
-    [
-    ].concat(users.map((x) => [x.profile.email, x.id]))
+    [].concat(users.map((x) => [x.profile.email, x.id]))
   );
   const imagesByEmail = new Map(
     users.map((x) => [x.profile.email, x.profile.image_512])

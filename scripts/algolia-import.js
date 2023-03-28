@@ -1,5 +1,5 @@
-import { parse } from "https://deno.land/std@0.140.0/flags/mod.ts";
-import createSearchClient from "https://esm.sh/algoliasearch@4.13.0";
+import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
+import createSearchClient from "https://esm.sh/algoliasearch@4.16.0";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { getRegistrationProjection } from "../lib/search.mjs";

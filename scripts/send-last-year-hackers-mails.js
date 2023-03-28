@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std@0.140.0/flags/mod.ts";
+import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { sendEmailWithTemplate, Template } from "./postmark.js";
 

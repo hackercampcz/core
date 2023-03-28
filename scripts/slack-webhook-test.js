@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std@0.140.0/flags/mod.ts";
+import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
 
 const actions = [
   "Znáte se? → 😈",
