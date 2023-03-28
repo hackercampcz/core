@@ -177,3 +177,18 @@ export function ticketDetail({ year, ticketType, patronAllowance }) {
     </p>
   `;
 }
+
+export const lineupText = new Map([
+  ["liorg", "Organizační"],
+  ["limain", "Mainframe"],
+  ["libase", "Basecamp"],
+  ["liback", "Backend"],
+  ["lipeep", "Peopleware"],
+  ["liwood", "WoodStack"],
+  ["lijungle", "Jungle Release"],
+  ["liother", "Doprovodné aktivity"],
+]);
+
+export function lineup(x) {
+  return html`<code>${lineupText.get(x)}</code>`;
+}

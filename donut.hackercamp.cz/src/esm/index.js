@@ -20,7 +20,8 @@ import { schedule } from "./lib/schedule.js";
 import * as slack from "./lib/slack.js";
 import { setSlackProfile } from "./lib/slack.js";
 import { showModalDialog } from "./modal-dialog.js";
-import { lineupText } from "./admin-program.js";
+
+import { lineupText } from "./admin/common.js";
 
 /** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */

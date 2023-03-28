@@ -2,6 +2,7 @@ import {
   chip,
   Endpoint,
   executeCommand,
+  lineup,
   ticketDetail,
   ticketName,
   unauthorized,
@@ -14,7 +15,6 @@ import { showModalDialog } from "./modal-dialog.js";
 import { when } from "lit-html/directives/when.js";
 import { until } from "lit-html/directives/until.js";
 import { sortBy } from "@hackercamp/lib/array.mjs";
-import { lineup } from "./admin-program.js";
 
 /**
  * @param {Object} attendee

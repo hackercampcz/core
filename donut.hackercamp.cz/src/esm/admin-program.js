@@ -1,20 +1,9 @@
-import { chip, unauthorized, View } from "./admin/common.js";
+import { chip, lineup, unauthorized, View } from "./admin/common.js";
 import { html } from "lit-html";
 import { when } from "lit-html/directives/when.js";
 import { formatDateTime } from "@hackercamp/lib/format.mjs";
 import { until } from "lit-html/directives/until.js";
 import { sortBy } from "@hackercamp/lib/array.mjs";
-
-export const lineupText = new Map([
-  ["liorg", "Organizační"],
-  ["limain", "Mainframe"],
-  ["libase", "Basecamp"],
-  ["liback", "Backend"],
-  ["lipeep", "Peopleware"],
-  ["liwood", "WoodStack"],
-  ["lijungle", "Jungle Release"],
-  ["liother", "Doprovodné aktivity"],
-]);
 
 export function programChips(view, year, { program, programApproval }) {
   return html`
@@ -53,10 +42,6 @@ export function programModalDialog() {
       <button name="close" type="reset">Zavřít</button>
     </dialog>
   `;
-}
-
-export function lineup(x) {
-  return html`<code>${lineupText.get(x)}</code>`;
 }
 
 function programTable(
