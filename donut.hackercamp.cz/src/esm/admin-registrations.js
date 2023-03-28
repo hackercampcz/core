@@ -339,7 +339,10 @@ export function registrationsTemplate(state, actions) {
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${registrationsChips(selectedView, year, {
-        [selectedView]: data?.then((data) => data.total),
+        [View.paid]: data?.then((data) => data.counts.paid),
+        [View.invoiced]: data?.then((data) => data.counts.invoiced),
+        [View.confirmed]: data?.then((data) => data.counts.confirmed),
+        [View.waitingList]: data?.then((data) => data.counts.waitingList),
       })}
     </div>
     <div
