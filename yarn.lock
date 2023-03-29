@@ -2851,7 +2851,7 @@ __metadata:
     "@pulumi/aws": 5.33.0
     "@pulumi/awsx": 1.0.2
     "@pulumi/pulumi": 3.60.0
-    "@topmonks/pulumi-aws": 2.3.0
+    "@topmonks/pulumi-aws": 3.0.0
     esbuild: 0.17.14
     front-matter: 4.0.2
     marked: 4.3.0
@@ -4242,14 +4242,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@topmonks/pulumi-aws@npm:2.3.0":
-  version: 2.3.0
-  resolution: "@topmonks/pulumi-aws@npm:2.3.0"
+"@topmonks/pulumi-aws@npm:3.0.0":
+  version: 3.0.0
+  resolution: "@topmonks/pulumi-aws@npm:3.0.0"
   peerDependencies:
     "@pulumi/aws": ">=5.30.0"
     "@pulumi/awsx": ">=1.0.0"
     "@pulumi/pulumi": ">=3.55.0"
-  checksum: 8d08b6d758d9b583fc66f381640abd8ae1c02dcb3f0fa0aa3957bc045c20659e726ca87c6841a0a8146ecdc8788ce48dffe2c3bb441b36cef556747f48f6f87b
+  checksum: 96de54484967be60c1bfd1df59e1fc59e994fe86c18b0bf50717911f4cf4f68b9b11918b628a7b753fa55d8193f64d97e8bcb645ab9fe095574db3d65fe9db95
   languageName: node
   linkType: hard
 
