@@ -5,7 +5,8 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import createSearchClient from "algoliasearch";
-import { response, internalError, notFound } from "../../http.mjs";
+import { response } from "../../http.mjs";
+import { resultsCount } from "../../algolia.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
@@ -51,18 +52,6 @@ async function getItemsFromDB(db, hits) {
     .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp));
 }
 
-function resultsCount(indexName, year, tag) {
-  return {
-    indexName,
-    query: "",
-    params: {
-      tagFilters: [year.toString(), tag],
-      attributesToRetrieve: [],
-      responseFields: ["nbHits"],
-    },
-  };
-}
-
 /**
  *
  * @param {string} tag
@@ -83,7 +72,7 @@ async function getRegistrations(tag, year, page) {
         attributesToRetrieve: ["year", "email"],
         tagFilters: [year.toString(), tag],
         // TODO: make page size reasonably small
-        hitsPerPage: 300,
+        hitsPerPage: 20,
         page,
       },
     },
@@ -121,10 +110,6 @@ export async function handler(event) {
     return response(optouts);
   }
 
-  const data = await getRegistrations(
-    type,
-    parseInt(year),
-    parseInt(page)
-  );
+  const data = await getRegistrations(type, parseInt(year), parseInt(page));
   return response(data);
 }
