@@ -157,8 +157,7 @@ export function chip({ text, count, selected, view, year }) {
           </span>
         </span>
         <span class="mdc-evolution-chip__text-label"
-          >${text}
-          ${until(
+          >${text}${until(
             count?.then((x) => html`<data value="${x}">${x}</data>`, "")
           )}</span
         >
