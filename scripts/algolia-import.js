@@ -2,12 +2,31 @@ import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
 import createSearchClient from "https://esm.sh/algoliasearch@4.16.0";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import { getRegistrationProjection } from "../lib/search.mjs";
+import {
+  getAttendeesProjection,
+  getRegistrationProjection,
+} from "../lib/search.mjs";
 
 const dynamo = createClient();
 const indexes = new Map([
   [
     "hc-registrations",
+    {
+      searchableAttributes: ["name", "email", "company"],
+      ranking: [
+        "desc(createdAt)",
+        "typo",
+        "words",
+        "filters",
+        "proximity",
+        "attribute",
+        "exact",
+        "custom",
+      ],
+    },
+  ],
+  [
+    "hc-attendees",
     {
       searchableAttributes: ["name", "email", "company"],
       ranking: [
@@ -74,18 +93,64 @@ async function getRegistrations() {
   return result;
 }
 
-async function main({ adminToken, slackBotToken }) {
-  const client = createSearchClient("J77BFM3PLE", adminToken);
+async function getAttendees() {
+  const resp = await dynamo.scan({
+    TableName: "hc-attendees",
+    ProjectionExpression: [
+      "#year",
+      "slackID",
+      "email",
+      "company",
+      "#name",
+      "paid",
+      "invoiced",
+      "ticketType",
+      "travel",
+      "housing",
+    ].join(),
+    ExpressionAttributeNames: {
+      "#year": "year",
+      "#name": "name",
+    },
+  });
 
+  if (resp.Items) {
+    return resp.Items;
+  }
+
+  const result = [];
+  for await (const { Items } of resp) {
+    result.push(...Items);
+  }
+  return result;
+}
+
+async function indexRegistrations(client, slackBotToken) {
   const index = client.initIndex("hc-registrations");
   await index.setSettings(indexes.get("hc-registrations"));
 
   const crewReferrals = await getCrewReferrals(slackBotToken);
   const registrations = await getRegistrations();
   const records = registrations.map(getRegistrationProjection(crewReferrals));
-  console.log(`Importing ${records.length} records to Algolia`);
-  const result = await index.saveObjects(records);
-  console.log(result);
+  console.log(`Importing ${records.length} registrations to Algolia`);
+  return index.saveObjects(records);
+}
+
+async function indexAttendees(client) {
+  const index = client.initIndex("hc-attendees");
+  await index.setSettings(indexes.get("hc-attendees"));
+
+  const attendees = await getAttendees();
+  const records = attendees.map(getAttendeesProjection());
+  console.log(`Importing ${records.length} attendees to Algolia`);
+  return index.saveObjects(records);
+}
+
+async function main({ adminToken, slackBotToken }) {
+  const client = createSearchClient("J77BFM3PLE", adminToken);
+
+  console.log(await indexRegistrations(client, slackBotToken));
+  console.log(await indexAttendees(client));
 }
 
 await main(

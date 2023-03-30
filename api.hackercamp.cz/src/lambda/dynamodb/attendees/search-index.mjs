@@ -1,6 +1,6 @@
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
-import { getRegistrationProjection } from "@hackercamp/lib/search.mjs";
+import { getAttendeesProjection } from "@hackercamp/lib/search.mjs";
 import createSearchClient from "algoliasearch";
 import { fromJS } from "immutable";
 import Rollbar from "../../rollbar.mjs";
@@ -8,19 +8,19 @@ import Rollbar from "../../rollbar.mjs";
 /** @typedef {import("aws-lambda").DynamoDBStreamEvent} DynamoDBStreamEvent */
 /** @typedef {import("algoliasearch").SearchIndex} SearchIndex */
 
-const rollbar = Rollbar.init({ lambdaName: "dynamodb-reindex-registrations" });
+const rollbar = Rollbar.init({ lambdaName: "dynamodb-reindex-attendees" });
 
 const keysToIndex = new Set([
   "year",
+  "slackID",
   "email",
   "company",
-  "firstName",
-  "lastName",
-  "timestamp",
-  "invoiced",
+  "name",
   "paid",
-  "firstTime",
-  "referral",
+  "invoiced",
+  "ticketType",
+  "travel",
+  "housing",
 ]);
 
 function openAlgoliaClient() {
@@ -34,31 +34,18 @@ function openAlgoliaIndex() {
   return algolia.initIndex(algolia_index_name);
 }
 
-let getCrewReferralsCache = null;
-
-async function getCrewReferrals() {
-  if (getCrewReferralsCache?.size) return getCrewReferralsCache;
-  const resp = await fetch(
-    "https://slack.com/api/usergroups.users.list?usergroup=S03EQ1LLYCC",
-    { headers: { Authorization: `Bearer ${process.env.slack_bot_token}` } }
-  );
-  const { users } = await resp.json();
-  getCrewReferralsCache = new Set(users);
-  return getCrewReferralsCache;
-}
-
 /**
  * @param {DynamoDBStreamEvent} event
  * @param {SearchIndex} searchIndex
  */
 async function deleteRemovedItems(event, searchIndex) {
-  const deletedRegistrations = event.Records.filter(
+  const deletedAttendees = event.Records.filter(
     (x) => x.eventName === "REMOVE"
-  ).map((x) => `${x.dynamodb.OldImage.year.N}-${x.dynamodb.OldImage.email.S}`);
+  ).map((x) => `${x.dynamodb.OldImage.year.N}-${x.dynamodb.OldImage.slackID.S}`);
 
-  if (deletedRegistrations.length > 0) {
-    console.log({ event: "Removing registrations from index", deletedRegistrations });
-    await searchIndex.deleteObjects(deletedRegistrations);
+  if (deletedAttendees.length > 0) {
+    console.log({ event: "Removing attendees from index", deletedAttendees });
+    await searchIndex.deleteObjects(deletedAttendees);
   }
 }
 
@@ -66,9 +53,8 @@ async function deleteRemovedItems(event, searchIndex) {
  * @param {DynamoDBStreamEvent} event
  * @param {SearchIndex} searchIndex
  */
-async function updateRegistrationsIndex(event, searchIndex) {
-  const crewReferrals = await getCrewReferrals();
-  const updatedRegistrations = event.Records.filter((x) => x.eventName !== "REMOVE")
+async function updateAttendeesIndex(event, searchIndex) {
+  const updatedAttendees = event.Records.filter((x) => x.eventName !== "REMOVE")
     .map((x) => [
       fromJS(selectKeys(unmarshall(x.dynamodb.NewImage), keysToIndex)),
       x.dynamodb.OldImage
@@ -77,13 +63,13 @@ async function updateRegistrationsIndex(event, searchIndex) {
     ])
     .filter(([n, o]) => !n.equals(o))
     .map(([n]) => n.toJS())
-    .map(getRegistrationProjection(crewReferrals));
-  if (updatedRegistrations.length > 0) {
+    .map(getAttendeesProjection());
+  if (updatedAttendees.length > 0) {
     console.log({
-      event: "Updating registrations index",
-      updatedRegistrations: updatedRegistrations.map((x) => x.objectID),
+      event: "Updating attendees index",
+      updatedAttendees: updatedAttendees.map((x) => x.objectID),
     });
-    await searchIndex.saveObjects(updatedRegistrations);
+    await searchIndex.saveObjects(updatedAttendees);
   }
 }
 
@@ -95,7 +81,7 @@ async function indexUpdate(event) {
   const searchIndex = openAlgoliaIndex();
   await Promise.all([
     deleteRemovedItems(event, searchIndex),
-    updateRegistrationsIndex(event, searchIndex),
+    updateAttendeesIndex(event, searchIndex),
   ]);
 }
 
