@@ -36,6 +36,14 @@
       border-bottom: 1px solid #ddd;
     }
 
+    h2 select {
+      color: var(--hc-text-color);
+      background-color: var(--hc-background-color);
+      font: 600 24px var(--hc-font-family);
+      -webkit-text-fill-color: initial;
+      border: none
+    }
+
     .hc-master-detail__list {
       --hc-viewport-compensation: 242px;
       padding: 0;
@@ -114,7 +122,16 @@
             icon="menu"
             id="drawer-button"
           ></mwc-icon-button>
-          <h2 id="view-title">Administrace</h2>
+          <h2 id="view-title">
+            <span>Administrace</span>
+            <label>ročník
+              <select id="year-selector">
+                {% for year in range(2022, currentYear + 1) %}
+                <option>{{ year }}</option>
+                {% endfor %}
+              </select>
+            </label>
+          </h2>
         </div>
       </div>
     </div>
@@ -127,7 +144,8 @@
   main({
     searchParams: new URLSearchParams(location.search),
     appRoot: document.getElementById("app-root"),
-    viewTitle: document.getElementById("view-title"),
+    viewTitle: document.getElementById("view-title").querySelector("span"),
+    yearSelector: document.getElementById("year-selector"),
     env: {{ build | dump(8) | safe }}
   });
   const drawer = document.getElementById("drawer");

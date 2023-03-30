@@ -306,13 +306,26 @@ function changeTitle(viewTitle, view) {
   viewTitle.textContent = endpointName.get(endpoint);
 }
 
-export async function main({ appRoot, searchParams, env, viewTitle }) {
+export async function main({
+  appRoot,
+  searchParams,
+  env,
+  viewTitle,
+  yearSelector,
+}) {
   rollbar.init(env);
 
   const year = parseInt(searchParams.get("year") ?? env.year);
   const selectedView = searchParams.get("view") ?? View.paid;
   const apiHost = env["api-host"];
   const contact = getContact();
+
+  yearSelector.value = year;
+  yearSelector.addEventListener("change", (e) => {
+    location.assign(
+      `?${new URLSearchParams({ year: e.target.value, view: selectedView })}`
+    );
+  });
 
   transact((x) =>
     Object.assign(x, { apiHost, year, contact }, schedule.get(year))

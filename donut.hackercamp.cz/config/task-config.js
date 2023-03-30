@@ -4,6 +4,8 @@ const mode = require("gulp-mode")();
 const projectPath = require("@topmonks/blendid/gulpfile.js/lib/projectPath.js");
 const pathConfig = require("./path-config.json");
 
+/** @typedef {import("@types/nunjucks").Environment} Environment */
+
 async function getSlackProfiles(token) {
   console.log("Loading Slack profiles...");
   const skip = new Set(["slackbot", "jakub"]);
@@ -52,6 +54,10 @@ module.exports = {
   html: {
     collections: ["build", "images", "hackers"],
     nunjucksRender: {
+      /** @param {Environment} env */
+      manageEnv(env) {
+        env.addGlobal("currentYear", new Date().getFullYear());
+      },
       filters: {
         year() {
           return new Date().getFullYear();

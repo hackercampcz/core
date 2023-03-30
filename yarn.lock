@@ -2799,6 +2799,7 @@ __metadata:
   resolution: "@hackercamp/core@workspace:."
   dependencies:
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=aadd932759b9908a4f8b0090df373ddea5148e67"
+    "@types/nunjucks": ^3.2.2
     dotenv: 16.0.3
     dotenv-cli: 7.1.0
     eslint: 8.37.0
@@ -4334,6 +4335,13 @@ __metadata:
   version: 17.0.25
   resolution: "@types/node@npm:17.0.25"
   checksum: 6a820bd624e69ea772f52a6cdb326484eff5829443dc981939373929ade109f58c21698b9f0a831bd6ceea799e722a75dc49c5fa7a6bc32a81e1cbdfc6507b64
+  languageName: node
+  linkType: hard
+
+"@types/nunjucks@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "@types/nunjucks@npm:3.2.2"
+  checksum: e0fdc68f01635b34ea6f5e8845ed6d2e8d11be6347b2f28c8093636454e2401f02c26a2ad6aa459da56f2459f2d59bf72914b6e4774bcd058fa12e2ae5f0f6ef
   languageName: node
   linkType: hard
 
