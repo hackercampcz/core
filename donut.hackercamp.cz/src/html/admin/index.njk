@@ -38,9 +38,10 @@
 
     h2 select {
       color: var(--hc-text-color);
+      -webkit-text-fill-color: initial;
       background-color: var(--hc-background-color);
       font: 600 24px var(--hc-font-family);
-      -webkit-text-fill-color: initial;
+      padding-left: 0;
       border: none
     }
 
@@ -106,8 +107,8 @@
 {% block content %}
   <mwc-drawer id="drawer" type="dismissible" style="margin-top: 2em">
     <mwc-list>
+      <mwc-list-item><a href="/admin/?view=confirmed">Registrace</a></mwc-list-item>
       <mwc-list-item><a href="/admin/?view=attendees">Účastníci</a></mwc-list-item>
-      <mwc-list-item><a href="/admin/?view=paid">Registrace</a></mwc-list-item>
       <mwc-list-item><a href="/admin/?view=program">Program</a></mwc-list-item>
       <mwc-list-item><a href="/admin/?view=housing">Ubytování</a></mwc-list-item>
     </mwc-list>

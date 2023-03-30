@@ -21,7 +21,7 @@ import { instatializeDates } from "./lib/object.js";
 
 const state = defAtom({
   year: 2023,
-  selectedView: View.paid,
+  selectedView: View.confirmed,
   view: renderView,
   apiHost: "",
   campStartAt: new Date(),
@@ -316,7 +316,7 @@ export async function main({
   rollbar.init(env);
 
   const year = parseInt(searchParams.get("year") ?? env.year);
-  const selectedView = searchParams.get("view") ?? View.paid;
+  const selectedView = searchParams.get("view") ?? View.confirmed;
   const apiHost = env["api-host"];
   const contact = getContact();
 
