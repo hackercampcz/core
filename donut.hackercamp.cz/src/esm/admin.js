@@ -258,8 +258,8 @@ const endpointForView = new Map([
   [View.housing, Endpoint.housing],
 ]);
 
-async function fetchData({ selectedView, year }, apiHost) {
-  const params = new URLSearchParams({ type: selectedView, year });
+async function fetchData({ selectedView, year, page }, apiHost) {
+  const params = new URLSearchParams({ type: selectedView, year, page });
   const endpoint = endpointForView.get(selectedView);
   const resource = new URL(`admin/${endpoint}?${params}`, apiHost).href;
   const resp = await withAuthHandler(
@@ -285,11 +285,11 @@ async function fetchData({ selectedView, year }, apiHost) {
  * @param {number} year
  * @param {string} apiHost
  */
-function loadData(selectedView, year, apiHost) {
+function loadData(selectedView, year, page, apiHost) {
   transact((x) =>
     Object.assign(x, {
       selectedView,
-      data: fetchData({ selectedView, year }, apiHost),
+      data: fetchData({ selectedView, year, page }, apiHost),
     })
   );
 }
@@ -316,6 +316,7 @@ export async function main({
   rollbar.init(env);
 
   const year = parseInt(searchParams.get("year") ?? env.year);
+  const page = parseInt(searchParams.get("page") ?? 0);
   const selectedView = searchParams.get("view") ?? View.confirmed;
   const apiHost = env["api-host"];
   const contact = getContact();
@@ -328,9 +329,9 @@ export async function main({
   });
 
   transact((x) =>
-    Object.assign(x, { apiHost, year, contact }, schedule.get(year))
+    Object.assign(x, { apiHost, year, page, contact }, schedule.get(year))
   );
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, selectedView);
-  loadData(selectedView, year, apiHost);
+  loadData(selectedView, year, page, apiHost);
 }
