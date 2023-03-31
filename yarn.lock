@@ -2849,7 +2849,7 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
-    "@pulumi/aws": 5.33.0
+    "@pulumi/aws": 5.34.0
     "@pulumi/awsx": 1.0.2
     "@pulumi/pulumi": 3.60.1
     "@topmonks/pulumi-aws": 3.0.0
@@ -3806,9 +3806,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:5.33.0":
-  version: 5.33.0
-  resolution: "@pulumi/aws@npm:5.33.0"
+"@pulumi/aws@npm:5.34.0":
+  version: 5.34.0
+  resolution: "@pulumi/aws@npm:5.34.0"
   dependencies:
     "@pulumi/pulumi": ^3.0.0
     aws-sdk: ^2.0.0
@@ -3816,7 +3816,7 @@ __metadata:
     mime: ^2.0.0
     read-package-tree: ^5.2.1
     resolve: ^1.7.1
-  checksum: f6d9af38263ffe7b051b72d489df72e750e12ba946860057cae1f061d5796da957fdff733f06d765fc39245bccc9d0cf200bebf1892dbb8dd1330a1360234771
+  checksum: c77cc51ec0920f8dd67bd99839be1df01fc4131f4c5ab40e735577f1d62ba3c74e539e8e5f8f822025b4d31b79c260027e92061dba68e2728192153694851d86
   languageName: node
   linkType: hard
 
