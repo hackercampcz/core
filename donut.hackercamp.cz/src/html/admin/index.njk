@@ -15,8 +15,8 @@
       border-collapse: collapse;
     }
 
-    th, td {
-      padding: 8px;
+    th {
+      padding: 8px 0;
     }
 
     thead {
@@ -39,7 +39,7 @@
     h2 select {
       color: var(--hc-text-color);
       -webkit-text-fill-color: initial;
-      background-color: var(--hc-background-color);
+      background-color: transparent;
       font: 600 24px var(--hc-font-family);
       padding-left: 0;
       border: none
@@ -124,7 +124,7 @@
             id="drawer-button"
           ></mwc-icon-button>
           <h2 id="view-title">
-            <span>Administrace</span>
+            <span>Administrace</span>,
             <label>ročník
               <select id="year-selector">
                 {% for year in range(2022, currentYear + 1) %}
