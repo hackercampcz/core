@@ -1,6 +1,3 @@
-@use "@material-design-icons/font/outlined";
-@use "@material-design-icons/font/filled";
-
 :where(a, button) .material-icons-outlined {
   color: var(--hc-text-color);
 }
