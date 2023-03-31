@@ -24,6 +24,7 @@ const state = defAtom({
   selectedView: View.confirmed,
   view: renderView,
   apiHost: "",
+  params: new URLSearchParams(location.search),
   campStartAt: new Date(),
   campEndAt: new Date(),
 });
@@ -283,6 +284,7 @@ async function fetchData({ selectedView, year, page }, apiHost) {
 /**
  * @param {string} selectedView
  * @param {number} year
+ * @param {number} page
  * @param {string} apiHost
  */
 function loadData(selectedView, year, page, apiHost) {
@@ -329,7 +331,11 @@ export async function main({
   });
 
   transact((x) =>
-    Object.assign(x, { apiHost, year, page, contact }, schedule.get(year))
+    Object.assign(
+      x,
+      { apiHost, year, page, contact, params: searchParams },
+      schedule.get(year)
+    )
   );
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, selectedView);

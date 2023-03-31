@@ -15,8 +15,11 @@
       border-collapse: collapse;
     }
 
-    th {
-      padding: 8px 0;
+    th+th {
+      padding: 8px;
+    }
+    td+td {
+      padding: 0 8px;
     }
 
     thead {
@@ -98,10 +101,7 @@
     }
   </style>
 
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css?family=Material+Icons&amp;display=block"
-  />
+  <link rel="stylesheet" href="/assets/css/admin.css">
 {% endblock %}
 
 {% block content %}

@@ -191,3 +191,51 @@ export const lineupText = new Map([
 export function lineup(x) {
   return html`<code>${lineupText.get(x)}</code>`;
 }
+export function paginationNavigation({ page, pages, count, total, params }) {
+  const pageSize = 20;
+  const offset = page * pageSize;
+  const first = offset + 1;
+  const last = offset + count;
+  function search(p) {
+    const temp = new URLSearchParams(params);
+    for (const [k, v] of Object.entries(p)) {
+      temp.set(k, v);
+    }
+    return temp;
+  }
+  return html`
+    <div class="hc-pagination">
+      <data class="hc-pagination__total" value="${total}"
+        >${first}-${last} ze ${total}</data
+      >
+      <a
+        title="První strana"
+        href="?${search({ page: 0 })}"
+        class="hc-pagination__button"
+        ?disabled="${page <= 0}"
+        ><span class="material-icons-outlined">first_page</span></a
+      >
+      <a
+        title="Předchozí strana"
+        href="?${search({ page: Math.max(page - 1, 0) })}"
+        class="hc-pagination__button"
+        ?disabled="${page <= 0}"
+        ><span class="material-icons-outlined">chevron_left</span></a
+      >
+      <a
+        title="Další strana"
+        href="?${search({ page: Math.min(page + 1, pages - 1) })}"
+        class="hc-pagination__button"
+        ?disabled="${page >= pages - 1}"
+        ><span class="material-icons-outlined">chevron_right</span></a
+      >
+      <a
+        title="Poslední strana"
+        href="?${search({ page: pages - 1 })}"
+        class="hc-pagination__button"
+        ?disabled="${page >= pages - 1}"
+        ><span class="material-icons-outlined">last_page</span></a
+      >
+    </div>
+  `;
+}

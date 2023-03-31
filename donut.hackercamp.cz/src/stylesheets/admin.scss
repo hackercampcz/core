@@ -1,0 +1,33 @@
+@use "@material-design-icons/font/outlined";
+@use "@material-design-icons/font/filled";
+
+:where(a, button) .material-icons-outlined {
+  color: var(--hc-text-color);
+}
+
+a[disabled] {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.hc-pagination {
+  box-sizing: content-box;
+  height: 32px;
+  padding: 8px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.hc-pagination .hc-pagination__total {
+  margin-right: 16px;
+}
+.hc-pagination .hc-pagination__button {
+  display: inline-flex;
+  height: 32px;
+  text-decoration: none;
+  align-items: center;
+}
+.hc-pagination .hc-pagination__button+.hc-pagination__button {
+  margin-left: 8px;
+}

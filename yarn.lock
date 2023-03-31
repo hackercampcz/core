@@ -2819,11 +2819,14 @@ __metadata:
     "@aws-sdk/client-secrets-manager": 3.303.0
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
+    "@material-design-icons/font": ^0.14.5
     "@material/chips": 14.0.0
     "@material/layout-grid": 14.0.0
     "@material/mwc-button": 0.27.0
+    "@material/mwc-checkbox": ^0.27.0
     "@material/mwc-drawer": 0.27.0
-    "@material/mwc-icon-button": 0.27.0
+    "@material/mwc-icon-button": ^0.27.0
+    "@material/mwc-linear-progress": ^0.27.0
     "@material/mwc-list": 0.27.0
     "@material/mwc-snackbar": 0.27.0
     "@thi.ng/atom": 5.1.34
@@ -2935,6 +2938,13 @@ __metadata:
   version: 2.2.0
   resolution: "@logdna/tail-file@npm:2.2.0"
   checksum: 44b757f068a1a50b6a3504e50feeeaacf098f65f302c944ca20ef6bcfa807d286547c55f273615c929caa1534b48b00a4830af2a508fc329b29aa88567c0586b
+  languageName: node
+  linkType: hard
+
+"@material-design-icons/font@npm:^0.14.5":
+  version: 0.14.5
+  resolution: "@material-design-icons/font@npm:0.14.5"
+  checksum: 03b758bdd77458e06f24e7f7ed3b0af7da76a75c8296fba992a326495d3034b0633f216dab3e8381716ab335dd8db23e2415759adc210289e7e6fb7731ca797b
   languageName: node
   linkType: hard
 
@@ -3191,6 +3201,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@material/linear-progress@npm:=14.0.0-canary.53b3cad2f.0":
+  version: 14.0.0-canary.53b3cad2f.0
+  resolution: "@material/linear-progress@npm:14.0.0-canary.53b3cad2f.0"
+  dependencies:
+    "@material/animation": 14.0.0-canary.53b3cad2f.0
+    "@material/base": 14.0.0-canary.53b3cad2f.0
+    "@material/dom": 14.0.0-canary.53b3cad2f.0
+    "@material/feature-targeting": 14.0.0-canary.53b3cad2f.0
+    "@material/progress-indicator": 14.0.0-canary.53b3cad2f.0
+    "@material/rtl": 14.0.0-canary.53b3cad2f.0
+    "@material/theme": 14.0.0-canary.53b3cad2f.0
+    tslib: ^2.1.0
+  checksum: f2e9bc0a2ec6e360955346cfa72612bf8aef04cf0e0e2f264eab9e190e78c790c470630865ff29a01bbdc308692a1d0c6c5fba45ed4a1baa74a12f7a5ffc5507
+  languageName: node
+  linkType: hard
+
 "@material/list@npm:14.0.0-canary.53b3cad2f.0, @material/list@npm:=14.0.0-canary.53b3cad2f.0":
   version: 14.0.0-canary.53b3cad2f.0
   resolution: "@material/list@npm:14.0.0-canary.53b3cad2f.0"
@@ -3259,7 +3285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/mwc-icon-button@npm:0.27.0":
+"@material/mwc-icon-button@npm:^0.27.0":
   version: 0.27.0
   resolution: "@material/mwc-icon-button@npm:0.27.0"
   dependencies:
@@ -3277,6 +3303,19 @@ __metadata:
     lit: ^2.0.0
     tslib: ^2.0.1
   checksum: 6dfa5115d5369fdf6062316e4b1238c588a515f212c573ef1bb162f92b67e22cd8ddd75ecde33eb7090e8d61cfea0da3ab18b1c311bdd0a03f19955e6121ba7d
+  languageName: node
+  linkType: hard
+
+"@material/mwc-linear-progress@npm:^0.27.0":
+  version: 0.27.0
+  resolution: "@material/mwc-linear-progress@npm:0.27.0"
+  dependencies:
+    "@material/linear-progress": =14.0.0-canary.53b3cad2f.0
+    "@material/mwc-base": ^0.27.0
+    "@material/theme": =14.0.0-canary.53b3cad2f.0
+    lit: ^2.0.0
+    tslib: ^2.0.1
+  checksum: 485e847ff996eff8627dccf48c7fc3494e84d75677a8bb5f65a9b95da06a3e27f95c3d0e658fe6ad60c6591e3b89bd7cfaf4d90e0cccffe6fec65f7bf66f92f2
   languageName: node
   linkType: hard
 
@@ -3332,6 +3371,15 @@ __metadata:
     lit: ^2.0.0
     tslib: ^2.0.1
   checksum: d678896263f7ce783f3a5df8395038f3d1f74d4d2d1ceb7379b42c4664ce7ab4fe183115805680cb0d5f3acbf013998dc36d8a6103760f9a874af1dd09c82b04
+  languageName: node
+  linkType: hard
+
+"@material/progress-indicator@npm:14.0.0-canary.53b3cad2f.0":
+  version: 14.0.0-canary.53b3cad2f.0
+  resolution: "@material/progress-indicator@npm:14.0.0-canary.53b3cad2f.0"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: 9b627a1cb2bce91cae43b17f361c5148cceb84ba58ddd22d7f8bfa7904fa68ed977181a7f361acb3d493dc9a206270de3449531ea77ca9e2f8ca449fce64f2be
   languageName: node
   linkType: hard
 
@@ -3448,7 +3496,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/theme@npm:14.0.0-canary.53b3cad2f.0":
+"@material/theme@npm:14.0.0-canary.53b3cad2f.0, @material/theme@npm:=14.0.0-canary.53b3cad2f.0":
   version: 14.0.0-canary.53b3cad2f.0
   resolution: "@material/theme@npm:14.0.0-canary.53b3cad2f.0"
   dependencies:
