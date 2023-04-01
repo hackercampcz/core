@@ -78,6 +78,7 @@ export function registrationsTableTemplate(
     <table>
       <thead>
         <tr>
+          <th></th>
           <th>Jméno</th>
           <th>Společnost</th>
           <th>${timeHeader}</th>
@@ -102,6 +103,13 @@ export function registrationsTableTemplate(
           (row) => html`
           <tr
             @click="${renderDetail(row)}">
+            <td>
+              <md-checkbox
+                aria-label="vybrat"
+                value="${row.email}"
+                @click="${(e) => e.stopPropagation()}"
+              ></md-checkbox>
+            </td>
             <td>${row.name}</td>
             <td>${row.company}</td>
             <td>${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
@@ -111,7 +119,7 @@ export function registrationsTableTemplate(
                 class="hc-action-button"
                 href="mailto:${row.email}"
                 title="Napsat ${row.email}"">
-                <i class="material-icons-outlined">mail</i>
+                <md-icon>mail</md-icon>
               </a>
               ${when(
                 row.phone,
@@ -121,7 +129,7 @@ export function registrationsTableTemplate(
                     href="tel:${row.phone.replace(" ", "")}"
                     title="Zavolat ${row.phone}"
                   >
-                    <i class="material-icons-outlined">call</i>
+                    <md-icon>call</md-icon>
                   </a>
                 `
               )}
@@ -150,7 +158,7 @@ export function registrationDetailTemplate(
         class="hc-action-button"
         href="mailto:${detail.email}"
         title="Napsat ${detail.email}"">
-        <i class="material-icons-outlined">mail</i>
+        <md-icon>mail</md-icon>
       </a>
       ${when(
         detail.phone,
@@ -160,7 +168,7 @@ export function registrationDetailTemplate(
             href="tel:${detail.phone.replace(" ", "")}"
             title="Zavolat ${detail.phone}"
           >
-            <i class="material-icons-outlined">call</i>
+            <md-icon>call</md-icon>
           </a>
         `
       )}
@@ -172,7 +180,7 @@ export function registrationDetailTemplate(
             title="Opt in"
             @click="${() => optin(detail.email)}"
           >
-            <span class="material-icons-outlined">person_add</span>
+            <md-icon>person_add</md-icon>
           </button>
         `
       )}
@@ -184,7 +192,7 @@ export function registrationDetailTemplate(
             title="Opt out"
             @click="${() => optout(detail.email)}"
           >
-            <span class="material-icons-outlined">person_remove</span>
+            <md-icon>person_remove</md-icon>
           </button>
         `
       )}
@@ -196,7 +204,7 @@ export function registrationDetailTemplate(
             title="Vyfakturováno"
             @click="${() => invoiced(detail.email)}"
           >
-            <span class="material-icons-outlined">request_quote</span>
+            <md-icon>request_quote</md-icon>
           </button>
         `
       )}
@@ -291,7 +299,7 @@ export function registrationsTemplate(state, actions) {
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
     >
-      <div class="hc-card hc-master-detail__list">
+      <form class="hc-card hc-master-detail__list">
         ${until(
           data?.then((data) => {
             if (data.unauthorized) return unauthorized();
@@ -326,7 +334,7 @@ export function registrationsTemplate(state, actions) {
             </div>
           `
         )}
-      </div>
+      </form>
       ${when(detail, () =>
         registrationDetailTemplate({ detail, selectedView }, actions)
       )}

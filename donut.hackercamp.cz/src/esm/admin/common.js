@@ -213,28 +213,28 @@ export function paginationNavigation({ page, pages, count, total, params }) {
         href="?${search({ page: 0 })}"
         class="hc-pagination__button"
         ?disabled="${page <= 0}"
-        ><span class="material-icons-outlined">first_page</span></a
+        ><md-icon>first_page</md-icon></a
       >
       <a
         title="Předchozí strana"
         href="?${search({ page: Math.max(page - 1, 0) })}"
         class="hc-pagination__button"
         ?disabled="${page <= 0}"
-        ><span class="material-icons-outlined">chevron_left</span></a
+        ><md-icon>chevron_left</md-icon></a
       >
       <a
         title="Další strana"
         href="?${search({ page: Math.min(page + 1, pages - 1) })}"
         class="hc-pagination__button"
         ?disabled="${page >= pages - 1}"
-        ><span class="material-icons-outlined">chevron_right</span></a
+        ><md-icon>chevron_right</md-icon></a
       >
       <a
         title="Poslední strana"
         href="?${search({ page: pages - 1 })}"
         class="hc-pagination__button"
         ?disabled="${page >= pages - 1}"
-        ><span class="material-icons-outlined">last_page</span></a
+        ><md-icon>last_page</md-icon></a
       >
     </div>
   `;

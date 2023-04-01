@@ -119,8 +119,8 @@ export async function init({ profile: root, env }) {
         wb.messageSkipWaiting();
       };
       render(
-        html`<mwc-button slot="action" @click="${update}"
-          >AKTUALIZOVAT</mwc-button
+        html`<md-text-button slot="action" @click="${update}"
+          >AKTUALIZOVAT</md-text-button
         >`,
         snackbar
       );

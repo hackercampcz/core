@@ -115,7 +115,7 @@ export function attendeesTableTemplate(data, { renderDetail }) {
                 class="hc-action-button"
                 href="mailto:${row.email}"
                 title="Napsat ${row.email}"">
-                <i class="material-icons-outlined">mail</i>
+                <md-icon>mail</md-icon>
               </a>
             </td>
           </tr>
@@ -139,13 +139,13 @@ export function attendeeDetailTemplate({ detail }) {
         class="hc-action-button"
         href="mailto:${detail.email}"
         title="Napsat ${detail.email}"">
-        <i class="material-icons-outlined">mail</i>
+        <md-icon>mail</md-icon>
       </a>
       <button
         class="hc-action-button"
         title="Upravit účastníka"
         @click="${() => showModalDialog("attendee-modal")}">
-        <span class="material-icons-outlined">edit</span>
+        <md-icon>edit</md-icon>
       </button>
     </div>
     ${ticketDetail(detail)}

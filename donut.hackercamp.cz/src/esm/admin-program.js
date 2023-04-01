@@ -90,7 +90,7 @@ function programTable(
                       title="Schválit event"
                       @click="${() => approveEvent(row._id)}"
                     >
-                      <span class="material-icons-outlined">done</span>
+                      <md-icon>done</md-icon>
                     </button>
                   `
                 )}
@@ -101,7 +101,7 @@ function programTable(
                     showEditEventModalDialog(row, { editEvent });
                   }}"
                 >
-                  <span class="material-icons-outlined">edit</span>
+                  <md-icon>edit</md-icon>
                 </button>
                 <button
                   class="hc-action-button"
@@ -112,7 +112,7 @@ function programTable(
                       row.people?.map((x) => x.slackID) ?? []
                     )}"
                 >
-                  <span class="material-icons-outlined">delete_forever</span>
+                  <md-icon>delete_forever</md-icon>
                 </button>
               </td>
             </tr>

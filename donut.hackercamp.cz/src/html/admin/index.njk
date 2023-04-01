@@ -11,37 +11,6 @@
       font-weight: 400;
       src: url(/assets/css/material-icons-outlined.woff2) format("woff2");
     }
-    .material-icons-outlined {
-      font-feature-settings: "liga";
-      font-family: Material Icons Outlined;
-    }
-    @font-face {
-      font-display: block;
-      font-family: Material Icons;
-      font-style: normal;
-      font-weight: 400;
-      src: url(/assets/css/material-icons.woff2) format("woff2");
-    }
-    .material-icons,
-    .material-icons-outlined {
-      word-wrap: normal;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: optimizeLegibility;
-      direction: ltr;
-      display: inline-block;
-      font-size: 24px;
-      font-style: normal;
-      font-weight: 400;
-      letter-spacing: normal;
-      line-height: 1;
-      text-transform: none;
-      white-space: nowrap;
-    }
-    .material-icons {
-      font-feature-settings: "liga";
-      font-family: Material Icons;
-    }
 
     #top {
       padding-top: 62px;
@@ -143,23 +112,22 @@
 
 {% block content %}
   <mwc-drawer id="drawer" type="dismissible" style="margin-top: 2em">
-    <mwc-list>
-      <mwc-list-item><a href="/admin/?view=confirmed">Registrace</a></mwc-list-item>
-      <mwc-list-item><a href="/admin/?view=attendees">Účastníci</a></mwc-list-item>
-      <mwc-list-item><a href="/admin/?view=program">Program</a></mwc-list-item>
-      <mwc-list-item><a href="/admin/?view=housing">Ubytování</a></mwc-list-item>
-    </mwc-list>
+    <md-list>
+      <md-list-item-link href="/admin/?view=confirmed" headline="Registrace"></md-list-item-link>
+      <md-list-item-link href="/admin/?view=attendees" headline="Účastníci"></md-list-item-link>
+      <md-list-item-link href="/admin/?view=program" headline="Program"></md-list-item-link>
+      <md-list-item-link href="/admin/?view=housing" headline="Ubytování"></md-list-item-link>
+    </md-list>
     <div class="mdc-layout-grid" slot="appContent">
       <div id="app-root" class="mdc-layout-grid__inner">
         <div
           class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
           style="display:flex; align-items: center; gap: 1em"
         >
-          <mwc-icon-button
+          <md-standard-icon-button
             slot="navigationIcon"
-            icon="menu"
             id="drawer-button"
-          ></mwc-icon-button>
+          >menu</md-standard-icon-button>
           <h2 id="view-title">
             <span>Administrace</span>,
             <label>ročník

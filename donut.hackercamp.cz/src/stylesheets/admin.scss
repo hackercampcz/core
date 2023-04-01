@@ -1,5 +1,9 @@
-:where(a, button) .material-icons-outlined {
-  color: var(--hc-text-color);
+:root {
+  --md-sys-color-primary: var(--hc-link-color);
+  --md-sys-color-surface: var(--hc-background-color);
+  --md-icon-font: "Material Icons Outlined";
+  --md-icon-color: var(--hc-text-color);
+  --md-list-list-item-label-text-type: 400 1rem var(--hc-font-family);
 }
 
 a[disabled] {

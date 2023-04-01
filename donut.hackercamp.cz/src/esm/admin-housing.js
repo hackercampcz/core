@@ -31,7 +31,7 @@ function housingTable(data) {
                 class="hc-action-button"
                 href="mailto:${row.email}"
                 title="Napsat ${row.email}"">
-                <i class="material-icons-outlined">mail</i>
+                <md-icon>mail</md-icon>
               </a>
             </td>
           </tr>
