@@ -182,7 +182,7 @@
                   method: "POST",
                   body: new URLSearchParams({
                     email,
-                    year: "{{ "this" | year }}"
+                    year: "{{ currentYear }}"
                   }),
                   headers: {
                     Accept: "application/json",
