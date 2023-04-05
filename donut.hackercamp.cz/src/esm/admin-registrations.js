@@ -125,41 +125,35 @@ export function registrationsTableTemplate(
       <tbody>
         ${data.map(
           (row) => html`
-          <tr
-            @click="${renderDetail(row)}">
-            <td>
-              <md-checkbox
-                aria-label="vybrat"
-                value="${row.email}"
-                @click="${(e) => e.stopPropagation()}"
-              ></md-checkbox>
-            </td>
-            <td>${row.name}</td>
-            <td>${row.company}</td>
-            <td>${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
-            </td>
-            <td>
-              <a
-                class="hc-action-button"
-                href="mailto:${row.email}"
-                title="Napsat ${row.email}"">
-                <md-icon>mail</md-icon>
-              </a>
-              ${when(
-                row.phone,
-                () => html`
-                  <a
-                    class="hc-action-button"
-                    href="tel:${row.phone.replace(/\s+/g, "")}"
-                    title="Zavolat ${row.phone}"
-                  >
-                    <md-icon>call</md-icon>
-                  </a>
-                `
-              )}
-            </td>
-          </tr>
-        `
+            <tr @click="${renderDetail(row)}">
+              <td>
+                <md-checkbox
+                  aria-label="vybrat"
+                  value="${row.email}"
+                  @click="${(e) => e.stopPropagation()}"
+                ></md-checkbox>
+              </td>
+              <td>${row.name}</td>
+              <td>${row.company}</td>
+              <td>
+                ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
+              </td>
+              <td>
+                ${html`<md-standard-link-icon-button
+                    href="mailto:${row.email}"
+                    title="Napsat ${row.email}"
+                    >mail</md-standard-link-icon-button
+                  >${when(
+                    row.phone,
+                    () => html`<md-standard-link-icon-button
+                      href="tel:${row.phone.replace(/\s+/g, "")}"
+                      title="Zavolat ${row.phone}"
+                      >call</md-standard-link-icon-button
+                    >`
+                  )}`}
+              </td>
+            </tr>
+          `
         )}
       </tbody>
     </table>

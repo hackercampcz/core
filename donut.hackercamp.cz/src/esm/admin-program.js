@@ -4,12 +4,28 @@ import { html } from "lit-html";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
 import {
+  Action,
   chip,
+  dispatchAction,
   lineup,
   renderModalDialog,
   unauthorized,
   View,
 } from "./admin/common.js";
+
+function approveEvent(eventId) {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.approveEvent, { eventId });
+  };
+}
+
+function deleteEvent(email) {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.invoiced, { email });
+  };
+}
 
 export function programChips(view, year, { program, programApproval }) {
   return html`
@@ -87,33 +103,25 @@ function programTable(data) {
               <td style="white-space: nowrap;">
                 ${when(
                   !row.approved,
-                  () => html`
-                    <button
-                      class="hc-action-button"
-                      title="Schválit event"
-                      @click="${approveEvent(row._id)}"
-                    >
-                      <md-icon>done</md-icon>
-                    </button>
-                  `
+                  () => html`<md-standard-icon-button
+                    title="Schválit event"
+                    @click="${approveEvent(row._id)}"
+                    >done</md-standard-icon-button
+                  >`
                 )}
-                <button
-                  class="hc-action-button"
+                <md-standard-icon-button
                   title="Upravit event"
                   @click="${renderModalDialog("edit-event")}"
+                  >edit</md-standard-icon-button
                 >
-                  <md-icon>edit</md-icon>
-                </button>
-                <button
-                  class="hc-action-button"
+                <md-standard-icon-button
                   title="Smazat event"
                   @click="${deleteEvent(
                     row._id,
                     row.people?.map((x) => x.slackID) ?? []
                   )}"
+                  >delete_forever</md-standard-icon-button
                 >
-                  <md-icon>delete_forever</md-icon>
-                </button>
               </td>
             </tr>
           `
@@ -140,12 +148,9 @@ export function programTemplate(state) {
         ${until(
           data?.then((data) => {
             if (data.unauthorized) return unauthorized();
-            return [
-              programTable(
-                sortBy("startAt", filterEvents(data), { asc: true })
-              ),
-              programModalDialog(),
-            ];
+            return programTable(
+              sortBy("startAt", filterEvents(data), { asc: true })
+            );
           }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">

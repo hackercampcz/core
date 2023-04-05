@@ -20,22 +20,21 @@ function housingTable(data) {
       <tbody>
         ${data.map(
           (row) => html`
-          <tr>
-            <td>${row.name}</td>
-            <td>${row.company}</td>
-            <td>${ticketName.get(row.ticketType)}</td>
-            <td>${housing.get(row.housing) ?? "Ještě si nevybral"}</td>
-            <td>${row.housingPlacement}</td>
-            <td>
-              <a
-                class="hc-action-button"
-                href="mailto:${row.email}"
-                title="Napsat ${row.email}"">
-                <md-icon>mail</md-icon>
-              </a>
-            </td>
-          </tr>
-        `
+            <tr>
+              <td>${row.name}</td>
+              <td>${row.company}</td>
+              <td>${ticketName.get(row.ticketType)}</td>
+              <td>${housing.get(row.housing) ?? "Ještě si nevybral"}</td>
+              <td>${row.housingPlacement}</td>
+              <td>
+                <md-standard-link-icon-button
+                  href="mailto:${row.email}"
+                  title="Napsat ${row.email}"
+                  >mail</md-standard-link-icon-button
+                >
+              </td>
+            </tr>
+          `
         )}
       </tbody>
     </table>

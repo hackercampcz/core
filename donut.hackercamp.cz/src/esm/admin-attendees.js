@@ -95,6 +95,7 @@ export function attendeesTableTemplate(data) {
     <table>
       <thead>
         <tr>
+          <th></th>
           <th>Jméno</th>
           <th>Společnost</th>
           <th>Typ lístku</th>
@@ -106,23 +107,28 @@ export function attendeesTableTemplate(data) {
       <tbody>
         ${data.map(
           (row) => html`
-          <tr
-            @click="${renderDetail(row)}">
-            <td>${row.name}</td>
-            <td>${row.company}</td>
-            <td>${ticketName.get(row.ticketType)}</td>
-            <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
-            <td>${row.nfcTronID}</td>
-            <td>
-              <a
-                class="hc-action-button"
-                href="mailto:${row.email}"
-                title="Napsat ${row.email}"">
-                <md-icon>mail</md-icon>
-              </a>
-            </td>
-          </tr>
-        `
+            <tr @click="${renderDetail(row)}">
+              <td>
+                <md-checkbox
+                  aria-label="vybrat"
+                  value="${row.slackID}"
+                  @click="${(e) => e.stopPropagation()}"
+                ></md-checkbox>
+              </td>
+              <td>${row.name}</td>
+              <td>${row.company}</td>
+              <td>${ticketName.get(row.ticketType)}</td>
+              <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
+              <td>${row.nfcTronID}</td>
+              <td>
+                <md-standard-link-icon-button
+                  href="mailto:${row.email}"
+                  title="Napsat ${row.email}"
+                  >mail</md-standard-link-icon-button
+                >
+              </td>
+            </tr>
+          `
         )}
       </tbody>
     </table>
