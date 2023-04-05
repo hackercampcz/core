@@ -386,6 +386,12 @@
       flex: 1;
     }
 
+    #reg fieldset {
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
     #reg [aria-hidden="true"] {
       display: none;
     }
@@ -695,7 +701,7 @@
           <option value="1">Někdo jiný (vedoucí výpravy naší skupiny)</option>
         </select>
       </div>
-      <div id="I-will-pay">
+      <fieldset id="I-will-pay">
         <p>Prosím, <strong>tohle vyplň už teď</strong>. Ušetříme si tím společně spoustu času.</p>
         <div class="field">
           <label for="invoice-name">
@@ -738,8 +744,8 @@
           </label>
           <input id="invoice-email" name="invEmail" type="email" autocomplete="email" placeholder="invoices@hrad.cz"/>
         </div>
-      </div>
-      <div id="someone-else-will-pay" aria-hidden="true">
+      </fieldset>
+      <fieldset id="someone-else-will-pay" disabled aria-hidden="true">
         <p>Kdo to má na starosti?</p>
         <div class="group">
           <div class="field">
@@ -769,24 +775,19 @@
             <input id="invoice-recipient-phone" name="invRecipientPhone" type="tel"/>
           </div>
         </div>
-      </div>
+      </fieldset>
     </div>
   </section>
   <script type="module">
     function showSection(id) {
       const section = document.getElementById(id);
       section.removeAttribute("aria-hidden");
-      for (const input of section.querySelectorAll("[data-required]")) {
-        input.setAttribute("required", "required");
-      }
+      section.removeAttribute("disabled");
     }
     function hideSection(id) {
       const section = document.getElementById(id);
       section.setAttribute("aria-hidden", "true");
-      for (const input of section.querySelectorAll("[required]")) {
-        input.dataset.required = true;
-        input.removeAttribute("required");
-      }
+      section.setAttribute("disabled", "true");
     }
     hideSection("someone-else-will-pay");
     document.querySelector("#email").addEventListener("blur", event => {
