@@ -1,18 +1,43 @@
+import { sortBy } from "@hackercamp/lib/array.mjs";
+import { formatDateTime } from "@hackercamp/lib/format.mjs";
+import { html } from "lit-html";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
+import { until } from "lit-html/directives/until.js";
+import { when } from "lit-html/directives/when.js";
+import * as marked from "marked";
 import {
+  Action,
   chip,
+  closeDetail,
+  dispatchAction,
   paginationNavigation,
+  renderDetail,
   ticketDetail,
   unauthorized,
   View,
 } from "./admin/common.js";
-import { html } from "lit-html";
-import { formatDateTime } from "@hackercamp/lib/format.mjs";
-import { when } from "lit-html/directives/when.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
-import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import * as marked from "marked";
-import { until } from "lit-html/directives/until.js";
-import { sortBy } from "@hackercamp/lib/array.mjs";
+
+function optout(email) {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.optout, { email });
+  };
+}
+
+function optin(email) {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.optin, { email });
+  };
+}
+
+function invoiced(email) {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.invoiced, { email });
+  };
+}
 
 export function registrationsChips(
   view,
@@ -71,8 +96,7 @@ export function registrationsChips(
 export function registrationsTableTemplate(
   data,
   { timeHeader, timeAttr },
-  { page, pages, total, params },
-  { renderDetail }
+  { page, pages, total, params }
 ) {
   return html`
     <table>
@@ -126,7 +150,7 @@ export function registrationsTableTemplate(
                 () => html`
                   <a
                     class="hc-action-button"
-                    href="tel:${row.phone.replace(" ", "")}"
+                    href="tel:${row.phone.replace(/\s+/g, "")}"
                     title="Zavolat ${row.phone}"
                   >
                     <md-icon>call</md-icon>
@@ -142,72 +166,51 @@ export function registrationsTableTemplate(
   `;
 }
 
-export function registrationDetailTemplate(
-  { detail, selectedView },
-  { optout, optin, invoiced }
-) {
+export function registrationDetailTemplate({ detail, selectedView }) {
   if (!detail) return null;
   return html`
     <div class="hc-card hc-master-detail__detail"">
-    <h2 style="display: flex;align-items: center;gap: 12px;">
-      <span>${detail.firstName}&nbsp;${detail.lastName}</span>
-      ${ticketBadge.get(detail.ticketType)}</h2>
+    <div style="display: flex;align-items: center;gap: 12px;">
+      <md-standard-icon-button
+        aria-label="Zavřít detail"
+        title="Zavřít detail"
+        @click="${closeDetail()}">arrow_back</md-standard-icon-button>
+      <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
+      ${ticketBadge.get(detail.ticketType)}</div>
     <p>${detail.company}</p>
     <div class="hc-detail__tools">
-      <a
-        class="hc-action-button"
+      <md-standard-link-icon-button
         href="mailto:${detail.email}"
-        title="Napsat ${detail.email}"">
-        <md-icon>mail</md-icon>
-      </a>
-      ${when(
+        title="Napsat ${detail.email}"
+      >mail</md-standard-link-icon-button>${when(
         detail.phone,
-        () => html`
-          <a
-            class="hc-action-button"
-            href="tel:${detail.phone.replace(" ", "")}"
-            title="Zavolat ${detail.phone}"
-          >
-            <md-icon>call</md-icon>
-          </a>
-        `
-      )}
-      ${when(
-        selectedView === View.waitingList,
-        () => html`
-          <button
-            class="hc-action-button"
-            title="Opt in"
-            @click="${() => optin(detail.email)}"
-          >
-            <md-icon>person_add</md-icon>
-          </button>
-        `
-      )}
-      ${when(
-        selectedView !== View.paid,
-        () => html`
-          <button
-            class="hc-action-button"
-            title="Opt out"
-            @click="${() => optout(detail.email)}"
-          >
-            <md-icon>person_remove</md-icon>
-          </button>
-        `
-      )}
-      ${when(
-        selectedView === View.confirmed,
-        () => html`
-          <button
-            class="hc-action-button"
-            title="Vyfakturováno"
-            @click="${() => invoiced(detail.email)}"
-          >
-            <md-icon>request_quote</md-icon>
-          </button>
-        `
-      )}
+        () => html`<md-standard-link-icon-button
+          href="tel:${detail.phone.replace(/\s+/g, "")}"
+          title="Zavolat ${detail.phone}"
+          >call</md-standard-link-icon-button
+        >`
+      )}${when(
+    selectedView === View.waitingList,
+    () => html`<md-standard-icon-button
+      title="Opt in"
+      @click="${optin(detail.email)}"
+      >person_add</md-standard-icon-button
+    >`
+  )}${when(
+    selectedView !== View.paid,
+    () => html`<md-standard-icon-button
+      title="Opt out"
+      @click="${optout(detail.email)}"
+      >person_remove</md-standard-icon-button
+    >`
+  )}${when(
+    selectedView === View.confirmed,
+    () => html`<md-standard-icon-button
+      title="Vyfakturováno"
+      @click="${invoiced(detail.email)}"
+      >request_quote</md-standard-icon-button
+    >`
+  )}
     </div>
     ${ticketDetail(detail)}
     ${when(
@@ -285,7 +288,7 @@ const timeColumn = new Map([
   [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }],
 ]);
 
-export function registrationsTemplate(state, actions) {
+export function registrationsTemplate(state) {
   const { data, selectedView, detail, year, page, params } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -324,8 +327,7 @@ export function registrationsTemplate(state, actions) {
                 )
               ),
               timeColumnSettings,
-              { page, pages: data.pages, total: data.total, params },
-              actions
+              { page, pages: data.pages, total: data.total, params }
             );
           }),
           html`
@@ -336,7 +338,7 @@ export function registrationsTemplate(state, actions) {
         )}
       </form>
       ${when(detail, () =>
-        registrationDetailTemplate({ detail, selectedView }, actions)
+        registrationDetailTemplate({ detail, selectedView })
       )}
     </div>
   `;

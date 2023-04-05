@@ -58,6 +58,10 @@
       border: none
     }
 
+    .hc-master-detail {
+      position: relative;
+    }
+
     .hc-master-detail__list {
       --hc-viewport-compensation: 242px;
       padding: 0;
@@ -89,6 +93,17 @@
     @media screen and (max-width: 479px) {
       #top {
         padding-top: 48px;
+      }
+    }
+
+    @media (max-width: 839px) {
+      .hc-master-detail__detail {
+        width: 100vw;
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        bottom: 0;
       }
     }
 
@@ -144,6 +159,10 @@
           </h2>
         </div>
       </div>
+      <dialog id="modal" class="hc-dialog">
+        <md-standard-icon-button data-action="close">close</md-standard-icon-button>
+        <div id="modal-root"></div>
+      </dialog>
     </div>
   </mwc-drawer>
 {% endblock %}

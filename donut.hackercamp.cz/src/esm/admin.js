@@ -1,5 +1,6 @@
 import "@material/mwc-drawer/mwc-drawer.js";
 import "@material/web/iconbutton/standard-icon-button.js";
+import "@material/web/iconbutton/standard-link-icon-button.js";
 import "@material/web/button/text-button.js";
 import "@material/web/checkbox/checkbox.js";
 import "@material/web/icon/icon.js";
@@ -7,8 +8,14 @@ import "@material/web/list/list.js";
 import "@material/web/list/list-item.js";
 import "@material/web/list/list-item-link.js";
 import { defAtom } from "@thi.ng/atom";
-import { html } from "lit-html";
-import { Endpoint, executeCommand, View } from "./admin/common.js";
+import { html, render } from "lit-html";
+import {
+  Action,
+  Endpoint,
+  executeCommand,
+  getDialog,
+  View,
+} from "./admin/common.js";
 import {
   getContact,
   getSlackProfile,
@@ -163,8 +170,16 @@ function editEvent(event_id, updates) {
   return saveEditedEvent(event_id, year, updates, apiHost);
 }
 
-const renderDetail = (detail) => () =>
+function renderDetail(detail) {
   transact((x) => Object.assign(x, { detail }));
+}
+
+async function renderModalDialog(name) {
+  const root = document.getElementById("modal-root");
+  const template = getDialog(name);
+  await render(template(state.deref()), root);
+  showModalDialog("modal");
+}
 
 async function showEditEventModalDialog(event, { editEvent }) {
   const { campStartAt, campEndAt, apiHost, data } = state.deref();
@@ -215,32 +230,22 @@ const programViews = new Set(["program", "programApproval"]);
 
 async function renderView(state) {
   const { selectedView } = state;
-  const actions = {
-    optout,
-    optin,
-    invoiced,
-    renderDetail,
-    editEvent,
-    deleteEvent,
-    approveEvent,
-    showEditEventModalDialog,
-  };
   if (registrationViews.has(selectedView)) {
     const { registrationsTemplate } = await import("./admin-registrations.js");
-    return registrationsTemplate(state, actions);
+    return registrationsTemplate(state);
   }
   if (attendeeViews.has(selectedView)) {
     const { attendeesTemplate } = await import("./admin-attendees.js");
-    return attendeesTemplate(state, actions);
+    return attendeesTemplate(state);
   }
   if (programViews.has(selectedView)) {
     const { programTemplate } = await import("./admin-program.js");
-    return programTemplate(state, actions);
+    return programTemplate(state);
   }
   switch (selectedView) {
     case View.housing:
       const { housingTemplate } = await import("./admin-housing.js");
-      return housingTemplate(state, actions);
+      return housingTemplate(state);
     default:
       return html`Pohled do neznáma`;
   }
@@ -312,6 +317,36 @@ function changeTitle(viewTitle, view) {
   viewTitle.textContent = endpointName.get(endpoint);
 }
 
+async function handleMessage(e) {
+  const { type, payload } = e.data;
+  switch (type) {
+    case Action.optin:
+      optin(payload.email);
+      break;
+    case Action.optout:
+      optout(payload.email);
+      break;
+    case Action.invoiced:
+      await invoiced(payload.email);
+      break;
+    case Action.renderDetail:
+      renderDetail(payload.detail);
+      break;
+    case Action.editEvent:
+      await editEvent(payload.eventId, payload.updates);
+      break;
+    case Action.deleteEvent:
+      deleteEvent(payload.eventId, payload.people);
+      break;
+    case Action.approveEvent:
+      approveEvent(payload.eventId);
+      break;
+    case Action.showModalDialog:
+      await renderModalDialog(payload.name);
+      break;
+  }
+}
+
 export async function main({
   appRoot,
   searchParams,
@@ -333,6 +368,8 @@ export async function main({
       `?${new URLSearchParams({ year: e.target.value, view: selectedView })}`
     );
   });
+
+  addEventListener("message", handleMessage);
 
   transact((x) =>
     Object.assign(

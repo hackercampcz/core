@@ -9,20 +9,15 @@ export function showModalDialog(id) {
   document.body.classList.add("has-open-dialog");
 
   let opened = true;
-  const close = () => {
+
+  function close() {
     document.body.classList.remove("has-open-dialog");
     element.close();
     opened = false;
-  };
-
-  document.addEventListener("keydown", (event) => {
-    if (opened && event.keyCode === 27) {
-      close();
-    }
-  });
+  }
 
   element.addEventListener("click", (event) => {
-    if (event.target.name === "close") {
+    if (event.target.dataset.action === "close") {
       close();
     }
   });

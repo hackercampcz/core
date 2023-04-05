@@ -5,6 +5,53 @@ import { classMap } from "lit-html/directives/class-map.js";
 import { until } from "lit-html/directives/until.js";
 import { formatMoney } from "@hackercamp/lib/format.mjs";
 
+export const Action = {
+  optout: "optout",
+  optin: "optin",
+  invoiced: "invoiced",
+  renderDetail: "renderDetail",
+  editEvent: "editEvent",
+  deleteEvent: "deleteEvent",
+  approveEvent: "approveEvent",
+  showModalDialog: "showModalDialog",
+};
+
+export function dispatchAction(type, payload) {
+  postMessage({ type, payload });
+}
+
+const dialogRegistry = new Map();
+export function registerDialog(name, template) {
+  dialogRegistry.set(name, template);
+}
+export function getDialog(name) {
+  return dialogRegistry.get(name);
+}
+
+export const View = {
+  paid: "paid",
+  invoiced: "invoiced",
+  confirmed: "confirmed",
+  hackers: "hackers",
+  waitingList: "waitingList",
+  optouts: "optouts",
+  attendees: "attendees",
+  hackerAttendees: "hackerAttendees",
+  staffAttendees: "staffAttendees",
+  crewAttendees: "crewAttendees",
+  volunteerAttendees: "volunteerAttendees",
+  housing: "housing",
+  program: "program",
+  programApproval: "programApproval",
+};
+
+export const Endpoint = {
+  registrations: "registrations",
+  attendees: "attendees",
+  housing: "housing",
+  program: "program",
+};
+
 export async function executeCommand(apiHost, endpoint, command, params) {
   const resource = new URL(`admin/${endpoint}`, apiHost).href;
   const resp = await withAuthHandler(
@@ -33,30 +80,6 @@ export async function executeCommand(apiHost, endpoint, command, params) {
   );
   if (!resp.ok) throw new Error(resp.status);
 }
-
-export const View = {
-  paid: "paid",
-  invoiced: "invoiced",
-  confirmed: "confirmed",
-  hackers: "hackers",
-  waitingList: "waitingList",
-  optouts: "optouts",
-  attendees: "attendees",
-  hackerAttendees: "hackerAttendees",
-  staffAttendees: "staffAttendees",
-  crewAttendees: "crewAttendees",
-  volunteerAttendees: "volunteerAttendees",
-  housing: "housing",
-  program: "program",
-  programApproval: "programApproval",
-};
-
-export const Endpoint = {
-  registrations: "registrations",
-  attendees: "attendees",
-  housing: "housing",
-  program: "program",
-};
 
 export function unauthorized() {
   return html`<p style="padding: 16px">
@@ -238,4 +261,25 @@ export function paginationNavigation({ page, pages, count, total, params }) {
       >
     </div>
   `;
+}
+
+export function renderDetail(detail) {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.renderDetail, { detail });
+  };
+}
+
+export function closeDetail() {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.renderDetail, { detail: undefined });
+  };
+}
+
+export function renderModalDialog(name) {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.showModalDialog, { name });
+  };
 }

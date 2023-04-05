@@ -1,7 +1,7 @@
+import { sortBy } from "@hackercamp/lib/array.mjs";
 import { html } from "lit-html";
 import { until } from "lit-html/directives/until.js";
 import { ticketName, unauthorized } from "./admin/common.js";
-import { sortBy } from "@hackercamp/lib/array.mjs";
 import { housing } from "./lib/attendee.js";
 
 function housingTable(data) {

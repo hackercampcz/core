@@ -1,20 +1,23 @@
+import { sortBy } from "@hackercamp/lib/array.mjs";
+import { formatDateTime } from "@hackercamp/lib/format.mjs";
+import { html } from "lit-html";
+import { until } from "lit-html/directives/until.js";
+import { when } from "lit-html/directives/when.js";
 import {
   chip,
+  closeDetail,
   Endpoint,
   executeCommand,
   lineup,
+  registerDialog,
+  renderDetail,
+  renderModalDialog,
   ticketDetail,
   ticketName,
   unauthorized,
   View,
 } from "./admin/common.js";
-import { html } from "lit-html";
-import { formatDateTime } from "@hackercamp/lib/format.mjs";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
-import { showModalDialog } from "./modal-dialog.js";
-import { when } from "lit-html/directives/when.js";
-import { until } from "lit-html/directives/until.js";
-import { sortBy } from "@hackercamp/lib/array.mjs";
 
 /**
  * @param {Object} attendee
@@ -87,7 +90,7 @@ export function attendeesChips(
   `;
 }
 
-export function attendeesTableTemplate(data, { renderDetail }) {
+export function attendeesTableTemplate(data) {
   return html`
     <table>
       <thead>
@@ -130,23 +133,22 @@ export function attendeeDetailTemplate({ detail }) {
   if (!detail) return null;
   return html`
     <div class="hc-card hc-master-detail__detail"">
-    <h2 style="display: flex;align-items: center;gap: 12px;">
-      <span>${detail.name}</span>
-      ${ticketBadge.get(detail.ticketType)}</h2>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <md-standard-icon-button
+        aria-label="Zavřít detail"
+        title="Zavřít detail"
+        @click="${closeDetail()}">arrow_back</md-standard-icon-button>
+      <h2 style="margin: 0">${detail.name}</h2>
+      ${ticketBadge.get(detail.ticketType)}</div>
     <p>${detail.company}</p>
     <div class="hc-detail__tools">
-      <a
-        class="hc-action-button"
+      <md-standard-link-icon-button
         href="mailto:${detail.email}"
-        title="Napsat ${detail.email}"">
-        <md-icon>mail</md-icon>
-      </a>
-      <button
-        class="hc-action-button"
+        title="Napsat ${detail.email}"
+        >mail</md-standard-link-icon-button><md-standard-icon-button
         title="Upravit účastníka"
-        @click="${() => showModalDialog("attendee-modal")}">
-        <md-icon>edit</md-icon>
-      </button>
+        @click="${renderModalDialog("attendee-modal")}"
+      >edit</md-standard-icon-button>
     </div>
     ${ticketDetail(detail)}
     <p>Ubytování: <strong>${
@@ -197,14 +199,38 @@ export function attendeeDetailTemplate({ detail }) {
   `;
 }
 
-export function attendeesTemplate(state, actions) {
-  const { data, selectedView, detail, apiHost, year } = state;
-  const apiURL = (resource) => new URL(resource, apiHost).href;
+registerDialog("attendee-modal", attendeeModalDialog);
+
+function attendeeModalDialog({ detail, apiHost }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    await attendees.edit(Object.fromEntries(form.entries()), apiHost);
+    await edit(Object.fromEntries(form.entries()), apiHost);
   };
+  const apiURL = (resource) => new URL(resource, apiHost).href;
+  return html`
+    <form
+      method="post"
+      @submit="${onSubmit}"
+      action="${apiURL("admin/program")}"
+    >
+      <input type="hidden" name="year" value="${detail.year}" />
+      <input type="hidden" name="slackID" value="${detail.slackID}" />
+      <div class="field">
+        <label for="note">Poznámka</label>
+        <input id="note" name="note" value="${detail.note}" />
+      </div>
+      <div class="field">
+        <label for="nfc-tron-id">NFCtron ID</label>
+        <input id="nfc-tron-id" name="nfcTronID" value="${detail.nfcTronID}" />
+      </div>
+      <button type="submit" class="hc-button">Odeslat to</button>
+    </form>
+  `;
+}
+
+export function attendeesTemplate(state) {
+  const { data, selectedView, detail, year } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${attendeesChips(selectedView, year, {
@@ -218,7 +244,7 @@ export function attendeesTemplate(state, actions) {
         ${until(
           data?.then((data) => {
             if (data.unauthorized) return unauthorized();
-            return attendeesTableTemplate(sortBy("paid", data), actions);
+            return attendeesTableTemplate(sortBy("paid", data));
           }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -227,42 +253,7 @@ export function attendeesTemplate(state, actions) {
           `
         )}
       </div>
-      ${when(detail, () => [
-        attendeeDetailTemplate({ detail }),
-        attendeeModalDialog({ detail, onSubmit, apiURL }),
-      ])}
+      ${when(detail, () => attendeeDetailTemplate({ detail }))}
     </div>
-  `;
-}
-
-function attendeeModalDialog({ detail, onSubmit, apiURL }) {
-  return html`
-    <dialog id="attendee-modal">
-      <div id="attendee-modal-root">
-        <form
-          method="post"
-          @submit="${onSubmit}"
-          action="${apiURL("admin/program")}"
-        >
-          <input type="hidden" name="year" value="${detail.year}" />
-          <input type="hidden" name="slackID" value="${detail.slackID}" />
-          <div class="field">
-            <label for="note">Poznámka</label>
-            <input id="note" name="note" value="${detail.note}" />
-          </div>
-          <div class="field">
-            <label for="nfc-tron-id">NFCtron ID</label>
-            <input
-              id="nfc-tron-id"
-              name="nfcTronID"
-              value="${detail.nfcTronID}"
-            />
-          </div>
-          <button type="submit" class="hc-button">Odeslat to</button>
-        </form>
-      </div>
-      <hr />
-      <button name="close" type="reset">Zavřít</button>
-    </dialog>
   `;
 }

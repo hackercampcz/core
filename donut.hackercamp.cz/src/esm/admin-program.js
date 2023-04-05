@@ -1,9 +1,15 @@
-import { chip, lineup, unauthorized, View } from "./admin/common.js";
-import { html } from "lit-html";
-import { when } from "lit-html/directives/when.js";
-import { formatDateTime } from "@hackercamp/lib/format.mjs";
-import { until } from "lit-html/directives/until.js";
 import { sortBy } from "@hackercamp/lib/array.mjs";
+import { formatDateTime } from "@hackercamp/lib/format.mjs";
+import { html } from "lit-html";
+import { until } from "lit-html/directives/until.js";
+import { when } from "lit-html/directives/when.js";
+import {
+  chip,
+  lineup,
+  renderModalDialog,
+  unauthorized,
+  View,
+} from "./admin/common.js";
 
 export function programChips(view, year, { program, programApproval }) {
   return html`
@@ -44,10 +50,7 @@ export function programModalDialog() {
   `;
 }
 
-function programTable(
-  data,
-  { approveEvent, deleteEvent, editEvent, showEditEventModalDialog }
-) {
+function programTable(data) {
   return html`
     <table style="width: 100%;">
       <thead>
@@ -88,7 +91,7 @@ function programTable(
                     <button
                       class="hc-action-button"
                       title="Schválit event"
-                      @click="${() => approveEvent(row._id)}"
+                      @click="${approveEvent(row._id)}"
                     >
                       <md-icon>done</md-icon>
                     </button>
@@ -97,20 +100,17 @@ function programTable(
                 <button
                   class="hc-action-button"
                   title="Upravit event"
-                  @click="${() => {
-                    showEditEventModalDialog(row, { editEvent });
-                  }}"
+                  @click="${renderModalDialog("edit-event")}"
                 >
                   <md-icon>edit</md-icon>
                 </button>
                 <button
                   class="hc-action-button"
                   title="Smazat event"
-                  @click="${() =>
-                    deleteEvent(
-                      row._id,
-                      row.people?.map((x) => x.slackID) ?? []
-                    )}"
+                  @click="${deleteEvent(
+                    row._id,
+                    row.people?.map((x) => x.slackID) ?? []
+                  )}"
                 >
                   <md-icon>delete_forever</md-icon>
                 </button>
@@ -127,7 +127,7 @@ function filterEvents(events) {
   return events.filter(({ type }) => ["org"].includes(type) === false);
 }
 
-export function programTemplate(state, actions) {
+export function programTemplate(state) {
   const { data, selectedView, year } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -142,8 +142,7 @@ export function programTemplate(state, actions) {
             if (data.unauthorized) return unauthorized();
             return [
               programTable(
-                sortBy("startAt", filterEvents(data), { asc: true }),
-                actions
+                sortBy("startAt", filterEvents(data), { asc: true })
               ),
               programModalDialog(),
             ];

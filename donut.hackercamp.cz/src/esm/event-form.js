@@ -1,10 +1,10 @@
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
+import { when } from "lit-html/directives/when.js";
 import { setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
-import { when } from "lit/directives/when.js";
 
 export const state = defAtom({
   view: signpostTemplate,
