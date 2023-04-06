@@ -98,7 +98,7 @@ async function getRegistrations(tag, year, page) {
 
 async function formatResponse(data, { year, type, format }) {
   if (format === "csv") {
-    const text = await csv.writeToString(data, { headers: true });
+    const text = await csv.writeToString(data.items, { headers: true });
     return response(text, {
       headers: {
         "Content-Type": "text/csv",
