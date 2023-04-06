@@ -4,6 +4,7 @@ import {
   ScanCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import csv from "@fast-csv/format";
 import createSearchClient from "algoliasearch";
 import { response } from "../../http.mjs";
 import { resultsCount } from "../../algolia.mjs";
@@ -95,21 +96,38 @@ async function getRegistrations(tag, year, page) {
   };
 }
 
+async function formatResponse(data, { year, type, format }) {
+  if (format === "csv") {
+    const text = await csv.writeToString(data, { headers: true });
+    return response(text, {
+      headers: {
+        "Content-Type": "text/csv",
+        "Content-Disposition": `attachment; filename=hc-${year}-registrations-${type}.csv`,
+      },
+    });
+  }
+  return response(data);
+}
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
   console.log("QS", event.queryStringParameters);
-  const { type, year, page } = Object.assign(
+  const { type, year, page, format } = Object.assign(
     { year: "2022", page: "0" },
     event.queryStringParameters
   );
+
+  // TODO: infer `format` from "Accept-Type" header
+  // TODO: For CSV export get all items, not just one page
+
   if (type === "optouts") {
     const optouts = await getOptOuts(parseInt(year));
-    return response(optouts);
+    return formatResponse(optouts, { year, type, format });
   }
 
   const data = await getRegistrations(type, parseInt(year), parseInt(page));
-  return response(data);
+  return formatResponse(data, { year, type, format });
 }
