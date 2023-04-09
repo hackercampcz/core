@@ -2802,7 +2802,7 @@ __metadata:
     "@hackercamp/lib": "workspace:lib"
     algoliasearch: ^4.16.0
     eslint: 8.38.0
-    fast-xml-parser: 4.1.4
+    fast-xml-parser: 4.2.0
     immutable: ^4.3.0
     jsonwebtoken: 9.0.0
     rollbar: ^2.26.1
@@ -7580,14 +7580,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:4.1.4":
-  version: 4.1.4
-  resolution: "fast-xml-parser@npm:4.1.4"
+"fast-xml-parser@npm:4.2.0":
+  version: 4.2.0
+  resolution: "fast-xml-parser@npm:4.2.0"
   dependencies:
     strnum: ^1.0.5
   bin:
     fxparser: src/cli/cli.js
-  checksum: bccc4747bb1e167cb882b708bf5b964ee6d9f9f659ee5957f44ce37885c12a4883fd51f32685eb9eac2bdb55ed134327cbaa09e65afd8dba8807c906aafeada2
+  checksum: 2e634740367781c365bd3d41608c1b39eceb8fc8a551228da09887220135cbaf16527c0d919c3334bea6ed416dc0171a6a8546a2beb3a4096f7cc32bbbc04091
   languageName: node
   linkType: hard
 
