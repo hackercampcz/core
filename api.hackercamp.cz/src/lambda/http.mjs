@@ -1,4 +1,4 @@
-/** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
+/** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
 
 /**
  * @param {Record<string, any> | string} body

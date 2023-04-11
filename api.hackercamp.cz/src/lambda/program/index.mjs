@@ -4,8 +4,8 @@ import * as get from "./get.mjs";
 import * as post from "./post.mjs";
 import Rollbar from "../rollbar.mjs";
 
-/** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
-/** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
+/** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
+/** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
 
 const rollbar = Rollbar.init({ lambdaName: "program" });
 

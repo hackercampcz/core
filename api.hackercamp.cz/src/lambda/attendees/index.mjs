@@ -8,8 +8,8 @@ import { getHeader, internalError, response, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
-/** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
-/** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
+/** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
+/** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
 
 const dynamo = new DynamoDBClient({});
 const rollbar = Rollbar.init({ lambdaName: "attendees" });

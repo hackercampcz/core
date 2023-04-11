@@ -18,8 +18,8 @@ import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
-/** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
-/** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
+/** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
+/** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
