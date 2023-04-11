@@ -118,7 +118,7 @@ async function formatResponse(data, { year, type, format }) {
 export async function handler(event) {
   console.log({ queryString: event.queryStringParameters });
   const { type, year, page, format } = Object.assign(
-    { year: "2022", page: "0", format, type },
+    { year: "2022", page: "0" },
     event.queryStringParameters
   );
 
