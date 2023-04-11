@@ -23,10 +23,10 @@ export async function attendees(event) {
     switch (event.httpMethod) {
       case "GET":
         await checkAuthorization(event);
-        return get.handler(event).then((x) => withCORS_(x));
+        return await get.handler(event).then((x) => withCORS_(x));
       case "POST":
         await checkAuthorization(event);
-        return post.handler(event).then((x) => withCORS_(x));
+        return await post.handler(event).then((x) => withCORS_(x));
       case "OPTIONS":
         return withCORS_({
           statusCode: 204,

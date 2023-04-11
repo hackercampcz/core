@@ -98,7 +98,9 @@ async function getRegistrations(tag, year, page) {
 
 async function formatResponse(data, { year, type, format }) {
   if (format === "csv") {
+    console.log({ event: "Formatting CSV" });
     const text = await csv.writeToString(data.items, { headers: true });
+    console.log(text)
     return response(text, {
       headers: {
         "Content-Type": "text/csv",
@@ -114,9 +116,9 @@ async function formatResponse(data, { year, type, format }) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  console.log("QS", event.queryStringParameters);
+  console.log({ queryString: event.queryStringParameters });
   const { type, year, page, format } = Object.assign(
-    { year: "2022", page: "0" },
+    { year: "2022", page: "0", format, type },
     event.queryStringParameters
   );
 

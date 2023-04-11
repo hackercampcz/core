@@ -4,7 +4,7 @@ import {
   GetItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { getHeader, response, withCORS } from "../http.mjs";
+import { getHeader, internalError, response, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -52,13 +52,20 @@ export async function attendees(event) {
       body: "",
     });
   }
-  const params = Object.assign({ year: "2022" }, event.queryStringParameters);
-  console.log({ method: "GET", params });
-  const year = parseInt(params.year, 10);
-  if (params.slackID) {
-    return withCORS_(response(await getAttendee(dynamo, params.slackID, year)));
+  try {
+    const params = Object.assign({ year: "2022" }, event.queryStringParameters);
+    console.log({ method: "GET", params });
+    const year = parseInt(params.year, 10);
+    if (params.slackID) {
+      const attendee = await getAttendee(dynamo, params.slackID, year);
+      return withCORS_(response(attendee));
+    }
+    const attendees = await getAttendees(dynamo, year);
+    return withCORS_(response(attendees));
+  } catch (err) {
+    rollbar.error(err);
+    return withCORS_(internalError());
   }
-  return withCORS_(response(await getAttendees(dynamo, year)));
 }
 
 export const handler = rollbar.lambdaHandler(attendees);
