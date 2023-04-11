@@ -35,6 +35,9 @@ button.hc-header__profile-photo:hover {
   color: inherit;
   text-decoration: none;
 }
+.hc-header__profile-name a:hover {
+  text-decoration: underline;
+}
 
 .hc-popup {
   width: 16rem;
