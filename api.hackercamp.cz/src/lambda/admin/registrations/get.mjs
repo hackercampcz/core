@@ -55,25 +55,27 @@ async function getItemsFromDB(db, hits) {
 
 /**
  *
+ * @param {string} query
  * @param {string} tag
  * @param {number} year
  * @param {number} page
+ * @param {number} pageSize
  */
-async function getRegistrations(tag, year, page) {
+async function getRegistrations(query, tag, year, page, pageSize) {
   const { algolia_app_id, algolia_search_key, algolia_index_name } =
     process.env;
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
-  console.log(`Loading ${tag} registrations`, { year, page });
+  console.log({ event: "Loading registrations", year, page, pageSize, query });
+
   const { results } = await client.multipleQueries([
     {
+      query,
       indexName: algolia_index_name,
-      query: "",
       params: {
         attributesToRetrieve: ["year", "email"],
         tagFilters: [year.toString(), tag],
-        // TODO: make page size reasonably small
-        hitsPerPage: 20,
+        hitsPerPage: pageSize,
         page,
       },
     },
@@ -86,6 +88,7 @@ async function getRegistrations(tag, year, page) {
   const [{ hits, ...searchResult }, ...counts] = results;
   const [paid, invoiced, confirmed, waitingList] = counts.map((x) => x.nbHits);
 
+  // TODO: handle page size > 100 items by batching DynamoDB requests
   const items = await getItemsFromDB(db, hits);
   return {
     items,
@@ -114,8 +117,8 @@ async function formatResponse(data, { year, type, format }) {
  */
 export async function handler(event) {
   console.log({ queryString: event.queryStringParameters });
-  const { type, year, page, format } = Object.assign(
-    { year: "2022", page: "0" },
+  const { type, year, page, pageSize, format, query } = Object.assign(
+    { year: "2022", page: "0", pageSize: "20", query: "" },
     event.queryStringParameters
   );
 
@@ -127,6 +130,12 @@ export async function handler(event) {
     return formatResponse(optouts, { year, type, format });
   }
 
-  const data = await getRegistrations(type, parseInt(year), parseInt(page));
+  const data = await getRegistrations(
+    query,
+    type,
+    parseInt(year),
+    parseInt(page),
+    parseInt(pageSize)
+  );
   return formatResponse(data, { year, type, format });
 }
