@@ -100,12 +100,9 @@ async function formatResponse(data, { year, type, format }) {
   if (format === "csv") {
     console.log({ event: "Formatting CSV" });
     const text = await csv.writeToString(data.items, { headers: true });
-    console.log(text)
     return response(text, {
-      headers: {
-        "Content-Type": "text/csv",
-        "Content-Disposition": `attachment; filename=hc-${year}-registrations-${type}.csv`,
-      },
+      "Content-Type": "text/csv",
+      "Content-Disposition": `attachment; filename=hc-${year}-registrations-${type}.csv`,
     });
   }
   return response(data);
