@@ -358,6 +358,14 @@
       font-size: 16px;
     }
 
+    #reg section .hc-card {
+      margin: 2em 0;
+    }
+
+    #reg section .hc-card h3:first-child {
+      margin-top: 0;
+    }
+
     .section-story {
       font-size: 14px;
     }
@@ -384,6 +392,8 @@
       flex-direction: column;
       padding-bottom: 4px;
       flex: 1;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     #reg fieldset {
@@ -566,65 +576,76 @@
   </header>
 </div>
 <form action="{{ build["api-host"] }}registration" method="post" class="mdc-layout-grid" id="reg">
-  <section>
+  <section id="contact">
     <h2>Něco o tobě</h2>
     <div class="hc-card">
-      <div class="group">
-        <div class="field">
-          <label for="firstname">
-            Jméno
-          </label>
-          <input id="firstname" name="firstName" type="text" autocomplete="given-name" required="required"/>
+      <fieldset>
+        <div class="group">
+          <div class="field">
+            <label for="firstname">
+              Jméno
+            </label>
+            <input id="firstname" name="firstName" type="text" autocomplete="given-name" required="required"/>
+          </div>
+          <div class="field">
+            <label for="lastname">
+              Příjmení
+            </label>
+            <input id="lastname" name="lastName" type="text" autocomplete="family-name" required="required"/>
+          </div>
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="email">
+              E-mail
+            </label>
+            <input id="email" name="email" type="email" autocomplete="email" required="required"/>
+          </div>
+          <div class="field">
+            <label for="phonenum">
+              Telefon
+            </label>
+            <input id="phonenum" name="phone" type="tel" autocomplete="tel" required="required"/>
+          </div>
         </div>
         <div class="field">
-          <label for="lastname">
-            Příjmení
+          <label for="company">
+            Jméno firmy
+            (jednotlivec nemusí)
           </label>
-          <input id="lastname" name="lastName" type="text" autocomplete="family-name" required="required"/>
+          <input id="company" name="company" type="text" autocomplete="on"/>
         </div>
-      </div>
-      <div class="group">
-        <div class="field">
-          <label for="email">
-            E-mail
-          </label>
-          <input id="email" name="email" type="email" autocomplete="email" required="required"/>
+        <div class="group">
+          <div class="field">
+            <label for="first-time">
+              Jedeš na HC poprvé?
+            </label>
+            <select name="firstTime" id="first-time">
+              <option value="1">Ano</option>
+              <option value="0">Byl/a jsem loni</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="inviter">
+              Kdo tě pozval?
+            </label>
+            <input id="inviter" name="inviter" type="text" placeholder="Celé jméno prosím"/>
+          </div>
         </div>
-        <div class="field">
-          <label for="phonenum">
-            Telefon
-          </label>
-          <input id="phonenum" name="phone" type="tel" autocomplete="tel" required="required"/>
+        <p id="go-to-login" aria-hidden="true">
+          <strong>Aha!</strong> Tak to už máš přístup na Slack - <a
+            href="https://donut.hackercamp.cz/registrace/"><strong>Pojď tudy</strong></a>!
+        </p>
+      </fieldset>
+    </div>
+    <div class="hc-card">
+      <fieldset id="volunteer" disabled aria-hidden="true">
+        <h3>Co od tebe budem potřebovat?</h3>
+        <div class="field field--block">
+          <label for="volunteerbio">Řekni nám něco o sobě</label>
+          <textarea id="volunteerbio" name="volunteerBio" rows="5" required></textarea>
         </div>
-      </div>
-      <div class="field">
-        <label for="company">
-          Jméno firmy
-          (jednotlivec nemusí)
-        </label>
-        <input id="company" name="company" type="text" autocomplete="on"/>
-      </div>
-      <div class="group">
-        <div class="field">
-          <label for="first-time">
-            Jedeš na HC poprvé?
-          </label>
-          <select name="firstTime" id="first-time">
-            <option value="1">Ano</option>
-            <option value="0">Byl/a jsem loni</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="inviter">
-            Kdo tě pozval?
-          </label>
-          <input id="inviter" name="inviter" type="text" placeholder="Celé jméno prosím"/>
-        </div>
-      </div>
-      <p id="go-to-login" aria-hidden="true">
-        <strong>Aha!</strong> Tak to už máš přístup na Slack - <a
-          href="https://donut.hackercamp.cz/registrace/"><strong>Pojď tudy</strong></a>!
-      </p>
+      </fieldset>
     </div>
   </section>
   <script type="module">
@@ -649,57 +670,61 @@
     //   }
     // });
   </script>
-  <section>
+  <section id="ticket">
     <h2>Lístek</h2>
     <div class="hc-card">
-      <div class="choose">
-        <input type="radio" name="ticketType" value="nonprofit" id="ticket-nonprofit"/>
-        <label for="ticket-nonprofit">
-          <strong>Táborník z neziskovky</strong> - 3&thinsp;000&nbsp;CZK
-          <span>Zvýhodněné vstupné (pro neziskové organizace a studenty)</span>
-        </label>
-      </div>
-      <div class="choose">
-        <input type="radio" name="ticketType" value="hacker" checked="checked" id="ticket-hacker"/>
-        <label for="ticket-hacker">
-          <strong>Hacker</strong> - 6&thinsp;000&nbsp;CZK<br/>
-          <span>Normální vstupné</span>
-        </label>
-      </div>
-      <div class="choose">
-        <input type="radio" name="ticketType" value="hacker-plus" id="ticket-hacker-plus"/>
-        <label for="ticket-hacker-plus">
-          <strong>Hacker filantrop</strong> - 9&thinsp;000&nbsp;CZK
-          <span>Normální vstupné + příspěvek na vstupné pro neziskové organizace a studenty</span>
-        </label>
-      </div>
-      <div class="choose">
-        <input type="radio" name="ticketType" value="hacker-patron" id="ticket-patron"/>
-        <div>
-          <label for="ticket-patron">
-            <strong>Patron campu</strong>
-            <span>Chci podpořit neziskovku i vás, protože chci podobnou akci i za rok.</span>
-          </label>
-          <label class="patron-allowance">
-            Přispěju částkou 9&thinsp;000&nbsp;CZK +
-            <input type="text" name="patronAllowance"/>&nbsp;CZK
+      <fieldset>
+        <div class="choose">
+          <input type="radio" name="ticketType" value="nonprofit" id="ticket-nonprofit"/>
+          <label for="ticket-nonprofit">
+            <strong>Táborník z neziskovky</strong> - 3&thinsp;000&nbsp;CZK
+            <span>Zvýhodněné vstupné (pro neziskové organizace a studenty)</span>
           </label>
         </div>
-      </div>
+        <div class="choose">
+          <input type="radio" name="ticketType" value="hacker" checked="checked" id="ticket-hacker"/>
+          <label for="ticket-hacker">
+            <strong>Hacker</strong> - 6&thinsp;000&nbsp;CZK<br/>
+            <span>Normální vstupné</span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="ticketType" value="hacker-plus" id="ticket-hacker-plus"/>
+          <label for="ticket-hacker-plus">
+            <strong>Hacker filantrop</strong> - 9&thinsp;000&nbsp;CZK
+            <span>Normální vstupné + příspěvek na vstupné pro neziskové organizace a studenty</span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="ticketType" value="hacker-patron" id="ticket-patron"/>
+          <div>
+            <label for="ticket-patron">
+              <strong>Patron campu</strong>
+              <span>Chci podpořit neziskovku i vás, protože chci podobnou akci i za rok.</span>
+            </label>
+            <label class="patron-allowance">
+              Přispěju částkou 9&thinsp;000&nbsp;CZK +
+              <input type="text" name="patronAllowance"/>&nbsp;CZK
+            </label>
+          </div>
+        </div>
+      </fieldset>
     </div>
   </section>
-  <section>
+  <section id="invoice">
     <h2>Fakturace</h2>
     <p class="disclaimer">Tahle sekce je důležitá, abychom vám mohli vystavit fakturu za vstupenky.</p>
     <div class="hc-card">
       <div class="field">
-        <label for="invoice-recipient">
-          Kdo to zaplatí?
-        </label>
-        <select name="invRecipient" id="invoice-recipient">
-          <option value="0">No, budu to muset být já (jedu sám nebo mám na starosti víc lidí)</option>
-          <option value="1">Někdo jiný (vedoucí výpravy naší skupiny)</option>
-        </select>
+        <fieldset>
+          <label for="invoice-recipient">
+            Kdo to zaplatí?
+          </label>
+          <select name="invRecipient" id="invoice-recipient">
+            <option value="0">No, budu to muset být já (jedu sám nebo mám na starosti víc lidí)</option>
+            <option value="1">Někdo jiný (vedoucí výpravy naší skupiny)</option>
+          </select>
+        /fieldset>
       </div>
       <fieldset id="I-will-pay">
         <p>Prosím, <strong>tohle vyplň už teď</strong>. Ušetříme si tím společně spoustu času.</p>
@@ -789,6 +814,9 @@
       section.setAttribute("aria-hidden", "true");
       section.setAttribute("disabled", "true");
     }
+    window.showSection = showSection;
+    window.hideSection = hideSection;
+
     hideSection("someone-else-will-pay");
     document.querySelector("#email").addEventListener("blur", event => {
       document.querySelector("#invoice-email").setAttribute("placeholder", event.target.value);
@@ -807,78 +835,82 @@
     Následující informace bude možné doplnit později. Pokud ale už znáš odpovědi, můžeš si je tu připravit - změnit je
     bude možné :)
   </p>
-  <section>
+  <section id="housing">
     <h2>Ubytování</h2>
     <div class="hc-card">
-      <div class="field">
-        <label for="stay-time">
-          Na jak dlouho dorazíš?
-        </label>
-        <select name="stayTime" id="stay-time">
-          <option value="0">Od čtvrtka večera do neděle</option>
-          <option value="1">Od pátku do neděle</option>
-          <option value="2">Jiné?</option>
-        </select>
-      </div>
-      <div class="field" aria-hidden="true">
-        <label for="custom-stay-time">
-          Napiš nám, jak to plánuješ
-        </label>
-        <input id="custom-stay-time" name="stayTimeCustom" type="text"/>
-      </div>
-      <h3>Jak a kde budeš spát?</h3>
-      <div class="choose">
-        <input type="radio" name="housing" value="own-car" id="car-housing"/>
-        <label for="car-housing">
-          Přijedu autem a budu v něm i spát
-        </label>
-      </div>
-      <div class="choose">
-        <input type="radio" name="housing" value="own-caravan" id="caravan-housing"/>
-        <label for="caravan-housing">
-          Přivezu si <strong>vlastní karavan</strong>, ve kterém chci spát
-        </label>
-      </div>
-      <div class="choose">
-        <input type="radio" name="housing" value="open-air" id="openair-housing"/>
-        <label for="openair-housing">
-          Jsem pankáč a budu spát <strong>pod širákem</strong> nebo v&nbsp;hamace
-        </label>
-      </div>
-      <div class="choose">
-        <input type="radio" name="housing" value="own-tent" id="own-housing" checked="checked"/>
-        <label for="own-housing">
-          Přivezu si <strong>vlastní stan</strong> a v něm budu spát
-          <span>v areálu je k dispozici louka pro stanování</span>
-        </label>
-      </div>
-      <div class="choose">
-        <input type="radio" name="housing" value="glamping" id="glamping-housing"/>
-        <label for="glamping-housing">
-          Dejte mi místo <strong>v Glamping stanu</strong>
-          <span>
-            Stany bereme od <a href="https://chillvillage.cz/">chillvillage.cz</a> a budou mít kapacity pro 4 - 6 lidí
-          </span>
-        </label>
-      </div>
-      <div class="choose">
-        <input type="radio" name="housing" value="cottage" id="cottage-housing"/>
-        <label for="cottage-housing">
-          Chci postel <strong>v chatce</strong> pro 2, 4 nebo 6
-          <span>
-            Konkrétní postel si vybereš po zaplacení faktury
-          </span>
-        </label>
-      </div>
-      <div class="choose">
-        <input type="radio" name="housing" value="nearby" id="nearby-housing"/>
-        <label for="nearby-housing">
-          Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
-          <span>
-            V okolí je několik hezkých penzionů, zeptej se crew na případné tipy.
-          </span>
-        </label>
-      </div>
+      <fieldset>
+
+        <div class="field">
+          <label for="stay-time">
+            Na jak dlouho dorazíš?
+          </label>
+          <select name="stayTime" id="stay-time">
+            <option value="0">Od čtvrtka večera do neděle</option>
+            <option value="1">Od pátku do neděle</option>
+            <option value="2">Jiné?</option>
+          </select>
+        </div>
+        <div class="field" aria-hidden="true">
+          <label for="custom-stay-time">
+            Napiš nám, jak to plánuješ
+          </label>
+          <input id="custom-stay-time" name="stayTimeCustom" type="text"/>
+        </div>
+        <h3>Jak a kde budeš spát?</h3>
+        <div class="choose">
+          <input type="radio" name="housing" value="own-car" id="car-housing"/>
+          <label for="car-housing">
+            Přijedu autem a budu v něm i spát
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="own-caravan" id="caravan-housing"/>
+          <label for="caravan-housing">
+            Přivezu si <strong>vlastní karavan</strong>, ve kterém chci spát
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="open-air" id="openair-housing"/>
+          <label for="openair-housing">
+            Jsem pankáč a budu spát <strong>pod širákem</strong> nebo v&nbsp;hamace
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="own-tent" id="own-housing" checked="checked"/>
+          <label for="own-housing">
+            Přivezu si <strong>vlastní stan</strong> a v něm budu spát
+            <span>v areálu je k dispozici louka pro stanování</span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="glamping" id="glamping-housing"/>
+          <label for="glamping-housing">
+            Dejte mi místo <strong>v Glamping stanu</strong>
+            <span>
+              Stany bereme od <a href="https://chillvillage.cz/">chillvillage.cz</a> a budou mít kapacity pro 4 - 6 lidí
+            </span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="cottage" id="cottage-housing"/>
+          <label for="cottage-housing">
+            Chci postel <strong>v chatce</strong> pro 2, 4 nebo 6
+            <span>
+              Konkrétní postel si vybereš po zaplacení faktury
+            </span>
+          </label>
+        </div>
+        <div class="choose">
+          <input type="radio" name="housing" value="nearby" id="nearby-housing"/>
+          <label for="nearby-housing">
+            Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
+            <span>
+              V okolí je několik hezkých penzionů, zeptej se crew na případné tipy.
+            </span>
+          </label>
+        </div>
+      
+      </fieldset>
     </div>
   </section>
   <script type="module">
@@ -890,7 +922,7 @@
       }
     });
   </script>
-  <section>
+  <section id="program">
     <h2>Zapojení</h2>
     <div class="hc-card">
       <p>Každý z účastníků je zároveň aktivní tvůrce programu. Ať jsi jednotlivec, nebo se hlásíš za tým, jak náš Hacker
@@ -986,6 +1018,16 @@
   const storagePrefix = "reg:";
 
   const {searchParams} = new URL(location.href);
+
+  const volunteer = searchParams.get("volunteer") === "bagr";
+
+  if (volunteer) {
+    showSection("volunteer");
+    hideSection("ticket");
+    hideSection("invoice");
+    hideSection("program");
+    document.querySelector("#contact h2").innerText = "Dobrovolník";
+  }
 
   if (searchParams.has("referral")) {
     formElement.elements.referral.setAttribute(
