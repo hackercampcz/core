@@ -18,6 +18,8 @@ import {
   View,
 } from "./admin/common.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
+import "./components/phone-button.js";
+import "./components/mail-button.js";
 
 /**
  * @param {Object} attendee
@@ -121,11 +123,8 @@ export function attendeesTableTemplate(data) {
               <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
               <td>${row.nfcTronID}</td>
               <td>
-                <md-standard-link-icon-button
-                  href="mailto:${row.email}"
-                  title="Napsat ${row.email}"
-                  >mail</md-standard-link-icon-button
-                >
+                <hc-mail-button email="${row.email}"></hc-mail-button
+                ><hc-phone-button phone="${row.phone}"></hc-phone-button>
               </td>
             </tr>
           `
@@ -148,10 +147,8 @@ export function attendeeDetailTemplate({ detail }) {
       ${ticketBadge.get(detail.ticketType)}</div>
     <p>${detail.company}</p>
     <div class="hc-detail__tools">
-      <md-standard-link-icon-button
-        href="mailto:${detail.email}"
-        title="Napsat ${detail.email}"
-        >mail</md-standard-link-icon-button><md-standard-icon-button
+      <hc-mail-button email="${detail.email}"></hc-mail-button
+      ><md-standard-icon-button
         title="Upravit účastníka"
         @click="${renderModalDialog("attendee-modal")}"
       >edit</md-standard-icon-button>

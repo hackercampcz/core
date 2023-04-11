@@ -17,6 +17,8 @@ import {
   View,
 } from "./admin/common.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
+import "./components/phone-button.js";
+import "./components/mail-button.js";
 
 function optout(email) {
   return (e) => {
@@ -139,18 +141,8 @@ export function registrationsTableTemplate(
                 ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
               </td>
               <td>
-                ${html`<md-standard-link-icon-button
-                    href="mailto:${row.email}"
-                    title="Napsat ${row.email}"
-                    >mail</md-standard-link-icon-button
-                  >${when(
-                    row.phone,
-                    () => html`<md-standard-link-icon-button
-                      href="tel:${row.phone.replace(/\s+/g, "")}"
-                      title="Zavolat ${row.phone}"
-                      >call</md-standard-link-icon-button
-                    >`
-                  )}`}
+                <hc-mail-button email="${row.email}"></hc-mail-button
+                ><hc-phone-button phone="${row.phone}"></hc-phone-button>
               </td>
             </tr>
           `
@@ -173,24 +165,19 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       ${ticketBadge.get(detail.ticketType)}</div>
     <p>${detail.company}</p>
     <div class="hc-detail__tools">
-      <md-standard-link-icon-button
-        href="mailto:${detail.email}"
-        title="Napsat ${detail.email}"
-      >mail</md-standard-link-icon-button>${when(
-        detail.phone,
-        () => html`<md-standard-link-icon-button
-          href="tel:${detail.phone.replace(/\s+/g, "")}"
-          title="Zavolat ${detail.phone}"
-          >call</md-standard-link-icon-button
-        >`
-      )}${when(
-    selectedView === View.waitingList,
-    () => html`<md-standard-icon-button
-      title="Opt in"
-      @click="${optin(detail.email)}"
-      >person_add</md-standard-icon-button
-    >`
-  )}${when(
+      <hc-mail-button
+        email="${detail.email}"></hc-mail-button
+      ><hc-phone-button
+          phone="${detail.phone}"
+          ></hc-phone-button
+    >${when(
+      selectedView === View.waitingList,
+      () => html`<md-standard-icon-button
+        title="Opt in"
+        @click="${optin(detail.email)}"
+        >person_add</md-standard-icon-button
+      >`
+    )}${when(
     selectedView !== View.paid,
     () => html`<md-standard-icon-button
       title="Opt out"

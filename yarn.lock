@@ -2847,6 +2847,7 @@ __metadata:
     date-fns: 2.29.3
     eslint: 8.38.0
     eslint-plugin-promise: 6.1.1
+    lit: 2.7.2
     lit-html: 2.7.2
     marked: 4.3.0
     ramda: 0.29.0
@@ -10033,6 +10034,17 @@ __metadata:
   dependencies:
     "@types/trusted-types": ^2.0.2
   checksum: 8a0f83c0f6110f8d02484803c2b309c6d21011bd03681cb790c5303e4a6e4f94956cb2dcb05e67f6c4066f382193a7e5c8987ab0ca244f2fe6e85b99e2feecdd
+  languageName: node
+  linkType: hard
+
+"lit@npm:2.7.2":
+  version: 2.7.2
+  resolution: "lit@npm:2.7.2"
+  dependencies:
+    "@lit/reactive-element": ^1.6.0
+    lit-element: ^3.3.0
+    lit-html: ^2.7.0
+  checksum: e8a53a0044c23564c99af6b2bfa68f521d28263354e33049917b9595549d091dd4af332a1b7eede1bfd5ba4fda63d9194659becf7f4c0951e8d83f3f2b0ba071
   languageName: node
   linkType: hard
 
