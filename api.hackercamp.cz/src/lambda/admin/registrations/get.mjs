@@ -5,13 +5,14 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import csv from "@fast-csv/format";
+import { partition } from "@thi.ng/transducers";
 import createSearchClient from "algoliasearch";
-import { response } from "../../http.mjs";
+import { getHeader, response } from "../../http.mjs";
 import { resultsCount } from "../../algolia.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
-/** @typedef { import("@pulumi/awsx/apigateway").Request } APIGatewayProxyEvent */
-/** @typedef { import("@pulumi/awsx/apigateway").Response } APIGatewayProxyResult */
+/** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
+/** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
@@ -34,23 +35,29 @@ async function getOptOuts(year) {
  *
  * @param {DynamoDBClient} db
  * @param hits
- * @returns {Promise<*|*[]>}
+ * @returns {Promise<Record<string, any>[]>}
  */
 async function getItemsFromDB(db, hits) {
   if (hits.length === 0) return [];
   const tableName = process.env.db_table_registrations;
-  const keys = hits.map(({ year, email }) => ({
-    year: { N: `${year}` },
-    email: { S: email },
-  }));
-  const result = await db.send(
-    new BatchGetItemCommand({
-      RequestItems: { [tableName]: { Keys: keys } },
-    })
-  );
-  return result.Responses[tableName]
-    .map((x) => unmarshall(x))
-    .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp));
+  const result = [];
+  for (const batch of partition(100, true, hits)) {
+    const keys = batch.map(({ year, email }) => ({
+      year: { N: year.toString() },
+      email: { S: email },
+    }));
+    const items = await db.send(
+      new BatchGetItemCommand({
+        RequestItems: { [tableName]: { Keys: keys } },
+      })
+    );
+    result.push(
+      ...items.Responses[tableName]
+        .map((x) => unmarshall(x))
+        .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp))
+    );
+  }
+  return result;
 }
 
 /**
@@ -85,27 +92,27 @@ async function getRegistrations(query, tag, year, page, pageSize) {
     resultsCount(algolia_index_name, year, "waitingList"),
   ]);
 
-  const [{ hits, ...searchResult }, ...counts] = results;
+  const [{ hits, nbHits, nbPages }, ...counts] = results;
   const [paid, invoiced, confirmed, waitingList] = counts.map((x) => x.nbHits);
 
-  // TODO: handle page size > 100 items by batching DynamoDB requests
   const items = await getItemsFromDB(db, hits);
   return {
     items,
     page,
-    pages: searchResult.nbPages,
-    total: searchResult.nbHits,
+    pages: nbPages,
+    total: nbHits,
     counts: { paid, invoiced, confirmed, waitingList },
   };
 }
 
 async function formatResponse(data, { year, type, format }) {
-  if (format === "csv") {
+  if (format === "csv" || format === "text/csv") {
     console.log({ event: "Formatting CSV" });
     const text = await csv.writeToString(data.items, { headers: true });
+    const fileName = `hc-${year}-registrations-${type}.csv`;
     return response(text, {
       "Content-Type": "text/csv",
-      "Content-Disposition": `attachment; filename=hc-${year}-registrations-${type}.csv`,
+      "Content-Disposition": `attachment; filename=${fileName}`,
     });
   }
   return response(data);
@@ -118,12 +125,15 @@ async function formatResponse(data, { year, type, format }) {
 export async function handler(event) {
   console.log({ queryString: event.queryStringParameters });
   const { type, year, page, pageSize, format, query } = Object.assign(
-    { year: "2022", page: "0", pageSize: "20", query: "" },
+    {
+      year: "2022",
+      query: "",
+      page: "0",
+      pageSize: "20",
+      format: getHeader(event.headers, "Accept"),
+    },
     event.queryStringParameters
   );
-
-  // TODO: infer `format` from "Accept-Type" header
-  // TODO: For CSV export get all items, not just one page
 
   if (type === "optouts") {
     const optouts = await getOptOuts(parseInt(year));

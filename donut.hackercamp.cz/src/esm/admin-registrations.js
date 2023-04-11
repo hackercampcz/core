@@ -99,7 +99,7 @@ export function registrationsChips(
       <div>
         <md-standard-icon-button
           href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
-            { year, type: view, format: "csv", pageSize: 100 }
+            { year, type: view, format: "csv", pageSize: 500 }
           )}"
           title="Stáhnout CSV"
           aria-label="Stáhnout CSV"
