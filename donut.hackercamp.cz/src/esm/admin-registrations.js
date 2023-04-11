@@ -47,50 +47,65 @@ export function registrationsChips(
   { waitingList, confirmed, invoiced, paid, optouts }
 ) {
   return html`
-    <search
-      class="mdc-evolution-chip-set"
-      role="grid"
-      id="filters"
-      aria-orientation="horizontal"
-      aria-multiselectable="false"
-    >
-      <span class="mdc-evolution-chip-set__chips" role="presentation">
-        ${chip({
-          text: "Zaplacení",
-          count: paid,
-          selected: view === View.paid,
-          view: View.paid,
-          year,
-        })}
-        ${chip({
-          text: "Vyfakturovaní",
-          count: invoiced,
-          selected: view === View.invoiced,
-          view: View.invoiced,
-          year,
-        })}
-        ${chip({
-          text: "Potvrzení",
-          count: confirmed,
-          selected: view === View.confirmed,
-          view: View.confirmed,
-          year,
-        })}
-        ${chip({
-          text: "Waiting list",
-          count: waitingList,
-          selected: view === View.waitingList,
-          view: View.waitingList,
-          year,
-        })}
-        ${chip({
-          text: "Opt-outs",
-          count: optouts,
-          selected: view === View.optouts,
-          view: View.optouts,
-          year,
-        })}
-      </span>
+    <search style="display: flex; gap: 8px">
+      <div>
+        <md-standard-icon-button>search</md-standard-icon-button>
+      </div>
+      <div
+        class="mdc-evolution-chip-set"
+        role="grid"
+        id="filters"
+        aria-orientation="horizontal"
+        aria-multiselectable="false"
+      >
+        <span class="mdc-evolution-chip-set__chips" role="presentation">
+          ${chip({
+            text: "Zaplacení",
+            count: paid,
+            selected: view === View.paid,
+            view: View.paid,
+            year,
+          })}
+          ${chip({
+            text: "Vyfakturovaní",
+            count: invoiced,
+            selected: view === View.invoiced,
+            view: View.invoiced,
+            year,
+          })}
+          ${chip({
+            text: "Potvrzení",
+            count: confirmed,
+            selected: view === View.confirmed,
+            view: View.confirmed,
+            year,
+          })}
+          ${chip({
+            text: "Waiting list",
+            count: waitingList,
+            selected: view === View.waitingList,
+            view: View.waitingList,
+            year,
+          })}
+          ${chip({
+            text: "Opt-outs",
+            count: optouts,
+            selected: view === View.optouts,
+            view: View.optouts,
+            year,
+          })}
+        </span>
+      </div>
+      <div>
+        <md-standard-icon-button
+          href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
+            { year, type: view, format: "csv" }
+          )}"
+          title="Stáhnout CSV"
+          aria-label="Stáhnout CSV"
+          >download</md-standard-icon-button
+        >
+      </div>
     </search>
   `;
 }
