@@ -96,7 +96,7 @@ for (const args of readTemplates("../communication/")) {
 const queues = createQueues();
 export const slackQueueUrl = queues.slackQueueUrl;
 
-const db = createDB({ slackQueueUrl });
+const db = createDB({ slackQueueUrl, postmarkTemplates });
 export const registrationsDataTable = db.registrationsDataTable;
 export const contactsDataTable = db.contactsDataTable;
 export const optOutsDataTable = db.optOutsDataTable;

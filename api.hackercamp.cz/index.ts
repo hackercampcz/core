@@ -316,7 +316,7 @@ const getSQSHandler = (
     args
   );
 
-export function createDB({ slackQueueUrl }) {
+export function createDB({ slackQueueUrl, postmarkTemplates }) {
   const defaultLambdaRole = createDefaultLambdaRole("dynamodb");
 
   const optOuts = new aws.dynamodb.Table(hcName("optouts"), {
@@ -354,6 +354,7 @@ export function createDB({ slackQueueUrl }) {
             rollbar_access_token,
             slack_queue_url: slackQueueUrl,
             postmark_token: config.get("postmark-token"),
+            ...postmarkTemplates,
           },
         },
       }
