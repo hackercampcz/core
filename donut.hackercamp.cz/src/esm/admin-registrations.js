@@ -44,7 +44,7 @@ function invoiced(email) {
 function copyToClipboard(counts) {
   return async () => {
     const [paid, invoiced, confirmed, waitingList] = await Promise.all(counts);
-    const content = new Blob(
+    const rich = new Blob(
       [
         `<ul>
           <li>Zaplacení: <b>${paid}</b>
@@ -55,8 +55,14 @@ function copyToClipboard(counts) {
       ],
       { type: "text/html" }
     );
+    const plain = new Blob(
+      [
+        `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}`,
+      ],
+      { type: "text/plain" }
+    );
     await navigator.clipboard.write([
-      new ClipboardItem({ "text/html": content }),
+      new ClipboardItem({ "text/html": rich, "text/plain": plain }),
     ]);
     window.snackbar.labelText = "Statistiky zkopírovány do schránky";
     window.snackbar.show();
