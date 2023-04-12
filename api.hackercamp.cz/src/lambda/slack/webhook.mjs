@@ -21,9 +21,9 @@ import {
 import { postChatMessage } from "../slack.mjs";
 import Rollbar from "../rollbar.mjs";
 
-/** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
-/** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
-/** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
+/** @typedef {import("@aws-sdk/client-dynamodb").DynamoDBClient} DynamoDBClient */
+/** @typedef {import("@pulumi/awsx/classic/apigateway").Request} APIGatewayProxyEvent */
+/** @typedef {import("@pulumi/awsx/classic/apigateway").Response} APIGatewayProxyResult */
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
