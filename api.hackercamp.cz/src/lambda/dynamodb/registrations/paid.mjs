@@ -96,7 +96,7 @@ async function paidRegistrations(event) {
     } else {
       await Promise.all([
         createAttendee(dynamo, contact, record),
-        enqueueSlackWelcomeMessage({ id: contact.slackID, year }),
+        enqueueSlackWelcomeMessage({ id: contact.slackID, year: parseInt(year) }),
       ]);
     }
   }
