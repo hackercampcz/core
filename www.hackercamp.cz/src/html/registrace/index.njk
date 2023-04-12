@@ -335,6 +335,11 @@
       font-weight: 400;
     }
 
+    .form-story ul li {
+      text-align: left;
+      line-height: 2;
+    }
+
     #reg {
       max-width: 40em;
     }
@@ -402,7 +407,7 @@
       margin: 0;
     }
 
-    #reg [aria-hidden="true"] {
+    [aria-hidden="true"] {
       display: none;
     }
 
@@ -559,7 +564,7 @@
         <h1>Registrace</h1>
       </div>
     </div>
-    <div class="form-story">
+    <div id="hacker-greeting" class="form-story">
       <p>Ahoj!</p>
       <p>Moc nás těší Tvůj zájem o&nbsp;účast na Hacker Campu (31. srpna až 3. září 2023)! Už asi víš, že
         akce bude jen tak dobrá, jak si ji společně uděláme. Proto se ptáme na
@@ -572,6 +577,19 @@
       <hr/>
       <p>Byl/a jsi na minulém ročníku, nebo už máš přístup na Slack?<br/><a
           href="https://donut.hackercamp.cz/registrace/"><strong>Pojď tudy</strong></a></p>
+    </div>
+    <div id="volunteer-greeting" class="form-story" aria-hidden="true">
+      <p>Ahoj! Moc nás těší Tvůj zájem nám vypomoci na Hacker Campu! Určitě si to společně užijeme.</p>
+      <p>Letošní termín je 31.- 3. 9. 2023</p>
+      <br>
+      <p>Před přihlášením prosím projdi letošní pravidla zapojení dobrovolníků, které vyplněním potvrzuješ:</p>
+      <ul>
+        <li>Dobrovolník je k dispozici 8-10 hodin denně, ve zbývajícím čase si užívá Hacker Camp</li>
+        <li>Dobrovolník je součástí crew</li>
+        <li>Odměna pro dobrovolníka je: účast na akci zdarma, ubytování, jídlo a nealko pití zdarma (možnost proplatit i alko nápoje budeme řešit v rámci vyúčtování Hacker Campu)</li>
+        <li>Každý dobrovolník má svého "vedoucího" z core teamu, se kterým se finálně ladí ohledně jeho zapojení (rozpis směn atd.)</li>
+        <li>Dobrovolníci začínají ve čtvrtek a končí v neděli (včetně částečné výpomoci s úklidem areálu), případně dle domluvy. Pokud budeš mít možnost, potřebujeme a velmi uvítáme i tvoje zapojení již ve středu, kdy budeme stavět areál a večer si uděláme předparty v malém kruhu!</li>
+      </ul>
     </div>
   </header>
 </div>
@@ -640,12 +658,24 @@
     </div>
       <fieldset id="volunteer" disabled aria-hidden="true">
       <div class="hc-card">
-        <h3>Co od tebe budem potřebovat?</h3>
-        <div class="field field--block">
-          <label for="volunteerbio">Řekni nám něco o sobě</label>
-          <textarea id="volunteerbio" name="volunteerBio" rows="5" required></textarea>
+        <h3>Jak se zapojím</h3>
+        <p>Zde je výčet hlavních aktivit. Můžeš zaškrtnout i více odpovědí. Prosím počítej s tím, že některé aktivity jsou spíše nárazové, takže je možné, že tě využijeme i někde jinde a síly rozložíme dle potřeby.</p>
+        <div class="choose">
+          <input type="checkbox" name="volunteerBar" id="bar">
+          <label for="bar">Budu pomáhat na baru</label>
         </div>
-      </div>
+        <div class="choose">
+          <input type="checkbox" name="volunteerConstruction" id="construction">
+          <label for="construction">Budu pomáhat primárně s výstavbou a likvidací areálu, parkingem aut a další</label>
+        </div>
+        <div class="choose">
+          <input type="checkbox" name="volunteerDriver" id="driver">
+          <label for="driver">Budu k dispozici jako možný řidič pro účastníky, kteří budou potřebovat někam přiblížit</label>
+        </div>
+        <div class="choose">
+          <input type="checkbox" name="volunteerSport" id="sport">
+          <label for="sport">Budu pomáhat Káje se sportovními doprovodnými aktivitami</label>
+        </div>
     </fieldset>
   </section>
   <script type="module">
@@ -807,12 +837,24 @@
     function showSection(id) {
       const section = document.getElementById(id);
       section.removeAttribute("aria-hidden");
-      section.removeAttribute("disabled");
+      if (section.tagName == "FIELDSET") {
+        section.removeAttribute("disabled");
+      }
+      for (const fieldset of section.querySelectorAll("fieldset")) {
+        fieldset.removeAttribute("aria-hidden");
+        fieldset.removeAttribute("disabled");
+      }
     }
     function hideSection(id) {
       const section = document.getElementById(id);
       section.setAttribute("aria-hidden", "true");
-      section.setAttribute("disabled", "true");
+      if (section.tagName == "FIELDSET") {
+        section.setAttribute("disabled", "true");
+      }
+      for (const fieldset of section.querySelectorAll("fieldset")) {
+        fieldset.setAttribute("aria-hidden", "true");
+        fieldset.setAttribute("disabled", "true");
+      }
     }
     window.showSection = showSection;
     window.hideSection = hideSection;
@@ -1022,6 +1064,8 @@
   const volunteer = searchParams.get("volunteer") === "bagr";
 
   if (volunteer) {
+    hideSection("hacker-greeting");
+    showSection("volunteer-greeting");
     showSection("volunteer");
     hideSection("ticket");
     hideSection("invoice");
@@ -1045,7 +1089,10 @@
 
     if (!field || !value) continue;
     const isRadio = field.length && field[0].type === "radio";
-    if (isRadio) {
+    const isCheckbox = field.type === "checkbox";
+    if (isCheckbox) {
+      field.checked = value;
+    } else if (isRadio) {
       formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
     } else if (field.type === "textarea") {
       field.innerText = value;
@@ -1072,7 +1119,10 @@
       let value = data[key];
       if (!field || !value) continue;
       const isRadio = field.length && field[0].type === "radio";
-      if (isRadio) {
+      const isCheckbox = field.type === "checkbox";
+      if (isCheckbox) {
+        field.checked = value;
+      } else if (isRadio) {
         formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
       } else if (field.type === "textarea") {
         field.innerText = value;
@@ -1088,7 +1138,16 @@
   }
 
   formElement.addEventListener("change", event => {
-    localStorage.setItem(storagePrefix + event.target.name, event.target.value);
+    const name = event.target.name;
+    if (event.target.type === "checkbox") {
+      if (event.target.checked) {
+        localStorage.setItem(storagePrefix + name, "on");
+      } else {
+        localStorage.removeItem(storagePrefix + name);
+      }
+      return;
+    }
+    localStorage.setItem(storagePrefix + name, event.target.value);
   });
 
   formElement.addEventListener("submit", event => {
