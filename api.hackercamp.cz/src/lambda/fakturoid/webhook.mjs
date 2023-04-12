@@ -84,12 +84,13 @@ export async function fakturoidWebhook(event) {
     getHeader(event.headers, "Origin")
   );
 
-  const { token } = event.queryStringParameters;
-  if (token !== process.env.TOKEN) {
-    return withCORS_(unauthorized());
-  }
 
   try {
+    const { token } = event.queryStringParameters;
+    if (token !== process.env.TOKEN) {
+      return withCORS_(unauthorized());
+    }
+
     const payload = readPayload(event);
     if (payload.event_name !== "invoice_paid") {
       console.log({ event: "Unknown event", payload });
