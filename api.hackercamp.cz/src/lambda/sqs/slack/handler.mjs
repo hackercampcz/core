@@ -3,7 +3,7 @@ import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { sendMessageToSlack } from "../../slack.mjs";
 import Rollbar from "../../rollbar.mjs";
 
-/** @typedef { import("aws-lambda").SQSEvent } SQSEvent */
+/** @typedef {import("aws-lambda").SQSEvent} SQSEvent */
 
 const db = new DynamoDBClient({});
 const rollbar = Rollbar.init({ lambdaName: "sqs-slack" });
@@ -22,9 +22,9 @@ async function getAttendee(slackID, year) {
   return resp.Item ? unmarshall(resp.Item) : null;
 }
 
-async function sendWelcomeMessage({ slackID }) {
+async function sendWelcomeMessage({ slackID, year }) {
   console.log({ event: "Send welcome message", slackID });
-  const attendee = await getAttendee(slackID, 2022);
+  const attendee = await getAttendee(slackID, year);
   if (!attendee) {
     console.log({ event: "No attendee found", slackID });
     return;
@@ -54,8 +54,13 @@ async function dispatchMessageByType(message) {
  */
 export async function sqsSlack(event) {
   for (const record of event.Records) {
-    const message = JSON.parse(record.body);
-    await dispatchMessageByType(message);
+    try {
+      const message = JSON.parse(record.body);
+      await dispatchMessageByType(message);
+    }
+    catch (err) {
+      rollbar.error(err);
+    }
   }
 }
 

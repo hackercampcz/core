@@ -67,6 +67,7 @@ function enqueueSlackWelcomeMessage(user) {
       MessageBody: JSON.stringify({
         event: "send-welcome-message",
         slackID: user.id,
+        year: user.year,
       }),
     })
   );
@@ -87,7 +88,7 @@ async function paidRegistrations(event) {
     .filter((x) => x.newImage.paid && !x.oldImage.paid)
     .map((x) => x.newImage);
   for (const record of newlyPaidRegistrations) {
-    const { email } = record;
+    const { email, year } = record;
     const contact = await getContact(dynamo, email);
     if (!contact) {
       console.log({ event: "No contact found", email });
@@ -95,7 +96,7 @@ async function paidRegistrations(event) {
     } else {
       await Promise.all([
         createAttendee(dynamo, contact, record),
-        enqueueSlackWelcomeMessage({ id: contact.slackID }),
+        enqueueSlackWelcomeMessage({ id: contact.slackID, year }),
       ]);
     }
   }
