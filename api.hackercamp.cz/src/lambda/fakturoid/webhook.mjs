@@ -85,7 +85,7 @@ export async function fakturoidWebhook(event) {
   );
 
   const { token } = event.queryStringParameters;
-  if (token !== env.TOKEN) {
+  if (token !== process.env.TOKEN) {
     return withCORS_(unauthorized());
   }
 
