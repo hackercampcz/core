@@ -41,6 +41,28 @@ function invoiced(email) {
   };
 }
 
+function copyToClipboard(counts) {
+  return async () => {
+    const [paid, invoiced, confirmed, waitingList] = await Promise.all(counts);
+    const content = new Blob(
+      [
+        `<ul>
+          <li>Zaplacení: <b>${paid}</b>
+          <li>Vyfakturovaní: <b>${invoiced}</b>
+          <li>Potvrzení: <b>${confirmed}</b>
+          <li>Waiting list: <b>${waitingList}</b>
+        </ul>`,
+      ],
+      { type: "text/html" }
+    );
+    await navigator.clipboard.write([
+      new ClipboardItem({ "text/html": content }),
+    ]);
+    window.snackbar.labelText = "Statistiky zkopírovány do schránky";
+    window.snackbar.show();
+  };
+}
+
 export function registrationsChips(
   view,
   year,
@@ -98,6 +120,10 @@ export function registrationsChips(
       </div>
       <div>
         <md-standard-icon-button
+          title="Zkopírovat statistiky"
+          @click="${copyToClipboard([paid, invoiced, confirmed, waitingList])}"
+          >content_copy</md-standard-icon-button
+        ><md-standard-icon-button
           href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
             { year, type: view, format: "csv", pageSize: 500 }
           )}"
