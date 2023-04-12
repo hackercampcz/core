@@ -1,5 +1,13 @@
 import "@material/web/iconbutton/standard-icon-button.js";
-import { LitElement, html } from "lit";
+import { html, LitElement } from "lit";
+
+function getInternationalPhoneFormat(phone) {
+  let internationalNr = phone.replace(/\s+/g, "");
+  if (internationalNr.startsWith("+")) {
+    return internationalNr;
+  }
+  return `+420${internationalNr}`;
+}
 
 export class PhoneButton extends LitElement {
   static properties = {
@@ -8,7 +16,7 @@ export class PhoneButton extends LitElement {
   render() {
     if (!this.phone) return null;
     return html`<md-standard-icon-button
-      href="tel:${this.phone.replace(/\w+/g, "")}"
+      href="tel:${getInternationalPhoneFormat(this.phone)}"
       title="Zavolat ${this.phone}"
       >call</md-standard-icon-button
     >`;
