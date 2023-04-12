@@ -8,7 +8,6 @@ import { fetchInvoice } from "../../fakturoid.mjs";
 import {
   accepted,
   getHeader,
-  internalError,
   readPayload,
   seeOther,
 } from "../../http.mjs";
@@ -41,6 +40,7 @@ async function optout(db, { email, year }) {
 }
 
 async function approve(db, { email, year, referral }) {
+  console.log({event: "Approving registration", email, year, referral });
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_registrations,
@@ -48,9 +48,10 @@ async function approve(db, { email, year, referral }) {
         { email, year },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
-      UpdateExpression: "SET referral = :referral",
+      UpdateExpression: "SET referral = :referral, approved = :approved",
       ExpressionAttributeValues: marshall({
         ":referral": referral,
+        ":approved": new Date().toISOString()
       }),
     })
   );
