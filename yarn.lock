@@ -225,13 +225,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.310.0":
-  version: 3.310.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.310.0"
+"@aws-sdk/client-dynamodb@npm:3.312.0":
+  version: 3.312.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.312.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
-    "@aws-sdk/client-sts": 3.310.0
+    "@aws-sdk/client-sts": 3.312.0
     "@aws-sdk/config-resolver": 3.310.0
     "@aws-sdk/credential-provider-node": 3.310.0
     "@aws-sdk/fetch-http-handler": 3.310.0
@@ -267,17 +267,17 @@ __metadata:
     "@aws-sdk/util-waiter": 3.310.0
     tslib: ^2.5.0
     uuid: ^8.3.2
-  checksum: 4d1d512ba647b1d80d5bc879ef56d0a6fe82c23c072c9041ce380fda2b723c9bfa47668bc498e84ab361295fda779b5599246a4c6a230d0f60c0f7ead6163e66
+  checksum: 553a756a0c910b37fa75bca8992d400dbd997ede39c91ac1b244f2a8ecdb9245da89f3fbd13bbfd8250bce60ef4b2584cc7a202e5333dc38b90a3009ef721199
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-secrets-manager@npm:3.310.0":
-  version: 3.310.0
-  resolution: "@aws-sdk/client-secrets-manager@npm:3.310.0"
+"@aws-sdk/client-secrets-manager@npm:3.312.0":
+  version: 3.312.0
+  resolution: "@aws-sdk/client-secrets-manager@npm:3.312.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
-    "@aws-sdk/client-sts": 3.310.0
+    "@aws-sdk/client-sts": 3.312.0
     "@aws-sdk/config-resolver": 3.310.0
     "@aws-sdk/credential-provider-node": 3.310.0
     "@aws-sdk/fetch-http-handler": 3.310.0
@@ -311,17 +311,17 @@ __metadata:
     "@aws-sdk/util-utf8": 3.310.0
     tslib: ^2.5.0
     uuid: ^8.3.2
-  checksum: 7f659b27f7995a2b398d8650ec742ffd487b2200307ce443651747b161cef0088b953a7737cebd76344f33d802434e189113ce39cd3e32276c3cac7e33b1cb54
+  checksum: 037bc3364b1ca9e772d72109853c636e4d9f60bab577e9d604f91c0836b185c01378afff55f4389624d5e03f7afcef770b4bd02c19089f26cdd40905af0d6078
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.310.0":
-  version: 3.310.0
-  resolution: "@aws-sdk/client-sqs@npm:3.310.0"
+"@aws-sdk/client-sqs@npm:3.312.0":
+  version: 3.312.0
+  resolution: "@aws-sdk/client-sqs@npm:3.312.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
-    "@aws-sdk/client-sts": 3.310.0
+    "@aws-sdk/client-sts": 3.312.0
     "@aws-sdk/config-resolver": 3.310.0
     "@aws-sdk/credential-provider-node": 3.310.0
     "@aws-sdk/fetch-http-handler": 3.310.0
@@ -357,7 +357,7 @@ __metadata:
     "@aws-sdk/util-utf8": 3.310.0
     fast-xml-parser: 4.1.2
     tslib: ^2.5.0
-  checksum: bfa9bf45f34affbcbaaf528375d27cdfcf055d69f2d2f446680b10e880d40ecf0a03ad3ea105ac26630600ac018d5e85dc94acc5746cf66f16896219c6767dee
+  checksum: 0cc2c0cb6b835d5dd29ff0f146fd4f7d4d7501ebdd419144a704a6092a029e774f580a6dcb6e668779fe86c589b6df884ef09f1866d3d28abbeb1787fe7eb58e
   languageName: node
   linkType: hard
 
@@ -441,9 +441,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sts@npm:3.310.0":
-  version: 3.310.0
-  resolution: "@aws-sdk/client-sts@npm:3.310.0"
+"@aws-sdk/client-sts@npm:3.312.0":
+  version: 3.312.0
+  resolution: "@aws-sdk/client-sts@npm:3.312.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
@@ -481,7 +481,7 @@ __metadata:
     "@aws-sdk/util-utf8": 3.310.0
     fast-xml-parser: 4.1.2
     tslib: ^2.5.0
-  checksum: 45097c36e79e9fe7844321331e37181e4a448209cd5263ddb4d162da24a68dd8655a335f373ff1b121beba43b333937bec14727bc984543923f9b817f5ff7fa0
+  checksum: ad0b444605cbb53caf7ef2c637a79923adeca133d8fc74ee45208828bc8546ae69a2738ce77f6aae376c53d41e2f59ec7703d4a3c364066cacef06427a746e8c
   languageName: node
   linkType: hard
 
@@ -1033,12 +1033,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.310.0":
-  version: 3.310.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.310.0"
+"@aws-sdk/util-dynamodb@npm:3.312.0":
+  version: 3.312.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.312.0"
   dependencies:
     tslib: ^2.5.0
-  checksum: 1253deb914e2f08cdff2c817b4c5d6e18ad04fcab693f6041babb5e12ab3f9c7a0d221339107b6e5cd1c811c179b0d50d78ccef6cef97557a4e6d78313edf17d
+  checksum: 180ec45e8d4b78a6c88f531f64c21e2d12d2c1a8465409f930f449982228ff3348fae343f3f961e294f2c426c3012fa6f8714f6648a6dae43dea07f2a01a46a8
   languageName: node
   linkType: hard
 
@@ -2794,9 +2794,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-dynamodb": 3.310.0
-    "@aws-sdk/client-sqs": 3.310.0
-    "@aws-sdk/util-dynamodb": 3.310.0
+    "@aws-sdk/client-dynamodb": 3.312.0
+    "@aws-sdk/client-sqs": 3.312.0
+    "@aws-sdk/util-dynamodb": 3.312.0
     "@fast-csv/format": 4.3.5
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
@@ -2832,7 +2832,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-secrets-manager": 3.310.0
+    "@aws-sdk/client-secrets-manager": 3.312.0
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": 14.0.0
