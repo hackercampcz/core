@@ -43,7 +43,8 @@ function invoiced(email) {
 
 function copyToClipboard(counts) {
   return async () => {
-    const [paid, invoiced, confirmed, waitingList] = await Promise.all(counts);
+    const [paid, invoiced, confirmed, waitingList, volunteers] =
+      await Promise.all(counts);
     const rich = new Blob(
       [
         `<ul>
@@ -51,13 +52,14 @@ function copyToClipboard(counts) {
           <li>Vyfakturovaní: <b>${invoiced}</b>
           <li>Potvrzení: <b>${confirmed}</b>
           <li>Waiting list: <b>${waitingList}</b>
+          <li>Dobrovolníci: <b>${volunteers}</b>
         </ul>`,
       ],
       { type: "text/html" }
     );
     const plain = new Blob(
       [
-        `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}`,
+        `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}\n* Dobrovolnící: ${volunteers}`,
       ],
       { type: "text/plain" }
     );
@@ -72,7 +74,7 @@ function copyToClipboard(counts) {
 export function registrationsChips(
   view,
   year,
-  { waitingList, confirmed, invoiced, paid, optouts }
+  { waitingList, confirmed, invoiced, paid, optouts, volunteers }
 ) {
   return html`
     <search style="display: flex; gap: 8px">
@@ -116,6 +118,13 @@ export function registrationsChips(
             year,
           })}
           ${chip({
+            text: "Dobrovolníci",
+            count: volunteers,
+            selected: view === View.volunteers,
+            view: View.volunteers,
+            year,
+          })}
+          ${chip({
             text: "Opt-outs",
             count: optouts,
             selected: view === View.optouts,
@@ -127,7 +136,13 @@ export function registrationsChips(
       <div>
         <md-standard-icon-button
           title="Zkopírovat statistiky"
-          @click="${copyToClipboard([paid, invoiced, confirmed, waitingList])}"
+          @click="${copyToClipboard([
+            paid,
+            invoiced,
+            confirmed,
+            waitingList,
+            volunteers,
+          ])}"
           >content_copy</md-standard-icon-button
         ><md-standard-icon-button
           href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(

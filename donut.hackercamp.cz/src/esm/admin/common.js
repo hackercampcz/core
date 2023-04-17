@@ -39,6 +39,7 @@ export const View = {
   hackerAttendees: "hackerAttendees",
   staffAttendees: "staffAttendees",
   crewAttendees: "crewAttendees",
+  volunteers: "volunteers",
   volunteerAttendees: "volunteerAttendees",
   housing: "housing",
   program: "program",
