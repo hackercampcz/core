@@ -215,6 +215,7 @@ const registrationViews = new Set([
   View.confirmed,
   View.hackers,
   View.waitingList,
+  View.volunteers,
   View.optouts,
 ]);
 const attendeeViews = new Set([
@@ -257,6 +258,7 @@ const endpointForView = new Map([
   [View.hackers, Endpoint.registrations],
   [View.optouts, Endpoint.registrations],
   [View.waitingList, Endpoint.registrations],
+  [View.volunteers, Endpoint.registrations],
   [View.attendees, Endpoint.attendees],
   [View.crewAttendees, Endpoint.attendees],
   [View.hackerAttendees, Endpoint.attendees],

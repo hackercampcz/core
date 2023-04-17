@@ -340,6 +340,7 @@ export function registrationsTemplate(state) {
         [View.invoiced]: data?.then((data) => data.counts.invoiced),
         [View.confirmed]: data?.then((data) => data.counts.confirmed),
         [View.waitingList]: data?.then((data) => data.counts.waitingList),
+        [View.volunteers]: data?.then((data) => data.counts.volunteers),
       })}
     </div>
     <div
