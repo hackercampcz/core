@@ -11,6 +11,7 @@ export const Template = {
     10
   ),
   HackerInvitation: parseInt(process.env["hc_hacker_invitation"], 10),
+  VolunteerInvitation: parseInt(process.env["hc_volunteer_invitation"], 10),
   AttendeesInfoMail: parseInt(process.env["hc_attendee_info"], 10),
   HackerInvitationLate: 28122158,
 };
@@ -23,7 +24,7 @@ export async function sendEmailWithTemplate({
   to,
 }) {
   if (!templateId) {
-    console.log({event: "No template ID provided. Mail not sent."})
+    console.log({ event: "No template ID provided. Mail not sent." });
     return;
   }
   console.log({ event: "Sending mail", to, templateId });
