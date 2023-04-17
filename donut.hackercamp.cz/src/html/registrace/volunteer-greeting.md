@@ -2,9 +2,9 @@ Ahoj!
 
 Moc nás těší Tvůj zájem nám vypomoci na Hacker Campu! Určitě si to společně užijeme.
 
-Letošní termín je 31. srpna až 3. září 2023
+Letošní termín je **31. srpna až 3. září 2023**
 
-Před přihlášením prosím projdi letošní pravidla zapojení dobrovolníků,
+Před přihlášením prosím projdi letošní **pravidla zapojení dobrovolníků**,
 které vyplněním potvrzuješ:
 
 *   Dobrovolník je k dispozici 8-10 hodin denně, ve zbývajícím čase si užívá Hacker Camp
