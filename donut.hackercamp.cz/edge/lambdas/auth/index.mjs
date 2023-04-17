@@ -17,10 +17,12 @@ export async function handler(event) {
   const token = getToken(request.headers);
   const isValidToken = await validateToken(token, secret);
   console.log("Authorization", request.uri, Boolean(isValidToken));
+
   if (isValidToken) return request;
+
   const query = new URLSearchParams({
     state: "not-authenticated",
-    returnUrl: request.uri,
+    returnUrl: request.querystring ? `${request.uri}?${request.querystring}`: request.uri,
   });
   return {
     status: "307",
