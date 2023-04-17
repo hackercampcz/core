@@ -90,6 +90,7 @@ async function getRegistrations(query, tag, year, page, pageSize) {
     resultsCount(algolia_index_name, year, "invoiced"),
     resultsCount(algolia_index_name, year, "confirmed"),
     resultsCount(algolia_index_name, year, "waitingList"),
+    resultsCount(algolia_index_name, year, "volunteers"),
   ]);
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
