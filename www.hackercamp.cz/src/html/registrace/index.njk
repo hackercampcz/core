@@ -1057,7 +1057,7 @@
 
   const {searchParams} = new URL(location.href);
 
-  const volunteer = searchParams.get("volunteer") === "bagr";
+  const volunteer = searchParams.has("volunteer");
 
   if (volunteer) {
     hideSection("hacker-greeting");
