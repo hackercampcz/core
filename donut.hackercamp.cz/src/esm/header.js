@@ -56,9 +56,9 @@ function headerProfilePopup(contact, profile, signOut) {
             </li>
           `
         )}
-        <li>
+        <!--li>
           <a href="/program/">Program kempu</a>
-        </li>
+        </li-->
         <li>
           <a href="/hackers/">Seznam účastníků</a>
         </li>

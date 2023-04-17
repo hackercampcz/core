@@ -151,10 +151,10 @@ function renderPaidScreen() {
         ubytování.
       </p>
       <a class="hc-link--decorated" href="/ubytovani/">Vybrat si ubytování</a>
-      <p>
+      <!--p>
         Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
         brzy si budeš moct zadat vlastní návrhy.
-      </p>
+      </p-->
     </div>
   `;
 }
@@ -242,10 +242,10 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
         Chceš se podívat, kdo už se na tebe těší? Tak tady je
         <a href="/hackers/">seznam účastníků</a>.
       </p>
-      <p>
+      <!--p>
         Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
         brzy si budeš moct zadat vlastní návrhy.
-      </p>
+      </p-->
     </div>
   `;
 }
@@ -391,10 +391,10 @@ function renderIndex({ profile, registration, attendee }) {
         Chceš někoho pozvat? Pošli mu tento link:
         <a href="${referralLink}"><code>${referralLink}</code></a>
       </p>
-      <p>
+      <!--p>
         Taky se můžeš podívat na <a href="/program/">předběžný program</a> a po
         zaplacení si budeš moct zadat vlastní návrhy.
-      </p>
+      </p-->
       <p>
         Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
         e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
