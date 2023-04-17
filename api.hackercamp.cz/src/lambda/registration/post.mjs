@@ -17,7 +17,11 @@ import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
-function getTemplateId(isNewbee, { referral }) {
+function getTemplateId(isNewbee, isVolunteer, { referral }) {
+  if (isVolunteer) {
+    // TODO: registration confirmation mail for volunteers
+    return null;
+  }
   if (isNewbee && !referral) {
     return Template.NewRegistration;
   } else if (isNewbee) {
@@ -50,8 +54,9 @@ export async function handler(event) {
         .map(([k, v]) => [k, v?.trim()])
         .filter(([k, v]) => Boolean(v))
     );
+    const isVolunteer = rest.ticketType === "volunteer";
     const id = crypto.randomBytes(20).toString("hex");
-    console.log({ event: "Put registration", email, year, isNewbee, ...rest });
+    console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
     const editUrl = getEditUrl(isNewbee, id);
 
     await Promise.all([
@@ -77,7 +82,7 @@ export async function handler(event) {
       ),
       sendEmailWithTemplate({
         token: process.env["postmark_token"],
-        templateId: getTemplateId(isNewbee, rest),
+        templateId: getTemplateId(isNewbee, isVolunteer, rest),
         data: { editUrl },
         from: "Hacker Camp Crew <team@hackercamp.cz>",
         to: email,

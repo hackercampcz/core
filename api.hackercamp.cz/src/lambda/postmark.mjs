@@ -22,6 +22,10 @@ export async function sendEmailWithTemplate({
   from,
   to,
 }) {
+  if (!templateId) {
+    console.log({event: "No template ID provided. Mail not sent."})
+    return;
+  }
   console.log({ event: "Sending mail", to, templateId });
   const resp = await fetch("https://api.postmarkapp.com/email/withTemplate", {
     method: "POST",
