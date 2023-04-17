@@ -25,7 +25,7 @@ async function getSlackProfiles(token) {
 
 async function getAttendees() {
   console.log("Loading attendees...");
-  const resp = await fetch("https://api.hackercamp.cz/v1/attendees");
+  const resp = await fetch("https://api.hackercamp.cz/v1/attendees?year=2023");
   return resp.json();
 }
 
