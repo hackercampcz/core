@@ -4,11 +4,6 @@ Moc nás těší Tvůj zájem nám vypomoci na Hacker Campu! Určitě si to spol
 
 Letošní termín je 31. srpna až 3. září 2023
 
-Byl/a jsi na minulém ročníku, nebo už máš přístup na Slack?  
-[**Pojď tudy**](https://donut.hackercamp.cz/registrace/?volunteer=1)
-
-***
-
 Před přihlášením prosím projdi letošní pravidla zapojení dobrovolníků,
 které vyplněním potvrzuješ:
 
@@ -24,3 +19,7 @@ které vyplněním potvrzuješ:
     Pokud budeš mít možnost, potřebujeme a velmi uvítáme i tvoje zapojení 
     již ve středu, kdy budeme stavět areál a večer si uděláme předparty v malém kruhu!
 
+* * *
+
+Pokud **nemáš zájem** zúčastnit se letošního ročníku, klikni na [Odhlásit odběr](javascript:optout()) 
+a my tě letos už nebudeme otravovat.

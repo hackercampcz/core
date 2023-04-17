@@ -179,30 +179,10 @@
         </div>
       </div>
       <div id="hacker-greeting" class="form-story">
-        <p>Ahoj!</p>
-        <p>Moc nás těší Tvůj zájem o&nbsp;účast na Hacker Campu!<br>(31. srpna až 3. září 2023)</p>
-        <p>Prosím, zkontroluj nebo doplň o sobě základní info.</p>
-        <p>Kdyby cokoliv, kontaktuj nás na Slacku. Tvoje Hacker Camp Crew</p>
-        <hr/>
-        <p>
-          Pokud <strong>nemáš zájem</strong> zúčastnit se letošního ročníku,
-          klikni na
-          <a class="" href="javascript:optout()">Odhlásit odběr</a>
-          a my tě letos už nebudeme otravovat.
-        </p>
+        {% markdown "registrace/hacker-greeting.md" %}
       </div>
       <div id="volunteer-greeting" class="form-story" aria-hidden="true">
-        <p>Ahoj! Moc nás těší Tvůj zájem nám vypomoci na Hacker Campu! Určitě si to společně užijeme.</p>
-        <p>Letošní termín je 31.- 3. 9. 2023</p>
-        <br>
-        <p>Před přihlášením prosím projdi letošní pravidla zapojení dobrovolníků, které vyplněním potvrzuješ:</p>
-        <ul>
-          <li>Dobrovolník je k dispozici 8-10 hodin denně, ve zbývajícím čase si užívá Hacker Camp</li>
-          <li>Dobrovolník je součástí crew</li>
-          <li>Odměna pro dobrovolníka je: účast na akci zdarma, ubytování, jídlo a nealko pití zdarma (možnost proplatit i alko nápoje budeme řešit v rámci vyúčtování Hacker Campu)</li>
-          <li>Každý dobrovolník má svého "vedoucího" z core teamu, se kterým se finálně ladí ohledně jeho zapojení (rozpis směn atd.)</li>
-          <li>Dobrovolníci začínají ve čtvrtek a končí v neděli (včetně částečné výpomoci s úklidem areálu), případně dle domluvy. Pokud budeš mít možnost, potřebujeme a velmi uvítáme i tvoje zapojení již ve středu, kdy budeme stavět areál a večer si uděláme předparty v malém kruhu!</li>
-        </ul>
+        {% markdown "registrace/volunteer-greeting.md" %}
       </div>
       <script>
         async function optout() {
