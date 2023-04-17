@@ -21,6 +21,7 @@ const keysToIndex = new Set([
   "paid",
   "firstTime",
   "referral",
+  "ticketType",
 ]);
 
 function openAlgoliaClient() {
