@@ -58,7 +58,10 @@ async function deleteRemovedItems(event, searchIndex) {
   ).map((x) => `${x.dynamodb.OldImage.year.N}-${x.dynamodb.OldImage.email.S}`);
 
   if (deletedRegistrations.length > 0) {
-    console.log({ event: "Removing registrations from index", deletedRegistrations });
+    console.log({
+      event: "Removing registrations from index",
+      deletedRegistrations,
+    });
     await searchIndex.deleteObjects(deletedRegistrations);
   }
 }
@@ -69,7 +72,9 @@ async function deleteRemovedItems(event, searchIndex) {
  */
 async function updateRegistrationsIndex(event, searchIndex) {
   const crewReferrals = await getCrewReferrals();
-  const updatedRegistrations = event.Records.filter((x) => x.eventName !== "REMOVE")
+  const updatedRegistrations = event.Records.filter(
+    (x) => x.eventName !== "REMOVE"
+  )
     .map((x) => [
       fromJS(selectKeys(unmarshall(x.dynamodb.NewImage), keysToIndex)),
       x.dynamodb.OldImage
