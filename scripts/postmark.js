@@ -1,17 +1,18 @@
 export const Template = {
-  NewRegistration: 28029948,
-  PlusOneRegistration: 28062472,
-  HackerRegistration: 28062457,
-  HackerInvitation: 28120216,
+  NewRegistration: 30944901,
+  PlusOneRegistration: 30944876,
+  HackerRegistration: 30944917,
+  HackerInvitation: 30945225,
   HackerInvitationLate: 28122158,
   HackersReminder: 28432253,
-  PlusOneInvitation: 28151070,
-  VolunteerSlackInvite: 28672994,
-  SlackInvite: 28750357,
-  AttendeesInfoMail: 28768871,
+  PlusOneInvitation: 30945167,
+  VolunteerSlackInvite: 30945168,
+  SlackInvite: 30945181,
+  AttendeesInfoMail: 30945078,
   LastYearHackersPush: 28896807,
   ThisYearsHackersPush: 28896811,
   Feedback: 29143589,
+  VolunteerInvitation: 31455038,
 };
 
 export async function sendEmailWithTemplate({
@@ -21,6 +22,7 @@ export async function sendEmailWithTemplate({
   data,
   from,
   to,
+  replyTo,
 }) {
   const body = JSON.stringify(
     Object.fromEntries(
@@ -30,6 +32,7 @@ export async function sendEmailWithTemplate({
         TemplateId: templateId,
         TemplateAlias: templateAlias,
         TemplateModel: data,
+        ReplyTo: replyTo,
       }).filter(([_, v]) => Boolean(v))
     )
   );
