@@ -1,5 +1,5 @@
 ---
-Subject: Pozvánka na Slack Hacker Campu
+Subject: Pozvánka na Hacker Camp
 LayoutTemplate: hc-basic
 ---
 Ahoj týme,
