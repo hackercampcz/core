@@ -58,7 +58,7 @@
   </style>
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <section id="crew" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         <h2>Hacker Camp Crew</h2>
         <ul class="hc-profile-list">
           {% for hacker in hackers %}
@@ -78,13 +78,13 @@
             {% endif %}
           {% endfor %}
         </ul>
-      </div>
+      </section>
     </div>
   </div>
 
   <div class="mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <section id="ucastnici" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         <h2>Účastníci 2023</h2>
         <ul class="hc-profile-list">
           {% for hacker in hackers %}
@@ -104,7 +104,7 @@
             {% endif %}
           {% endfor %}
         </ul>
-      </div>
+      </section>
     </div>
   </div>
 {% endblock %}
