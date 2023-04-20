@@ -32,6 +32,7 @@ import { instatializeDates } from "./lib/object.js";
 const state = defAtom({
   year: 2023,
   selectedView: View.confirmed,
+  query: "",
   view: renderView,
   apiHost: "",
   params: new URLSearchParams(location.search),
@@ -269,8 +270,8 @@ const endpointForView = new Map([
   [View.housing, Endpoint.housing],
 ]);
 
-async function fetchData({ selectedView, year, page }, apiHost) {
-  const params = new URLSearchParams({ type: selectedView, year, page });
+async function fetchData({ selectedView, year, page, query }, apiHost) {
+  const params = new URLSearchParams({ type: selectedView, year, page, query });
   const endpoint = endpointForView.get(selectedView);
   const resource = new URL(`admin/${endpoint}?${params}`, apiHost).href;
   const resp = await withAuthHandler(
@@ -360,6 +361,7 @@ export async function main({
   const year = parseInt(searchParams.get("year") ?? env.year);
   const page = parseInt(searchParams.get("page") ?? 0);
   const selectedView = searchParams.get("view") ?? View.confirmed;
+  const query = searchParams.get("query") ?? "";
   const apiHost = env["api-host"];
   const contact = getContact();
 
@@ -375,7 +377,7 @@ export async function main({
   transact((x) =>
     Object.assign(
       x,
-      { apiHost, year, page, contact, params: searchParams },
+      { apiHost, year, page, query, contact, params: searchParams },
       schedule.get(year)
     )
   );
