@@ -271,9 +271,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-secrets-manager@npm:3.316.0":
-  version: 3.316.0
-  resolution: "@aws-sdk/client-secrets-manager@npm:3.316.0"
+"@aws-sdk/client-secrets-manager@npm:3.317.0":
+  version: 3.317.0
+  resolution: "@aws-sdk/client-secrets-manager@npm:3.317.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
@@ -311,7 +311,7 @@ __metadata:
     "@aws-sdk/util-utf8": 3.310.0
     tslib: ^2.5.0
     uuid: ^8.3.2
-  checksum: 71dadf994b3637f13fd119747708f642e35205228aeee85c3ce8b68fc5df780f93164fe6349ea78e3ae863c62bda008b7642f2f648accac7c6c007cabfe45f51
+  checksum: 138d86d6345e948ca147c7bca788e0df1db947b89f49e2a2fd351267bc52432f9f7de1f15fa76beca9374c58f01328d1053500458466cdd90ff723543678db63
   languageName: node
   linkType: hard
 
@@ -2839,7 +2839,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-secrets-manager": 3.316.0
+    "@aws-sdk/client-secrets-manager": 3.317.0
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": 14.0.0
