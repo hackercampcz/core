@@ -11,3 +11,14 @@ for registered hackers.
 
 Hacker Camp Donut is application that requires Slack integration for user Sign In and other functionality.
 
+## Development
+
+Secrets are stored in 1password vault. Ask @rarous for access to the vault.
+
+When you run something, use [1password CLI](https://developer.1password.com/docs/cli/get-started/) to get secrets.
+
+For example to run website locally, you have to use:
+```
+op run --env-file=.env -- yarn start:www.hackercamp.cz
+```
+
