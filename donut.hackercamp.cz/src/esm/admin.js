@@ -270,6 +270,7 @@ const endpointForView = new Map([
 ]);
 
 async function fetchData({ selectedView, year, page }, apiHost) {
+  if (selectedView === View.volunteers) selectedView = "volunteer";
   const params = new URLSearchParams({ type: selectedView, year, page });
   const endpoint = endpointForView.get(selectedView);
   const resource = new URL(`admin/${endpoint}?${params}`, apiHost).href;
