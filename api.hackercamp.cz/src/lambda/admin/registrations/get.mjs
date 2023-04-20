@@ -94,7 +94,9 @@ async function getRegistrations(query, tag, year, page, pageSize) {
   ]);
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
-  const [paid, invoiced, confirmed, waitingList, volunteers] = counts.map((x) => x.nbHits);
+  const [paid, invoiced, confirmed, waitingList, volunteers] = counts.map(
+    (x) => x.nbHits
+  );
 
   const items = await getItemsFromDB(db, hits);
   return {
@@ -143,7 +145,7 @@ export async function handler(event) {
 
   const data = await getRegistrations(
     query,
-    type,
+    type === "volunteers" ? "volunteer" : type,
     parseInt(year),
     parseInt(page),
     parseInt(pageSize)
