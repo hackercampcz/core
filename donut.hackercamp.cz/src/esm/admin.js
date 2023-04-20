@@ -42,6 +42,9 @@ const state = defAtom({
 
 const transact = (fn, atom = state) => atom.swap(fn);
 
+// export for dev experience
+globalThis.transact = transact;
+
 /**
  * @param {string} email
  * @param year
