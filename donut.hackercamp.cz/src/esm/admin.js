@@ -299,13 +299,14 @@ async function fetchData({ selectedView, year, page, query }, apiHost) {
  * @param {string} selectedView
  * @param {number} year
  * @param {number} page
+ * @param {string} query
  * @param {string} apiHost
  */
-function loadData(selectedView, year, page, apiHost) {
+function loadData(selectedView, year, page, query, apiHost) {
   transact((x) =>
     Object.assign(x, {
       selectedView,
-      data: fetchData({ selectedView, year, page }, apiHost),
+      data: fetchData({ selectedView, year, page, query }, apiHost),
     })
   );
 }
@@ -386,5 +387,5 @@ export async function main({
   );
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, selectedView);
-  loadData(selectedView, year, page, apiHost);
+  loadData(selectedView, year, page, query, apiHost);
 }
