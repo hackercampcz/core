@@ -143,7 +143,7 @@ async function getProgram(year, apiUrl) {
   return resp.json();
 }
 
-function renderPaidScreen() {
+function renderPaidScreen(referralLink) {
   return html`
     <div>
       <p>
@@ -151,6 +151,10 @@ function renderPaidScreen() {
         ubytování.
       </p>
       <a class="hc-link--decorated" href="/ubytovani/">Vybrat si ubytování</a>
+      <p>
+        Chceš někoho pozvat? Pošli mu tento link:
+        <a href="${referralLink}"><code>${referralLink}</code></a>
+      </p>
       <!--p>
         Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
         brzy si budeš moct zadat vlastní návrhy.
@@ -336,13 +340,10 @@ function nfcTronTemplate(entries) {
   `;
 }
 
-function renderDashboardScreen({
-  housing,
-  housingPlacement,
-  travel,
-  events = [],
-  nfcTronData,
-}) {
+function renderDashboardScreen(
+  { housing, housingPlacement, travel, events = [], nfcTronData },
+  referralLink
+) {
   return html`
     <div class="mdc-layout-grid__inner">
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -357,6 +358,10 @@ function renderDashboardScreen({
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         ${housedCardTemplate({ housing, housingPlacement, travel })}
       </div>
+      <p>
+        Chceš někoho pozvat? Pošli mu tento link:
+        <a href="${referralLink}"><code>${referralLink}</code></a>
+      </p>
     </div>
   `;
 }
@@ -370,13 +375,13 @@ function renderIndex({ profile, registration, attendee }) {
   if (!(profile || registration || attendee)) {
     return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
   }
+  const referralLink = `https://www.hackercamp.cz/registrace/?referral=${profile.sub}`;
   if (attendee?.housingPlacement) {
-    return renderDashboardScreen(attendee);
+    return renderDashboardScreen(attendee, referralLink);
   }
   if (canSelectHousing(registration, attendee)) {
-    return renderPaidScreen();
+    return renderPaidScreen(referralLink);
   }
-  const referralLink = `https://www.hackercamp.cz/registrace/?referral=${profile.sub}`;
   if (registration.year && !registration.paid) {
     return html`
       <p>
