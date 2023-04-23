@@ -4,8 +4,10 @@ import instrumenter from "rollbar/src/browser/telemetry";
 
 export function init(env) {
   Rollbar.setComponents({ telemeter, instrumenter });
-  Rollbar.init({
+  return Rollbar.init({
     accessToken: env["rollbar/access-token"],
+    addErrorContext: true,
+    captureIp: "anonymize",
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
@@ -16,11 +18,9 @@ export function init(env) {
 }
 
 export function info(...args) {
-  console.info(...args);
   Rollbar.info(...args);
 }
 
-export function error(err) {
-  console.error(err);
-  Rollbar.error(err);
+export function error(...args) {
+  Rollbar.error(...args);
 }
