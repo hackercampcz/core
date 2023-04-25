@@ -4,31 +4,59 @@ import { sendEmailWithTemplate, Template } from "./postmark.js";
 
 const dynamo = createClient();
 
-async function getPaidRegistrations() {
+async function getPaidRegistrations(year) {
   const result = await dynamo.scan({
     TableName: "hc-registrations",
     ProjectionExpression: "email",
     FilterExpression:
-      "attribute_exists(invoiced) AND attribute_not_exists(cancelled)",
+      "attribute_exists(invoiced) AND attribute_not_exists(cancelled) AND #year = :year",
+    ExpressionAttributeNames: {
+      "#year": "year",
+    },
+    ExpressionAttributeValues: {
+      ":year": year,
+    },
   });
   return result.Items.map((x) => x.email);
 }
 
-async function getAttendees() {
+async function getThisYearRegistrations(year) {
+  const result = await dynamo.scan({
+    TableName: "hc-registrations",
+    ProjectionExpression: "email",
+    FilterExpression: "#year = :year",
+    ExpressionAttributeNames: {
+      "#year": "year",
+    },
+    ExpressionAttributeValues: {
+      ":year": year,
+    },
+  });
+  return result.Items.map((x) => x.email);
+}
+
+async function getAttendees(year) {
   const result = await dynamo.scan({
     TableName: "hc-attendees",
     ProjectionExpression: "email",
+    FilterExpression: "#year = :year",
+    ExpressionAttributeNames: {
+      "#year": "year",
+    },
+    ExpressionAttributeValues: {
+      ":year": year,
+    },
   });
   return result.Items.map((x) => x.email);
 }
 
-async function getOptOuts(year = 2022) {
+async function getOptOuts(year) {
   const result = await dynamo.scan({
     TableName: "hc-optouts",
     ProjectionExpression: "email",
-    FilterExpression: "#y = :year",
+    FilterExpression: "#year = :year",
     ExpressionAttributeNames: {
-      "#y": "year",
+      "#year": "year",
     },
     ExpressionAttributeValues: {
       ":year": year,
@@ -39,30 +67,39 @@ async function getOptOuts(year = 2022) {
 
 const ignoreList = new Set();
 
+async function getContacts() {
+  const result = await dynamo.scan({
+    TableName: "hc-contacts",
+    ProjectionExpression: "email",
+  });
+  return result.Items.map((x) => x.email);
+}
+
 async function main({ token }) {
-  const optOuts = await getOptOuts();
+  const year = new Date().getFullYear();
+  const optOuts = await getOptOuts(year);
   for (const email of optOuts) ignoreList.add(email);
-  const attendees = await getAttendees();
-  //const paidRegistrations = await getPaidRegistrations();
-  const registrations = new Set(attendees.filter((x) => !ignoreList.has(x)));
+  const contacts = await getContacts();
+  const thisYearRegistrations = await getThisYearRegistrations(year);
+  for (const email of thisYearRegistrations) ignoreList.add(email);
+  //const attendees = await getAttendees(year);
+  //const paidRegistrations = await getPaidRegistrations(year);
+  const coldHackers = new Set(contacts.filter((x) => !ignoreList.has(x)));
 
-  //console.log(token);
-
-  //console.log(registrations);
-  console.log(registrations.size);
+  console.log(coldHackers.size);
   //return;
-  for (const email of registrations) {
+  for (const email of coldHackers) {
+    console.log(`"${email}",`);
     await sendEmailWithTemplate({
       token,
-      templateId: Template.Feedback,
+      templateId: Template.HackerPush,
       from: "Hacker Camp Crew <team@hackercamp.cz>",
       to: email,
       data: {},
     });
-    console.log(email, "sent");
   }
 }
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-hackers-mails.js
+// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-hackers-mails.js --token $(op read 'op://Hacker Camp/Postmark/credential')

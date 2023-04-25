@@ -13,7 +13,6 @@ async function main({ token }) {
   const users = data.members.filter(
     (x) => !(x.is_bot || x.deleted || skip.has(x.name))
   );
-
   const items = users.map((x) => ({
     email: x.profile.email,
     slackID: x.id,
@@ -41,3 +40,5 @@ async function main({ token }) {
 }
 
 await main(parse(Deno.args));
+
+// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config fetch-profiles.js --token $(op read 'op://Hacker Camp/Slack Bot/credential')
