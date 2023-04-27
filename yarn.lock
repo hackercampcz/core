@@ -2873,7 +2873,7 @@ __metadata:
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
     "@pulumi/aws": 5.37.0
     "@pulumi/awsx": 1.0.2
-    "@pulumi/pulumi": 3.65.0
+    "@pulumi/pulumi": 3.65.1
     "@topmonks/pulumi-aws": 3.0.0
     esbuild: 0.17.18
     front-matter: 4.0.2
@@ -3800,9 +3800,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.65.0":
-  version: 3.65.0
-  resolution: "@pulumi/pulumi@npm:3.65.0"
+"@pulumi/pulumi@npm:3.65.1":
+  version: 3.65.1
+  resolution: "@pulumi/pulumi@npm:3.65.1"
   dependencies:
     "@grpc/grpc-js": ^1.3.8
     "@logdna/tail-file": ^2.0.6
@@ -3827,7 +3827,7 @@ __metadata:
     ts-node: ^7.0.1
     typescript: ~3.8.3
     upath: ^1.1.0
-  checksum: 761de7b4ed7bb4b2f6954054749d56f9f603ce6b9773abeff1400ccb383df0a915ec2601cc7f9669f39ba039e4d8e9aee4b0716cb2f629accccd8c1a74f55a13
+  checksum: 7d67a66407b901570dce1e7fc60be980c1d3a46c19eba9992df32cc3ae7fd2fcc52a2fbb48e6b9fd32db6dd9245e3abd2302bcf64ae3b40e4b5dc21c27522d4d
   languageName: node
   linkType: hard
 
