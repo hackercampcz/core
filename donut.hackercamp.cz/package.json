@@ -23,7 +23,7 @@
     "date-fns": "2.30.0",
     "lit": "2.7.3",
     "lit-html": "2.7.3",
-    "marked": "4.3.0",
+    "marked": "5.0.0",
     "ramda": "0.29.0",
     "rollbar": "2.26.1",
     "workbox-window": "6.5.4"
