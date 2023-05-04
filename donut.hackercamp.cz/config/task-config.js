@@ -154,9 +154,11 @@ module.exports = {
   },
 
   production: {
-    rev: false,
+    rev: true,
   },
 
+  // needs to be set to enable rev of bundled files
+  esbuild: true,
   registries: [
     new ESBuildRegistry(
       {

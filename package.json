@@ -7,7 +7,7 @@
   "private": true,
   "packageManager": "yarn@3.5.1",
   "devDependencies": {
-    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=461332f373dbba3b1fe2b8d9c2cd2691f444bf73",
+    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=2812e325d057dfe2871e93e841008233b5768a00",
     "@types/nunjucks": "3.2.2",
     "dotenv": "16.0.3",
     "dotenv-cli": "7.2.1",

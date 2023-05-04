@@ -2830,7 +2830,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=461332f373dbba3b1fe2b8d9c2cd2691f444bf73"
+    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=2812e325d057dfe2871e93e841008233b5768a00"
     "@types/nunjucks": 3.2.2
     dotenv: 16.0.3
     dotenv-cli: 7.2.1
@@ -4150,9 +4150,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=461332f373dbba3b1fe2b8d9c2cd2691f444bf73":
+"@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=2812e325d057dfe2871e93e841008233b5768a00":
   version: 6.0.0
-  resolution: "@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=461332f373dbba3b1fe2b8d9c2cd2691f444bf73"
+  resolution: "@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=2812e325d057dfe2871e93e841008233b5768a00"
   dependencies:
     "@rollup/plugin-alias": 5.0.0
     "@rollup/plugin-node-resolve": 15.0.2
@@ -4181,7 +4181,6 @@ __metadata:
     gulp-postcss: 9.0.1
     gulp-rename: 2.0.0
     gulp-rev-delete-original: 0.2.3
-    gulp-rev-replace: 0.4.4
     gulp-rev-rewrite: 5.0.0
     gulp-sizereport: 1.2.1
     gulp-sourcemaps: 3.0.0
@@ -4215,7 +4214,7 @@ __metadata:
     workbox-build: 6.5.4
   bin:
     blendid: bin/blendid.js
-  checksum: 0fc7df069e4361e4d67b592e6e462144df8f383fb3e61be1e065fc65db57472d4ee8691552d4c7adb9990817b5dd3d7ec3531df384de64b716ff19f3d6c40852
+  checksum: 70b372dc9e829b34ff03985cdf75228c4e3144bb424c4edd13fc892ccd1cf29b3a1531587fea7b7d02171cb50c0715f7033fe9a905ac34d43617cf164bfa5ab8
   languageName: node
   linkType: hard
 
@@ -8598,16 +8597,6 @@ __metadata:
     rimraf: ^2.3.4
     through2: ^0.6.5
   checksum: 6e575a02bff76f812ba6bb44f53410b9ee1b100f497bc722489434ef8b13ddebd6149624dcbc2781910eeadb85ec4784e0ebdbe826ea75dcba9ee289ce5ade26
-  languageName: node
-  linkType: hard
-
-"gulp-rev-replace@npm:0.4.4":
-  version: 0.4.4
-  resolution: "gulp-rev-replace@npm:0.4.4"
-  dependencies:
-    plugin-error: ^0.1.2
-    through2: ^2.0.0
-  checksum: 6efabfe4771892a2ec75c44150059e2c4daef28fb0ac7673bf90514c847d3a185695f7a7e420a2dbe9fd17ccfa6fbea71fe895a8cbd53ba2e91cec1fa4b3ba10
   languageName: node
   linkType: hard
 
