@@ -2860,7 +2860,7 @@ __metadata:
     "@thi.ng/transducers": 8.4.4
     "@typescript-eslint/eslint-plugin": 5.59.2
     "@typescript-eslint/parser": 5.59.2
-    "@ungap/structured-clone": 1.1.2
+    "@ungap/structured-clone": 1.2.0
     date-fns: 2.30.0
     eslint: 8.39.0
     eslint-plugin-promise: 6.1.1
@@ -4501,10 +4501,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ungap/structured-clone@npm:1.1.2":
-  version: 1.1.2
-  resolution: "@ungap/structured-clone@npm:1.1.2"
-  checksum: cc6d7c4d555a4540e72855649470182caffe9943ea3e73c06cb927da18c0a9a65ac99878e4041fccc8693fb3b5c53a5a4044f0623dd67c99fee2008fc2a105e9
+"@ungap/structured-clone@npm:1.2.0":
+  version: 1.2.0
+  resolution: "@ungap/structured-clone@npm:1.2.0"
+  checksum: 4f656b7b4672f2ce6e272f2427d8b0824ed11546a601d8d5412b9d7704e83db38a8d9f402ecdf2b9063fc164af842ad0ec4a55819f621ed7e7ea4d1efcc74524
   languageName: node
   linkType: hard
 
