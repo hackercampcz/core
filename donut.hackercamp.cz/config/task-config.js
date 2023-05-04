@@ -1,32 +1,79 @@
 const fs = require("fs");
 const esbuild = require("gulp-esbuild");
 const mode = require("gulp-mode")();
+const DefaultRegistry = require("undertaker-registry");
 const projectPath = require("@topmonks/blendid/gulpfile.js/lib/projectPath.js");
 const pathConfig = require("./path-config.json");
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
-async function getSlackProfiles(token) {
-  console.log("Loading Slack profiles...");
-  const skip = new Set(["slackbot", "jakub"]);
-  const resp = await fetch("https://slack.com/api/users.list", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
-  const data = await resp.json();
-  if (resp.status !== 200) {
-    console.log(data);
+class ESBuildRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.src = projectPath(pathConfig.src, pathConfig.esbuild.src, "*.js");
+    this.dest = projectPath(pathConfig.dest, pathConfig.esbuild.dest);
   }
-  return new Map(
-    data.members
-      .filter((x) => !(x.is_bot || skip.has(x.name)))
-      .map((x) => [x.id, x.profile])
-  );
+  init({ task, src, dest }) {
+    task("esbuild-prod", () =>
+      src(this.src).pipe(esbuild(this.config.options)).pipe(dest(this.dest))
+    );
+    const esbuildInc = esbuild.createGulpEsbuild({ incremental: true });
+    task("esbuild", () =>
+      src(this.src).pipe(esbuildInc(this.config.options)).pipe(dest(this.dest))
+    );
+  }
 }
 
-async function getAttendees() {
-  console.log("Loading attendees...");
-  const resp = await fetch("https://api.hackercamp.cz/v1/attendees?year=2023");
-  return resp.json();
+class HackersRegistry extends DefaultRegistry {
+  constructor(config, pathConfig) {
+    super();
+    this.config = config;
+    this.dest = projectPath(
+      pathConfig.src,
+      pathConfig.data.src,
+      "hackers.json"
+    );
+  }
+  init({ task }) {
+    async function getSlackProfiles(token) {
+      console.log("Loading Slack profiles...");
+      const skip = new Set(["slackbot", "jakub"]);
+      const resp = await fetch("https://slack.com/api/users.list", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const data = await resp.json();
+      if (resp.status !== 200) {
+        console.log(data);
+      }
+      return new Map(
+        data.members
+          .filter((x) => !(x.is_bot || skip.has(x.name)))
+          .map((x) => [x.id, x.profile])
+      );
+    }
+
+    async function getAttendees() {
+      console.log("Loading attendees...");
+      const resp = await fetch(
+        "https://api.hackercamp.cz/v1/attendees?year=2023"
+      );
+      return resp.json();
+    }
+
+    task("prepare-data", async () => {
+      const [profiles, items] = await Promise.all([
+        getSlackProfiles(this.config.slackToken),
+        getAttendees(),
+      ]);
+      const attendees = items.map((x) => [x.slug, profiles.get(x.slackID), x]);
+      return fs.promises.writeFile(
+        this.dest,
+        JSON.stringify(attendees, null, 2),
+        { encoding: "utf-8" }
+      );
+    });
+  }
 }
 
 /**
@@ -58,6 +105,9 @@ module.exports = {
       manageEnv(env) {
         env.addGlobal("currentYear", new Date().getFullYear());
       },
+      globals: {
+        currentYear: new Date().getFullYear(),
+      },
       filters: {
         year() {
           return new Date().getFullYear();
@@ -78,22 +128,6 @@ module.exports = {
         route: (x) => `hackers/${x[0]}/index.html`,
       },
     ],
-  },
-
-  esbuild: {
-    extensions: ["ts", "js", "mjs"],
-    options: {
-      bundle: true,
-      splitting: true,
-      treeShaking: true,
-      minify: mode.production(),
-      mainFields: ["module", "browser", "main"],
-      sourcemap: true,
-      format: "esm",
-      platform: "browser",
-      target: ["es2018"],
-      charset: "utf8",
-    },
   },
 
   browserSync: {
@@ -123,43 +157,29 @@ module.exports = {
     rev: true,
   },
 
+  registries: [
+    new ESBuildRegistry(
+      {
+        extensions: ["ts", "js", "mjs"],
+        options: {
+          bundle: true,
+          splitting: true,
+          treeShaking: true,
+          minify: mode.production(),
+          mainFields: ["module", "browser", "main"],
+          sourcemap: true,
+          format: "esm",
+          platform: "browser",
+          target: ["es2018"],
+          charset: "utf8",
+        },
+      },
+      pathConfig
+    ),
+    new HackersRegistry({ slackToken: process.env["SLACK_TOKEN"] }, pathConfig),
+  ],
+
   additionalTasks: {
-    initialize(gulp, pathConfig, taskConfig) {
-      const { src, task, dest } = gulp;
-      const esmPaths = {
-        src: projectPath(pathConfig.src, pathConfig.esbuild.src, "*.js"),
-        dest: projectPath(pathConfig.dest, pathConfig.esbuild.dest),
-      };
-
-      task("prepare-data", async () => {
-        const [profiles, items] = await Promise.all([
-          getSlackProfiles(process.env["SLACK_TOKEN"]),
-          getAttendees(),
-        ]);
-        const attendees = items.map((x) => [
-          x.slug,
-          profiles.get(x.slackID),
-          x,
-        ]);
-        return fs.promises.writeFile(
-          projectPath(pathConfig.src, pathConfig.data.src, "hackers.json"),
-          JSON.stringify(attendees, null, 2),
-          { encoding: "utf-8" }
-        );
-      });
-
-      task("esbuild-prod", () =>
-        src(esmPaths.src)
-          .pipe(esbuild(taskConfig.esbuild.options))
-          .pipe(dest(esmPaths.dest))
-      );
-      const esbuildInc = esbuild.createGulpEsbuild({ incremental: true });
-      task("esbuild", () =>
-        src(esmPaths.src)
-          .pipe(esbuildInc(taskConfig.esbuild.options))
-          .pipe(dest(esmPaths.dest))
-      );
-    },
     development: {
       prebuild: ["prepare-data"],
       code: ["esbuild"],

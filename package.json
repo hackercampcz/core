@@ -7,7 +7,7 @@
   "private": true,
   "packageManager": "yarn@3.5.1",
   "devDependencies": {
-    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=47870f3de9de3a0343eab8736f26f024eacffd5f",
+    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=461332f373dbba3b1fe2b8d9c2cd2691f444bf73",
     "@types/nunjucks": "3.2.2",
     "dotenv": "16.0.3",
     "dotenv-cli": "7.2.1",
@@ -17,7 +17,8 @@
     "gulp-esbuild": "0.11.1",
     "gulp-mode": "1.1.0",
     "npm-run-all": "4.1.5",
-    "prettier": "2.8.8"
+    "prettier": "2.8.8",
+    "undertaker-registry": "^2.0.0"
   },
   "resolutions": {
     "@grpc/grpc-js": "1.8.14"

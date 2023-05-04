@@ -19,6 +19,6 @@ When you run something, use [1password CLI](https://developer.1password.com/docs
 
 For example to run website locally, you have to use:
 ```
-op run --env-file=.env -- yarn start:www.hackercamp.cz
+op run --env-file=.env --no-masking -- yarn start:www.hackercamp.cz
 ```
 

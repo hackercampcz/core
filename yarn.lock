@@ -2830,7 +2830,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=47870f3de9de3a0343eab8736f26f024eacffd5f"
+    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=461332f373dbba3b1fe2b8d9c2cd2691f444bf73"
     "@types/nunjucks": 3.2.2
     dotenv: 16.0.3
     dotenv-cli: 7.2.1
@@ -2841,6 +2841,7 @@ __metadata:
     gulp-mode: 1.1.0
     npm-run-all: 4.1.5
     prettier: 2.8.8
+    undertaker-registry: ^2.0.0
   languageName: unknown
   linkType: soft
 
@@ -4149,9 +4150,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=47870f3de9de3a0343eab8736f26f024eacffd5f":
+"@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=461332f373dbba3b1fe2b8d9c2cd2691f444bf73":
   version: 6.0.0
-  resolution: "@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=47870f3de9de3a0343eab8736f26f024eacffd5f"
+  resolution: "@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=461332f373dbba3b1fe2b8d9c2cd2691f444bf73"
   dependencies:
     "@rollup/plugin-alias": 5.0.0
     "@rollup/plugin-node-resolve": 15.0.2
@@ -4214,7 +4215,7 @@ __metadata:
     workbox-build: 6.5.4
   bin:
     blendid: bin/blendid.js
-  checksum: c586a66298f88abb71205da35321672c2a137a7304eff48fea428674c82af6d0e71761663d6a0c43d2e8e604b57194407c160016b706ac4cd0d2b2930765974b
+  checksum: 0fc7df069e4361e4d67b592e6e462144df8f383fb3e61be1e065fc65db57472d4ee8691552d4c7adb9990817b5dd3d7ec3531df384de64b716ff19f3d6c40852
   languageName: node
   linkType: hard
 
@@ -14590,6 +14591,13 @@ __metadata:
   version: 1.0.1
   resolution: "undertaker-registry@npm:1.0.1"
   checksum: e090474e6add367ed48f0c3ca39e9720cbb51efd5bd3a2aefc8602702601f0ca751aaa34fefc00e760b57e04a4ccaf9ffa6f50bf6ee8ff7554b793d9c160350f
+  languageName: node
+  linkType: hard
+
+"undertaker-registry@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "undertaker-registry@npm:2.0.0"
+  checksum: 5a26ac2bcddd5ffad9bcb1115968b19c18a3e8896610124c26592b44037bbb43f84b1252f7c5df730c2ad05c142b85bd564b2bc6b04fb1f9d53a75aa8067fd10
   languageName: node
   linkType: hard
 
