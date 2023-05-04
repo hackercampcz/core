@@ -154,7 +154,7 @@ module.exports = {
   },
 
   production: {
-    rev: true,
+    rev: false,
   },
 
   registries: [
@@ -168,9 +168,10 @@ module.exports = {
           minify: mode.production(),
           mainFields: ["module", "browser", "main"],
           sourcemap: true,
+          legalComments: "linked",
           format: "esm",
           platform: "browser",
-          target: ["es2018"],
+          target: ["es2021"],
           charset: "utf8",
         },
       },
