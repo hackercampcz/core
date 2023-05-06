@@ -1,8 +1,8 @@
-const pathConfig = require("./path-config.json");
+import pathConfig from "./path-config.json" assert { type: "json" };
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
-module.exports = {
+export default {
   images: true,
   cloudinary: true,
   fonts: true,

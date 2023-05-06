@@ -1,7 +1,7 @@
-const fs = require("fs");
-const DefaultRegistry = require("undertaker-registry");
-const projectPath = require("@topmonks/blendid/gulpfile.js/lib/projectPath.js");
-const pathConfig = require("./path-config.json");
+import fs from "node:fs";
+import DefaultRegistry from "undertaker-registry";
+import projectPath from "@topmonks/blendid/gulpfile.js/lib/projectPath.mjs";
+import pathConfig from "./path-config.json" assert { type: "json" };
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
@@ -69,7 +69,7 @@ const formatDateTime = (x) =>
     minute: "2-digit",
   }) ?? null;
 
-module.exports = {
+export default {
   images: true,
   cloudinary: true,
   fonts: true,
