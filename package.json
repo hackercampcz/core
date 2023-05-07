@@ -7,7 +7,7 @@
   "private": true,
   "packageManager": "yarn@3.5.1",
   "devDependencies": {
-    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=68954d1d3282147a5e5ae3409b4ca6a26d948925",
+    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=03b5a1aedf85849c37b42c85e853fa6bb38c4b67",
     "@types/nunjucks": "3.2.2",
     "dotenv": "16.0.3",
     "dotenv-cli": "7.2.1",
@@ -22,8 +22,8 @@
     "@grpc/grpc-js": "1.8.14"
   },
   "scripts": {
-    "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid -- build --production",
-    "build:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid -- build --production",
+    "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid -- build",
+    "build:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid -- build",
     "start:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid",
     "start:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid"
   },

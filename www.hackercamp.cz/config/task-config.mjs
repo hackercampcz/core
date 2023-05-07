@@ -35,11 +35,10 @@ export default {
     },
   },
 
-  browserSync: {
-    port: 3001,
-    server: {
-      baseDir: pathConfig.dest,
-    },
+  vite: {
+    server: { port: 3001 },
+    browser: "google chrome canary",
+    browserArgs: "--ignore-certificate-errors --allow-insecure-localhost",
   },
 
   production: {

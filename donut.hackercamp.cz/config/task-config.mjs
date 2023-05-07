@@ -104,13 +104,9 @@ export default {
     ],
   },
 
-  browserSync: {
-    port: 3000,
-    https: true,
-    server: {
-      baseDir: pathConfig.dest,
-    },
-    browser: ["Google Chrome Canary"],
+  vite: {
+    browser: "google chrome canary",
+    browserArgs: "--ignore-certificate-errors --allow-insecure-localhost",
   },
 
   workboxBuild: {
