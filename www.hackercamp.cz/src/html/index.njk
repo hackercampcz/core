@@ -415,6 +415,15 @@
         <video aria-hidden="true" class="responsive" muted autoplay loop playsinline
                poster="{{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr="auto") }}">
           <source
+            media="screen and (max-width: 599px)"
+            src="https://res.cloudinary.com/topmonks/video/upload/f_auto,h_480,q_auto,w_480/v1652864856/www.hackercamp.cz/hc21-mov-v5_cut.mp4"
+          />
+          <source
+            media="screen and (min-width: 600px) and (max-width: 839px)"
+            src="https://res.cloudinary.com/topmonks/video/upload/f_auto,h_360,q_auto,w_360/v1652864856/www.hackercamp.cz/hc21-mov-v5_cut.mp4"
+          />
+          <source
+            media="screen and (min-width: 840px)"
             src="https://res.cloudinary.com/topmonks/video/upload/f_auto,h_622,q_auto,w_622/v1652864856/www.hackercamp.cz/hc21-mov-v5_cut.mp4"
           />
           <picture>
