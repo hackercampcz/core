@@ -369,7 +369,9 @@
       {% include "shared/logo.html" %}
     </div>
     <div class="hc-navbar__right mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-      <!-- a class="hc-link hc-navbar__link" href="https://g.page/sobenak?share">Navigovat</a-->
+      {% if event.willStartSoon %}
+      <a class="hc-link hc-navbar__link" href="https://goo.gl/maps/u7zHVpWCf8rvpASq9">Navigovat</a>
+      {% endif %}
       <a class="hc-link hc-navbar__link" href="/faq/">FAQ</a>
       <a
         class="hc-link hc-link--decorated"
@@ -385,29 +387,29 @@
         class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop"
       >
         <hgroup>
-          <h1 property="name">Hacker Camp</h1>
+          <h1 property="name">{{ event.name }}</h1>
           <h2><small>Hack to the Future</small></h2>
         </hgroup>
-        <p property="description">
-          Zažij s námi netradiční třídenní festival pro lidi
-          z&nbsp;české tech scény.
-        </p>
-        <p>31. srpna &ndash; 3. září 2023 na Sobeňáku</p>
+        {% if not event.willStartSoon %}
+          <p property="description">
+            {{ event.details }}
+          </p>
+        <p>{{ event.startDate | longDate }} &ndash; {{ event.endDate | longDate }} {{ year }} na Sobeňáku</p>
         <p>
           <a
             class="hc-cta"
             href="/registrace/"
           >Chci se zapojit</a>
         </p>
-        <!--
+        {% else %}
         <p>Vjezd do areálu je chráněn značkou zákaz vjezdu. Nelekni se. Ta napovídá správný směr. Pokračuj</p>
         <p>
           <a
-            href="https://g.page/sobenak?share"
+            href="https://goo.gl/maps/u7zHVpWCf8rvpASq9"
             class="hc-cta"
           >Navigovat</a>
         </p>
-        -->
+        {% endif %}
       </div>
       <div
         class="hc-camp-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
@@ -751,17 +753,19 @@
         <h3 class="hc-text--gay">Přelom srpna a&nbsp;září</h3>
         <p>
           Začínáme ve čtvrtek
-          <time property="startDate" datetime="2023-08-31"
-          >31.&nbsp;srpna
-          </time>
+          <time property="startDate" datetime="{{ event.startDate | isoDate }}"
+            >{{ event.startDate | longDate }}</time
+          >
           a končíme v&nbsp;neděli
-          <time property="endDate" datetime="2023-09-03">3.&nbsp;září</time>
+          <time property="endDate" datetime="{{ event.endDate | isoDate }}"
+            >{{ event.endDate | longDate }}</time
+          >
           v&nbsp;poledne, hned jak se proberete po good-bye&nbsp;party.
         </p>
         <p style="margin: 2em 0 0">
           <a
             class="hc-icon-link"
-            href="https://calendar.google.com/calendar/event?action=TEMPLATE&amp;dates=20230831/20230904&amp;text=Hacker+Camp&amp;location=Sobe%C5%88%C3%A1k,+Star%C3%BD+Ro%C5%BEmit%C3%A1l+148,+Ro%C5%BEmit%C3%A1l+pod+T%C5%99em%C5%A1%C3%ADnem&amp;details=Za%C5%BEijte+druh%C3%BD+ro%C4%8Dn%C3%ADk+netradi%C4%8Dn%C3%ADho+t%C5%99%C3%ADdenn%C3%ADho+festivalu+pro+lidi+z+%C4%8Desk%C3%A9+tech+sc%C3%A9ny.&amp;sf=true"
+            href="{{ event | calendarURL }}"
           >
             <svg
               aria-hidden="true"
@@ -851,7 +855,7 @@
     <div class="hc-price-list__text">
       <p>Na akci neplánujeme vydělávat, zároveň ji chceme tvořit bez velkých
         komerčních sponzorů.</p>
-      <p>Do konce dubna 2023 si lístky můžou koupit jen hackeři, co s námi byli na předchozích ročnících. Když v téhle lhůtě
+      <p>Do konce dubna {{ year }} si lístky můžou koupit jen hackeři, co s námi byli na předchozích ročnících. Když v téhle lhůtě
         zvládnou i za vstup zaplatit, mají od nás garantované místo i pro jednoho svého hosta. Od května začneme se
         zvaním dalších hackerů.</p>
     </div>
@@ -1017,7 +1021,7 @@
     <div class="hc-price-list__text">
       <p>Cena vstupenky obsahuje: vstup na camp (program), ubytování - chatky nebo stany, koncerty, další doprovodný
         program, snídaně každé ráno po dobu trvání campu.
-        Vstupenky jsou jednotné (platí po celou dobu trvání campu 31. 8.-3. 9. 2023). Ceny jsou bez DPH.</p>
+        Vstupenky jsou jednotné (platí po celou dobu trvání campu {{ event.startDate | shortDate }}-{{ event.endDate | shortDate }} {{ year }}). Ceny jsou bez DPH.</p>
     </div>
   </section>
 

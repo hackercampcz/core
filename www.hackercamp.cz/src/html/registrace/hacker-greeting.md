@@ -1,6 +1,6 @@
 Ahoj!
 
-Moc nás těší Tvůj zájem o účast na Hacker Campu (31. srpna až 3. září 2023)!
+Moc nás těší Tvůj zájem o účast na Hacker Campu ({{ event.startDate | longDate }} až {{ event.endDate | longDate }} {{ year }})!
 Už asi víš, že akce bude jen tak dobrá, jak si ji společně uděláme. 
 Proto se ptáme na několik věcí.
 

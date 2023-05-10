@@ -2,7 +2,7 @@ Ahoj!
 
 Moc nás těší Tvůj zájem nám vypomoci na Hacker Campu! Určitě si to společně užijeme.
 
-Letošní termín je **31. srpna až 3. září 2023**
+Letošní termín je **{{ event.startDate | longDate }} až {{ event.endDate | longDate }} {{ year }}**
 
 ***
 

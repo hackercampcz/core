@@ -3147,7 +3147,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=03b5a1aedf85849c37b42c85e853fa6bb38c4b67"
+    "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=3641a0fee2004f90e3be069001cbaf582c31fa70"
     "@types/nunjucks": 3.2.2
     dotenv: 16.0.3
     dotenv-cli: 7.2.1
@@ -4465,9 +4465,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=03b5a1aedf85849c37b42c85e853fa6bb38c4b67":
+"@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=3641a0fee2004f90e3be069001cbaf582c31fa70":
   version: 6.0.0
-  resolution: "@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=03b5a1aedf85849c37b42c85e853fa6bb38c4b67"
+  resolution: "@topmonks/blendid@https://github.com/topmonks/blendid.git#commit=3641a0fee2004f90e3be069001cbaf582c31fa70"
   dependencies:
     "@rollup/plugin-alias": 5.0.0
     "@rollup/plugin-node-resolve": 15.0.2
@@ -4534,7 +4534,7 @@ __metadata:
     workbox-build: 6.5.4
   bin:
     blendid: bin/blendid.js
-  checksum: 3372f1e204cad6c967538ca29b776750065d41dd9c1efdffa6a1a3ddb87226af66c93d64765eb30c2b6d78365358d703ddf9125667475c7fc6592bea2fa5ff7d
+  checksum: f5436395c5e3258e3117a36b2a2219d4b94ae731b28a5ece55fd7dbfbbb99a7d10985e0fd4e9ec2444beb9bd5bf385d8b15559d49066063c80b5f640e983aff5
   languageName: node
   linkType: hard
 

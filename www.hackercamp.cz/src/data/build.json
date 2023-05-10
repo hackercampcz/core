@@ -2,7 +2,6 @@
   "environment": "development",
   "version": "HEAD",
   "build": "local",
-  "year": "2023",
   "hostname": "localhost:3000",
   "api-host": "https://api.hackercamp.cz/v1/",
   "slack/client-id": "1990816352820.3334586910531"

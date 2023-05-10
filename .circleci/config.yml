@@ -222,8 +222,6 @@ jobs:
                --arg value5 "$HC_SLACK_CLIENT_ID" \
                --arg key5 'rollbar/access-token' \
                --arg value5 "$ROLLBAR_ACCESS_TOKEN" \
-               --arg key6 'year' \
-               --arg value6 2023 \
                '. | .[$key0]=$value0 | .[$key1]=$value1 | .[$key2]=$value2 | .[$key3]=$value3 | .[$key4]=$value4 | .[$key5]=$value5 | .[$key6]=$value6' \
             > << parameters.site_name >>/src/data/build.json
       - run:
