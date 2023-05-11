@@ -18,6 +18,7 @@ const algoliaEnv = {
   algolia_app_id: config.get("algolia-app-id"),
   algolia_admin_key: config.get("algolia-admin-key"),
   algolia_search_key: config.get("algolia-search-key"),
+  // TODO: extend this to support more than one index
   algolia_index_name: config.get("algolia-index-name"),
 };
 const rollbar_access_token = config.require("rollbar-access-token");
