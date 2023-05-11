@@ -234,6 +234,7 @@ export const createRoutes = ({
           fileName: "slack/webhook.mjs",
           environment: {
             variables: {
+              year: config.getNumber("year"),
               rollbar_access_token,
               slack_queue_url: slackQueueUrl,
               slack_bot_token: config.get("slack-bot-token"),

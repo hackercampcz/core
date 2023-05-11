@@ -196,10 +196,11 @@ function enqueueSlackWelcomeMessage(user) {
 
 async function onTeamJoin({ user }) {
   const { email } = user.profile;
+  const { year } = process.env;
   console.log({ event: "Team join", email });
   const [registration, attendee] = await Promise.all([
-    getRegistration(email, 2022),
-    getAttendeeByEmail(email, 2022),
+    getRegistration(email, year),
+    getAttendeeByEmail(email, year),
   ]);
   if (attendee) {
     await Promise.all([
@@ -274,10 +275,11 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
 
 async function onUserProfileChanged({ user }) {
   const { email } = user.profile;
+  const { year } = process.env;
   console.log({ event: "Profile update", email });
   const [contact, attendee] = await Promise.all([
     getContact(email, user.id),
-    getAttendee(user.id, 2022),
+    getAttendee(user.id, year),
   ]);
   if (!contact) {
     console.log({ event: "Contact not found", email, slackID: user.id });
@@ -315,7 +317,9 @@ export async function slackWebhook(event) {
     const payload = readPayload(event);
     // TODO: validate webhook token
     // TODO: push this to queue instead
-    return await dispatchByType(payload.event ?? payload).then((x) => withCORS_(x));
+    return await dispatchByType(payload.event ?? payload).then((x) =>
+      withCORS_(x)
+    );
   } catch (err) {
     rollbar.error(err);
     return withCORS_(internalError());
