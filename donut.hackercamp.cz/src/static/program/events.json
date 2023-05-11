@@ -112,21 +112,21 @@
     "type": "org"
   },
   {
-    "id":"org-dinner-day-1",
+    "id": "org-dinner-day-1",
     "lineup": "liorg",
     "startAt": "2022-09-01T18:00:00.000+02:00",
     "endAt": "2022-09-01T20:00:00.000+02:00",
     "title": "Ideální doba se nadlábnout"
   },
   {
-    "id":"fire-day-1",
+    "id": "fire-day-1",
     "lineup": "liorg",
     "startAt": "2022-09-01T20:00:00.000+02:00",
     "endAt": "2022-09-02T04:00:00.000+02:00",
     "title": "Oheň a pečení buřtů"
   },
   {
-    "id":"disco-dating",
+    "id": "disco-dating",
     "lineup": "libase",
     "startAt": "2022-09-01T17:15:00.000+02:00",
     "endAt": "2022-09-01T18:45:00.000+02:00",
@@ -252,8 +252,7 @@
     "description": "Rozeberme téma biohacking na cimprcampr.",
     "level": 110,
     "type": "topic",
-    "people": [
-    ]
+    "people": []
   },
   {
     "id": "biohacking-slot-1",
@@ -264,7 +263,11 @@
     "title": "Není BIO jako bio",
     "description": "Chci vám ukázat, co si představuju pd slovy bio a hacking.",
     "people": [
-      { "slackID": "121232", "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03URCQNMU2-00983dc5012b-512", "name": "Ondřej Zoubek" }
+      {
+        "slackID": "121232",
+        "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03URCQNMU2-00983dc5012b-512",
+        "name": "Ondřej Zoubek"
+      }
     ]
   },
 
@@ -277,7 +280,11 @@
     "title": "Jak 100 hodin nespat",
     "description": "Ukážu vám, co pomocí přírodních látek dokáže vaše tělo.",
     "people": [
-      { "slackID": "131322", "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03U1766R0F-b686175664c5-512", "name": "Martin Holečko" }
+      {
+        "slackID": "131322",
+        "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03U1766R0F-b686175664c5-512",
+        "name": "Martin Holečko"
+      }
     ]
   },
   {
@@ -290,9 +297,21 @@
     "level": 110,
     "type": "topic",
     "people": [
-      { "slackID": "321413", "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03TWPUL1KN-7869e9238d9f-512", "name": "Tereza Jandáčková" },
-      { "slackID": "421421", "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03TNAB52K0-g583bcf76466-512", "name": "David Grudl" },
-      { "slackID": "412412", "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03T63QJBN3-636b3db7dc7e-512", "name": "Patrik Raš" }
+      {
+        "slackID": "321413",
+        "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03TWPUL1KN-7869e9238d9f-512",
+        "name": "Tereza Jandáčková"
+      },
+      {
+        "slackID": "421421",
+        "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03TNAB52K0-g583bcf76466-512",
+        "name": "David Grudl"
+      },
+      {
+        "slackID": "412412",
+        "image": "https://ca.slack-edge.com/T01V4Q0ACQ4-U03T63QJBN3-636b3db7dc7e-512",
+        "name": "Patrik Raš"
+      }
     ]
   },
   {
@@ -527,7 +546,7 @@
     "description": "Opakování loňského, velmi úspěšného, dobývání zámků (TunaSec)"
   },
   {
-    "id":"dinner-day-2",
+    "id": "dinner-day-2",
     "lineup": "liorg",
     "startAt": "2022-09-02T18:00:00.000+02:00",
     "endAt": "2022-09-02T20:00:00.000+02:00",
@@ -551,7 +570,7 @@
     "type": "org"
   },
   {
-    "id":"workshop-8",
+    "id": "workshop-8",
     "lineup": "liother",
     "startAt": "2022-09-02T18:00:00.000+02:00",
     "endAt": "2022-09-02T19:00:00.000+02:00",
@@ -559,7 +578,7 @@
     "description": "Přineste si vlastní nůž a Petr Severa vám ukáže jak ho správně nabrousit!"
   },
   {
-    "id":"ev30",
+    "id": "ev30",
     "lineup": "liwood",
     "startAt": "2022-09-02T19:00:00.000+02:00",
     "endAt": "2022-09-02T20:00:00.000+02:00",
@@ -738,7 +757,7 @@
     "startAt": "2022-09-03T10:15:00.000+02:00",
     "endAt": "2022-09-03T12:00:00.000+02:00",
     "title": "Sustainable code",
-    "description":"Aleš Roubíček, Marek Trunkát",
+    "description": "Aleš Roubíček, Marek Trunkát",
     "type": "topic",
     "level": 110
   },
@@ -751,7 +770,7 @@
     "description": "(Jakub Korbela)"
   },
   {
-    "id":"lunch-day-3",
+    "id": "lunch-day-3",
     "lineup": "liorg",
     "startAt": "2022-09-03T12:00:00.000+02:00",
     "endAt": "2022-09-03T14:00:00.000+02:00",
@@ -946,7 +965,7 @@
     "description": "Workshop (Matouš Paleček)"
   },
   {
-    "id":"dinner-day-3",
+    "id": "dinner-day-3",
     "lineup": "liorg",
     "startAt": "2022-09-03T18:00:00.000+02:00",
     "endAt": "2022-09-03T20:00:00.000+02:00",

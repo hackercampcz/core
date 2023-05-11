@@ -5,7 +5,11 @@
     "title": "Chatky pro dva",
     "description": "V areálu stojí 10 malých starších chatek. Každá chatka je pro 2 pořádné pankáče. Chatek je bez elektrické zásuvky.",
     "images": [
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3920.jpg", "width": 1752, "height": 1168 }
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3920.jpg",
+        "width": 1752,
+        "height": 1168
+      }
     ]
   },
   {
@@ -14,8 +18,16 @@
     "title": "Chatky pro čtyři",
     "description": "V areálu stojí 20 klasických táborových čtyřlůžkových chatek. Chatky jsou udržované. V každé chatce jsou dvě palandy, dvě skříně, stoleček s židlí. V polovině chatek jsou elektrické zásuvky.",
     "images": [
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3874.jpg", "width": 1819, "height": 1212 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3912.jpg", "width": 1198, "height": 1796 }
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3874.jpg",
+        "width": 1819,
+        "height": 1212
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3912.jpg",
+        "width": 1198,
+        "height": 1796
+      }
     ]
   },
   {
@@ -24,12 +36,36 @@
     "title": "Modrý domek",
     "description": "Modrý domek má celkovou kapacitu 28 lůžek. Domek je rozdělen do dvou půlek. Každá polovina má jeden dvoulůžkový, dva šestilůžkové pokoje a koupelnu s umyvadly a toaletou.",
     "images": [
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/Modry%CC%81.jpg", "width": 2466, "height": 902 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3666.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3635.jpg", "width": 1200, "height": 1800 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3646.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3670.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3616.jpg", "width": 1800, "height": 1200 }
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/Modry%CC%81.jpg",
+        "width": 2466,
+        "height": 902
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3666.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3635.jpg",
+        "width": 1200,
+        "height": 1800
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3646.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3670.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3616.jpg",
+        "width": 1800,
+        "height": 1200
+      }
     ]
   },
   {
@@ -38,12 +74,36 @@
     "title": "Zelený domek",
     "description": "Zelený domek má celkovou kapacitu 28 lůžek. Každý pokoj má vlastní sociální zařízení (koupelna, toaleta).",
     "images": [
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/Zeleny%CC%81.jpg", "width": 2466, "height": 902 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3771.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3757.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3748.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3731.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3691.jpg", "width": 1800, "height": 1200 }
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/Zeleny%CC%81.jpg",
+        "width": 2466,
+        "height": 902
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3771.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3757.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3748.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3731.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3691.jpg",
+        "width": 1800,
+        "height": 1200
+      }
     ]
   },
   {
@@ -52,12 +112,36 @@
     "title": "Žlutý domek",
     "description": "Žlutý domek má celkovou kapacitu 28 lůžek. Domek je rozdělen do dvou půlek. Každá polovina má jeden dvoulůžkový, dva šestilůžkové pokoje a koupelnu s umyvadly a toaletou.",
     "images": [
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/Z%CC%8Cluty%CC%81.jpg", "width": 2466, "height": 902 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3810.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3832.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3817.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3814.jpg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3826.jpg", "width": 1800, "height": 1200 }
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/Z%CC%8Cluty%CC%81.jpg",
+        "width": 2466,
+        "height": 902
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3810.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3832.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3817.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3814.jpg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/4V1A3826.jpg",
+        "width": 1800,
+        "height": 1200
+      }
     ]
   },
   {
@@ -66,12 +150,36 @@
     "title": "Červený domek",
     "description": "Červený domek má celkovou kapacitu 24 lůžek. Jeden pokoj je kompletně bezbariérový. Pokoje jsou s vlatní koupelnou a toaletou (VK) nebo s koupelnou a toaletou na chodbě (CHK)",
     "images": [
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/marodka-redesign-5.png", "width": 2419, "height": 1000 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/61331936482__7CC50492-9C32-49E5-8182-817F9FD6263F-scaled.jpeg", "width": 1800, "height": 1200 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/IMG_2943-scaled.jpeg", "width": 1920, "height": 2560 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/IMG_2945-scaled.jpeg", "width": 2560, "height": 1213 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/IMG_3058-scaled.jpeg", "width": 1920, "height": 2560 },
-      { "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/IMG_2948-scaled.jpeg", "width": 2560, "height": 1920 }
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/marodka-redesign-5.png",
+        "width": 2419,
+        "height": 1000
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/61331936482__7CC50492-9C32-49E5-8182-817F9FD6263F-scaled.jpeg",
+        "width": 1800,
+        "height": 1200
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/IMG_2943-scaled.jpeg",
+        "width": 1920,
+        "height": 2560
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/IMG_2945-scaled.jpeg",
+        "width": 2560,
+        "height": 1213
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/IMG_3058-scaled.jpeg",
+        "width": 1920,
+        "height": 2560
+      },
+      {
+        "src": "https://www.sobenak.cz/wp-content/uploads/2020/10/IMG_2948-scaled.jpeg",
+        "width": 2560,
+        "height": 1920
+      }
     ]
   },
   {
@@ -80,8 +188,16 @@
     "title": "Glamping stany",
     "description": "V areálu připravíme i ubytování v ChillVillage stanech. Stany jsou pro 5 osob a v každém budou matrace, povlečení, polštáře, peřiny, led osvětlení a dokonce i kobereček.",
     "images": [
-      { "src": "https://chillvillage.cz/wp-content/uploads/2022/03/MG_0681-scaled.jpg", "width": 2560, "height": 1707 },
-      { "src": "https://chillvillage.cz/wp-content/uploads/2020/02/DSCN0801-scaled.jpg", "width": 1600, "height": 1200 }
+      {
+        "src": "https://chillvillage.cz/wp-content/uploads/2022/03/MG_0681-scaled.jpg",
+        "width": 2560,
+        "height": 1707
+      },
+      {
+        "src": "https://chillvillage.cz/wp-content/uploads/2020/02/DSCN0801-scaled.jpg",
+        "width": 1600,
+        "height": 1200
+      }
     ]
   }
 ]

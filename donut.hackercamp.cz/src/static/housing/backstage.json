@@ -13,7 +13,11 @@
   { "type": "house", "placement": "Pokoj č. 11", "label": "HACKER CAMP" },
   { "type": "house", "placement": "Pokoj č. 12", "label": "HACKER CAMP" },
   { "type": "house", "placement": "Pokoj č. 18", "label": "HACKER CAMP" },
-  { "type": "house", "placement": "Pokoj č. 19 BEZBARIÉRA", "label": "HACKER CAMP" },
+  {
+    "type": "house",
+    "placement": "Pokoj č. 19 BEZBARIÉRA",
+    "label": "HACKER CAMP"
+  },
   { "type": "house", "placement": "Pokoj č. 20 (VK)", "label": "HACKER CAMP" },
   { "type": "house", "placement": "Pokoj č. 21 (VK)", "label": "KUCHAŘKY" },
   { "type": "house", "placement": "Pokoj č. 22 (VK)", "label": "HACKER CAMP" }

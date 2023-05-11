@@ -24,7 +24,7 @@ button.hc-header__profile-photo:hover {
   box-shadow: #ee771b 0 0 12px 0;
 }
 
-.hc-header__profile-photo img{
+.hc-header__profile-photo img {
   border: 2px solid transparent;
   border-radius: 50%;
   background-clip: padding-box;
@@ -48,11 +48,11 @@ button.hc-header__profile-photo:hover {
 
   &::before {
     content: "";
-    border-left: .75rem solid transparent;
-    border-right: .75rem solid transparent;
-    border-bottom: .75rem solid var(--hc-background-color);
+    border-left: 0.75rem solid transparent;
+    border-right: 0.75rem solid transparent;
+    border-bottom: 0.75rem solid var(--hc-background-color);
     position: absolute;
-    top: -.75rem;
+    top: -0.75rem;
     right: 14px;
   }
 
@@ -62,7 +62,7 @@ button.hc-header__profile-photo:hover {
     list-style-type: none;
 
     li {
-      display:flex;
+      display: flex;
       align-items: center;
       gap: 16px;
       padding: 16px;

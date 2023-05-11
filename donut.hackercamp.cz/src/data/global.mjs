@@ -1,5 +1,5 @@
 export default {
-  "year": 2023,
+  year: 2023,
   event: {
     name: "Hacker Camp",
     startDate: new Date("2023-05-12T17:00:00+02:00"),
@@ -15,7 +15,7 @@ export default {
     details:
       "Zažijte netradiční třídenní festival pro lidi z české tech scény.",
   },
-  "rollbar": {
-    "accessToken": "a1f80d94b33346c1baf8e5be27ae5646"
-  }
-}
+  rollbar: {
+    accessToken: "a1f80d94b33346c1baf8e5be27ae5646",
+  },
+};

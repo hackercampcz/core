@@ -1,4 +1,7 @@
-import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
+import {
+  SecretsManagerClient,
+  GetSecretValueCommand,
+} from "@aws-sdk/client-secrets-manager";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
 
 /** @typedef { import("@types/aws-lambda").CloudFrontRequestEvent } CloudFrontRequestEvent */
@@ -22,7 +25,9 @@ export async function handler(event) {
 
   const query = new URLSearchParams({
     state: "not-authenticated",
-    returnUrl: request.querystring ? `${request.uri}?${request.querystring}`: request.uri,
+    returnUrl: request.querystring
+      ? `${request.uri}?${request.querystring}`
+      : request.uri,
   });
   return {
     status: "307",

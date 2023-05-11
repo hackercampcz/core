@@ -95,8 +95,7 @@ code {
   font-kerning: normal;
   font-variant-numeric: lining-nums slashed-zero;
   font-variant-ligatures: common-ligatures contextual;
-  -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum",
-  "zero";
+  -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
   font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
@@ -117,7 +116,7 @@ code {
 }
 
 .hc-button:disabled {
-  opacity: .8;
+  opacity: 0.8;
 }
 
 .hc-icon-link:link,
@@ -166,7 +165,6 @@ code {
   line-height: 56px;
   margin-right: 2em;
 }
-
 
 @media screen and (max-width: 600px) {
   .hc-navbar__right {
