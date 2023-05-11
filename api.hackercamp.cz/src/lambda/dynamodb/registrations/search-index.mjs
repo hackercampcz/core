@@ -22,6 +22,7 @@ const keysToIndex = new Set([
   "firstTime",
   "referral",
   "ticketType",
+  "approved",
 ]);
 
 function openAlgoliaClient() {

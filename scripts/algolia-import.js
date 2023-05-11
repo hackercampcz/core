@@ -77,6 +77,7 @@ async function getRegistrations() {
       "firstTime",
       "referral",
       "ticketType",
+      "approved",
     ].join(),
     ExpressionAttributeNames: {
       "#year": "year",
