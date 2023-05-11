@@ -68,10 +68,12 @@
 <script type="module">
   import { main } from "/assets/esm/profile.js";
 
+  const build = {{ build | dump(8) | safe }};
+  const env = Object.assign({ year: {{ year }} }, build);
   main({
     profile: {{ profile | dump(8) | safe }},
     attendee: {{ attendee | dump(8) | safe }},
-    env: {{ build | dump(8) |safe }},
+    env,
   })
 </script>
 {% endblock %}

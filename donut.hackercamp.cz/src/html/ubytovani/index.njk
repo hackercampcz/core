@@ -137,7 +137,6 @@
 
   select, input:not([type="radio"]) {
     -webkit-appearance: none;
-    border: 0 none;
     padding: 2px 8px;
     border: 1px solid #c4c4c4;
     background-color: var(--hc-background-color);
@@ -244,7 +243,7 @@
     <div class="gou-up">
       <a href="javascript:window.scrollTo(0, 0);">⤴</a>
     </div>
-    <input type="hidden" name="year" value="{{ currentYear }}" />
+    <input type="hidden" name="year" value="{{ year }}" />
   </form>
 </div>
 {% endblock %}
@@ -253,12 +252,14 @@
 <script type="module">
   import { main } from "/assets/esm/housing.js";
   const formElement = document.getElementById("housing");
+  const build = {{ build | dump(8) | safe }};
+  const env = Object.assign({ year: {{ year }} }, build);
   main({
     formElement,
     variantsRootElement: document.getElementById(
       "generated-housing-variant-sections"
     ),
-    env: {{ build | dump(8) | safe }}
+    env
   });
 </script>
 {% endblock %}

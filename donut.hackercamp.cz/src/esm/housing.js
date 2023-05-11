@@ -2,15 +2,14 @@ import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
 
-async function loadHousingData(apiBase) {
+async function loadHousingData(apiBase, year) {
   try {
-    const params = new URLSearchParams({ year: 2022 });
+    const params = new URLSearchParams({ year });
     const responses = await Promise.all([
       fetch(`/housing/index.json`),
       fetch(`/housing/types.json`),
       fetch(`/housing/variants.json`),
       fetch(`/housing/backstage.json`),
-      // FIXME: Hardcoded year 👇
       withAuthHandler(
         fetch(new URL(`housing?${params}`, apiBase).href, {
           headers: { Accept: "application/json" },
@@ -168,14 +167,12 @@ function renderHousingVariants(rootElement, { variants, housing }) {
 function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
   const hackersListElement = document.createElement("datalist");
   hackersListElement.id = "hackers";
+  const hackersByName = hackers
+    .filter((x) => x.name)
+    .sort((a, b) => a.name.localeCompare(b.name));
 
-  for (const {
-    slackID,
-    name,
-    company,
-    housing,
-    housingPlacement,
-  } of hackers.sort((a, b) => a.name.localeCompare(b.name))) {
+  for (const hacker of hackersByName) {
+    const { slackID, name, company, housing, housingPlacement } = hacker;
     const isHomeless = !housingPlacement;
     const inlineValue = inlineHackerName({ name, company });
 
@@ -439,7 +436,7 @@ export async function main({ formElement, variantsRootElement, env }) {
   const selectElement = formElement.elements.type;
   const profile = getSlackProfile();
   const { housing, hackers, types, variants, backstage } =
-    await loadHousingData(env["api-host"]);
+    await loadHousingData(env["api-host"], env.year);
   const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
 
   if (!hacker) {

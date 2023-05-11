@@ -97,10 +97,12 @@
 {% block javascript %}
 <script type="module">
   import {main} from "/assets/esm/index.js";
+  const build = {{ build | dump(8) | safe }};
+  const env = Object.assign({ year: {{ year }} }, build);
   main({
     searchParams: new URLSearchParams(location.search),
     rootElement: document.getElementById("dashboard"),
-    env: {{ build | dump(8) | safe }}
+    env
   });
 </script>
 {% endblock %}

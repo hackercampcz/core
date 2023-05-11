@@ -1,7 +1,9 @@
 import fs from "node:fs";
 import DefaultRegistry from "undertaker-registry";
+import logger from "fancy-log";
 import projectPath from "@topmonks/blendid/gulpfile.js/lib/projectPath.mjs";
 import pathConfig from "./path-config.json" assert { type: "json" };
+import data from "../src/data/global.mjs";
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
@@ -17,26 +19,26 @@ class HackersRegistry extends DefaultRegistry {
   }
   init({ task }) {
     async function getSlackProfiles(token) {
-      console.log("Loading Slack profiles...");
+      logger.info("Loading Slack profiles…");
       const skip = new Set(["slackbot", "jakub"]);
       const resp = await fetch("https://slack.com/api/users.list", {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await resp.json();
-      if (resp.status !== 200) {
-        console.log(data);
+      if (!resp.ok) {
+        logger.warn("Slack profiles:", data.error);
       }
       return new Map(
         data.members
-          .filter((x) => !(x.is_bot || skip.has(x.name)))
-          .map((x) => [x.id, x.profile])
+          ?.filter((x) => !(x.is_bot || skip.has(x.name)))
+          ?.map((x) => [x.id, x.profile])
       );
     }
 
-    async function getAttendees() {
-      console.log("Loading attendees...");
+    async function getAttendees(year) {
+      logger.info(`Loading ${year} attendees…`);
       const resp = await fetch(
-        "https://api.hackercamp.cz/v1/attendees?year=2023"
+        `https://api.hackercamp.cz/v1/attendees?year=${year}`
       );
       return resp.json();
     }
@@ -44,7 +46,7 @@ class HackersRegistry extends DefaultRegistry {
     task("prepare-data", async () => {
       const [profiles, items] = await Promise.all([
         getSlackProfiles(this.config.slackToken),
-        getAttendees(),
+        getAttendees(this.config.year),
       ]);
       const attendees = items.map((x) => [x.slug, profiles.get(x.slackID), x]);
       return fs.promises.writeFile(
@@ -80,6 +82,7 @@ export default {
   esbuild: true,
 
   html: {
+    dataFile: "global.mjs",
     collections: ["build", "images", "hackers"],
     nunjucksRender: {
       globals: {
@@ -128,7 +131,10 @@ export default {
   },
 
   registries: [
-    new HackersRegistry({ slackToken: process.env["SLACK_TOKEN"] }, pathConfig),
+    new HackersRegistry(
+      { slackToken: process.env["SLACK_TOKEN"], year: data.year },
+      pathConfig
+    ),
   ],
 
   additionalTasks: {

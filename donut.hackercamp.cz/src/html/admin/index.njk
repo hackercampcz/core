@@ -171,12 +171,14 @@
 {% block javascript %}
 <script type="module">
   import { main } from "/assets/esm/admin.js";
+  const build = {{ build | dump(8) | safe }};
+  const env = Object.assign({ year: {{ year }} }, build);
   main({
     searchParams: new URLSearchParams(location.search),
     appRoot: document.getElementById("app-root"),
     viewTitle: document.getElementById("view-title").querySelector("span"),
     yearSelector: document.getElementById("year-selector"),
-    env: {{ build | dump(8) | safe }}
+    env,
   });
   const drawer = document.getElementById("drawer");
   const drawerBtn = document.getElementById("drawer-button");
