@@ -90,10 +90,9 @@ export async function postChatMessage(channel, message) {
       ],
     }),
   });
-  const body = await resp.text();
-  console.log(body)
-  if (!resp.ok) {
-    rollbar.error("Slack API error", { status: resp.status, body });
+  const body = await resp.json();
+  if (!body.ok) {
+    rollbar.error("Slack API error", body);
   }
   return body;
 }
