@@ -3181,7 +3181,7 @@ __metadata:
     eslint: 8.40.0
     eslint-plugin-promise: 6.1.1
     lit: 2.7.4
-    lit-html: 2.7.3
+    lit-html: 2.7.4
     marked: 5.0.2
     ramda: 0.29.0
     rollbar: 2.26.1
@@ -10510,12 +10510,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:2.7.3":
-  version: 2.7.3
-  resolution: "lit-html@npm:2.7.3"
+"lit-html@npm:2.7.4":
+  version: 2.7.4
+  resolution: "lit-html@npm:2.7.4"
   dependencies:
     "@types/trusted-types": ^2.0.2
-  checksum: da0110aa5fc19119dc34bb0462ff41d70b458a3bbe83bee5a484c61360eeafcbaf72c84672af76163a4402dc59a210acc523503dc51e0528b556bc32ec366dd2
+  checksum: 3809d62d8b8e66c047a582fe62d430384c63af8c8444da4ca565b41d03e0295be2ce3eaa3c03b58d35a5d74fd8c98976585902204fc28006cfb9adf29fc1761e
   languageName: node
   linkType: hard
 
