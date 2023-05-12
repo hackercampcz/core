@@ -241,6 +241,10 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
         Jsi ubytovaný ${housingText(housing, housingPlacement)}, dle tvého
         výběru.
       </p>
+      <p>
+        Do <date datetime="2023-08-21">21. srpna</date> si ještě můžeš
+        <a class="hc-link" href="/ubytovani/">změnit ubytování</a>.
+      </p>
       ${travelText(travel)}
       <p>
         Chceš se podívat, kdo už se na tebe těší? Tak tady je
