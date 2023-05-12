@@ -20,14 +20,14 @@ config:
   hackercamp:rollbar-access-token:
     secure: AAABAGSuq2HM/IDxpXt6ZF+lnaa0AvnE+yPejTIOHNXO+YGFjEsjwZRp+yMnNFhpulFkX8Ov1ay+5FVhCcSXOg==
   hackercamp:slack-bot-token:
-    secure: AAABACoHB2TgYtSI2iuIj21KWTNfMLf0Sy5i4iyo4rNOSE5rz82lXe6I+OnTiusSrR7aF9eazd1CoUzta6pVkMIQUushrfJre3EVf1ZR2zG6Qe4hLinno4I=
+    secure: AAABAOcd56GLMiyf3SikIIfQjmDs1jIUg1OLYz8IWudo4J821x2EOod9C2s7YwIVS+nXc02JvvqEx4p2m3+OpEE4NI3653umgcN1UADmM+aywmDop3hFOmM=
   hackercamp:slack-client-id: "1990816352820.3334586910531"
   hackercamp:slack-client-secret:
     secure: AAABAPOefxVCpWj0ILWHq9UKChjnqzVPwlwAm8auqjii5KzUfgdHI7dV386pv69MQYJO2VV5KuWucxwuOwM4+g==
   hackercamp:slack-incoming-webhook:
     secure: AAABAG1uYVw8jL3J7xW6vyH0foRT5MJJm9QSrs/weKRHwhapwDGssqRhG8fprdJszWJICn1nGEycpL8qCvbaxvtWuaOFG6uNg+nhdnx17/XLNC+L4MPwIH6GjQKr4i3eJL/V5Ts0oCw+WcxtQ/Pze0A=
   hackercamp:web-domain: www.hackercamp.cz
-  hackercamp:year: 2023
+  hackercamp:year: "2023"
   postmark:server-api-token:
     secure: AAABAJ8bBjERlSzcam+1C/wz2ygdjl+MQDW+ROCzPq5CtZwnYicF+N6fdBZJj7NGRvOBfpesC9VqhhicB6PXH/rnRGg=
   pulumi:template: aws-typescript
