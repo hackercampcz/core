@@ -171,8 +171,8 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
     .filter((x) => x.name)
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  for (const hacker of hackersByName) {
-    const { slackID, name, company, housing, housingPlacement } = hacker;
+  for (const otherHacker of hackersByName) {
+    const { slackID, name, company, housing, housingPlacement } = otherHacker;
     const isHomeless = !housingPlacement;
     const inlineValue = inlineHackerName({ name, company });
 
