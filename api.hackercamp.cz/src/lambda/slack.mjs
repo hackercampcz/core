@@ -1,4 +1,4 @@
-import rollbar from "./rollbar.mjs";
+import Rollbar from "./rollbar.mjs";
 
 const actions = [
   "Znáte se? → 😈",
@@ -67,6 +67,7 @@ export async function sendMessageToSlack(profile) {
 }
 
 export async function postChatMessage(channel, message) {
+  const rollbar = Rollbar.init();
   if (channel.startsWith("hc-")) {
     console.log({
       msg: "synthetic users can't receive slack messages",
