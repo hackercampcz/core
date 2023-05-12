@@ -1,3 +1,5 @@
+import rollbar from "./rollbar.mjs";
+
 const actions = [
   "Znáte se? → 😈",
   "Chceš se potkat na campu? → 🙋",
@@ -88,5 +90,8 @@ export async function postChatMessage(channel, message) {
       ],
     }),
   });
+  if (!resp.ok) {
+    rollbar.error("Slack API error", { status: resp.status, body: await resp.text() });
+  }
   return resp.text();
 }
