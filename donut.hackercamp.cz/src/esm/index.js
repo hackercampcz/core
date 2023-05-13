@@ -145,20 +145,21 @@ async function getProgram(year, apiUrl) {
 
 function renderPaidScreen(referralLink) {
   return html`
-    <div>
-      <p>
-        Děkujeme za registraci a zaplacení faktury. Teď si můžeš vybrat svoje
-        ubytování.
-      </p>
-      <a class="hc-link--decorated" href="/ubytovani/">Vybrat si ubytování</a>
-      <p>
-        Chceš někoho pozvat? Pošli mu tento link:
-        <a href="${referralLink}"><code>${referralLink}</code></a>
-      </p>
-      <!--p>
+    <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        <p>
+          Děkujeme za registraci a zaplacení faktury. Teď si můžeš vybrat svoje
+          ubytování.
+        </p>
+        <a class="hc-link--decorated" href="/ubytovani/">Vybrat si ubytování</a>
+        <!--p>
         Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
         brzy si budeš moct zadat vlastní návrhy.
       </p-->
+      </div>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        ${plusOneCard(referralLink)}
+      </div>
     </div>
   `;
 }
@@ -344,6 +345,34 @@ function nfcTronTemplate(entries) {
   `;
 }
 
+function plusOneCard(referralLink) {
+  return html`
+    <div class="hc-card hc-card--decorated">
+      <p>
+        Chceš někoho pozvat? Pošli mu tento svůj <strong>+1</strong> link:
+        <a href="${referralLink}">
+          <code>${referralLink}</code>
+        </a>
+      </p>
+      <p>Pokud chceš ukázat atmosféru kempu, můžeš použít toto video:</p>
+      <iframe
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/Kj2PSYBWKYM"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+      <p>
+        Prosíme, cti zásadu, že
+        <em>"co se stalo na campu, zůstane na campu"</em> a nevystavujte ho
+        nikde veřejně. Díky 💙
+      </p>
+    </div>
+  `;
+}
+
 function renderDashboardScreen(
   { housing, housingPlacement, travel, events = [], nfcTronData },
   referralLink
@@ -362,10 +391,17 @@ function renderDashboardScreen(
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         ${housedCardTemplate({ housing, housingPlacement, travel })}
       </div>
-      <p>
-        Chceš někoho pozvat? Pošli mu tento link:
-        <a href="${referralLink}"><code>${referralLink}</code></a>
-      </p>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        ${plusOneCard(referralLink)}
+      </div>
+      <div
+        style="display: none"
+        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+      >
+        <div class="hc-card hc-card--decorated">
+          <!-- TODO: previous year -->
+        </div>
+      </div>
     </div>
   `;
 }
@@ -388,48 +424,55 @@ function renderIndex({ profile, registration, attendee }) {
   }
   if (registration.year && !registration.paid) {
     return html`
-      <p>
-        Svoje ubytování si budeš moct vybrat až po zaplacení faktury. Tak
-        s&nbsp;tím moc neváhej, abys spal / spala podle svých představ&nbsp;:)
-      </p>
-      <p>
-        Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
-        <a href="/hackers/">seznam účastníků</a>.
-      </p>
-      <p>
-        Chceš někoho pozvat? Pošli mu tento link:
-        <a href="${referralLink}"><code>${referralLink}</code></a>
-      </p>
-      <!--p>
+      <div class="mdc-layout-grid__inner">
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <p>
+            Svoje ubytování si budeš moct vybrat až po zaplacení faktury. Tak
+            s&nbsp;tím moc neváhej, abys spal / spala podle svých
+            představ&nbsp;:)
+          </p>
+          <p>
+            Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
+            <a href="/hackers/">seznam účastníků</a>.
+          </p>
+          <!--p>
         Taky se můžeš podívat na <a href="/program/">předběžný program</a> a po
         zaplacení si budeš moct zadat vlastní návrhy.
       </p-->
-      <p>
-        Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
-        e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
-        <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
-          ><code>@rarous</code></a
-        >
-        nebo e-mail na <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a
-        on to dá do pořádku.
-      </p>
+          <p>
+            Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
+            e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
+            <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
+              ><code>@rarous</code></a
+            >
+            nebo e-mail na
+            <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a on to dá do
+            pořádku.
+          </p>
+        </div>
+
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          ${plusOneCard(referralLink)}
+        </div>
+      </div>
     `;
   }
   return html`
-    <div>
-      <p>
-        Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to i
-        díky tobě.
-      </p>
-      <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>
-      <p>
-        Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
-        <a href="/hackers/">seznam účastníků</a>.
-      </p>
-      <p>
-        Chceš někoho pozvat? Pošli mu tento link:
-        <a href="${referralLink}"><code>${referralLink}</code></a>
-      </p>
+    <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        <p>
+          Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to i
+          díky tobě.
+        </p>
+        <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>
+        <p>
+          Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
+          <a href="/hackers/">seznam účastníků</a>.
+        </p>
+      </div>
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        ${plusOneCard(referralLink)}
+      </div>
     </div>
   `;
 }
