@@ -157,10 +157,20 @@ export function registrationsChips(
   `;
 }
 
+function selectRow(e) {
+  e.stopPropagation();
+  const key = e.target.value;
+  if (!e.target.checked) {
+    dispatchAction(Action.select, { key });
+  } else {
+    dispatchAction(Action.unselect, { key });
+  }
+}
+
 export function registrationsTableTemplate(
   data,
   { timeHeader, timeAttr },
-  { page, pages, total, params }
+  { page, pages, total, params, selection }
 ) {
   return html`
     <table>
@@ -194,7 +204,8 @@ export function registrationsTableTemplate(
                 <md-checkbox
                   aria-label="vybrat"
                   value="${row.email}"
-                  @click="${(e) => e.stopPropagation()}"
+                  @click="${selectRow}"
+                  ?checked="${selection.has(row.email)}"
                 ></md-checkbox>
               </td>
               <td>${row.name}</td>
@@ -332,7 +343,7 @@ const timeColumn = new Map([
 ]);
 
 export function registrationsTemplate(state) {
-  const { data, selectedView, detail, year, page, params } = state;
+  const { data, selectedView, detail, year, page, params, selection } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${registrationsChips(selectedView, year, {
@@ -371,7 +382,7 @@ export function registrationsTemplate(state) {
                 )
               ),
               timeColumnSettings,
-              { page, pages: data.pages, total: data.total, params }
+              { page, pages: data.pages, total: data.total, params, selection }
             );
           }),
           html`

@@ -38,6 +38,7 @@ const state = defAtom({
   params: new URLSearchParams(location.search),
   campStartAt: new Date(),
   campEndAt: new Date(),
+  selection: new Set(),
 });
 
 const transact = (fn, atom = state) => atom.swap(fn);
@@ -349,6 +350,18 @@ async function handleMessage(e) {
       break;
     case Action.showModalDialog:
       await renderModalDialog(payload.name);
+      break;
+    case Action.select:
+      transact((x) => {
+        x.selection.add(payload.key);
+        return x;
+      });
+      break;
+    case Action.unselect:
+      transact((x) => {
+        x.selection.delete(payload.key);
+        return x;
+      });
       break;
   }
 }

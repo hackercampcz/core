@@ -14,6 +14,8 @@ export const Action = {
   deleteEvent: "deleteEvent",
   approveEvent: "approveEvent",
   showModalDialog: "showModalDialog",
+  select: "select",
+  unselect: "unselect",
 };
 
 export function dispatchAction(type, payload) {
