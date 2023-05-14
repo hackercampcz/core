@@ -26,6 +26,15 @@ import { lineupText } from "./admin/common.js";
 /** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
 
+/** @enum */
+const View = {
+  loading: "loading",
+  dashboard: "dashboard",
+  selectHousing: "select-housing",
+  paymentPending: "payment-pending",
+  notRegistered: "not-registered",
+};
+
 const state = defAtom({
   attendee: null,
   contact: null,
@@ -33,8 +42,25 @@ const state = defAtom({
   registration: null,
   program: null,
   view: renderIndex,
+  forcedView: null,
   campStartAt: new Date(),
   campEndAt: new Date(),
+  get selectedView() {
+    if (this.forcedView) return this.forcedView;
+    if (!(this.profile || this.registration || this.attendee)) {
+      return View.loading;
+    }
+    if (this.attendee?.housingPlacement) {
+      return View.dashboard;
+    }
+    if (canSelectHousing(this.registration, this.attendee)) {
+      return View.selectHousing;
+    }
+    if (this.registration.year && !this.registration.paid) {
+      return View.paymentPending;
+    }
+    return View.notRegistered;
+  },
 });
 
 /**
@@ -42,6 +68,11 @@ const state = defAtom({
  * @param {IAtom<T>} atom
  */
 const transact = (fn, atom = state) => atom.swap(fn);
+
+// Global exports for DX
+globalThis.setView = (view) =>
+  transact((x) => Object.assign(x, { forcedView: view }));
+globalThis.View = View;
 
 async function authenticate({ searchParams, apiURL }) {
   const code = searchParams.get("code");
@@ -147,15 +178,19 @@ function renderPaidScreen(referralLink) {
   return html`
     <div class="mdc-layout-grid__inner">
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <p>
-          Děkujeme za registraci a zaplacení faktury. Teď si můžeš vybrat svoje
-          ubytování.
-        </p>
-        <a class="hc-link--decorated" href="/ubytovani/">Vybrat si ubytování</a>
-        <!--p>
+        <div class="hc-card hc-card--decorated">
+          <p>
+            Děkujeme za registraci a zaplacení faktury. Teď si můžeš vybrat
+            svoje ubytování.
+          </p>
+          <a class="hc-link--decorated" href="/ubytovani/"
+            >Vybrat si ubytování</a
+          >
+          <!--p>
         Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
         brzy si budeš moct zadat vlastní návrhy.
       </p-->
+        </div>
       </div>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         ${plusOneCard(referralLink)}
@@ -261,7 +296,7 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
 function programCardTemplate({ events }) {
   return html`
     <div class="hc-card hc-card--decorated">
-      <h2>Tvé zapojení do programu</h2>
+      <h2>Tvoje zapojení do programu</h2>
       ${when(
         events.length,
         () => html`
@@ -311,7 +346,7 @@ function nfcTronTemplate(entries) {
   const total = entries.reduce((acc, x) => acc + x.spent, 0);
   return html`
     <div class="hc-card hc-card--decorated">
-      <h3>Útrata na Hackercampu</h3>
+      <h2>Útrata na Hackercampu</h2>
       <p>
         <strong><data value="${total}">${formatMoney(total)}</data></strong>
       </p>
@@ -348,6 +383,7 @@ function nfcTronTemplate(entries) {
 function plusOneCard(referralLink) {
   return html`
     <div class="hc-card hc-card--decorated">
+      <h2>Tvoje +1</h2>
       <p>
         Chceš někoho pozvat? Pošli mu tento svůj <strong>+1</strong> link:
         <a href="${referralLink}">
@@ -379,17 +415,22 @@ function renderDashboardScreen(
 ) {
   return html`
     <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <div
+        style="${!nfcTronData ? "display: none" : ""}"
+        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+      >
         ${nfcTronTemplate(nfcTronData)}
       </div>
       <div
-        style="display:none"
-        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
+        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-8-tablet"
+      >
+        ${housedCardTemplate({ housing, housingPlacement, travel })}
+      </div>
+      <div
+        style="${!events.length ? "display: none" : ""}"
+        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-8-tablet"
       >
         ${programCardTemplate({ events })}
-      </div>
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        ${housedCardTemplate({ housing, housingPlacement, travel })}
       </div>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         ${plusOneCard(referralLink)}
@@ -411,70 +452,69 @@ function canSelectHousing(registration, attendee) {
   return registration.paid || freeTickets.has(attendee?.ticketType);
 }
 
-function renderIndex({ profile, registration, attendee }) {
-  if (!(profile || registration || attendee)) {
-    return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
-  }
-  const referralLink = `https://www.hackercamp.cz/registrace/?referral=${profile.sub}`;
-  if (attendee?.housingPlacement) {
-    return renderDashboardScreen(attendee, referralLink);
-  }
-  if (canSelectHousing(registration, attendee)) {
-    return renderPaidScreen(referralLink);
-  }
-  if (registration.year && !registration.paid) {
-    return html`
-      <div class="mdc-layout-grid__inner">
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-          <p>
-            Svoje ubytování si budeš moct vybrat až po zaplacení faktury. Tak
-            s&nbsp;tím moc neváhej, abys spal / spala podle svých
-            představ&nbsp;:)
-          </p>
-          <p>
-            Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
-            <a href="/hackers/">seznam účastníků</a>.
-          </p>
-          <!--p>
-        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a po
-        zaplacení si budeš moct zadat vlastní návrhy.
-      </p-->
-          <p>
-            Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
-            e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
-            <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
-              ><code>@rarous</code></a
+function renderIndex({ profile, attendee, selectedView }) {
+  const referralLink = `https://www.hackercamp.cz/registrace/?referral=${profile?.sub}`;
+  switch (selectedView) {
+    case View.loading:
+      return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
+    case View.dashboard:
+      return renderDashboardScreen(attendee, referralLink);
+    case View.selectHousing:
+      return renderPaidScreen(referralLink);
+    case View.paymentPending:
+      return html`
+        <div class="mdc-layout-grid__inner">
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+            <div class="hc-card hc-card--decorated">
+              <p>
+                Svoje ubytování si budeš moct vybrat až po zaplacení faktury.
+                Tak s&nbsp;tím moc neváhej, abys spal / spala podle svých
+                představ&nbsp;:)
+              </p>
+              <p>
+                Chceš se podívat, kdo už se na tebe těší? Tak tady je
+                <a href="/hackers/">seznam účastníků</a>.
+              </p>
+              <!--p>
+          Taky se můžeš podívat na <a href="/program/">předběžný program</a> a po
+          zaplacení si budeš moct zadat vlastní návrhy.
+        </p-->
+              <p>
+                Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
+                e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
+                <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
+                  ><code>@rarous</code></a
+                >
+                nebo e-mail na
+                <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a on to
+                dá do pořádku.
+              </p>
+            </div>
+          </div>
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+            ${plusOneCard(referralLink)}
+          </div>
+        </div>
+      `;
+    default:
+      return html`
+        <div class="mdc-layout-grid__inner">
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+            <p>
+              Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to
+              i díky tobě.
+            </p>
+            <a class="hc-link--decorated" href="/registrace/"
+              >Zaregistrovat se</a
             >
-            nebo e-mail na
-            <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a on to dá do
-            pořádku.
-          </p>
+            <p>
+              Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
+              <a href="/hackers/">seznam účastníků</a>.
+            </p>
+          </div>
         </div>
-
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-          ${plusOneCard(referralLink)}
-        </div>
-      </div>
-    `;
+      `;
   }
-  return html`
-    <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <p>
-          Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to i
-          díky tobě.
-        </p>
-        <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>
-        <p>
-          Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
-          <a href="/hackers/">seznam účastníků</a>.
-        </p>
-      </div>
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        ${plusOneCard(referralLink)}
-      </div>
-    </div>
-  `;
 }
 
 async function loadData(profile, year, apiURL) {
