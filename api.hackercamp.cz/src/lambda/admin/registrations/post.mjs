@@ -43,10 +43,10 @@ async function approve(db, { email, year, referral }) {
         { email, year },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
-      UpdateExpression: "SET referral = :referral, approved = :approved",
+      UpdateExpression: "SET approved = :approved, approvedBy = :approvedBy",
       ExpressionAttributeValues: marshall({
-        ":referral": referral,
         ":approved": new Date().toISOString(),
+        ":approvedBy": referral
       }),
     })
   );
