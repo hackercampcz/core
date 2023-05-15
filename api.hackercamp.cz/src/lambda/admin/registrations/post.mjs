@@ -5,12 +5,7 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import { fetchInvoice } from "../../fakturoid.mjs";
-import {
-  accepted,
-  getHeader,
-  readPayload,
-  seeOther,
-} from "../../http.mjs";
+import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -40,7 +35,7 @@ async function optout(db, { email, year }) {
 }
 
 async function approve(db, { email, year, referral }) {
-  console.log({event: "Approving registration", email, year, referral });
+  console.log({ event: "Approving registration", email, year, referral });
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_registrations,
@@ -51,7 +46,7 @@ async function approve(db, { email, year, referral }) {
       UpdateExpression: "SET referral = :referral, approved = :approved",
       ExpressionAttributeValues: marshall({
         ":referral": referral,
-        ":approved": new Date().toISOString()
+        ":approved": new Date().toISOString(),
       }),
     })
   );
@@ -117,9 +112,14 @@ async function processRequest(db, data) {
  */
 export async function handler(event) {
   const data = readPayload(event);
-  await processRequest(db, data);
-  if (getHeader(event.headers, "Accept") === "application/json") {
-    return accepted();
+  console.log(data);
+  try {
+    await processRequest(db, data);
+    if (getHeader(event.headers, "Accept") === "application/json") {
+      return accepted();
+    }
+    return seeOther(getHeader(event.headers, "Referer"));
+  } catch (err) {
+    console.error(err);
   }
-  return seeOther(getHeader(event.headers, "Referer"));
 }
