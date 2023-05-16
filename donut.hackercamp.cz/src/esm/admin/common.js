@@ -16,6 +16,7 @@ export const Action = {
   showModalDialog: "showModalDialog",
   select: "select",
   unselect: "unselect",
+  invoiceSelected: "invoiceSelected",
 };
 
 export function dispatchAction(type, payload) {

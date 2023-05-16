@@ -40,6 +40,12 @@ function invoiced(email) {
     dispatchAction(Action.invoiced, { email });
   };
 }
+function invoiceSelected() {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.invoiceSelected, {});
+  };
+}
 
 function copyToClipboard(counts) {
   return async () => {
@@ -157,6 +163,22 @@ export function registrationsChips(
   `;
 }
 
+export function selectionBar(selectedView, selection) {
+  return html`
+    <div>
+      <md-checkbox indeterminate="true"></md-checkbox>
+      ${when(
+        selectedView === View.confirmed,
+        () => html`<md-standard-icon-button
+          title="Vyfakturovat"
+          @click="${invoiceSelected()}"
+          >request_quote</md-standard-icon-button
+        >`
+      )}
+    </div>
+  `;
+}
+
 function selectRow(e) {
   e.stopPropagation();
   const key = e.target.value;
@@ -260,7 +282,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
   )}${when(
     selectedView === View.confirmed,
     () => html`<md-standard-icon-button
-      title="Vyfakturováno"
+      title="Vyfakturovat"
       @click="${invoiced(detail.email)}"
       >request_quote</md-standard-icon-button
     >`
@@ -346,13 +368,18 @@ export function registrationsTemplate(state) {
   const { data, selectedView, detail, year, page, params, selection } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${registrationsChips(selectedView, year, {
-        [View.paid]: data?.then((data) => data.counts.paid),
-        [View.invoiced]: data?.then((data) => data.counts.invoiced),
-        [View.confirmed]: data?.then((data) => data.counts.confirmed),
-        [View.waitingList]: data?.then((data) => data.counts.waitingList),
-        [View.volunteers]: data?.then((data) => data.counts.volunteers),
-      })}
+      ${when(
+        selection.size,
+        () => selectionBar(selectedView, selection),
+        () =>
+          registrationsChips(selectedView, year, {
+            [View.paid]: data?.then((data) => data.counts.paid),
+            [View.invoiced]: data?.then((data) => data.counts.invoiced),
+            [View.confirmed]: data?.then((data) => data.counts.confirmed),
+            [View.waitingList]: data?.then((data) => data.counts.waitingList),
+            [View.volunteers]: data?.then((data) => data.counts.volunteers),
+          })
+      )}
     </div>
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
