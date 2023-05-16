@@ -163,10 +163,27 @@ export function registrationsChips(
   `;
 }
 
-export function selectionBar(selectedView, selection) {
+function multiRowSelection(indeterminate, checked, items) {
+  return (e) => {
+    if (indeterminate) {
+      dispatchAction(Action.select, { keys: items.map((x) => x.email) });
+    } else if (checked) {
+      dispatchAction(Action.unselect, { all: true });
+    }
+  };
+}
+
+export async function selectionBar(selectedView, selection, data) {
+  const { items } = await data;
+  const checked = selection.size === items.length;
+  const indeterminate = selection.size < items.length;
   return html`
     <div>
-      <md-checkbox indeterminate="true"></md-checkbox>
+      <md-checkbox
+        ?checked="${checked}"
+        ?indeterminate="${indeterminate}"
+        @click="${multiRowSelection(indeterminate, checked, items)}"
+      ></md-checkbox>
       ${when(
         selectedView === View.confirmed,
         () => html`<md-standard-icon-button
@@ -183,7 +200,7 @@ function selectRow(e) {
   e.stopPropagation();
   const key = e.target.value;
   if (!e.target.checked) {
-    dispatchAction(Action.select, { key });
+    dispatchAction(Action.select, { keys: [key] });
   } else {
     dispatchAction(Action.unselect, { key });
   }
@@ -370,7 +387,7 @@ export function registrationsTemplate(state) {
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${when(
         selection.size,
-        () => selectionBar(selectedView, selection),
+        () => until(selectionBar(selectedView, selection, data)),
         () =>
           registrationsChips(selectedView, year, {
             [View.paid]: data?.then((data) => data.counts.paid),

@@ -45,6 +45,7 @@ const transact = (fn, atom = state) => atom.swap(fn);
 
 // export for dev experience
 globalThis.transact = transact;
+globalThis.getState = () => state.deref();
 
 /**
  * @param {string} email
@@ -362,13 +363,19 @@ async function handleMessage(e) {
       break;
     case Action.select:
       transact((x) => {
-        x.selection.add(payload.key);
+        for (const key of payload.keys) {
+          x.selection.add(key);
+        }
         return x;
       });
       break;
     case Action.unselect:
       transact((x) => {
-        x.selection.delete(payload.key);
+        if (payload.all) {
+          x.selection.clear();
+        } else {
+          x.selection.delete(payload.key);
+        }
         return x;
       });
       break;
