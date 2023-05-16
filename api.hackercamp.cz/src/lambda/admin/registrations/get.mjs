@@ -111,7 +111,15 @@ async function getRegistrations(query, tag, year, page, pageSize) {
 async function formatResponse(data, { year, type, format }) {
   if (format === "csv" || format === "text/csv") {
     console.log({ event: "Formatting CSV" });
-    const text = await csv.writeToString(data.items, { headers: true });
+    const headers = new Set();
+    for (const item of data.items) {
+      for (const key of Object.keys(item)) {
+        headers.add(key);
+      }
+    }
+    const text = await csv.writeToString(data.items, {
+      headers: Array.from(headers),
+    });
     const fileName = `hc-${year}-registrations-${type}.csv`;
     return response(text, {
       "Content-Type": "text/csv",
