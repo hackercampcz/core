@@ -392,6 +392,7 @@ function plusOneCard(referralLink) {
       </p>
       <p>Pokud chceš ukázat atmosféru kempu, můžeš použít toto video:</p>
       <iframe
+        class="responsive"
         width="560"
         height="315"
         src="https://www.youtube.com/embed/Kj2PSYBWKYM"
