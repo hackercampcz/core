@@ -8,7 +8,7 @@
     "@hackercamp/infrastructure": "workspace:infrastructure",
     "@hackercamp/lib": "workspace:lib",
     "@thi.ng/transducers": "8.4.5",
-    "algoliasearch": "4.17.0",
+    "algoliasearch": "4.17.1",
     "fast-xml-parser": "4.2.2",
     "immutable": "4.3.0",
     "jsonwebtoken": "9.0.0",
