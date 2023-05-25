@@ -3331,7 +3331,7 @@ __metadata:
     "@material/layout-grid": 14.0.0
     "@material/mwc-drawer": 0.27.0
     "@material/mwc-snackbar": 0.27.0
-    "@material/web": 1.0.0-pre.8
+    "@material/web": 1.0.0-pre.9
     "@thi.ng/atom": 5.2.2
     "@thi.ng/transducers": 8.4.5
     "@typescript-eslint/eslint-plugin": 5.59.7
@@ -3949,14 +3949,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/web@npm:1.0.0-pre.8":
-  version: 1.0.0-pre.8
-  resolution: "@material/web@npm:1.0.0-pre.8"
+"@material/web@npm:1.0.0-pre.9":
+  version: 1.0.0-pre.9
+  resolution: "@material/web@npm:1.0.0-pre.9"
   dependencies:
-    lit: ^2.3.0
+    lit: ^2.7.4
     safevalues: ^0.4.3
     tslib: ^2.4.0
-  checksum: 3470cbc7ec69f8215cd0a70c91df884c94e7a628b396f1ec5f2c4cac836ef17355424df78444fb55f9b3c45772e5649a4258217f11c23db6ac45d37a4acdb36b
+  checksum: c4c6a5328448ee55a6f68260bbadecda2cabd031bf81502934fff95422e63b6903f9737e35ae3cd7e87f6f146a13dc3f492e92fc4e3cef3caee8d0fd4e177a7a
   languageName: node
   linkType: hard
 
@@ -10781,7 +10781,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:2.7.4":
+"lit@npm:2.7.4, lit@npm:^2.7.4":
   version: 2.7.4
   resolution: "lit@npm:2.7.4"
   dependencies:
@@ -10811,17 +10811,6 @@ __metadata:
     lit-element: ^3.2.0
     lit-html: ^2.2.0
   checksum: 786d5e493a5e6bc4afd7aa76d429cfa39479e016488c2bc86202ed1aa9806ec0fbeac17f9b9149b4164cb2d1eab546038ff92a3a24c58d0e0e66464a3e26d515
-  languageName: node
-  linkType: hard
-
-"lit@npm:^2.3.0":
-  version: 2.7.0
-  resolution: "lit@npm:2.7.0"
-  dependencies:
-    "@lit/reactive-element": ^1.6.0
-    lit-element: ^3.3.0
-    lit-html: ^2.7.0
-  checksum: 916f459ded2e9700fe695070963dcb2edcea2dd1d127db6885cf10e94766d5ca9f438ebf659dca264c6402708254927b0ffed6595b6bcaac422e6f203dbbf6ee
   languageName: node
   linkType: hard
 
