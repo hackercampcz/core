@@ -43,7 +43,7 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
       templateId: Template.RegistrationPaid,
       data: {},
       from: "Hacker Camp Crew <team@hackercamp.cz>",
-      to: registration.email,
+      to: registration.email.S,
     });
     console.log({
       event: "Invoice marked as paid",
