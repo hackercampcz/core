@@ -142,7 +142,9 @@ export function attendeeDetailTemplate({ detail }) {
       <md-standard-icon-button
         aria-label="Zavřít detail"
         title="Zavřít detail"
-        @click="${closeDetail()}">arrow_back</md-standard-icon-button>
+        @click="${closeDetail()}">
+        <md-icon>arrow_back</md-icon>
+      </md-standard-icon-button>
       <h2 style="margin: 0">${detail.name}</h2>
       ${ticketBadge.get(detail.ticketType)}</div>
     <p>${detail.company}</p>
@@ -151,7 +153,9 @@ export function attendeeDetailTemplate({ detail }) {
       ><md-standard-icon-button
         title="Upravit účastníka"
         @click="${renderModalDialog("attendee-modal")}"
-      >edit</md-standard-icon-button>
+      >
+      <md-icon>edit</md-icon>
+    </md-standard-icon-button>
     </div>
     ${ticketDetail(detail)}
     <p>Ubytování: <strong>${

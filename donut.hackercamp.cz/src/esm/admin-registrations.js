@@ -85,7 +85,9 @@ export function registrationsChips(
   return html`
     <search style="display: flex; gap: 8px">
       <div>
-        <md-standard-icon-button>search</md-standard-icon-button>
+        <md-standard-icon-button>
+          <md-icon>search</md-icon>
+        </md-standard-icon-button>
       </div>
       <div
         class="mdc-evolution-chip-set"
@@ -149,15 +151,17 @@ export function registrationsChips(
             waitingList,
             volunteers,
           ])}"
-          >content_copy</md-standard-icon-button
+        >
+          <md-icon>content_copy</md-icon></md-standard-icon-button
         ><md-standard-icon-button
           href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
             { year, type: view, format: "csv", pageSize: 500 }
           )}"
           title="Stáhnout CSV"
           aria-label="Stáhnout CSV"
-          >download</md-standard-icon-button
         >
+          <md-icon>download</md-icon>
+        </md-standard-icon-button>
       </div>
     </search>
   `;
@@ -189,8 +193,8 @@ export async function selectionBar(selectedView, selection, data) {
         () => html`<md-standard-icon-button
           title="Vyfakturovat"
           @click="${invoiceSelected()}"
-          >request_quote</md-standard-icon-button
-        >`
+          ><md-icon>request_quote</md-icon>
+        </md-standard-icon-button>`
       )}
     </div>
   `;
@@ -272,7 +276,9 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       <md-standard-icon-button
         aria-label="Zavřít detail"
         title="Zavřít detail"
-        @click="${closeDetail()}">arrow_back</md-standard-icon-button>
+        @click="${closeDetail()}">
+        <md-icon>arrow_back</md-icon>
+      </md-standard-icon-button>
       <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
       ${ticketBadge.get(detail.ticketType)}</div>
     <p>${detail.company}</p>
@@ -287,22 +293,25 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       () => html`<md-standard-icon-button
         title="Opt in"
         @click="${optin(detail.email)}"
-        >person_add</md-standard-icon-button
-      >`
+      >
+        <md-icon>person_add</md-icon>
+      </md-standard-icon-button>`
     )}${when(
     selectedView !== View.paid,
     () => html`<md-standard-icon-button
       title="Opt out"
       @click="${optout(detail.email)}"
-      >person_remove</md-standard-icon-button
-    >`
+    >
+      <md-icon>person_remove</md-icon>
+    </md-standard-icon-button>`
   )}${when(
     selectedView === View.confirmed,
     () => html`<md-standard-icon-button
       title="Vyfakturovat"
       @click="${invoiced(detail.email)}"
-      >request_quote</md-standard-icon-button
-    >`
+    >
+      <md-icon>request_quote</md-icon>
+    </md-standard-icon-button>`
   )}
     </div>
     ${ticketDetail(detail)}

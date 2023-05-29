@@ -1,5 +1,6 @@
 import "@material/mwc-drawer/mwc-drawer.js";
 import "@material/web/iconbutton/standard-icon-button.js";
+import "@material/web/icon/icon.js";
 import "@material/web/button/text-button.js";
 import "@material/web/checkbox/checkbox.js";
 import "@material/web/icon/icon.js";

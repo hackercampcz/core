@@ -106,22 +106,25 @@ function programTable(data) {
                   () => html`<md-standard-icon-button
                     title="Schválit event"
                     @click="${approveEvent(row._id)}"
-                    >done</md-standard-icon-button
-                  >`
+                  >
+                    <md-icon>done</md-icon>
+                  </md-standard-icon-button>`
                 )}
                 <md-standard-icon-button
                   title="Upravit event"
                   @click="${renderModalDialog("edit-event")}"
-                  >edit</md-standard-icon-button
                 >
+                  <md-icon>edit</md-icon>
+                </md-standard-icon-button>
                 <md-standard-icon-button
                   title="Smazat event"
                   @click="${deleteEvent(
                     row._id,
                     row.people?.map((x) => x.slackID) ?? []
                   )}"
-                  >delete_forever</md-standard-icon-button
                 >
+                  <md-icon>delete_forever</md-icon>
+                </md-standard-icon-button>
               </td>
             </tr>
           `
