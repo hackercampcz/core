@@ -3346,7 +3346,7 @@ __metadata:
     ramda: 0.29.0
     rollbar: 2.26.1
     web-types-lit: 0.1.0
-    workbox-window: 6.6.0
+    workbox-window: 6.6.1
   languageName: unknown
   linkType: soft
 
@@ -16278,10 +16278,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workbox-core@npm:6.6.0":
-  version: 6.6.0
-  resolution: "workbox-core@npm:6.6.0"
-  checksum: 7d773a866b73a733780c52b895f9cf7bec926c9187395c307174deefba9a0a2fcd1edce0d1ca12b8a6c95ca9cf7755ccc1885b03bc82ebcfc4843e015bd84d7b
+"workbox-core@npm:6.6.1":
+  version: 6.6.1
+  resolution: "workbox-core@npm:6.6.1"
+  checksum: b11f3908607328e3886878aafb326f1d62052e3adf778f65ae9f80dc10a002e84e1c70e9c32d852bd4961fd1e42dd42cbf4617de6bb4692f941abab458780baf
   languageName: node
   linkType: hard
 
@@ -16395,13 +16395,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"workbox-window@npm:6.6.0":
-  version: 6.6.0
-  resolution: "workbox-window@npm:6.6.0"
+"workbox-window@npm:6.6.1":
+  version: 6.6.1
+  resolution: "workbox-window@npm:6.6.1"
   dependencies:
     "@types/trusted-types": ^2.0.2
-    workbox-core: 6.6.0
-  checksum: bb1dd031c1525317ceffbdc3e4f502a70dce461fd6355146e1050c1090f3c640bf65edf42a5d2a3b91b4d0c313df32c1405d88bf701d44c0e3ebc492cd77fe14
+    workbox-core: 6.6.1
+  checksum: 24f193ce44c214bbddea3eec9a937b97d3edf706f20bb47a3699babcf0d172a8be97cd3d97b9d6838bbca711c35530cd82bd8be23e6546bbb58e708c13d33167
   languageName: node
   linkType: hard
 
