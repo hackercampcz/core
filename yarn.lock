@@ -3342,7 +3342,7 @@ __metadata:
     eslint-plugin-promise: 6.1.1
     lit: 2.7.4
     lit-html: 2.7.4
-    marked: 5.0.3
+    marked: 5.0.4
     ramda: 0.29.0
     rollbar: 2.26.1
     web-types-lit: 0.1.0
@@ -3362,7 +3362,7 @@ __metadata:
     "@topmonks/pulumi-aws": 3.0.0
     esbuild: 0.17.19
     front-matter: 4.0.2
-    marked: 5.0.3
+    marked: 5.0.4
   languageName: unknown
   linkType: soft
 
@@ -11186,12 +11186,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:5.0.3":
-  version: 5.0.3
-  resolution: "marked@npm:5.0.3"
+"marked@npm:5.0.4":
+  version: 5.0.4
+  resolution: "marked@npm:5.0.4"
   bin:
     marked: bin/marked.js
-  checksum: 5eeb6379b1e2a340b7c024d7cf22e0a1ffc08e05618072428327262a4d6df0228aca7eb281319d1b17722eb723f2c25e5b0ffc17e2bf957e315068b9ede56117
+  checksum: 7230d63555b54549a89f197856c1eba591e1ce8d4f6f9ba3e996d7b01e0b90fe4cd575225100e0ff773fe900bf274164c8d9aba9556984651e685cbfc2bb7def
   languageName: node
   linkType: hard
 
