@@ -229,8 +229,9 @@ Důležité novinky najdeš v kanále #general.
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
       ),
     ]);
-  } else if (!registration?.paid) {
-    console.log({ event: "Registration not found", email });
+    return response("");
+  } else if (registration && !registration.paid) {
+    console.log({ event: "Registration not paid", email });
     await Promise.all([
       createContact(user),
       postChatMessage(
@@ -247,14 +248,14 @@ až ti přijde faktura a ty ji zaplatíš. :) Zatím užívej naší komunitu!
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
       ),
     ]);
-    return notFound();
-  }
-  await Promise.all([
-    createContact(user),
-    createAttendee(user, registration),
-    postChatMessage(
-      user.id,
-      `Ahoj, táborníku,
+    return response("");
+  } else if (registration?.paid) {
+    await Promise.all([
+      createContact(user),
+      createAttendee(user, registration),
+      postChatMessage(
+        user.id,
+        `Ahoj, táborníku,
 
 Vítej v našem slacku. Hacker Camp se blíží. Snad se těšíš stejně jako my.
 
@@ -270,10 +271,13 @@ Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni.
 Důležité novinky najdeš v kanále #general.
 
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
-    ),
-    enqueueSlackWelcomeMessage(user),
-  ]);
-  return response("");
+      ),
+      enqueueSlackWelcomeMessage(user),
+    ]);
+    return response("");
+  }
+  // This can be invited user that is not HC attendee
+  return notFound();
 }
 
 async function onUserProfileChanged({ user }) {
