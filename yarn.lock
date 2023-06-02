@@ -3364,7 +3364,7 @@ __metadata:
     date-fns: 2.30.0
     eslint: 8.41.0
     eslint-plugin-promise: 6.1.1
-    lit: 2.7.4
+    lit: 2.7.5
     lit-html: 2.7.4
     marked: 5.0.4
     ramda: 0.29.0
@@ -10805,14 +10805,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:2.7.4, lit@npm:^2.7.4":
-  version: 2.7.4
-  resolution: "lit@npm:2.7.4"
+"lit@npm:2.7.5":
+  version: 2.7.5
+  resolution: "lit@npm:2.7.5"
   dependencies:
     "@lit/reactive-element": ^1.6.0
     lit-element: ^3.3.0
     lit-html: ^2.7.0
-  checksum: 7494f4e814fca0ebf7a73923c85454531aac26ff83f0d4d5afe62ebbc6225363c9df41f88147d79d5d3ab518925ceb9b27a557bee610bbb414ae0339c513f5a3
+  checksum: 61a3f87c57136618f47a30b36cdfb592fcba42dcfbdb104d2b5ca291148c2d9a32fcb713bb91090bd08d6897a00e73f8425da6e3626aa080eaf410a32397ae69
   languageName: node
   linkType: hard
 
@@ -10835,6 +10835,17 @@ __metadata:
     lit-element: ^3.2.0
     lit-html: ^2.2.0
   checksum: 786d5e493a5e6bc4afd7aa76d429cfa39479e016488c2bc86202ed1aa9806ec0fbeac17f9b9149b4164cb2d1eab546038ff92a3a24c58d0e0e66464a3e26d515
+  languageName: node
+  linkType: hard
+
+"lit@npm:^2.7.4":
+  version: 2.7.4
+  resolution: "lit@npm:2.7.4"
+  dependencies:
+    "@lit/reactive-element": ^1.6.0
+    lit-element: ^3.3.0
+    lit-html: ^2.7.0
+  checksum: 7494f4e814fca0ebf7a73923c85454531aac26ff83f0d4d5afe62ebbc6225363c9df41f88147d79d5d3ab518925ceb9b27a557bee610bbb414ae0339c513f5a3
   languageName: node
   linkType: hard
 
