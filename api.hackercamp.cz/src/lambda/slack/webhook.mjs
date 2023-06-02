@@ -77,10 +77,10 @@ async function getContact(email, slackID) {
   const resp = await db.send(
     new GetItemCommand({
       TableName: "hc-contacts",
-      Key: marshall(
-        { email, slackID },
-        { removeUndefinedValues: true, convertEmptyValues: true }
-      ),
+      Key: {
+        email: { S: email },
+        slackID: { S: slackID },
+      },
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
@@ -91,10 +91,10 @@ async function getAttendee(slackID, year) {
   const resp = await db.send(
     new GetItemCommand({
       TableName: "hc-attendees",
-      Key: marshall(
-        { slackID, year },
-        { removeUndefinedValues: true, convertEmptyValues: true }
-      ),
+      Key: {
+        slackID: { S: slackID },
+        year: { N: year.toString() },
+      },
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
@@ -124,7 +124,10 @@ async function deleteAttendee(slackID, year) {
   return db.send(
     new DeleteItemCommand({
       TableName: "hc-attendees",
-      Key: marshall({ slackID, year }),
+      Key: {
+        slackID: { S: slackID },
+        year: { N: year.toString() },
+      },
     })
   );
 }
@@ -134,10 +137,10 @@ async function getRegistration(email, year) {
   const resp = await db.send(
     new GetItemCommand({
       TableName: "hc-registrations",
-      Key: marshall(
-        { email, year },
-        { removeUndefinedValues: true, convertEmptyValues: true }
-      ),
+      Key: {
+        email: { S: email },
+        year: { N: year.toString() },
+      },
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
