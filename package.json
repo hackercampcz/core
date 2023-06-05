@@ -19,7 +19,7 @@
     "undertaker-registry": "2.0.0"
   },
   "resolutions": {
-    "@grpc/grpc-js": "1.8.14"
+    "@grpc/grpc-js": "1.8.15"
   },
   "scripts": {
     "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid -- build",
