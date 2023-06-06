@@ -1,5 +1,5 @@
 import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
-import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { sendMessageToSlack } from "../../slack.mjs";
 import Rollbar from "../../rollbar.mjs";
 
@@ -13,10 +13,10 @@ async function getAttendee(slackID, year) {
   const resp = await db.send(
     new GetItemCommand({
       TableName: "hc-attendees",
-      Key: marshall(
-        { slackID, year },
-        { removeUndefinedValues: true, convertEmptyValues: true }
-      ),
+      Key: {
+        slackID: { S: slackID },
+        year: { N: year },
+      },
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
@@ -43,6 +43,7 @@ async function dispatchMessageByType(message) {
     case "send-welcome-message":
       await sendWelcomeMessage(message);
       break;
+    // TODO: Move all slack messages here
     default:
       throw new Error("Unknown event: " + message.event);
   }
@@ -57,8 +58,7 @@ export async function sqsSlack(event) {
     try {
       const message = JSON.parse(record.body);
       await dispatchMessageByType(message);
-    }
-    catch (err) {
+    } catch (err) {
       rollbar.error(err);
     }
   }
