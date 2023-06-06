@@ -184,7 +184,7 @@ async function onUrlVerification({ challenge }) {
   return response({ challenge });
 }
 
-function enqueueSlackWelcomeMessage(user) {
+function enqueueSlackWelcomeMessage(user, year) {
   return queue.send(
     new SendMessageCommand({
       QueueUrl: process.env.slack_queue_url,
@@ -192,6 +192,7 @@ function enqueueSlackWelcomeMessage(user) {
       MessageBody: JSON.stringify({
         event: "send-welcome-message",
         slackID: user.id,
+        year,
       }),
     })
   );
@@ -272,7 +273,7 @@ Důležité novinky najdeš v kanále #general.
 
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
       ),
-      enqueueSlackWelcomeMessage(user),
+      enqueueSlackWelcomeMessage(user, year),
     ]);
     return response("");
   }
