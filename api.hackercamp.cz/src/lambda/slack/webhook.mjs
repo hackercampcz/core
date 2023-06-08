@@ -106,10 +106,10 @@ async function getAttendeeByEmail(email, year) {
     new ScanCommand({
       TableName: "hc-attendees",
       FilterExpression: "#email = :email and #year = :year",
-      ExpressionAttributeValues: marshall({
-        ":email": email,
-        ":year": year,
-      }),
+      ExpressionAttributeValues: {
+        ":email": { S: email },
+        ":year": { N: year.toString() },
+      },
       ExpressionAttributeNames: {
         "#email": "email",
         "#year": "year",
@@ -184,18 +184,25 @@ async function onUrlVerification({ challenge }) {
   return response({ challenge });
 }
 
-function enqueueSlackWelcomeMessage(user, year) {
-  return queue.send(
-    new SendMessageCommand({
-      QueueUrl: process.env.slack_queue_url,
-      DelaySeconds: 900, // 15 min delay
-      MessageBody: JSON.stringify({
-        event: "send-welcome-message",
-        slackID: user.id,
-        year,
-      }),
-    })
-  );
+async function enqueueSlackWelcomeMessage(user, year) {
+  console.log({ event: "Sending welcome message", slackID: user.id, year });
+  try {
+    const resp = await queue.send(
+      new SendMessageCommand({
+        QueueUrl: process.env.slack_queue_url,
+        DelaySeconds: 900, // 15 min delay
+        MessageBody: JSON.stringify({
+          event: "send-welcome-message",
+          slackID: user.id,
+          year,
+        }),
+      })
+    );
+    return resp;
+  } catch (err) {
+    rollbar.error(err);
+    throw err;
+  }
 }
 
 async function onTeamJoin({ user }) {
@@ -207,6 +214,7 @@ async function onTeamJoin({ user }) {
     getAttendeeByEmail(email, year),
   ]);
   if (attendee) {
+    console.log({ event: "Attendee already exists", email });
     await Promise.all([
       deleteAttendee(attendee.slackID, attendee.year),
       updateAttendee(Object.assign({}, attendee, { slackID: user.id }), user),
@@ -251,6 +259,7 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
     ]);
     return response("");
   } else if (registration?.paid) {
+    console.log({ event: "Registration paid", email });
     await Promise.all([
       createContact(user),
       createAttendee(user, registration),

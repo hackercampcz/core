@@ -75,6 +75,7 @@ export async function postChatMessage(channel, message) {
     });
     return null;
   }
+  console.log({ event: "Send message to slack", channel });
   const resp = await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
     headers: {
