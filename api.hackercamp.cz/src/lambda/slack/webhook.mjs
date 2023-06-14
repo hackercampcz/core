@@ -21,7 +21,7 @@ async function onUrlVerification({ challenge }) {
 }
 
 async function enqueueHandler(event, payload) {
-  console.log({ event: "Enqueue handler", eventType: "event" });
+  console.log({ event: "Enqueue handler", eventType: event });
   try {
     const resp = await queue.send(
       new SendMessageCommand({
@@ -68,7 +68,6 @@ export async function slackWebhook(event) {
   try {
     const payload = readPayload(event);
     // TODO: validate webhook token
-    // TODO: push this to queue instead
     return await dispatchByType(payload.event ?? payload).then((x) =>
       withCORS_(x)
     );
