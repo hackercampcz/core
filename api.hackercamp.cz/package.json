@@ -7,7 +7,7 @@
     "@fast-csv/format": "4.3.5",
     "@hackercamp/infrastructure": "workspace:infrastructure",
     "@hackercamp/lib": "workspace:lib",
-    "@thi.ng/transducers": "8.4.5",
+    "@thi.ng/transducers": "8.4.6",
     "algoliasearch": "4.17.2",
     "fast-xml-parser": "4.2.4",
     "immutable": "4.3.0",
