@@ -473,7 +473,7 @@ export function createDefaultLambdaRole(stage) {
   return defaultLambdaRole;
 }
 
-export function createQueues() {
+export function createQueues({ postmarkTemplates }) {
   const defaultRole = createDefaultLambdaRole("sqs");
   const slackQueue = new aws.sqs.Queue(hcName("slack-message-queue"), {});
   slackQueue.onEvent(
@@ -483,6 +483,10 @@ export function createQueues() {
         variables: {
           rollbar_access_token,
           slack_announcement_url: config.get("slack-incoming-webhook"),
+          year: config.getNumber("year"),
+          slack_bot_token: config.get("slack-bot-token"),
+          postmark_token: config.get("postmark-token"),
+          ...postmarkTemplates,
         },
       },
     })

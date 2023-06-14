@@ -93,7 +93,7 @@ for (const args of readTemplates("../communication/")) {
   postmarkTemplates[key] = template.id;
 }
 
-const queues = createQueues();
+const queues = createQueues({ postmarkTemplates });
 export const slackQueueUrl = queues.slackQueueUrl;
 
 const db = createDB({ slackQueueUrl, postmarkTemplates });
