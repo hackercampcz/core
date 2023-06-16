@@ -193,9 +193,13 @@ export function chip({ text, count, selected, view, year }) {
   `;
 }
 
-export function ticketDetail({ year, ticketType, patronAllowance }) {
+export function getTicketPrice({ patronAllowance, year, ticketType }) {
   const allowance = patronAllowance ? parseInt(patronAllowance) : 0;
-  const price = ticketPrice.get(year).get(ticketType) + allowance;
+  return ticketPrice.get(year).get(ticketType) + allowance;
+}
+
+export function ticketDetail({ year, ticketType, patronAllowance }) {
+  const price = getTicketPrice({ patronAllowance, year, ticketType });
   return html`
     <p>
       Lístek: <strong>${ticketName.get(ticketType)}</strong>

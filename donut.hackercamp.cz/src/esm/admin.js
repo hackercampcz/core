@@ -111,9 +111,8 @@ function invoiced(email) {
   return markAsInvoiced([email], year, invoiceId, apiHost);
 }
 
-function invoiceSelected() {
+function invoiceSelected(invoiceId) {
   const { apiHost, year, selection } = state.deref();
-  const invoiceId = prompt("Zadej ID faktury");
   return markAsInvoiced(Array.from(selection), year, invoiceId, apiHost);
 }
 
@@ -344,7 +343,7 @@ async function handleMessage(e) {
       await invoiced(payload.email);
       break;
     case Action.invoiceSelected:
-      await invoiceSelected();
+      await invoiceSelected(payload.invoiceId);
       break;
     case Action.renderDetail:
       renderDetail(payload.detail);

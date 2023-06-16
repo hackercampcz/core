@@ -1,6 +1,7 @@
 import { sortBy } from "@hackercamp/lib/array.mjs";
-import { formatDateTime } from "@hackercamp/lib/format.mjs";
+import { formatDateTime, formatMoney } from "@hackercamp/lib/format.mjs";
 import { html } from "lit-html";
+import { map } from "lit-html/directives/map.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
@@ -10,9 +11,12 @@ import {
   chip,
   closeDetail,
   dispatchAction,
+  getTicketPrice,
   paginationNavigation,
+  registerDialog,
   renderDetail,
   ticketDetail,
+  ticketName,
   unauthorized,
   View,
 } from "./admin/common.js";
@@ -43,8 +47,96 @@ function invoiced(email) {
 function invoiceSelected() {
   return (e) => {
     e.preventDefault();
-    dispatchAction(Action.invoiceSelected, {});
+    dispatchAction(Action.showModalDialog, { name: "group-invoice" });
   };
+}
+
+function submitInvoiceSelected() {
+  return (e) => {
+    e.preventDefault();
+    const invoiceId = e.target.invoiceId.value;
+    dispatchAction(Action.invoiceSelected, { invoiceId });
+  };
+}
+
+registerDialog("group-invoice", groupInvoiceModal);
+
+function invoiceSummary(selection) {
+  return ({ items }) => {
+    const registrations = new Map(
+      items.map((x) => [
+        x.email,
+        Object.assign(
+          {
+            get name() {
+              return `${this.firstName} ${this.lastName}`;
+            },
+            get price() {
+              return getTicketPrice(this);
+            },
+          },
+          x
+        ),
+      ])
+    );
+    const regs = Array.from(selection).map((email) => registrations.get(email));
+    const total = regs.map((x) => x.price).reduce((a, b) => a + b, 0);
+    const invContacts = new Set(regs.map((x) => x.invRecipientEmail));
+    return html`
+      ${map(
+        regs.filter((x) => x.invAddress),
+        invoiceDetails
+      )}
+      <p>
+        Fakturu zaslat na:
+        ${map(invContacts, (x) => html`<a href="mailto:${x}">${x}</a>`)}
+      </p>
+      <h4>Položky na faktuře</h4>
+      <ul style="list-style-type: none; padding: 0">
+        ${map(selection, (email) => {
+          const reg = registrations.get(email);
+          return html`
+            <li
+              style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between"
+            >
+              <span>${reg.name} - ${ticketName.get(reg.ticketType)}</span>
+              <data value="${reg.price}">${formatMoney(reg.price)} Kč</data>
+            </li>
+          `;
+        })}
+        <li
+          style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between; border-top: 3px double; margin-top: 5px;"
+        >
+          <span>Celkem</span>
+          <data value="${total}">${formatMoney(total)} Kč</data>
+        </li>
+      </ul>
+    `;
+  };
+}
+
+function groupInvoiceModal({ data, selection }) {
+  return html`
+    <form @submit="${submitInvoiceSelected()}">
+      <h2>Podklady k hromadné fakturaci</h2>
+      ${until(data.then(invoiceSummary(selection)))}
+      <fieldset>
+        <legend>Hromadná fakturace</legend>
+        <div class="field">
+          <label for="invoiceId">ID faktury z fakturoidu (v URL)</label>
+          <input
+            type="text"
+            id="invoiceId"
+            name="invoiceId"
+            required
+            pattern="[0-9]*"
+            inputmode="numeric"
+          />
+        </div>
+        <button class="hc-button" type="submit">Potvrdit</button>
+      </fieldset>
+    </form>
+  `;
 }
 
 function copyToClipboard(counts) {
@@ -354,33 +446,31 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         </p>
       `
     )}
-    ${when(
-      detail.invAddress,
-      () => html`
-        <address
-          style="border: 1px solid #ddd; padding: 16px; font-size: 14px;"
-        >
-          <h3>Fakturační údaje</h3>
-          <p>${detail.invName}</p>
-          <p>${detail.invAddress}</p>
-          ${when(
-            detail.invEmail || detail["invoice-contact"],
-            () => html`
-              <p>
-                E-mail:
-                <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
-              </p>
-            `
-          )}
-          <p>
-            ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
-            ${when(detail.invVatNo, () => html`DIČ: ${detail.invVatNo}`)}
-          </p>
-          ${when(detail.invText, () => html`<p>${detail.invText}</p>`)}
-        </address>
-      `
-    )}
+    ${when(detail.invAddress, () => invoiceDetails(detail))}
     </div>
+  `;
+}
+function invoiceDetails(detail) {
+  return html`
+    <address style="border: 1px solid #ddd; padding: 16px; font-size: 14px;">
+      <h3>Fakturační údaje</h3>
+      <p>${detail.invName}</p>
+      <p>${detail.invAddress}</p>
+      ${when(
+        detail.invEmail || detail["invoice-contact"],
+        () => html`
+          <p>
+            E-mail:
+            <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
+          </p>
+        `
+      )}
+      <p>
+        ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
+        ${when(detail.invVatNo, () => html`DIČ: ${detail.invVatNo}`)}
+      </p>
+      ${when(detail.invText, () => html`<p>${detail.invText}</p>`)}
+    </address>
   `;
 }
 
