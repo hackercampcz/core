@@ -513,6 +513,9 @@ function renderIndex({ profile, attendee, selectedView }) {
               <a href="/hackers/">seznam účastníků</a>.
             </p>
           </div>
+          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+            ${plusOneCard(referralLink)}
+          </div>
         </div>
       `;
   }
