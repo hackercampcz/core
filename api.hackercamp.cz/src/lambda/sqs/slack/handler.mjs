@@ -6,9 +6,10 @@ import {
   ScanCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { postChatMessage, sendMessageToSlack } from "../../slack.mjs";
 import Rollbar from "../../rollbar.mjs";
-import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
+import { SQSClient } from "@aws-sdk/client-sqs";
 
 /** @typedef {import("aws-lambda").SQSEvent} SQSEvent */
 
