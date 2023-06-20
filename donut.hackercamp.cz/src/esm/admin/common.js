@@ -40,6 +40,7 @@ export const View = {
   optouts: "optouts",
   attendees: "attendees",
   hackerAttendees: "hackerAttendees",
+  staff: "staff",
   staffAttendees: "staffAttendees",
   crewAttendees: "crewAttendees",
   volunteers: "volunteers",

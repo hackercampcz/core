@@ -141,7 +141,7 @@ function groupInvoiceModal({ data, selection }) {
 
 function copyToClipboard(counts) {
   return async () => {
-    const [paid, invoiced, confirmed, waitingList, volunteers] =
+    const [paid, invoiced, confirmed, waitingList, volunteers, staff] =
       await Promise.all(counts);
     const rich = new Blob(
       [
@@ -151,13 +151,14 @@ function copyToClipboard(counts) {
           <li>Potvrzení: <b>${confirmed}</b>
           <li>Waiting list: <b>${waitingList}</b>
           <li>Dobrovolníci: <b>${volunteers}</b>
+          <li>Ostatní: <b>${staff}</b>
         </ul>`,
       ],
       { type: "text/html" }
     );
     const plain = new Blob(
       [
-        `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}\n* Dobrovolnící: ${volunteers}`,
+        `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}\n* Dobrovolnící: ${volunteers}\n* Ostatní: ${staff}`,
       ],
       { type: "text/plain" }
     );
@@ -172,7 +173,7 @@ function copyToClipboard(counts) {
 export function registrationsChips(
   view,
   year,
-  { waitingList, confirmed, invoiced, paid, optouts, volunteers }
+  { waitingList, confirmed, invoiced, paid, optouts, volunteers, staff }
 ) {
   return html`
     <search style="display: flex; gap: 8px">
@@ -225,6 +226,13 @@ export function registrationsChips(
             year,
           })}
           ${chip({
+            text: "Ostatní",
+            count: staff,
+            selected: view === View.staff,
+            view: View.staff,
+            year,
+          })}
+          ${chip({
             text: "Opt-outs",
             count: optouts,
             selected: view === View.optouts,
@@ -242,6 +250,7 @@ export function registrationsChips(
             confirmed,
             waitingList,
             volunteers,
+            staff,
           ])}"
         >
           <md-icon>content_copy</md-icon></md-standard-icon-button
@@ -494,6 +503,7 @@ export function registrationsTemplate(state) {
             [View.confirmed]: data?.then((data) => data.counts.confirmed),
             [View.waitingList]: data?.then((data) => data.counts.waitingList),
             [View.volunteers]: data?.then((data) => data.counts.volunteers),
+            [View.staff]: data?.then((data) => data.counts.staff),
           })
       )}
     </div>
