@@ -6,6 +6,7 @@ import {
   ScanCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { postChatMessage, sendMessageToSlack } from "../../slack.mjs";
 import Rollbar from "../../rollbar.mjs";
