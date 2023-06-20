@@ -91,10 +91,11 @@ async function getRegistrations(query, tag, year, page, pageSize) {
     resultsCount(algolia_index_name, year, "confirmed"),
     resultsCount(algolia_index_name, year, "waitingList"),
     resultsCount(algolia_index_name, year, "volunteer"),
+    resultsCount(algolia_index_name, year, "staff"),
   ]);
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
-  const [paid, invoiced, confirmed, waitingList, volunteers] = counts.map(
+  const [paid, invoiced, confirmed, waitingList, volunteers, staff] = counts.map(
     (x) => x.nbHits
   );
 
@@ -104,7 +105,7 @@ async function getRegistrations(query, tag, year, page, pageSize) {
     page,
     pages: nbPages,
     total: nbHits,
-    counts: { paid, invoiced, confirmed, waitingList, volunteers },
+    counts: { paid, invoiced, confirmed, waitingList, volunteers, staff },
   };
 }
 
