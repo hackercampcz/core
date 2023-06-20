@@ -21,15 +21,12 @@ async function onUrlVerification({ challenge }) {
 }
 
 async function enqueueHandler(event, payload) {
-  console.log({ event: "Enqueue handler", eventType: event });
+  console.log({ event: "Enqueue handler", eventType: event, email: payload.user?.profile?.email });
   try {
     const resp = await queue.send(
       new SendMessageCommand({
         QueueUrl: process.env.slack_queue_url,
-        MessageBody: JSON.stringify({
-          event,
-          payload,
-        }),
+        MessageBody: JSON.stringify({ event, payload }),
       })
     );
     return resp;
