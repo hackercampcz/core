@@ -236,13 +236,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.358.0":
-  version: 3.358.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.358.0"
+"@aws-sdk/client-dynamodb@npm:3.359.0":
+  version: 3.359.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.359.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
-    "@aws-sdk/client-sts": 3.358.0
+    "@aws-sdk/client-sts": 3.359.0
     "@aws-sdk/config-resolver": 3.357.0
     "@aws-sdk/credential-provider-node": 3.358.0
     "@aws-sdk/fetch-http-handler": 3.357.0
@@ -279,17 +279,17 @@ __metadata:
     "@smithy/types": ^1.0.0
     tslib: ^2.5.0
     uuid: ^8.3.2
-  checksum: 69326faaca706eb30ab43b41986aaa5c68bb28dd75520b385ff2e7e5f72cf7d5035786efea7f1263a58573b6544f4b194eeccf022d213e6e62aa5f7a61f34450
+  checksum: 4b2a5298b2229a31bac0cefe1cda7514f31690fc7c9ea8de41601ed10a95092e106ef99b879943e65027fe7b3308f5a6fa3cecec673a9e5aa5e05359f9af55ce
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-secrets-manager@npm:3.358.0":
-  version: 3.358.0
-  resolution: "@aws-sdk/client-secrets-manager@npm:3.358.0"
+"@aws-sdk/client-secrets-manager@npm:3.359.0":
+  version: 3.359.0
+  resolution: "@aws-sdk/client-secrets-manager@npm:3.359.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
-    "@aws-sdk/client-sts": 3.358.0
+    "@aws-sdk/client-sts": 3.359.0
     "@aws-sdk/config-resolver": 3.357.0
     "@aws-sdk/credential-provider-node": 3.358.0
     "@aws-sdk/fetch-http-handler": 3.357.0
@@ -324,17 +324,17 @@ __metadata:
     "@smithy/types": ^1.0.0
     tslib: ^2.5.0
     uuid: ^8.3.2
-  checksum: 227a14826064cefc7af15890e3b1a91fbcd086b29b64842a47b59ea338d44296eb407c046d998bf0d6e41e2eddfddcc32ae65cb2ad6220d4b3fc615f335ac826
+  checksum: 0ec5c3aec84f8f2e4b448e0803774a112062ae47903d597faeba9389c636ce7b5fa7a288de5e0ffb357fe27d58e791b363d48c675a15fdce27e789d22eaaa16c
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.358.0":
-  version: 3.358.0
-  resolution: "@aws-sdk/client-sqs@npm:3.358.0"
+"@aws-sdk/client-sqs@npm:3.359.0":
+  version: 3.359.0
+  resolution: "@aws-sdk/client-sqs@npm:3.359.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
-    "@aws-sdk/client-sts": 3.358.0
+    "@aws-sdk/client-sts": 3.359.0
     "@aws-sdk/config-resolver": 3.357.0
     "@aws-sdk/credential-provider-node": 3.358.0
     "@aws-sdk/fetch-http-handler": 3.357.0
@@ -369,9 +369,9 @@ __metadata:
     "@aws-sdk/util-utf8": 3.310.0
     "@smithy/protocol-http": ^1.0.1
     "@smithy/types": ^1.0.0
-    fast-xml-parser: 4.2.4
+    fast-xml-parser: 4.2.5
     tslib: ^2.5.0
-  checksum: 5bdd23aae025bd8a89a905b7e88efbe5f77410155801f34ad793b49f43a77ef3856306ca632cd93e6fbac7b7c9701c8b9fb8f12a80514010e46d300ff575d6d7
+  checksum: 0e8ec3dd00cf320da6e99715893f5620766d2947cb8950f20d9407d32cb2fb236ca7e7a9a61517a6af16e328b2338df07b7477d53d8f5223ff4f5836711449f9
   languageName: node
   linkType: hard
 
@@ -457,9 +457,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sts@npm:3.358.0":
-  version: 3.358.0
-  resolution: "@aws-sdk/client-sts@npm:3.358.0"
+"@aws-sdk/client-sts@npm:3.359.0":
+  version: 3.359.0
+  resolution: "@aws-sdk/client-sts@npm:3.359.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
@@ -496,9 +496,9 @@ __metadata:
     "@aws-sdk/util-utf8": 3.310.0
     "@smithy/protocol-http": ^1.0.1
     "@smithy/types": ^1.0.0
-    fast-xml-parser: 4.2.4
+    fast-xml-parser: 4.2.5
     tslib: ^2.5.0
-  checksum: 71da447c9c4f6832fd22350fde9c2aec0cedc74e4e2b1248367960c7c366244e1413a24938f3d418db543b627618278ea5119f58d54e1f10763cb6282dd35715
+  checksum: 12b6ac49dca0eb782802c0eb32e9af31bf0235daf9303458fc6f5f3a55cc0bda0d4f2f965389775e83cbd9ef4ba0e5573c484535faea2ff101ef4e06e1956c9e
   languageName: node
   linkType: hard
 
@@ -1065,12 +1065,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.358.0":
-  version: 3.358.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.358.0"
+"@aws-sdk/util-dynamodb@npm:3.359.0":
+  version: 3.359.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.359.0"
   dependencies:
     tslib: ^2.5.0
-  checksum: f557b8a39ba3dcd0d646fa891f387943bfebde65151d94ccd77c1afe87e76a3562d9e1a3cbcac78333fa0b4905db2ea3e50604d295c3a1602ebd24a6a63d6487
+  checksum: ae48e837893a66e7ed9951fad5aba4ef831fe03ee7ad27bf2b95ac7760aab67ded011ff238edceb908bf676dca1cebd8acf90fd4294fa45ba937de6668daedc1
   languageName: node
   linkType: hard
 
@@ -3329,9 +3329,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-dynamodb": 3.358.0
-    "@aws-sdk/client-sqs": 3.358.0
-    "@aws-sdk/util-dynamodb": 3.358.0
+    "@aws-sdk/client-dynamodb": 3.359.0
+    "@aws-sdk/client-sqs": 3.359.0
+    "@aws-sdk/util-dynamodb": 3.359.0
     "@fast-csv/format": 4.3.5
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
@@ -3366,7 +3366,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-secrets-manager": 3.358.0
+    "@aws-sdk/client-secrets-manager": 3.359.0
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": 14.0.0
@@ -8350,17 +8350,6 @@ __metadata:
   version: 2.0.6
   resolution: "fast-levenshtein@npm:2.0.6"
   checksum: 92cfec0a8dfafd9c7a15fba8f2cc29cd0b62b85f056d99ce448bbcd9f708e18ab2764bda4dd5158364f4145a7c72788538994f0d1787b956ef0d1062b0f7c24c
-  languageName: node
-  linkType: hard
-
-"fast-xml-parser@npm:4.2.4":
-  version: 4.2.4
-  resolution: "fast-xml-parser@npm:4.2.4"
-  dependencies:
-    strnum: ^1.0.5
-  bin:
-    fxparser: src/cli/cli.js
-  checksum: d3b4d0c0152c09f98def792769fca6bb3fa1d597f9745d9564451c239089bd86bdf573c9263b4944860028cb7edb81752d64399c1aff8b87c9225ecef96905f7
   languageName: node
   linkType: hard
 
