@@ -3373,7 +3373,7 @@ __metadata:
     "@material/layout-grid": 14.0.0
     "@material/mwc-drawer": 0.27.0
     "@material/mwc-snackbar": 0.27.0
-    "@material/web": 1.0.0-pre.11
+    "@material/web": 1.0.0-pre.12
     "@thi.ng/atom": 5.2.3
     "@thi.ng/transducers": 8.4.6
     "@typescript-eslint/eslint-plugin": 5.60.1
@@ -3991,14 +3991,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/web@npm:1.0.0-pre.11":
-  version: 1.0.0-pre.11
-  resolution: "@material/web@npm:1.0.0-pre.11"
+"@material/web@npm:1.0.0-pre.12":
+  version: 1.0.0-pre.12
+  resolution: "@material/web@npm:1.0.0-pre.12"
   dependencies:
     lit: ^2.7.4
     safevalues: ^0.4.3
     tslib: ^2.4.0
-  checksum: 6c08d5d1b159472032d8a274eb29c22229dbcd29a80c478bbf680906903a9542dab9916d547e40c3b607a0ecfe51484bc8681b8c2f1fcd521b2b20fe23d84a66
+  checksum: 21132f90e004c84745bd9ba15aacc0ec74ee5c67e8dd610da14220cf0fa129882a82c409094b39226a82f9eaae0c1fbea9a6df07a6a056fc2ef5b771a14b078a
   languageName: node
   linkType: hard
 
