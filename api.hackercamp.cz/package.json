@@ -1,9 +1,9 @@
 {
   "name": "@hackercamp/api",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.362.0",
-    "@aws-sdk/client-sqs": "3.362.0",
-    "@aws-sdk/util-dynamodb": "3.362.0",
+    "@aws-sdk/client-dynamodb": "3.363.0",
+    "@aws-sdk/client-sqs": "3.363.0",
+    "@aws-sdk/util-dynamodb": "3.363.0",
     "@fast-csv/format": "4.3.5",
     "@hackercamp/infrastructure": "workspace:infrastructure",
     "@hackercamp/lib": "workspace:lib",
