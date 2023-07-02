@@ -169,7 +169,7 @@ jobs:
 
   merge-pr:
     docker:
-      - image: cimg/base:2023.06
+      - image: cimg/base:2023.07
     steps:
       - checkout
       - github/install
