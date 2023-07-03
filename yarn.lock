@@ -731,12 +731,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.363.0":
-  version: 3.363.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.363.0"
+"@aws-sdk/util-dynamodb@npm:3.365.0":
+  version: 3.365.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.365.0"
   dependencies:
     tslib: ^2.5.0
-  checksum: 998d341fb7c16b5398d6adf270df75144b6c7fed0751c5493c7e5f75f2b3d44a3749dfb808876c0a26c92d5a704344238c7e7c5f0dd871908bfd7e349a859ca9
+  checksum: e3ea1dae9295c0c492c0183c852cb2fc1ef636d6eae8eb210d2b8326ee681bda26c36b4c9a1c915a350131261e036af9abc90a94cff199b694a1485fa3501329
   languageName: node
   linkType: hard
 
@@ -2925,7 +2925,7 @@ __metadata:
   dependencies:
     "@aws-sdk/client-dynamodb": 3.363.0
     "@aws-sdk/client-sqs": 3.363.0
-    "@aws-sdk/util-dynamodb": 3.363.0
+    "@aws-sdk/util-dynamodb": 3.365.0
     "@fast-csv/format": 4.3.5
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
