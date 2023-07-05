@@ -21,7 +21,7 @@
     "@thi.ng/transducers": "8.4.6",
     "@ungap/structured-clone": "1.2.0",
     "date-fns": "2.30.0",
-    "lit": "2.7.5",
+    "lit": "2.7.6",
     "lit-html": "2.7.4",
     "marked": "5.1.0",
     "ramda": "0.29.0",
