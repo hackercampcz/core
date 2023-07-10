@@ -512,32 +512,41 @@ export function registrationsTemplate(state) {
     >
       <form class="hc-card hc-master-detail__list">
         ${until(
-          data?.then((data) => {
-            if (data.unauthorized) return unauthorized();
-            const timeColumnSettings = timeColumn.get(selectedView) ?? {
-              timeHeader: "Čas registrace",
-              timeAttr: "timestamp",
-            };
-            if (selectedView === View.optouts) {
-              return html`
-                <ul>
-                  ${data.map((x) => html` <li>${x}</li>`)}
-                </ul>
-              `;
-            }
-            return registrationsTableTemplate(
-              sortBy(
-                timeColumnSettings.timeAttr,
-                data.items.map((x) =>
-                  Object.assign({}, x, {
-                    name: x.name ?? `${x.firstName} ${x.lastName}`,
-                  })
-                )
-              ),
-              timeColumnSettings,
-              { page, pages: data.pages, total: data.total, params, selection }
-            );
-          }),
+          data
+            ?.then((data) => {
+              const timeColumnSettings = timeColumn.get(selectedView) ?? {
+                timeHeader: "Čas registrace",
+                timeAttr: "timestamp",
+              };
+              if (selectedView === View.optouts) {
+                return html`
+                  <ul>
+                    ${data.map((x) => html` <li>${x}</li>`)}
+                  </ul>
+                `;
+              }
+              return registrationsTableTemplate(
+                sortBy(
+                  timeColumnSettings.timeAttr,
+                  data.items.map((x) =>
+                    Object.assign({}, x, {
+                      name: x.name ?? `${x.firstName} ${x.lastName}`,
+                    })
+                  )
+                ),
+                timeColumnSettings,
+                {
+                  page,
+                  pages: data.pages,
+                  total: data.total,
+                  params,
+                  selection,
+                }
+              );
+            })
+            ?.catch((data) => {
+              if (data.unauthorized) return unauthorized();
+            }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p style="padding: 16px">Načítám data&hellip;</p>

@@ -40,16 +40,19 @@ function housingTable(data) {
   `;
 }
 
-export function housingTemplate(state, actions) {
+export function housingTemplate(state) {
   const { data } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       <div class="hc-card">
         ${until(
-          data?.then((data) => {
-            if (data.unauthorized) return unauthorized();
-            return housingTable(sortBy("housing", data));
-          }),
+          data
+            ?.then((data) => {
+              return housingTable(sortBy("housing", data));
+            })
+            ?.catch((data) => {
+              if (data.unauthorized) return unauthorized();
+            }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p style="padding: 16px">Načítám data&hellip;</p>

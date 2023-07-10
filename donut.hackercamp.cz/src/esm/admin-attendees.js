@@ -249,10 +249,13 @@ export function attendeesTemplate(state) {
     >
       <div class="hc-card hc-master-detail__list">
         ${until(
-          data?.then((data) => {
-            if (data.unauthorized) return unauthorized();
-            return attendeesTableTemplate(sortBy("paid", data));
-          }),
+          data
+            ?.then((data) => {
+              return attendeesTableTemplate(sortBy("paid", data));
+            })
+            ?.catch((data) => {
+              if (data.unauthorized) return unauthorized();
+            }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p style="padding: 16px">Načítám data&hellip;</p>

@@ -149,12 +149,15 @@ export function programTemplate(state) {
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       <div class="hc-card">
         ${until(
-          data?.then((data) => {
-            if (data.unauthorized) return unauthorized();
-            return programTable(
-              sortBy("startAt", filterEvents(data), { asc: true })
-            );
-          }),
+          data
+            ?.then((data) => {
+              return programTable(
+                sortBy("startAt", filterEvents(data), { asc: true })
+              );
+            })
+            ?.catch((data) => {
+              if (data.unauthorized) return unauthorized();
+            }),
           html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p style="padding: 16px">Načítám data&hellip;</p>
