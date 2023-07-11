@@ -6,6 +6,14 @@
   --md-list-item-list-item-label-text-type: 400 1rem var(--hc-font-family);
   --md-text-button-label-text-type: 500 0.85rem var(--hc-font-family);
 }
+@media (prefers-color-scheme: dark) {
+  :root {
+    --md-list-item-list-item-label-text-color: var(--hc-text-color);
+    --md-list-item-list-item-hover-label-text-color: var(--hc-text-color);
+    --md-list-item-list-item-hover-state-layer-color: var(--hc-text-color);
+    --mdc-theme-surface: var(--hc-background-color);
+  }
+}
 
 a[disabled] {
   pointer-events: none;
