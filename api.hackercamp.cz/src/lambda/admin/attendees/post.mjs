@@ -1,6 +1,5 @@
 import {
   DynamoDBClient,
-  PutItemCommand,
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
@@ -12,7 +11,6 @@ import {
   readPayload,
   seeOther,
 } from "../../http.mjs";
-import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -46,8 +44,8 @@ function editAttendee(db, data) {
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
       ExpressionAttributeNames: {
-        "#attendeeName": "name"
-      }
+        "#attendeeName": "name",
+      },
     })
   );
 }
