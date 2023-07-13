@@ -33,7 +33,7 @@ function editAttendee(db, data) {
         ])
       ),
       UpdateExpression:
-        "SET name = :name, email = :email, note = :note, nfcTronID = :nfcTronID, company = :company, edited = :now",
+        "SET #attendeeName = :name, email = :email, note = :note, nfcTronID = :nfcTronID, company = :company, edited = :now",
       ExpressionAttributeValues: marshall(
         {
           ":name": data.name,
@@ -45,6 +45,9 @@ function editAttendee(db, data) {
         },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
+      ExpressionAttributeNames: {
+        "#attendeeName": "name"
+      }
     })
   );
 }
