@@ -33,11 +33,14 @@ function editAttendee(db, data) {
         ])
       ),
       UpdateExpression:
-        "SET note = :note, nfcTronID = :nfcTronID, edited = :now",
+        "SET name = :name, email = :email, note = :note, nfcTronID = :nfcTronID, company = :company, edited = :now",
       ExpressionAttributeValues: marshall(
         {
+          ":name": data.name,
+          ":email": data.email,
           ":note": data.note,
           ":nfcTronID": data.nfcTronID,
+          ":company": data.company,
           ":now": new Date().toISOString(),
         },
         { removeUndefinedValues: true, convertEmptyValues: true }

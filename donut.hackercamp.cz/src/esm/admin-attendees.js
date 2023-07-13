@@ -214,15 +214,28 @@ function attendeeModalDialog({ detail, apiHost }) {
     const form = new FormData(e.target);
     await edit(Object.fromEntries(form.entries()), apiHost);
   };
-  const apiURL = (resource) => new URL(resource, apiHost).href;
   return html`
-    <form
-      method="post"
-      @submit="${onSubmit}"
-      action="${apiURL("admin/program")}"
-    >
+    <form method="post" @submit="${onSubmit}">
       <input type="hidden" name="year" value="${detail.year}" />
       <input type="hidden" name="slackID" value="${detail.slackID}" />
+      <div class="field">
+        <label for="name">Jméno</label>
+        <input id="name" name="name" value="${detail.name}" required />
+      </div>
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          name="email"
+          value="${detail.email}"
+          type="email"
+          required
+        />
+      </div>
+      <div class="field">
+        <label for="company">Společnost</label>
+        <input id="company" name="company" value="${detail.company}" />
+      </div>
       <div class="field">
         <label for="note">Poznámka</label>
         <input id="note" name="note" value="${detail.note}" />
