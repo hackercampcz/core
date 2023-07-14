@@ -7,6 +7,7 @@ import { marshall } from "@aws-sdk/util-dynamodb";
 import { fetchInvoice } from "../../fakturoid.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
+import { selectKeys } from "@thi.ng/transducers";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -82,15 +83,16 @@ async function invoiced(db, { registrations, invoiceId }) {
 }
 
 async function editRegistration(db, data) {
-  const { email, year } = data;
-  console.log({ event: "Save registration", data, email, year });
+  console.log({ event: "Save registration", data });
 
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_registrations,
       Key: marshall(
-        { email, year },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        selectKeys(data, new Set(["email", "year"]), ([k, v]) => [
+          k,
+          k === "year" ? parseInt(v, 10) : v,
+        ])
       ),
       UpdateExpression:
         "SET firstName = :firstName, lastName = :lastName, company = :company, edited = :now",
