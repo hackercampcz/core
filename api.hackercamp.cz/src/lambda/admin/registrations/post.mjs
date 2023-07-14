@@ -87,7 +87,7 @@ async function editRegistration(db, data) {
     new UpdateItemCommand({
       TableName: process.env.db_table_registrations,
       Key: marshall(
-        { email, year },
+        { email: data.email, year: data.year },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
       UpdateExpression:
