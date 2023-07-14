@@ -453,7 +453,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       detail.invRecipient === "1",
       () => html`
         <p>
-          Faturovat za něj bude
+          Fakturovat za něj bude
           <a href="mailto:${detail.invRecipientEmail}"
             >${detail.invRecipientFirstname} ${detail.invRecipientLastname}</a
           >
