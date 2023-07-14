@@ -7,7 +7,7 @@ import { marshall } from "@aws-sdk/util-dynamodb";
 import { fetchInvoice } from "../../fakturoid.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
-import { selectKeys } from "@thi.ng/transducers";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
