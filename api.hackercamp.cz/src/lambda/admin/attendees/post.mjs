@@ -1,7 +1,4 @@
-import {
-  DynamoDBClient,
-  UpdateItemCommand,
-} from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import {

@@ -11,10 +11,13 @@ import {
   chip,
   closeDetail,
   dispatchAction,
+  Endpoint,
+  executeCommand,
   getTicketPrice,
   paginationNavigation,
   registerDialog,
   renderDetail,
+  renderModalDialog,
   ticketDetail,
   ticketName,
   unauthorized,
@@ -269,7 +272,7 @@ export function registrationsChips(
 }
 
 function multiRowSelection(indeterminate, checked, items) {
-  return (e) => {
+  return () => {
     if (indeterminate) {
       dispatchAction(Action.select, { keys: items.map((x) => x.email) });
     } else if (checked) {
@@ -413,7 +416,12 @@ export function registrationDetailTemplate({ detail, selectedView }) {
     >
       <md-icon>request_quote</md-icon>
     </md-standard-icon-button>`
-  )}
+  )}<md-standard-icon-button
+        title="Upravit registraci"
+        @click="${renderModalDialog("registration-modal")}"
+      >
+        <md-icon>edit</md-icon>
+      </md-standard-icon-button>
     </div>
     ${ticketDetail(detail)}
     ${when(
@@ -558,5 +566,72 @@ export function registrationsTemplate(state) {
         registrationDetailTemplate({ detail, selectedView })
       )}
     </div>
+  `;
+}
+
+/**
+ * @param {Object} registration
+ * @param {string} apiHost
+ * @returns {Promise<void>}
+ */
+export function edit(registration, apiHost) {
+  return executeCommand(
+    apiHost,
+    Endpoint.registrations,
+    "edit",
+    registration
+  ).then(() => location.reload());
+}
+
+registerDialog("registration-modal", registrationModalDialog);
+
+function registrationModalDialog({ detail, apiHost }) {
+  console.log(detail);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+    await edit(Object.fromEntries(form.entries()), apiHost);
+  };
+  return html`
+    <form method="post" @submit="${onSubmit}">
+      <input type="hidden" name="year" value="${detail.year}" />
+      <div class="group">
+        <div class="field">
+          <label for="firstName">Jméno</label>
+          <input
+            id="firstName"
+            name="firstName"
+            value="${detail.firstName}"
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="lastName">Příjmení</label>
+          <input
+            id="lastName"
+            name="lastName"
+            value="${detail.lastName}"
+            required
+          />
+        </div>
+      </div>
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          name="email"
+          value="${detail.email}"
+          type="email"
+          disabled
+          required
+        />
+      </div>
+      <div class="field">
+        <label for="company">Společnost</label>
+        <input id="company" name="company" value="${detail.company}" />
+      </div>
+      <button type="submit" class="hc-button">Odeslat to</button>
+    </form>
   `;
 }

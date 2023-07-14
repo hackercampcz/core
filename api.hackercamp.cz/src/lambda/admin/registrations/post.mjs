@@ -81,6 +81,31 @@ async function invoiced(db, { registrations, invoiceId }) {
   }
 }
 
+async function editRegistration(db, data) {
+  console.log({ event: "Save registration", data });
+  return db.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_registrations,
+      Key: marshall(
+        { email, year },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
+      UpdateExpression:
+        "SET firstName = :firstName, lastName = :lastName, company = :company, edited = :now",
+      ExpressionAttributeValues: marshall(
+        {
+          ":firstName": data.firstName,
+          ":lastName": data.lastName,
+          //":email": data.email,
+          ":company": data.company,
+          ":now": new Date().toISOString(),
+        },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
+    })
+  );
+}
+
 /**
  * @param {DynamoDBClient} db
  * @param {*} data
@@ -102,6 +127,9 @@ async function processRequest(db, data) {
       break;
     case "invoiced":
       await invoiced(db, data.params);
+      break;
+    case "edit":
+      await editRegistration(db, data.params);
       break;
   }
 }
