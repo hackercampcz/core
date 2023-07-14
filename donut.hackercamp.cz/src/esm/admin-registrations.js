@@ -586,7 +586,6 @@ export function edit(registration, apiHost) {
 registerDialog("registration-modal", registrationModalDialog);
 
 function registrationModalDialog({ detail, apiHost }) {
-  console.log(detail);
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -623,7 +622,7 @@ function registrationModalDialog({ detail, apiHost }) {
           name="email"
           value="${detail.email}"
           type="email"
-          disabled
+          readonly
           required
         />
       </div>
