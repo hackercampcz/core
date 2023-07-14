@@ -82,12 +82,14 @@ async function invoiced(db, { registrations, invoiceId }) {
 }
 
 async function editRegistration(db, data) {
-  console.log({ event: "Save registration", data });
+  const { email, year } = data;
+  console.log({ event: "Save registration", data, email, year });
+
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_registrations,
       Key: marshall(
-        { email: data.email, year: data.year },
+        { email, year },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
       UpdateExpression:

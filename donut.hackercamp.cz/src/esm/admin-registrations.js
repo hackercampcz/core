@@ -586,7 +586,6 @@ export function edit(registration, apiHost) {
 registerDialog("registration-modal", registrationModalDialog);
 
 function registrationModalDialog({ detail, apiHost }) {
-
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
