@@ -26,6 +26,7 @@ import {
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
+import { getContact } from "./lib/profile";
 
 function optout(email) {
   return (e) => {
@@ -575,11 +576,12 @@ export function registrationsTemplate(state) {
  * @returns {Promise<void>}
  */
 export function edit(registration, apiHost) {
+  const contact = getContact();
   return executeCommand(
     apiHost,
     Endpoint.registrations,
     "edit",
-    registration
+    { ...registration, editedBy: contact.email }
   ).then(() => location.reload());
 }
 

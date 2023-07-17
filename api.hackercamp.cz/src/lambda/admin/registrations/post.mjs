@@ -95,7 +95,7 @@ async function editRegistration(db, data) {
         ])
       ),
       UpdateExpression:
-        "SET firstName = :firstName, lastName = :lastName, company = :company, edited = :now",
+        "SET firstName = :firstName, lastName = :lastName, company = :company, edited = :now, editedBy = :editedBy",
       ExpressionAttributeValues: marshall(
         {
           ":firstName": data.firstName,
@@ -103,6 +103,7 @@ async function editRegistration(db, data) {
           //":email": data.email,
           ":company": data.company,
           ":now": new Date().toISOString(),
+          ":editedBy": data.editedBy,
         },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
