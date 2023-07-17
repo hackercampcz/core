@@ -79,9 +79,9 @@ function invoiceSummary(selection) {
               return getTicketPrice(this);
             },
           },
-          x
+          x,
         ),
-      ])
+      ]),
     );
     const regs = Array.from(selection).map((email) => registrations.get(email));
     const total = regs.map((x) => x.price).reduce((a, b) => a + b, 0);
@@ -89,7 +89,7 @@ function invoiceSummary(selection) {
     return html`
       ${map(
         regs.filter((x) => x.invAddress),
-        invoiceDetails
+        invoiceDetails,
       )}
       <p>
         Fakturu zaslat na:
@@ -158,13 +158,13 @@ function copyToClipboard(counts) {
           <li>Ostatní: <b>${staff}</b>
         </ul>`,
       ],
-      { type: "text/html" }
+      { type: "text/html" },
     );
     const plain = new Blob(
       [
         `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}\n* Dobrovolnící: ${volunteers}\n* Ostatní: ${staff}`,
       ],
-      { type: "text/plain" }
+      { type: "text/plain" },
     );
     await navigator.clipboard.write([
       new ClipboardItem({ "text/html": rich, "text/plain": plain }),
@@ -177,7 +177,7 @@ function copyToClipboard(counts) {
 export function registrationsChips(
   view,
   year,
-  { waitingList, confirmed, invoiced, paid, optouts, volunteers, staff }
+  { waitingList, confirmed, invoiced, paid, optouts, volunteers, staff },
 ) {
   return html`
     <search style="display: flex; gap: 8px">
@@ -260,7 +260,7 @@ export function registrationsChips(
           <md-icon>content_copy</md-icon></md-standard-icon-button
         ><md-standard-icon-button
           href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
-            { year, type: view, format: "csv", pageSize: 500 }
+            { year, type: view, format: "csv", pageSize: 500 },
           )}"
           title="Stáhnout CSV"
           aria-label="Stáhnout CSV"
@@ -295,11 +295,12 @@ export async function selectionBar(selectedView, selection, data) {
       ></md-checkbox>
       ${when(
         selectedView === View.confirmed,
-        () => html`<md-standard-icon-button
-          title="Vyfakturovat"
-          @click="${invoiceSelected()}"
-          ><md-icon>request_quote</md-icon>
-        </md-standard-icon-button>`
+        () =>
+          html`<md-standard-icon-button
+            title="Vyfakturovat"
+            @click="${invoiceSelected()}"
+            ><md-icon>request_quote</md-icon>
+          </md-standard-icon-button>`,
       )}
     </div>
   `;
@@ -318,7 +319,7 @@ function selectRow(e) {
 export function registrationsTableTemplate(
   data,
   { timeHeader, timeAttr },
-  { page, pages, total, params, selection }
+  { page, pages, total, params, selection },
 ) {
   return html`
     <table>
@@ -366,7 +367,7 @@ export function registrationsTableTemplate(
                 ><hc-phone-button phone="${row.phone}"></hc-phone-button>
               </td>
             </tr>
-          `
+          `,
         )}
       </tbody>
     </table>
@@ -395,29 +396,32 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           ></hc-phone-button
     >${when(
       selectedView === View.waitingList,
-      () => html`<md-standard-icon-button
-        title="Opt in"
-        @click="${optin(detail.email)}"
-      >
-        <md-icon>person_add</md-icon>
-      </md-standard-icon-button>`
+      () =>
+        html`<md-standard-icon-button
+          title="Opt in"
+          @click="${optin(detail.email)}"
+        >
+          <md-icon>person_add</md-icon>
+        </md-standard-icon-button>`,
     )}${when(
-    selectedView !== View.paid,
-    () => html`<md-standard-icon-button
-      title="Opt out"
-      @click="${optout(detail.email)}"
-    >
-      <md-icon>person_remove</md-icon>
-    </md-standard-icon-button>`
-  )}${when(
-    selectedView === View.confirmed,
-    () => html`<md-standard-icon-button
-      title="Vyfakturovat"
-      @click="${invoiced(detail.email)}"
-    >
-      <md-icon>request_quote</md-icon>
-    </md-standard-icon-button>`
-  )}<md-standard-icon-button
+      selectedView !== View.paid,
+      () =>
+        html`<md-standard-icon-button
+          title="Opt out"
+          @click="${optout(detail.email)}"
+        >
+          <md-icon>person_remove</md-icon>
+        </md-standard-icon-button>`,
+    )}${when(
+      selectedView === View.confirmed,
+      () =>
+        html`<md-standard-icon-button
+          title="Vyfakturovat"
+          @click="${invoiced(detail.email)}"
+        >
+          <md-icon>request_quote</md-icon>
+        </md-standard-icon-button>`,
+    )}<md-standard-icon-button
         title="Upravit registraci"
         @click="${renderModalDialog("registration-modal")}"
       >
@@ -427,7 +431,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
     ${ticketDetail(detail)}
     ${when(
       detail.inviter,
-      () => html`<p>Pozval ho <strong>${detail.inviter}</strong></p>`
+      () => html`<p>Pozval ho <strong>${detail.inviter}</strong></p>`,
     )}
     <p>Ubytování: <strong>${
       housing.get(detail.housing) ?? "Ještě si nevybral"
@@ -442,13 +446,13 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         ${unsafeHTML(marked.parse(detail.activity))}
         ${when(
           detail.activityCrew,
-          () => html`<p>Parťáci: ${detail.activityCrew}</p>`
+          () => html`<p>Parťáci: ${detail.activityCrew}</p>`,
         )}
         ${when(
           detail.activityPlace,
-          () => html`<p>Zázemí: ${detail.activityPlace}</p>`
+          () => html`<p>Zázemí: ${detail.activityPlace}</p>`,
         )}
-      `
+      `,
     )}
     ${when(
       detail.invRecipient === "1",
@@ -462,7 +466,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
             >${detail.invRecipientPhone}</a
           >
         </p>
-      `
+      `,
     )}
     ${when(detail.invAddress, () => invoiceDetails(detail))}
     </div>
@@ -481,7 +485,7 @@ function invoiceDetails(detail) {
             E-mail:
             <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
           </p>
-        `
+        `,
       )}
       <p>
         ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
@@ -513,7 +517,7 @@ export function registrationsTemplate(state) {
             [View.waitingList]: data?.then((data) => data.counts.waitingList),
             [View.volunteers]: data?.then((data) => data.counts.volunteers),
             [View.staff]: data?.then((data) => data.counts.staff),
-          })
+          }),
       )}
     </div>
     <div
@@ -540,8 +544,8 @@ export function registrationsTemplate(state) {
                   data.items.map((x) =>
                     Object.assign({}, x, {
                       name: x.name ?? `${x.firstName} ${x.lastName}`,
-                    })
-                  )
+                    }),
+                  ),
                 ),
                 timeColumnSettings,
                 {
@@ -550,7 +554,7 @@ export function registrationsTemplate(state) {
                   total: data.total,
                   params,
                   selection,
-                }
+                },
               );
             })
             ?.catch((data) => {
@@ -560,11 +564,11 @@ export function registrationsTemplate(state) {
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p style="padding: 16px">Načítám data&hellip;</p>
             </div>
-          `
+          `,
         )}
       </form>
       ${when(detail, () =>
-        registrationDetailTemplate({ detail, selectedView })
+        registrationDetailTemplate({ detail, selectedView }),
       )}
     </div>
   `;
@@ -577,12 +581,10 @@ export function registrationsTemplate(state) {
  */
 export function edit(registration, apiHost) {
   const contact = getContact();
-  return executeCommand(
-    apiHost,
-    Endpoint.registrations,
-    "edit",
-    { ...registration, editedBy: contact.email }
-  ).then(() => location.reload());
+  return executeCommand(apiHost, Endpoint.registrations, "edit", {
+    ...registration,
+    editedBy: contact.email,
+  }).then(() => location.reload());
 }
 
 registerDialog("registration-modal", registrationModalDialog);
@@ -633,15 +635,22 @@ function registrationModalDialog({ detail, apiHost }) {
       </div>
 
       <section id="ticket">
-          <fieldset>
-            <legend>Lístek</legend>
-            ${Array.from(ticketName).map(([ticketKey, name])=> html`<div class="choose">
-                <input type="radio" name="ticketType" value="${ticketKey}" id="${ticketKey}" ?checked="${ticketKey === detail.ticketType}"/>
-                <label for="${ticketKey}">
-                  ${name}
-                </label>
-              </div>`)}
-          </fieldset>
+        <fieldset>
+          <legend>Lístek</legend>
+          ${Array.from(ticketName).map(
+            ([ticketKey, name]) =>
+              html`<div class="choose">
+                <input
+                  type="radio"
+                  name="ticketType"
+                  value="${ticketKey}"
+                  id="${ticketKey}"
+                  ?checked="${ticketKey === detail.ticketType}"
+                />
+                <label for="${ticketKey}"> ${name} </label>
+              </div>`,
+          )}
+        </fieldset>
       </section>
       <button type="submit" class="hc-button">Odeslat to</button>
     </form>
