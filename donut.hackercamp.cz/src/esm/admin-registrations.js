@@ -618,16 +618,29 @@ function registrationModalDialog({ detail, apiHost }) {
           />
         </div>
       </div>
-      <div class="field">
-        <label for="email">E-mail</label>
-        <input
-          id="email"
-          name="email"
-          value="${detail.email}"
-          type="email"
-          readonly
-          required
-        />
+      <div class="group">
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input
+            id="email"
+            name="email"
+            value="${detail.email}"
+            type="email"
+            readonly
+            required
+          />
+        </div>
+        <div class="field">
+          <label for="phone">Tel</label>
+          <input
+            id="phone"
+            name="phone"
+            value="${detail.phone}"
+            type="tel"
+            autocomplete="tel"
+            required
+          />
+        </div>
       </div>
       <div class="field">
         <label for="company">Společnost</label>
