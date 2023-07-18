@@ -767,6 +767,13 @@
           if (value === true) value = "1";
           field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
           field.dispatchEvent(new Event("change"));
+        } else if (field.length) {
+          const option = Array.from(field).find(option => option.value === value);
+          if (option) {
+            option.setAttribute("selected", "selected");
+          } else {
+            field.setAttribute("value", value);
+          }
         } else {
           field.setAttribute("value", value);
         }
