@@ -12,6 +12,7 @@
   ],
   "plugins": ["@typescript-eslint", "prettier", "promise"],
   "rules": {
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "comma-dangle": ["error", "always"]
   }
 }
