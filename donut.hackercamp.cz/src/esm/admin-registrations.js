@@ -410,8 +410,8 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           title="Opt out"
           @click="${optout(detail.email)}"
         >
-          <md-icon>person_remove</md-icon>
-        </md-standard-icon-button>`
+          <md-icon>person_remove</md-icon></md-standard-icon-button
+        >`
     )}${when(
       selectedView === View.confirmed,
       () =>
@@ -419,8 +419,8 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           title="Vyfakturovat"
           @click="${invoiced(detail.email)}"
         >
-          <md-icon>request_quote</md-icon>
-        </md-standard-icon-button>`
+          <md-icon>request_quote</md-icon></md-standard-icon-button
+        >`
     )}<md-standard-icon-button
         title="Upravit registraci"
         @click="${renderModalDialog("registration-modal")}"
