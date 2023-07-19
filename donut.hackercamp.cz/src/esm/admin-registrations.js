@@ -588,7 +588,6 @@ export function edit(registration, apiHost) {
   return executeCommand(apiHost, Endpoint.registrations, "edit", {
     ...registration,
     editedBy: contact.email,
-    paid: registration.paid ? parseDateTime(registration.paid) : null,
   }).then(() => location.reload());
 }
 
@@ -683,12 +682,7 @@ function registrationModalDialog({ detail, apiHost }) {
         () => html`
           <div class="field">
             <label for="paid">Čas zaplacení</label>
-            <input
-              id="paid"
-              name="paid"
-              value="${formatDateTime(new Date(detail.paid))}"
-              required
-            />
+            <input id="paid" name="paid" value="${detail.paid}" required />
           </div>
         `
       )}

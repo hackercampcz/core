@@ -106,7 +106,7 @@ async function editRegistration(db, data) {
           ":editedBy": data.editedBy,
           ":ticketType": data.ticketType,
           ":phone": data.phone,
-          ":paid": data.paid ? data.paid.toISOString() : null,
+          ":paid": data.paid ? data.paid : null,
         },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
