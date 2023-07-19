@@ -6,9 +6,9 @@
     "sourceType": "module"
   },
   "extends": [
-    "prettier",
     "plugin:@typescript-eslint/recommended",
-    "plugin:promise/recommended"
+    "plugin:promise/recommended",
+    "prettier"
   ],
   "plugins": ["@typescript-eslint", "prettier", "promise"],
   "rules": {
