@@ -95,7 +95,7 @@ async function editRegistration(db, data) {
         ])
       ),
       UpdateExpression:
-        "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType",
+        "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid",
       ExpressionAttributeValues: marshall(
         {
           ":firstName": data.firstName,
@@ -106,6 +106,7 @@ async function editRegistration(db, data) {
           ":editedBy": data.editedBy,
           ":ticketType": data.ticketType,
           ":phone": data.phone,
+          ":paid": data.paid ? data.paid.toISOString() : null,
         },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),

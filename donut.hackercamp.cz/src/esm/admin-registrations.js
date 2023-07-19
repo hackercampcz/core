@@ -1,5 +1,9 @@
 import { sortBy } from "@hackercamp/lib/array.mjs";
-import { formatDateTime, formatMoney } from "@hackercamp/lib/format.mjs";
+import {
+  formatDateTime,
+  formatMoney,
+  parseDateTime,
+} from "@hackercamp/lib/format.mjs";
 import { html } from "lit-html";
 import { map } from "lit-html/directives/map.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
@@ -584,10 +588,42 @@ export function edit(registration, apiHost) {
   return executeCommand(apiHost, Endpoint.registrations, "edit", {
     ...registration,
     editedBy: contact.email,
+    paid: registration.paid ? parseDateTime(registration.paid) : null,
   }).then(() => location.reload());
 }
 
 registerDialog("registration-modal", registrationModalDialog);
+
+// const juri = {
+//   activity:
+//     "Možná druhý ročník loňského spontánního Programmers Anonymous, kde si vylejeme frustrace a srdíčka.",
+//   activityCrew: "Aleš Roubíček, pokud bude mít chuť. Kontakt máte",
+//   invRecipientEmail: "ales.roubicek@topmonks.com",
+//   housing: "own-car",
+//   lastName: "Jansa",
+//   invRecipientPhone: "+420737461283",
+//   firstTime: false,
+//   email: "jirka.jansa@topmonks.com",
+//   firstName: "Jiří",
+//   paid: "2023-06-23T00:00:00.000Z",
+//   stayTime: "0",
+//   activityPlace: "malá stage ve stanu minule byla úplně dostačující",
+//   company: "TopMonks",
+//   ticketType: "hacker",
+//   travel: "free-car",
+//   edited: "2023-07-17T16:01:05.030Z",
+//   id: "5f60b2645ae1223b981e01a76319c0d7f48c39f1",
+//   invRecipientFirstname: "Aleš",
+//   phone: "+420777642895",
+//   timestamp: "2023-05-28T18:37:21.097Z",
+//   editedBy: "vaclav.slavik@topmonks.com",
+//   invoiced: "2023-06-17T13:08:16.492+02:00",
+//   invRecipientLastname: "Roubíček",
+//   invoice_id: 29636597,
+//   year: 2023,
+//   invRecipient: "1",
+//   name: "Jiří Jansa",
+// };
 
 function registrationModalDialog({ detail, apiHost }) {
   const onSubmit = async (e) => {
@@ -642,6 +678,20 @@ function registrationModalDialog({ detail, apiHost }) {
           />
         </div>
       </div>
+      ${when(
+        detail.paid,
+        () => html`
+          <div class="field">
+            <label for="paid">Čas zaplacení</label>
+            <input
+              id="paid"
+              name="paid"
+              value="${formatDateTime(new Date(detail.paid))}"
+              required
+            />
+          </div>
+        `
+      )}
       <div class="field">
         <label for="company">Společnost</label>
         <input id="company" name="company" value="${detail.company}" />
