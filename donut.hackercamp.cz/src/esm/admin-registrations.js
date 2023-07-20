@@ -703,6 +703,112 @@ function registrationModalDialog({ detail, apiHost }) {
         <input id="ticketType" name="ticketType" value="${detail.ticketType}" />
       </div>
 
+      <h3>Fakturace</h3>
+      <fieldset id="I-will-pay">
+        <legend>Zaplatí sám</legend>
+        <div class="field">
+          <label for="invoice-name"> Jméno / název společnosti </label>
+          <input
+            id="invoice-name"
+            name="invName"
+            type="text"
+            value="${detail.invName}"
+          />
+        </div>
+        <div class="field">
+          <label for="invoice-address"> Adresa (Ulice č.p., PSČ, Město) </label>
+          <input
+            id="invoice-address"
+            name="invAddress"
+            type="text"
+            value="${detail.invAddress}"
+          />
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="invoice-regno"> IČO </label>
+            <input
+              id="invoice-regno"
+              name="invRegNo"
+              type="text"
+              value="${detail.invRegNo}"
+            />
+          </div>
+          <div class="field">
+            <label for="invoice-vatno"> DIČ </label>
+            <input
+              id="invoice-vatno"
+              name="invVatNo"
+              type="text"
+              value="${detail.invVatNo}"
+            />
+          </div>
+        </div>
+        <div class="field">
+          <label for="invoice-text"> Text na faktuře </label>
+          <input
+            id="invoice-text"
+            name="invText"
+            type="text"
+            value="${detail.invText}"
+          />
+        </div>
+        <div class="field">
+          <label for="invoice-email"> Kontakt pro fakturaci </label>
+          <input
+            id="invoice-email"
+            name="invEmail"
+            value="${detail.invEmail}"
+            type="email"
+            autocomplete="email"
+          />
+        </div>
+      </fieldset>
+
+      <fieldset id="someone-else-will-pay">
+        <legend>Zaplatí za něj někdo jiný</legend>
+        <div class="group">
+          <div class="field">
+            <label for="invoice-recipient-firstname"> Jméno </label>
+            <input
+              id="invoice-recipient-firstname"
+              name="invRecipientFirstname"
+              value="${detail.invRecipientFirstname}"
+              type="text"
+            />
+          </div>
+          <div class="field">
+            <label for="invoice-recipient-lastname"> Příjmení </label>
+            <input
+              id="invoice-recipient-lastname"
+              name="invRecipientLastname"
+              value="${detail.invRecipientLastname}"
+              type="text"
+            />
+          </div>
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="invoice-recipient-email"> E-mail </label>
+            <input
+              id="invoice-recipient-email"
+              name="invRecipientEmail"
+              value="${detail.invRecipientEmail}"
+              type="email"
+            />
+          </div>
+          <div class="field">
+            <label for="invoice-recipient-phone"> Telefon </label>
+            <input
+              id="invoice-recipient-phone"
+              name="invRecipientPhone"
+              value="${detail.invRecipientPhone}"
+              type="tel"
+            />
+          </div>
+        </div>
+      </fieldset>
+
       <button type="submit" class="hc-button">Odeslat to</button>
     </form>
   `;

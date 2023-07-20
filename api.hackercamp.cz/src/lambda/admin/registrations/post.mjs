@@ -95,7 +95,9 @@ async function editRegistration(db, data) {
         ])
       ),
       UpdateExpression:
-        "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid",
+        "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid," +
+        "invRecipient = :invRecipient, invRecipientEmail = :invRecipientEmail, invRecipientPhone = :invRecipientPhone, invRecipientFirstname = :invRecipientFirstname, invRecipientLastname =:invRecipientLastname," +
+        "invName = :invName, invAddress = :invAddress, invRegNo = :invRegNo, invVatNo = :invVatNo, invText =:invText, invEmail =:invEmail",
       ExpressionAttributeValues: marshall(
         {
           ":firstName": data.firstName,
@@ -106,7 +108,18 @@ async function editRegistration(db, data) {
           ":editedBy": data.editedBy,
           ":ticketType": data.ticketType,
           ":phone": data.phone,
-          ":paid": data.paid ? data.paid : null,
+          ":paid": data.paid ?? null,
+          ":invRecipient": data.invRecipientEmail ? 1 : 0,
+          ":invRecipientEmail": data.invRecipientEmail ?? null,
+          ":invRecipientPhone": data.invRecipientPhone ?? null,
+          ":invRecipientFirstname": data.invRecipientFirstname ?? null,
+          ":invRecipientLastname": data.invRecipientLastname ?? null,
+          ":invName": data.invName ?? null,
+          ":invAddress": data.invAddress ?? null,
+          ":invRegNo": data.invRegNo ?? null,
+          ":invVatNo": data.invVatNo ?? null,
+          ":invText": data.invText ?? null,
+          ":invEmail": data.invEmail ?? null,
         },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
