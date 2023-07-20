@@ -691,22 +691,11 @@ function registrationModalDialog({ detail, apiHost }) {
         <input id="company" name="company" value="${detail.company}" />
       </div>
 
-      <fieldset>
-        <legend class="legend">Lístek</legend>
-        ${Array.from(ticketName).map(
-          ([ticketKey, name]) =>
-            html`<div class="choose">
-              <input
-                type="radio"
-                name="ticketType"
-                value="${ticketKey}"
-                id="${ticketKey}"
-                ?checked="${ticketKey === detail.ticketType}"
-              />
-              <label for="${ticketKey}"> ${name} </label>
-            </div>`
-        )}
-      </fieldset>
+      <div class="field">
+        <label for="ticketType">Lístek</label>
+        <input id="ticketType" name="ticketType" value="${detail.ticketType}" />
+      </div>
+
       <button type="submit" class="hc-button">Odeslat to</button>
     </form>
   `;
