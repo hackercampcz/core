@@ -1,9 +1,5 @@
 import { sortBy } from "@hackercamp/lib/array.mjs";
-import {
-  formatDateTime,
-  formatMoney,
-  parseDateTime,
-} from "@hackercamp/lib/format.mjs";
+import { formatDateTime, formatMoney } from "@hackercamp/lib/format.mjs";
 import { html } from "lit-html";
 import { map } from "lit-html/directives/map.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
@@ -473,6 +469,17 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       `
     )}
     ${when(detail.invAddress, () => invoiceDetails(detail))}
+    ${when(
+      detail.edited,
+      () => html`
+        <p>
+          Naposledy editováno
+          <strong>${formatDateTime(new Date(detail.edited))}</strong>
+          administrátorem
+          <strong>${detail.editedBy}</strong>
+        </p>
+      `
+    )}
     </div>
   `;
 }
