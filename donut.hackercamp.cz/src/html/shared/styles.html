@@ -74,6 +74,10 @@
     }
   }
 
+  html {
+    color-scheme: light dark;
+  }
+
   html,
   body {
     margin: 0;
@@ -99,6 +103,15 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: geometricPrecision;
   }
+
+  :target {
+    scroll-padding-block-start: 2rem;
+  }
+
+  :focus {
+    scroll-padding-block-end: 8vh;
+  }
+
 
   a:link {
     color: var(--hc-link-color);
