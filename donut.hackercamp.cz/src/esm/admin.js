@@ -85,6 +85,11 @@ export function createOptIn(email, year, slackID, apiHost) {
 
 function optin(email) {
   const { apiHost, year, contact } = state.deref();
+  if (!contact) {
+    return alert(
+      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj."
+    );
+  }
   return (
     confirm("Opravdu chceš táborníka potvrdit?") &&
     createOptIn(email, year, contact.slackID, apiHost)
