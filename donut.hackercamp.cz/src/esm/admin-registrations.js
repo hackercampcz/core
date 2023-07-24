@@ -55,6 +55,13 @@ function invoiceSelected() {
   };
 }
 
+function approveSelected() {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.showModalDialog, { name: "group-approve" });
+  };
+}
+
 function submitInvoiceSelected() {
   return (e) => {
     e.preventDefault();
@@ -63,7 +70,16 @@ function submitInvoiceSelected() {
   };
 }
 
+function submitApproveVolunteerSelected() {
+  return (e) => {
+    e.preventDefault();
+    const invoiceId = e.target.invoiceId.value;
+    dispatchAction(Action.invoiceSelected, { invoiceId });
+  };
+}
+
 registerDialog("group-invoice", groupInvoiceModal);
+registerDialog("group-approve", groupApproveVolunteerSelectionModal);
 
 function invoiceSummary(selection) {
   return ({ items }) => {
@@ -118,6 +134,39 @@ function invoiceSummary(selection) {
     `;
   };
 }
+function approveVolunteersSummary(selection) {
+  return ({ items }) => {
+    const registrations = new Map(
+      items.map((x) => [
+        x.email,
+        Object.assign(
+          {
+            get name() {
+              return `${this.firstName} ${this.lastName}`;
+            },
+          },
+          x
+        ),
+      ])
+    );
+
+    return html`
+      <h4>Výběr kanditátů na dobrovolníky ke schválení</h4>
+      <ul style="list-style-type: none; padding: 0">
+        ${map(selection, (email) => {
+          const reg = registrations.get(email);
+          return html`
+            <li
+              style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between"
+            >
+              <span>${reg.name}</span>
+            </li>
+          `;
+        })}
+      </ul>
+    `;
+  };
+}
 
 function groupInvoiceModal({ data, selection }) {
   return html`
@@ -137,6 +186,18 @@ function groupInvoiceModal({ data, selection }) {
             inputmode="numeric"
           />
         </div>
+        <button class="hc-button" type="submit">Potvrdit</button>
+      </fieldset>
+    </form>
+  `;
+}
+
+function groupApproveVolunteerSelectionModal({ data, selection }) {
+  return html`
+    <form @submit="${submitApproveVolunteerSelected()}">
+      <h2>Hromadné schválení dobrovolníků</h2>
+      ${until(data.then(approveVolunteersSummary(selection)))}
+      <fieldset>
         <button class="hc-button" type="submit">Potvrdit</button>
       </fieldset>
     </form>
@@ -300,6 +361,15 @@ export async function selectionBar(selectedView, selection, data) {
             title="Vyfakturovat"
             @click="${invoiceSelected()}"
             ><md-icon>request_quote</md-icon>
+          </md-standard-icon-button>`
+      )}
+      ${when(
+        selectedView === View.volunteers,
+        () =>
+          html`<md-standard-icon-button
+            title="Schválit"
+            @click="${approveSelected()}"
+            ><md-icon>person_add</md-icon>
           </md-standard-icon-button>`
       )}
     </div>
