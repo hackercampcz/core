@@ -66,11 +66,12 @@ async function approveVolunteer(db, { registrations, referral }) {
           removeUndefinedValues: true,
           convertEmptyValues: true,
         }),
-        UpdateExpression: "SET paid = :paid, approved = :approved, approvedBy = :approvedBy",
+        UpdateExpression:
+          "SET paid = :paid, approved = :approved, approvedBy = :approvedBy",
         ExpressionAttributeValues: marshall({
           ":paid": new Date().toISOString(),
           ":approved": new Date().toISOString(),
-          ":approvedBy": referral
+          ":approvedBy": referral,
         }),
       })
     );

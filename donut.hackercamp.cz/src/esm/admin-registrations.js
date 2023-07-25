@@ -363,7 +363,7 @@ export async function selectionBar(selectedView, selection, data) {
           </md-standard-icon-button>`
       )}
       ${when(
-        selectedView === View.volunteers,
+        selectedView === View.volunteers || selectedView === View.staff,
         () =>
           html`<md-standard-icon-button
             title="Schválit"
