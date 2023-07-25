@@ -17,6 +17,7 @@ export const Action = {
   select: "select",
   unselect: "unselect",
   invoiceSelected: "invoiceSelected",
+  approveSelectedVolunteers: "approveSelectedVolunteers",
 };
 
 export function dispatchAction(type, payload) {

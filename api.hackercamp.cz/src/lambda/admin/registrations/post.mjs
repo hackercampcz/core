@@ -53,6 +53,30 @@ async function approve(db, { email, year, referral }) {
   );
 }
 
+async function approveVolunteer(db, { registrations, referral }) {
+  for (const key of registrations) {
+    console.log({
+      event: "Marking volunteer registration as paid",
+      ...key,
+    });
+    await db.send(
+      new UpdateItemCommand({
+        TableName: process.env.db_table_registrations,
+        Key: marshall(key, {
+          removeUndefinedValues: true,
+          convertEmptyValues: true,
+        }),
+        UpdateExpression: "SET paid = :paid, approved = :approved, approvedBy = :approvedBy",
+        ExpressionAttributeValues: marshall({
+          ":paid": new Date().toISOString(),
+          ":approved": new Date().toISOString(),
+          ":approvedBy": referral
+        }),
+      })
+    );
+  }
+}
+
 async function invoiced(db, { registrations, invoiceId }) {
   const { fakturoid_token: token } = process.env;
   const { created_at: invoiced, id } = await fetchInvoice(token, invoiceId);
@@ -145,6 +169,9 @@ async function processRequest(db, data) {
         from: "Hacker Camp Crew <team@hackercamp.cz>",
         to: data.params.email,
       });
+      break;
+    case "approveVolunteer":
+      await approveVolunteer(db, data.params);
       break;
     case "invoiced":
       await invoiced(db, data.params);

@@ -121,6 +121,16 @@ function invoiceSelected(invoiceId) {
   return markAsInvoiced(Array.from(selection), year, invoiceId, apiHost);
 }
 
+function approveSelectedVolunteers() {
+  const { apiHost, year, selection, contact } = state.deref();
+
+  const emails = Array.from(selection);
+  return executeCommand(apiHost, Endpoint.registrations, "approveVolunteer", {
+    registrations: emails.map((email) => ({ email, year })),
+    referral: contact.slackID,
+  }).then(() => location.reload());
+}
+
 /**
  * @param {string} event_id
  * @param {number} year
@@ -351,6 +361,9 @@ async function handleMessage(e) {
       break;
     case Action.invoiceSelected:
       await invoiceSelected(payload.invoiceId);
+      break;
+    case Action.approveSelectedVolunteers:
+      await approveSelectedVolunteers();
       break;
     case Action.renderDetail:
       renderDetail(payload.detail);

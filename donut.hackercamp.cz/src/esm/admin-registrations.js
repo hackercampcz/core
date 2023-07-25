@@ -70,11 +70,10 @@ function submitInvoiceSelected() {
   };
 }
 
-function submitApproveVolunteerSelected() {
+function submitApproveSelectedVolunteers() {
   return (e) => {
     e.preventDefault();
-    const invoiceId = e.target.invoiceId.value;
-    dispatchAction(Action.invoiceSelected, { invoiceId });
+    dispatchAction(Action.approveSelectedVolunteers, {});
   };
 }
 
@@ -194,7 +193,7 @@ function groupInvoiceModal({ data, selection }) {
 
 function groupApproveVolunteerSelectionModal({ data, selection }) {
   return html`
-    <form @submit="${submitApproveVolunteerSelected()}">
+    <form @submit="${submitApproveSelectedVolunteers()}">
       <h2>Hromadné schválení dobrovolníků</h2>
       ${until(data.then(approveVolunteersSummary(selection)))}
       <fieldset>
