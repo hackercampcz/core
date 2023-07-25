@@ -25,32 +25,29 @@ function getActions() {
   return [actions[a], actions[Math.max(b, 0)]];
 }
 
-async function sendMessageToSlack(profile) {
-  const resp = await fetch(
-    "https://hooks.slack.com/services/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",
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        blocks: [
-          {
-            type: "section",
-            text: {
-              type: "mrkdwn",
-              text: [`Hey! <@${profile.slackID}> s námi letos jede na camp.`]
-                .concat(getActions())
-                .join("\n"),
-            },
-            accessory: {
-              type: "image",
-              image_url: profile.image,
-              alt_text: profile.name,
-            },
+async function sendMessageToSlack(url, profile) {
+  const resp = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      blocks: [
+        {
+          type: "section",
+          text: {
+            type: "mrkdwn",
+            text: [`Hey! <@${profile.slackID}> s námi letos jede na camp.`]
+              .concat(getActions())
+              .join("\n"),
           },
-        ],
-      }),
-    }
-  );
+          accessory: {
+            type: "image",
+            image_url: profile.image,
+            alt_text: profile.name,
+          },
+        },
+      ],
+    }),
+  });
   return resp.text();
 }
 
@@ -78,41 +75,16 @@ export async function postChatMessage(channel, message, token) {
   return resp.json();
 }
 
-async function main({ token }) {
-  await sendMessageToSlack({
-    slackID: "U0417TG5GPJ",
-    name: "Bohdan Bláhovec",
-    image: "https://ca.slack-edge.com/T01V4Q0ACQ4-U0417TG5GPJ-bb34e5cea70b-512",
+async function main({ url, token }) {
+  console.log({ url, token });
+  const resp = await sendMessageToSlack(url, {
+    slackID: "U05BH02AFFT",
+    name: "Anita SVOBODA-LÉVÁRDI",
+    image: "https://ca.slack-edge.com/T01V4Q0ACQ4-U05BH02AFFT-gc8d684c4108-512",
   });
+  console.log(resp);
   return;
-  // await sendMessageToSlack({
-  //   slackID: "U03RRCEUQCX",
-  //   name: "Simona Haganová",
-  //   image:
-  //     "https://avatars.slack-edge.com/2022-08-03/3892425407684_5e3dd7e680df78a11c5f_512.jpg",
-  // });
-  const users = [
-    // "U03SJP5SVTN",
-    // "U03S07B11FH",
-    // "U03T1N53VUG",
-    // "U03SBT9BRCK",
-    // "U03T19RUVPS",
-    // "U03SBHZ3RB4",
-    // "U03SBHA6X8S",
-    // "U03SBEHAL2F",
-    // "U03T18D9Y5N",
-    // "U03RRCEUQCX",
-    // "U03RQ1JG7JT",
-    // "U03QXVAN0AH",
-    // "U03RCGVL4LR",
-    // "U03QZJ1578T",
-    // "U03QVNFEHKL",
-    // "U03QUN2P3A7",
-    // "U03R6V1ANM7",
-    // "U03QWNJD604",
-    // "U03QU6KPR50",
-    "U0202S9SB1T",
-  ];
+  const users = ["U0202S9SB1T"];
   const message = `Ahoj, táborníku,
 
 Vítej v našem slacku. Začátek září se blíží. Snad se těšíš stejně jako my.
@@ -131,4 +103,4 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`;
 
 await main(parse(Deno.args));
 
-// deno run --allow-net=hooks.slack.com slack-webhook-test.js --token xoxb-1990816352820-3333049321349-fYMHvigmiP4ApQur61t3tiOC
+// deno run --allow-net=hooks.slack.com slack-webhook-test.js --token $(op read "op://Hacker Camp/Slack Bot/credential") --url $(op read "op://Hacker Camp/Slack Bot/incomming webhook")
