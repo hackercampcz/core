@@ -64,7 +64,7 @@ function makeTick(time) {
   }
 }
 
-function makeDayline(startAt, endAt, minutes = SLOT_MINUTES) {
+function makeDayline(startAt, endAt) {
   const dayStart = new Date(
     startAt.getFullYear(),
     startAt.getMonth(),
@@ -142,36 +142,37 @@ function eventTemplate({
   return html`
     ${when(
       !event.topic,
-      () => html`<div
-        class="${classMap({
-          lineup__event: true,
-          "lineup__event--narrow":
-            durationInSlots === 1 && event.title?.length > 3,
-          [`lineup__event--${event.type}`]: event.type,
-        })}"
-        data-lineup=${lineup.id}
-        id=${event.id || event._id}
-        style=${`
+      () =>
+        html`<div
+          class="${classMap({
+            lineup__event: true,
+            "lineup__event--narrow":
+              durationInSlots === 1 && event.title?.length > 3,
+            [`lineup__event--${event.type}`]: event.type,
+          })}"
+          data-lineup=${lineup.id}
+          id=${event.id || event._id}
+          style=${`
         --slot-start: ${eventStartAtSlot(event)};
         --slot-duration: ${durationInSlots};
         --slot-top-offset: ${event._top ?? "calc(var(--spacing) / 4)"};
       `}
-        @click=${() => showModalDialog(`event-detail-${event.id || event._id}`)}
-      >
-        <p
-          style="${`
+          @click=${() =>
+            showModalDialog(`event-detail-${event.id || event._id}`)}
+        >
+          <p
+            style="${`
           font-weight: ${event.level > 100 ? "bold" : "normal"};
           font-size: ${event.level || 100}%;
           margin: 0;
           line-height: 1.1;
         `}"
-        >
-          ${event.title}
-        </p>
-        <div class="people-list">
-          ${event.people?.map(
-            (speaker) =>
-              html`
+          >
+            ${event.title}
+          </p>
+          <div class="people-list">
+            ${event.people?.map(
+              (speaker) => html`
                 <figure class="speaker speaker--photo">
                   <img
                     alt="${speaker.name}"
@@ -181,13 +182,13 @@ function eventTemplate({
                   />
                 </figure>
               `
-          )}
-          ${when(
-            event.type === "topic" && event.people?.length,
-            () => html` <figure class="speaker speaker--add">+</figure> `
-          )}
-        </div>
-      </div>`
+            )}
+            ${when(
+              event.type === "topic" && event.people?.length,
+              () => html` <figure class="speaker speaker--add">+</figure> `
+            )}
+          </div>
+        </div>`
     )}
     <dialog class="event__detail" id="event-detail-${event.id || event._id}">
       <h1>${event.title}</h1>
@@ -205,16 +206,17 @@ function eventTemplate({
         () => html`
           <div class="people-list">
             ${event.people?.map(
-              (speaker) => html` <figure class="speaker speaker--full">
-                <img
-                  alt="${speaker.name}"
-                  src="${speaker.image}"
-                  width="32"
-                  height="32"
-                />
-                <a href=${`/hackers/${speaker.slug}`}>${speaker.name}</a>
-                ${when(speaker.company, () => html`z ${speaker.company}`)}
-              </figure>`
+              (speaker) =>
+                html` <figure class="speaker speaker--full">
+                  <img
+                    alt="${speaker.name}"
+                    src="${speaker.image}"
+                    width="32"
+                    height="32"
+                  />
+                  <a href=${`/hackers/${speaker.slug}`}>${speaker.name}</a>
+                  ${when(speaker.company, () => html`z ${speaker.company}`)}
+                </figure>`
             )}
           </div>
         `
@@ -231,12 +233,8 @@ function eventTemplate({
           ({ id, _id, title, people = [] }) => html`
             <figure class="speaker speaker--full">
               ${people.map(
-                ({ name, image }) => html`<img
-                  width="32"
-                  height="32"
-                  alt=${name}
-                  src=${image}
-                />`
+                ({ name, image }) =>
+                  html`<img width="32" height="32" alt=${name} src=${image} />`
               )}
               <a
                 href="#"
@@ -688,24 +686,23 @@ function renderProgram({
       <div class="program__dayline">
         <div class="dayline">
           ${makeDayline(campStartAt, campEndAt).map(
-            (day) =>
-              html`
-                <a
-                  class=${classMap({
-                    dayline__tick: true,
-                    "dayline__tick--visible":
-                      visibleDate.getDate() === day.getDate(),
-                  })}
-                  href="#${day.toISOString()}"
-                  @click=${() => {
-                    const date = new Date(day);
-                    date.setHours(DAY_START_HOUR);
-                    scrollToDate(date);
-                  }}
-                >
-                  ${formatLongDayName(day)}
-                </a>
-              `
+            (day) => html`
+              <a
+                class=${classMap({
+                  dayline__tick: true,
+                  "dayline__tick--visible":
+                    visibleDate.getDate() === day.getDate(),
+                })}
+                href="#${day.toISOString()}"
+                @click=${() => {
+                  const date = new Date(day);
+                  date.setHours(DAY_START_HOUR);
+                  scrollToDate(date);
+                }}
+              >
+                ${formatLongDayName(day)}
+              </a>
+            `
           )}
         </div>
       </div>
@@ -737,16 +734,17 @@ function renderProgram({
                 <p>${lineup.detail}</p>
                 ${when(
                   lineup.id !== "liorg",
-                  () => html`<a
-                    class="hc-link hc-link--decorated"
-                    style="padding: calc(var(--spacing) / 4);"
-                    @click=${(e) => {
-                      e.preventDefault();
-                      renderAndShowAddEventForm(lineup.id);
-                    }}
-                  >
-                    Zapoj se do programu
-                  </a> `
+                  () =>
+                    html`<a
+                      class="hc-link hc-link--decorated"
+                      style="padding: calc(var(--spacing) / 4);"
+                      @click=${(e) => {
+                        e.preventDefault();
+                        renderAndShowAddEventForm(lineup.id);
+                      }}
+                    >
+                      Zapoj se do programu
+                    </a> `
                 )}
                 <hr />
                 <button name="close">Zavřít</button>
@@ -765,25 +763,24 @@ function renderProgram({
               </div>
               <div class="lineup__timeline">
                 ${makeTimeline(campStartAt, campEndAt, 15).map(
-                  (time) =>
-                    html`
-                      <a
-                        class="lineup__slot"
-                        ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
-                        data-tick=${makeTick(time)}
-                        data-day=${formatShortDayName(time)}
-                        @click=${(e) => {
-                          e.preventDefault();
-                          // timezone hotfix
-                          time.setHours(time.getHours() + 2);
-                          renderAndShowAddEventForm(lineup.id, {
-                            preferredTime: time,
-                          });
-                        }}
-                      >
-                        &nbsp;
-                      </a>
-                    `
+                  (time) => html`
+                    <a
+                      class="lineup__slot"
+                      ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
+                      data-tick=${makeTick(time)}
+                      data-day=${formatShortDayName(time)}
+                      @click=${(e) => {
+                        e.preventDefault();
+                        // timezone hotfix
+                        time.setHours(time.getHours() + 2);
+                        renderAndShowAddEventForm(lineup.id, {
+                          preferredTime: time,
+                        });
+                      }}
+                    >
+                      &nbsp;
+                    </a>
+                  `
                 )}
               </div>
             </div>

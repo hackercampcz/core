@@ -302,22 +302,21 @@ function programCardTemplate({ events }) {
         () => html`
           <ul style="list-style-type: none; text-align: left; padding: 0;">
             ${events.map(
-              (event) =>
-                html`
-                  <li>
-                    <a
-                      style="text-decoration: none;"
-                      href="#"
-                      @click=${() => {
-                        showEventModalDialog(event);
-                      }}
-                    >
-                      ${event.title}
-                      (<code>${lineupText.get(event.lineup)}</code>) 👈
-                      <strong>upravit</strong>
-                    </a>
-                  </li>
-                `
+              (event) => html`
+                <li>
+                  <a
+                    style="text-decoration: none;"
+                    href="#"
+                    @click=${() => {
+                      showEventModalDialog(event);
+                    }}
+                  >
+                    ${event.title}
+                    (<code>${lineupText.get(event.lineup)}</code>) 👈
+                    <strong>upravit</strong>
+                  </a>
+                </li>
+              `
             )}
           </ul>
         `,
@@ -359,12 +358,13 @@ function nfcTronTemplate(entries) {
                 x.vip || x.paid,
                 () =>
                   html`<strong style="color: forestgreen">Zaplaceno</strong>`,
-                () => html`<strong style="color: darkred"
-                  >Nezaplaceno
-                  <data value="${x.spent}"
-                    >${formatMoney(x.spent)}</data
-                  ></strong
-                >`
+                () =>
+                  html`<strong style="color: darkred"
+                    >Nezaplaceno
+                    <data value="${x.spent}"
+                      >${formatMoney(x.spent)}</data
+                    ></strong
+                  >`
               )}
 
               <a
