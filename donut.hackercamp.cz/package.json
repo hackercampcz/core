@@ -2,7 +2,7 @@
   "name": "@hackercamp/donut",
   "packageManager": "yarn@3.6.1",
   "devDependencies": {
-    "@aws-sdk/client-secrets-manager": "3.377.0",
+    "@aws-sdk/client-secrets-manager": "3.378.0",
     "@typescript-eslint/eslint-plugin": "6.2.0",
     "@typescript-eslint/parser": "6.2.0",
     "eslint": "8.45.0",
