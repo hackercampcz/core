@@ -32,6 +32,17 @@ export function edit(attendee, apiHost) {
   );
 }
 
+/**
+ * @param {Object} attendee
+ * @param {string} apiHost
+ * @returns {Promise<void>}
+ */
+export function add(attendee, apiHost) {
+  return executeCommand(apiHost, Endpoint.attendees, "add", attendee).then(() =>
+    location.reload()
+  );
+}
+
 export function attendeesChips(
   view,
   year,
@@ -91,7 +102,10 @@ export function attendeesChips(
         </span>
       </div>
       <div>
-        <md-standard-icon-button title="Přidat účastníka">
+        <md-standard-icon-button
+          title="Přidat účastníka"
+          @click="${renderModalDialog("add-attendee-modal")}"
+        >
           <md-icon>person_add</md-icon></md-standard-icon-button
         >
       </div>
@@ -159,7 +173,7 @@ export function attendeeDetailTemplate({ detail }) {
       <hc-mail-button email="${detail.email}"></hc-mail-button
       ><md-standard-icon-button
         title="Upravit účastníka"
-        @click="${renderModalDialog("attendee-modal")}"
+        @click="${renderModalDialog("edit-attendee-modal")}"
       >
       <md-icon>edit</md-icon>
     </md-standard-icon-button>
@@ -214,9 +228,10 @@ export function attendeeDetailTemplate({ detail }) {
   `;
 }
 
-registerDialog("attendee-modal", attendeeModalDialog);
+registerDialog("edit-attendee-modal", editAttendeeModalDialog);
+registerDialog("add-attendee-modal", addAttendeeModalDialog);
 
-function attendeeModalDialog({ detail, apiHost }) {
+function editAttendeeModalDialog({ detail, apiHost }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
@@ -251,6 +266,44 @@ function attendeeModalDialog({ detail, apiHost }) {
       <div class="field">
         <label for="nfc-tron-id">NFCtron ID</label>
         <input id="nfc-tron-id" name="nfcTronID" value="${detail.nfcTronID}" />
+      </div>
+      <button type="submit" class="hc-button">Odeslat to</button>
+    </form>
+  `;
+}
+
+function addAttendeeModalDialog({ year, apiHost }) {
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    const form = new FormData(e.target);
+    await add(Object.fromEntries(form.entries()), apiHost);
+  };
+  return html`
+    <form method="post" @submit="${onSubmit}">
+      <input type="hidden" name="year" value="${year}" />
+      <div class="field">
+        <label for="name">Jméno</label>
+        <input id="name" name="name" required />
+      </div>
+      <div class="field">
+        <label for="email">E-mail</label>
+        <input id="email" name="email" type="email" required />
+      </div>
+      <div class="field">
+        <label for="ticketType">Lístek</label>
+        <input id="ticketType" name="ticketType" required />
+      </div>
+      <div class="field">
+        <label for="company">Společnost</label>
+        <input id="company" name="company" />
+      </div>
+      <div class="field">
+        <label for="note">Poznámka</label>
+        <input id="note" name="note" />
+      </div>
+      <div class="field">
+        <label for="nfc-tron-id">NFCtron ID</label>
+        <input id="nfc-tron-id" name="nfcTronID" />
       </div>
       <button type="submit" class="hc-button">Odeslat to</button>
     </form>
