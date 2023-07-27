@@ -44,50 +44,57 @@ export function attendeesChips(
   }
 ) {
   return html`
-    <div
-      class="mdc-evolution-chip-set"
-      role="grid"
-      id="filters"
-      aria-orientation="horizontal"
-      aria-multiselectable="false"
-    >
-      <span class="mdc-evolution-chip-set__chips" role="presentation">
-        ${chip({
-          text: "Všichni",
-          count: attendees,
-          selected: view === View.attendees,
-          view: View.attendees,
-          year,
-        })}
-        ${chip({
-          text: "Hackeři",
-          count: hackerAttendees,
-          selected: view === View.hackerAttendees,
-          view: View.hackerAttendees,
-          year,
-        })}
-        ${chip({
-          text: "Dobrovolníci",
-          count: volunteerAttendees,
-          selected: view === View.volunteerAttendees,
-          view: View.volunteerAttendees,
-          year,
-        })}
-        ${chip({
-          text: "Ostatní",
-          count: staffAttendees,
-          selected: view === View.staffAttendees,
-          view: View.staffAttendees,
-          year,
-        })}
-        ${chip({
-          text: "Crew",
-          count: crewAttendees,
-          selected: view === View.crewAttendees,
-          view: View.crewAttendees,
-          year,
-        })}
-      </span>
+    <div style="display: flex; gap: 8px">
+      <div
+        class="mdc-evolution-chip-set"
+        role="grid"
+        id="filters"
+        aria-orientation="horizontal"
+        aria-multiselectable="false"
+      >
+        <span class="mdc-evolution-chip-set__chips" role="presentation">
+          ${chip({
+            text: "Všichni",
+            count: attendees,
+            selected: view === View.attendees,
+            view: View.attendees,
+            year,
+          })}
+          ${chip({
+            text: "Hackeři",
+            count: hackerAttendees,
+            selected: view === View.hackerAttendees,
+            view: View.hackerAttendees,
+            year,
+          })}
+          ${chip({
+            text: "Dobrovolníci",
+            count: volunteerAttendees,
+            selected: view === View.volunteerAttendees,
+            view: View.volunteerAttendees,
+            year,
+          })}
+          ${chip({
+            text: "Ostatní",
+            count: staffAttendees,
+            selected: view === View.staffAttendees,
+            view: View.staffAttendees,
+            year,
+          })}
+          ${chip({
+            text: "Crew",
+            count: crewAttendees,
+            selected: view === View.crewAttendees,
+            view: View.crewAttendees,
+            year,
+          })}
+        </span>
+      </div>
+      <div>
+        <md-standard-icon-button title="Přidat účastníka">
+          <md-icon>person_add</md-icon></md-standard-icon-button
+        >
+      </div>
     </div>
   `;
 }
@@ -161,9 +168,9 @@ export function attendeeDetailTemplate({ detail }) {
     <p>Ubytování: <strong>${
       housing.get(detail.housing) ?? "Ještě si nevybral"
     }</strong> ${when(
-    detail.housingPlacement,
-    () => html` - <em>${detail.housingPlacement}</em>`
-  )}</p>
+      detail.housingPlacement,
+      () => html` - <em>${detail.housingPlacement}</em>`
+    )}</p>
     <p>Doprava: <strong>${
       travel.get(detail.travel) ?? "Ještě si nevybral"
     }</strong></p>
@@ -187,10 +194,11 @@ export function attendeeDetailTemplate({ detail }) {
                 ${when(event.topic, () => html`<code>${event.topic}</code>`)}
                 ${when(
                   event.startAt,
-                  () => html`-
-                    <time datetime="${event.startAt}"
-                      >${formatDateTime(new Date(event.startAt))}
-                    </time>`
+                  () =>
+                    html`-
+                      <time datetime="${event.startAt}"
+                        >${formatDateTime(new Date(event.startAt))}
+                      </time>`
                 )}
               </p>
               ${when(
