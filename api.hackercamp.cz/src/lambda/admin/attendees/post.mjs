@@ -8,6 +8,7 @@ import {
   readPayload,
   seeOther,
 } from "../../http.mjs";
+import imagesByEmail from "immutable";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -47,6 +48,22 @@ function editAttendee(db, data) {
   );
 }
 
+function addAttendee(db, data) {
+  const id = `hc-${crypto.randomUUID()}`;
+  const attendee = {
+    ...data,
+    timestamp: new Date().toISOString(),
+    slackID: id,
+    slug: id
+  };
+  console.log({ event: "Add new attendee", attendee });
+
+  return db.putItem({
+    TableName: "hc-attendees",
+    Item: attendee,
+  });
+}
+
 /**
  * @param {DynamoDBClient} db
  * @param {*} data
@@ -55,6 +72,8 @@ async function processRequest(db, data) {
   switch (data.command) {
     case "edit":
       return editAttendee(db, data.params);
+    case "add":
+      return addAttendee(db, data.params);
   }
 }
 
