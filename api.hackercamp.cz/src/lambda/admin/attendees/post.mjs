@@ -8,6 +8,7 @@ import {
   readPayload,
   seeOther,
 } from "../../http.mjs";
+import crypto from "crypto";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
