@@ -64,10 +64,13 @@ function addAttendee(db, data) {
   return db.send(
     new PutItemCommand({
       TableName: process.env.db_table_attendees,
-      Item: marshall(attendee, {
-        convertEmptyValues: true,
-        removeUndefinedValues: true,
-      }),
+      Item: marshall(
+        { ...attendee },
+        {
+          convertEmptyValues: true,
+          removeUndefinedValues: true,
+        }
+      ),
     })
   );
 }
