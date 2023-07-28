@@ -8,7 +8,6 @@ import {
   readPayload,
   seeOther,
 } from "../../http.mjs";
-import imagesByEmail from "immutable";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -52,9 +51,8 @@ function addAttendee(db, data) {
   const id = `hc-${crypto.randomUUID()}`;
   const attendee = {
     ...data,
-    timestamp: new Date().toISOString(),
     slackID: id,
-    slug: id
+    slug: id,
   };
   console.log({ event: "Add new attendee", attendee });
 
