@@ -15,7 +15,7 @@ import {
   readPayload,
   seeOther,
 } from "../http.mjs";
-import { postChatMessage } from "../slack.mjs";
+// import { postChatMessage } from "../slack.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
