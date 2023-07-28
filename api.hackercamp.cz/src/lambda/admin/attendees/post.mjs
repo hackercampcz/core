@@ -1,4 +1,8 @@
-import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import {
+  DynamoDBClient,
+  PutItemCommand,
+  UpdateItemCommand,
+} from "@aws-sdk/client-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import {
@@ -57,10 +61,15 @@ function addAttendee(db, data) {
   };
   console.log({ event: "Add new attendee", attendee });
 
-  return db.putItem({
-    TableName: "hc-attendees",
-    Item: attendee,
-  });
+  return db.send(
+    new PutItemCommand({
+      TableName: process.env.db_table_attendees,
+      Item: marshall(attendee, {
+        convertEmptyValues: true,
+        removeUndefinedValues: true,
+      }),
+    })
+  );
 }
 
 /**
