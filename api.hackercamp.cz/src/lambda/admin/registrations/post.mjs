@@ -8,6 +8,7 @@ import { fetchInvoice } from "../../fakturoid.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
+import { getContact } from "../../dynamodb/registrations/paid.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -47,22 +48,39 @@ async function approve(db, { email, year, referral }) {
       UpdateExpression: "SET approved = :approved, approvedBy = :approvedBy",
       ExpressionAttributeValues: marshall({
         ":approved": new Date().toISOString(),
-        ":approvedBy": referral
+        ":approvedBy": referral,
       }),
     })
   );
 }
 
+async function sendVolunteerSlackInvitation(email, postmarkToken) {
+  await sendEmailWithTemplate({
+    token: postmarkToken,
+    from: "Hacker Camp Crew <team@hackercamp.cz>",
+    to: email,
+    templateId: Template.VolunteerSlackInvite,
+    data: {},
+  });
+  console.log({ event: "Volunteer slack invitation sent", email });
+}
+
 async function approveVolunteer(db, { registrations, referral }) {
-  for (const key of registrations) {
+  for (const email of registrations) {
     console.log({
       event: "Marking volunteer registration as paid",
-      ...key,
+      ...email,
     });
+    const contact = await getContact(db, email);
+    if (!contact) {
+      console.log({ event: "No contact found", email });
+      await sendVolunteerSlackInvitation(email, process.env.postmark_token);
+    }
+
     await db.send(
       new UpdateItemCommand({
         TableName: process.env.db_table_registrations,
-        Key: marshall(key, {
+        Key: marshall(email, {
           removeUndefinedValues: true,
           convertEmptyValues: true,
         }),

@@ -17,7 +17,7 @@ const queue = new SQSClient({});
 
 const rollbar = Rollbar.init({ lambdaName: "dynamodb-paid-registrations" });
 
-async function getContact(dynamodb, email) {
+export async function getContact(dynamodb, email) {
   console.log({ event: "Get contact", email });
   const res = await dynamo.send(
     new ScanCommand({
@@ -96,7 +96,10 @@ async function paidRegistrations(event) {
     } else {
       await Promise.all([
         createAttendee(dynamo, contact, record),
-        enqueueSlackWelcomeMessage({ id: contact.slackID, year: parseInt(year) }),
+        enqueueSlackWelcomeMessage({
+          id: contact.slackID,
+          year: parseInt(year),
+        }),
       ]);
     }
   }
