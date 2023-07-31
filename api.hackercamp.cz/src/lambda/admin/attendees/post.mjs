@@ -56,6 +56,7 @@ function addAttendee(db, data) {
   const id = `hc-${crypto.randomUUID()}`;
   const attendee = {
     ...data,
+    year: parseInt(data.year, 10),
     slackID: id,
     slug: id,
   };
