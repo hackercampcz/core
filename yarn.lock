@@ -281,21 +281,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-secrets-manager@npm:3.379.1":
-  version: 3.379.1
-  resolution: "@aws-sdk/client-secrets-manager@npm:3.379.1"
+"@aws-sdk/client-secrets-manager@npm:3.382.0":
+  version: 3.382.0
+  resolution: "@aws-sdk/client-secrets-manager@npm:3.382.0"
   dependencies:
     "@aws-crypto/sha256-browser": 3.0.0
     "@aws-crypto/sha256-js": 3.0.0
-    "@aws-sdk/client-sts": 3.379.1
-    "@aws-sdk/credential-provider-node": 3.379.1
+    "@aws-sdk/client-sts": 3.382.0
+    "@aws-sdk/credential-provider-node": 3.382.0
     "@aws-sdk/middleware-host-header": 3.379.1
     "@aws-sdk/middleware-logger": 3.378.0
     "@aws-sdk/middleware-recursion-detection": 3.378.0
     "@aws-sdk/middleware-signing": 3.379.1
-    "@aws-sdk/middleware-user-agent": 3.379.1
+    "@aws-sdk/middleware-user-agent": 3.382.0
     "@aws-sdk/types": 3.378.0
-    "@aws-sdk/util-endpoints": 3.378.0
+    "@aws-sdk/util-endpoints": 3.382.0
     "@aws-sdk/util-user-agent-browser": 3.378.0
     "@aws-sdk/util-user-agent-node": 3.378.0
     "@smithy/config-resolver": ^2.0.1
@@ -322,7 +322,7 @@ __metadata:
     "@smithy/util-utf8": ^2.0.0
     tslib: ^2.5.0
     uuid: ^8.3.2
-  checksum: c587c1eea5e6f25b3886fcbb9615286a4441c1a77927492f087ea72a913bca002b0edb526e6e32056891771dbf24c1c2490f7b1e3a884f6d67eba4f1cab9671b
+  checksum: fb05350f5c2010fe7a6d8c3c65b0a6e1318250c612840fc3b22e7e44acd2cbd959ef1f1e50af74a4ecdb18a2dcbedcc5fc0ec3e51a772a2474eda2a853f8815b
   languageName: node
   linkType: hard
 
@@ -3282,7 +3282,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-secrets-manager": 3.379.1
+    "@aws-sdk/client-secrets-manager": 3.382.0
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": 14.0.0
