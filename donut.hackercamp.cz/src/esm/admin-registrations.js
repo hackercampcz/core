@@ -663,7 +663,7 @@ export function edit(registration, apiHost) {
   const contact = getContact();
   return executeCommand(apiHost, Endpoint.registrations, "edit", {
     ...registration,
-    editedBy: contact.email,
+    editedBy: contact?.email,
   }).then(() => location.reload());
 }
 

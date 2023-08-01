@@ -20,6 +20,7 @@ import {
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
+import { getContact } from "./lib/profile";
 
 /**
  * @param {Object} attendee
@@ -27,9 +28,11 @@ import "./components/mail-button.js";
  * @returns {Promise<void>}
  */
 export function edit(attendee, apiHost) {
-  return executeCommand(apiHost, Endpoint.attendees, "edit", attendee).then(
-    () => location.reload()
-  );
+  const contact = getContact();
+  return executeCommand(apiHost, Endpoint.attendees, "edit", {
+    ...attendee,
+    editedBy: contact?.email,
+  }).then(() => location.reload());
 }
 
 /**
@@ -193,6 +196,17 @@ export function attendeeDetailTemplate({ detail }) {
       () => html`<p>NFCtron ID: <code>${detail.nfcTronID}</code></p>`
     )}
     ${when(detail.note, () => html`<p>${detail.note}</p>`)}
+    ${when(
+      detail.edited,
+      () => html`
+        <p>
+          Naposledy editováno
+          <strong>${formatDateTime(new Date(detail.edited))}</strong>
+          administrátorem
+          <strong>${detail.editedBy}</strong>
+        </p>
+      `
+    )}
     ${when(
       detail.events?.length,
       () => html`

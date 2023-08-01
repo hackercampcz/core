@@ -33,7 +33,7 @@ function editAttendee(db, data) {
         ])
       ),
       UpdateExpression:
-        "SET #attendeeName = :name, email = :email, note = :note, nfcTronID = :nfcTronID, company = :company, edited = :now",
+        "SET #attendeeName = :name, email = :email, note = :note, nfcTronID = :nfcTronID, company = :company, edited = :now, editedBy = :editedBy",
       ExpressionAttributeValues: marshall(
         {
           ":name": data.name,
@@ -42,6 +42,7 @@ function editAttendee(db, data) {
           ":nfcTronID": data.nfcTronID,
           ":company": data.company,
           ":now": new Date().toISOString(),
+          ":editedBy": data.editedBy,
         },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
