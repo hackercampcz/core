@@ -52,11 +52,18 @@ export async function handler(event) {
     rest = Object.fromEntries(
       Object.entries(rest)
         .map(([k, v]) => [k, v?.trim()])
-        .filter(([k, v]) => Boolean(v))
+        .filter(([, v]) => Boolean(v))
     );
     const isVolunteer = rest.ticketType === "volunteer";
     const id = crypto.randomBytes(20).toString("hex");
-    console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
+    console.log({
+      event: "Put registration",
+      email,
+      year,
+      isNewbee,
+      isVolunteer,
+      ...rest,
+    });
     const editUrl = getEditUrl(isNewbee, id);
 
     await Promise.all([
