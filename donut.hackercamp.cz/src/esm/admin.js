@@ -124,6 +124,12 @@ function invoiceSelected(invoiceId) {
 function approveSelectedVolunteers() {
   const { apiHost, year, selection, contact } = state.deref();
 
+  if (!contact) {
+    return alert(
+      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj."
+    );
+  }
+
   const emails = Array.from(selection);
   return executeCommand(apiHost, Endpoint.registrations, "approveVolunteer", {
     registrations: emails.map((email) => ({ email, year })),
