@@ -3074,7 +3074,7 @@ __metadata:
     "@material/mwc-drawer": 0.27.0
     "@material/mwc-snackbar": 0.27.0
     "@material/web": 1.0.0-pre.14
-    "@thi.ng/atom": 5.2.3
+    "@thi.ng/atom": 5.2.4
     "@thi.ng/transducers": 8.4.7
     "@typescript-eslint/eslint-plugin": 6.2.1
     "@typescript-eslint/parser": 6.2.1
@@ -4738,6 +4738,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@thi.ng/api@npm:^8.9.0":
+  version: 8.9.0
+  resolution: "@thi.ng/api@npm:8.9.0"
+  checksum: 4a4697369118519de258b717c17633fe86e4f14be6215ed4cb640c034ba7ffaa9295440009a042e1da791be6158d9fae8c6345f4820126f689d1d7bf4decc532
+  languageName: node
+  linkType: hard
+
 "@thi.ng/arrays@npm:^2.5.14":
   version: 2.5.14
   resolution: "@thi.ng/arrays@npm:2.5.14"
@@ -4752,16 +4759,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/atom@npm:5.2.3":
-  version: 5.2.3
-  resolution: "@thi.ng/atom@npm:5.2.3"
+"@thi.ng/atom@npm:5.2.4":
+  version: 5.2.4
+  resolution: "@thi.ng/atom@npm:5.2.4"
   dependencies:
-    "@thi.ng/api": ^8.8.2
-    "@thi.ng/equiv": ^2.1.24
-    "@thi.ng/errors": ^2.2.17
-    "@thi.ng/paths": ^5.1.38
-    tslib: ^2.5.3
-  checksum: f32766777e6c0976ba1342fc073447445982ce64ab6989c10d5d2b7c8a4a5dd257c9cf9e3771bf8497e87a9ed178c23d595ff989ca4055edb2a34660e7c14877
+    "@thi.ng/api": ^8.9.0
+    "@thi.ng/equiv": ^2.1.25
+    "@thi.ng/errors": ^2.3.0
+    "@thi.ng/paths": ^5.1.39
+    tslib: ^2.6.1
+  checksum: e84b7d19a404c57e271fe271d655ed5cd02df35b2c7b14a37bede3227408bfb9ab592eb4298f76ab3651775cc61c121862c886222081706044ba3a4468002e4d
   languageName: node
   linkType: hard
 
@@ -4771,6 +4778,15 @@ __metadata:
   dependencies:
     tslib: ^2.5.3
   checksum: 4a3801175ee697813600c296761523f018b479c05ff6fdc03ff6662db6c7acabe2818063e129111857505c4fa0b608cbaf532f2101ea56d9527117b70ab675d5
+  languageName: node
+  linkType: hard
+
+"@thi.ng/checks@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@thi.ng/checks@npm:3.4.0"
+  dependencies:
+    tslib: ^2.6.1
+  checksum: d2933f9137b89be6fcfdd5ad2d6be200c2a0529155da61a76322f20422ed4750112cf0b29aa85f8d35dc0e8ff173359f5c96e52892ead1c7756fbf81f9a4e28d
   languageName: node
   linkType: hard
 
@@ -4800,10 +4816,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@thi.ng/equiv@npm:^2.1.25":
+  version: 2.1.25
+  resolution: "@thi.ng/equiv@npm:2.1.25"
+  checksum: cf14422ddfaa754e2422916e331f6a3f3158f826f70a4562a3e930e69e0a14867b8ccfb38ca64159de0d0e375aa47ccdfa98558bd331cb02085d371391ed7b8b
+  languageName: node
+  linkType: hard
+
 "@thi.ng/errors@npm:^2.2.17":
   version: 2.2.17
   resolution: "@thi.ng/errors@npm:2.2.17"
   checksum: 3ad87cb5d04d811bf69c1caefd2443e8c0327014f028e989fef4ee30c2cce831066487a4773ec078b61298a7d6395a4c3b3dcd1de9d14e56fc03b4fab2142bef
+  languageName: node
+  linkType: hard
+
+"@thi.ng/errors@npm:^2.3.0":
+  version: 2.3.0
+  resolution: "@thi.ng/errors@npm:2.3.0"
+  checksum: 8a2fdbbbdf00e017a59a33ac719e5f60626745bb4ebce47680d0348cf9c8b54cade6bcc2c3d938fc4a3a7df683f1f73f6098b72781570a7ecb612d840714d8ae
   languageName: node
   linkType: hard
 
@@ -4823,14 +4853,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/paths@npm:^5.1.38":
-  version: 5.1.38
-  resolution: "@thi.ng/paths@npm:5.1.38"
+"@thi.ng/paths@npm:^5.1.39":
+  version: 5.1.39
+  resolution: "@thi.ng/paths@npm:5.1.39"
   dependencies:
-    "@thi.ng/api": ^8.8.2
-    "@thi.ng/checks": ^3.3.14
-    "@thi.ng/errors": ^2.2.17
-  checksum: c0a9ee506baad6d0bf2d5bebabe762c98d3d2211397e7f8cce826b918ff8fd61098c452ed4a053cfa6800426957596f386638c5bf55b6360107be50dada55d0f
+    "@thi.ng/api": ^8.9.0
+    "@thi.ng/checks": ^3.4.0
+    "@thi.ng/errors": ^2.3.0
+  checksum: 824107cd43ca323a7e26250e0ade01321db42b9ceea3fd1feee00f1a58c352d667edfcb6c9557786b6dee89b4518dd7580f8ef966e5da9120bd44de0fbed659c
   languageName: node
   linkType: hard
 
@@ -15840,6 +15870,13 @@ __metadata:
   version: 2.6.0
   resolution: "tslib@npm:2.6.0"
   checksum: c01066038f950016a18106ddeca4649b4d76caa76ec5a31e2a26e10586a59fceb4ee45e96719bf6c715648e7c14085a81fee5c62f7e9ebee68e77a5396e5538f
+  languageName: node
+  linkType: hard
+
+"tslib@npm:^2.6.1":
+  version: 2.6.1
+  resolution: "tslib@npm:2.6.1"
+  checksum: b0d176d176487905b66ae4d5856647df50e37beea7571c53b8d10ba9222c074b81f1410fb91da13debaf2cbc970663609068bdebafa844ea9d69b146527c38fe
   languageName: node
   linkType: hard
 
