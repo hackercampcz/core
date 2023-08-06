@@ -38,7 +38,7 @@ async function optout(db, { email, year }) {
 
 async function approve(db, { email, year, referral }) {
   console.log({ event: "Approving registration", email, year, referral });
-  return db.send(
+  await db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_registrations,
       Key: marshall(
@@ -52,6 +52,13 @@ async function approve(db, { email, year, referral }) {
       }),
     })
   );
+  return sendEmailWithTemplate({
+    token: process.env.postmark_token,
+    templateId: Template.RegistrationApproved,
+    data: {},
+    from: "Hacker Camp Crew <team@hackercamp.cz>",
+    to: data.params.email,
+  });
 }
 
 async function sendVolunteerSlackInvitation(email, postmarkToken) {
@@ -66,21 +73,24 @@ async function sendVolunteerSlackInvitation(email, postmarkToken) {
 }
 
 async function approveVolunteer(db, { registrations, referral }) {
-  for (const email of registrations) {
+  for (const registration of registrations) {
     console.log({
       event: "Marking volunteer registration as paid",
-      ...email,
+      ...registration,
     });
-    const contact = await getContact(db, email);
+    const contact = await getContact(db, registration.email);
     if (!contact) {
-      console.log({ event: "No contact found", email });
-      await sendVolunteerSlackInvitation(email, process.env.postmark_token);
+      console.log({ event: "No contact found", email: registration.email });
+      await sendVolunteerSlackInvitation(
+        registration.email,
+        process.env.postmark_token
+      );
     }
 
     await db.send(
       new UpdateItemCommand({
         TableName: process.env.db_table_registrations,
-        Key: marshall(email, {
+        Key: marshall(registration, {
           removeUndefinedValues: true,
           convertEmptyValues: true,
         }),
@@ -181,13 +191,6 @@ async function processRequest(db, data) {
       break;
     case "approve":
       await approve(db, data.params);
-      await sendEmailWithTemplate({
-        token: process.env.postmark_token,
-        templateId: Template.RegistrationApproved,
-        data: {},
-        from: "Hacker Camp Crew <team@hackercamp.cz>",
-        to: data.params.email,
-      });
       break;
     case "approveVolunteer":
       await approveVolunteer(db, data.params);
