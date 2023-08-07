@@ -141,9 +141,10 @@ function updateAttendee(attendee, user) {
       TableName: "hc-attendees",
       Item: marshall(
         Object.assign({}, attendee, {
-          name: user.profile.real_name || attendee.name,
+          email: user.profile.email ?? attendee.email,
+          name: user.profile.real_name ?? attendee.name,
           image: user.profile.image_512,
-          company: user.profile?.fields?.Xf03A7A5815F?.alt || attendee.company,
+          company: user.profile?.fields?.Xf03A7A5815F?.alt ?? attendee.company,
         }),
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
@@ -158,9 +159,10 @@ function updateContact(contact, user) {
       TableName: "hc-contacts",
       Item: marshall(
         Object.assign({}, contact, {
-          name: user.profile.real_name || contact.name,
+          email: user.profile.email ?? contact.email,
+          name: user.profile.real_name ?? contact.name,
           image: user.profile.image_512,
-          company: user.profile?.fields?.Xf03A7A5815F?.alt || contact.company,
+          company: user.profile?.fields?.Xf03A7A5815F?.alt ?? contact.company,
         }),
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
