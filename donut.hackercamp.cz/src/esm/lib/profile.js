@@ -1,9 +1,14 @@
-export function signIn({
-  idToken,
-  slackProfile,
-  slackToken,
-  slackAccessToken,
-}) {
+import { getContact as getContactFromDb } from "../index";
+export async function signIn(
+  { idToken, slackProfile, slackToken, slackAccessToken },
+  apiURL
+) {
+  const contact = await getContactFromDb(
+    slackProfile.id,
+    slackProfile.email,
+    apiURL
+  );
+  setContact(contact);
   localStorage.setItem("hc:id_token", idToken);
   localStorage.setItem("slack:id_token", slackToken);
   localStorage.setItem("slack:access_token", slackAccessToken);

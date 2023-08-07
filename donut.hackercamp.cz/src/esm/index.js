@@ -83,7 +83,7 @@ async function authenticate({ searchParams, apiURL }) {
   });
   if (resp.ok) {
     const data = await resp.json();
-    if (data.ok) return signIn(data);
+    if (data.ok) return signIn(data, apiURL);
   }
   const data = await resp.text();
   throw new Error("Authentication error", { cause: data });
@@ -107,7 +107,7 @@ async function setDonutProfileUrl(user, token, slug) {
   // }
 }
 
-async function getContact(slackID, email, apiUrl) {
+export async function getContact(slackID, email, apiUrl) {
   const params = new URLSearchParams({ slackID, email });
   const resp = await withAuthHandler(
     fetch(apiUrl(`contacts?${params}`), {
