@@ -4,11 +4,11 @@ import { html } from "lit-html";
 import { when } from "lit-html/directives/when.js";
 import { renderEventForm } from "./event-form.js";
 import {
+  getContact,
   getSlackAccessToken,
   getSlackProfile,
   handleReturnUrl,
   isSignedIn,
-  setContact,
   setReturnUrl,
   signIn,
   signOut,
@@ -105,25 +105,6 @@ async function setDonutProfileUrl(user, token, slug) {
   //   });
   //   console.log("Company set");
   // }
-}
-
-export async function getContact(slackID, email, apiUrl) {
-  const params = new URLSearchParams({ slackID, email });
-  const resp = await withAuthHandler(
-    fetch(apiUrl(`contacts?${params}`), {
-      credentials: "include",
-    }),
-    {
-      onUnauthenticated() {
-        setReturnUrl(location.href);
-        return new Promise((resolve, reject) => {
-          signOut(apiUrl);
-          reject({ unauthenticated: true });
-        });
-      },
-    }
-  );
-  return resp.json();
 }
 
 async function getRegistration(slackID, email, year, apiUrl) {
@@ -522,16 +503,15 @@ function renderIndex({ profile, attendee, selectedView }) {
 }
 
 async function loadData(profile, year, apiURL) {
-  const [contact, registration, attendee, program] = await Promise.all([
-    getContact(profile.sub, profile.email, apiURL),
+  const [registration, attendee, program] = await Promise.all([
     getRegistration(profile.sub, profile.email, year, apiURL),
     getAttendee(profile.sub, year, apiURL),
     getProgram(year, apiURL),
   ]);
+  const contact = getContact();
   transact((x) =>
     Object.assign(x, { profile, contact, registration, attendee, program })
   );
-  setContact(contact);
   try {
     await setDonutProfileUrl(profile.sub, getSlackAccessToken(), contact.slug);
   } catch (err) {

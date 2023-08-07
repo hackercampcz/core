@@ -1,4 +1,4 @@
-import { getContact as getContactFromDb } from "../index";
+import { withAuthHandler } from "./remoting";
 export async function signIn(
   { idToken, slackProfile, slackToken, slackAccessToken },
   apiURL
@@ -24,6 +24,25 @@ export function signOut(apiURL) {
   localStorage.removeItem("slack:access_token");
   localStorage.removeItem("slack:profile");
   location.assign(apiURL("auth/sign-out"));
+}
+
+async function getContactFromDb(slackID, email, apiUrl) {
+  const params = new URLSearchParams({ slackID, email });
+  const resp = await withAuthHandler(
+    fetch(apiUrl(`contacts?${params}`), {
+      credentials: "include",
+    }),
+    {
+      onUnauthenticated() {
+        setReturnUrl(location.href);
+        return new Promise((resolve, reject) => {
+          signOut(apiUrl);
+          reject({ unauthenticated: true });
+        });
+      },
+    }
+  );
+  return resp.json();
 }
 
 export function getContact() {
