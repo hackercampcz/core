@@ -8,7 +8,7 @@ async function main({}) {
   const now = new Date().toISOString();
   const data = JSON.parse(text).map((x) =>
     Object.assign(x, {
-      year: 2022,
+      year: 2023,
       _id: crypto.randomUUID(),
       approved: now,
       approvedBy: "U0202S9SB1T",

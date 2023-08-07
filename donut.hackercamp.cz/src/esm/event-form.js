@@ -8,7 +8,7 @@ import * as rollbar from "./lib/rollbar.js";
 
 export const state = defAtom({
   view: signpostTemplate,
-  year: 2022,
+  year: 2023,
   apiHost: "",
   profile: {},
 });
@@ -79,7 +79,7 @@ const lineupHeadersTemplates = new Map([
   ],
 ]);
 
-const lineupsFiledsTemplates = new Map([
+const lineupsFieldsTemplates = new Map([
   ["", html`<em>nah.</em>`, ""],
   [
     "limain",
@@ -458,9 +458,9 @@ const lineupsFiledsTemplates = new Map([
       html`<em>copy of liother</em>`,
   ],
 ]);
-lineupsFiledsTemplates.set("lijungle", lineupsFiledsTemplates.get("liwood"));
-lineupsFiledsTemplates.set("libase", lineupsFiledsTemplates.get("limain"));
-lineupsFiledsTemplates.set("liorg", lineupsFiledsTemplates.get("liother"));
+lineupsFieldsTemplates.set("lijungle", lineupsFieldsTemplates.get("liwood"));
+lineupsFieldsTemplates.set("libase", lineupsFieldsTemplates.get("limain"));
+lineupsFieldsTemplates.set("liorg", lineupsFieldsTemplates.get("liother"));
 
 function showLineupEventForm(lineupId) {
   transact((x) =>
@@ -571,7 +571,7 @@ export function eventFormTemplate({
   onEventSubmit = () => {},
 }) {
   const headHtml = header ?? lineupHeadersTemplates.get(lineupId);
-  const fieldsHtml = lineupsFiledsTemplates.get(lineupId)({
+  const fieldsHtml = lineupsFieldsTemplates.get(lineupId)({
     campStartAt,
     campEndAt,
     preferredTime,
@@ -605,6 +605,7 @@ export function eventFormTemplate({
 export async function renderEventForm(
   rootElement,
   {
+    year,
     apiHost,
     profile,
     lineupId,
@@ -641,8 +642,9 @@ export async function renderEventForm(
 
   if (hijackHacker) {
     try {
-      const params = new URLSearchParams({ year: 2022 });
+      const params = new URLSearchParams({ year });
       const response = await withAuthHandler(
+        // TODO: read it from attendees instead
         fetch(new URL(`housing?${params}`, apiHost).href, {
           headers: { Accept: "application/json" },
           credentials: "include",

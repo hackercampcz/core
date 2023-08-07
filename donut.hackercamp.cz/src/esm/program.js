@@ -44,6 +44,10 @@ const state = defAtom({
  */
 const transact = (fn, atom = state) => atom.swap(fn);
 
+// export for dev experience
+globalThis.transact = transact;
+globalThis.getState = () => state.deref();
+
 function makeTimeline(startAt, endAt, minutes = SLOT_MINUTES) {
   const times = [];
   const diff = endAt.getTime() - startAt.getTime();
@@ -101,24 +105,25 @@ function formatEventTimeInfo(event) {
     <strong>${formatTime(event.endAt)}</strong>.`;
 }
 
-function getSlotWidth() {
-  const scrollElement = document.getElementById("lineups");
-  return scrollElement.querySelector(".lineup__slot").offsetWidth;
+function getSlotWidth(scrollElement) {
+  const slot = scrollElement.querySelector(".lineup__slot");
+  return slot.offsetWidth;
 }
 
-function scrollToDate(date) {
+function scrollToDate(scrollElement, date) {
   const { campStartAt } = state.deref();
-  const scrollElement = document.getElementById("lineups");
-  const time = (date - campStartAt) / 1000 / 60 / SLOT_MINUTES;
-  const left = time * getSlotWidth();
-  scrollElement.scrollLeft = left;
+  const diff = date - campStartAt;
+  if (diff < 0) return;
+  const time = diff / 1000 / 60 / SLOT_MINUTES;
+  scrollElement.scrollLeft = time * getSlotWidth(scrollElement);
 }
 
 function handleLineupsScroll(event) {
+  const scrollElement = document.getElementById("lineups");
   const { campStartAt } = state.deref();
   const visibleDate = new Date(campStartAt.getTime());
   const minutesScrolledOut =
-    (event.target.scrollLeft / getSlotWidth()) * SLOT_MINUTES;
+    (event.target.scrollLeft / getSlotWidth(scrollElement)) * SLOT_MINUTES;
 
   visibleDate.setMinutes(campStartAt.getMinutes() + minutesScrolledOut);
   location.hash = `#${visibleDate.toISOString()}`;
@@ -590,7 +595,7 @@ function renderProgram({
       }
 
       .program__beside {
-        box-size: border-box;
+        box-sizing: border-box;
         padding: calc(var(--spacing));
       }
 
@@ -637,7 +642,6 @@ function renderProgram({
         background-image: var(--hc-gradient-btn);
         background-size: 200% 100%;
         padding: 2px;
-        border-radius: 50%;
         color: var(--hc-background-color);
       }
       figure.speaker.speaker--add {
@@ -652,7 +656,6 @@ function renderProgram({
         background-image: var(--hc-gradient-btn);
         background-size: 200% 100%;
         padding: 2px;
-        border-radius: 50%;
         color: var(--hc-background-color);
       }
       figure.speaker.speaker--full {
@@ -695,9 +698,10 @@ function renderProgram({
                 })}
                 href="#${day.toISOString()}"
                 @click=${() => {
+                  const scrollElement = document.getElementById("lineups");
                   const date = new Date(day);
                   date.setHours(DAY_START_HOUR);
-                  scrollToDate(date);
+                  scrollToDate(scrollElement, date);
                 }}
               >
                 ${formatLongDayName(day)}
@@ -819,7 +823,8 @@ async function fetchLineups(apiHost) {
   const { year } = state.deref();
   const params = new URLSearchParams({ year });
   // TODO: move to DB/API
-  const resp = await fetch(`/program/lineups.json?${params}`, {
+  const url = `/program/lineups.json?${params}`;
+  const resp = await fetch(url, {
     headers: { Accept: "application/json" },
     credentials: "include",
   });
@@ -886,8 +891,7 @@ export async function main({ rootElement, env }) {
     )
   );
 
-  // TODO: check this code; seems it uses nonexistent state props
-  const { startAt, endAt } = state.deref();
+  const { campStartAt: startAt, campEndAt: endAt } = state.deref();
   const ticks = (endAt - startAt) / 1000 / 60 / 15;
   transact((x) =>
     Object.assign(x, {
@@ -924,12 +928,13 @@ export async function main({ rootElement, env }) {
   );
 
   requestAnimationFrame(() => {
-    const param = location.hash.replace(/^#/, "");
+    const param = location.hash.substring(1);
 
+    const scrollElement = document.getElementById("lineups");
     if (isISODateTime(param)) {
-      scrollToDate(new Date(param));
+      scrollToDate(scrollElement, new Date(param));
     } else {
-      scrollToDate(new Date());
+      scrollToDate(scrollElement, new Date());
     }
   });
 }

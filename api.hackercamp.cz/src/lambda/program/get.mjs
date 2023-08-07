@@ -18,9 +18,9 @@ async function getProgram(dynamo, year) {
   const result = await dynamo.send(
     new ScanCommand({
       TableName: process.env.db_table_program,
-      FilterExpression: "#y = :y AND attribute_exists(approved)",
-      ExpressionAttributeNames: { "#y": "year" },
-      ExpressionAttributeValues: marshall({ ":y": year }),
+      FilterExpression: "#year = :year AND attribute_exists(approved)",
+      ExpressionAttributeNames: { "#year": "year" },
+      ExpressionAttributeValues: marshall({ ":year": year }),
     })
   );
   return result.Items.map((x) => unmarshall(x));

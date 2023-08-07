@@ -92,7 +92,7 @@ function programTable(data) {
               >
                 ${row.title}
               </td>
-              <td>${row.people?.[0].name}</td>
+              <td>${row.people?.[0]?.name}</td>
               <td>${when(row.topic, () => html`<code>${row.topic}</code>`)}</td>
               <td>${row.type}</td>
               <td>${lineup(row.lineup)}</td>

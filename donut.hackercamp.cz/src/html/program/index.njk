@@ -33,7 +33,7 @@
 
 {% block javascript %}
 <script type="module">
-  import { main } from "/assets/esm/program.js?2";
+  import { main } from "/assets/esm/program.js?2023.1";
 
   const build = {{ build | dump(8) | safe }};
   const env = Object.assign({ year: {{ year }} }, build);
