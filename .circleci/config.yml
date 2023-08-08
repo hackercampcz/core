@@ -97,6 +97,7 @@ commands:
       - read_deployment_envs:
           stack_name: << parameters.stack_name >>
           site_name: << parameters.site_name >>
+      - aws-cli/setup
       - aws-s3/sync:
           from: << parameters.distribution_folder >>/<< parameters.site_name >>
           to: << parameters.s3_bucket_uri >>
