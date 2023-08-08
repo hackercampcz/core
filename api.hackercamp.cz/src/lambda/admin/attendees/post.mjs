@@ -21,8 +21,12 @@ import crypto from "crypto";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
+/**
+ * @param {DynamoDBClient} db
+ * @param {*} data
+ */
 function editAttendee(db, data) {
-  console.log({ event: "Save attendee", data });
+  console.log({ event: "Update attendee", data });
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_attendees,
@@ -53,6 +57,10 @@ function editAttendee(db, data) {
   );
 }
 
+/**
+ * @param {DynamoDBClient} db
+ * @param {*} data
+ */
 function addAttendee(db, data) {
   const id = `hc-${crypto.randomUUID()}`;
   const attendee = {
@@ -61,7 +69,7 @@ function addAttendee(db, data) {
     slackID: id,
     slug: id,
   };
-  console.log({ event: "Add new attendee", attendee });
+  console.log({ event: "Put attendee", attendee });
 
   return db.send(
     new PutItemCommand({

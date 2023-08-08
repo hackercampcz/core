@@ -1,4 +1,5 @@
 import {
+  DeleteItemCommand,
   DynamoDBClient,
   PutItemCommand,
   UpdateItemCommand,
@@ -27,6 +28,44 @@ async function optout(db, { email, year }) {
       TableName: process.env.db_table_optouts,
       Item: marshall(
         { email, year },
+        {
+          convertEmptyValues: true,
+          removeUndefinedValues: true,
+        }
+      ),
+    })
+  );
+}
+
+/**
+ * @param {DynamoDBClient} db
+ * @param {{email: string, year: number}} data
+ */
+async function deleteRegistration(db, { email, year }) {
+  console.log({ event: "Delete registration", email, year });
+  return db.send(
+    new DeleteItemCommand({
+      TableName: process.env.db_table_registrations,
+      Key: marshall(
+        { email, year },
+        { convertEmptyValues: true, removeUndefinedValues: true }
+      ),
+    })
+  );
+}
+
+/**
+ * @param {DynamoDBClient} db
+ * @param {*} data
+ */
+function addRegistration(db, data) {
+  console.log({ event: "Put registration", data });
+
+  return db.send(
+    new PutItemCommand({
+      TableName: process.env.db_table_registrations,
+      Item: marshall(
+        { ...data },
         {
           convertEmptyValues: true,
           removeUndefinedValues: true,
@@ -136,7 +175,7 @@ async function invoiced(db, { registrations, invoiceId }) {
 }
 
 async function editRegistration(db, data) {
-  console.log({ event: "Save registration", data });
+  console.log({ event: "Update registration", data });
 
   return db.send(
     new UpdateItemCommand({
@@ -200,6 +239,12 @@ async function processRequest(db, data) {
       break;
     case "edit":
       await editRegistration(db, data.params);
+      break;
+    case "delete":
+      await deleteRegistration(db, data.params);
+      break;
+    case "add":
+      await addRegistration(db, data.params);
       break;
   }
 }
