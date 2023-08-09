@@ -174,8 +174,8 @@ async function invoiced(db, { registrations, invoiceId }) {
   }
 }
 
-async function editRegistration(db, data) {
-  console.log({ event: "Update registration", data });
+async function editRegistration(db, { key, data }) {
+  console.log({ event: "Update registration", key, data });
 
   return db.send(
     new UpdateItemCommand({
@@ -194,24 +194,23 @@ async function editRegistration(db, data) {
         {
           ":firstName": data.firstName,
           ":lastName": data.lastName,
-          //":email": data.email,
           ":company": data.company,
           ":now": new Date().toISOString(),
           ":editedBy": data.editedBy,
           ":ticketType": data.ticketType,
           ":phone": data.phone,
-          ":paid": data.paid ?? null,
+          ":paid": data.paid ?? undefined,
           ":invRecipient": data.invRecipientEmail ? 1 : 0,
-          ":invRecipientEmail": data.invRecipientEmail ?? null,
-          ":invRecipientPhone": data.invRecipientPhone ?? null,
-          ":invRecipientFirstname": data.invRecipientFirstname ?? null,
-          ":invRecipientLastname": data.invRecipientLastname ?? null,
-          ":invName": data.invName ?? null,
-          ":invAddress": data.invAddress ?? null,
-          ":invRegNo": data.invRegNo ?? null,
-          ":invVatNo": data.invVatNo ?? null,
-          ":invText": data.invText ?? null,
-          ":invEmail": data.invEmail ?? null,
+          ":invRecipientEmail": data.invRecipientEmail ?? undefined,
+          ":invRecipientPhone": data.invRecipientPhone ?? undefined,
+          ":invRecipientFirstname": data.invRecipientFirstname ?? undefined,
+          ":invRecipientLastname": data.invRecipientLastname ?? undefined,
+          ":invName": data.invName ?? undefined,
+          ":invAddress": data.invAddress ?? undefined,
+          ":invRegNo": data.invRegNo ?? undefined,
+          ":invVatNo": data.invVatNo ?? undefined,
+          ":invText": data.invText ?? undefined,
+          ":invEmail": data.invEmail ?? undefined,
         },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
