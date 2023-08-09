@@ -199,7 +199,7 @@ async function editRegistration(db, { key, data }) {
           ":editedBy": data.editedBy,
           ":ticketType": data.ticketType,
           ":phone": data.phone,
-          ":paid": data.paid,
+          ":paid": data.paid ?? null,
           ":invRecipient": data.invRecipientEmail ? 1 : 0,
           ":invRecipientEmail": data.invRecipientEmail,
           ":invRecipientPhone": data.invRecipientPhone,
