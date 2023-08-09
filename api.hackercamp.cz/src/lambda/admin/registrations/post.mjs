@@ -175,9 +175,8 @@ async function invoiced(db, { registrations, invoiceId }) {
 }
 
 async function editRegistration(db, { key, data }) {
-  if (key.email === data.email) {
-    console.log({ event: "Update registration", key, data });
-
+  console.log({ event: "Update registration", key, data });
+  if (key.email === data.email)
     return db.send(
       new UpdateItemCommand({
         TableName: process.env.db_table_registrations,
@@ -212,9 +211,13 @@ async function editRegistration(db, { key, data }) {
         ),
       })
     );
-  }
 
-  console.log({ event: "Update registration with new email", data });
+  console.log({
+    event:
+      "Update registration with new email - deleting old item and adding new one",
+    key,
+    data,
+  });
   return db.send(
     new TransactWriteItemsCommand({
       TransactItems: [
