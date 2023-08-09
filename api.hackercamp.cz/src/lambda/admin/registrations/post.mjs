@@ -2,13 +2,13 @@ import {
   DeleteItemCommand,
   DynamoDBClient,
   PutItemCommand,
+  TransactWriteItemsCommand,
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import { fetchInvoice } from "../../fakturoid.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
-import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { getContact } from "../../dynamodb/registrations/paid.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -175,45 +175,69 @@ async function invoiced(db, { registrations, invoiceId }) {
 }
 
 async function editRegistration(db, { key, data }) {
-  console.log({ event: "Update registration", key, data });
+  if (key.email === data.email) {
+    console.log({ event: "Update registration", key, data });
 
+    return db.send(
+      new UpdateItemCommand({
+        TableName: process.env.db_table_registrations,
+        Key: marshall(key),
+        UpdateExpression:
+          "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid," +
+          "invRecipient = :invRecipient, invRecipientEmail = :invRecipientEmail, invRecipientPhone = :invRecipientPhone, invRecipientFirstname = :invRecipientFirstname, invRecipientLastname =:invRecipientLastname," +
+          "invName = :invName, invAddress = :invAddress, invRegNo = :invRegNo, invVatNo = :invVatNo, invText =:invText, invEmail =:invEmail",
+        ExpressionAttributeValues: marshall(
+          {
+            ":firstName": data.firstName,
+            ":lastName": data.lastName,
+            ":company": data.company,
+            ":now": new Date().toISOString(),
+            ":editedBy": data.editedBy,
+            ":ticketType": data.ticketType,
+            ":phone": data.phone,
+            ":paid": data.paid ?? null,
+            ":invRecipient": data.invRecipientEmail ? 1 : 0,
+            ":invRecipientEmail": data.invRecipientEmail,
+            ":invRecipientPhone": data.invRecipientPhone,
+            ":invRecipientFirstname": data.invRecipientFirstname,
+            ":invRecipientLastname": data.invRecipientLastname,
+            ":invName": data.invName,
+            ":invAddress": data.invAddress,
+            ":invRegNo": data.invRegNo,
+            ":invVatNo": data.invVatNo,
+            ":invText": data.invText,
+            ":invEmail": data.invEmail,
+          },
+          { removeUndefinedValues: true, convertEmptyValues: true }
+        ),
+      })
+    );
+  }
+
+  console.log({ event: "Update registration with new email", data });
   return db.send(
-    new UpdateItemCommand({
-      TableName: process.env.db_table_registrations,
-      Key: marshall(
-        selectKeys(data, new Set(["email", "year"]), ([k, v]) => [
-          k,
-          k === "year" ? parseInt(v, 10) : v,
-        ])
-      ),
-      UpdateExpression:
-        "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid," +
-        "invRecipient = :invRecipient, invRecipientEmail = :invRecipientEmail, invRecipientPhone = :invRecipientPhone, invRecipientFirstname = :invRecipientFirstname, invRecipientLastname =:invRecipientLastname," +
-        "invName = :invName, invAddress = :invAddress, invRegNo = :invRegNo, invVatNo = :invVatNo, invText =:invText, invEmail =:invEmail",
-      ExpressionAttributeValues: marshall(
+    new TransactWriteItemsCommand({
+      TransactItems: [
         {
-          ":firstName": data.firstName,
-          ":lastName": data.lastName,
-          ":company": data.company,
-          ":now": new Date().toISOString(),
-          ":editedBy": data.editedBy,
-          ":ticketType": data.ticketType,
-          ":phone": data.phone,
-          ":paid": data.paid ?? null,
-          ":invRecipient": data.invRecipientEmail ? 1 : 0,
-          ":invRecipientEmail": data.invRecipientEmail,
-          ":invRecipientPhone": data.invRecipientPhone,
-          ":invRecipientFirstname": data.invRecipientFirstname,
-          ":invRecipientLastname": data.invRecipientLastname,
-          ":invName": data.invName,
-          ":invAddress": data.invAddress,
-          ":invRegNo": data.invRegNo,
-          ":invVatNo": data.invVatNo,
-          ":invText": data.invText,
-          ":invEmail": data.invEmail,
+          Put: {
+            Item: marshall(
+              { ...data, year: key.year },
+              {
+                convertEmptyValues: true,
+                removeUndefinedValues: true,
+              }
+            ),
+            TableName: process.env.db_table_registrations,
+          },
+          Delete: {
+            TableName: process.env.db_table_registrations,
+            Key: marshall(key, {
+              convertEmptyValues: true,
+              removeUndefinedValues: true,
+            }),
+          },
         },
-        { removeUndefinedValues: true, convertEmptyValues: true }
-      ),
+      ],
     })
   );
 }
