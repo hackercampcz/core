@@ -655,16 +655,14 @@ export function registrationsTemplate(state) {
 }
 
 /**
- * @param {Object} registration
+ * @param {Object} payload
  * @param {string} apiHost
  * @returns {Promise<void>}
  */
-export function edit(registration, apiHost) {
-  const contact = getContact();
-  return executeCommand(apiHost, Endpoint.registrations, "edit", {
-    ...registration,
-    editedBy: contact?.email,
-  }).then(() => location.reload());
+export function edit(payload, apiHost) {
+  return executeCommand(apiHost, Endpoint.registrations, "edit", payload).then(
+    () => location.reload()
+  );
 }
 
 registerDialog("registration-modal", registrationModalDialog);
@@ -673,10 +671,14 @@ function registrationModalDialog({ detail, apiHost }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
+    const contact = getContact();
     await edit(
       {
         key: { email: detail.email, year: detail.year },
-        data: Object.fromEntries(form.entries()),
+        data: {
+          ...Object.fromEntries(form.entries()),
+          editedBy: contact?.email,
+        },
       },
       apiHost
     );
