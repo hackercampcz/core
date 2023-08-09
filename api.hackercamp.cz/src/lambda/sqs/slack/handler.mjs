@@ -10,12 +10,10 @@ import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { postChatMessage, sendMessageToSlack } from "../../slack.mjs";
 import Rollbar from "../../rollbar.mjs";
-import { SQSClient } from "@aws-sdk/client-sqs";
 
 /** @typedef {import("aws-lambda").SQSEvent} SQSEvent */
 
 const db = new DynamoDBClient({});
-const queue = new SQSClient({});
 const rollbar = Rollbar.init({ lambdaName: "sqs-slack" });
 
 async function getAttendee(slackID, year) {
