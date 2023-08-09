@@ -673,7 +673,13 @@ function registrationModalDialog({ detail, apiHost }) {
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    await edit(Object.fromEntries(form.entries()), apiHost);
+    await edit(
+      {
+        key: { email: detail.email, year: detail.year },
+        data: Object.fromEntries(form.entries()),
+      },
+      apiHost
+    );
   };
   return html`
     <form method="post" @submit="${onSubmit}">
@@ -706,7 +712,6 @@ function registrationModalDialog({ detail, apiHost }) {
             name="email"
             value="${detail.email}"
             type="email"
-            readonly
             required
           />
         </div>
