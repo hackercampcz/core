@@ -229,6 +229,8 @@ async function editRegistration(db, { key, data }) {
             ),
             TableName: process.env.db_table_registrations,
           },
+        },
+        {
           Delete: {
             TableName: process.env.db_table_registrations,
             Key: marshall(key, {
