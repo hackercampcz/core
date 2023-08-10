@@ -12,6 +12,6 @@
     "@topmonks/pulumi-aws": "3.0.0",
     "esbuild": "0.18.20",
     "front-matter": "4.0.2",
-    "marked": "7.0.1"
+    "marked": "7.0.2"
   }
 }
