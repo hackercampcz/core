@@ -105,11 +105,11 @@ export function attendeesChips(
         </span>
       </div>
       <div>
-        <md-standard-icon-button
+        <md-icon-button
           title="Přidat účastníka"
           @click="${renderModalDialog("add-attendee-modal")}"
         >
-          <md-icon>person_add</md-icon></md-standard-icon-button
+          <md-icon>person_add</md-icon></md-icon-button
         >
       </div>
     </div>
@@ -138,6 +138,7 @@ export function attendeesTableTemplate(data) {
                 <md-checkbox
                   aria-label="vybrat"
                   value="${row.slackID}"
+                  touch-target="wrapper"
                   @click="${(e) => e.stopPropagation()}"
                 ></md-checkbox>
               </td>
@@ -163,23 +164,23 @@ export function attendeeDetailTemplate({ detail }) {
   return html`
     <div class="hc-card hc-master-detail__detail"">
     <div style="display: flex; align-items: center; gap: 12px;">
-      <md-standard-icon-button
+      <md-icon-button
         aria-label="Zavřít detail"
         title="Zavřít detail"
         @click="${closeDetail()}">
         <md-icon>arrow_back</md-icon>
-      </md-standard-icon-button>
+      </md-icon-button>
       <h2 style="margin: 0">${detail.name}</h2>
       ${ticketBadge.get(detail.ticketType)}</div>
     <p>${detail.company}</p>
     <div class="hc-detail__tools">
       <hc-mail-button email="${detail.email}"></hc-mail-button
-      ><md-standard-icon-button
+      ><md-icon-button
         title="Upravit účastníka"
         @click="${renderModalDialog("edit-attendee-modal")}"
       >
       <md-icon>edit</md-icon>
-    </md-standard-icon-button>
+    </md-icon-button>
     </div>
     ${ticketDetail(detail)}
     <p>Ubytování: <strong>${

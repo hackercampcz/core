@@ -133,10 +133,10 @@
 {% block content %}
   <mwc-drawer id="drawer" type="dismissible" style="margin-top: 2em">
     <md-list>
-      <md-list-item-link href="/admin/?view=confirmed" headline="Registrace"></md-list-item-link>
-      <md-list-item-link href="/admin/?view=attendees" headline="Účastníci"></md-list-item-link>
-      <md-list-item-link href="/admin/?view=program" headline="Program"></md-list-item-link>
-      <md-list-item-link href="/admin/?view=housing" headline="Ubytování"></md-list-item-link>
+      <md-list-item href="/admin/?view=confirmed" headline="Registrace"></md-list-item>
+      <md-list-item href="/admin/?view=attendees" headline="Účastníci"></md-list-item>
+      <md-list-item href="/admin/?view=program" headline="Program"></md-list-item>
+      <md-list-item href="/admin/?view=housing" headline="Ubytování"></md-list-item>
     </md-list>
     <div class="mdc-layout-grid" slot="appContent">
       <div id="app-root" class="mdc-layout-grid__inner">
@@ -144,12 +144,12 @@
           class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
           style="display:flex; align-items: center; gap: 1em"
         >
-          <md-standard-icon-button
+          <md-icon-button
             slot="navigationIcon"
             id="drawer-button"
           >
             <md-icon>menu</md-icon>
-          </md-standard-icon-button>
+          </md-icon-button>
           <h2 id="view-title">
             <span>Administrace</span>,
             <label>ročník
@@ -164,9 +164,9 @@
       </div>
       <dialog id="modal" class="hc-dialog">
         <div id="modal-root"></div>
-        <md-standard-icon-button data-action="close">
+        <md-icon-button data-action="close">
           <md-icon>close</md-icon>
-        </md-standard-icon-button>
+        </md-icon-button>
       </dialog>
     </div>
   </mwc-drawer>

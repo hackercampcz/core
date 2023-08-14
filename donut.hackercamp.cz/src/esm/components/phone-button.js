@@ -1,4 +1,4 @@
-import "@material/web/iconbutton/standard-icon-button.js";
+import "@material/web/iconbutton/icon-button.js";
 import "@material/web/icon/icon.js";
 import { html, LitElement } from "lit";
 
@@ -16,12 +16,12 @@ export class PhoneButton extends LitElement {
   };
   render() {
     if (!this.phone) return null;
-    return html`<md-standard-icon-button
+    return html`<md-icon-button
       href="tel:${getInternationalPhoneFormat(this.phone)}"
       title="Zavolat ${this.phone}"
     >
       <md-icon>call</md-icon>
-    </md-standard-icon-button>`;
+    </md-icon-button>`;
   }
 }
 

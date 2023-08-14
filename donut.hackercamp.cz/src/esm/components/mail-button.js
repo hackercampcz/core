@@ -1,4 +1,4 @@
-import "@material/web/iconbutton/standard-icon-button.js";
+import "@material/web/iconbutton/icon-button.js";
 import "@material/web/icon/icon.js";
 import { LitElement, html } from "lit";
 
@@ -8,12 +8,12 @@ export class MailButton extends LitElement {
   };
   render() {
     if (!this.email) return null;
-    return html`<md-standard-icon-button
+    return html`<md-icon-button
       href="mailto:${this.email}"
       title="Napsat ${this.email}"
     >
       <md-icon>mail</md-icon>
-    </md-standard-icon-button>`;
+    </md-icon-button>`;
   }
 }
 

@@ -110,13 +110,13 @@ function programTable(data) {
                     <md-icon>done</md-icon>
                   </md-standard-icon-button>`
                 )}
-                <md-standard-icon-button
+                <md-icon-button
                   title="Upravit event"
                   @click="${renderModalDialog("edit-event")}"
                 >
                   <md-icon>edit</md-icon>
-                </md-standard-icon-button>
-                <md-standard-icon-button
+                </md-icon-button>
+                <md-icon-button
                   title="Smazat event"
                   @click="${deleteEvent(
                     row._id,
@@ -124,7 +124,7 @@ function programTable(data) {
                   )}"
                 >
                   <md-icon>delete_forever</md-icon>
-                </md-standard-icon-button>
+                </md-icon-button>
               </td>
             </tr>
           `

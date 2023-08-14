@@ -242,9 +242,9 @@ export function registrationsChips(
   return html`
     <search style="display: flex; gap: 8px">
       <div>
-        <md-standard-icon-button>
+        <md-icon-button>
           <md-icon>search</md-icon>
-        </md-standard-icon-button>
+        </md-icon-button>
       </div>
       <div
         class="mdc-evolution-chip-set"
@@ -306,7 +306,7 @@ export function registrationsChips(
         </span>
       </div>
       <div>
-        <md-standard-icon-button
+        <md-icon-button
           title="Zkopírovat statistiky"
           @click="${copyToClipboard([
             paid,
@@ -317,8 +317,8 @@ export function registrationsChips(
             staff,
           ])}"
         >
-          <md-icon>content_copy</md-icon></md-standard-icon-button
-        ><md-standard-icon-button
+          <md-icon>content_copy</md-icon></md-icon-button
+        ><md-icon-button
           href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
             { year, type: view, format: "csv", pageSize: 500 }
           )}"
@@ -326,7 +326,7 @@ export function registrationsChips(
           aria-label="Stáhnout CSV"
         >
           <md-icon>download</md-icon>
-        </md-standard-icon-button>
+        </md-icon-button>
       </div>
     </search>
   `;
@@ -352,6 +352,7 @@ export async function selectionBar(selectedView, selection, data) {
         ?checked="${checked}"
         ?indeterminate="${indeterminate}"
         @click="${multiRowSelection(indeterminate, checked, items)}"
+        touch-target="wrapper"
       ></md-checkbox>
       ${when(
         selectedView === View.confirmed,
@@ -360,7 +361,7 @@ export async function selectionBar(selectedView, selection, data) {
             title="Vyfakturovat"
             @click="${invoiceSelected()}"
             ><md-icon>request_quote</md-icon>
-          </md-standard-icon-button>`
+          </md-icon-button>`
       )}
       ${when(
         selectedView === View.volunteers || selectedView === View.staff,
@@ -423,6 +424,7 @@ export function registrationsTableTemplate(
                   aria-label="vybrat"
                   value="${row.email}"
                   @click="${selectRow}"
+                  touch-target="wrapper"
                   ?checked="${selection.has(row.email)}"
                 ></md-checkbox>
               </td>
@@ -448,12 +450,12 @@ export function registrationDetailTemplate({ detail, selectedView }) {
   return html`
     <div class="hc-card hc-master-detail__detail"">
     <div style="display: flex;align-items: center;gap: 12px;">
-      <md-standard-icon-button
+      <md-icon-button
         aria-label="Zavřít detail"
         title="Zavřít detail"
         @click="${closeDetail()}">
         <md-icon>arrow_back</md-icon>
-      </md-standard-icon-button>
+      </md-icon-button>
       <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
       ${ticketBadge.get(detail.ticketType)}</div>
     <p>${detail.company}</p>
@@ -466,36 +468,30 @@ export function registrationDetailTemplate({ detail, selectedView }) {
     >${when(
       selectedView === View.waitingList,
       () =>
-        html`<md-standard-icon-button
-          title="Opt in"
-          @click="${optin(detail.email)}"
-        >
+        html`<md-icon-button title="Opt in" @click="${optin(detail.email)}">
           <md-icon>person_add</md-icon>
-        </md-standard-icon-button>`
+        </md-icon-button>`
     )}${when(
       selectedView !== View.paid,
       () =>
-        html`<md-standard-icon-button
-          title="Opt out"
-          @click="${optout(detail.email)}"
-        >
-          <md-icon>person_remove</md-icon></md-standard-icon-button
+        html`<md-icon-button title="Opt out" @click="${optout(detail.email)}">
+          <md-icon>person_remove</md-icon></md-icon-button
         >`
     )}${when(
       selectedView === View.confirmed,
       () =>
-        html`<md-standard-icon-button
+        html`<md-icon-button
           title="Vyfakturovat"
           @click="${invoiced(detail.email)}"
         >
-          <md-icon>request_quote</md-icon></md-standard-icon-button
+          <md-icon>request_quote</md-icon></md-icon-button
         >`
-    )}<md-standard-icon-button
+    )}<md-icon-button
         title="Upravit registraci"
         @click="${renderModalDialog("registration-modal")}"
       >
         <md-icon>edit</md-icon>
-      </md-standard-icon-button>
+      </md-icon-button>
     </div>
     ${ticketDetail(detail)}
     ${when(
