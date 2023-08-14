@@ -103,12 +103,13 @@ function programTable(data) {
               <td style="white-space: nowrap;">
                 ${when(
                   !row.approved,
-                  () => html`<md-standard-icon-button
-                    title="Schválit event"
-                    @click="${approveEvent(row._id)}"
-                  >
-                    <md-icon>done</md-icon>
-                  </md-standard-icon-button>`
+                  () =>
+                    html`<md-icon-button
+                      title="Schválit event"
+                      @click="${approveEvent(row._id)}"
+                    >
+                      <md-icon>done</md-icon>
+                    </md-icon-button>`
                 )}
                 <md-icon-button
                   title="Upravit event"

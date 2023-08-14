@@ -357,7 +357,7 @@ export async function selectionBar(selectedView, selection, data) {
       ${when(
         selectedView === View.confirmed,
         () =>
-          html`<md-standard-icon-button
+          html`<md-icon-button
             title="Vyfakturovat"
             @click="${invoiceSelected()}"
             ><md-icon>request_quote</md-icon>
@@ -366,11 +366,9 @@ export async function selectionBar(selectedView, selection, data) {
       ${when(
         selectedView === View.volunteers || selectedView === View.staff,
         () =>
-          html`<md-standard-icon-button
-            title="Schválit"
-            @click="${approveSelected()}"
+          html`<md-icon-button title="Schválit" @click="${approveSelected()}"
             ><md-icon>person_add</md-icon>
-          </md-standard-icon-button>`
+          </md-icon-button>`
       )}
     </div>
   `;
