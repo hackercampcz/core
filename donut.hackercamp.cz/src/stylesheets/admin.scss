@@ -13,6 +13,7 @@
     --md-list-item-list-item-hover-state-layer-color: var(--hc-text-color);
     --mdc-theme-surface: var(--hc-background-color);
     --md-sys-color-on-surface-variant: var(--hc-text-color);
+    --md-icon-button-disabled-icon-color: var(--hc-text-color);
   }
 }
 
@@ -33,16 +34,6 @@ a[disabled] {
 .hc-pagination .hc-pagination__total {
   margin-right: 16px;
 }
-.hc-pagination .hc-pagination__button {
-  display: inline-flex;
-  height: 32px;
-  text-decoration: none;
-  align-items: center;
-}
-.hc-pagination .hc-pagination__button + .hc-pagination__button {
-  margin-left: 8px;
-}
-
 .hc-dialog {
   position: relative;
   padding-top: 2rem;

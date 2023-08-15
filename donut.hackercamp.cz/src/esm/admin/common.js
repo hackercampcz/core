@@ -234,40 +234,38 @@ export function paginationNavigation({ page, pages, count, total, params }) {
     for (const [k, v] of Object.entries(p)) {
       temp.set(k, v);
     }
-    return temp;
+    return `?${temp}`;
   }
   return html`
     <div class="hc-pagination">
       <data class="hc-pagination__total" value="${total}"
         >${first}-${last} ze ${total}</data
       >
-      <a
+      <md-icon-button
         title="První strana"
-        href="?${search({ page: 0 })}"
-        class="hc-pagination__button"
+        href="${page <= 0 ? "" : search({ page: 0 })}"
         ?disabled="${page <= 0}"
-        ><md-icon>first_page</md-icon></a
+        ><md-icon>first_page</md-icon></md-icon-button
       >
-      <a
+      <md-icon-button
         title="Předchozí strana"
-        href="?${search({ page: Math.max(page - 1, 0) })}"
-        class="hc-pagination__button"
+        href="${page <= 0 ? "" : search({ page: Math.max(page - 1, 0) })}"
         ?disabled="${page <= 0}"
-        ><md-icon>chevron_left</md-icon></a
+        ><md-icon>chevron_left</md-icon></md-icon-button
       >
-      <a
+      <md-icon-button
         title="Další strana"
-        href="?${search({ page: Math.min(page + 1, pages - 1) })}"
-        class="hc-pagination__button"
+        href="${page >= pages - 1
+          ? ""
+          : search({ page: Math.min(page + 1, pages - 1) })}"
         ?disabled="${page >= pages - 1}"
-        ><md-icon>chevron_right</md-icon></a
+        ><md-icon>chevron_right</md-icon></md-icon-button
       >
-      <a
+      <md-icon-button
         title="Poslední strana"
-        href="?${search({ page: pages - 1 })}"
-        class="hc-pagination__button"
+        href="${page >= pages - 1 ? "" : search({ page: pages - 1 })}"
         ?disabled="${page >= pages - 1}"
-        ><md-icon>last_page</md-icon></a
+        ><md-icon>last_page</md-icon></md-icon-button
       >
     </div>
   `;
