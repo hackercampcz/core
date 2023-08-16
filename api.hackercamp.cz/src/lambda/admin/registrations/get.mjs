@@ -73,7 +73,14 @@ async function getRegistrations(query, tag, year, page, pageSize) {
     process.env;
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
-  console.log({ event: "Loading registrations", year, page, pageSize, query });
+  console.log({
+    event: "Loading registrations",
+    tag,
+    year,
+    page,
+    pageSize,
+    query,
+  });
 
   const { results } = await client.multipleQueries([
     {
@@ -95,9 +102,8 @@ async function getRegistrations(query, tag, year, page, pageSize) {
   ]);
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
-  const [paid, invoiced, confirmed, waitingList, volunteers, staff] = counts.map(
-    (x) => x.nbHits
-  );
+  const [paid, invoiced, confirmed, waitingList, volunteers, staff] =
+    counts.map((x) => x.nbHits);
 
   const items = await getItemsFromDB(db, hits);
   return {
