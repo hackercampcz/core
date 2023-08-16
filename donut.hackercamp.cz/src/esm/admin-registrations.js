@@ -205,7 +205,7 @@ function groupApproveVolunteerSelectionModal({ data, selection }) {
 
 function copyToClipboard(counts) {
   return async () => {
-    const [paid, invoiced, confirmed, waitingList, volunteers, staff] =
+    const [paid, invoiced, confirmed, waitingList, volunteer, staff] =
       await Promise.all(counts);
     const rich = new Blob(
       [
@@ -214,7 +214,7 @@ function copyToClipboard(counts) {
           <li>Vyfakturovaní: <b>${invoiced}</b>
           <li>Potvrzení: <b>${confirmed}</b>
           <li>Waiting list: <b>${waitingList}</b>
-          <li>Dobrovolníci: <b>${volunteers}</b>
+          <li>Dobrovolníci: <b>${volunteer}</b>
           <li>Ostatní: <b>${staff}</b>
         </ul>`,
       ],
@@ -237,7 +237,7 @@ function copyToClipboard(counts) {
 export function registrationsChips(
   view,
   year,
-  { waitingList, confirmed, invoiced, paid, optouts, volunteers, staff }
+  { waitingList, confirmed, invoiced, paid, optouts, volunteer, staff }
 ) {
   return html`
     <search style="display: flex; gap: 8px">
@@ -284,9 +284,9 @@ export function registrationsChips(
           })}
           ${chip({
             text: "Dobrovolníci",
-            count: volunteers,
-            selected: view === View.volunteers,
-            view: View.volunteers,
+            count: volunteer,
+            selected: view === View.volunteer,
+            view: View.volunteer,
             year,
           })}
           ${chip({
@@ -313,7 +313,7 @@ export function registrationsChips(
             invoiced,
             confirmed,
             waitingList,
-            volunteers,
+            volunteer,
             staff,
           ])}"
         >
@@ -364,7 +364,7 @@ export async function selectionBar(selectedView, selection, data) {
           </md-icon-button>`
       )}
       ${when(
-        selectedView === View.volunteers || selectedView === View.staff,
+        selectedView === View.volunteer || selectedView === View.staff,
         () =>
           html`<md-icon-button title="Schválit" @click="${approveSelected()}"
             ><md-icon>person_add</md-icon>
@@ -589,7 +589,7 @@ export function registrationsTemplate(state) {
             [View.invoiced]: data?.then((data) => data.counts.invoiced),
             [View.confirmed]: data?.then((data) => data.counts.confirmed),
             [View.waitingList]: data?.then((data) => data.counts.waitingList),
-            [View.volunteers]: data?.then((data) => data.counts.volunteers),
+            [View.volunteer]: data?.then((data) => data.counts.volunteer),
             [View.staff]: data?.then((data) => data.counts.staff),
           })
       )}

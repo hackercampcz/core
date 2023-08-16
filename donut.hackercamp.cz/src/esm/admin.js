@@ -246,9 +246,10 @@ const registrationViews = new Set([
   View.confirmed,
   View.hackers,
   View.waitingList,
-  View.volunteers,
+  View.volunteer,
   View.staff,
   View.optouts,
+  View.search,
 ]);
 const attendeeViews = new Set([
   View.attendees,
@@ -262,6 +263,7 @@ const programViews = new Set(["program", "programApproval"]);
 
 async function renderView(state) {
   const { selectedView } = state;
+  console.log(selectedView);
   if (registrationViews.has(selectedView)) {
     const { registrationsTemplate } = await import("./admin-registrations.js");
     return registrationsTemplate(state);
@@ -290,8 +292,9 @@ const endpointForView = new Map([
   [View.hackers, Endpoint.registrations],
   [View.optouts, Endpoint.registrations],
   [View.waitingList, Endpoint.registrations],
-  [View.volunteers, Endpoint.registrations],
+  [View.volunteer, Endpoint.registrations],
   [View.staff, Endpoint.registrations],
+  [View.search, Endpoint.registrations],
   [View.attendees, Endpoint.attendees],
   [View.crewAttendees, Endpoint.attendees],
   [View.hackerAttendees, Endpoint.attendees],
