@@ -6,7 +6,7 @@ import {
   TransactWriteItemsCommand,
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
-import { marshall } from "@aws-sdk/util-dynamodb";
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { fetchInvoice } from "../../fakturoid.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
@@ -220,6 +220,9 @@ async function editRegistration(db, { key, data }) {
     data,
   });
 
+  //invoiced: 2023-08-17T09:48:56.075+02:00
+  //invoice_id: 30735131
+
   const dataFromDb = await db.send(
     new GetItemCommand({
       TableName: process.env.db_table_registrations,
@@ -239,7 +242,7 @@ async function editRegistration(db, { key, data }) {
         {
           Put: {
             Item: marshall(
-              { ...dataFromDb, ...data, year: key.year },
+              { ...unmarshall(dataFromDb.Item), ...data, year: key.year },
               {
                 convertEmptyValues: true,
                 removeUndefinedValues: true,
