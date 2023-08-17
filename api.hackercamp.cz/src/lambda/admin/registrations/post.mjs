@@ -224,7 +224,7 @@ async function editRegistration(db, { key, data }) {
     event:
       "Update registration with new email - deleting old item and adding new one",
     key,
-    originalData: dataFromDb,
+    originalData: unmarshall(dataFromDb.Item),
     formData: data,
   });
 
