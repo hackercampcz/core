@@ -88,7 +88,7 @@ async function getRegistrations(query, tag, year, page, pageSize) {
       indexName: algolia_index_name,
       params: {
         attributesToRetrieve: ["year", "email"],
-        tagFilters: [year.toString(), tag],
+        tagFilters: tag === "search" ? [year.toString()] : [year.toString, tag],
         hitsPerPage: pageSize,
         page,
       },
