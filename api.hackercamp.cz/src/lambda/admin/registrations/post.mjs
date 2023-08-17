@@ -220,7 +220,7 @@ async function editRegistration(db, { key, data }) {
     data,
   });
 
-  const dataFromDb = await dynamo.send(
+  const dataFromDb = await db.send(
     new GetItemCommand({
       TableName: process.env.db_table_registrations,
       Key: marshall(key),
