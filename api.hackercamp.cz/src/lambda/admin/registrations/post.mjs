@@ -213,16 +213,6 @@ async function editRegistration(db, { key, data }) {
       })
     );
 
-  console.log({
-    event:
-      "Update registration with new email - deleting old item and adding new one",
-    key,
-    data,
-  });
-
-  //invoiced: 2023-08-17T09:48:56.075+02:00
-  //invoice_id: 30735131
-
   const dataFromDb = await db.send(
     new GetItemCommand({
       TableName: process.env.db_table_registrations,
@@ -231,9 +221,11 @@ async function editRegistration(db, { key, data }) {
   );
 
   console.log({
-    event: "Retrieved original registration data",
+    event:
+      "Update registration with new email - deleting old item and adding new one",
     key,
-    dataFromDb,
+    originalData: dataFromDb,
+    formData: data,
   });
 
   return db.send(
