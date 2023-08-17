@@ -1,6 +1,7 @@
 import {
   DeleteItemCommand,
   DynamoDBClient,
+  GetItemCommand,
   PutItemCommand,
   TransactWriteItemsCommand,
   UpdateItemCommand,
@@ -218,13 +219,27 @@ async function editRegistration(db, { key, data }) {
     key,
     data,
   });
+
+  const dataFromDb = await dynamo.send(
+    new GetItemCommand({
+      TableName: process.env.db_table_registrations,
+      Key: marshall(key),
+    })
+  );
+
+  console.log({
+    event: "Retrieved original registration data",
+    key,
+    dataFromDb,
+  });
+
   return db.send(
     new TransactWriteItemsCommand({
       TransactItems: [
         {
           Put: {
             Item: marshall(
-              { ...data, year: key.year },
+              { ...dataFromDb, ...data, year: key.year },
               {
                 convertEmptyValues: true,
                 removeUndefinedValues: true,
