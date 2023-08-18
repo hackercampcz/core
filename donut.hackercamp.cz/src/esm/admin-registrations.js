@@ -234,6 +234,14 @@ function copyToClipboard(counts) {
   };
 }
 
+const delay = (function () {
+  let timer = 0;
+  return function (callback, ms) {
+    clearTimeout(timer);
+    timer = setTimeout(callback, ms);
+  };
+})();
+
 export function registrationsChips(
   view,
   year,
@@ -244,6 +252,15 @@ export function registrationsChips(
       ${view === View.search
         ? html`<md-outlined-text-field
             style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px;"
+            @keyup="${(e) =>
+              delay(() => {
+                location.assign(
+                  `?${new URLSearchParams({
+                    query: e.target.value,
+                    view: View.search,
+                  })}`
+                );
+              }, 700)}"
             ><md-icon slot="leadingicon"
               >search</md-icon
             ></md-outlined-text-field
