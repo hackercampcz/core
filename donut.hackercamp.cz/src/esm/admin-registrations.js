@@ -222,7 +222,7 @@ function copyToClipboard(counts) {
     );
     const plain = new Blob(
       [
-        `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}\n* Dobrovolnící: ${volunteers}\n* Ostatní: ${staff}`,
+        `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}\n* Dobrovolnící: ${volunteer}\n* Ostatní: ${staff}`,
       ],
       { type: "text/plain" }
     );
@@ -241,70 +241,77 @@ export function registrationsChips(
 ) {
   return html`
     <search style="display: flex; gap: 8px">
-      <div>
-        <md-icon-button>
-          <md-icon>search</md-icon>
-        </md-icon-button>
-      </div>
-      <div
-        class="mdc-evolution-chip-set"
-        role="grid"
-        id="filters"
-        aria-orientation="horizontal"
-        aria-multiselectable="false"
-      >
-        <span class="mdc-evolution-chip-set__chips" role="presentation">
-          ${chip({
-            text: "Zaplacení",
-            count: paid,
-            selected: view === View.paid,
-            view: View.paid,
-            year,
-          })}
-          ${chip({
-            text: "Vyfakturovaní",
-            count: invoiced,
-            selected: view === View.invoiced,
-            view: View.invoiced,
-            year,
-          })}
-          ${chip({
-            text: "Potvrzení",
-            count: confirmed,
-            selected: view === View.confirmed,
-            view: View.confirmed,
-            year,
-          })}
-          ${chip({
-            text: "Waiting list",
-            count: waitingList,
-            selected: view === View.waitingList,
-            view: View.waitingList,
-            year,
-          })}
-          ${chip({
-            text: "Dobrovolníci",
-            count: volunteer,
-            selected: view === View.volunteer,
-            view: View.volunteer,
-            year,
-          })}
-          ${chip({
-            text: "Ostatní",
-            count: staff,
-            selected: view === View.staff,
-            view: View.staff,
-            year,
-          })}
-          ${chip({
-            text: "Opt-outs",
-            count: optouts,
-            selected: view === View.optouts,
-            view: View.optouts,
-            year,
-          })}
-        </span>
-      </div>
+      ${view === View.search
+        ? html`<md-outlined-text-field
+            style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px;"
+            ><md-icon slot="leadingicon"
+              >search</md-icon
+            ></md-outlined-text-field
+          >`
+        : html` <div>
+              <md-icon-button href="/admin/?view=search">
+                <md-icon>search</md-icon>
+              </md-icon-button>
+            </div>
+            <div
+              class="mdc-evolution-chip-set"
+              role="grid"
+              id="filters"
+              aria-orientation="horizontal"
+              aria-multiselectable="false"
+            >
+              <span class="mdc-evolution-chip-set__chips" role="presentation">
+                ${chip({
+                  text: "Zaplacení",
+                  count: paid,
+                  selected: view === View.paid,
+                  view: View.paid,
+                  year,
+                })}
+                ${chip({
+                  text: "Vyfakturovaní",
+                  count: invoiced,
+                  selected: view === View.invoiced,
+                  view: View.invoiced,
+                  year,
+                })}
+                ${chip({
+                  text: "Potvrzení",
+                  count: confirmed,
+                  selected: view === View.confirmed,
+                  view: View.confirmed,
+                  year,
+                })}
+                ${chip({
+                  text: "Waiting list",
+                  count: waitingList,
+                  selected: view === View.waitingList,
+                  view: View.waitingList,
+                  year,
+                })}
+                ${chip({
+                  text: "Dobrovolníci",
+                  count: volunteer,
+                  selected: view === View.volunteer,
+                  view: View.volunteer,
+                  year,
+                })}
+                ${chip({
+                  text: "Ostatní",
+                  count: staff,
+                  selected: view === View.staff,
+                  view: View.staff,
+                  year,
+                })}
+                ${chip({
+                  text: "Opt-outs",
+                  count: optouts,
+                  selected: view === View.optouts,
+                  view: View.optouts,
+                  year,
+                })}
+              </span>
+            </div>`}
       <div>
         <md-icon-button
           title="Zkopírovat statistiky"

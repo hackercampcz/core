@@ -5,6 +5,8 @@ import "@material/web/checkbox/checkbox.js";
 import "@material/web/icon/icon.js";
 import "@material/web/list/list.js";
 import "@material/web/list/list-item.js";
+import "@material/web/textfield/outlined-text-field.js";
+import "@material/web/textfield/filled-text-field.js";
 import { defAtom } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import {
