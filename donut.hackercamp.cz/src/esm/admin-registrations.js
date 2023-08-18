@@ -245,8 +245,10 @@ const delay = (function () {
 export function registrationsChips(
   view,
   year,
-  { waitingList, confirmed, invoiced, paid, optouts, volunteer, staff }
+  { waitingList, confirmed, invoiced, paid, optouts, volunteer, staff },
+  params
 ) {
+  console.log(params);
   return html`
     <search style="display: flex; gap: 8px">
       ${view === View.search
@@ -260,10 +262,13 @@ export function registrationsChips(
                     view: View.search,
                   })}`
                 );
-              }, 700)}"
-            ><md-icon slot="leadingicon"
-              >search</md-icon
-            ></md-outlined-text-field
+              }, 1000)}"
+            placeholder="Začni psát..."
+            value="${params.get("query")}"
+            ><md-icon slot="leadingicon">search</md-icon>
+            <md-icon-button slot="trailingicon" href="/admin/">
+              <md-icon>cancel</md-icon>
+            </md-icon-button></md-outlined-text-field
           >`
         : html` <div>
               <md-icon-button href="/admin/?view=search">
@@ -328,30 +333,30 @@ export function registrationsChips(
                   year,
                 })}
               </span>
+            </div>
+            <div>
+              <md-icon-button
+                title="Zkopírovat statistiky"
+                @click="${copyToClipboard([
+                  paid,
+                  invoiced,
+                  confirmed,
+                  waitingList,
+                  volunteer,
+                  staff,
+                ])}"
+              >
+                <md-icon>content_copy</md-icon></md-icon-button
+              ><md-icon-button
+                href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
+                  { year, type: view, format: "csv", pageSize: 500 }
+                )}"
+                title="Stáhnout CSV"
+                aria-label="Stáhnout CSV"
+              >
+                <md-icon>download</md-icon>
+              </md-icon-button>
             </div>`}
-      <div>
-        <md-icon-button
-          title="Zkopírovat statistiky"
-          @click="${copyToClipboard([
-            paid,
-            invoiced,
-            confirmed,
-            waitingList,
-            volunteer,
-            staff,
-          ])}"
-        >
-          <md-icon>content_copy</md-icon></md-icon-button
-        ><md-icon-button
-          href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
-            { year, type: view, format: "csv", pageSize: 500 }
-          )}"
-          title="Stáhnout CSV"
-          aria-label="Stáhnout CSV"
-        >
-          <md-icon>download</md-icon>
-        </md-icon-button>
-      </div>
     </search>
   `;
 }
@@ -608,14 +613,19 @@ export function registrationsTemplate(state) {
         selection.size,
         () => until(selectionBar(selectedView, selection, data)),
         () =>
-          registrationsChips(selectedView, year, {
-            [View.paid]: data?.then((data) => data.counts.paid),
-            [View.invoiced]: data?.then((data) => data.counts.invoiced),
-            [View.confirmed]: data?.then((data) => data.counts.confirmed),
-            [View.waitingList]: data?.then((data) => data.counts.waitingList),
-            [View.volunteer]: data?.then((data) => data.counts.volunteer),
-            [View.staff]: data?.then((data) => data.counts.staff),
-          })
+          registrationsChips(
+            selectedView,
+            year,
+            {
+              [View.paid]: data?.then((data) => data.counts.paid),
+              [View.invoiced]: data?.then((data) => data.counts.invoiced),
+              [View.confirmed]: data?.then((data) => data.counts.confirmed),
+              [View.waitingList]: data?.then((data) => data.counts.waitingList),
+              [View.volunteer]: data?.then((data) => data.counts.volunteer),
+              [View.staff]: data?.then((data) => data.counts.staff),
+            },
+            params
+          )
       )}
     </div>
     <div
