@@ -248,7 +248,6 @@ export function registrationsChips(
   { waitingList, confirmed, invoiced, paid, optouts, volunteer, staff },
   params
 ) {
-  console.log(params);
   return html`
     <search style="display: flex; gap: 8px">
       ${view === View.search

@@ -265,7 +265,6 @@ const programViews = new Set(["program", "programApproval"]);
 
 async function renderView(state) {
   const { selectedView } = state;
-  console.log(selectedView);
   if (registrationViews.has(selectedView)) {
     const { registrationsTemplate } = await import("./admin-registrations.js");
     return registrationsTemplate(state);
