@@ -10,11 +10,5 @@
     "plugin:promise/recommended",
     "prettier"
   ],
-  "plugins": ["@typescript-eslint", "prettier", "promise"],
-  "rules": {
-    "prettier/prettier": ["error",
-      {
-        "trailingComma": "es5"
-      }]
-  }
+  "plugins": ["@typescript-eslint", "prettier", "promise"]
 }
