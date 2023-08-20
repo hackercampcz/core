@@ -250,112 +250,131 @@ export function registrationsChips(
 ) {
   return html`
     <search style="display: flex; gap: 8px">
-      ${view === View.search
-        ? html`<md-outlined-text-field
-            style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px;"
-            @keyup="${(e) =>
-              delay(() => {
-                location.assign(
-                  `?${new URLSearchParams({
-                    query: e.target.value,
-                    view: View.search,
-                  })}`
-                );
-              }, 1000)}"
-            placeholder="Začni psát..."
-            value="${params.get("query")}"
-            ><md-icon slot="leadingicon">search</md-icon>
-            <md-icon-button slot="trailingicon" href="/admin/">
-              <md-icon>cancel</md-icon>
-            </md-icon-button></md-outlined-text-field
-          >`
-        : html` <div>
-              <md-icon-button href="/admin/?view=search">
+      ${when(
+        view === View.search,
+        () =>
+          html`<form
+            @submit="${(e) =>
+              location.assign(
+                `?${new URLSearchParams({
+                  query: e.target.value,
+                  year: params.get("year"),
+                  view: View.search,
+                })}`
+              )}"
+          >
+            <input type="hidden" name="view" value="search" />
+            <input type="hidden" name="year" value="${year}" />
+            <md-outlined-text-field
+              name="query"
+              style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px;"
+              placeholder="Hledat jméno, e-mail, firmu&hellip;"
+              value="${params.get("query")}"
+              @change="${(e) => e.target.form.submit()}"
+            >
+              <md-icon-button slot="leadingicon" type="submit">
                 <md-icon>search</md-icon>
               </md-icon-button>
-            </div>
-            <div
-              class="mdc-evolution-chip-set"
-              role="grid"
-              id="filters"
-              aria-orientation="horizontal"
-              aria-multiselectable="false"
-            >
-              <span class="mdc-evolution-chip-set__chips" role="presentation">
-                ${chip({
-                  text: "Zaplacení",
-                  count: paid,
-                  selected: view === View.paid,
-                  view: View.paid,
-                  year,
-                })}
-                ${chip({
-                  text: "Vyfakturovaní",
-                  count: invoiced,
-                  selected: view === View.invoiced,
-                  view: View.invoiced,
-                  year,
-                })}
-                ${chip({
-                  text: "Potvrzení",
-                  count: confirmed,
-                  selected: view === View.confirmed,
-                  view: View.confirmed,
-                  year,
-                })}
-                ${chip({
-                  text: "Waiting list",
-                  count: waitingList,
-                  selected: view === View.waitingList,
-                  view: View.waitingList,
-                  year,
-                })}
-                ${chip({
-                  text: "Dobrovolníci",
-                  count: volunteer,
-                  selected: view === View.volunteer,
-                  view: View.volunteer,
-                  year,
-                })}
-                ${chip({
-                  text: "Ostatní",
-                  count: staff,
-                  selected: view === View.staff,
-                  view: View.staff,
-                  year,
-                })}
-                ${chip({
-                  text: "Opt-outs",
-                  count: optouts,
-                  selected: view === View.optouts,
-                  view: View.optouts,
-                  year,
-                })}
-              </span>
-            </div>
-            <div>
-              <md-icon-button
-                title="Zkopírovat statistiky"
-                @click="${copyToClipboard([
-                  paid,
-                  invoiced,
-                  confirmed,
-                  waitingList,
-                  volunteer,
-                  staff,
-                ])}"
-              >
-                <md-icon>content_copy</md-icon></md-icon-button
-              ><md-icon-button
-                href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
-                  { year, type: view, format: "csv", pageSize: 500 }
-                )}"
-                title="Stáhnout CSV"
-                aria-label="Stáhnout CSV"
-              >
-                <md-icon>download</md-icon>
+              <md-icon-button slot="trailingicon" href="/admin/">
+                <md-icon>close</md-icon>
               </md-icon-button>
-            </div>`}
+            </md-outlined-text-field>
+          </form>`,
+        () => html`
+          <div>
+            <md-icon-button
+              href="/admin/?${new URLSearchParams({
+                view: View.search,
+                year,
+              })}"
+            >
+              <md-icon>search</md-icon>
+            </md-icon-button>
+          </div>
+          <div
+            class="mdc-evolution-chip-set"
+            role="grid"
+            id="filters"
+            aria-orientation="horizontal"
+            aria-multiselectable="false"
+          >
+            <span class="mdc-evolution-chip-set__chips" role="presentation">
+              ${chip({
+                text: "Zaplacení",
+                count: paid,
+                selected: view === View.paid,
+                view: View.paid,
+                year,
+              })}
+              ${chip({
+                text: "Vyfakturovaní",
+                count: invoiced,
+                selected: view === View.invoiced,
+                view: View.invoiced,
+                year,
+              })}
+              ${chip({
+                text: "Potvrzení",
+                count: confirmed,
+                selected: view === View.confirmed,
+                view: View.confirmed,
+                year,
+              })}
+              ${chip({
+                text: "Waiting list",
+                count: waitingList,
+                selected: view === View.waitingList,
+                view: View.waitingList,
+                year,
+              })}
+              ${chip({
+                text: "Dobrovolníci",
+                count: volunteer,
+                selected: view === View.volunteer,
+                view: View.volunteer,
+                year,
+              })}
+              ${chip({
+                text: "Ostatní",
+                count: staff,
+                selected: view === View.staff,
+                view: View.staff,
+                year,
+              })}
+              ${chip({
+                text: "Opt-outs",
+                count: optouts,
+                selected: view === View.optouts,
+                view: View.optouts,
+                year,
+              })}
+            </span>
+          </div>
+          <div>
+            <md-icon-button
+              title="Zkopírovat statistiky"
+              @click="${copyToClipboard([
+                paid,
+                invoiced,
+                confirmed,
+                waitingList,
+                volunteer,
+                staff,
+              ])}"
+            >
+              <md-icon>content_copy</md-icon></md-icon-button
+            ><md-icon-button
+              href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
+                { year, type: view, format: "csv", pageSize: 500 }
+              )}"
+              title="Stáhnout CSV"
+              aria-label="Stáhnout CSV"
+            >
+              <md-icon>download</md-icon>
+            </md-icon-button>
+          </div>
+        `
+      )}
     </search>
   `;
 }
