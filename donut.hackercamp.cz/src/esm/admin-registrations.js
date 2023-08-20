@@ -234,14 +234,6 @@ function copyToClipboard(counts) {
   };
 }
 
-const delay = (function () {
-  let timer = 0;
-  return function (callback, ms) {
-    clearTimeout(timer);
-    timer = setTimeout(callback, ms);
-  };
-})();
-
 export function registrationsChips(
   view,
   year,
@@ -253,29 +245,24 @@ export function registrationsChips(
       ${when(
         view === View.search,
         () =>
-          html`<form
-            @submit="${(e) =>
-              location.assign(
-                `?${new URLSearchParams({
-                  query: e.target.value,
-                  year: params.get("year"),
-                  view: View.search,
-                })}`
-              )}"
-          >
-            <input type="hidden" name="view" value="search" />
+          html`<form style="flex-grow: 1">
+            <input type="hidden" name="view" value="${View.search}" />
             <input type="hidden" name="year" value="${year}" />
             <md-outlined-text-field
               name="query"
-              style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px;"
+              style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px; width: 100%; max-width: 480px"
               placeholder="Hledat jméno, e-mail, firmu&hellip;"
               value="${params.get("query")}"
               @change="${(e) => e.target.form.submit()}"
             >
-              <md-icon-button slot="leadingicon" type="submit">
+              <md-icon-button slot="leadingicon" type="submit" title="Hledat">
                 <md-icon>search</md-icon>
               </md-icon-button>
-              <md-icon-button slot="trailingicon" href="/admin/">
+              <md-icon-button
+                slot="trailingicon"
+                href="/admin/"
+                title="Zavřít hledání"
+              >
                 <md-icon>close</md-icon>
               </md-icon-button>
             </md-outlined-text-field>
