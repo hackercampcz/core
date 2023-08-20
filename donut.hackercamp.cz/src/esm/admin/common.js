@@ -231,11 +231,11 @@ export function paginationNavigation({ page, pages, count, total, params }) {
   const first = offset + 1;
   const last = offset + count;
   function search(p) {
-    const temp = new URLSearchParams(params);
+    const qs = new URLSearchParams(params);
     for (const [k, v] of Object.entries(p)) {
-      temp.set(k, v);
+      qs.set(k, v);
     }
-    return `?${temp}`;
+    return `?${qs}`;
   }
   return html`
     <div class="hc-pagination">
