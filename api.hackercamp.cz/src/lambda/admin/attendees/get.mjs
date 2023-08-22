@@ -1,5 +1,6 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import createSearchClient from "algoliasearch";
 import { response, internalError, notFound } from "../../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -106,7 +107,10 @@ async function getVolunteerAttendees(year) {
   return res.Items.map((x) => unmarshall(x));
 }
 
-function getData(type, year) {
+function getData(type, year, page) {
+  const { algolia_app_id, algolia_search_key, algolia_index_name } =
+    process.env;
+  const client = createSearchClient(algolia_app_id, algolia_search_key);
   switch (type) {
     case "attendees":
       return getAttendees(year);
@@ -129,16 +133,11 @@ function getData(type, year) {
  */
 export async function handler(event) {
   console.log("QS", event.queryStringParameters);
-  const { type, year } = Object.assign(
-    { year: "2022" },
+  const { type, year, page } = Object.assign(
+    { year: "2022", page: "0" },
     event.queryStringParameters
   );
-  try {
-    const data = await getData(type, parseInt(year));
-    if (!data) return notFound();
-    return response(data);
-  } catch (err) {
-    console.error(err);
-    return internalError();
-  }
+  const data = await getData(type, parseInt(year), parseInt(page));
+  if (!data) return notFound();
+  return response(data);
 }
