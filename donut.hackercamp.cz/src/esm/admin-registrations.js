@@ -419,18 +419,18 @@ function selectRow(e) {
 }
 
 const registrationStatus = (row) => {
-  if (["staff", "volunteer"].includes(row.ticketType))
-    return row.ticketType;
-  else if (["hacker", "hacker-plus", "hacker-patron", "nonprofit"].includes(row.ticketType)) {
-    if (row.paid)
-      return "paid";
-    if (row.invoiced)
-      return "invoiced";
-    if (row.approved)
-       return "approved";
+  if (["staff", "volunteer"].includes(row.ticketType)) return row.ticketType;
+  else if (
+    ["hacker", "hacker-plus", "hacker-patron", "nonprofit"].includes(
+      row.ticketType
+    )
+  ) {
+    if (row.paid) return "paid";
+    if (row.invoiced) return "invoiced";
+    if (row.approved) return "approved";
   }
-  return "waiting list"
-}
+  return "waiting list";
+};
 
 export function registrationsTableTemplate(
   data,
@@ -446,11 +446,7 @@ export function registrationsTableTemplate(
           <th>Jméno</th>
           <th>Společnost</th>
           <th>${timeHeader}</th>
-          ${when(
-            selectedView === View.search,
-            () =>
-              html`<th>Stav</th>`
-          )}
+          ${when(selectedView === View.search, () => html`<th>Stav</th>`)}
           <th>Akce</th>
         </tr>
       </thead>
@@ -487,8 +483,7 @@ export function registrationsTableTemplate(
               </td>
               ${when(
                 selectedView === View.search,
-                () =>
-                  html`<td>${registrationStatus(row)}</td>`
+                () => html`<td>${registrationStatus(row)}</td>`
               )}
               <td>
                 <hc-mail-button email="${row.email}"></hc-mail-button

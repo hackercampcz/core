@@ -1,6 +1,6 @@
 {
   "root": true,
-  "parser": "@typescript-eslint/parser",
+  "parser": "espree",
   "parserOptions": {
     "ecmaVersion": 2021,
     "sourceType": "module"
@@ -10,5 +10,11 @@
     "plugin:promise/recommended",
     "prettier"
   ],
-  "plugins": ["@typescript-eslint", "prettier", "promise"]
+  "plugins": ["@typescript-eslint", "prettier", "promise"],
+  "rules": {
+    "prettier/prettier": ["error",
+      {
+        "trailingComma": "es5"
+      }]
+  }
 }
