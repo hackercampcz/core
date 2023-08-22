@@ -3,21 +3,20 @@
   --md-sys-color-surface: var(--hc-background-color);
   --md-icon-font: "Material Icons Outlined";
   --md-icon-color: var(--hc-text-color);
-  --md-list-item-list-item-label-text-type: 400 1rem var(--hc-font-family);
+  --md-list-item-label-text-type: 400 1rem var(--hc-font-family);
   --md-ref-typeface-plain: var(--hc-font-family);
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --md-list-item-list-item-label-text-color: var(--hc-text-color);
-    --md-list-item-list-item-hover-label-text-color: var(--hc-text-color);
-    --md-list-item-list-item-hover-state-layer-color: var(--hc-text-color);
+    --md-list-item-label-text-color: var(--hc-text-color);
+    --md-list-item-hover-label-text-color: var(--hc-text-color);
+    --md-list-item-hover-state-layer-color: var(--hc-text-color);
     --mdc-theme-surface: var(--hc-background-color);
     --md-sys-color-on-surface-variant: var(--hc-text-color);
     --md-sys-color-on-surface: var(--hc-text-color);
     --md-icon-button-disabled-icon-color: var(--hc-text-color);
   }
 }
-
 .hc-pagination {
   box-sizing: content-box;
   height: 32px;
