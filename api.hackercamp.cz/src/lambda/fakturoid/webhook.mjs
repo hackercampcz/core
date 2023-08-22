@@ -84,7 +84,6 @@ export async function fakturoidWebhook(event) {
     getHeader(event.headers, "Origin")
   );
 
-
   try {
     const { token } = event.queryStringParameters;
     if (token !== process.env.TOKEN) {

@@ -21,7 +21,11 @@ async function onUrlVerification({ challenge }) {
 }
 
 async function enqueueHandler(event, payload) {
-  console.log({ event: "Enqueue handler", eventType: event, email: payload.user?.profile?.email });
+  console.log({
+    event: "Enqueue handler",
+    eventType: event,
+    email: payload.user?.profile?.email,
+  });
   try {
     const resp = await queue.send(
       new SendMessageCommand({
