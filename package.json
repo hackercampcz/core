@@ -5,7 +5,7 @@
   "author": "Aleš Roubíček <ales@roubicek.name>",
   "license": "EPL-2.0",
   "private": true,
-  "packageManager": "yarn@3.6.2",
+  "packageManager": "yarn@3.6.3",
   "devDependencies": {
     "@topmonks/blendid": "https://github.com/topmonks/blendid.git#commit=3641a0fee2004f90e3be069001cbaf582c31fa70",
     "@types/nunjucks": "3.2.3",

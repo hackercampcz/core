@@ -1,6 +1,6 @@
 {
   "name": "@hackercamp/donut",
-  "packageManager": "yarn@3.6.2",
+  "packageManager": "yarn@3.6.3",
   "devDependencies": {
     "@aws-sdk/client-secrets-manager": "3.395.0",
     "eslint": "8.47.0",

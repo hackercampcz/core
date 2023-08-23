@@ -17,5 +17,5 @@
   "devDependencies": {
     "eslint": "8.47.0"
   },
-  "packageManager": "yarn@3.6.2"
+  "packageManager": "yarn@3.6.3"
 }
