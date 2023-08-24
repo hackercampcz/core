@@ -15,6 +15,8 @@ config:
     secure: AAABABtVCcrrfoNz5vMiKPyHEEpSYXXOmrrT8DsT/c8aeJMocuIQ0GPjJOMYf+Ffd5eoSeAcOpkbQtVIjNw44vy60YYlNKYQaRxs9gKwubldaK13ircdx+/6TLIkIm7ok8fnv7NqrzTJj/LeF/vU3g==
   hackercamp:postmark-token:
     secure: AAABAF/Uwb6BOz5Iik1PbYzp+nvMR+VvkJw1T9l3V84G5htqzIgzTkDtA98Th9o1hB96Eg6rCrsmz5pXGx2ex0lo7NM=
+  hackercamp:postmark-webhook-token:
+    secure: AAABALwlpz9yqA5f4xNKXvTLVdQkaxyb6CCUIKcp3o9ymx2182ssEwFiNFNYqbMcbLgN4BvUyYKL3fcy2tAsVg==
   hackercamp:private-key:
     secure: AAABAMiObrKrGCJNcaB9RdcBRl2shK6sfmHwYdEChCgqQy3dVOxeVIuH/zk2R4dGDbqq/LjS7ZVWWuiDoutiFxdmDyoR21q9VQtOiQg=
   hackercamp:rollbar-access-token:

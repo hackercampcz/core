@@ -102,6 +102,7 @@ export const contactsDataTable = db.contactsDataTable;
 export const optOutsDataTable = db.optOutsDataTable;
 export const attendeesDataTable = db.attendeesDataTable;
 export const programDataTable = db.programDataTable;
+export const postmarkDataTable = db.postmarkDataTable;
 
 const routes = createRoutes({
   slackQueueUrl,
@@ -110,6 +111,7 @@ const routes = createRoutes({
   optOutsDataTable,
   attendeesDataTable,
   programDataTable,
+  postmarkDataTable,
   postmarkTemplates,
 });
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));

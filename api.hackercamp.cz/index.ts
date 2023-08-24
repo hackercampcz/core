@@ -23,7 +23,7 @@ const algoliaEnv = {
 };
 const rollbar_access_token = config.require("rollbar-access-token");
 
-export const createRoutes = ({
+export function createRoutes({
   slackQueueUrl,
   // TODO: inject table names to lambdas
   registrationsDataTable,
@@ -31,9 +31,10 @@ export const createRoutes = ({
   optOutsDataTable,
   attendeesDataTable,
   programDataTable,
+  postmarkDataTable,
   postmarkTemplates,
-}: Record<string, any>) =>
-  new Map<string, Record<string, RouteArgs>>([
+}: Record<string, any>) {
+  return new Map<string, Record<string, RouteArgs>>([
     [
       "v1",
       {
@@ -236,6 +237,18 @@ export const createRoutes = ({
             },
           },
         },
+        postmarkWebhook: {
+          httpMethod: "POST",
+          path: "/webhooks/postmark",
+          fileName: "postmark/webhook.mjs",
+          environment: {
+            variables: {
+              db_table_postmark: postmarkDataTable,
+              token: config.get("postmark-webhook-token"),
+              rollbar_access_token,
+            },
+          },
+        },
         slackWebhook: {
           httpMethod: "POST",
           path: "/webhooks/slack",
@@ -254,6 +267,7 @@ export const createRoutes = ({
       },
     ],
   ]);
+}
 
 function hcName(t: string, options?: { stage?: string }) {
   const suffix = options?.stage ? `-${options.stage}` : "";
@@ -423,12 +437,24 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
     billingMode: "PAY_PER_REQUEST",
   });
 
+  const postmark = new aws.dynamodb.Table(hcName("postmark"), {
+    name: hcName("postmark"),
+    hashKey: "MessageID",
+    rangeKey: "RecordType",
+    attributes: [
+      { name: "MessageID", type: "S" },
+      { name: "RecordType", type: "S" },
+    ],
+    billingMode: "PAY_PER_REQUEST",
+  });
+
   return pulumi.Output.create({
     registrationsDataTable: registrations.name,
     contactsDataTable: contacts.name,
     optOutsDataTable: optOuts.name,
     attendeesDataTable: attendees.name,
     programDataTable: program.name,
+    postmarkDataTable: postmark.name,
   });
 }
 
