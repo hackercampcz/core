@@ -128,7 +128,7 @@ function getAllHeaders(data) {
   return Array.from(headers);
 }
 
-async function formatResponse(data, { year, type, format }) {
+export async function formatResponse(data, { year, type, format }) {
   if (format === "csv" || format === "text/csv") {
     console.log({ event: "Formatting CSV" });
     const headers = getAllHeaders(data);
