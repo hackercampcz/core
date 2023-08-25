@@ -4,11 +4,11 @@ import {
   ScanCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import csv from "@fast-csv/format";
 import { partition } from "@thi.ng/transducers";
 import createSearchClient from "algoliasearch";
-import { getHeader, response } from "../../http.mjs";
+import { getHeader } from "../../http.mjs";
 import { resultsCount } from "../../algolia.mjs";
+import { formatResponse } from "../csv.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -116,30 +116,6 @@ async function getRegistrations(query, tag, year, page, pageSize) {
     total: nbHits,
     counts: { paid, invoiced, confirmed, waitingList, volunteer, staff },
   };
-}
-
-function getAllHeaders(data) {
-  const headers = new Set();
-  for (const item of data.items) {
-    for (const key of Object.keys(item)) {
-      headers.add(key);
-    }
-  }
-  return Array.from(headers);
-}
-
-export async function formatResponse(data, { year, type, format }) {
-  if (format === "csv" || format === "text/csv") {
-    console.log({ event: "Formatting CSV" });
-    const headers = getAllHeaders(data);
-    const text = await csv.writeToString(data.items, { headers });
-    const fileName = `hc-${year}-registrations-${type}.csv`;
-    return response(text, {
-      "Content-Type": "text/csv",
-      "Content-Disposition": `attachment; filename=${fileName}`,
-    });
-  }
-  return response(data);
 }
 
 /**

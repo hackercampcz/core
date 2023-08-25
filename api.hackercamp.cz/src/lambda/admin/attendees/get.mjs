@@ -2,7 +2,7 @@ import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import createSearchClient from "algoliasearch";
 import { response, notFound, getHeader } from "../../http.mjs";
-import { formatResponse } from "../registrations/get.mjs";
+import { formatResponse } from "../csv.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
