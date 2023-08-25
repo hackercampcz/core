@@ -10,7 +10,7 @@
     "@thi.ng/transducers": "8.6.1",
     "algoliasearch": "4.19.1",
     "fast-xml-parser": "4.2.7",
-    "immutable": "4.3.3",
+    "immutable": "4.3.4",
     "jsonwebtoken": "9.0.1",
     "rollbar": "2.26.2"
   },
