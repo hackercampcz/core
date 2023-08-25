@@ -296,6 +296,7 @@ const endpointForView = new Map([
   [View.volunteer, Endpoint.registrations],
   [View.staff, Endpoint.registrations],
   [View.search, Endpoint.registrations],
+  [View.searchAttendees, Endpoint.attendees],
   [View.attendees, Endpoint.attendees],
   [View.crewAttendees, Endpoint.attendees],
   [View.hackerAttendees, Endpoint.attendees],
