@@ -36,6 +36,7 @@ const postmarkTemplateProvider: pulumi.dynamic.ResourceProvider<
       body: JSON.stringify(inputs),
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
         "X-Postmark-Server-Token": token,
       },
     });
@@ -49,6 +50,7 @@ const postmarkTemplateProvider: pulumi.dynamic.ResourceProvider<
       body: JSON.stringify(news),
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json",
         "X-Postmark-Server-Token": token,
       },
     });
