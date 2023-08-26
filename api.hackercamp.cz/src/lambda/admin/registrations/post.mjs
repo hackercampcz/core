@@ -97,7 +97,7 @@ async function approve(db, { email, year, referral }) {
     templateId: Template.RegistrationApproved,
     data: {},
     from: "Hacker Camp Crew <team@hackercamp.cz>",
-    to: data.params.email,
+    to: email,
   });
 }
 
@@ -293,7 +293,6 @@ async function processRequest(db, data) {
  */
 export async function handler(event) {
   const data = readPayload(event);
-  console.log(data);
   try {
     await processRequest(db, data);
     if (getHeader(event.headers, "Accept") === "application/json") {
