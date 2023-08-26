@@ -1,4 +1,4 @@
-import { getHeader, withCORS } from "../http.mjs";
+import { errorResponse, getHeader, withCORS } from "../http.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
 import Rollbar from "../rollbar.mjs";
@@ -17,15 +17,20 @@ export async function registration(event) {
     ["GET", "POST", "OPTIONS"],
     getHeader(event?.headers, "Origin")
   );
-  switch (event.httpMethod) {
-    case "GET":
-      return await get.handler(event).then((x) => withCORS_(x));
-    case "POST":
-      return await post.handler(event).then((x) => withCORS_(x));
-    case "OPTIONS":
-      return withCORS_({ statusCode: 204, body: "" });
-    default:
-      return withCORS_({ statusCode: 405, body: "Method Not Allowed" });
+  try {
+    switch (event.httpMethod) {
+      case "GET":
+        return await get.handler(event).then((x) => withCORS_(x));
+      case "POST":
+        return await post.handler(event).then((x) => withCORS_(x));
+      case "OPTIONS":
+        return withCORS_({ statusCode: 204, body: "" });
+      default:
+        return withCORS_({ statusCode: 405, body: "Method Not Allowed" });
+    }
+  } catch (err) {
+    rollbar.error(err);
+    return withCORS_(errorResponse(err));
   }
 }
 

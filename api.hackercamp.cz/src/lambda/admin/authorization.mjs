@@ -8,5 +8,9 @@ export async function checkAuthorization(event) {
   const token = getToken(event.headers);
   const privateKey = process.env.private_key;
   const isAuthorized = await authorize("admin", token, privateKey);
-  if (!isAuthorized) throw Error("Unauthorized");
+  if (!isAuthorized) {
+    const error = new Error("Unauthorized");
+    error.name = "AuthorizationError";
+    throw error;
+  }
 }

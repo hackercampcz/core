@@ -2,13 +2,7 @@ import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
-import {
-  accepted,
-  getHeader,
-  internalError,
-  readPayload,
-  seeOther,
-} from "../http.mjs";
+import { accepted, getHeader, readPayload, seeOther } from "../http.mjs";
 import { postChatMessage } from "../slack.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -89,23 +83,18 @@ Tvoje Hacker Camp Crew`;
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  try {
-    const data = readPayload(event);
-    const token = getToken(event.headers);
-    const payload = await validateToken(token, process.env.private_key);
-    const submittedBy = payload["https://slack.com/user_id"];
-    const year = parseInt(data.year, 10);
-    console.log({ method: "POST", data });
-    for (const item of data.items) {
-      await saveAttendee(dynamo, Object.assign({ year }, item));
-      await sendSlackMessage(submittedBy, item);
-    }
-    if (getHeader(event.headers, "Accept") === "application/json") {
-      return accepted();
-    }
-    return seeOther();
-  } catch (err) {
-    console.error(err);
-    return internalError();
+  const data = readPayload(event);
+  const token = getToken(event.headers);
+  const payload = await validateToken(token, process.env.private_key);
+  const submittedBy = payload["https://slack.com/user_id"];
+  const year = parseInt(data.year, 10);
+  console.log({ method: "POST", data });
+  for (const item of data.items) {
+    await saveAttendee(dynamo, Object.assign({ year }, item));
+    await sendSlackMessage(submittedBy, item);
   }
+  if (getHeader(event.headers, "Accept") === "application/json") {
+    return accepted();
+  }
+  return seeOther();
 }

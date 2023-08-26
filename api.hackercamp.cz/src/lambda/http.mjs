@@ -164,3 +164,16 @@ export function readPayload(event) {
 export function getHeader(headers, name) {
   return headers?.[name] ?? headers?.[name.toLowerCase()];
 }
+
+export function errorResponse(err) {
+  switch (err.name) {
+    case "AuthorizationError":
+      return forbidden();
+    case "JsonWebTokenError":
+      return unauthorized({
+        "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
+      });
+    default:
+      return internalError();
+  }
+}

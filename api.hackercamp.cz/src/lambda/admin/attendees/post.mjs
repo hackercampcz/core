@@ -5,13 +5,7 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import {
-  accepted,
-  getHeader,
-  internalError,
-  readPayload,
-  seeOther,
-} from "../../http.mjs";
+import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 import crypto from "crypto";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -103,15 +97,10 @@ async function processRequest(db, data) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  try {
-    const data = readPayload(event);
-    await processRequest(db, data);
-    if (getHeader(event.headers, "Accept") === "application/json") {
-      return accepted();
-    }
-    return seeOther(getHeader(event.headers, "Referer"));
-  } catch (err) {
-    console.error(err);
-    return internalError();
+  const data = readPayload(event);
+  await processRequest(db, data);
+  if (getHeader(event.headers, "Accept") === "application/json") {
+    return accepted();
   }
+  return seeOther(getHeader(event.headers, "Referer"));
 }

@@ -2,8 +2,8 @@ import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import {
   accepted,
+  errorResponse,
   getHeader,
-  internalError,
   readPayload,
   withCORS,
 } from "../http.mjs";
@@ -50,7 +50,7 @@ export async function optout(event) {
     return withCORS_(accepted());
   } catch (err) {
     rollbar.error(err);
-    return withCORS_(internalError());
+    return withCORS_(errorResponse(err));
   }
 }
 

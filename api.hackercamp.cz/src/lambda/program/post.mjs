@@ -8,14 +8,7 @@ import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
 import crypto from "crypto";
-import {
-  getHeader,
-  internalError,
-  notFound,
-  readPayload,
-  seeOther,
-} from "../http.mjs";
-// import { postChatMessage } from "../slack.mjs";
+import { getHeader, notFound, readPayload, seeOther } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -74,48 +67,43 @@ const freeStages = new Set(["liback", "lipeep", "liother"]);
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  try {
-    const data = readPayload(event);
-    const token = getToken(event.headers);
-    const payload = await validateToken(token, process.env.private_key);
-    const submittedBy = payload["https://slack.com/user_id"];
-    const year = parseInt(data.year, 10);
-    data._id = data._id ?? crypto.randomUUID();
-    data.year = year;
-    delete data.slackID;
-    delete data.buddy; // TODO: handle cooperators
-    const sanitizedData = Object.fromEntries(
-      Object.entries(data)
-        .map(([k, v]) => [k, v?.trim ? v?.trim() : v])
-        .filter(([k, v]) => Boolean(v))
-    );
-    if (freeStages.has(sanitizedData.lineup)) {
-      sanitizedData.approved = new Date().toISOString();
-      sanitizedData.approvedBy = submittedBy;
-    }
-    if (sanitizedData.duration && sanitizedData.startAt) {
-      const duration = parseInt(sanitizedData.duration, 10) * 60 * 1000;
-      const startTime = Date.parse(
-        sanitizedData.startAt + sanitizedData.timezone
-      );
-      sanitizedData.endAt = new Date(startTime + duration).toISOString();
-    }
-    console.log({ method: "POST", data: sanitizedData, submittedBy, year });
-    const attendee = await getAttendee(dynamo, submittedBy, year);
-    if (!attendee) return notFound();
-    const events = Array.from(
-      new Map(attendee.events?.map((e) => [e._id, e]))
-        .set(sanitizedData._id, sanitizedData)
-        .values()
-    ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
-    await saveAttendee(dynamo, { slackID: submittedBy, year, events });
-    sanitizedData.people = [
-      selectKeys(attendee, new Set(["slackID", "image", "slug", "name"])),
-    ];
-    await createEvent(dynamo, sanitizedData);
-    return seeOther(getHeader(event.headers, "Referer"));
-  } catch (err) {
-    console.error(err);
-    return internalError();
+  const data = readPayload(event);
+  const token = getToken(event.headers);
+  const payload = await validateToken(token, process.env.private_key);
+  const submittedBy = payload["https://slack.com/user_id"];
+  const year = parseInt(data.year, 10);
+  data._id = data._id ?? crypto.randomUUID();
+  data.year = year;
+  delete data.slackID;
+  delete data.buddy; // TODO: handle cooperators
+  const sanitizedData = Object.fromEntries(
+    Object.entries(data)
+      .map(([k, v]) => [k, v?.trim ? v?.trim() : v])
+      .filter(([k, v]) => Boolean(v))
+  );
+  if (freeStages.has(sanitizedData.lineup)) {
+    sanitizedData.approved = new Date().toISOString();
+    sanitizedData.approvedBy = submittedBy;
   }
+  if (sanitizedData.duration && sanitizedData.startAt) {
+    const duration = parseInt(sanitizedData.duration, 10) * 60 * 1000;
+    const startTime = Date.parse(
+      sanitizedData.startAt + sanitizedData.timezone
+    );
+    sanitizedData.endAt = new Date(startTime + duration).toISOString();
+  }
+  console.log({ method: "POST", data: sanitizedData, submittedBy, year });
+  const attendee = await getAttendee(dynamo, submittedBy, year);
+  if (!attendee) return notFound();
+  const events = Array.from(
+    new Map(attendee.events?.map((e) => [e._id, e]))
+      .set(sanitizedData._id, sanitizedData)
+      .values()
+  ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
+  await saveAttendee(dynamo, { slackID: submittedBy, year, events });
+  sanitizedData.people = [
+    selectKeys(attendee, new Set(["slackID", "image", "slug", "name"])),
+  ];
+  await createEvent(dynamo, sanitizedData);
+  return seeOther(getHeader(event.headers, "Referer"));
 }

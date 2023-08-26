@@ -1,8 +1,8 @@
 import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
 import {
   accepted,
+  errorResponse,
   getHeader,
-  internalError,
   readPayload,
   response,
   unprocessableEntity,
@@ -26,18 +26,13 @@ async function enqueueHandler(event, payload) {
     eventType: event,
     email: payload.user?.profile?.email,
   });
-  try {
-    const resp = await queue.send(
-      new SendMessageCommand({
-        QueueUrl: process.env.slack_queue_url,
-        MessageBody: JSON.stringify({ event, payload }),
-      })
-    );
-    return resp;
-  } catch (err) {
-    rollbar.error(err);
-    throw err;
-  }
+  const resp = await queue.send(
+    new SendMessageCommand({
+      QueueUrl: process.env.slack_queue_url,
+      MessageBody: JSON.stringify({ event, payload }),
+    })
+  );
+  return resp;
 }
 
 function dispatchByType(event) {
@@ -74,7 +69,7 @@ export async function slackWebhook(event) {
     );
   } catch (err) {
     rollbar.error(err);
-    return withCORS_(internalError());
+    return withCORS_(errorResponse(err));
   }
 }
 

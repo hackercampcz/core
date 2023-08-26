@@ -4,7 +4,7 @@ import {
   GetItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { getHeader, internalError, response, withCORS } from "../http.mjs";
+import { errorResponse, getHeader, response, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -64,7 +64,7 @@ export async function attendees(event) {
     return withCORS_(response(attendees));
   } catch (err) {
     rollbar.error(err);
-    return withCORS_(internalError());
+    return withCORS_(errorResponse(err));
   }
 }
 

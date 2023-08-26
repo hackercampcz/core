@@ -2,8 +2,8 @@ import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import {
   accepted,
+  errorResponse,
   getHeader,
-  internalError,
   readPayload,
   unauthorized,
   withCORS,
@@ -44,7 +44,7 @@ export async function postmarkWebhook(event) {
     return withCORS_(accepted());
   } catch (err) {
     rollbar.error(err);
-    return withCORS_(internalError());
+    return withCORS_(errorResponse(err));
   }
 }
 

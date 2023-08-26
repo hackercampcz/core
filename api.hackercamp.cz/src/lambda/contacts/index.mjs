@@ -2,10 +2,10 @@ import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { checkAuthorization } from "../auth.mjs";
 import {
+  errorResponse,
   getHeader,
   notFound,
   response,
-  unauthorized,
   withCORS,
 } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
@@ -49,11 +49,7 @@ export async function contacts(event) {
     return withCORS_(response(contact));
   } catch (err) {
     rollbar.error(err);
-    return withCORS_(
-      unauthorized({
-        "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
-      })
-    );
+    return withCORS_(errorResponse(err));
   }
 }
 

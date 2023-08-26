@@ -1,4 +1,4 @@
-import { forbidden, getHeader, unauthorized, withCORS } from "../../http.mjs";
+import { errorResponse, getHeader, withCORS } from "../../http.mjs";
 import { checkAuthorization } from "../authorization.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
@@ -40,12 +40,7 @@ export async function housing(event) {
     }
   } catch (err) {
     rollbar.error(err);
-    if (err.message === "Unauthorized") return withCORS_(forbidden());
-    return withCORS_(
-      unauthorized({
-        "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
-      })
-    );
+    return withCORS_(errorResponse(err));
   }
 }
 

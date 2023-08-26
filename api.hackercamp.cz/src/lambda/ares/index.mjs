@@ -1,7 +1,7 @@
 import { getCompanyDetails } from "../ares.mjs";
 import {
+  errorResponse,
   getHeader,
-  internalError,
   notFound,
   response,
   withCORS,
@@ -30,7 +30,7 @@ export async function ares(event) {
     return withCORS_(response(data));
   } catch (err) {
     rollbar.error(err);
-    return withCORS_(internalError());
+    return withCORS_(errorResponse(err));
   }
 }
 

@@ -293,13 +293,9 @@ async function processRequest(db, data) {
  */
 export async function handler(event) {
   const data = readPayload(event);
-  try {
-    await processRequest(db, data);
-    if (getHeader(event.headers, "Accept") === "application/json") {
-      return accepted();
-    }
-    return seeOther(getHeader(event.headers, "Referer"));
-  } catch (err) {
-    console.error(err);
+  await processRequest(db, data);
+  if (getHeader(event.headers, "Accept") === "application/json") {
+    return accepted();
   }
+  return seeOther(getHeader(event.headers, "Referer"));
 }

@@ -5,8 +5,8 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import {
+  errorResponse,
   getHeader,
-  internalError,
   notFound,
   readPayload,
   response,
@@ -122,7 +122,7 @@ export async function fakturoidWebhook(event) {
     return withCORS_(response({}));
   } catch (err) {
     rollbar.error(err);
-    return withCORS_(internalError());
+    return withCORS_(errorResponse(err));
   }
 }
 
