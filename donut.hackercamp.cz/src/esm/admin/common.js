@@ -247,28 +247,32 @@ export function paginationNavigation({ page, pages, count, total, params }) {
         title="První strana"
         href="${page <= 0 ? "" : search({ page: 0 })}"
         ?disabled="${page <= 0}"
-        ><md-icon>first_page</md-icon></md-icon-button
       >
+        <md-icon>first_page</md-icon>
+      </md-icon-button>
       <md-icon-button
         title="Předchozí strana"
         href="${page <= 0 ? "" : search({ page: Math.max(page - 1, 0) })}"
         ?disabled="${page <= 0}"
-        ><md-icon>chevron_left</md-icon></md-icon-button
       >
+        <md-icon>chevron_left</md-icon>
+      </md-icon-button>
       <md-icon-button
         title="Další strana"
         href="${page >= pages - 1
           ? ""
           : search({ page: Math.min(page + 1, pages - 1) })}"
         ?disabled="${page >= pages - 1}"
-        ><md-icon>chevron_right</md-icon></md-icon-button
       >
+        <md-icon>chevron_right</md-icon>
+      </md-icon-button>
       <md-icon-button
         title="Poslední strana"
         href="${page >= pages - 1 ? "" : search({ page: pages - 1 })}"
         ?disabled="${page >= pages - 1}"
-        ><md-icon>last_page</md-icon></md-icon-button
       >
+        <md-icon>last_page</md-icon>
+      </md-icon-button>
     </div>
   `;
 }
