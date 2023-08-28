@@ -38,19 +38,34 @@ async function optout(db, { email, year }) {
   );
 }
 
+async function getRegistration(db, { email, year }) {
+  const resp = await db.send(
+    new GetItemCommand({
+      TableName: process.env.db_table_registrations,
+      Key: { email: { S: email }, year: { N: year.toString() } },
+    })
+  );
+  return resp.Item;
+}
+
 /**
  * @param {DynamoDBClient} db
  * @param {{email: string, year: number}} data
  */
-async function deleteRegistration(db, { email, year }) {
-  console.log({ event: "Delete registration", email, year });
-  return db.send(
+async function moveToTrash(db, { email, year }) {
+  console.log({ event: "Moving registration to trash", email, year });
+
+  const reg = await getRegistration(email, year);
+  await db.send(
+    new PutItemCommand({
+      TableName: "hc-trash",
+      Item: reg,
+    })
+  );
+  await db.send(
     new DeleteItemCommand({
       TableName: process.env.db_table_registrations,
-      Key: marshall(
-        { email, year },
-        { convertEmptyValues: true, removeUndefinedValues: true }
-      ),
+      Key: { email: { S: email }, year: { N: year.toString() } },
     })
   );
 }
@@ -179,13 +194,14 @@ async function editRegistration(db, { key, data }) {
   console.log({ event: "Update registration", key, data });
   if (key.email === data.email)
     return db.send(
+      // TODO: maybe use PutItem, to prevent loss of unknown attributes
       new UpdateItemCommand({
         TableName: process.env.db_table_registrations,
         Key: marshall(key),
         UpdateExpression:
           "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid," +
-          "invRecipient = :invRecipient, invRecipientEmail = :invRecipientEmail, invRecipientPhone = :invRecipientPhone, invRecipientFirstname = :invRecipientFirstname, invRecipientLastname =:invRecipientLastname," +
-          "invName = :invName, invAddress = :invAddress, invRegNo = :invRegNo, invVatNo = :invVatNo, invText =:invText, invEmail =:invEmail",
+          "invRecipient = :invRecipient, invRecipientEmail = :invRecipientEmail, invRecipientPhone = :invRecipientPhone, invRecipientFirstname = :invRecipientFirstname, invRecipientLastname = :invRecipientLastname," +
+          "invName = :invName, invAddress = :invAddress, invRegNo = :invRegNo, invVatNo = :invVatNo, invText = :invText, invEmail = :invEmail",
         ExpressionAttributeValues: marshall(
           {
             ":firstName": data.firstName,
@@ -213,12 +229,7 @@ async function editRegistration(db, { key, data }) {
       })
     );
 
-  const dataFromDb = await db.send(
-    new GetItemCommand({
-      TableName: process.env.db_table_registrations,
-      Key: marshall(key),
-    })
-  );
+  const dataFromDb = await getRegistration(db, key);
 
   console.log({
     event:
@@ -278,8 +289,8 @@ async function processRequest(db, data) {
     case "edit":
       await editRegistration(db, data.params);
       break;
-    case "delete":
-      await deleteRegistration(db, data.params);
+    case "move-to-trash":
+      await moveToTrash(db, data.params);
       break;
     case "add":
       await addRegistration(db, data.params);
