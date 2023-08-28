@@ -55,7 +55,7 @@ async function getRegistration(db, { email, year }) {
 async function moveToTrash(db, { email, year, slackID }) {
   console.log({ event: "Moving registration to trash", email, year });
 
-  const reg = await getRegistration(email, year);
+  const reg = await getRegistration(db, { email, year });
   await db.send(
     new PutItemCommand({
       TableName: "hc-trash",
