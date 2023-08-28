@@ -1,5 +1,6 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { partition } from "@thi.ng/transducers";
 import createSearchClient from "algoliasearch";
 import { response, notFound, getHeader } from "../../http.mjs";
 import { formatResponse } from "../csv.mjs";
