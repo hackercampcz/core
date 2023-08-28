@@ -178,6 +178,7 @@ export function createRoutes({
               db_table_attendees: attendeesDataTable,
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
+              ...algoliaEnv,
               ...postmarkTemplates,
             },
           },
