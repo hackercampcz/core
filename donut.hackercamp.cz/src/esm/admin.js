@@ -280,6 +280,7 @@ const attendeeViews = new Set([
   View.staffAttendees,
   View.crewAttendees,
   View.volunteerAttendees,
+  View.searchAttendees,
 ]);
 
 const programViews = new Set(["program", "programApproval"]);
