@@ -1,4 +1,8 @@
-import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
+import {
+  BatchGetItemCommand,
+  DynamoDBClient,
+  ScanCommand,
+} from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { partition } from "@thi.ng/transducers";
 import createSearchClient from "algoliasearch";
@@ -52,10 +56,10 @@ async function getAttendeesSearch(query, tag, year, page, pageSize) {
   // const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map(
   //   (x) => x.nbHits
   // );
-  console.log({ hits, nbHits, nbPages });
+  console.log(hits, nbHits, nbPages);
 
   const items = await getItemsFromDB(db, hits);
-  console.log({ hits, nbHits, nbPages });
+  console.log(items);
   return {
     items,
     page,
@@ -80,6 +84,7 @@ async function getItemsFromDB(db, hits) {
       year: { N: year.toString() },
       email: { S: email },
     }));
+    console.log(keys);
     const items = await db.send(
       new BatchGetItemCommand({
         RequestItems: { [tableName]: { Keys: keys } },
