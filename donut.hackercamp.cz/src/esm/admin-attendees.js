@@ -4,11 +4,14 @@ import { html } from "lit-html";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
 import {
+  Action,
   chip,
   closeDetail,
+  dispatchAction,
   Endpoint,
   executeCommand,
   lineup,
+  paginationNavigation,
   registerDialog,
   renderDetail,
   renderModalDialog,
@@ -44,6 +47,16 @@ export function add(attendee, apiHost) {
   return executeCommand(apiHost, Endpoint.attendees, "add", attendee).then(() =>
     location.reload()
   );
+}
+
+function selectRow(e) {
+  e.stopPropagation();
+  const key = e.target.value;
+  if (!e.target.checked) {
+    dispatchAction(Action.select, { keys: [key] });
+  } else {
+    dispatchAction(Action.unselect, { key });
+  }
 }
 
 export function attendeesChips(
@@ -116,7 +129,10 @@ export function attendeesChips(
   `;
 }
 
-export function attendeesTableTemplate(data) {
+export function attendeesTableTemplate(
+  data,
+  { page, pages, total, params, selection }
+) {
   return html`
     <table>
       <thead>
@@ -130,6 +146,19 @@ export function attendeesTableTemplate(data) {
           <th>Akce</th>
         </tr>
       </thead>
+      <tfoot>
+        <tr>
+          <td colspan="5">
+            ${paginationNavigation({
+              page,
+              pages,
+              total,
+              count: data.length,
+              params,
+            })}
+          </td>
+        </tr>
+      </tfoot>
       <tbody>
         ${data.map(
           (row) => html`
@@ -138,8 +167,9 @@ export function attendeesTableTemplate(data) {
                 <md-checkbox
                   aria-label="vybrat"
                   value="${row.slackID}"
+                  @click="${selectRow}"
                   touch-target="wrapper"
-                  @click="${(e) => e.stopPropagation()}"
+                  ?checked="${selection.has(row.slackID)}"
                 ></md-checkbox>
               </td>
               <td>${row.name}</td>
@@ -403,7 +433,9 @@ function addAttendeeModalDialog({ year, apiHost }) {
 }
 
 export function attendeesTemplate(state) {
-  const { data, selectedView, detail, year } = state;
+  const { data, selectedView, detail, year, page, params, selection } = state;
+
+  console.log(data);
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${attendeesChips(selectedView, year, {
@@ -417,7 +449,13 @@ export function attendeesTemplate(state) {
         ${until(
           data
             ?.then((data) => {
-              return attendeesTableTemplate(sortBy("paid", data));
+              return attendeesTableTemplate(sortBy("paid", data.items), {
+                page,
+                pages: data.pages,
+                total: data.total,
+                params,
+                selection,
+              });
             })
             ?.catch((data) => {
               if (data.unauthorized) return unauthorized();
