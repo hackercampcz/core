@@ -97,6 +97,27 @@ function optin(email) {
   );
 }
 
+function moveToTrash(email, year, slackID, apiHost) {
+  return executeCommand(apiHost, Endpoint.registrations, "moveToTrash", {
+    email,
+    year,
+    slackID,
+  });
+}
+
+function trashRegistration(email) {
+  const { apiHost, year, contact } = state.deref();
+  if (!contact) {
+    return alert(
+      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj."
+    );
+  }
+  return (
+    confirm("Opravdu chceš táborníka smáznout?") &&
+    moveToTrash(email, year, contact.slackID, apiHost)
+  );
+}
+
 /**
  * @param {string[]} emails
  * @param year
@@ -365,6 +386,9 @@ async function handleMessage(e) {
       break;
     case Action.optout:
       optout(payload.email);
+      break;
+    case Action.trashRegistration:
+      trashRegistration(payload.email);
       break;
     case Action.invoiced:
       await invoiced(payload.email);

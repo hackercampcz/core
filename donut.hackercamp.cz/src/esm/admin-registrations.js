@@ -42,12 +42,20 @@ function optin(email) {
   };
 }
 
+function trashRegistration(email) {
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.trashRegistration, { email });
+  };
+}
+
 function invoiced(email) {
   return (e) => {
     e.preventDefault();
     dispatchAction(Action.invoiced, { email });
   };
 }
+
 function invoiceSelected() {
   return (e) => {
     e.preventDefault();
@@ -352,6 +360,7 @@ export function registrationsChips(
               <md-icon>content_copy</md-icon></md-icon-button
             ><md-icon-button
               href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
+                // TODO: add support for search queries
                 { year, type: view, format: "csv", pageSize: 500 }
               )}"
               title="Stáhnout CSV"
@@ -543,7 +552,12 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         @click="${renderModalDialog("registration-modal")}"
       >
         <md-icon>edit</md-icon>
-      </md-icon-button>
+      </md-icon-button><md-icon-button
+                title="Odstranit registraci"
+                @click="${trashRegistration(detail.email)}">
+        >
+            <md-icon>delete</md-icon>
+        </md-icon-button>
     </div>
     ${ticketDetail(detail)}
     ${when(

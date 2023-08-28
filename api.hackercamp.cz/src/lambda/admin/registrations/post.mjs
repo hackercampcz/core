@@ -68,7 +68,10 @@ async function moveToTrash(db, { email, year, slackID }) {
   await db.send(
     new DeleteItemCommand({
       TableName: process.env.db_table_registrations,
-      Key: { email: { S: email }, year: { N: year.toString() } },
+      Key: {
+        email: { S: email },
+        year: { N: year.toString() },
+      },
     })
   );
 }
