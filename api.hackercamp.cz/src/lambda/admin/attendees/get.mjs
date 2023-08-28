@@ -47,12 +47,15 @@ async function getAttendeesSearch(query, tag, year, page, pageSize) {
     // resultsCount(algolia_index_name, year, "staff"),
   ]);
 
-  const [{ hits, nbHits, nbPages }, ...counts] = results;
+  console.log(results);
+  const [{ hits, nbHits, nbPages }] = results;
   // const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map(
   //   (x) => x.nbHits
   // );
+  console.log({ hits, nbHits, nbPages });
 
   const items = await getItemsFromDB(db, hits);
+  console.log({ hits, nbHits, nbPages });
   return {
     items,
     page,
