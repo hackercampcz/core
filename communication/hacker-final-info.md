@@ -2,7 +2,6 @@
 Subject: Hacker Camp startuje příští čtvrtek
 LayoutTemplate: hc-basic
 ---
-
 Ahoj, táborníku!
 
 Hacker Camp už máme za pár, tak je kromě těšení se dobré si říct pár praktikálií,
