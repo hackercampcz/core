@@ -52,14 +52,17 @@ async function getRegistration(db, { email, year }) {
  * @param {DynamoDBClient} db
  * @param {{email: string, year: number}} data
  */
-async function moveToTrash(db, { email, year }) {
+async function moveToTrash(db, { email, year, slackID }) {
   console.log({ event: "Moving registration to trash", email, year });
 
   const reg = await getRegistration(email, year);
   await db.send(
     new PutItemCommand({
       TableName: "hc-trash",
-      Item: reg,
+      Item: Object.assign({}, reg, {
+        deletedBy: { S: slackID },
+        deleted: { S: new Date().toISOString() },
+      }),
     })
   );
   await db.send(
