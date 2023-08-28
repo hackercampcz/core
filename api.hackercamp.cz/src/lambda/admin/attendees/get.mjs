@@ -30,9 +30,10 @@ async function getAttendeesSearch(query, tag, year, page, pageSize) {
       indexName: "hc-attendees",
       params: {
         attributesToRetrieve: ["year", "email"],
-        tagFilters: [year.toString(), tag === "search" ? null : tag].filter(
-          Boolean
-        ),
+        tagFilters: [
+          year.toString(),
+          tag === "searchAttendees" ? null : tag,
+        ].filter(Boolean),
         hitsPerPage: pageSize,
         page,
       },
