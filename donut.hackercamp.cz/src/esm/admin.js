@@ -98,7 +98,7 @@ function optin(email) {
 }
 
 function moveToTrash(email, year, slackID, apiHost) {
-  return executeCommand(apiHost, Endpoint.registrations, "moveToTrash", {
+  return executeCommand(apiHost, Endpoint.registrations, "move-to-trash", {
     email,
     year,
     slackID,

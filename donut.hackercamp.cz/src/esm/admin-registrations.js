@@ -536,8 +536,8 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       selectedView !== View.paid,
       () =>
         html`<md-icon-button title="Opt out" @click="${optout(detail.email)}">
-          <md-icon>person_remove</md-icon></md-icon-button
-        >`
+          <md-icon>person_remove</md-icon>
+        </md-icon-button>`
     )}${when(
       selectedView === View.confirmed,
       () =>
@@ -545,17 +545,18 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           title="Vyfakturovat"
           @click="${invoiced(detail.email)}"
         >
-          <md-icon>request_quote</md-icon></md-icon-button
-        >`
+          <md-icon>request_quote</md-icon>
+        </md-icon-button>`
     )}<md-icon-button
         title="Upravit registraci"
         @click="${renderModalDialog("registration-modal")}"
       >
         <md-icon>edit</md-icon>
-      </md-icon-button><md-icon-button
-                title="Odstranit registraci"
-                @click="${trashRegistration(detail.email)}">
-        >
+      </md-icon-button
+      ><md-icon-button
+        title="Odstranit registraci"
+        @click="${trashRegistration(detail.email)}"
+      >
             <md-icon>delete</md-icon>
         </md-icon-button>
     </div>
