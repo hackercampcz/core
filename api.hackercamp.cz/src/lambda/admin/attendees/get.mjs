@@ -37,7 +37,9 @@ async function getAttendeesSearch(query, tag, year, page, pageSize) {
         attributesToRetrieve: ["year", "slackID"],
         tagFilters: [
           year.toString(),
-          tag === "searchAttendees" ? null : tag.replace("Attendees", ""),
+          tag === "searchAttendees" || tag === "attendees"
+            ? null
+            : tag.replace("Attendees", ""),
         ].filter(Boolean),
         hitsPerPage: pageSize,
         page,
@@ -234,18 +236,12 @@ export async function handler(event) {
     event.queryStringParameters
   );
 
-  if (type === "searchAttendees" || type === "staffAttendees") {
-    const respData = await getAttendeesSearch(
-      query,
-      type,
-      parseInt(year),
-      parseInt(page),
-      parseInt(pageSize)
-    );
-    return formatResponse(respData, { year, type, format });
-  }
-
-  const data = await getData(type, parseInt(year), parseInt(page));
-  if (!data) return notFound();
-  return response(data);
+  const respData = await getAttendeesSearch(
+    query,
+    type,
+    parseInt(year),
+    parseInt(page),
+    parseInt(pageSize)
+  );
+  return formatResponse(respData, { year, type, format });
 }
