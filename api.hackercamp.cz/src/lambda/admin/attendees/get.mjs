@@ -34,7 +34,7 @@ async function getAttendeesSearch(query, tag, year, page, pageSize) {
       query,
       indexName: "hc-attendees",
       params: {
-        attributesToRetrieve: ["year", "slackId"],
+        attributesToRetrieve: ["year", "slackID"],
         tagFilters: [
           year.toString(),
           tag === "searchAttendees" ? null : tag,
@@ -81,9 +81,9 @@ async function getItemsFromDB(db, hits) {
   console.log("GET ITEMS FROM DB", hits);
   for (const batch of partition(100, true, hits)) {
     console.log("batch", batch);
-    const keys = batch.map(({ year, slackId }) => ({
+    const keys = batch.map(({ year, slackID }) => ({
       year: { N: year.toString() },
-      slackId: { S: slackId },
+      slackID: { S: slackID },
     }));
     console.log(keys);
     const items = await db.send(
