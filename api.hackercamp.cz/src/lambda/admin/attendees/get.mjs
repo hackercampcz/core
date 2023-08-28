@@ -51,7 +51,6 @@ async function getAttendeesSearch(query, tag, year, page, pageSize) {
     // resultsCount(algolia_index_name, year, "staff"),
   ]);
 
-  console.log(results);
   const [{ hits, nbHits, nbPages }] = results;
   // const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map(
   //   (x) => x.nbHits
@@ -79,7 +78,9 @@ async function getItemsFromDB(db, hits) {
   if (hits.length === 0) return [];
   const tableName = process.env.db_table_attendees;
   const result = [];
+  console.log("GET ITEMS FROM DB", hits);
   for (const batch of partition(100, true, hits)) {
+    console.log("batch", batch);
     const keys = batch.map(({ year, email }) => ({
       year: { N: year.toString() },
       email: { S: email },
