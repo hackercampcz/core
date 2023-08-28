@@ -37,7 +37,7 @@ async function getAttendeesSearch(query, tag, year, page, pageSize) {
         attributesToRetrieve: ["year", "slackID"],
         tagFilters: [
           year.toString(),
-          tag === "searchAttendees" ? null : tag,
+          tag === "searchAttendees" ? null : tag.replace("Attendees", ""),
         ].filter(Boolean),
         hitsPerPage: pageSize,
         page,
@@ -234,7 +234,7 @@ export async function handler(event) {
     event.queryStringParameters
   );
 
-  if (type === "searchAttendees") {
+  if (type === "searchAttendees" || type === "staffAttendees") {
     const respData = await getAttendeesSearch(
       query,
       type,
