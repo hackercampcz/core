@@ -68,64 +68,106 @@ export function attendeesChips(
     staffAttendees,
     volunteerAttendees,
     hackerAttendees,
-  }
+  },
+  params
 ) {
   return html`
-    <div style="display: flex; gap: 8px">
-      <div
-        class="mdc-evolution-chip-set"
-        role="grid"
-        id="filters"
-        aria-orientation="horizontal"
-        aria-multiselectable="false"
-      >
-        <span class="mdc-evolution-chip-set__chips" role="presentation">
-          ${chip({
-            text: "Všichni",
-            count: attendees,
-            selected: view === View.attendees,
-            view: View.attendees,
-            year,
-          })}
-          ${chip({
-            text: "Hackeři",
-            count: hackerAttendees,
-            selected: view === View.hackerAttendees,
-            view: View.hackerAttendees,
-            year,
-          })}
-          ${chip({
-            text: "Dobrovolníci",
-            count: volunteerAttendees,
-            selected: view === View.volunteerAttendees,
-            view: View.volunteerAttendees,
-            year,
-          })}
-          ${chip({
-            text: "Ostatní",
-            count: staffAttendees,
-            selected: view === View.staffAttendees,
-            view: View.staffAttendees,
-            year,
-          })}
-          ${chip({
-            text: "Crew",
-            count: crewAttendees,
-            selected: view === View.crewAttendees,
-            view: View.crewAttendees,
-            year,
-          })}
-        </span>
-      </div>
-      <div>
-        <md-icon-button
-          title="Přidat účastníka"
-          @click="${renderModalDialog("add-attendee-modal")}"
-        >
-          <md-icon>person_add</md-icon></md-icon-button
-        >
-      </div>
-    </div>
+    <search style="display: flex; gap: 8px">
+      ${when(
+        view === View.searchAttendees,
+        () =>
+          html`<form style="flex-grow: 1">
+            <input type="hidden" name="view" value="${View.searchAttendees}" />
+            <input type="hidden" name="year" value="${year}" />
+            <md-outlined-text-field
+              name="query"
+              style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px; width: 100%; max-width: 480px"
+              placeholder="Hledat jméno, e-mail, firmu&hellip;"
+              value="${params.get("query")}"
+              @change="${(e) => e.target.form.submit()}"
+            >
+              <md-icon-button slot="leadingicon" type="submit" title="Hledat">
+                <md-icon>search</md-icon>
+              </md-icon-button>
+              <md-icon-button
+                slot="trailingicon"
+                href="/admin/?${new URLSearchParams({
+                  view: View.attendees,
+                  year,
+                })}"
+                title="Zavřít hledání"
+              >
+                <md-icon>close</md-icon>
+              </md-icon-button>
+            </md-outlined-text-field>
+          </form>`,
+        () => html`
+          <div>
+            <md-icon-button
+              href="/admin/?${new URLSearchParams({
+                view: View.searchAttendees,
+                year,
+              })}"
+            >
+              <md-icon>search</md-icon>
+            </md-icon-button>
+          </div>
+          <div
+            class="mdc-evolution-chip-set"
+            role="grid"
+            id="filters"
+            aria-orientation="horizontal"
+            aria-multiselectable="false"
+          >
+            <span class="mdc-evolution-chip-set__chips" role="presentation">
+              ${chip({
+                text: "Všichni",
+                count: attendees,
+                selected: view === View.attendees,
+                view: View.attendees,
+                year,
+              })}
+              ${chip({
+                text: "Hackeři",
+                count: hackerAttendees,
+                selected: view === View.hackerAttendees,
+                view: View.hackerAttendees,
+                year,
+              })}
+              ${chip({
+                text: "Dobrovolníci",
+                count: volunteerAttendees,
+                selected: view === View.volunteerAttendees,
+                view: View.volunteerAttendees,
+                year,
+              })}
+              ${chip({
+                text: "Ostatní",
+                count: staffAttendees,
+                selected: view === View.staffAttendees,
+                view: View.staffAttendees,
+                year,
+              })}
+              ${chip({
+                text: "Crew",
+                count: crewAttendees,
+                selected: view === View.crewAttendees,
+                view: View.crewAttendees,
+                year,
+              })}
+            </span>
+          </div>
+          <div>
+            <md-icon-button
+              title="Přidat účastníka"
+              @click="${renderModalDialog("add-attendee-modal")}"
+            >
+              <md-icon>person_add</md-icon></md-icon-button
+            >
+          </div>
+        `
+      )}
+    </search>
   `;
 }
 
@@ -435,12 +477,16 @@ function addAttendeeModalDialog({ year, apiHost }) {
 export function attendeesTemplate(state) {
   const { data, selectedView, detail, year, page, params, selection } = state;
 
-  console.log(data);
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${attendeesChips(selectedView, year, {
-        [selectedView]: data?.then((data) => data.length),
-      })}
+      ${attendeesChips(
+        selectedView,
+        year,
+        {
+          [selectedView]: data?.then((data) => data.total),
+        },
+        params
+      )}
     </div>
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
