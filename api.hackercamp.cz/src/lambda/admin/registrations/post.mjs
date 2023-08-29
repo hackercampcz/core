@@ -244,10 +244,13 @@ async function editRegistration(db, { key, data }) {
   }
 
   const originalData = await getRegistration(db, key);
-  const formData = marshall(data, {
-    convertEmptyValues: true,
-    removeUndefinedValues: true,
-  });
+  const formData = marshall(
+    Object.assign(data, { year: parseInt(data.year) }),
+    {
+      convertEmptyValues: true,
+      removeUndefinedValues: true,
+    }
+  );
 
   console.log({
     event:
