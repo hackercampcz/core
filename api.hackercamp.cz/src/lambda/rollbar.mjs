@@ -7,7 +7,7 @@ export default {
       environment: "production",
       reportLevel: "error",
       uncaughtErrorLevel: "error",
-      autoInstrument: { log: false },
+      autoInstrument: true,
       captureLambdaTimeouts: true,
       captureUncaught: true,
       captureUnhandledRejections: true,
