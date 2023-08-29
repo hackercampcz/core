@@ -249,7 +249,7 @@ async function editRegistration(db, { key, data }) {
     event:
       "Update registration with new email - deleting old item and adding new one",
     key,
-    originalData: unmarshall(dataFromDb.Item),
+    originalData: dataFromDb.Item,
     formData: data,
   });
 
@@ -259,13 +259,7 @@ async function editRegistration(db, { key, data }) {
         {
           Put: {
             TableName: process.env.db_table_registrations,
-            Item: marshall(
-              { ...unmarshall(dataFromDb.Item), ...data, year: key.year },
-              {
-                convertEmptyValues: true,
-                removeUndefinedValues: true,
-              }
-            ),
+            Item: Object.assign({}, dataFromDb.Item, marshall(data)),
           },
         },
         {
