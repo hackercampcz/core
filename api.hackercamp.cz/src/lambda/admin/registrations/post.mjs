@@ -258,6 +258,7 @@ async function editRegistration(db, { key, data }) {
       TransactItems: [
         {
           Put: {
+            TableName: process.env.db_table_registrations,
             Item: marshall(
               { ...unmarshall(dataFromDb.Item), ...data, year: key.year },
               {
@@ -265,16 +266,15 @@ async function editRegistration(db, { key, data }) {
                 removeUndefinedValues: true,
               }
             ),
-            TableName: process.env.db_table_registrations,
           },
         },
         {
           Delete: {
             TableName: process.env.db_table_registrations,
-            Key: marshall(key, {
-              convertEmptyValues: true,
-              removeUndefinedValues: true,
-            }),
+            Key: {
+              email: { S: key.email },
+              year: { N: key.year.toString() },
+            },
           },
         },
       ],
