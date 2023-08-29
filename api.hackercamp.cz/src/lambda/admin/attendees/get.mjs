@@ -43,7 +43,7 @@ async function getAttendees(query, tag, year, page, pageSize) {
         page,
       },
     },
-    resultsCount(algolia_index_name, year),
+    resultsCount(algolia_index_name, year, null),
     resultsCount(algolia_index_name, year, "hacker"),
     resultsCount(algolia_index_name, year, "volunteer"),
     resultsCount(algolia_index_name, year, "staff"),
