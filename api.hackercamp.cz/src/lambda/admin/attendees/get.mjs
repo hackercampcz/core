@@ -4,6 +4,7 @@ import { partition } from "@thi.ng/transducers";
 import createSearchClient from "algoliasearch";
 import { getHeader } from "../../http.mjs";
 import { formatResponse } from "../csv.mjs";
+import { resultsCount } from "../../algolia.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -13,6 +14,7 @@ import { formatResponse } from "../csv.mjs";
 const db = new DynamoDBClient({});
 
 async function getAttendees(query, tag, year, page, pageSize) {
+  const algolia_index_name = "hc-attendees";
   const { algolia_app_id, algolia_search_key } = process.env;
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
@@ -28,7 +30,7 @@ async function getAttendees(query, tag, year, page, pageSize) {
   const { results } = await client.multipleQueries([
     {
       query,
-      indexName: "hc-attendees",
+      indexName: algolia_index_name,
       params: {
         attributesToRetrieve: ["year", "slackID"],
         tagFilters: [
@@ -41,19 +43,16 @@ async function getAttendees(query, tag, year, page, pageSize) {
         page,
       },
     },
-    // resultsCount(algolia_index_name, year, "paid"),
-    // resultsCount(algolia_index_name, year, "invoiced"),
-    // resultsCount(algolia_index_name, year, "confirmed"),
-    // resultsCount(algolia_index_name, year, "waitingList"),
-    // resultsCount(algolia_index_name, year, "volunteer"),
-    // resultsCount(algolia_index_name, year, "staff"),
+    resultsCount(algolia_index_name, year),
+    resultsCount(algolia_index_name, year, "hacker"),
+    resultsCount(algolia_index_name, year, "volunteer"),
+    resultsCount(algolia_index_name, year, "staff"),
+    resultsCount(algolia_index_name, year, "crew"),
   ]);
 
-  const [{ hits, nbHits, nbPages }] = results;
-  // const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map(
-  //   (x) => x.nbHits
-  // );
-  console.log(hits, nbHits, nbPages);
+  const [{ hits, nbHits, nbPages }, ...counts] = results;
+  const [all, hacker, volunteer, staff, crew] = counts.map((x) => x.nbHits);
+  console.log(hits, nbHits, nbPages, counts);
 
   const items = await getItemsFromDB(db, hits);
   console.log(items);
@@ -62,7 +61,7 @@ async function getAttendees(query, tag, year, page, pageSize) {
     page,
     pages: nbPages,
     total: nbHits,
-    counts: {},
+    counts: { all, hacker, volunteer, staff, crew },
   };
 }
 
