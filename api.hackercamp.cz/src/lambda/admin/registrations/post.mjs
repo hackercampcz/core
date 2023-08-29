@@ -243,13 +243,13 @@ async function editRegistration(db, { key, data }) {
     );
   }
 
-  const dataFromDb = await getRegistration(db, key);
+  const originalData = await getRegistration(db, key);
 
   console.log({
     event:
       "Update registration with new email - deleting old item and adding new one",
     key,
-    originalData: dataFromDb.Item,
+    originalData,
     formData: data,
   });
 
@@ -259,7 +259,7 @@ async function editRegistration(db, { key, data }) {
         {
           Put: {
             TableName: process.env.db_table_registrations,
-            Item: Object.assign({}, dataFromDb.Item, marshall(data)),
+            Item: Object.assign({}, originalData, marshall(data)),
           },
         },
         {
