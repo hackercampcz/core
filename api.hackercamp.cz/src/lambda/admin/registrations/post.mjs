@@ -39,10 +39,14 @@ async function optout(db, { email, year }) {
 }
 
 async function getRegistration(db, { email, year }) {
+  console.log("Get registration", { email, year });
   const resp = await db.send(
     new GetItemCommand({
       TableName: process.env.db_table_registrations,
-      Key: { email: { S: email }, year: { N: year.toString() } },
+      Key: {
+        email: { S: email },
+        year: { N: year.toString() },
+      },
     })
   );
   return resp.Item;
@@ -198,12 +202,15 @@ async function invoiced(db, { registrations, invoiceId }) {
 
 async function editRegistration(db, { key, data }) {
   console.log({ event: "Update registration", key, data });
-  if (key.email === data.email)
+  if (key.email === data.email) {
     return db.send(
       // TODO: maybe use PutItem, to prevent loss of unknown attributes
       new UpdateItemCommand({
         TableName: process.env.db_table_registrations,
-        Key: marshall(key),
+        Key: {
+          email: { S: key.email },
+          year: { N: key.year.toString() },
+        },
         UpdateExpression:
           "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid," +
           "invRecipient = :invRecipient, invRecipientEmail = :invRecipientEmail, invRecipientPhone = :invRecipientPhone, invRecipientFirstname = :invRecipientFirstname, invRecipientLastname = :invRecipientLastname," +
@@ -234,6 +241,7 @@ async function editRegistration(db, { key, data }) {
         ),
       })
     );
+  }
 
   const dataFromDb = await getRegistration(db, key);
 
