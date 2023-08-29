@@ -483,7 +483,13 @@ export function attendeesTemplate(state) {
         selectedView,
         year,
         {
-          [selectedView]: data?.then((data) => data.total),
+          [View.attendees]: data?.then((data) => data.counts.all),
+          [View.hackerAttendees]: data?.then((data) => data.counts.hacker),
+          [View.volunteerAttendees]: data?.then(
+            (data) => data.counts.volunteer
+          ),
+          [View.staffAttendees]: data?.then((data) => data.counts.staff),
+          [View.crewAttendees]: data?.then((data) => data.counts.crew),
         },
         params
       )}
