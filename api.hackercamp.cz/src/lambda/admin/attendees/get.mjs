@@ -12,7 +12,7 @@ import { formatResponse } from "../csv.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
-async function getAttendeesSearch(query, tag, year, page, pageSize) {
+async function getAttendees(query, tag, year, page, pageSize) {
   const { algolia_app_id, algolia_search_key } = process.env;
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
@@ -112,7 +112,7 @@ export async function handler(event) {
     event.queryStringParameters
   );
 
-  const respData = await getAttendeesSearch(
+  const respData = await getAttendees(
     query,
     type,
     parseInt(year),
