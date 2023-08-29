@@ -3,7 +3,7 @@ export function resultsCount(indexName, year, tag) {
     indexName,
     query: "",
     params: {
-      tagFilters: [year.toString(), tag],
+      tagFilters: [year.toString(), tag].filter(Boolean),
       attributesToRetrieve: [],
       responseFields: ["nbHits"],
     },
