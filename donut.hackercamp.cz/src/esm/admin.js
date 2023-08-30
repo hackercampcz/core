@@ -23,7 +23,7 @@ import {
   signOut,
 } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
-import { initRenderLoop } from "./lib/renderer.js";
+import { initRenderLoop, renderScheduler } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 import { renderEventForm } from "./event-form.js";
 import { schedule } from "./lib/schedule.js";
@@ -230,8 +230,18 @@ function renderDetail(detail) {
 async function renderModalDialog(name) {
   const root = document.getElementById("modal-root");
   const template = getDialog(name);
-  await render(template(state.deref()), root);
+  render(template(state.deref()), root);
   showModalDialog("modal");
+  const modalScheduler = renderScheduler();
+  state.addWatch("renderModal", (id, prev, curr) => {
+    const { view } = curr;
+    if (typeof view !== "function") return;
+    modalScheduler({
+      async render() {
+        render(template(state.deref()), root);
+      },
+    });
+  });
 }
 
 async function showEditEventModalDialog(event, { editEvent }) {
@@ -447,7 +457,7 @@ async function handleMessage(e) {
           console.log(e);
           transact((state) =>
             Object.assign(state, {
-              nfcTronData: e.serialNumber.replace(/:/, ""),
+              nfcTronData: e.serialNumber.replaceAll(":", ""),
             })
           );
         });

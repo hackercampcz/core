@@ -482,7 +482,7 @@ function nfcSN(chipSN) {
   return html`
     <div class="field">
       <label for="nfc-tron-sn">S/N</label>
-      <input id="nfc-tron-sn" name="nfcTronSN" .value="${chipSN}" />
+      <input id="nfc-tron-sn" name="nfcTronSN" .value="${chipSN ?? ""}" />
     </div>
   `;
 }
