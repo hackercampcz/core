@@ -29,6 +29,7 @@ import { renderEventForm } from "./event-form.js";
 import { schedule } from "./lib/schedule.js";
 import { showModalDialog } from "./modal-dialog.js";
 import { instatializeDates } from "./lib/object.js";
+import { getChipId } from "./lib/nfctron.js";
 
 const state = defAtom({
   year: 2023,
@@ -457,9 +458,10 @@ async function handleMessage(e) {
 
         ndef.addEventListener("reading", (e) => {
           console.log(e);
+          const sn = e.serialNumber.replaceAll(":", "");
           transact((state) =>
             Object.assign(state, {
-              nfcTronData: e.serialNumber.replaceAll(":", ""),
+              nfcTronData: { sn, chipId: getChipId(sn) },
             })
           );
         });
@@ -485,6 +487,7 @@ export async function main({
   console.log(searchParams.toString());
   const apiHost = env["api-host"];
   const contact = getContact();
+  const isNFCSupported = typeof NDEFReader !== "undefined";
 
   yearSelector.value = year;
   yearSelector.addEventListener("change", (e) => {
@@ -498,7 +501,15 @@ export async function main({
   transact((x) =>
     Object.assign(
       x,
-      { apiHost, year, page, query, contact, params: searchParams },
+      {
+        apiHost,
+        year,
+        page,
+        query,
+        contact,
+        params: searchParams,
+        isNFCSupported,
+      },
       schedule.get(year)
     )
   );

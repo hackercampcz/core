@@ -280,7 +280,7 @@ export function attendeesTableTemplate(
   `;
 }
 
-export function attendeeDetailTemplate({ detail }) {
+export function attendeeDetailTemplate({ detail, isNFCSupported }) {
   if (!detail) return null;
   return html`
     <div class="hc-card hc-master-detail__detail"">
@@ -304,7 +304,13 @@ export function attendeeDetailTemplate({ detail }) {
       </md-icon-button
       ><md-icon-button
         title="Check In"
-        @click="${renderModalDialog("check-in-modal")}"
+        @click="${renderModalDialog("check-in-modal", {
+          preDispatch() {
+            if (isNFCSupported) {
+              startChipScan();
+            }
+          },
+        })}"
       >
         <md-icon>where_to_vote</md-icon>
       </md-icon-button>
@@ -527,15 +533,11 @@ function addAttendeeModalDialog({ year, apiHost }) {
     </form>
   `;
 }
-function nfcSN(chipSN) {
+function nfcSN({ sn } = { sn: "" }) {
   return html`
     <div class="field">
       <label for="nfc-tron-sn">S/N</label>
-      <md-outlined-text-field
-        id="nfc-tron-sn"
-        name="nfcTronSN"
-        .value="${chipSN ?? ""}"
-      >
+      <md-outlined-text-field id="nfc-tron-sn" name="nfcTronSN" .value="${sn}">
         <md-icon slot="trailingicon">nfc</md-icon>
       </md-outlined-text-field>
     </div>
@@ -546,15 +548,16 @@ function startChipScan() {
   return dispatchAction(Action.startNfcScan);
 }
 
-export function checkInModalDialog({ year, apiHost, nfcTronData }) {
+export function checkInModalDialog({
+  year,
+  apiHost,
+  nfcTronData,
+  isNFCSupported,
+}) {
   const onSubmit = (e) => {
     const data = new FormData(e.target);
     console.log(data);
   };
-  const isNFCSupported = typeof NDEFReader !== "undefined";
-  if (isNFCSupported) {
-    startChipScan();
-  }
   return html`
     <form method="dialog" @submit="${onSubmit}">
       <input type="hidden" name="year" value="${year}" />
@@ -570,6 +573,18 @@ export function checkInModalDialog({ year, apiHost, nfcTronData }) {
             </p>`
         )}
         ${nfcSN(nfcTronData)}
+        <div class="field">
+          <p>ID čipu:</strong>&nbsp;${when(
+            nfcTronData?.chipId,
+            () =>
+              html`<strong
+                ><data value="${nfcTronData.chipId}"
+                  >${nfcTronData.chipId}</data
+                ></strong
+              >`,
+            () => html`<code>neznámý čip</code>`
+          )}</p>
+        </div>
       </fieldset>
     </form>
   `;

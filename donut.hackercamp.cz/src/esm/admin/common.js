@@ -293,9 +293,10 @@ export function closeDetail() {
   };
 }
 
-export function renderModalDialog(name) {
+export function renderModalDialog(name, { preDispatch } = {}) {
   return (e) => {
     e.preventDefault();
+    if (preDispatch) preDispatch();
     dispatchAction(Action.showModalDialog, { name });
   };
 }
