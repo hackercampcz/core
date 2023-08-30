@@ -101,7 +101,8 @@ export async function auth(event) {
       delete profile.ok;
       // For local development we need to relax Cross site security
       const sameSite =
-        origin.includes("localhost") || origin.includes("192.168.68.114")
+        origin.includes("localhost") ||
+        origin.includes("7da2-145-224-120-68.ngrok-free.app")
           ? "None"
           : "Strict";
       return withCORS_(

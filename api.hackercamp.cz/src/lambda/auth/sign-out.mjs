@@ -20,7 +20,8 @@ export async function signOut(event) {
 
   // For local development we need to relax Cross site security
   const sameSite =
-    origin.includes("localhost") || origin.includes("192.168.68.114")
+    origin.includes("localhost") ||
+    origin.includes("7da2-145-224-120-68.ngrok-free.app")
       ? "None"
       : "Strict";
   const expired = new Date(0).toUTCString();
