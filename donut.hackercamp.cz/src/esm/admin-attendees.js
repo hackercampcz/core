@@ -24,6 +24,8 @@ import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
 import { getContact } from "./lib/profile";
+import { getChipID } from "./lib/nfctron.js";
+import { map } from "lit-html/directives/map.js";
 
 /**
  * @param {Object} attendee
@@ -378,9 +380,6 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
 }
 
 registerDialog("edit-attendee-modal", editAttendeeModalDialog);
-registerDialog("add-attendee-modal", addAttendeeModalDialog);
-registerDialog("check-in-modal", checkInModalDialog);
-
 function editAttendeeModalDialog({ detail, apiHost }) {
   const onSubmit = async (e) => {
     const form = new FormData(e.target);
@@ -421,6 +420,7 @@ function editAttendeeModalDialog({ detail, apiHost }) {
   `;
 }
 
+registerDialog("add-attendee-modal", addAttendeeModalDialog);
 function addAttendeeModalDialog({ year, apiHost }) {
   const onSubmit = async (e) => {
     const form = new FormData(e.target);
@@ -534,34 +534,38 @@ function addAttendeeModalDialog({ year, apiHost }) {
     </form>
   `;
 }
-function nfcSN({ sn } = { sn: "" }) {
-  return html`
-    <div class="field">
-      <label for="nfc-tron-sn">S/N</label>
-      <md-outlined-text-field id="nfc-tron-sn" name="nfcTronSN" .value="${sn}">
-        <md-icon slot="trailingicon">nfc</md-icon>
-      </md-outlined-text-field>
-    </div>
-  `;
-}
 
 function startChipScan() {
   return dispatchAction(Action.startNfcScan);
 }
 
-export function checkInModalDialog({
-  year,
+registerDialog("check-in-modal", checkInModalDialog);
+function checkInModalDialog({
   apiHost,
+  year,
+  detail,
+  contact,
   nfcTronData,
   isNFCSupported,
 }) {
-  const onSubmit = (e) => {
-    const data = new FormData(e.target);
-    console.log(data);
+  const onSubmit = async (e) => {
+    const formData = new FormData(e.target);
+    const data = {
+      admin: contact.email,
+      year: formData.get("year"),
+      slackID: formData.get("slackID"),
+      note: formData.get("note"),
+      nfcTronData: Array.from(nfcTronData).map((sn) => ({
+        sn,
+        chipID: getChipID(sn),
+      })),
+    };
+    return executeCommand(apiHost, Endpoint.attendees, "checkIn", data);
   };
   return html`
     <form method="dialog" @submit="${onSubmit}">
       <input type="hidden" name="year" value="${year}" />
+      <input type="hidden" name="slackID" value="${detail.slackID}" />
       <h2>Check-in</h2>
       <fieldset>
         <legend>NCF Tron</legend>
@@ -571,22 +575,47 @@ export function checkInModalDialog({
             html`<p>
               Pro scanování chipů použij Chrome na mobilním telefonu se systémem
               Android.
+            </p>`,
+          () =>
+            html`<p>
+              Přilož čip pro načtení. Případně opiš druhý řádek na rubu čipu
+              ručně.
             </p>`
         )}
-        ${nfcSN(nfcTronData)}
+        ${map(nfcTronData, (sn, i) => {
+          const chipID = getChipID(sn);
+          // TODO: remove scan
+          return html`
+            <div class="field">
+              <label for="nfc-tron-sn-${i}">S/N #${i + 1}</label>
+              <md-outlined-text-field
+                id="nfc-tron-sn-${i}"
+                name="nfcTronSN${i}"
+                value="${sn}"
+              >
+                <md-icon slot="trailingicon">nfc</md-icon>
+              </md-outlined-text-field>
+              <div>
+                <strong>ID čipu:</strong>
+                ${when(
+                  chipID,
+                  () =>
+                    html`<code><data value="${chipID}">${chipID}</data></code>`,
+                  () => html`<code>neznámý čip</code>`
+                )}
+              </div>
+            </div>
+          `;
+        })}
+      </fieldset>
+      <fieldset>
+        <legend>Další</legend>
         <div class="field">
-          <p>ID čipu:</strong>&nbsp;${when(
-            nfcTronData?.chipId,
-            () =>
-              html`<strong
-                ><data value="${nfcTronData.chipId}"
-                  >${nfcTronData.chipId}</data
-                ></strong
-              >`,
-            () => html`<code>neznámý čip</code>`
-          )}</p>
+          <label for="note">Poznámka</label>
+          <textarea id="note" name="note"></textarea>
         </div>
       </fieldset>
+      <button type="submit" class="hc-button">Odeslat to</button>
     </form>
   `;
 }
@@ -602,7 +631,6 @@ export function attendeesTemplate(state) {
     selection,
     isNFCSupported,
   } = state;
-
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${attendeesChips(
