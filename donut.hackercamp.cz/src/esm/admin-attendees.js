@@ -478,32 +478,28 @@ function addAttendeeModalDialog({ year, apiHost }) {
     </form>
   `;
 }
+function nfcSN(chipSN) {
+  return html`
+    <div class="field">
+      <label for="nfc-tron-sn">S/N</label>
+      <input id="nfc-tron-sn" name="nfcTronSN" .value="${chipSN}" />
+    </div>
+  `;
+}
 
-export function checkInModalDialog({ year, apiHost }) {
-  let chipSN = "";
+function startChipScan() {
+  return dispatchAction(Action.startNfcScan);
+}
+
+export function checkInModalDialog({ year, apiHost, nfcTronData }) {
   const onSubmit = (e) => {
     const data = new FormData(e.target);
     console.log(data);
   };
   const isNFCSupported = typeof NDEFReader !== "undefined";
-  const startChipScan = async () => {
-    if (!isNFCSupported) return;
-    try {
-      const ndef = new NDEFReader();
-      await ndef.scan();
-
-      ndef.addEventListener("readingerror", (e) => {
-        console.log(e);
-      });
-
-      ndef.addEventListener("reading", (e) => {
-        chipSN = e.serialNumber.replace(/:/, "");
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  setTimeout(() => startChipScan(), 0);
+  if (isNFCSupported) {
+    startChipScan();
+  }
   return html`
     <form method="dialog" @submit="${onSubmit}">
       <input type="hidden" name="year" value="${year}" />
@@ -517,10 +513,7 @@ export function checkInModalDialog({ year, apiHost }) {
               Android.
             </p>`
         )}
-        <div class="field">
-          <label for="nfc-tron-sn">S/N</label>
-          <input id="nfc-tron-sn" name="nfcTronSN" value="${chipSN}" />
-        </div>
+        ${nfcSN(nfcTronData)}
       </fieldset>
     </form>
   `;

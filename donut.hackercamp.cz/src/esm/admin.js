@@ -433,6 +433,25 @@ async function handleMessage(e) {
         return x;
       });
       break;
+    case Action.startNfcScan:
+      try {
+        const ndef = new NDEFReader();
+        await ndef.scan();
+
+        ndef.addEventListener("readingerror", (e) => {
+          console.error(e);
+        });
+
+        ndef.addEventListener("reading", (e) => {
+          transact((state) =>
+            Object.assign(state, {
+              nfcTranData: e.serialNumber.replace(/:/, ""),
+            })
+          );
+        });
+      } catch (err) {
+        console.error(err);
+      }
   }
 }
 

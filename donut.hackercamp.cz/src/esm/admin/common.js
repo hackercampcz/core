@@ -19,6 +19,7 @@ export const Action = {
   invoiceSelected: "invoiceSelected",
   approveSelectedVolunteers: "approveSelectedVolunteers",
   trashRegistration: "trashRegistration",
+  startNfcScan: "startNfcScan",
 };
 
 export function dispatchAction(type, payload) {
