@@ -306,6 +306,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
         title="Check In"
         @click="${renderModalDialog("check-in-modal", {
           preDispatch() {
+            console.log("Check In", { isNFCSupported });
             if (isNFCSupported) {
               startChipScan();
             }
@@ -591,7 +592,16 @@ export function checkInModalDialog({
 }
 
 export function attendeesTemplate(state) {
-  const { data, selectedView, detail, year, page, params, selection } = state;
+  const {
+    data,
+    selectedView,
+    detail,
+    year,
+    page,
+    params,
+    selection,
+    isNFCSupported,
+  } = state;
 
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -635,7 +645,7 @@ export function attendeesTemplate(state) {
           `
         )}
       </div>
-      ${when(detail, () => attendeeDetailTemplate({ detail }))}
+      ${when(detail, () => attendeeDetailTemplate({ detail, isNFCSupported }))}
     </div>
   `;
 }
