@@ -178,9 +178,8 @@ export function attendeesChips(
               title="Stáhnout CSV"
               aria-label="Stáhnout CSV"
             >
-              <md-icon>download</md-icon>
-            </md-icon-button>
-            <md-icon-button
+              <md-icon>download</md-icon></md-icon-button
+            ><md-icon-button
               title="Přidat účastníka"
               @click="${renderModalDialog("add-attendee-modal")}"
             >
