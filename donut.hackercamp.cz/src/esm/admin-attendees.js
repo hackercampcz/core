@@ -251,8 +251,14 @@ export function attendeeDetailTemplate({ detail }) {
         title="Upravit účastníka"
         @click="${renderModalDialog("edit-attendee-modal")}"
       >
-      <md-icon>edit</md-icon>
-    </md-icon-button>
+        <md-icon>edit</md-icon>
+      </md-icon-button
+      ><md-icon-button
+        title="Check In"
+        @click="${renderModalDialog("check-in-modal")}"
+      >
+        <md-icon>where_to_vote</md-icon>
+      </md-icon-button>
     </div>
     ${ticketDetail(detail)}
     <p>Ubytování: <strong>${
@@ -317,15 +323,15 @@ export function attendeeDetailTemplate({ detail }) {
 
 registerDialog("edit-attendee-modal", editAttendeeModalDialog);
 registerDialog("add-attendee-modal", addAttendeeModalDialog);
+registerDialog("check-in-modal", checkInModalDialog);
 
 function editAttendeeModalDialog({ detail, apiHost }) {
   const onSubmit = async (e) => {
-    e.preventDefault();
     const form = new FormData(e.target);
     await edit(Object.fromEntries(form.entries()), apiHost);
   };
   return html`
-    <form method="post" @submit="${onSubmit}">
+    <form method="dialog" @submit="${onSubmit}">
       <input type="hidden" name="year" value="${detail.year}" />
       <input type="hidden" name="slackID" value="${detail.slackID}" />
       <div class="field">
@@ -361,12 +367,11 @@ function editAttendeeModalDialog({ detail, apiHost }) {
 
 function addAttendeeModalDialog({ year, apiHost }) {
   const onSubmit = async (e) => {
-    e.preventDefault();
     const form = new FormData(e.target);
     await add(Object.fromEntries(form.entries()), apiHost);
   };
   return html`
-    <form method="post" @submit="${onSubmit}">
+    <form method="dialog" @submit="${onSubmit}">
       <input type="hidden" name="year" value="${year}" />
       <div class="field">
         <label for="name">Jméno</label>
@@ -470,6 +475,53 @@ function addAttendeeModalDialog({ year, apiHost }) {
       </fieldset>
 
       <button type="submit" class="hc-button">Odeslat to</button>
+    </form>
+  `;
+}
+
+export function checkInModalDialog({ year, apiHost }) {
+  let chipSN = "";
+  const onSubmit = (e) => {
+    const data = new FormData(e.target);
+    console.log(data);
+  };
+  const isNFCSupported = typeof NDEFReader !== "undefined";
+  const startChipScan = async () => {
+    if (!isNFCSupported) return;
+    try {
+      const ndef = new NDEFReader();
+      await ndef.scan();
+
+      ndef.addEventListener("readingerror", (e) => {
+        console.log(e);
+      });
+
+      ndef.addEventListener("reading", (e) => {
+        console.log(e);
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  setTimeout(() => startChipScan(), 0);
+  return html`
+    <form method="dialog" @submit="${onSubmit}">
+      <input type="hidden" name="year" value="${year}" />
+      <fieldset>
+        <legend>NCF Tron</legend>
+        ${when(
+          !isNFCSupported,
+          () =>
+            html`<p>
+              Pro scanování chipů použij Chrome na mobilním telefonu se systémem
+              Android.
+            </p>`
+        )}
+        <div class="field">
+          <label for="nfc-tron-sn">S/N</label>
+          <input id="nfc-tron-sn" name="nfcTronSN" value="${chipSN}" />
+        </div>
+      </fieldset>
     </form>
   `;
 }
