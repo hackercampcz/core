@@ -11,12 +11,12 @@ function getAllHeaders(data) {
   return Array.from(headers);
 }
 
-export async function formatResponse(data, { year, type, format }) {
+export async function formatResponse(data, { year, resource, type, format }) {
   if (format === "csv" || format === "text/csv") {
     console.log({ event: "Formatting CSV" });
     const headers = getAllHeaders(data);
     const text = await csv.writeToString(data.items, { headers });
-    const fileName = `hc-${year}-registrations-${type}.csv`;
+    const fileName = `hc-${year}-${resource}-${type}.csv`;
     return response(text, {
       "Content-Type": "text/csv",
       "Content-Disposition": `attachment; filename=${fileName}`,

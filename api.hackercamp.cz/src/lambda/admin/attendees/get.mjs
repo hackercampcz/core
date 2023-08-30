@@ -52,10 +52,9 @@ async function getAttendees(query, tag, year, page, pageSize) {
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
   const [all, hacker, volunteer, staff, crew] = counts.map((x) => x.nbHits);
-  console.log(hits, nbHits, nbPages, counts);
 
   const items = await getItemsFromDB(db, hits);
-  console.log(items);
+
   return {
     items,
     page,
@@ -118,5 +117,10 @@ export async function handler(event) {
     parseInt(page),
     parseInt(pageSize)
   );
-  return formatResponse(respData, { year, type, format });
+  return formatResponse(respData, {
+    year,
+    resource: "attendees",
+    type,
+    format,
+  });
 }

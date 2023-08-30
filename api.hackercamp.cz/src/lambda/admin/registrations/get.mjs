@@ -137,7 +137,12 @@ export async function handler(event) {
 
   if (type === "optouts") {
     const optouts = await getOptOuts(parseInt(year));
-    return formatResponse(optouts, { year, type, format });
+    return formatResponse(optouts, {
+      year,
+      resource: "registrations",
+      type,
+      format,
+    });
   }
 
   const data = await getRegistrations(
@@ -147,5 +152,10 @@ export async function handler(event) {
     parseInt(page),
     parseInt(pageSize)
   );
-  return formatResponse(data, { year, type, format });
+  return formatResponse(data, {
+    year,
+    resource: "registrations",
+    type,
+    format,
+  });
 }
