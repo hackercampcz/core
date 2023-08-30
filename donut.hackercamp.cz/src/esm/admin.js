@@ -437,15 +437,17 @@ async function handleMessage(e) {
       try {
         const ndef = new NDEFReader();
         await ndef.scan();
+        console.log("NCF Reader started");
 
         ndef.addEventListener("readingerror", (e) => {
           console.error(e);
         });
 
         ndef.addEventListener("reading", (e) => {
+          console.log(e);
           transact((state) =>
             Object.assign(state, {
-              nfcTranData: e.serialNumber.replace(/:/, ""),
+              nfcTronData: e.serialNumber.replace(/:/, ""),
             })
           );
         });
