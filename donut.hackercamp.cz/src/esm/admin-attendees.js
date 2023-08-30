@@ -159,6 +159,26 @@ export function attendeesChips(
           </div>
           <div>
             <md-icon-button
+              title="Zkopírovat statistiky"
+              @click="${copyToClipboard([
+                attendees,
+                hackerAttendees,
+                volunteerAttendees,
+                staffAttendees,
+                crewAttendees,
+              ])}"
+            >
+              <md-icon>content_copy</md-icon></md-icon-button
+            ><md-icon-button
+              href="https://api.hackercamp.cz/v1/admin/attendees?${new URLSearchParams(
+                { year, type: view, format: "csv", pageSize: 500 }
+              )}"
+              title="Stáhnout CSV"
+              aria-label="Stáhnout CSV"
+            >
+              <md-icon>download</md-icon>
+            </md-icon-button>
+            <md-icon-button
               title="Přidat účastníka"
               @click="${renderModalDialog("add-attendee-modal")}"
             >
@@ -169,6 +189,35 @@ export function attendeesChips(
       )}
     </search>
   `;
+}
+
+function copyToClipboard(counts) {
+  return async () => {
+    const [all, hacker, volunteer, staff, crew] = await Promise.all(counts);
+    const rich = new Blob(
+      [
+        `<ul>
+          <li>Všichni: <b>${all}</b>
+          <li>Hackeři: <b>${hacker}</b>
+          <li>Dobrovolníci: <b>${volunteer}</b>
+          <li>Ostatní: <b>${staff}</b>
+          <li>Crew: <b>${crew}</b>
+        </ul>`,
+      ],
+      { type: "text/html" }
+    );
+    const plain = new Blob(
+      [
+        `* Všichni: ${all}\n* Hackeři: ${hacker}\n* Dobrovolnící: ${volunteer}\n* Ostatní: ${staff}\n* Dobrovolníci: ${crew}`,
+      ],
+      { type: "text/plain" }
+    );
+    await navigator.clipboard.write([
+      new ClipboardItem({ "text/html": rich, "text/plain": plain }),
+    ]);
+    window.snackbar.labelText = "Statistiky zkopírovány do schránky";
+    window.snackbar.show();
+  };
 }
 
 export function attendeesTableTemplate(
