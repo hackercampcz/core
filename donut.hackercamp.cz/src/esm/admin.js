@@ -237,7 +237,9 @@ async function renderModalDialog(name) {
     const { view } = curr;
     if (typeof view !== "function") return;
     modalScheduler({
+      preFirstRender() {},
       async render() {
+        console.log("Modal re-render");
         render(template(state.deref()), root);
       },
     });
