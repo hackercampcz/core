@@ -79,6 +79,25 @@
     grid-row-gap: 8px;
     margin-bottom: 32px;
   }
+
+
+  .booking-grid__cell {
+    position: relative;
+  }
+
+  .booking-grid__cell button {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    margin-top: 6px;
+    height: 24px;
+  }
+
+  .booking-grid__cell input:not(:disabled) + button,
+  .booking-grid__cell input:focus + button {
+    display: none;
+  }
+
   @media screen and (min-width: 600px) {
     .booking-grid {
       grid-template-columns: 1fr 1fr;

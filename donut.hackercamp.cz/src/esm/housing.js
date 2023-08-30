@@ -1,6 +1,7 @@
 import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
+import { when } from "lit-html/directives/when.js";
 
 async function loadHousingData(apiBase, year) {
   try {
@@ -61,7 +62,7 @@ function renderHousingTypes(selectElement, { types, hacker }) {
   }
 }
 
-function renderHousingVariants(rootElement, { variants, housing }) {
+function renderHousingVariants(rootElement, { variants, housing, profile }) {
   for (const variant of variants) {
     const sectionElement = document.createElement("section");
     sectionElement.classList.add(`${variant.type}-housing`);
@@ -123,6 +124,16 @@ function renderHousingVariants(rootElement, { variants, housing }) {
                       placeholder="-- Volno --"
                       type="search"
                     />
+
+                    ${when(profile.is_admin, () => `
+                      <button onclick="
+                        event.preventDefault();
+                        const input = event.target.previousElementSibling;
+                        input.disabled = false;
+                      " type="button">
+                        unlock
+                      </button>
+                    `)}
                   </div>
                 `
                 )
@@ -452,6 +463,7 @@ export async function main({ formElement, variantsRootElement, env }) {
     variants,
     housing,
     formElement,
+    profile,
   });
   renderHackers({ formElement, selectElement }, { hackers, hacker });
   renderBackstage(formElement, { backstage });
