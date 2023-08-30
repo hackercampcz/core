@@ -482,7 +482,13 @@ function nfcSN(chipSN) {
   return html`
     <div class="field">
       <label for="nfc-tron-sn">S/N</label>
-      <input id="nfc-tron-sn" name="nfcTronSN" .value="${chipSN ?? ""}" />
+      <md-outlined-text-field
+        id="nfc-tron-sn"
+        name="nfcTronSN"
+        .value="${chipSN ?? ""}"
+      >
+        <md-icon slot="trailingicon">nfc</md-icon>
+      </md-outlined-text-field>
     </div>
   `;
 }
@@ -503,6 +509,7 @@ export function checkInModalDialog({ year, apiHost, nfcTronData }) {
   return html`
     <form method="dialog" @submit="${onSubmit}">
       <input type="hidden" name="year" value="${year}" />
+      <h2>Check-in</h2>
       <fieldset>
         <legend>NCF Tron</legend>
         ${when(
