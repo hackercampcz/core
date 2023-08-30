@@ -1,5 +1,12 @@
 import { authorize, getToken } from "@hackercamp/lib/auth.mjs";
 
+class AuthorizationError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "AuthorizationError";
+  }
+}
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise<void>}
@@ -9,8 +16,6 @@ export async function checkAuthorization(event) {
   const privateKey = process.env.private_key;
   const isAuthorized = await authorize("admin", token, privateKey);
   if (!isAuthorized) {
-    const error = new Error("Unauthorized");
-    error.name = "AuthorizationError";
-    throw error;
+    throw new AuthorizationError("Unauthorized");
   }
 }
