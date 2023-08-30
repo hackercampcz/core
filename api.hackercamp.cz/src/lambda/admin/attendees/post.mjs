@@ -83,12 +83,42 @@ function addAttendee(db, data) {
  * @param {DynamoDBClient} db
  * @param {*} data
  */
+async function checkIn(db, data) {
+  console.log({ event: "Attendee check-in", data });
+  return db.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_attendees,
+      Key: {
+        year: { N: data.year.toString() },
+        slackID: { S: data.slackID },
+      },
+      UpdateExpression:
+        "SET checkIn = :checkIn, checkInBy = :checkInBy, checkInNote = :checkInNote, nfcTronData = :nfcTronData",
+      ExpressionAttributeValues: marshall(
+        {
+          ":checkIn": new Date().toISOString(),
+          ":checkInBy": data.admin,
+          ":checkInNote": data.note,
+          ":nfcTronData": data.nfcTronData,
+        },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
+    })
+  );
+}
+
+/**
+ * @param {DynamoDBClient} db
+ * @param {*} data
+ */
 async function processRequest(db, data) {
   switch (data.command) {
     case "edit":
       return editAttendee(db, data.params);
     case "add":
       return addAttendee(db, data.params);
+    case "checkIn":
+      return checkIn(db, data.params);
   }
 }
 
