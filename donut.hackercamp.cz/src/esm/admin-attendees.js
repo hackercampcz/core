@@ -497,7 +497,7 @@ export function checkInModalDialog({ year, apiHost }) {
       });
 
       ndef.addEventListener("reading", (e) => {
-        console.log(e);
+        chipSN = e.serialNumber.replace(/:/, "");
       });
     } catch (err) {
       console.error(err);
