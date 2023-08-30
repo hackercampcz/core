@@ -585,6 +585,7 @@ function checkInModalDialog({
         ${map(nfcTronData, (sn, i) => {
           const chipID = getChipID(sn);
           // TODO: remove scan
+          // TODO: hand written Chip insert support
           return html`
             <div class="field">
               <label for="nfc-tron-sn-${i}">S/N #${i + 1}</label>

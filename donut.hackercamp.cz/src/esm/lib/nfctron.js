@@ -360,6 +360,6 @@ const mapping = new Map([
   ["04ea9ef2b91290", "aH12zseA2j3"],
 ]);
 
-export function getChipId(serialNumber) {
+export function getChipID(serialNumber) {
   return mapping.get(serialNumber);
 }

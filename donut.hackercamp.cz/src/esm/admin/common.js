@@ -20,6 +20,7 @@ export const Action = {
   approveSelectedVolunteers: "approveSelectedVolunteers",
   trashRegistration: "trashRegistration",
   startNfcScan: "startNfcScan",
+  removeChip: "removeChip",
 };
 
 export function dispatchAction(type, payload) {

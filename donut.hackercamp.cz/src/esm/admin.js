@@ -29,7 +29,6 @@ import { renderEventForm } from "./event-form.js";
 import { schedule } from "./lib/schedule.js";
 import { showModalDialog } from "./modal-dialog.js";
 import { instatializeDates } from "./lib/object.js";
-import { getChipId } from "./lib/nfctron.js";
 
 const state = defAtom({
   year: 2023,
@@ -41,6 +40,7 @@ const state = defAtom({
   campStartAt: new Date(),
   campEndAt: new Date(),
   selection: new Set(),
+  nfcTronData: new Set(),
 });
 
 const transact = (fn, atom = state) => atom.swap(fn);
@@ -225,7 +225,12 @@ function editEvent(event_id, updates) {
 }
 
 function renderDetail(detail) {
-  transact((x) => Object.assign(x, { detail }));
+  transact((x) =>
+    Object.assign(x, {
+      detail,
+      nfcTronData: new Set(detail.nfcTronData?.map((x) => x.sn) ?? [""]),
+    })
+  );
 }
 
 async function renderModalDialog(name) {
@@ -446,7 +451,7 @@ async function handleMessage(e) {
         return x;
       });
       break;
-    case Action.startNfcScan:
+    case Action.startNfcScan: {
       try {
         const ndef = new NDEFReader();
         await ndef.scan();
@@ -459,15 +464,22 @@ async function handleMessage(e) {
         ndef.addEventListener("reading", (e) => {
           console.log(e);
           const sn = e.serialNumber.replaceAll(":", "");
-          transact((state) =>
-            Object.assign(state, {
-              nfcTronData: { sn, chipId: getChipId(sn) },
-            })
-          );
+          transact((state) => {
+            state.nfcTronData.add(sn);
+            state.nfcTronData.delete("");
+            return state;
+          });
         });
       } catch (err) {
         console.error(err);
       }
+      break;
+    }
+    case Action.removeChip:
+      transact((state) => {
+        state.nfcTronData.delete(payload.sn);
+        return state;
+      });
   }
 }
 
