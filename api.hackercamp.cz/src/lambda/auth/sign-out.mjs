@@ -19,7 +19,10 @@ export async function signOut(event) {
   });
 
   // For local development we need to relax Cross site security
-  const sameSite = origin.includes("localhost") ? "None" : "Strict";
+  const sameSite =
+    origin.includes("localhost") || origin.includes("192.168.68.114")
+      ? "None"
+      : "Strict";
   const expired = new Date(0).toUTCString();
   return withCORS_(
     found(origin, {
