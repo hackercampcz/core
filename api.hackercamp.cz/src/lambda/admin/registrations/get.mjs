@@ -46,7 +46,14 @@ async function getItemsFromDB(db, hits) {
       year: { N: year.toString() },
       email: { S: email },
     }));
-    console.log("KEYS TO LOAD", keys);
+    const deduplicatedKeys = keys.filter(
+      (value, index, self) =>
+        index ===
+        self.findIndex(
+          (t) => t.S.email === value.S.email && t.N.year === value.N.year
+        )
+    );
+    console.log("KEYS TO LOAD", keys, deduplicatedKeys);
     const items = await db.send(
       new BatchGetItemCommand({
         RequestItems: { [tableName]: { Keys: keys } },
@@ -117,16 +124,6 @@ async function getRegistrations(query, tag, year, page, pageSize) {
 
   const duplicates = findDuplicates(hits);
   console.log(hits, duplicates);
-
-  const deduplicatedHits = hits.filter(
-    (value, index, self) =>
-      index ===
-      self.findIndex(
-        (t) => t.S.email === value.S.email && t.N.year === value.N.year
-      )
-  );
-
-  console.log(hits, duplicates, deduplicatedHits);
 
   const items = await getItemsFromDB(db, deduplicatedHits);
   return {
