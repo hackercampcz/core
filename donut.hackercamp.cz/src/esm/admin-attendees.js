@@ -436,7 +436,7 @@ function addAttendeeModalDialog({ year, apiHost }) {
       </div>
       <div class="field">
         <label for="ticketType">Lístek</label>
-        <input id="ticketType" name="ticketType" required />
+        <input id="ticketType" name="ticketType" required value="staff" />
       </div>
       <div class="field">
         <label for="company">Společnost</label>
