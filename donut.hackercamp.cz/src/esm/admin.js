@@ -225,12 +225,11 @@ function editEvent(event_id, updates) {
 }
 
 function renderDetail(detail) {
-  transact((x) =>
-    Object.assign(x, {
-      detail,
-      nfcTronData: new Set(detail.nfcTronData?.map((x) => x.sn) ?? [""]),
-    })
-  );
+  const items = detail.nfcTronData?.length
+    ? detail.nfcTronData.map((x) => x.sn)
+    : [""];
+  const nfcTronData = new Set(items);
+  transact((x) => Object.assign(x, { detail, nfcTronData }));
 }
 
 function closeDetail() {

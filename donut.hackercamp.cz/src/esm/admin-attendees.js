@@ -601,6 +601,7 @@ function checkInModalDialog({
                   () => html`
                     <md-icon-button
                       slot="trailingicon"
+                      type="button"
                       title="Odebrat"
                       @click="${removeChip(sn)}"
                     >
