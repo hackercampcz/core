@@ -337,10 +337,10 @@ function nfcTronTemplate(entries) {
       )}
       ${entries.map(
         (x) => html`
-          <div>
+          <div data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
             <p>
               ${when(
-                x.vip || x.paid,
+                x.paid,
                 () =>
                   html`<strong style="color: forestgreen">Zaplaceno</strong>`,
                 () =>
