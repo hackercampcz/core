@@ -46,6 +46,7 @@ async function getItemsFromDB(db, hits) {
       year: { N: year.toString() },
       email: { S: email },
     }));
+    console.log("KEYS TO LOAD", keys);
     const items = await db.send(
       new BatchGetItemCommand({
         RequestItems: { [tableName]: { Keys: keys } },
