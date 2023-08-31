@@ -41,19 +41,18 @@ async function getItemsFromDB(db, hits) {
   if (hits.length === 0) return [];
   const tableName = process.env.db_table_registrations;
   const result = [];
+  const deduplicatedHits = keys.filter(
+    (value, index, self) =>
+      index ===
+      self.findIndex((t) => t.email === value.email && t.year === value.year)
+  );
+
   for (const batch of partition(100, true, hits)) {
     const keys = batch.map(({ year, email }) => ({
       year: { N: year.toString() },
       email: { S: email },
     }));
-    const deduplicatedKeys = keys.filter(
-      (value, index, self) =>
-        index ===
-        self.findIndex(
-          (t) => t.S.email === value.S.email && t.N.year === value.N.year
-        )
-    );
-    console.log("KEYS TO LOAD", keys, deduplicatedKeys);
+    console.log("KEYS TO LOAD", keys, deduplicatedHits);
     const items = await db.send(
       new BatchGetItemCommand({
         RequestItems: { [tableName]: { Keys: keys } },
