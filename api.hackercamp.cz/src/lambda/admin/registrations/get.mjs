@@ -60,6 +60,12 @@ async function getItemsFromDB(db, hits) {
   return result;
 }
 
+function findDuplicates(arr) {
+  return arr.filter(
+    (currentValue, currentIndex) => arr.indexOf(currentValue) !== currentIndex
+  );
+}
+
 /**
  *
  * @param {string} query
@@ -107,6 +113,9 @@ async function getRegistrations(query, tag, year, page, pageSize) {
   const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map(
     (x) => x.nbHits
   );
+
+  const duplicates = findDuplicates(hits);
+  console.log(hits, duplicates);
 
   const items = await getItemsFromDB(db, hits);
   return {
