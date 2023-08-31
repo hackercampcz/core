@@ -427,7 +427,7 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
     billingMode: "PAY_PER_REQUEST",
   });
   attendees.onEvent(
-    "search-indexing",
+    "search-indexing-attendees",
     getTableEventHandler(
       "search-indexing-attendees",
       "attendees/search-index.mjs",
