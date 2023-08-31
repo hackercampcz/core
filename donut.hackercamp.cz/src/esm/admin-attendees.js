@@ -587,7 +587,15 @@ function checkInModalDialog({
                 name="nfcTronSN${i}"
                 value="${sn}"
               >
-                <md-icon slot="trailingicon">nfc</md-icon>
+                ${when(
+                  sn === "",
+                  () => html`<md-icon slot="trailingicon">nfc</md-icon>`,
+                  () => html`
+                    <md-icon-button title="Odebrat" @click="">
+                      <md-icon slot="trailingicon">remove</md-icon>
+                    </md-icon-button>
+                  `
+                )}
               </md-outlined-text-field>
               <div>
                 <strong>ID čipu:</strong>
