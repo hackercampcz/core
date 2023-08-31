@@ -290,7 +290,7 @@ export function renderDetail(detail) {
 export function closeDetail() {
   return (e) => {
     e.preventDefault();
-    dispatchAction(Action.renderDetail, { detail: undefined });
+    dispatchAction(Action.closeDetail);
   };
 }
 

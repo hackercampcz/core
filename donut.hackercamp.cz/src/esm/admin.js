@@ -225,15 +225,14 @@ function editEvent(event_id, updates) {
 }
 
 function renderDetail(detail) {
-  transact((x) =>
-    detail
-      ? Object.assign(x, {
-          detail,
-          nfcTronData: new Set(detail.nfcTronData?.map((x) => x.sn) ?? [""]),
-        })
-      : x
-  );
+  transact((x) => Object.assign(x, {
+    detail,
+    nfcTronData: new Set(detail.nfcTronData?.map((x) => x.sn) ?? [""]),
+  }));
 }
+
+function closeDetail() {
+  transact((x) => Object.assign(x, { detail: null }));}
 
 async function renderModalDialog(name) {
   const root = document.getElementById("modal-root");
@@ -422,6 +421,9 @@ async function handleMessage(e) {
       break;
     case Action.renderDetail:
       renderDetail(payload.detail);
+      break;
+    case Action.closeDetail:
+      closeDetail();
       break;
     case Action.editEvent:
       await editEvent(payload.eventId, payload.updates);
