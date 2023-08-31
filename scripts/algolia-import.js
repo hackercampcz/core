@@ -28,7 +28,7 @@ const indexes = new Map([
   [
     "hc-attendees",
     {
-      searchableAttributes: ["name", "email", "company"],
+      searchableAttributes: ["name", "email", "company", "nfcTronData"],
       ranking: [
         "desc(createdAt)",
         "typo",
@@ -110,6 +110,7 @@ async function getAttendees() {
       "ticketType",
       "travel",
       "housing",
+      "nfcTronData",
     ].join(),
     ExpressionAttributeNames: {
       "#year": "year",

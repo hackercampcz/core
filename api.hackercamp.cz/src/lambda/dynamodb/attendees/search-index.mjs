@@ -21,6 +21,7 @@ const keysToIndex = new Set([
   "ticketType",
   "travel",
   "housing",
+  "nfcTronData",
 ]);
 
 function openAlgoliaClient() {
