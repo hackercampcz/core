@@ -571,10 +571,12 @@ function checkInModalDialog({
       year: formData.get("year"),
       slackID: formData.get("slackID"),
       note: formData.get("note"),
-      nfcTronData: Array.from(nfcTronData).map((sn) => ({
-        sn,
-        chipID: getChipID(sn),
-      })),
+      nfcTronData: Array.from(nfcTronData)
+        .filter(Boolean)
+        .map((sn) => ({
+          sn,
+          chipID: getChipID(sn),
+        })),
     };
     try {
       const result = executeCommand(
@@ -732,6 +734,7 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
           <textarea id="note" name="note"></textarea>
         </div>
       </fieldset>
+      <button type="submit" class="hc-button">Odeslat to</button>
     </form>
   `;
 }
