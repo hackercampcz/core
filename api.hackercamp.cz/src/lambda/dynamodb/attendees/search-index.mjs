@@ -80,11 +80,15 @@ async function updateAttendeesIndex(event, searchIndex) {
  * @returns {Promise<void>}
  */
 async function indexUpdate(event) {
-  const searchIndex = openAlgoliaIndex();
-  await Promise.all([
-    deleteRemovedItems(event, searchIndex),
-    updateAttendeesIndex(event, searchIndex),
-  ]);
+  try {
+    const searchIndex = openAlgoliaIndex();
+    await Promise.all([
+      deleteRemovedItems(event, searchIndex),
+      updateAttendeesIndex(event, searchIndex),
+    ]);
+  } catch (err) {
+    rollbar.error(err);
+  }
 }
 
 export const handler = rollbar.lambdaHandler(indexUpdate);
