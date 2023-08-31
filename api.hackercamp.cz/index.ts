@@ -426,6 +426,24 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
     ],
     billingMode: "PAY_PER_REQUEST",
   });
+  attendees.onEvent(
+    "search-indexing",
+    getTableEventHandler(
+      "search-indexing",
+      "attendees/search-index.mjs",
+      defaultLambdaRole,
+      {
+        environment: {
+          variables: {
+            rollbar_access_token,
+            slack_bot_token: config.get("slack-bot-token"),
+            ...algoliaEnv,
+          },
+        },
+      }
+    ),
+    { startingPosition: "LATEST" }
+  );
 
   const program = new aws.dynamodb.Table(hcName("program"), {
     name: hcName("program"),
