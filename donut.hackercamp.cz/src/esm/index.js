@@ -327,10 +327,14 @@ function nfcTronTemplate(entries) {
   return html`
     <div class="hc-card hc-card--decorated">
       <h2>Útrata na Hackercampu</h2>
-      <p>
-        <strong><data value="${total}">${formatMoney(total)}</data></strong>
-      </p>
-
+      ${when(
+        total > 0,
+        () =>
+          html`<p>
+            Celkem:
+            <strong><data value="${total}">${formatMoney(total)}</data></strong>
+          </p>`
+      )}
       ${entries.map(
         (x) => html`
           <div>

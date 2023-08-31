@@ -31,13 +31,12 @@ function editAttendee(db, data) {
         ])
       ),
       UpdateExpression:
-        "SET #attendeeName = :name, email = :email, note = :note, nfcTronID = :nfcTronID, company = :company, edited = :now, editedBy = :editedBy",
+        "SET #attendeeName = :name, email = :email, note = :note, company = :company, edited = :now, editedBy = :editedBy",
       ExpressionAttributeValues: marshall(
         {
           ":name": data.name,
           ":email": data.email,
           ":note": data.note,
-          ":nfcTronID": data.nfcTronID,
           ":company": data.company,
           ":now": new Date().toISOString(),
           ":editedBy": data.editedBy,

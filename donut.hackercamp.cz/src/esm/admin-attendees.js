@@ -268,6 +268,7 @@ export function attendeesTableTemplate(
               <td>${row.company}</td>
               <td>${ticketName.get(row.ticketType)}</td>
               <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
+              <!-- TODO: Show nfcTronData -->
               <td>${row.nfcTronID}</td>
               <td>
                 <hc-mail-button email="${row.email}"></hc-mail-button
@@ -327,6 +328,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
     <p>Doprava: <strong>${
       travel.get(detail.travel) ?? "Ještě si nevybral"
     }</strong></p>
+    <!-- TODO: Show nfcTronData -->
     ${when(
       detail.nfcTronID,
       () => html`<p>NFCtron ID: <code>${detail.nfcTronID}</code></p>`
@@ -410,10 +412,6 @@ function editAttendeeModalDialog({ detail, apiHost }) {
         <label for="note">Poznámka</label>
         <input id="note" name="note" value="${detail.note}" />
       </div>
-      <div class="field">
-        <label for="nfc-tron-id">NFCtron ID</label>
-        <input id="nfc-tron-id" name="nfcTronID" value="${detail.nfcTronID}" />
-      </div>
       <button type="submit" class="hc-button">Odeslat to</button>
     </form>
   `;
@@ -447,10 +445,6 @@ function addAttendeeModalDialog({ year, apiHost }) {
       <div class="field">
         <label for="note">Poznámka</label>
         <input id="note" name="note" />
-      </div>
-      <div class="field">
-        <label for="nfc-tron-id">NFCtron ID</label>
-        <input id="nfc-tron-id" name="nfcTronID" />
       </div>
 
       <h3>Fakturace</h3>
