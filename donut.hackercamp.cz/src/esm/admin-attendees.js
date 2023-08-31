@@ -720,8 +720,8 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
             id="total"
             name="checkOutTotal"
             value="${detail.nfcTronData
-              .map((x) => x.spent ?? 0)
-              .reduce((a, b) => a + b, 0)}"
+              ?.map((x) => x.spent ?? 0)
+              ?.reduce((a, b) => a + b, 0) ?? 0}"
           ></md-outlined-text-field>
         </div>
       </fieldset>
