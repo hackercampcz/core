@@ -125,7 +125,7 @@ async function getRegistrations(query, tag, year, page, pageSize) {
   const duplicates = findDuplicates(hits);
   console.log(hits, duplicates);
 
-  const items = await getItemsFromDB(db);
+  const items = await getItemsFromDB(db, hits);
   return {
     items,
     page,
