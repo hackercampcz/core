@@ -268,8 +268,11 @@ export function attendeesTableTemplate(
               <td>${row.company}</td>
               <td>${ticketName.get(row.ticketType)}</td>
               <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
-              <!-- TODO: Show nfcTronData -->
-              <td>${row.nfcTronID}</td>
+              <td>
+                ${row.nfcTronData
+                  ?.map(({ chipID }) => chipID)
+                  .filter(Boolean).join(", ") || html`<em><small>nene</small></em>`}
+              </td>
               <td>
                 <hc-mail-button email="${row.email}"></hc-mail-button
                 ><hc-phone-button phone="${row.phone}"></hc-phone-button>
@@ -328,11 +331,12 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
     <p>Doprava: <strong>${
       travel.get(detail.travel) ?? "Ještě si nevybral"
     }</strong></p>
-    <!-- TODO: Show nfcTronData -->
-    ${when(
-      detail.nfcTronID,
-      () => html`<p>NFCtron ID: <code>${detail.nfcTronID}</code></p>`
-    )}
+    <p>
+      NFCtron ID(s):
+      ${detail.nfcTronData
+        ?.map(({ chipID }) => chipID && html`<code>${chipID}</code>`)
+        .filter(Boolean) || html`<em><strong>nemá</strong></em>`}
+    </p>
     ${when(detail.note, () => html`<p>${detail.note}</p>`)}
     ${when(
       detail.edited,
