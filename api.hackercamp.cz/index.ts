@@ -429,7 +429,7 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
   attendees.onEvent(
     "search-indexing",
     getTableEventHandler(
-      "search-indexing",
+      "search-indexing-attendees",
       "attendees/search-index.mjs",
       defaultLambdaRole,
       {
