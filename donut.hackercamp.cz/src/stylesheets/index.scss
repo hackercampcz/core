@@ -149,7 +149,9 @@ code {
   border-image-source: var(--hc-gradient);
   background-image: var(--hc-gradient);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* hotfix that brokes gay text color due to certain ios browsers
+  with white color on white background. */
+  -webkit-text-fill-color: unset;
 }
 
 .hc-navbar {
