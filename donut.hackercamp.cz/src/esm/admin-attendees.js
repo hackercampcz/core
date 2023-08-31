@@ -532,7 +532,12 @@ function startChipScan() {
   return dispatchAction(Action.startNfcScan);
 }
 
+function removeChip(sn) {
+  return () => dispatchAction(Action.removeChip, sn);
+}
+
 registerDialog("check-in-modal", checkInModalDialog);
+
 function checkInModalDialog({
   apiHost,
   year,
@@ -591,8 +596,12 @@ function checkInModalDialog({
                   sn === "",
                   () => html`<md-icon slot="trailingicon">nfc</md-icon>`,
                   () => html`
-                    <md-icon-button title="Odebrat" @click="">
-                      <md-icon slot="trailingicon">remove</md-icon>
+                    <md-icon-button
+                      slot="trailingicon"
+                      title="Odebrat"
+                      @click="${removeChip(sn)}"
+                    >
+                      <md-icon>remove</md-icon>
                     </md-icon-button>
                   `
                 )}
