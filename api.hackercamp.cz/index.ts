@@ -425,6 +425,8 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
       { name: "year", type: "N" },
     ],
     billingMode: "PAY_PER_REQUEST",
+    streamEnabled: true,
+    streamViewType: "NEW_AND_OLD_IMAGES",
   });
   attendees.onEvent(
     "search-indexing-attendees",
