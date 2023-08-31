@@ -533,7 +533,10 @@ function startChipScan() {
 }
 
 function removeChip(sn) {
-  return () => dispatchAction(Action.removeChip, sn);
+  return (e) => {
+    e.preventDefault();
+    dispatchAction(Action.removeChip, { sn });
+  };
 }
 
 registerDialog("check-in-modal", checkInModalDialog);

@@ -225,14 +225,17 @@ function editEvent(event_id, updates) {
 }
 
 function renderDetail(detail) {
-  transact((x) => Object.assign(x, {
-    detail,
-    nfcTronData: new Set(detail.nfcTronData?.map((x) => x.sn) ?? [""]),
-  }));
+  transact((x) =>
+    Object.assign(x, {
+      detail,
+      nfcTronData: new Set(detail.nfcTronData?.map((x) => x.sn) ?? [""]),
+    })
+  );
 }
 
 function closeDetail() {
-  transact((x) => Object.assign(x, { detail: null }));}
+  transact((x) => Object.assign(x, { detail: null }));
+}
 
 async function renderModalDialog(name) {
   const root = document.getElementById("modal-root");
@@ -470,7 +473,6 @@ async function handleMessage(e) {
           const sn = e.serialNumber.replaceAll(":", "");
           transact((state) => {
             state.nfcTronData.add(sn);
-            state.nfcTronData.delete("");
             return state;
           });
         });
