@@ -110,6 +110,35 @@ async function checkIn(db, data) {
  * @param {DynamoDBClient} db
  * @param {*} data
  */
+async function checkOut(db, data) {
+  console.log({ event: "Attendee check-out", data });
+  return db.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_attendees,
+      Key: {
+        year: { N: data.year.toString() },
+        slackID: { S: data.slackID },
+      },
+      UpdateExpression:
+        "SET checkout = :checkOut, checkOutBy = :checkOutBy, checkOutNote = :checkOutNote, checkOutPaid = :checkOutPaid, checkOutTotal = :checkOutTotal",
+      ExpressionAttributeValues: marshall(
+        {
+          ":checkOut": new Date().toISOString(),
+          ":checkOutBy": data.admin,
+          ":checkOutNote": data.note,
+          ":checkOutPaid": data.paid,
+          ":checkOutTotal": data.amount,
+        },
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      ),
+    })
+  );
+}
+
+/**
+ * @param {DynamoDBClient} db
+ * @param {*} data
+ */
 async function processRequest(db, data) {
   switch (data.command) {
     case "edit":
@@ -118,6 +147,8 @@ async function processRequest(db, data) {
       return addAttendee(db, data.params);
     case "checkIn":
       return checkIn(db, data.params);
+    case "checkOut":
+      return checkOut(db, data.params);
   }
 }
 

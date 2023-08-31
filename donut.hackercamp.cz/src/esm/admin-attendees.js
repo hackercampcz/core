@@ -271,7 +271,8 @@ export function attendeesTableTemplate(
               <td>
                 ${row.nfcTronData
                   ?.map(({ chipID }) => chipID)
-                  .filter(Boolean).join(", ") || html`<em><small>nene</small></em>`}
+                  .filter(Boolean)
+                  .join(", ") || html`<em><small>nene</small></em>`}
               </td>
               <td>
                 <hc-mail-button email="${row.email}"></hc-mail-button
@@ -319,6 +320,12 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
         })}"
       >
         <md-icon>where_to_vote</md-icon>
+      </md-icon-button
+      ><md-icon-button
+            title="Check Out"
+            @click="${renderModalDialog("check-out-modal")}"
+      >
+        <md-icon>location_off</md-icon>
       </md-icon-button>
     </div>
     ${ticketDetail(detail)}
@@ -333,9 +340,11 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
     }</strong></p>
     <p>
       NFCtron ID(s):
-      ${detail.nfcTronData
-        ?.map(({ chipID }) => chipID && html`<code>${chipID}</code>`)
-        .filter(Boolean) || html`<em><strong>nemá</strong></em>`}
+      ${
+        detail.nfcTronData
+          ?.map(({ chipID }) => chipID && html`<code>${chipID}</code>`)
+          .filter(Boolean) || html`<em><strong>nemá</strong></em>`
+      }
     </p>
     ${when(detail.note, () => html`<p>${detail.note}</p>`)}
     ${when(
@@ -651,6 +660,78 @@ function checkInModalDialog({
         </div>
       </fieldset>
       <button type="submit" class="hc-button">Odeslat to</button>
+    </form>
+  `;
+}
+
+registerDialog("check-out-modal", checkOutModalDialog);
+function checkOutModalDialog({ apiHost, year, detail, contact }) {
+  const onSubmit = async (e) => {
+    const formData = new FormData(e.target);
+    const data = {
+      admin: contact.email,
+      year: formData.get("year"),
+      slackID: formData.get("slackID"),
+      note: formData.get("note"),
+      paid: formData.get("checkOutPaid"),
+      amount: formData.get("checkOutTotal"),
+    };
+    try {
+      const result = executeCommand(
+        apiHost,
+        Endpoint.attendees,
+        "checkOut",
+        data
+      );
+      window.snackbar.labelText = "Check-out uložen";
+      window.snackbar.show();
+      return result;
+    } catch (err) {
+      window.snackbar.labelText = "Check-out neuložen";
+      window.snackbar.timeoutMs = -1;
+      window.snackbar.show();
+    }
+  };
+  return html`
+    <form method="dialog" @submit="${onSubmit}">
+      <input type="hidden" name="year" value="${year}" />
+      <input type="hidden" name="slackID" value="${detail.slackID}" />
+      <h2>Check out</h2>
+      <fieldset>
+        <legend>Vyúčtování</legend>
+        <p>
+          Účastník by měl za sebe zaplatit, nebo by měl být vyúčtován hromadně.
+          V případě, že platba probhla, tak to odškrtněte a zadejte i částku.
+        </p>
+        <div class="field">
+          <label for="paid"
+            ><input
+              type="checkbox"
+              id="paid"
+              name="checkOutPaid"
+              value="true"
+            />
+            Zaplaceno</label
+          >
+        </div>
+        <div class="field">
+          <label for="total">Částka</label>
+          <md-outlined-text-field
+            id="total"
+            name="checkOutTotal"
+            value="${detail.nfcTronData
+              .map((x) => x.spent ?? 0)
+              .reduce((a, b) => a + b, 0)}"
+          ></md-outlined-text-field>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Další</legend>
+        <div class="field">
+          <label for="note">Poznámka</label>
+          <textarea id="note" name="note"></textarea>
+        </div>
+      </fieldset>
     </form>
   `;
 }
