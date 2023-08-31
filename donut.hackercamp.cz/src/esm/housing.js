@@ -289,7 +289,7 @@ function renderBackstage(rootElement, { backstage }) {
     )) {
       inputElement.value = label;
       inputElement.disabled = true;
-      inputElement?.parentElement.querySelector("button").remove();
+      inputElement.parentElement?.querySelector("button")?.remove();
     }
   }
 }
