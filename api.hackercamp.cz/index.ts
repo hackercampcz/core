@@ -386,10 +386,10 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
     ),
     { startingPosition: "LATEST" }
   );
-  registrations.onEvent(
-    "search-indexing",
+  /*registrations.onEvent(
+    "search-indexing-registrations",
     getTableEventHandler(
-      "search-indexing",
+      "search-indexing-registartions",
       "registrations/search-index.mjs",
       defaultLambdaRole,
       {
@@ -403,7 +403,7 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
       }
     ),
     { startingPosition: "LATEST" }
-  );
+  );*/
 
   const contacts = new aws.dynamodb.Table(hcName("contacts"), {
     name: hcName("contacts"),
@@ -428,7 +428,7 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
   });
-  attendees.onEvent(
+  /*attendees.onEvent(
     "search-indexing-attendees",
     getTableEventHandler(
       "search-indexing-attendees",
@@ -445,7 +445,7 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
       }
     ),
     { startingPosition: "LATEST" }
-  );
+  );*/
 
   const program = new aws.dynamodb.Table(hcName("program"), {
     name: hcName("program"),
