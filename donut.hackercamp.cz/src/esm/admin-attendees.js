@@ -536,6 +536,8 @@ function removeChip(sn) {
   return (e) => {
     e.preventDefault();
     dispatchAction(Action.removeChip, { sn });
+    window.snackbar.labelText = "Chip odebrán";
+    window.snackbar.show();
   };
 }
 
@@ -561,7 +563,21 @@ function checkInModalDialog({
         chipID: getChipID(sn),
       })),
     };
-    return executeCommand(apiHost, Endpoint.attendees, "checkIn", data);
+    try {
+      const result = executeCommand(
+        apiHost,
+        Endpoint.attendees,
+        "checkIn",
+        data
+      );
+      window.snackbar.labelText = "Check-in uložen";
+      window.snackbar.show();
+      return result;
+    } catch (err) {
+      window.snackbar.labelText = "Check-in neuložen";
+      window.snackbar.timeoutMs = -1;
+      window.snackbar.show();
+    }
   };
   return html`
     <form method="dialog" @submit="${onSubmit}">
