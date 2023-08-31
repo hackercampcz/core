@@ -47,13 +47,13 @@ async function getItemsFromDB(db, hits) {
       self.findIndex((t) => t.email === value.email && t.year === value.year)
   );
 
-  console.log("KEYS TO LOAD", hits, deduplicatedHits);
-
-  for (const batch of partition(100, true, hits)) {
+  for (const batch of partition(100, true, deduplicatedHits)) {
     const keys = batch.map(({ year, email }) => ({
       year: { N: year.toString() },
       email: { S: email },
     }));
+    console.log("KEYS TO LOAD", keys);
+
     const items = await db.send(
       new BatchGetItemCommand({
         RequestItems: { [tableName]: { Keys: keys } },
