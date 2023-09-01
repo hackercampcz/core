@@ -18,8 +18,6 @@ const algoliaEnv = {
   algolia_app_id: config.get("algolia-app-id"),
   algolia_admin_key: config.get("algolia-admin-key"),
   algolia_search_key: config.get("algolia-search-key"),
-  // TODO: extend this to support more than one index
-  algolia_index_name: config.get("algolia-index-name"),
 };
 const rollbar_access_token = config.require("rollbar-access-token");
 
@@ -163,6 +161,7 @@ export function createRoutes({
               private_key: config.get("private-key"),
               fakturoid_token: config.get("fakturoid-token"),
               postmark_token: config.get("postmark-token"),
+              algolia_index_name: config.get("algolia-registrations-index-name"),
               ...algoliaEnv,
               ...postmarkTemplates,
             },
@@ -178,6 +177,7 @@ export function createRoutes({
               db_table_attendees: attendeesDataTable,
               private_key: config.get("private-key"),
               postmark_token: config.get("postmark-token"),
+              algolia_index_name: config.get("algolia-attendees-index-name"),
               ...algoliaEnv,
               ...postmarkTemplates,
             },
@@ -397,6 +397,7 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
           variables: {
             rollbar_access_token,
             slack_bot_token: config.get("slack-bot-token"),
+            algolia_index_name: config.get("algolia-registrations-index-name"),
             ...algoliaEnv,
           },
         },
@@ -439,6 +440,7 @@ export function createDB({ slackQueueUrl, postmarkTemplates }) {
           variables: {
             rollbar_access_token,
             slack_bot_token: config.get("slack-bot-token"),
+            algolia_index_name: config.get("algolia-attendees-index-name"),
             ...algoliaEnv,
           },
         },

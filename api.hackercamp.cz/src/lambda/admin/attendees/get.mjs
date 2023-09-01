@@ -14,8 +14,8 @@ import { resultsCount } from "../../algolia.mjs";
 const db = new DynamoDBClient({});
 
 async function getAttendees(query, tag, year, page, pageSize) {
-  const algolia_index_name = "hc-attendees";
-  const { algolia_app_id, algolia_search_key } = process.env;
+  const { algolia_app_id, algolia_search_key, algolia_index_name } =
+    process.env;
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
   console.log({
