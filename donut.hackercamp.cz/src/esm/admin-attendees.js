@@ -342,8 +342,12 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
       NFCtron ID(s):
       ${
         detail.nfcTronData
-          ?.map(({ chipID }) => chipID && html`<code>${chipID}</code>`)
-          .filter(Boolean) || html`<em><strong>nemá</strong></em>`
+          ?.map(({ chipID }) => chipID && html`
+            <a title="Online účtenka" href="https://pass.nfctron.com/receipt/v2/${chipID}/">
+              ${chipID}
+            </a>
+          `)
+          .filter(Boolean) || html`<strong>nemá</strong>`
       }
     </p>
     ${when(detail.note, () => html`<p>${detail.note}</p>`)}
