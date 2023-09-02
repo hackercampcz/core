@@ -79,7 +79,7 @@ export async function attendees(event) {
     for (const attendee of attendees) {
       for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
         const nfcTron = await getNfcTronData(chip.chipID);
-        Object.assign(chip, nfcTron);
+        Object.assign(chip, { spent: nfcTron.totalSpent / 100 });
       }
     }
     return withCORS_(response(attendees));
