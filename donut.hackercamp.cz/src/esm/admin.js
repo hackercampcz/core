@@ -372,6 +372,18 @@ async function fetchData({ selectedView, year, page, query }, apiHost) {
   return resp.json();
 }
 
+async function getNfcTronData(attendee, apiUrl) {
+  for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
+    const params = new URLSearchParams({ chipID: chip.chipID });
+    const resp = await fetch(apiUrl(`nfctron?${params}`), {
+      headers: { Accept: "application/json" },
+    });
+    const data = await resp.json();
+    chip.spent = data.totalSpent / 100;
+  }
+  return attendee;
+}
+
 /**
  * @param {string} selectedView
  * @param {number} year
@@ -422,7 +434,10 @@ async function handleMessage(e) {
       await approveSelectedVolunteers();
       break;
     case Action.renderDetail:
-      renderDetail(payload.detail);
+      const { apiHost } = state.deref();
+      const apiUrl = (x) => new URL(x, apiHost).href;
+      const attendee = await getNfcTronData(payload.detail, apiUrl);
+      renderDetail(attendee);
       break;
     case Action.closeDetail:
       closeDetail();

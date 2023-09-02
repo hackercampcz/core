@@ -1,5 +1,5 @@
 import { sortBy } from "@hackercamp/lib/array.mjs";
-import { formatDateTime } from "@hackercamp/lib/format.mjs";
+import { formatDateTime, formatMoney } from "@hackercamp/lib/format.mjs";
 import { html } from "lit-html";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
@@ -345,7 +345,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
         detail.nfcTronData
           ?.filter(({ chipID }) => chipID)
           ?.map(
-            ({ chipID }) =>
+            ({ chipID, spent }) =>
               chipID &&
               html`
                 <a
@@ -354,9 +354,10 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
                 >
                   ${chipID}
                 </a>
+                - <data value="${spent}">${formatMoney(spent)}</data>
               `
           )
-          .filter(Boolean) || html`<strong>nemá</strong>`
+          ?.filter(Boolean) ?? html`<strong>nemá</strong>`
       }
     </p>
     ${when(detail.note, () => html`<p>${detail.note}</p>`)}
