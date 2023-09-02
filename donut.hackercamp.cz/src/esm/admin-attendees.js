@@ -77,8 +77,8 @@ export function attendeesChips(
     <search style="display: flex; gap: 8px">
       ${when(
         view === View.searchAttendees,
-        () =>
-          html`<form style="flex-grow: 1">
+        () => html`
+          <form style="flex-grow: 1">
             <input type="hidden" name="view" value="${View.searchAttendees}" />
             <input type="hidden" name="year" value="${year}" />
             <md-outlined-text-field
@@ -102,7 +102,8 @@ export function attendeesChips(
                 <md-icon>close</md-icon>
               </md-icon-button>
             </md-outlined-text-field>
-          </form>`,
+          </form>
+        `,
         () => html`
           <div>
             <md-icon-button
@@ -342,11 +343,19 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
       NFCtron ID(s):
       ${
         detail.nfcTronData
-          ?.map(({ chipID }) => chipID && html`
-            <a title="Online účtenka" href="https://pass.nfctron.com/receipt/v2/${chipID}/">
-              ${chipID}
-            </a>
-          `)
+          ?.filter(({ chipID }) => chipID)
+          ?.map(
+            ({ chipID }) =>
+              chipID &&
+              html`
+                <a
+                  title="Online účtenka"
+                  href="https://pass.nfctron.com/receipt/v2/${chipID}/"
+                >
+                  ${chipID}
+                </a>
+              `
+          )
           .filter(Boolean) || html`<strong>nemá</strong>`
       }
     </p>
