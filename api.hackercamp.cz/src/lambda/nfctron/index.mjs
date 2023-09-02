@@ -24,7 +24,7 @@ async function getNfcTronData(chipID) {
  */
 export async function attendees(event) {
   const withCORS_ = withCORS(
-    ["GET", "POST", "OPTIONS"],
+    ["GET", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*"
   );
   if (event.httpMethod === "OPTIONS") {

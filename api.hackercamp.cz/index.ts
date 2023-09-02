@@ -268,7 +268,7 @@ export function createRoutes({
           },
         },
         nfctron: {
-          httpMethod: "POST",
+          httpMethod: "GET",
           path: "/nfctron",
           fileName: "nfctron/index.mjs",
           environment: {
