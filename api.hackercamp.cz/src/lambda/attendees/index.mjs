@@ -76,13 +76,13 @@ export async function attendees(event) {
     const year = parseInt(params.year, 10);
     if (params.slackID) {
       const attendee = await getAttendee(dynamo, params.slackID, year);
-      await readSpent(attendee);
+      //await readSpent(attendee);
       return withCORS_(response(attendee));
     }
     const attendees = await getAttendees(dynamo, year);
-    for (const attendee of attendees) {
-      await readSpent(attendee);
-    }
+    // for (const attendee of attendees) {
+    //   await readSpent(attendee);
+    // }
     return withCORS_(response(attendees));
   } catch (err) {
     rollbar.error(err);
