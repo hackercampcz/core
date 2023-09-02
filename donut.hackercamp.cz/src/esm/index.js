@@ -155,6 +155,18 @@ async function getProgram(year, apiUrl) {
   return resp.json();
 }
 
+async function getNfcTronData(attendee, apiUrl) {
+  for (const chip of attendee.nfcTronData.filter((x) => x.sn)) {
+    const params = new URLSearchParams({ chipID: chip.chipID });
+    const resp = await fetch(apiUrl(`nfctron?${params}`), {
+      headers: { Accept: "application/json" },
+    });
+    const data = await resp.json();
+    chip.spent = data.totalSpent / 100;
+  }
+  return attendee;
+}
+
 function renderPaidScreen(referralLink) {
   return html`
     <div class="mdc-layout-grid__inner">
@@ -335,32 +347,34 @@ function nfcTronTemplate(entries) {
             <strong><data value="${total}">${formatMoney(total)}</data></strong>
           </p>`
       )}
-      ${entries.map(
-        (x) => html`
-          <div data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
-            <p>
-              ${when(
-                x.paid,
-                () =>
-                  html`<strong style="color: forestgreen">Zaplaceno</strong>`,
-                () =>
-                  html`<strong style="color: darkred"
-                    >Nezaplaceno
-                    <data value="${x.spent}"
-                      >${formatMoney(x.spent)}</data
-                    ></strong
-                  >`
-              )}
+      ${entries
+        .filter((x) => x.sn)
+        .map(
+          (x) => html`
+            <div data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
+              <p>
+                ${when(
+                  x.paid,
+                  () =>
+                    html`<strong style="color: forestgreen">Zaplaceno</strong>`,
+                  () =>
+                    html`<strong style="color: darkred"
+                      >Nezaplaceno
+                      <data value="${x.spent}"
+                        >${formatMoney(x.spent)}</data
+                      ></strong
+                    >`
+                )}
 
-              <a
-                href="https://pass.nfctron.com/receipt/${x.chipID}"
-                target="nfcTron"
-                >Účtenka</a
-              >
-            </p>
-          </div>
-        `
-      )}
+                <a
+                  href="https://pass.nfctron.com/receipt/${x.chipID}"
+                  target="nfcTron"
+                  >Účtenka</a
+                >
+              </p>
+            </div>
+          `
+        )}
     </div>
   `;
 }
@@ -512,6 +526,9 @@ async function loadData(profile, year, apiURL) {
     getAttendee(profile.sub, year, apiURL),
     getProgram(year, apiURL),
   ]);
+  getNfcTronData(attendee, apiURL).then((attendee) =>
+    transact((x) => Object.assign(x, { attendee }))
+  );
   const contact = getContact();
   transact((x) =>
     Object.assign(x, { profile, contact, registration, attendee, program })
