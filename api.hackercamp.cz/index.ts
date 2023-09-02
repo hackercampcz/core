@@ -161,7 +161,9 @@ export function createRoutes({
               private_key: config.get("private-key"),
               fakturoid_token: config.get("fakturoid-token"),
               postmark_token: config.get("postmark-token"),
-              algolia_index_name: config.get("algolia-registrations-index-name"),
+              algolia_index_name: config.get(
+                "algolia-registrations-index-name"
+              ),
               ...algoliaEnv,
               ...postmarkTemplates,
             },
@@ -262,6 +264,16 @@ export function createRoutes({
               slack_bot_token: config.get("slack-bot-token"),
               postmark_token: config.get("postmark-token"),
               ...postmarkTemplates,
+            },
+          },
+        },
+        nfctron: {
+          httpMethod: "POST",
+          path: "/nfctron",
+          fileName: "nfctron/index.mjs",
+          environment: {
+            variables: {
+              rollbar_access_token,
             },
           },
         },

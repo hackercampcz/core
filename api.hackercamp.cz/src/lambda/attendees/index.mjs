@@ -14,17 +14,6 @@ import Rollbar from "../rollbar.mjs";
 const dynamo = new DynamoDBClient({});
 const rollbar = Rollbar.init({ lambdaName: "attendees" });
 
-async function getNfcTronData(chipID) {
-  const resp = await fetch(
-    `https://api.nfctron.com/receipt/v2/${chipID}/transaction`,
-    {
-      headers: { accept: "application/json" },
-      referrer: "https://pass.nfctron.com/",
-    }
-  );
-  return resp.json();
-}
-
 async function getAttendees(dynamo, year) {
   const result = await dynamo.send(
     new ScanCommand({
@@ -48,13 +37,6 @@ async function getAttendee(dynamo, slackID, year) {
   return result.Item ? unmarshall(result.Item) : null;
 }
 
-async function readSpent(attendee) {
-  for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
-    const nfcTron = await getNfcTronData(chip.chipID);
-    Object.assign(chip, { spent: nfcTron.totalSpent / 100 });
-  }
-}
-
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
@@ -76,13 +58,9 @@ export async function attendees(event) {
     const year = parseInt(params.year, 10);
     if (params.slackID) {
       const attendee = await getAttendee(dynamo, params.slackID, year);
-      //await readSpent(attendee);
       return withCORS_(response(attendee));
     }
     const attendees = await getAttendees(dynamo, year);
-    // for (const attendee of attendees) {
-    //   await readSpent(attendee);
-    // }
     return withCORS_(response(attendees));
   } catch (err) {
     rollbar.error(err);
