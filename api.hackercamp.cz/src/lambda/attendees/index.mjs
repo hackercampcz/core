@@ -48,6 +48,13 @@ async function getAttendee(dynamo, slackID, year) {
   return result.Item ? unmarshall(result.Item) : null;
 }
 
+async function readSpent(attendee) {
+  for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
+    const nfcTron = await getNfcTronData(chip.chipID);
+    Object.assign(chip, { spent: nfcTron.totalSpent / 100 });
+  }
+}
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @returns {Promise.<APIGatewayProxyResult>}
@@ -69,18 +76,12 @@ export async function attendees(event) {
     const year = parseInt(params.year, 10);
     if (params.slackID) {
       const attendee = await getAttendee(dynamo, params.slackID, year);
-      for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
-        const nfcTron = await getNfcTronData(chip.chipID);
-        Object.assign(chip, nfcTron);
-      }
+      await readSpent(attendee);
       return withCORS_(response(attendee));
     }
     const attendees = await getAttendees(dynamo, year);
     for (const attendee of attendees) {
-      for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
-        const nfcTron = await getNfcTronData(chip.chipID);
-        Object.assign(chip, { spent: nfcTron.totalSpent / 100 });
-      }
+      await readSpent(attendee);
     }
     return withCORS_(response(attendees));
   } catch (err) {
