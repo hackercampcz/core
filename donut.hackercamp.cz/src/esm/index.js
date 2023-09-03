@@ -20,8 +20,8 @@ import { schedule } from "./lib/schedule.js";
 import * as slack from "./lib/slack.js";
 import { setSlackProfile } from "./lib/slack.js";
 import { showModalDialog } from "./modal-dialog.js";
-
 import { lineupText } from "./admin/common.js";
+import { map } from "lit-html/directives/map.js";
 
 /** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
@@ -333,9 +333,10 @@ function programCardTemplate({ events }) {
   `;
 }
 
-function nfcTronTemplate(entries) {
-  if (!entries) return null;
-  const total = entries.reduce((acc, x) => acc + x.spent, 0);
+function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
+  if (!nfcTronData) return null;
+  const chips = nfcTronData.filter((x) => x.sn);
+  const total = chips.reduce((acc, x) => acc + x.spent, 0);
   return html`
     <div class="hc-card hc-card--decorated">
       <h2>Útrata na Hackercampu</h2>
@@ -347,34 +348,33 @@ function nfcTronTemplate(entries) {
             <strong><data value="${total}">${formatMoney(total)}</data></strong>
           </p>`
       )}
-      ${entries
-        .filter((x) => x.sn)
-        .map(
-          (x) => html`
-            <div data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
-              <p>
-                ${when(
-                  x.paid,
-                  () =>
-                    html`<strong style="color: forestgreen">Zaplaceno</strong>`,
-                  () =>
-                    html`<strong style="color: darkred"
-                      >Nezaplaceno
-                      <data value="${x.spent}"
-                        >${formatMoney(x.spent)}</data
-                      ></strong
-                    >`
-                )}
+      ${map(
+        chips,
+        (x) => html`
+          <div data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
+            <p>
+              ${when(
+                checkOutPaid || x.paid,
+                () =>
+                  html`<strong style="color: forestgreen">Zaplaceno</strong>`,
+                () =>
+                  html`<strong style="color: darkred"
+                    >Nezaplaceno
+                    <data value="${x.spent}"
+                      >${formatMoney(x.spent)}</data
+                    ></strong
+                  >`
+              )}
 
-                <a
-                  href="https://pass.nfctron.com/receipt/${x.chipID}"
-                  target="nfcTron"
-                  >Účtenka</a
-                >
-              </p>
-            </div>
-          `
-        )}
+              <a
+                href="https://pass.nfctron.com/receipt/${x.chipID}"
+                target="nfcTron"
+                >Účtenka</a
+              >
+            </p>
+          </div>
+        `
+      )}
     </div>
   `;
 }
@@ -410,7 +410,7 @@ function plusOneCard(referralLink) {
 }
 
 function renderDashboardScreen(
-  { housing, housingPlacement, travel, events = [], nfcTronData },
+  { housing, housingPlacement, travel, events = [], nfcTronData, checkOutPaid },
   referralLink
 ) {
   return html`
@@ -419,7 +419,7 @@ function renderDashboardScreen(
         style="${!nfcTronData ? "display: none" : ""}"
         class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
       >
-        ${nfcTronTemplate(nfcTronData)}
+        ${nfcTronTemplate({ nfcTronData, checkOutPaid })}
       </div>
       <div
         class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-8-tablet"
