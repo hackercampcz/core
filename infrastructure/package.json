@@ -12,7 +12,7 @@
     "@topmonks/pulumi-aws": "3.0.0",
     "esbuild": "0.19.2",
     "front-matter": "4.0.2",
-    "marked": "7.0.5"
+    "marked": "8.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "6.5.0",
