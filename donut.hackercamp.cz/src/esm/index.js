@@ -156,13 +156,13 @@ async function getProgram(year, apiUrl) {
 }
 
 async function getNfcTronData(attendee, apiUrl) {
-  for (const chip of attendee.nfcTronData.filter((x) => x.sn)) {
+  for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
     const params = new URLSearchParams({ chipID: chip.chipID });
     const resp = await fetch(apiUrl(`nfctron?${params}`), {
       headers: { Accept: "application/json" },
     });
     const data = await resp.json();
-    chip.spent = data.totalSpent / 100;
+    chip.spent = data.totalSpent / 100; // NFCTron has spent in halíř
   }
   return attendee;
 }
