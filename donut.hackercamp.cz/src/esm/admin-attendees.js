@@ -355,6 +355,10 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
                   ${chipID}
                 </a>
                 - <data value="${spent}">${formatMoney(spent)}</data>
+                ${when(
+                  detail.checkOutPaid,
+                  () => html` <strong>zaplaceno</strong>`
+                )}
               `
           )
           ?.filter(Boolean) ?? html`<strong>nemá</strong>`
@@ -362,11 +366,37 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
     </p>
     ${when(detail.note, () => html`<p>${detail.note}</p>`)}
     ${when(
+      detail.checkIn,
+      () =>
+        html`<p>
+          Check in:
+          <time datetime="${detail.checkIn}"
+            >${formatDateTime(new Date(detail.checkIn))}</time
+          >
+          provedl <strong>${detail.checkInBy}</strong>
+        </p>`
+    )}
+    ${when(detail.checkInNote, () => html`<p>${detail.checkInNote}</p>`)}
+    ${when(
+      detail.checkout,
+      () =>
+        html`<p>
+          Check out:
+          <time datetime="${detail.checkout}"
+            >${formatDateTime(new Date(detail.checkout))}</time
+          >
+          provedl <strong>${detail.checkOutBy}</strong>
+        </p>`
+    )}
+    ${when(detail.checkOutNote, () => html`<p>${detail.checkOutNote}</p>`)}
+    ${when(
       detail.edited,
       () => html`
         <p>
           Naposledy editováno
-          <strong>${formatDateTime(new Date(detail.edited))}</strong>
+          <time datetime="${detail.edited}"
+            >${formatDateTime(new Date(detail.edited))}</time
+          >
           administrátorem
           <strong>${detail.editedBy}</strong>
         </p>
