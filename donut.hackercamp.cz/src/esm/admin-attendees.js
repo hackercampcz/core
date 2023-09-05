@@ -352,7 +352,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
             ({ chipID, spent }) => html`
               <li>
                 <a
-                  title="Online účtenka"
+                  title="Online účet"
                   href="https://pass.nfctron.com/receipt/v2/${chipID}/"
                 >
                   ${chipID}

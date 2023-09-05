@@ -348,11 +348,12 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
             <strong><data value="${total}">${formatMoney(total)}</data></strong>
           </p>`
       )}
-      ${map(
-        chips,
-        (x) => html`
-          <div data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
-            <p>
+      <ul>
+        ${map(
+          chips,
+          (x) => html`
+            <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
+              ID chipu: <code>${x.chipID}</code> -&nbsp;
               ${when(
                 checkOutPaid || x.paid,
                 () =>
@@ -369,12 +370,12 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
               <a
                 href="https://pass.nfctron.com/receipt/${x.chipID}"
                 target="nfcTron"
-                >Účtenka</a
+                >Účet</a
               >
-            </p>
-          </div>
-        `
-      )}
+            </li>
+          `
+        )}
+      </ul>
     </div>
   `;
 }
