@@ -476,6 +476,10 @@ function editAttendeeModalDialog({ detail, apiHost }) {
         />
       </div>
       <div class="field">
+        <label for="ticketType">Typ lístku</label>
+        <input id="ticketType" name="ticketType" value="${detail.ticketType}" />
+      </div>
+      <div class="field">
         <label for="company">Společnost</label>
         <input id="company" name="company" value="${detail.company}" />
       </div>
@@ -497,6 +501,10 @@ function addAttendeeModalDialog({ year, apiHost }) {
   return html`
     <form method="dialog" @submit="${onSubmit}">
       <input type="hidden" name="year" value="${year}" />
+      <div class="field">
+        <label for="slackID">Slack ID</label>
+        <input id="slackID" name="slackID" />
+      </div>
       <div class="field">
         <label for="name">Jméno</label>
         <input id="name" name="name" required />
