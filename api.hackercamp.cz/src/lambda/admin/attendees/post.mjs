@@ -24,14 +24,12 @@ function editAttendee(db, data) {
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_attendees,
-      Key: marshall(
-        selectKeys(data, new Set(["year", "slackID"]), ([k, v]) => [
-          k,
-          k === "year" ? parseInt(v, 10) : v,
-        ])
-      ),
+      Key: {
+        year: { N: data.year.toString() },
+        slackID: { S: data.slackID },
+      },
       UpdateExpression:
-        "SET #attendeeName = :name, email = :email, note = :note, company = :company, edited = :now, editedBy = :editedBy",
+        "SET #name = :name, email = :email, ticketType = :ticketType, note = :note, company = :company, edited = :now, editedBy = :editedBy",
       ExpressionAttributeValues: marshall(
         {
           ":name": data.name,
@@ -40,11 +38,12 @@ function editAttendee(db, data) {
           ":company": data.company,
           ":now": new Date().toISOString(),
           ":editedBy": data.editedBy,
+          ":ticketType": data.ticketType,
         },
         { removeUndefinedValues: true, convertEmptyValues: true }
       ),
       ExpressionAttributeNames: {
-        "#attendeeName": "name",
+        "#name": "name",
       },
     })
   );
@@ -56,24 +55,20 @@ function editAttendee(db, data) {
  */
 function addAttendee(db, data) {
   const id = `hc-${crypto.randomUUID()}`;
-  const attendee = {
-    ...data,
+  const attendee = Object.assign({}, data, {
     year: parseInt(data.year, 10),
-    slackID: id,
-    slug: id,
-  };
+    slackID: data.slackID || id,
+    slug: data.slackID || id,
+  });
   console.log({ event: "Put attendee", attendee });
 
   return db.send(
     new PutItemCommand({
       TableName: process.env.db_table_attendees,
-      Item: marshall(
-        { ...attendee },
-        {
-          convertEmptyValues: true,
-          removeUndefinedValues: true,
-        }
-      ),
+      Item: marshall(attendee, {
+        convertEmptyValues: true,
+        removeUndefinedValues: true,
+      }),
     })
   );
 }
