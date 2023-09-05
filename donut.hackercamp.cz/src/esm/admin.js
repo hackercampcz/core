@@ -11,6 +11,7 @@ import { defAtom } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import {
   Action,
+  dispatchAction,
   Endpoint,
   executeCommand,
   getDialog,
@@ -485,21 +486,29 @@ async function handleMessage(e) {
         ndef.addEventListener("reading", (e) => {
           console.log(e);
           const sn = e.serialNumber.replaceAll(":", "");
-          transact((state) => {
-            state.nfcTronData.add(sn);
-            return state;
-          });
+          dispatchAction(Action.addChip, { sn });
         });
       } catch (err) {
         console.error(err);
       }
       break;
     }
-    case Action.removeChip:
+    case Action.addChip: {
+      console.log({ event: "add chip", payload });
+      transact((state) => {
+        state.nfcTronData.add(payload.sn);
+        return state;
+      });
+      break;
+    }
+    case Action.removeChip: {
+      console.log({ event: "remove chip", payload });
       transact((state) => {
         state.nfcTronData.delete(payload.sn);
         return state;
       });
+      break;
+    }
   }
 }
 
