@@ -339,31 +339,35 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
     <p>Doprava: <strong>${
       travel.get(detail.travel) ?? "Ještě si nevybral"
     }</strong></p>
-    <p>
-      NFCtron ID(s):
-      ${
-        detail.nfcTronData
-          ?.filter(({ chipID }) => chipID)
-          ?.map(
-            ({ chipID, spent }) =>
-              chipID &&
-              html`
+    <p>NFCtron ID(s): ${when(
+      !detail.nfcTronData?.length,
+      () => html`<em>nemá</em>`
+    )}</p>
+    ${when(
+      detail.nfcTronData?.length,
+      () => html`
+        <ul>
+          ${map(
+            detail.nfcTronData.filter(({ chipID }) => chipID),
+            ({ chipID, spent }) => html`
+              <li>
                 <a
                   title="Online účtenka"
                   href="https://pass.nfctron.com/receipt/v2/${chipID}/"
                 >
                   ${chipID}
                 </a>
-                - <data value="${spent}">${formatMoney(spent)}</data>
-                ${when(
+                - <data value="${spent}">${formatMoney(spent)}</data> ${when(
                   detail.checkOutPaid,
                   () => html` <strong>zaplaceno</strong>`
                 )}
-              `
-          )
-          ?.filter(Boolean) ?? html`<strong>nemá</strong>`
-      }
-    </p>
+              </li>
+            `
+          )}
+        </ul>
+      `
+    )}
+
     ${when(detail.note, () => html`<p>${detail.note}</p>`)}
     ${when(
       detail.checkIn,
@@ -373,7 +377,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
           <time datetime="${detail.checkIn}"
             >${formatDateTime(new Date(detail.checkIn))}</time
           >
-          provedl <strong>${detail.checkInBy}</strong>
+          provedl/a <strong>${detail.checkInBy}</strong>
         </p>`
     )}
     ${when(detail.checkInNote, () => html`<p>${detail.checkInNote}</p>`)}
@@ -385,7 +389,17 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
           <time datetime="${detail.checkout}"
             >${formatDateTime(new Date(detail.checkout))}</time
           >
-          provedl <strong>${detail.checkOutBy}</strong>
+          provedl/a <strong>${detail.checkOutBy}</strong>
+        </p>`
+    )}
+    ${when(
+      detail.checkOutTotal,
+      () =>
+        html`<p>
+          Zaplaceno při odchodu:
+          <data value="${detail.checkOutTotal}"
+            >${formatMoney(parseInt(detail.checkOutTotal))}</data
+          >
         </p>`
     )}
     ${when(detail.checkOutNote, () => html`<p>${detail.checkOutNote}</p>`)}
