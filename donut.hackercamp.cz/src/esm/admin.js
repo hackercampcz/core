@@ -440,22 +440,27 @@ async function handleMessage(e) {
       const attendee = await getNfcTronData(payload.detail, apiUrl);
       renderDetail(attendee);
       break;
-    case Action.closeDetail:
+    case Action.closeDetail: {
       closeDetail();
       break;
-    case Action.editEvent:
+    }
+    case Action.editEvent: {
       await editEvent(payload.eventId, payload.updates);
       break;
-    case Action.deleteEvent:
+    }
+    case Action.deleteEvent: {
       deleteEvent(payload.eventId, payload.people);
       break;
-    case Action.approveEvent:
+    }
+    case Action.approveEvent: {
       approveEvent(payload.eventId);
       break;
-    case Action.showModalDialog:
+    }
+    case Action.showModalDialog: {
       await renderModalDialog(payload.name);
       break;
-    case Action.select:
+    }
+    case Action.select: {
       transact((x) => {
         for (const key of payload.keys) {
           x.selection.add(key);
@@ -463,7 +468,8 @@ async function handleMessage(e) {
         return x;
       });
       break;
-    case Action.unselect:
+    }
+    case Action.unselect: {
       transact((x) => {
         if (payload.all) {
           x.selection.clear();
@@ -473,6 +479,7 @@ async function handleMessage(e) {
         return x;
       });
       break;
+    }
     case Action.startNfcScan: {
       try {
         const ndef = new NDEFReader();

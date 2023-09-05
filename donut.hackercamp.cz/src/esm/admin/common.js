@@ -9,6 +9,7 @@ export const Action = {
   optout: "optout",
   optin: "optin",
   invoiced: "invoiced",
+  closeDetail: "closeDetail",
   renderDetail: "renderDetail",
   editEvent: "editEvent",
   deleteEvent: "deleteEvent",

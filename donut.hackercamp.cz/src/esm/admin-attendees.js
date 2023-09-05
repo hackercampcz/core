@@ -653,7 +653,7 @@ function checkInModalDialog({
     }
   };
   const onChange = (e) => {
-    const sn = e.target.value.trim();
+    const sn = e.target.value.trim().toLowerCase();
     if (sn.length > 0) dispatchAction(Action.addChip, { sn });
   };
   return html`
