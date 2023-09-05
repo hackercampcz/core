@@ -9,6 +9,7 @@ export const Template = {
   AttendeesInfoMail: 30945078,
   VolunteerInvitation: 31455038,
   HackerPush: 31533299,
+  Feedback: 33045403,
 };
 
 export async function sendEmailWithTemplate({
@@ -19,6 +20,9 @@ export async function sendEmailWithTemplate({
   from,
   to,
   replyTo,
+  attachments,
+  messageStream,
+  tag,
 }) {
   const body = JSON.stringify(
     Object.fromEntries(
@@ -28,7 +32,10 @@ export async function sendEmailWithTemplate({
         TemplateId: templateId,
         TemplateAlias: templateAlias,
         TemplateModel: data,
+        Tag: tag,
+        MessageStream: messageStream,
         ReplyTo: replyTo,
+        Attachments: attachments,
       }).filter(([_, v]) => Boolean(v))
     )
   );
