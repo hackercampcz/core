@@ -339,7 +339,7 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
   const total = chips.reduce((acc, x) => acc + x.spent, 0);
   return html`
     <div class="hc-card hc-card--decorated">
-      <h2>Útrata na Hackercampu</h2>
+      <h2>Útrata</h2>
       ${when(
         total > 0,
         () =>
@@ -415,6 +415,27 @@ function renderDashboardScreen(
 ) {
   return html`
     <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+        <div class="hc-card hc-card--decorated">
+          <h2>Zpětná vazba</h2>
+          <p>
+            Doufáme, že už jste se po dalším za nás vydařeném campu pomalu
+            vzpamatovali a vrátili se do svého obvyklého rytmu :) Než všechno,
+            co se na campu dělo, zapomenete, poprosíme vás o 3 minutky vašeho
+            času.
+          </p>
+          <p>
+            <a href="https://forms.gle/q2cJzpoL4e4wphk38"
+              >Dejte nám prosím zpětnou vazbu</a
+            >
+          </p>
+          <p>
+            Dotazník má 3 povinné otázky, je to fakt na tři minuty max :) A nám
+            vaše zpětka obrovsky pomůže. Výsledky budeme zase jako loni sdílet
+            na slacku.
+          </p>
+        </div>
+      </div>
       <div
         style="${!nfcTronData ? "display: none" : ""}"
         class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
