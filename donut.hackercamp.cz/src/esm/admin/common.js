@@ -20,6 +20,7 @@ export const Action = {
   approveSelectedVolunteers: "approveSelectedVolunteers",
   trashRegistration: "trashRegistration",
   startNfcScan: "startNfcScan",
+  addChip: "addChip",
   removeChip: "removeChip",
 };
 
