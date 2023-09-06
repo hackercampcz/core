@@ -290,163 +290,168 @@ export function attendeesTableTemplate(
 export function attendeeDetailTemplate({ detail, isNFCSupported }) {
   if (!detail) return null;
   return html`
-    <div class="hc-card hc-master-detail__detail"">
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <md-icon-button
-        aria-label="Zavřít detail"
-        title="Zavřít detail"
-        @click="${closeDetail()}">
-        <md-icon>arrow_back</md-icon>
-      </md-icon-button>
-      <h2 style="margin: 0">${detail.name}</h2>
-      ${ticketBadge.get(detail.ticketType)}</div>
-    <p>${detail.company}</p>
-    <div class="hc-detail__tools">
-      <hc-mail-button email="${detail.email}"></hc-mail-button
-      ><md-icon-button
-        title="Upravit účastníka"
-        @click="${renderModalDialog("edit-attendee-modal")}"
-      >
-        <md-icon>edit</md-icon>
-      </md-icon-button
-      ><md-icon-button
-        title="Check In"
-        @click="${renderModalDialog("check-in-modal", {
-          preDispatch() {
-            console.log("Check In", { isNFCSupported });
-            if (isNFCSupported) {
-              startChipScan();
-            }
-          },
-        })}"
-      >
-        <md-icon>where_to_vote</md-icon>
-      </md-icon-button
-      ><md-icon-button
-            title="Check Out"
-            @click="${renderModalDialog("check-out-modal")}"
-      >
-        <md-icon>location_off</md-icon>
-      </md-icon-button>
-    </div>
-    ${ticketDetail(detail)}
-    <p>Ubytování: <strong>${
-      housing.get(detail.housing) ?? "Ještě si nevybral"
-    }</strong> ${when(
-      detail.housingPlacement,
-      () => html` - <em>${detail.housingPlacement}</em>`
-    )}</p>
-    <p>Doprava: <strong>${
-      travel.get(detail.travel) ?? "Ještě si nevybral"
-    }</strong></p>
-    <p>NFCtron ID(s): ${when(
-      !detail.nfcTronData?.length,
-      () => html`<em>nemá</em>`
-    )}</p>
-    ${when(
-      detail.nfcTronData?.length,
-      () => html`
-        <ul>
-          ${map(
-            detail.nfcTronData.filter(({ chipID }) => chipID),
-            ({ chipID, spent, sn }) => html`
-              <li data-chip-sn="${sn}" data-chip-id="${chipID}">
-                <a
-                  title="Online účet"
-                  href="https://pass.nfctron.com/receipt/v2/${chipID}/"
-                >
-                  ${chipID}
-                </a>
-                - <data value="${spent}">${formatMoney(spent)}</data> ${when(
-                  detail.checkOutPaid,
-                  () => html` <strong>zaplaceno</strong>`
+    <div
+      class="hc-card hc-master-detail__detail"
+      data-slack-id="${detail.slackID}"
+    >
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <md-icon-button
+          aria-label="Zavřít detail"
+          title="Zavřít detail"
+          @click="${closeDetail()}"
+        >
+          <md-icon>arrow_back</md-icon>
+        </md-icon-button>
+        <h2 style="margin: 0">${detail.name}</h2>
+        ${ticketBadge.get(detail.ticketType)}
+      </div>
+      <p>${detail.company}</p>
+      <div class="hc-detail__tools">
+        <hc-mail-button email="${detail.email}"></hc-mail-button
+        ><md-icon-button
+          title="Upravit účastníka"
+          @click="${renderModalDialog("edit-attendee-modal")}"
+        >
+          <md-icon>edit</md-icon> </md-icon-button
+        ><md-icon-button
+          title="Check In"
+          @click="${renderModalDialog("check-in-modal", {
+            preDispatch() {
+              console.log("Check In", { isNFCSupported });
+              if (isNFCSupported) {
+                startChipScan();
+              }
+            },
+          })}"
+        >
+          <md-icon>where_to_vote</md-icon> </md-icon-button
+        ><md-icon-button
+          title="Check Out"
+          @click="${renderModalDialog("check-out-modal")}"
+        >
+          <md-icon>location_off</md-icon>
+        </md-icon-button>
+      </div>
+      ${ticketDetail(detail)}
+      <p>
+        Ubytování:
+        <strong>${housing.get(detail.housing) ?? "Ještě si nevybral"}</strong>
+        ${when(
+          detail.housingPlacement,
+          () => html` - <em>${detail.housingPlacement}</em>`
+        )}
+      </p>
+      <p>
+        Doprava:
+        <strong>${travel.get(detail.travel) ?? "Ještě si nevybral"}</strong>
+      </p>
+      <p>
+        NFCtron ID(s):
+        ${when(!detail.nfcTronData?.length, () => html`<em>nemá</em>`)}
+      </p>
+      ${when(
+        detail.nfcTronData?.length,
+        () => html`
+          <ul>
+            ${map(
+              detail.nfcTronData.filter(({ chipID }) => chipID),
+              ({ chipID, spent, sn }) => html`
+                <li data-chip-sn="${sn}" data-chip-id="${chipID}">
+                  <a
+                    title="Online účet"
+                    href="https://pass.nfctron.com/receipt/v2/${chipID}/"
+                  >
+                    ${chipID}
+                  </a>
+                  - <data value="${spent}">${formatMoney(spent)}</data> ${when(
+                    detail.checkOutPaid,
+                    () => html` <strong>zaplaceno</strong>`
+                  )}
+                </li>
+              `
+            )}
+          </ul>
+        `
+      )}
+      ${when(detail.note, () => html`<p>${detail.note}</p>`)}
+      ${when(
+        detail.checkIn,
+        () =>
+          html`<p>
+            Check in:
+            <time datetime="${detail.checkIn}"
+              >${formatDateTime(new Date(detail.checkIn))}</time
+            >
+            provedl/a <strong>${detail.checkInBy}</strong>
+          </p>`
+      )}
+      ${when(detail.checkInNote, () => html`<p>${detail.checkInNote}</p>`)}
+      ${when(
+        detail.checkout,
+        () =>
+          html`<p>
+            Check out:
+            <time datetime="${detail.checkout}"
+              >${formatDateTime(new Date(detail.checkout))}</time
+            >
+            provedl/a <strong>${detail.checkOutBy}</strong>
+          </p>`
+      )}
+      ${when(
+        detail.checkOutTotal,
+        () =>
+          html`<p>
+            Zaplaceno při odchodu:
+            <data value="${detail.checkOutTotal}"
+              >${formatMoney(parseInt(detail.checkOutTotal))}</data
+            >
+          </p>`
+      )}
+      ${when(detail.checkOutNote, () => html`<p>${detail.checkOutNote}</p>`)}
+      ${when(
+        detail.edited,
+        () => html`
+          <p>
+            Naposledy editováno
+            <time datetime="${detail.edited}"
+              >${formatDateTime(new Date(detail.edited))}</time
+            >
+            administrátorem
+            <strong>${detail.editedBy}</strong>
+          </p>
+        `
+      )}
+      ${when(
+        detail.events?.length,
+        () => html`
+          <h3>Program</h3>
+          ${detail.events?.map(
+            (event) => html`
+              <div
+                style="border: 1px solid var(--hc-text-color); padding: 8px 16px"
+              >
+                <h4>${event.title}</h4>
+                <p>
+                  <code>${lineup(event.lineup)}</code>
+                  ${when(event.topic, () => html`<code>${event.topic}</code>`)}
+                  ${when(
+                    event.startAt,
+                    () =>
+                      html`-
+                        <time datetime="${event.startAt}"
+                          >${formatDateTime(new Date(event.startAt))}
+                        </time>`
+                  )}
+                </p>
+                ${when(
+                  event.description,
+                  () => html`<p>${event.description}</p>`
                 )}
-              </li>
+              </div>
             `
           )}
-        </ul>
-      `
-    )}
-
-    ${when(detail.note, () => html`<p>${detail.note}</p>`)}
-    ${when(
-      detail.checkIn,
-      () =>
-        html`<p>
-          Check in:
-          <time datetime="${detail.checkIn}"
-            >${formatDateTime(new Date(detail.checkIn))}</time
-          >
-          provedl/a <strong>${detail.checkInBy}</strong>
-        </p>`
-    )}
-    ${when(detail.checkInNote, () => html`<p>${detail.checkInNote}</p>`)}
-    ${when(
-      detail.checkout,
-      () =>
-        html`<p>
-          Check out:
-          <time datetime="${detail.checkout}"
-            >${formatDateTime(new Date(detail.checkout))}</time
-          >
-          provedl/a <strong>${detail.checkOutBy}</strong>
-        </p>`
-    )}
-    ${when(
-      detail.checkOutTotal,
-      () =>
-        html`<p>
-          Zaplaceno při odchodu:
-          <data value="${detail.checkOutTotal}"
-            >${formatMoney(parseInt(detail.checkOutTotal))}</data
-          >
-        </p>`
-    )}
-    ${when(detail.checkOutNote, () => html`<p>${detail.checkOutNote}</p>`)}
-    ${when(
-      detail.edited,
-      () => html`
-        <p>
-          Naposledy editováno
-          <time datetime="${detail.edited}"
-            >${formatDateTime(new Date(detail.edited))}</time
-          >
-          administrátorem
-          <strong>${detail.editedBy}</strong>
-        </p>
-      `
-    )}
-    ${when(
-      detail.events?.length,
-      () => html`
-        <h3>Program</h3>
-        ${detail.events?.map(
-          (event) => html`
-            <div
-              style="border: 1px solid var(--hc-text-color); padding: 8px 16px"
-            >
-              <h4>${event.title}</h4>
-              <p>
-                <code>${lineup(event.lineup)}</code>
-                ${when(event.topic, () => html`<code>${event.topic}</code>`)}
-                ${when(
-                  event.startAt,
-                  () =>
-                    html`-
-                      <time datetime="${event.startAt}"
-                        >${formatDateTime(new Date(event.startAt))}
-                      </time>`
-                )}
-              </p>
-              ${when(
-                event.description,
-                () => html`<p>${event.description}</p>`
-              )}
-            </div>
-          `
-        )}
-      `
-    )}
+        `
+      )}
     </div>
   `;
 }
