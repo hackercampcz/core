@@ -434,12 +434,14 @@ async function handleMessage(e) {
     case Action.approveSelectedVolunteers:
       await approveSelectedVolunteers();
       break;
-    case Action.renderDetail:
+    case Action.renderDetail: {
+      renderDetail(payload.detail);
       const { apiHost } = state.deref();
       const apiUrl = (x) => new URL(x, apiHost).href;
       const attendee = await getNfcTronData(payload.detail, apiUrl);
       renderDetail(attendee);
       break;
+    }
     case Action.closeDetail: {
       closeDetail();
       break;
