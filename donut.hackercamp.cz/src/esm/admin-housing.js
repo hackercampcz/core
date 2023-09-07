@@ -16,6 +16,7 @@ function housingTable(data) {
           <th>Typ lístku</th>
           <th>Ubytování</th>
           <th>Umístění</th>
+          <th>Délka pobytu</th>
           <th>Akce</th>
         </tr>
       </thead>
@@ -28,6 +29,7 @@ function housingTable(data) {
               <td>${ticketName.get(row.ticketType)}</td>
               <td>${housing.get(row.housing) ?? "Ještě si nevybral"}</td>
               <td>${row.housingPlacement}</td>
+              <td>${row.days}</td>
               <td>
                 <hc-mail-button email="${row.email}"></hc-mail-button
                 ><hc-phone-button phone="${row.phone}"></hc-phone-button>
