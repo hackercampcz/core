@@ -3,7 +3,7 @@
   "packageManager": "yarn@3.6.3",
   "devDependencies": {
     "@aws-sdk/client-secrets-manager": "3.409.0",
-    "eslint": "8.48.0",
+    "eslint": "8.49.0",
     "eslint-plugin-promise": "6.1.1",
     "web-types-lit": "0.1.0"
   },
