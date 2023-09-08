@@ -1,6 +1,6 @@
 import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
-import { sendEmailWithTemplate, Template } from "./postmark.js";
+import { sendEmailWithTemplate, Template } from "./lib/postmark.js";
 
 async function inviteSlackUser(email, token) {
   const resp = await fetch("https://slack.com/api/admin.users.invite", {

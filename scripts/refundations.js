@@ -1,5 +1,6 @@
 import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { getTransactions } from "./lib/nfctron.js";
 
 const dynamo = createClient();
 
@@ -64,35 +65,6 @@ const transactionsToRefund = new Set([
   "0f2671a7-04d7-4816-93eb-03e1f303c84d",
   "b4217df3-9733-4181-a6c9-0f45e5ad1acc",
 ]);
-
-async function getTransactions(chipID) {
-  const resp = await retry(() =>
-    fetch(`https://api.nfctron.com/receipt/v2/${chipID}/transaction`)
-  );
-  if (!resp) return [];
-  const data = await resp.json();
-  if (Array.isArray(data.transactions)) {
-    return data.transactions;
-  }
-  return [];
-}
-
-async function sleep(number) {
-  return new Promise((resolve, reject) => setTimeout(resolve, number));
-}
-
-async function retry(callback, retryCount = 3) {
-  var lastResult = null;
-  for (let i = 0; i < retryCount; i++) {
-    const result = await callback();
-    lastResult = result;
-    if (result.ok) return result;
-    else if (result.status === 404) return null;
-    else await sleep(2 ** (i + 1) * 10000);
-  }
-  console.log(await lastResult.json());
-  throw new Error();
-}
 
 async function main({}) {
   const result = [];

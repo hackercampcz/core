@@ -1,5 +1,6 @@
 import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { getTransactions } from "./lib/nfctron.js";
 
 const dynamo = createClient();
 
@@ -27,34 +28,6 @@ async function updateAttendee(year, slackID, nfcTronData) {
     UpdateExpression: "SET nfcTronData = :nfcTronData",
     ExpressionAttributeValues: { ":nfcTronData": nfcTronData },
   });
-}
-
-async function getTransactions(chipID) {
-  const resp = await retry(() =>
-    fetch(`https://api.nfctron.com/receipt/v2/${chipID}/transaction`)
-  );
-  if (!resp) return [];
-  const data = await resp.json();
-  if (Array.isArray(data.transactions)) {
-    return [data.transactions, data.totalSpent / 100];
-  }
-  return [];
-}
-async function sleep(number) {
-  return new Promise((resolve, reject) => setTimeout(resolve, number));
-}
-
-async function retry(callback, retryCount = 3) {
-  var lastResult = null;
-  for (let i = 0; i < retryCount; i++) {
-    const result = await callback();
-    lastResult = result;
-    if (result.ok) return result;
-    else if (result.status === 404) return null;
-    else await sleep(2 ** (i + 1) * 10000);
-  }
-  console.log(await lastResult.json());
-  throw new Error();
 }
 
 async function main({ year }) {

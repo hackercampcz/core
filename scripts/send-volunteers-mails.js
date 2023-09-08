@@ -1,5 +1,5 @@
 import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
-import { sendEmailWithTemplate, Template } from "./postmark.js";
+import { sendEmailWithTemplate, Template } from "./lib/postmark.js";
 
 async function main({ token }) {
   const contacts = ["zuzkahefer@gmail.com", "michal@fenekpr.cz"];
