@@ -336,7 +336,7 @@ function programCardTemplate({ events }) {
 function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
   if (!nfcTronData) return null;
   const chips = nfcTronData.filter((x) => x.sn);
-  const total = chips.reduce((acc, x) => acc + x.spent, 0);
+  const total = chips.reduce((acc, x) => acc + (x.spent ?? x.totalSpent), 0);
   return html`
     <div class="hc-card hc-card--decorated">
       <h2>Útrata</h2>
@@ -353,7 +353,11 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
           chips,
           (x) => html`
             <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
-              ID chipu: <code>${x.chipID}</code> -&nbsp;
+              SN chipu:
+              <code title="SN najdete na zadní straně čipu - pod páskem"
+                >${x.sn.toUpperCase()}</code
+              >
+              -
               ${when(
                 checkOutPaid || x.paid,
                 () =>
@@ -361,8 +365,8 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
                 () =>
                   html`<strong style="color: darkred"
                     >Nezaplaceno
-                    <data value="${x.spent}"
-                      >${formatMoney(x.spent)}</data
+                    <data value="${x.spent ?? x.totalSpent}"
+                      >${formatMoney(x.spent ?? x.totalSpent)}</data
                     ></strong
                   >`
               )}
@@ -548,9 +552,13 @@ async function loadData(profile, year, apiURL) {
     getAttendee(profile.sub, year, apiURL),
     getProgram(year, apiURL),
   ]);
-  getNfcTronData(attendee, apiURL).then((attendee) =>
-    transact((x) => Object.assign(x, { attendee }))
-  );
+  if (!attendee?.nfcTronData?.[0]?.totalSpent) {
+    // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
+    // Load them async, because NFCTron API is slow as hell
+    getNfcTronData(attendee, apiURL).then((attendee) =>
+      transact((x) => Object.assign(x, { attendee }))
+    );
+  }
   const contact = getContact();
   transact((x) =>
     Object.assign(x, { profile, contact, registration, attendee, program })

@@ -355,7 +355,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
           <ul>
             ${map(
               detail.nfcTronData.filter(({ chipID }) => chipID),
-              ({ chipID, spent, sn }) => html`
+              ({ chipID, spent, totalSpent, sn }) => html`
                 <li data-chip-sn="${sn}" data-chip-id="${chipID}">
                   <a
                     title="Online účet"
@@ -363,7 +363,11 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
                   >
                     ${chipID}
                   </a>
-                  - <data value="${spent}">${formatMoney(spent)}</data> ${when(
+                  -
+                  <data value="${spent ?? totalSpent}"
+                    >${formatMoney(spent ?? totalSpent)}</data
+                  >
+                  ${when(
                     detail.checkOutPaid,
                     () => html` <strong>zaplaceno</strong>`
                   )}

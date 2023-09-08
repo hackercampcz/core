@@ -436,6 +436,9 @@ async function handleMessage(e) {
       break;
     case Action.renderDetail: {
       renderDetail(payload.detail);
+      if (payload.detail?.nfcTronData?.[0]?.totalSpent) break;
+      // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
+      // Load them async, because NFCTron API is slow as hell.
       const { apiHost } = state.deref();
       const apiUrl = (x) => new URL(x, apiHost).href;
       const attendee = await getNfcTronData(payload.detail, apiUrl);
