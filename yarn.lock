@@ -3065,7 +3065,7 @@ __metadata:
     "@fast-csv/format": 4.3.5
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
-    "@thi.ng/transducers": 8.6.4
+    "@thi.ng/transducers": 8.6.5
     algoliasearch: 4.20.0
     eslint: 8.49.0
     fast-xml-parser: 4.2.7
@@ -3105,7 +3105,7 @@ __metadata:
     "@material/mwc-snackbar": 0.27.0
     "@material/web": 1.0.0-pre.17
     "@thi.ng/atom": 5.2.9
-    "@thi.ng/transducers": 8.6.4
+    "@thi.ng/transducers": 8.6.5
     "@ungap/structured-clone": 1.2.0
     date-fns: 2.30.0
     eslint: 8.49.0
@@ -4984,9 +4984,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/transducers@npm:8.6.4":
-  version: 8.6.4
-  resolution: "@thi.ng/transducers@npm:8.6.4"
+"@thi.ng/transducers@npm:8.6.5":
+  version: 8.6.5
+  resolution: "@thi.ng/transducers@npm:8.6.5"
   dependencies:
     "@thi.ng/api": ^8.9.5
     "@thi.ng/arrays": ^2.5.22
@@ -4996,7 +4996,7 @@ __metadata:
     "@thi.ng/errors": ^2.3.5
     "@thi.ng/math": ^5.6.1
     "@thi.ng/random": ^3.6.4
-  checksum: 86eba2796c4175a9140b64c70bfd41651f2fc0172ae07746d3ade972fd8ff6a4c95da321820691bfbd3352cc636e2d68d21ad4affecd98a6fcdfee8e68171e34
+  checksum: b4cc38b456cf19fb7da13c3505da110c572c9e606eeaaeb8dba9882f41d5b4dad5647c11cb7e67d1fac29d37cb42b382060b7167ed96fcad0e7fca69f5b99d18
   languageName: node
   linkType: hard
 
