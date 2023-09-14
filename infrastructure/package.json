@@ -10,7 +10,7 @@
     "@pulumi/awsx": "1.0.5",
     "@pulumi/pulumi": "3.82.1",
     "@topmonks/pulumi-aws": "3.0.0",
-    "esbuild": "0.19.2",
+    "esbuild": "0.19.3",
     "front-matter": "4.0.2",
     "marked": "9.0.0"
   },
