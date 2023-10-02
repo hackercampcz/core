@@ -9,7 +9,7 @@
     "@hackercamp/lib": "workspace:lib",
     "@thi.ng/transducers": "8.7.1",
     "algoliasearch": "4.20.0",
-    "fast-xml-parser": "4.2.7",
+    "fast-xml-parser": "4.3.2",
     "immutable": "4.3.4",
     "jsonwebtoken": "9.0.2",
     "rollbar": "2.26.2"
