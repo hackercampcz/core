@@ -3147,9 +3147,9 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
-    "@pulumi/aws": 6.2.0
+    "@pulumi/aws": 6.3.0
     "@pulumi/awsx": 1.0.5
-    "@pulumi/pulumi": 3.83.0
+    "@pulumi/pulumi": 3.86.0
     "@topmonks/pulumi-aws": 3.0.0
     "@typescript-eslint/eslint-plugin": 6.7.3
     "@typescript-eslint/parser": 6.7.3
@@ -4098,16 +4098,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:6.2.0":
-  version: 6.2.0
-  resolution: "@pulumi/aws@npm:6.2.0"
+"@pulumi/aws@npm:6.3.0":
+  version: 6.3.0
+  resolution: "@pulumi/aws@npm:6.3.0"
   dependencies:
     "@pulumi/pulumi": ^3.0.0
     builtin-modules: 3.0.0
     mime: ^2.0.0
     read-package-tree: ^5.2.1
     resolve: ^1.7.1
-  checksum: 2e4a94a4d56f24e13b4c49347f52f62bbad19cd308daf0c563cd53b1249b265f7fd489fd597af6ee57c5ad15d644d7300be9b28584ac1ecb376036dd402feffa
+  checksum: b1135a0179fd9af0fe84ef6647227dd8bb56d66333ee51f873c2a7312235d502a2b08441d85102b1605e13153513903f8381a6eeefe79b7aef195bfbd2f5f0d1
   languageName: node
   linkType: hard
 
@@ -4148,9 +4148,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.83.0":
-  version: 3.83.0
-  resolution: "@pulumi/pulumi@npm:3.83.0"
+"@pulumi/pulumi@npm:3.86.0":
+  version: 3.86.0
+  resolution: "@pulumi/pulumi@npm:3.86.0"
   dependencies:
     "@grpc/grpc-js": ^1.8.16
     "@logdna/tail-file": ^2.0.6
@@ -4177,7 +4177,7 @@ __metadata:
     ts-node: ^7.0.1
     typescript: ~3.8.3
     upath: ^1.1.0
-  checksum: 779229fe81e06df1627146d06a77a96a148631d418ace4fcc5074021fce2c54877fa9f5135e1d8e24dccbedb91c13e00aa11c721a5a021ad6ff561334d407dc1
+  checksum: 77b5705a3caceb533e207acfc8d507d20081f83db93ddf070e5644bbe96d8edc304bbbdd422f17bb7e6454c5f0d3209448d816636841899c4c4010734fc680ad
   languageName: node
   linkType: hard
 
