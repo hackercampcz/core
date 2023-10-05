@@ -22,7 +22,7 @@
     "lit": "2.8.0",
     "lit-html": "2.8.0",
     "marked": "9.1.0",
-    "ramda": "0.29.0",
+    "ramda": "0.29.1",
     "rollbar": "2.26.2",
     "workbox-window": "7.0.0"
   }
