@@ -3151,7 +3151,7 @@ __metadata:
     "@pulumi/aws": 6.4.0
     "@pulumi/awsx": 1.0.5
     "@pulumi/pulumi": 3.87.0
-    "@topmonks/pulumi-aws": 3.0.0
+    "@topmonks/pulumi-aws": 3.1.0
     "@typescript-eslint/eslint-plugin": 6.7.4
     "@typescript-eslint/parser": 6.7.4
     esbuild: 0.19.4
@@ -5118,14 +5118,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@topmonks/pulumi-aws@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@topmonks/pulumi-aws@npm:3.0.0"
+"@topmonks/pulumi-aws@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@topmonks/pulumi-aws@npm:3.1.0"
   peerDependencies:
     "@pulumi/aws": ">=5.30.0"
     "@pulumi/awsx": ">=1.0.0"
     "@pulumi/pulumi": ">=3.55.0"
-  checksum: 96de54484967be60c1bfd1df59e1fc59e994fe86c18b0bf50717911f4cf4f68b9b11918b628a7b753fa55d8193f64d97e8bcb645ab9fe095574db3d65fe9db95
+  checksum: a1329109b1eee1f259c5d33f3c9a5bddb6723b024d7956fa59d59ee7937116617ad9970a81c3d074b649e864b3e5e15dffd4d37f6c96a56c50c51b43bfed5706
   languageName: node
   linkType: hard
 
