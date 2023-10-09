@@ -138,7 +138,7 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
-          channel: ntf-hackercamp
+          channel: ntf-donut
 
   preview-provision:
     parameters:
@@ -166,7 +166,7 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
-          channel: ntf-hackercamp
+          channel: ntf-donut
 
   merge-pr:
     docker:
@@ -179,7 +179,7 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
-          channel: ntf-hackercamp
+          channel: ntf-donut
 
   build-website:
     parameters:
@@ -234,7 +234,7 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
-          channel: ntf-hackercamp
+          channel: ntf-donut
 
   deploy-site:
     parameters:
@@ -267,7 +267,7 @@ jobs:
       - slack/notify:
           event: fail
           template: basic_fail_1
-          channel: ntf-hackercamp
+          channel: ntf-donut
 
 workflows:
   ci:
