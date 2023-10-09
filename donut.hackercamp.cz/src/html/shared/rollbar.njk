@@ -1,6 +1,6 @@
 <script>
   var _rollbarConfig = {
-    accessToken: '{{ rollbar.accessToken }}',
+    accessToken: '{{ build['rollbar/access-token'] }}',
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {

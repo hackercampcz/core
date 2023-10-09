@@ -3,8 +3,8 @@ config:
   hackercamp:algolia-admin-key:
     secure: AAABAA4XNdpHjMZ20VgptK68AwCpeF6ODv8IvQL4L7fLpZvRJkEDFk3g8+g7hNZ1Gh8rnRN6cgUc6tJuQejI1w==
   hackercamp:algolia-app-id: J77BFM3PLE
-  hackercamp:algolia-registrations-index-name: hc-registrations
   hackercamp:algolia-attendees-index-name: hc-attendees
+  hackercamp:algolia-registrations-index-name: hc-registrations
   hackercamp:algolia-search-key:
     secure: AAABAHscEyAGxDlFeEALF4xcitOWcrr5do2A79y4O0lDekbIa5jNQJX/qo89o2Yx1/iEVxewaVc4n4twoNfA4Q==
   hackercamp:api-domain: api.hackercamp.cz
@@ -21,7 +21,7 @@ config:
   hackercamp:private-key:
     secure: AAABAMiObrKrGCJNcaB9RdcBRl2shK6sfmHwYdEChCgqQy3dVOxeVIuH/zk2R4dGDbqq/LjS7ZVWWuiDoutiFxdmDyoR21q9VQtOiQg=
   hackercamp:rollbar-access-token:
-    secure: AAABAGSuq2HM/IDxpXt6ZF+lnaa0AvnE+yPejTIOHNXO+YGFjEsjwZRp+yMnNFhpulFkX8Ov1ay+5FVhCcSXOg==
+    secure: AAABANsAX/V4CvRNpbPVveHuf8od+m3/6dItRVCei/OvG0o+7HPn30+p9iVN8tVvkMjpPsxW22c/uZeoVjNhEw==
   hackercamp:slack-bot-token:
     secure: AAABAOcd56GLMiyf3SikIIfQjmDs1jIUg1OLYz8IWudo4J821x2EOod9C2s7YwIVS+nXc02JvvqEx4p2m3+OpEE4NI3653umgcN1UADmM+aywmDop3hFOmM=
   hackercamp:slack-client-id: "1990816352820.3334586910531"

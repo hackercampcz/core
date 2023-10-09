@@ -15,7 +15,4 @@ export default {
     details:
       "Zažijte netradiční třídenní festival pro lidi z české tech scény.",
   },
-  rollbar: {
-    accessToken: "a1f80d94b33346c1baf8e5be27ae5646",
-  },
 };

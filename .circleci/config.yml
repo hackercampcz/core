@@ -117,7 +117,7 @@ jobs:
     resource_class: arm.medium
     environment:
       AWS_STS_REGIONAL_ENDPOINTS: regional
-      ROLLBAR_ACCESS_TOKEN: 3bfe96c3b97941d9acff53c6913b9ccc
+      ROLLBAR_ACCESS_TOKEN: 5cf06f210c3e461d8ac668c7d5522519
     steps:
       - checkout
       - pulumi/login
@@ -296,14 +296,14 @@ workflows:
       - build-website:
           name: build-donut
           site_name: donut.hackercamp.cz
-          rollbar_access_token: a1f80d94b33346c1baf8e5be27ae5646
+          rollbar_access_token: 2ee8ed63889f4e28895cbca7c6f62f45
           context: org-global
           requires:
             - provision
       - deploy-site:
           name: deploy-donut
           site_name: donut.hackercamp.cz
-          rollbar_access_token: 6ed48e07fedb43bb9767261178684740
+          rollbar_access_token: 7e7b3e864db64b3692d42e8d9ec274a9
           context: org-global
           requires:
             - build-donut
@@ -313,14 +313,14 @@ workflows:
       - build-website:
           name: build-web
           site_name: www.hackercamp.cz
-          rollbar_access_token: 0e85a6c66092466eb20ef77aae300485
+          rollbar_access_token: e10c4ff9ff024effb7c6fd80430ba646
           context: org-global
           requires:
             - provision
       - deploy-site:
           name: deploy-web
           site_name: www.hackercamp.cz
-          rollbar_access_token: 1f07ff28d2d34cef95f57f34f8fab39d
+          rollbar_access_token: fa19c9b04b6849f2b87deb7fd567a4f6
           context: org-global
           requires:
             - build-web
