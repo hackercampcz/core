@@ -3149,7 +3149,7 @@ __metadata:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
     "@pulumi/aws": 6.4.1
-    "@pulumi/awsx": 1.0.5
+    "@pulumi/awsx": 2.0.0
     "@pulumi/pulumi": 3.88.0
     "@topmonks/pulumi-aws": 3.1.0
     "@typescript-eslint/eslint-plugin": 6.7.5
@@ -4142,16 +4142,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/awsx@npm:1.0.5":
-  version: 1.0.5
-  resolution: "@pulumi/awsx@npm:1.0.5"
+"@pulumi/awsx@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@pulumi/awsx@npm:2.0.0"
   dependencies:
     "@pulumi/aws": ^5.35.0
     "@pulumi/docker": ^3.6.1
     "@pulumi/pulumi": ^3.0.0
     "@types/aws-lambda": ^8.10.23
     mime: ^2.0.0
-  checksum: a82280171bbbf98041968af6235cd34d13b8f7dfad589849451371aee718780852ff14b449711b501f6888158c523a560473b9db3993232922471f588e55ddf9
+  checksum: 358b2281b3978b72898d079e75aa0b77da3e7a40e0d0678a837571fcb735eacbeade9551f7951f77f41f150a6abb0576fb86481b340a88409e0293cc5447c17f
   languageName: node
   linkType: hard
 
