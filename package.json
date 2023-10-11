@@ -13,7 +13,7 @@
     "dotenv-cli": "7.3.0",
     "eslint": "8.51.0",
     "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-prettier": "5.0.1",
     "npm-run-all": "4.1.5",
     "prettier": "3.0.3",
     "undertaker-registry": "2.0.0"
