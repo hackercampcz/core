@@ -6,9 +6,9 @@
   "dependencies": {
     "@hackercamp/api": "workspace:api.hackercamp.cz",
     "@hackercamp/donut": "workspace:donut.hackercamp.cz",
-    "@pulumi/aws": "6.4.1",
+    "@pulumi/aws": "6.5.0",
     "@pulumi/awsx": "2.0.0",
-    "@pulumi/pulumi": "3.88.0",
+    "@pulumi/pulumi": "3.88.1",
     "@topmonks/pulumi-aws": "3.1.0",
     "esbuild": "0.19.4",
     "front-matter": "4.0.2",
