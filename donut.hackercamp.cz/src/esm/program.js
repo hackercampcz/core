@@ -20,6 +20,7 @@ import { isISODateTime } from "./lib/validation.js";
 import { showModalDialog } from "./modal-dialog.js";
 
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
+/** @typedef {import("@thi.ng/atom").Path} Path */
 /** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
 
 const SLOT_MINUTES = 15;
@@ -43,7 +44,12 @@ const state = defAtom({
  * @param {IAtom<T>} [atom]
  */
 const transact = (fn, atom = state) => atom.swap(fn);
-const swapIn = (path, fn, atom = state) => atom.swapIn(path, fn);
+/**
+ * @param {Path} path
+ * @param {SwapFn<T, T>} fn
+ * @param {IAtom<T>} [atom]
+ */
+const swapIn = (path, fn, atom = state) => atom.swapInUnsafe(path, fn);
 
 if (globalThis.__DEVELOPMENT__) {
   // export for dev experience

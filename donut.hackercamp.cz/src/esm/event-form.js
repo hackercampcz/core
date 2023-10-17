@@ -6,6 +6,10 @@ import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 
+/** @typedef {import("@thi.ng/atom").IAtom} IAtom */
+/** @typedef {import("@thi.ng/atom").Path} Path */
+/** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
+
 const state = defAtom({
   view: signpostTemplate,
   year: 2023,
@@ -13,10 +17,18 @@ const state = defAtom({
   profile: {},
 });
 
+/**
+ * @param {SwapFn<T, T>} fn
+ * @param {IAtom<T>} [atom]
+ */
 const transact = (fn, atom = state) => atom.swap(fn);
-
+/**
+ * @param {Path} path
+ * @param {SwapFn<T, T>} fn
+ * @param {IAtom<T>} [atom]
+ */
+const swapIn = (path, fn, atom = state) => atom.swapInUnsafe(path, fn);
 const transaction = (fn, atom = state) => updateAsTransaction(atom, fn);
-const swapIn = (path, fn, atom = state) => atom.swapIn(path, fn);
 
 if (globalThis.__DEVELOPMENT__) {
   globalThis.transact = transact;

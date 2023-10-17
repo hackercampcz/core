@@ -44,10 +44,18 @@ const state = defAtom({
   nfcTronData: new Set(),
 });
 
+/**
+ * @param {SwapFn<T, T>} fn
+ * @param {IAtom<T>} [atom]
+ */
 const transact = (fn, atom = state) => atom.swap(fn);
-
+/**
+ * @param {Path} path
+ * @param {SwapFn<T, T>} fn
+ * @param {IAtom<T>} [atom]
+ */
+const swapIn = (path, fn, atom = state) => atom.swapInUnsafe(path, fn);
 const transaction = (fn, atom = state) => updateAsTransaction(atom, fn);
-const swapIn = (path, fn, atom = state) => atom.swapIn(path, fn);
 
 if (globalThis.__DEVELOPMENT__) {
   // export for dev experience
