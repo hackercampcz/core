@@ -17,6 +17,7 @@ const rollbar = Rollbar.init({ lambdaName: "ares" });
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function ares(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "OPTIONS"],
     getHeader(event?.headers, "Origin")

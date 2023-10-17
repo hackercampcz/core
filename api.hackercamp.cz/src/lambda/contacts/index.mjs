@@ -35,6 +35,7 @@ async function getContact(dynamo, slackID, email) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function contacts(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*",

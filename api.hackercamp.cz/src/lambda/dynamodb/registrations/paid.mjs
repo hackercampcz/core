@@ -78,6 +78,7 @@ function enqueueSlackWelcomeMessage(user) {
  * @returns {Promise<void>}
  */
 async function paidRegistrations(event) {
+  rollbar.configure({ payload: { event } });
   const newlyPaidRegistrations = event.Records.filter(
     (x) => x.eventName === "MODIFY"
   )

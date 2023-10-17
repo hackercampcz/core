@@ -14,6 +14,7 @@ const rollbar = Rollbar.init({ lambdaName: "admin-housing" });
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function housing(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*",

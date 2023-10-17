@@ -22,6 +22,7 @@ const rollbar = Rollbar.init({ lambdaName: "optout" });
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function optout(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*"

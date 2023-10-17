@@ -13,6 +13,7 @@ const rollbar = Rollbar.init({ lambdaName: "contacts" });
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function registration(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
     getHeader(event?.headers, "Origin")

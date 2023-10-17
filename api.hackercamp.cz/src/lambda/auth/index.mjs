@@ -11,6 +11,7 @@ const rollbar = Rollbar.init({ lambdaName: "auth" });
  * @param {APIGatewayProxyEvent} event
  */
 function readBody(event) {
+  rollbar.configure({ payload: { event } });
   if (event.isBase64Encoded)
     return Buffer.from(event.body, "base64").toString("utf-8");
   return event.body;

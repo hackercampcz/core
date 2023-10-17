@@ -42,6 +42,7 @@ async function getAttendee(dynamo, slackID, year) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function attendees(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*"

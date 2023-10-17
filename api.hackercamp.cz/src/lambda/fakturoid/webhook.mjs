@@ -79,6 +79,7 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function fakturoidWebhook(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
     getHeader(event.headers, "Origin")

@@ -14,6 +14,7 @@ const rollbar = Rollbar.init({ lambdaName: "admin-registrations" });
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function registrations(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*",

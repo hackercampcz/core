@@ -302,6 +302,7 @@ async function dispatchMessageByType(message) {
  * @returns {Promise<void>}
  */
 export async function sqsSlack(event) {
+  rollbar.configure({ payload: { event } });
   for (const record of event.Records) {
     try {
       const message = JSON.parse(record.body);

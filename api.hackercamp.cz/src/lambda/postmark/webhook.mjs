@@ -23,6 +23,7 @@ const rollbar = Rollbar.init({ lambdaName: "postmark-webhook" });
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function postmarkWebhook(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
     getHeader(event.headers, "Origin")

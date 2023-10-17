@@ -10,6 +10,7 @@ const rollbar = Rollbar.init({ lambdaName: "auth-signout" });
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function signOut(event) {
+  rollbar.configure({ payload: { event } });
   const origin =
     getHeader(event.headers, "Origin") ??
     getHeader(event.headers, "Referer") ??

@@ -57,6 +57,7 @@ function dispatchByType(event) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function slackWebhook(event) {
+  rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
     getHeader(event.headers, "Origin")

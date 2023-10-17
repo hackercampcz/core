@@ -99,6 +99,7 @@ async function updateRegistrationsIndex(event, searchIndex) {
  * @returns {Promise<void>}
  */
 async function indexUpdate(event) {
+  rollbar.configure({ payload: { event } });
   try {
     const searchIndex = openAlgoliaIndex();
     await Promise.all([
