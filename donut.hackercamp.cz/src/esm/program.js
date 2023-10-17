@@ -3,7 +3,7 @@ import {
   formatShortDayName,
   formatTime,
 } from "@hackercamp/lib/format.mjs";
-import { defAtom } from "@thi.ng/atom";
+import { defAtom, updateAsTransaction } from "@thi.ng/atom";
 import structuredClone from "@ungap/structured-clone";
 import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
@@ -43,10 +43,14 @@ const state = defAtom({
  * @param {IAtom<T>} [atom]
  */
 const transact = (fn, atom = state) => atom.swap(fn);
+const swapIn = (path, fn, atom = state) => atom.swapIn(path, fn);
 
-// export for dev experience
-globalThis.transact = transact;
-globalThis.getState = () => state.deref();
+if (globalThis.__DEVELOPMENT__) {
+  // export for dev experience
+  globalThis.transact = transact;
+  globalThis.swapIn = swapIn;
+  globalThis.getState = () => state.deref();
+}
 
 function makeTimeline(startAt, endAt, minutes = SLOT_MINUTES) {
   const times = [];
@@ -128,11 +132,7 @@ function handleLineupsScroll(event) {
   visibleDate.setMinutes(campStartAt.getMinutes() + minutesScrolledOut);
   location.hash = `#${visibleDate.toISOString()}`;
 
-  transact((x) =>
-    Object.assign(x, {
-      visibleDate,
-    })
-  );
+  swapIn("visibleDate", () => visibleDate);
 }
 
 function eventTemplate({
@@ -286,7 +286,7 @@ function topicEvents({ id }, events) {
 
 /**
  * TODO: split me?
- * @param {Atom} state
+ * @param {any} state
  */
 function renderProgram({
   lineups,
@@ -893,15 +893,11 @@ export async function main({ rootElement, env }) {
 
   const { campStartAt: startAt, campEndAt: endAt } = state.deref();
   const ticks = (endAt - startAt) / 1000 / 60 / 15;
-  transact((x) =>
-    Object.assign(x, {
-      slots: Array.from({ length: ticks }),
-    })
-  );
+  swapIn("slots", () => Array.from({ length: ticks }));
 
   try {
     const lineups = await fetchLineups(env["api-host"]);
-    transact((x) => Object.assign(x, { lineups: instatializeDates(lineups) }));
+    swapIn("lineups", () => instatializeDates(lineups));
   } catch (o_O) {
     rollbar.error(o_O);
     snackbar.labelText = "Chyba při načítání lineupů";
@@ -910,9 +906,7 @@ export async function main({ rootElement, env }) {
 
   try {
     const events = await fetchEvents(env["api-host"]);
-    transact((x) =>
-      Object.assign(x, { events: joinTopicPeople(instatializeDates(events)) })
-    );
+    swapIn("events", () => joinTopicPeople(instatializeDates(events)));
   } catch (o_O) {
     rollbar.error(o_O);
     snackbar.labelText = "Chyba při načítání eventů";
@@ -920,12 +914,7 @@ export async function main({ rootElement, env }) {
   }
 
   // Manual and auto scroll trought the program features
-
-  transact((x) =>
-    Object.assign(x, {
-      onLineupsScroll: throttle(handleLineupsScroll),
-    })
-  );
+  swapIn("onLineupsScroll", () => throttle(handleLineupsScroll));
 
   requestAnimationFrame(() => {
     const param = location.hash.substring(1);

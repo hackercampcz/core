@@ -7,7 +7,7 @@ import "@material/web/list/list.js";
 import "@material/web/list/list-item.js";
 import "@material/web/textfield/outlined-text-field.js";
 import "@material/web/textfield/filled-text-field.js";
-import { defAtom } from "@thi.ng/atom";
+import { defAtom, updateAsTransaction } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import {
   Action,
@@ -46,9 +46,15 @@ const state = defAtom({
 
 const transact = (fn, atom = state) => atom.swap(fn);
 
-// export for dev experience
-globalThis.transact = transact;
-globalThis.getState = () => state.deref();
+const transaction = (fn, atom = state) => updateAsTransaction(atom, fn);
+const swapIn = (path, fn, atom = state) => atom.swapIn(path, fn);
+
+if (globalThis.__DEVELOPMENT__) {
+  // export for dev experience
+  globalThis.transact = transact;
+  globalThis.swapIn = swapIn;
+  globalThis.getState = () => state.deref();
+}
 
 /**
  * @param {string} email
@@ -229,12 +235,15 @@ function renderDetail(detail) {
   const items = detail.nfcTronData?.length
     ? detail.nfcTronData.map((x) => x.sn)
     : [""];
-  const nfcTronData = new Set(items);
-  transact((x) => Object.assign(x, { detail, nfcTronData }));
+  transaction((t) => {
+    swapIn("detail", () => detail, t);
+    swapIn("nfcTronData", () => new Set(items), t);
+    return true;
+  });
 }
 
 function closeDetail() {
-  transact((x) => Object.assign(x, { detail: null }));
+  swapIn("detail", () => null);
 }
 
 async function renderModalDialog(name) {
@@ -393,12 +402,15 @@ async function getNfcTronData(attendee, apiUrl) {
  * @param {string} apiHost
  */
 function loadData(selectedView, year, page, query, apiHost) {
-  transact((x) =>
-    Object.assign(x, {
-      selectedView,
-      data: fetchData({ selectedView, year, page, query }, apiHost),
-    })
-  );
+  transaction((t) => {
+    swapIn("selectedView", () => selectedView, t);
+    swapIn(
+      "data",
+      () => fetchData({ selectedView, year, page, query }, apiHost),
+      t
+    );
+    return true;
+  });
 }
 
 const endpointName = new Map([
@@ -466,20 +478,20 @@ async function handleMessage(e) {
       break;
     }
     case Action.select: {
-      transact((x) => {
+      swapIn("selection", (x) => {
         for (const key of payload.keys) {
-          x.selection.add(key);
+          x.add(key);
         }
         return x;
       });
       break;
     }
     case Action.unselect: {
-      transact((x) => {
+      swapIn("selection", (x) => {
         if (payload.all) {
-          x.selection.clear();
+          x.clear();
         } else {
-          x.selection.delete(payload.key);
+          x.delete(payload.key);
         }
         return x;
       });
@@ -507,18 +519,12 @@ async function handleMessage(e) {
     }
     case Action.addChip: {
       console.log({ event: "add chip", payload });
-      transact((state) => {
-        state.nfcTronData.add(payload.sn);
-        return state;
-      });
+      swapIn("nfcTronData", (x) => x.add(payload.sn));
       break;
     }
     case Action.removeChip: {
       console.log({ event: "remove chip", payload });
-      transact((state) => {
-        state.nfcTronData.delete(payload.sn);
-        return state;
-      });
+      swapIn("nfcTronData", (x) => x.delete(payload.sn));
       break;
     }
   }

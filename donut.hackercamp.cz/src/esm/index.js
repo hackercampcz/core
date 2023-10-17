@@ -68,11 +68,16 @@ const state = defAtom({
  * @param {IAtom<T>} atom
  */
 const transact = (fn, atom = state) => atom.swap(fn);
+const swapIn = (path, fn, atom = state) => atom.swapIn(path, fn);
 
-// Global exports for DX
-globalThis.setView = (view) =>
-  transact((x) => Object.assign(x, { forcedView: view }));
-globalThis.View = View;
+if (globalThis.__DEVELOPMENT__) {
+  // Global exports for DX
+  globalThis.transact = transact;
+  globalThis.swapIn = swapIn;
+  globalThis.getState = () => state.deref();
+  globalThis.setView = (view) => swapIn("forcedView", () => view);
+  globalThis.View = View;
+}
 
 async function authenticate({ searchParams, apiURL }) {
   const code = searchParams.get("code");
@@ -556,7 +561,7 @@ async function loadData(profile, year, apiURL) {
     // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
     // Load them async, because NFCTron API is slow as hell
     getNfcTronData(attendee, apiURL).then((attendee) =>
-      transact((x) => Object.assign(x, { attendee }))
+      swapIn("attendee", () => attendee)
     );
   }
   const contact = getContact();

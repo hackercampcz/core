@@ -1,4 +1,4 @@
-import { defAtom } from "@thi.ng/atom";
+import { defAtom, updateAsTransaction } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { when } from "lit-html/directives/when.js";
 import { setReturnUrl, signOut } from "./lib/profile.js";
@@ -6,13 +6,23 @@ import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 
-export const state = defAtom({
+const state = defAtom({
   view: signpostTemplate,
   year: 2023,
   apiHost: "",
   profile: {},
 });
-const transact = (fn) => state.swap(fn);
+
+const transact = (fn, atom = state) => atom.swap(fn);
+
+const transaction = (fn, atom = state) => updateAsTransaction(atom, fn);
+const swapIn = (path, fn, atom = state) => atom.swapIn(path, fn);
+
+if (globalThis.__DEVELOPMENT__) {
+  globalThis.transact = transact;
+  globalThis.swapIn = swapIn;
+  globalThis.getState = () => state.deref();
+}
 
 const eventFormStyles = html`
   <style>
@@ -93,11 +103,7 @@ const lineupsFieldsTemplates = new Map([
           required
           style="font-weight: bold;"
           ?readonly=${Boolean(editingEvent?.topic)}
-          @change=${(event) => {
-            transact((x) =>
-              Object.assign(x, { selectedTopic: event.target.value })
-            );
-          }}
+          @change=${(e) => swapIn("selectedTopic", () => e.target.value)}
         >
           <option value="" disabled ?selected=${!selectedTopic}>
             Vyberte vaše téma
@@ -394,11 +400,7 @@ const lineupsFieldsTemplates = new Map([
           required
           style="font-weight: bold;"
           ?readonly=${Boolean(editingEvent?.topic)}
-          @change=${(event) => {
-            transact((x) =>
-              Object.assign(x, { selectedTopic: event.target.value })
-            );
-          }}
+          @change=${(e) => swapIn("selectedTopic", () => e.target.value)}
         >
           <option value="" disabled ?selected=${!selectedTopic}>
             Vyberte vaše téma
@@ -463,12 +465,11 @@ lineupsFieldsTemplates.set("libase", lineupsFieldsTemplates.get("limain"));
 lineupsFieldsTemplates.set("liorg", lineupsFieldsTemplates.get("liother"));
 
 function showLineupEventForm(lineupId) {
-  transact((x) =>
-    Object.assign(x, {
-      view: eventFormTemplate,
-      lineupId,
-    })
-  );
+  transaction((t) => {
+    swapIn("view", () => eventFormTemplate, t);
+    swapIn("lineupId", () => lineupId, t);
+    return true;
+  });
 }
 
 export function signpostTemplate() {
@@ -483,8 +484,8 @@ export function signpostTemplate() {
           <a
             class="hc-link--decorated"
             href="#"
-            @click=${(event) => {
-              event.preventDefault();
+            @click=${(e) => {
+              e.preventDefault();
               showLineupEventForm("limain");
             }}
             >Mainframe</a
@@ -495,8 +496,8 @@ export function signpostTemplate() {
           <a
             class="hc-link--decorated"
             href="#"
-            @click=${(event) => {
-              event.preventDefault();
+            @click=${(e) => {
+              e.preventDefault();
               showLineupEventForm("libase");
             }}
             >Basecamp</a
@@ -508,8 +509,8 @@ export function signpostTemplate() {
         <a
           class="hc-link--decorated"
           href="#"
-          @click=${(event) => {
-            event.preventDefault();
+          @click=${(e) => {
+            e.preventDefault();
             showLineupEventForm("liback");
           }}
           >Backend</a
@@ -520,8 +521,8 @@ export function signpostTemplate() {
         <a
           class="hc-link--decorated"
           href="#"
-          @click=${(event) => {
-            event.preventDefault();
+          @click=${(e) => {
+            e.preventDefault();
             showLineupEventForm("lipeep");
           }}
           >PeopleWare</a
@@ -532,8 +533,8 @@ export function signpostTemplate() {
         <a
           class="hc-link--decorated"
           href="#"
-          @click=${(event) => {
-            event.preventDefault();
+          @click=${(e) => {
+            e.preventDefault();
             showLineupEventForm("liwood");
           }}
           >WoodStack /<br />Jungle release</a
@@ -544,8 +545,8 @@ export function signpostTemplate() {
         <a
           class="hc-link--decorated"
           href="#"
-          @click=${(event) => {
-            event.preventDefault();
+          @click=${(e) => {
+            e.preventDefault();
             showLineupEventForm("liother");
           }}
           >Doprovodný program</a
@@ -664,7 +665,7 @@ export async function renderEventForm(
         name,
         slackID,
       }));
-      transact((x) => Object.assign(x, { hackers }));
+      swapIn("hackers", () => hackers);
     } catch (o_O) {
       rollbar.error(o_O);
       snackbar.labelText = "Chyba při načítání hackerů";
