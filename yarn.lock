@@ -282,6 +282,52 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/client-ecs@npm:^3.405.0":
+  version: 3.430.0
+  resolution: "@aws-sdk/client-ecs@npm:3.430.0"
+  dependencies:
+    "@aws-crypto/sha256-browser": 3.0.0
+    "@aws-crypto/sha256-js": 3.0.0
+    "@aws-sdk/client-sts": 3.430.0
+    "@aws-sdk/credential-provider-node": 3.430.0
+    "@aws-sdk/middleware-host-header": 3.429.0
+    "@aws-sdk/middleware-logger": 3.428.0
+    "@aws-sdk/middleware-recursion-detection": 3.428.0
+    "@aws-sdk/middleware-signing": 3.428.0
+    "@aws-sdk/middleware-user-agent": 3.428.0
+    "@aws-sdk/region-config-resolver": 3.430.0
+    "@aws-sdk/types": 3.428.0
+    "@aws-sdk/util-endpoints": 3.428.0
+    "@aws-sdk/util-user-agent-browser": 3.428.0
+    "@aws-sdk/util-user-agent-node": 3.430.0
+    "@smithy/config-resolver": ^2.0.15
+    "@smithy/fetch-http-handler": ^2.2.3
+    "@smithy/hash-node": ^2.0.11
+    "@smithy/invalid-dependency": ^2.0.11
+    "@smithy/middleware-content-length": ^2.0.13
+    "@smithy/middleware-endpoint": ^2.1.2
+    "@smithy/middleware-retry": ^2.0.17
+    "@smithy/middleware-serde": ^2.0.11
+    "@smithy/middleware-stack": ^2.0.5
+    "@smithy/node-config-provider": ^2.1.2
+    "@smithy/node-http-handler": ^2.1.7
+    "@smithy/protocol-http": ^3.0.7
+    "@smithy/smithy-client": ^2.1.11
+    "@smithy/types": ^2.3.5
+    "@smithy/url-parser": ^2.0.11
+    "@smithy/util-base64": ^2.0.0
+    "@smithy/util-body-length-browser": ^2.0.0
+    "@smithy/util-body-length-node": ^2.1.0
+    "@smithy/util-defaults-mode-browser": ^2.0.15
+    "@smithy/util-defaults-mode-node": ^2.0.20
+    "@smithy/util-retry": ^2.0.4
+    "@smithy/util-utf8": ^2.0.0
+    "@smithy/util-waiter": ^2.0.11
+    tslib: ^2.5.0
+  checksum: e2880cccfd97f75ad91c126096ef6ebcbef5e0fa6ee5b3c7a44d9f867665b0d3bfec3b436eba953f1ab0d9163a0937dd0102a59d4d7ef5a206b617b117a3c6b0
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/client-secrets-manager@npm:3.430.0":
   version: 3.430.0
   resolution: "@aws-sdk/client-secrets-manager@npm:3.430.0"
@@ -3148,7 +3194,7 @@ __metadata:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
     "@pulumi/aws": 6.5.0
-    "@pulumi/awsx": 2.0.0
+    "@pulumi/awsx": 2.0.2
     "@pulumi/pulumi": 3.89.0
     "@topmonks/pulumi-aws": 3.1.1
     "@typescript-eslint/eslint-plugin": 6.8.0
@@ -4114,7 +4160,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:6.5.0":
+"@pulumi/aws@npm:6.5.0, @pulumi/aws@npm:^6.5.0":
   version: 6.5.0
   resolution: "@pulumi/aws@npm:6.5.0"
   dependencies:
@@ -4127,40 +4173,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:^5.35.0":
-  version: 5.42.0
-  resolution: "@pulumi/aws@npm:5.42.0"
+"@pulumi/awsx@npm:2.0.2":
+  version: 2.0.2
+  resolution: "@pulumi/awsx@npm:2.0.2"
   dependencies:
-    "@pulumi/pulumi": ^3.0.0
-    aws-sdk: ^2.0.0
-    builtin-modules: 3.0.0
-    mime: ^2.0.0
-    read-package-tree: ^5.2.1
-    resolve: ^1.7.1
-  checksum: ab859d204c3c33b49c2efbf3634286e8dffbf82f92d1d5e454d9aa646dd8935c437c7cb999a3f4de05680684703ff5647b8d94aed0366e75166fc0488f3526f4
-  languageName: node
-  linkType: hard
-
-"@pulumi/awsx@npm:2.0.0":
-  version: 2.0.0
-  resolution: "@pulumi/awsx@npm:2.0.0"
-  dependencies:
-    "@pulumi/aws": ^5.35.0
-    "@pulumi/docker": ^3.6.1
+    "@aws-sdk/client-ecs": ^3.405.0
+    "@pulumi/aws": ^6.5.0
+    "@pulumi/docker": ^4.4.3
     "@pulumi/pulumi": ^3.0.0
     "@types/aws-lambda": ^8.10.23
+    aws-sdk: ^2.1450.0
+    docker-classic: "npm:@pulumi/docker@3.6.1"
     mime: ^2.0.0
-  checksum: 358b2281b3978b72898d079e75aa0b77da3e7a40e0d0678a837571fcb735eacbeade9551f7951f77f41f150a6abb0576fb86481b340a88409e0293cc5447c17f
+  checksum: 3f4abb74476b3645aace2fc8d98fad28b57eb2029e868e2ee09a75a06f80acaa1d2d1432ff3f3aee65e90a1ab03821991ee13d8eb720b7df0acbb5bc7009af84
   languageName: node
   linkType: hard
 
-"@pulumi/docker@npm:^3.6.1":
-  version: 3.6.1
-  resolution: "@pulumi/docker@npm:3.6.1"
+"@pulumi/docker@npm:^4.4.3":
+  version: 4.4.3
+  resolution: "@pulumi/docker@npm:4.4.3"
   dependencies:
     "@pulumi/pulumi": ^3.0.0
     semver: ^5.4.0
-  checksum: cf8302e65d43bfcc10da904e3f79c64fe397b8e3beca62b968693caeb3fbf4276619d67979da2eed644e47af9c04a8f54d8806006a51e893223eafc622a48a1f
+  checksum: cc9f636783d15983cc5b369ec1d4547c32ec55a905c7a9d07541a17a2064809a0812695d69c12c4d3fa45702e5e72b5f98ccd4953a65df4754bfe5b8be89bbda
   languageName: node
   linkType: hard
 
@@ -6025,9 +6060,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:^2.0.0":
-  version: 2.1416.0
-  resolution: "aws-sdk@npm:2.1416.0"
+"aws-sdk@npm:^2.1450.0":
+  version: 2.1475.0
+  resolution: "aws-sdk@npm:2.1475.0"
   dependencies:
     buffer: 4.9.2
     events: 1.1.1
@@ -6039,7 +6074,7 @@ __metadata:
     util: ^0.12.4
     uuid: 8.0.0
     xml2js: 0.5.0
-  checksum: 22fc4de797b0a9cefaba14cb26134f577c7c4ee41f85cd47399997553662a3895a13fbbf0a362ad0cfa11a79b46d946f13e771f88a7778a0416c60d4bc816f61
+  checksum: 35810505de99db21dff95e25c5ab07c8b75d03df371f45ed84243a66ab17db5172316df2f7e24c26ef1460adcfaf82b0eef74c5b5fecea2094307e2f3dffafec
   languageName: node
   linkType: hard
 
@@ -7505,6 +7540,16 @@ __metadata:
   dependencies:
     path-type: ^4.0.0
   checksum: fa05e18324510d7283f55862f3161c6759a3f2f8dbce491a2fc14c8324c498286c54282c1f0e933cb930da8419b30679389499b919122952a4f8592362ef4615
+  languageName: node
+  linkType: hard
+
+"docker-classic@npm:@pulumi/docker@3.6.1":
+  version: 3.6.1
+  resolution: "@pulumi/docker@npm:3.6.1"
+  dependencies:
+    "@pulumi/pulumi": ^3.0.0
+    semver: ^5.4.0
+  checksum: cf8302e65d43bfcc10da904e3f79c64fe397b8e3beca62b968693caeb3fbf4276619d67979da2eed644e47af9c04a8f54d8806006a51e893223eafc622a48a1f
   languageName: node
   linkType: hard
 
