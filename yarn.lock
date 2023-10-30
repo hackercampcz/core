@@ -3550,7 +3550,7 @@ __metadata:
     "@material/mwc-drawer": "npm:0.27.0"
     "@material/mwc-snackbar": "npm:0.27.0"
     "@material/web": "npm:1.0.1"
-    "@thi.ng/atom": "npm:5.2.11"
+    "@thi.ng/atom": "npm:5.2.12"
     "@thi.ng/transducers": "npm:8.8.6"
     "@ungap/structured-clone": "npm:1.2.0"
     date-fns: "npm:2.30.0"
@@ -5709,16 +5709,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/atom@npm:5.2.11":
-  version: 5.2.11
-  resolution: "@thi.ng/atom@npm:5.2.11"
+"@thi.ng/atom@npm:5.2.12":
+  version: 5.2.12
+  resolution: "@thi.ng/atom@npm:5.2.12"
   dependencies:
     "@thi.ng/api": "npm:^8.9.6"
     "@thi.ng/equiv": "npm:^2.1.31"
     "@thi.ng/errors": "npm:^2.4.0"
-    "@thi.ng/paths": "npm:^5.1.46"
+    "@thi.ng/paths": "npm:^5.1.47"
     tslib: "npm:^2.6.2"
-  checksum: bf1e68d284a98c63aef063e4a3d6be43262760b2c4dc108d2b873da19705def766e05bd2b44ce8108a635183159250c86fa7a677fa0806e5d53fb65a386b8f85
+  checksum: 751832b6e1d8c7d2ca16a60dfcf1508e3e0ad9718c46ff8d422f33ad99cfd7caea4a5c609a0fe763aae87f13615a52256ff3192abc550da6442197ef0fd484d7
   languageName: node
   linkType: hard
 
@@ -5780,14 +5780,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/paths@npm:^5.1.46":
-  version: 5.1.46
-  resolution: "@thi.ng/paths@npm:5.1.46"
+"@thi.ng/paths@npm:^5.1.47":
+  version: 5.1.47
+  resolution: "@thi.ng/paths@npm:5.1.47"
   dependencies:
     "@thi.ng/api": "npm:^8.9.6"
     "@thi.ng/checks": "npm:^3.4.6"
     "@thi.ng/errors": "npm:^2.4.0"
-  checksum: edc1fb89cc33e662906ec3563d3ef9b0e7b30bd002b098355ea0117bcfa70aba62cf5427851c428ee6ed24f1bf109151ba09621b1f9b333587296810973fcfcf
+  checksum: acc28b2b24185a3be748c456cff0bbdf02cee7ba7b2f50b6e53a8e8dd97c84d882fb0cda25cc7e4e5b0f3b10ca18a90c76cd61ab1a0a7ffaa816bca037acdb2f
   languageName: node
   linkType: hard
 
