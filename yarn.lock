@@ -3557,7 +3557,7 @@ __metadata:
     eslint: "npm:8.52.0"
     eslint-plugin-promise: "npm:6.1.1"
     lit: "npm:3.0.1"
-    lit-html: "npm:3.0.1"
+    lit-html: "npm:3.0.2"
     marked: "npm:9.1.5"
     ramda: "npm:0.29.1"
     rollbar: "npm:2.26.2"
@@ -11913,12 +11913,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:3.0.1":
-  version: 3.0.1
-  resolution: "lit-html@npm:3.0.1"
+"lit-html@npm:3.0.2":
+  version: 3.0.2
+  resolution: "lit-html@npm:3.0.2"
   dependencies:
     "@types/trusted-types": "npm:^2.0.2"
-  checksum: a7e545eee4d0f8fa9a6ff4c084a563f6123d412b19acf651edbe0a9e41aaece6c8accc5c0cfa150d30ff44d9053dbd3656e182b023e18dbf30206722c4cb89e2
+  checksum: feec3c82e2ea2609c44b3e9bdeb80de614132ceac08be2ce312d979ffad714cb0b6081353c25ec8753120033388110806171d0cfa7ad640dbecdc4c93e56052a
   languageName: node
   linkType: hard
 
