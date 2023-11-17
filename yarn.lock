@@ -234,13 +234,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.451.0":
-  version: 3.451.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.451.0"
+"@aws-sdk/client-dynamodb@npm:3.454.0":
+  version: 3.454.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.454.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
-    "@aws-sdk/client-sts": "npm:3.451.0"
+    "@aws-sdk/client-sts": "npm:3.454.0"
     "@aws-sdk/core": "npm:3.451.0"
     "@aws-sdk/credential-provider-node": "npm:3.451.0"
     "@aws-sdk/middleware-endpoint-discovery": "npm:3.451.0"
@@ -280,7 +280,7 @@ __metadata:
     "@smithy/util-waiter": "npm:^2.0.13"
     tslib: "npm:^2.5.0"
     uuid: "npm:^8.3.2"
-  checksum: 618649a9fbf7153de4d395838b11f8a63a1b36a6949123533435f4be67d099bec7cec2c3f04a423f2e41e53eed6dbb6bb15889b4daefa38db03caae78a8f4f7f
+  checksum: bb9b29c7d5a47ca05a85d9112658d8f5b3147c84ad282958cee7e864e6ebe04dec47486c2e32204c36d12625fbd941d600eac8b71a8f0f698d21d0960184546f
   languageName: node
   linkType: hard
 
@@ -330,13 +330,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-secrets-manager@npm:3.451.0":
-  version: 3.451.0
-  resolution: "@aws-sdk/client-secrets-manager@npm:3.451.0"
+"@aws-sdk/client-secrets-manager@npm:3.454.0":
+  version: 3.454.0
+  resolution: "@aws-sdk/client-secrets-manager@npm:3.454.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
-    "@aws-sdk/client-sts": "npm:3.451.0"
+    "@aws-sdk/client-sts": "npm:3.454.0"
     "@aws-sdk/core": "npm:3.451.0"
     "@aws-sdk/credential-provider-node": "npm:3.451.0"
     "@aws-sdk/middleware-host-header": "npm:3.451.0"
@@ -374,17 +374,17 @@ __metadata:
     "@smithy/util-utf8": "npm:^2.0.2"
     tslib: "npm:^2.5.0"
     uuid: "npm:^8.3.2"
-  checksum: 506ab9625f11d7f290cf295599b2147002860cf2bc0c0e26c7e710978dc2170e6ab4a4d5bf2b7473976eab45d414082b15ba9d7c8a9d91c8abb6ce027bc81ecd
+  checksum: ca9a1c41b42702464abe456b3dc64b35c19d4c9130001e4bd18150c47d5925a0fe8e3e2d1b6b714b72a1594f303b4cd3191dcbd030aa5c393badf8af946de590
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.451.0":
-  version: 3.451.0
-  resolution: "@aws-sdk/client-sqs@npm:3.451.0"
+"@aws-sdk/client-sqs@npm:3.454.0":
+  version: 3.454.0
+  resolution: "@aws-sdk/client-sqs@npm:3.454.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
-    "@aws-sdk/client-sts": "npm:3.451.0"
+    "@aws-sdk/client-sts": "npm:3.454.0"
     "@aws-sdk/core": "npm:3.451.0"
     "@aws-sdk/credential-provider-node": "npm:3.451.0"
     "@aws-sdk/middleware-host-header": "npm:3.451.0"
@@ -423,7 +423,7 @@ __metadata:
     "@smithy/util-retry": "npm:^2.0.6"
     "@smithy/util-utf8": "npm:^2.0.2"
     tslib: "npm:^2.5.0"
-  checksum: 1e2961f512954909630d26e42a50734e80a05a4938f1b63db6b63fa158d45f2161c805cb5a6283031a0c56c1203ea249d0862a09cf69bd9b410a29bd09a09e51
+  checksum: 9703f809ad3975aad6aeb4e917b6fab99d7a252a6c5a946bb8ef6f73480c28371436968291a712a7f8852db1533932bdc6648d86ec28c4b1a9e33180ed3b1b2a
   languageName: node
   linkType: hard
 
@@ -559,9 +559,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sts@npm:3.451.0":
-  version: 3.451.0
-  resolution: "@aws-sdk/client-sts@npm:3.451.0"
+"@aws-sdk/client-sts@npm:3.454.0":
+  version: 3.454.0
+  resolution: "@aws-sdk/client-sts@npm:3.454.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
@@ -603,7 +603,7 @@ __metadata:
     "@smithy/util-utf8": "npm:^2.0.2"
     fast-xml-parser: "npm:4.2.5"
     tslib: "npm:^2.5.0"
-  checksum: 244c5f875bee0dba8ede40cb4f9c81947f5a539a3a5e920fe7adf6bfb6d6dc0cac7262f0fe9168958030f8cfc20a9aea0f67c7a3b0795e6b31bb3d213c827b2e
+  checksum: 072bf82abf227bf339ca0b4fba2535a88fab410c95cac9805e57f335bc5b7ea4794e8e1d583c4c3ec8c98c4f197f7f4fea409120aaf3d833f34b352f88889df6
   languageName: node
   linkType: hard
 
@@ -1126,14 +1126,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.451.0":
-  version: 3.451.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.451.0"
+"@aws-sdk/util-dynamodb@npm:3.454.0":
+  version: 3.454.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.454.0"
   dependencies:
     tslib: "npm:^2.5.0"
   peerDependencies:
     "@aws-sdk/client-dynamodb": ^3.0.0
-  checksum: 69813c41617532b5250ea4ba15e8185986b789e92eea07add6b4435cff3a4b37c1ccd97a769fd0b5659a1c59255d30e1ea5fc44c3aeebe381c4870ac0fedb51e
+  checksum: dd06fdcdaa3e9ae89ae682080ccd416829f34fc2d531bd3f464d20b9c547dc74ec525b5911be54e5946f1e59ee6403a6ed9e6dccc852a6f0bc7ee3186f753638
   languageName: node
   linkType: hard
 
@@ -3505,9 +3505,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-dynamodb": "npm:3.451.0"
-    "@aws-sdk/client-sqs": "npm:3.451.0"
-    "@aws-sdk/util-dynamodb": "npm:3.451.0"
+    "@aws-sdk/client-dynamodb": "npm:3.454.0"
+    "@aws-sdk/client-sqs": "npm:3.454.0"
+    "@aws-sdk/util-dynamodb": "npm:3.454.0"
     "@fast-csv/format": "npm:4.3.5"
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
@@ -3542,7 +3542,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-secrets-manager": "npm:3.451.0"
+    "@aws-sdk/client-secrets-manager": "npm:3.454.0"
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": "npm:14.0.0"
