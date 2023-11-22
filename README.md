@@ -22,3 +22,9 @@ For example to run website locally, you have to use:
 op run --env-file=.env --no-masking -- yarn start:www.hackercamp.cz
 ```
 
+## Infrastructure
+
+Infrastructure is provisioned with Pulumi
+
+<img src="https://www.pulumi.com/images/pricing/team-oss.svg" width="300">
+
