@@ -3573,7 +3573,7 @@ __metadata:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
     "@pulumi/aws": "npm:6.10.0"
-    "@pulumi/awsx": "npm:2.2.0"
+    "@pulumi/awsx": "npm:2.3.0"
     "@pulumi/pulumi": "npm:3.94.2"
     "@topmonks/pulumi-aws": "npm:3.1.2"
     "@typescript-eslint/eslint-plugin": "npm:6.12.0"
@@ -4539,7 +4539,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:6.10.0":
+"@pulumi/aws@npm:6.10.0, @pulumi/aws@npm:^6.9.0":
   version: 6.10.0
   resolution: "@pulumi/aws@npm:6.10.0"
   dependencies:
@@ -4552,42 +4552,29 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:^6.7.0":
-  version: 6.7.0
-  resolution: "@pulumi/aws@npm:6.7.0"
-  dependencies:
-    "@pulumi/pulumi": "npm:^3.0.0"
-    builtin-modules: "npm:3.0.0"
-    mime: "npm:^2.0.0"
-    read-package-tree: "npm:^5.2.1"
-    resolve: "npm:^1.7.1"
-  checksum: 4a14e2a6976e612271940602b69cfe9ef57ccc422f38d95b131a28dbb311423bfcb4f329651f9d0b47e628cce513515db94edb689885dd4ace4850f5f8e0ceef
-  languageName: node
-  linkType: hard
-
-"@pulumi/awsx@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@pulumi/awsx@npm:2.2.0"
+"@pulumi/awsx@npm:2.3.0":
+  version: 2.3.0
+  resolution: "@pulumi/awsx@npm:2.3.0"
   dependencies:
     "@aws-sdk/client-ecs": "npm:^3.405.0"
-    "@pulumi/aws": "npm:^6.7.0"
-    "@pulumi/docker": "npm:^4.4.4"
+    "@pulumi/aws": "npm:^6.9.0"
+    "@pulumi/docker": "npm:^4.5.0"
     "@pulumi/pulumi": "npm:^3.0.0"
     "@types/aws-lambda": "npm:^8.10.23"
     aws-sdk: "npm:^2.1450.0"
     docker-classic: "npm:@pulumi/docker@3.6.1"
     mime: "npm:^2.0.0"
-  checksum: b418ae33b6fee7781e428375d25b649b5f37a51fed02cba41d9dba8c3d5b2b6d6ac868f4c46f9c356dfc7a7f76ed52f30d38bcee9c1a7ae11d530cfe2ddecac2
+  checksum: 6a7e018ad994e86d69edc7a231f5211e96c4f35492cc9691ad837b8a3792fefb55edd90c171769c6b67449c2f6fbe0bb2cba370097ccda2348102ac01da475b9
   languageName: node
   linkType: hard
 
-"@pulumi/docker@npm:^4.4.4":
-  version: 4.4.4
-  resolution: "@pulumi/docker@npm:4.4.4"
+"@pulumi/docker@npm:^4.5.0":
+  version: 4.5.0
+  resolution: "@pulumi/docker@npm:4.5.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.0.0"
     semver: "npm:^5.4.0"
-  checksum: c8f4ccf9da95ffb77b9b2bae211257c46a25db6671886fb6fee8a25b95689e646ee7e9cd91ee4096209330d80768ff3347ccaf86d0e597b351e22d06eaabafca
+  checksum: 47969f17e3e8bb13a5e7e62824aa6faf5dcac48d3f876261245e9da02a596c9248fe5faa5aad9b4b85416c741705aa9c80a5bf40afe038fd12435f7af7ed1855
   languageName: node
   linkType: hard
 
