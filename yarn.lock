@@ -3558,7 +3558,7 @@ __metadata:
     eslint-plugin-promise: "npm:6.1.1"
     lit: "npm:3.1.0"
     lit-html: "npm:3.1.0"
-    marked: "npm:10.0.0"
+    marked: "npm:11.0.0"
     ramda: "npm:0.29.1"
     rollbar: "npm:2.26.2"
     web-types-lit: "npm:0.1.0"
@@ -3580,7 +3580,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:6.13.0"
     esbuild: "npm:0.19.8"
     front-matter: "npm:4.0.2"
-    marked: "npm:10.0.0"
+    marked: "npm:11.0.0"
   languageName: unknown
   linkType: soft
 
@@ -12422,12 +12422,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:10.0.0":
-  version: 10.0.0
-  resolution: "marked@npm:10.0.0"
+"marked@npm:11.0.0":
+  version: 11.0.0
+  resolution: "marked@npm:11.0.0"
   bin:
     marked: bin/marked.js
-  checksum: 5882b04a5f0d619757b281f09a67eb8f9e966299083748b51b144b482c56527161cc4dee3ef8e334926c84b7c6ad2bb5c48af5855a52c6ae460131175e3fb93f
+  checksum: 45a8d7b168f965229e9d64607cda8a05ed7776ee137f4acfae16555114513a7f1c73bc977ea865ad380402fac3b17c072516e0e5a6171db05151c7d69aee5485
   languageName: node
   linkType: hard
 
