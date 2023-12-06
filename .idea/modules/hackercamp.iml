@@ -18,4 +18,7 @@
     <orderEntry type="library" name="Deps: org.clojure/spec.alpha:0.3.218" level="project" />
     <orderEntry type="library" name="Deps: org.clojure/core.specs.alpha:0.2.62" level="project" />
   </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="743d129f-f7f2-41cf-994e-5ed5caf13719" />
+  </component>
 </module>
