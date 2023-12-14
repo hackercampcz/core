@@ -91,8 +91,8 @@ jobs:
       stack_name:
         type: string
         default: prod
-    machine:
-      image: ubuntu-2204:2023.02.1
+    docker:
+      - image: cimg/node:lts
     resource_class: arm.medium
     environment:
       AWS_STS_REGIONAL_ENDPOINTS: regional
@@ -124,8 +124,8 @@ jobs:
       stack_name:
         type: string
         default: prod
-    machine:
-      image: ubuntu-2204:2023.02.1
+    docker:
+      - image: cimg/node:lts
     resource_class: arm.medium
     steps:
       - checkout
@@ -170,8 +170,8 @@ jobs:
       rollbar_access_token:
         type: string
         default: ""
-    machine:
-      image: ubuntu-2204:2023.02.1
+    docker:
+      - image: cimg/node:lts
     resource_class: arm.large
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
@@ -225,7 +225,9 @@ jobs:
       rollbar_access_token:
         type: string
         default: ""
-    executor: aws-cli/default
+    docker:
+      - image: cimg/node:lts
+    resource_class: arm.medium
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
     steps:
