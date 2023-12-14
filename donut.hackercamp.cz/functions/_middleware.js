@@ -1,0 +1,29 @@
+import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
+
+const authorizedOnly = [
+  "/hackers",
+  "/registrace",
+  "/ubytovani",
+  "/program",
+  "/admin",
+];
+
+/**
+ * @param {EventContext} context
+ */
+export async function onRequest({ request, next, env }) {
+  const url = new URL(request.url);
+  if (!authorizedOnly.some((x) => url.pathname.startsWith(x))) return next();
+
+  const token = getToken(request.headers);
+  const isValidToken = await validateToken(token, env.HC_JWT_SECRET);
+  console.log("Authorization", request.url, Boolean(isValidToken));
+
+  if (isValidToken) return next();
+
+  const query = new URLSearchParams({
+    state: "not-authenticated",
+    returnUrl: request.url,
+  });
+  return Response.redirect(`https://donut.hackercamp.cz/?${query}`, 307);
+}

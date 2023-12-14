@@ -8,6 +8,7 @@ export function* readTemplates(relPath) {
   const communication = path.resolve(relPath);
   const templates = fs.readdirSync(communication);
   for (const template of templates) {
+    if (path.extname(template) !== ".md") continue;
     const name = path.basename(template, ".md");
     const filePath = path.resolve(communication, template);
     const content = fs.readFileSync(filePath, { encoding: "utf-8" });

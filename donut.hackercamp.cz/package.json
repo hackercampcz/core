@@ -1,12 +1,6 @@
 {
   "name": "@hackercamp/donut",
   "packageManager": "yarn@4.0.2",
-  "devDependencies": {
-    "@aws-sdk/client-secrets-manager": "3.468.0",
-    "eslint": "8.55.0",
-    "eslint-plugin-promise": "6.1.1",
-    "web-types-lit": "0.1.0"
-  },
   "dependencies": {
     "@hackercamp/infrastructure": "workspace:infrastructure",
     "@hackercamp/lib": "workspace:lib",
@@ -25,5 +19,13 @@
     "ramda": "0.29.1",
     "rollbar": "2.26.2",
     "workbox-window": "7.0.0"
+  },
+  "devDependencies": {
+    "@aws-sdk/client-secrets-manager": "3.468.0",
+    "@cloudflare/workers-types": "4.20231121.0",
+    "eslint": "8.55.0",
+    "eslint-plugin-promise": "6.1.1",
+    "web-types-lit": "0.1.0",
+    "wrangler": "3.19.0"
   }
 }

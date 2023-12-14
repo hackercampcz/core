@@ -41,7 +41,7 @@ const postmarkTemplateProvider: pulumi.dynamic.ResourceProvider<
       },
     });
     const outs = await resp.json();
-    console.log(outs);
+    if (outs.ErrorCode) console.log({ outs, inputs });
     return { id: outs.TemplateId.toString(), outs };
   },
   async update(id, olds, news) {

@@ -1,23 +1,17 @@
+import * as fs from "node:fs";
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
-import {
-  registerAutoTags,
-  createCertificate,
-  createGoogleMxRecords,
-  createTxtRecord,
-  Website,
-  CloudFront,
-  getHostedZone,
-} from "@topmonks/pulumi-aws";
+import * as cloudflare from "@pulumi/cloudflare";
+import { registerAutoTags } from "@topmonks/pulumi-aws";
 import {
   createApi,
   createDB,
   createQueues,
   createRoutes,
 } from "@hackercamp/api";
-import { AuthEdgeLambda } from "@hackercamp/donut/edge";
 import { readTemplates } from "./communication";
 import * as postmark from "./postmark";
+import { Output } from "@pulumi/pulumi";
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),
@@ -26,144 +20,137 @@ registerAutoTags({
 
 const config = new pulumi.Config();
 
-const domain = config.get("domain");
-const donutDomain = config.get("donut-domain");
-const webDomain = config.get("web-domain");
-const apiDomain = config.get("api-domain");
+const domain = config.require("domain");
+const donutDomain = config.require("donut-domain");
+const webDomain = config.require("web-domain");
+const apiDomain = config.require("api-domain");
 
-createCertificate(donutDomain);
-createGoogleMxRecords(domain);
-createTxtRecord(
-  "google-site-verification",
-  domain,
-  "google-site-verification=KBiUM11RTkIHm4ZpDtFuUUrEXLSsARgSBVTvQCMA0N0"
+const account = new cloudflare.Account(
+  "rarous",
+  {
+    name: "rarous",
+    enforceTwofactor: true,
+  },
+  { protect: true }
 );
 
-createGoogleMxRecords("hckr.camp");
-createTxtRecord(
-  "hckr-google-site-verification",
+const hackercampCzZone = new cloudflare.Zone(
+  "hackercamp.cz",
+  {
+    accountId: account.id,
+    plan: "free",
+    zone: domain,
+  },
+  { protect: true }
+);
+
+const hckrCampZone = new cloudflare.Zone(
   "hckr.camp",
-  "google-site-verification=DsAlbVX0oPkg6-3STev856iJg08e5u19lKd36cct5is"
+  {
+    accountId: account.id,
+    plan: "free",
+    zone: "hckr.camp",
+  },
+  { protect: true }
 );
 
-// TODO: slack-domain-verification=GGg8FlpfnfuznZITUfCuicVigdiJEo9q5nXA3sgM
-
-const hostedZone = getHostedZone(domain);
-new aws.route53.Record(`${domain}/txt-records-postmark-dkim`, {
-  name: pulumi.interpolate`20220529092104pm._domainkey.${hostedZone.name}`,
-  type: "TXT",
-  zoneId: pulumi.interpolate`${hostedZone.zoneId}`,
-  records: [
-    "k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC4oUe6QSmHlcBgjSY41LwJGQO/7fh4MD5WXvZMW8hu1H8KKTIfuNgRyV3I6xDPzzHjIMUlAlVClvxGzffC7wQ1qJM6jPFHCTO2o3AkSWfwk2PnT6MsFFFWft9TdAyA6HWO+PtUkuMsujB+JG1uoN19d9CqvMxvjQdNwdGkwwMdmQIDAQAB",
-  ],
-  ttl: 3600,
-});
-new aws.route53.Record(`${domain}/cname-record-postmark-bounce`, {
-  name: pulumi.interpolate`pm-bounces.${hostedZone.name}`,
-  type: "CNAME",
-  zoneId: pulumi.interpolate`${hostedZone.zoneId}`,
-  records: ["pm.mtasv.net"],
-  ttl: 3600,
-});
-new aws.route53.Record(`${domain}/cname-google-recovery`, {
-  name: pulumi.interpolate`google288bf0ca4bf89f6a.${hostedZone.name}`,
-  type: "CNAME",
-  zoneId: pulumi.interpolate`${hostedZone.zoneId}`,
-  records: ["google.com"],
-  ttl: 3600,
-});
+// TODO: cloudflare domains and pages
 
 const jwtSecret = new aws.secretsmanager.Secret("hc-jwt-secret", {
   name: "HC-JWT-SECRET",
 });
-
 new aws.secretsmanager.SecretVersion("hc-jwt-secret", {
   secretId: jwtSecret.arn,
-  secretString: config.get("private-key"),
+  secretString: config.require("private-key"),
 });
 
-export const postmarkTemplates = {};
+const postmarkLayout = new postmark.Template("postmark-layout", {
+  Name: "Hackercamp styling",
+  Alias: `hc-basic`,
+  Subject: "Template",
+  HtmlBody: fs.readFileSync("../communication/layout.html").toString(),
+  TextBody: `{{{ @content }}}`,
+  TemplateType: "Layout",
+  LayoutTemplate: "",
+});
+export const postmarkTemplates: Record<string, Output<string>> = {};
 
 for (const args of readTemplates("../communication/")) {
   const template = new postmark.Template(
     `postmark-template-${args.Name}`,
-    args
+    args,
+    { dependsOn: [postmarkLayout] }
   );
   const key = args.Alias.replace(/-/g, "_");
   postmarkTemplates[key] = template.id;
 }
 
-const queues = createQueues({ postmarkTemplates });
-export const slackQueueUrl = queues.slackQueueUrl;
+export const queues = createQueues({ postmarkTemplates });
 
-const db = createDB({ slackQueueUrl, postmarkTemplates });
-export const registrationsDataTable = db.registrationsDataTable;
-export const contactsDataTable = db.contactsDataTable;
-export const optOutsDataTable = db.optOutsDataTable;
-export const attendeesDataTable = db.attendeesDataTable;
-export const programDataTable = db.programDataTable;
-export const postmarkDataTable = db.postmarkDataTable;
+const db = createDB({ queues, postmarkTemplates });
 
-const routes = createRoutes({
-  slackQueueUrl,
-  registrationsDataTable,
-  contactsDataTable,
-  optOutsDataTable,
-  attendeesDataTable,
-  programDataTable,
-  postmarkDataTable,
-  postmarkTemplates,
-});
+export const dataTables = {
+  registrations: db.registrationsDataTable,
+  contacts: db.contactsDataTable,
+  optOuts: db.optOutsDataTable,
+  attendees: db.attendeesDataTable,
+  program: db.programDataTable,
+  postmark: db.postmarkDataTable,
+};
+
+const routes = createRoutes({ queues, db, postmarkTemplates });
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = api.url.apply((x) => new URL("/v1/", x).href);
 
-const { lambda: authLambda } = AuthEdgeLambda.create("hc-auth-lambda");
-export const websites: Record<string, WebsiteExport> = {
-  [donutDomain]: siteExports(
-    Website.create(donutDomain, {
-      assetsCachePolicyId: CloudFront.ManagedCachePolicy.CachingOptimized,
-      assetResponseHeadersPolicyId:
-        CloudFront.ManagedResponseHeaderPolicy
-          .CORSwithPreflightAndSecurityHeadersPolicy,
-      cachePolicyId: CloudFront.ManagedCachePolicy.CachingDisabled,
-      responseHeadersPolicyId:
-        CloudFront.ManagedResponseHeaderPolicy
-          .CORSwithPreflightAndSecurityHeadersPolicy,
-      edgeLambdas: [
-        "/hackers/",
-        "/hackers/*",
-        "/registrace/",
-        "/ubytovani/",
-        "/program/",
-        "/admin/",
-      ].map((pathPattern) =>
-        Object.assign(
-          { pathPattern },
-          {
-            lambdaAssociation: {
-              eventType: "viewer-request",
-              lambdaArn: authLambda.arn,
-            },
-          }
-        )
-      ),
-    })
-  ),
-  [webDomain]: siteExports(Website.create(webDomain, {})),
-};
+const webPages = new cloudflare.PagesProject("web", {
+  accountId: account.id,
+  name: "hackercamp-web",
+  productionBranch: "trunk",
+  deploymentConfigs: {
+    production: {
+      compatibilityDate: "2023-09-29",
+    },
+  },
+});
 
-function siteExports(site: Website): WebsiteExport {
-  return {
-    url: site.url,
-    s3BucketUri: site.s3BucketUri,
-    s3WebsiteUrl: site.s3WebsiteUrl,
-    cloudFrontId: site.cloudFrontId,
-  };
-}
+const wwwRecord = new cloudflare.Record(`${webDomain}/dns-record`, {
+  zoneId: hackercampCzZone.id,
+  name: "www",
+  type: "CNAME",
+  value: webPages.domains[0],
+  ttl: 1,
+  proxied: true,
+});
+const webPagesDomain = new cloudflare.PagesDomain("web-domain", {
+  accountId: account.id,
+  domain: wwwRecord.hostname,
+  projectName: webPages.name,
+});
 
-interface WebsiteExport {
-  url: pulumi.Output<string>;
-  s3BucketUri: pulumi.Output<string>;
-  s3WebsiteUrl: pulumi.Output<string>;
-  cloudFrontId: pulumi.Output<string>;
-}
+const donutPages = new cloudflare.PagesProject("donut", {
+  accountId: account.id,
+  name: "hackercamp-donut",
+  productionBranch: "trunk",
+  deploymentConfigs: {
+    production: {
+      compatibilityDate: "2023-09-29",
+      secrets: {
+        HC_JWT_SECRET: config.require("private-key"),
+      },
+    },
+  },
+});
+
+const donutRecord = new cloudflare.Record(`${donutDomain}/dns-record`, {
+  zoneId: hackercampCzZone.id,
+  name: "donut",
+  type: "CNAME",
+  value: donutPages.domains[0],
+  ttl: 1,
+  proxied: true,
+});
+const donutPagesDomain = new cloudflare.PagesDomain("donut-domain", {
+  accountId: account.id,
+  domain: donutRecord.hostname,
+  projectName: donutPages.name,
+});

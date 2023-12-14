@@ -1,36 +1,27 @@
 config:
-  aws:region: eu-central-1
-  hackercamp:algolia-admin-key:
-    secure: AAABAA4XNdpHjMZ20VgptK68AwCpeF6ODv8IvQL4L7fLpZvRJkEDFk3g8+g7hNZ1Gh8rnRN6cgUc6tJuQejI1w==
-  hackercamp:algolia-app-id: J77BFM3PLE
   hackercamp:algolia-attendees-index-name: hc-attendees
   hackercamp:algolia-registrations-index-name: hc-registrations
-  hackercamp:algolia-search-key:
-    secure: AAABAHscEyAGxDlFeEALF4xcitOWcrr5do2A79y4O0lDekbIa5jNQJX/qo89o2Yx1/iEVxewaVc4n4twoNfA4Q==
   hackercamp:api-domain: api.hackercamp.cz
   hackercamp:domain: hackercamp.cz
   hackercamp:donut-domain: donut.hackercamp.cz
   hackercamp:fakturoid-token:
-    secure: AAABAO1IpF1r9MJvs/PAxvTotqlXlsg4dbWJsk5/51fWJCysxaDpWLoXNBerDjZTjBRQJGTAXszyFKJoKViR+KHz8Ywa/fNH
+    secure: AAABAM/iCsr9NhZmYFVliK6dEFHEy8ZjfPX0mi1ZlE7Llr6QzUKzkOWYpxNjCpiZ0OXRt1Gq6NoRb0kC7zVWQPJLC4X/soso
   hackercamp:fakturoid-webhook-token:
-    secure: AAABABtVCcrrfoNz5vMiKPyHEEpSYXXOmrrT8DsT/c8aeJMocuIQ0GPjJOMYf+Ffd5eoSeAcOpkbQtVIjNw44vy60YYlNKYQaRxs9gKwubldaK13ircdx+/6TLIkIm7ok8fnv7NqrzTJj/LeF/vU3g==
-  hackercamp:postmark-token:
-    secure: AAABAF/Uwb6BOz5Iik1PbYzp+nvMR+VvkJw1T9l3V84G5htqzIgzTkDtA98Th9o1hB96Eg6rCrsmz5pXGx2ex0lo7NM=
+    secure: AAABAC2y0+KPnVrs8PNrWEkp0ytfAbj0bon6HXIVRctgJJsEuoiAFKLUwaTRgd8UENvcfhw4jIhuzpNG3e/Xa6LRPrBk7lIiVnj6nVch1zt89si3ScRWVwH3XYsWkCJE76nVv5YpV3nnRtBdAcX2eQ==
   hackercamp:postmark-webhook-token:
-    secure: AAABALwlpz9yqA5f4xNKXvTLVdQkaxyb6CCUIKcp3o9ymx2182ssEwFiNFNYqbMcbLgN4BvUyYKL3fcy2tAsVg==
+    secure: AAABAC7xWGnAjPQWfgJOAVN6YcRB89HWc9sDFa3oC2V/PdezbM1W8lbzri3h+wiTxHzy5I5CdvpMu+9yY1PrEA==
   hackercamp:private-key:
-    secure: AAABAMiObrKrGCJNcaB9RdcBRl2shK6sfmHwYdEChCgqQy3dVOxeVIuH/zk2R4dGDbqq/LjS7ZVWWuiDoutiFxdmDyoR21q9VQtOiQg=
-  hackercamp:rollbar-access-token:
-    secure: AAABANsAX/V4CvRNpbPVveHuf8od+m3/6dItRVCei/OvG0o+7HPn30+p9iVN8tVvkMjpPsxW22c/uZeoVjNhEw==
+    secure: AAABALEi/CWh7glkyY7gDR/2P+FpQX56VWoMLpSM0UuOR7rvfME1myIWxtewIPC8P8flBw2ORaushAWR2lGJfeBFKWiAjJFqpJYVLg6BuvQ=
   hackercamp:slack-bot-token:
-    secure: AAABAOcd56GLMiyf3SikIIfQjmDs1jIUg1OLYz8IWudo4J821x2EOod9C2s7YwIVS+nXc02JvvqEx4p2m3+OpEE4NI3653umgcN1UADmM+aywmDop3hFOmM=
-  hackercamp:slack-client-id: "1990816352820.3334586910531"
-  hackercamp:slack-client-secret:
-    secure: AAABAPOefxVCpWj0ILWHq9UKChjnqzVPwlwAm8auqjii5KzUfgdHI7dV386pv69MQYJO2VV5KuWucxwuOwM4+g==
+    secure: AAABAPVKNBH+3caqm5hEgc2T0CgPxs5CJc4gkWRDYtcLBlPPny2aJc2bDVdtNk2zbxWUTks8m5n4CN+XcmTkd+y/wlrJtIS25/aqZTMLo4uvc1uFCFFtEd4=
   hackercamp:slack-incoming-webhook:
-    secure: AAABAG1uYVw8jL3J7xW6vyH0foRT5MJJm9QSrs/weKRHwhapwDGssqRhG8fprdJszWJICn1nGEycpL8qCvbaxvtWuaOFG6uNg+nhdnx17/XLNC+L4MPwIH6GjQKr4i3eJL/V5Ts0oCw+WcxtQ/Pze0A=
+    secure: AAABABfMSRSXy/P/K3g3YeTNS571GjFL9QNP4rOQbgYYvU6+B58UH5mmf9GixbUJk3vLnEqKplGmYamfOF3utEKcH51JCkwp2NEuqhsGYJ76WMEmzYkyfIU80YtcxnYQWYUtgw83y8pg7oHIf2cOY9o=
   hackercamp:web-domain: www.hackercamp.cz
   hackercamp:year: "2023"
-  postmark:server-api-token:
-    secure: AAABAJ8bBjERlSzcam+1C/wz2ygdjl+MQDW+ROCzPq5CtZwnYicF+N6fdBZJj7NGRvOBfpesC9VqhhicB6PXH/rnRGg=
-  pulumi:template: aws-typescript
+environment:
+  - hackercamp-algolia
+  - hackercamp-aws
+  - hackercamp-postmark
+  - hackercamp-rollbar
+  - hackercamp-slack
+  - rarous-cloudflare

@@ -72,39 +72,18 @@ commands:
             echo "export HC_WEB_HOSTNAME=\"${WEB_HOSTNAME}\"" >> $BASH_ENV
   deploy_website:
     parameters:
-      stack_name:
+      project_name:
         type: string
-        default: prod
       site_name:
         type: string
-      distribution_id:
-        type: string
-        default: "${AWS_CLOUDFRONT_DISTRIBUTION_ID}"
-      s3_bucket_uri:
-        type: string
-        default: "${AWS_S3_BUCKET}"
-      paths:
-        type: string
-        default: "/*"
       distribution_folder:
         type: string
         default: dist
-      after_s3_sync:
-        description: Steps that will be execute after S3 sync, but before Cloudfront distribution invalidation
-        type: steps
-        default: []
     steps:
-      - read_deployment_envs:
-          stack_name: << parameters.stack_name >>
-          site_name: << parameters.site_name >>
-      - aws-cli/setup
-      - aws-s3/sync:
-          from: << parameters.distribution_folder >>/<< parameters.site_name >>
-          to: << parameters.s3_bucket_uri >>
-      - steps: << parameters.after_s3_sync >>
-      - aws-cloudfront/invalidate:
-          distribution_id: << parameters.distribution_id >>
-          paths: << parameters.paths >>
+      - run:
+          name: Deploy website
+          working_directory: << parameters.site_name >>
+          command: yarn wrangler pages deploy ../<< parameters.distribution_folder >>/<< parameters.site_name >> --project-name << parameters.project_name >>
 
 jobs:
   provision:
@@ -238,31 +217,24 @@ jobs:
 
   deploy-site:
     parameters:
-      stack_name:
+      project_name:
         type: string
         default: prod
       site_name:
         type: string
-      after_s3_sync:
-        description: Steps that will be execute after S3 sync, but before Cloudfront distribution invalidation
-        type: steps
-        default: [ ]
       rollbar_access_token:
         type: string
         default: ""
     executor: aws-cli/default
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
-      AWS_RETRY_MODE: standard
-      AWS_MAX_ATTEMPTS: 5
     steps:
       - checkout
       - attach_workspace:
           at: ~/project
       - deploy_website:
-          stack_name: << parameters.stack_name >>
+          project_name: << parameters.project_name >>
           site_name: << parameters.site_name >>
-          after_s3_sync: << parameters.after_s3_sync >>
       - rollbar/notify_deploy
       - slack/notify:
           event: fail
@@ -302,6 +274,7 @@ workflows:
             - provision
       - deploy-site:
           name: deploy-donut
+          project_name: hackercamp-donut
           site_name: donut.hackercamp.cz
           rollbar_access_token: 7e7b3e864db64b3692d42e8d9ec274a9
           context: org-global
@@ -319,6 +292,7 @@ workflows:
             - provision
       - deploy-site:
           name: deploy-web
+          project_name: hackercamp-web
           site_name: www.hackercamp.cz
           rollbar_access_token: fa19c9b04b6849f2b87deb7fd567a4f6
           context: org-global

@@ -3,5 +3,8 @@
   "packageManager": "yarn@4.0.2",
   "dependencies": {
     "@material/layout-grid": "14.0.0"
+  },
+  "devDependencies": {
+    "wrangler": "3.19.0"
   }
 }
