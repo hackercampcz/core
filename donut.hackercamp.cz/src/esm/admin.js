@@ -31,6 +31,10 @@ import { schedule } from "./lib/schedule.js";
 import { showModalDialog } from "./modal-dialog.js";
 import { instatializeDates } from "./lib/object.js";
 
+/** @typedef {import("@thi.ng/atom").IAtom} IAtom */
+/** @typedef {import("@thi.ng/atom").Path} Path */
+/** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
+
 const state = defAtom({
   year: 2023,
   selectedView: View.confirmed,
