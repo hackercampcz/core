@@ -3807,10 +3807,10 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
-    "@pulumi/aws": "npm:6.13.1"
+    "@pulumi/aws": "npm:6.13.3"
     "@pulumi/awsx": "npm:2.3.0"
     "@pulumi/cloudflare": "npm:5.16.0"
-    "@pulumi/pulumi": "npm:3.95.0"
+    "@pulumi/pulumi": "npm:3.97.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@typescript-eslint/eslint-plugin": "npm:6.13.2"
     "@typescript-eslint/parser": "npm:6.13.2"
@@ -4776,16 +4776,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:6.13.1":
-  version: 6.13.1
-  resolution: "@pulumi/aws@npm:6.13.1"
+"@pulumi/aws@npm:6.13.3":
+  version: 6.13.3
+  resolution: "@pulumi/aws@npm:6.13.3"
   dependencies:
     "@pulumi/pulumi": "npm:^3.0.0"
     builtin-modules: "npm:3.0.0"
     mime: "npm:^2.0.0"
     read-package-tree: "npm:^5.2.1"
     resolve: "npm:^1.7.1"
-  checksum: 742fa82439602bfdb36e03890c3fe9ac282cbf05681ec9385d5ac08dafd4acab74f53497e092ad30581a51f738277178ff5d6f72b0574719fbe2481142afa017
+  checksum: b38f42bed31b6681df5e946b1dd3c7695394e46f8e4692f59c42a2728d823a72a70036baff8d02e6bb3c2f995efb10b0ec97614e6f5f989ea248e9e513c6e311
   languageName: node
   linkType: hard
 
@@ -4837,9 +4837,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.95.0":
-  version: 3.95.0
-  resolution: "@pulumi/pulumi@npm:3.95.0"
+"@pulumi/pulumi@npm:3.97.0":
+  version: 3.97.0
+  resolution: "@pulumi/pulumi@npm:3.97.0"
   dependencies:
     "@grpc/grpc-js": "npm:1.9.6"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -4852,6 +4852,7 @@ __metadata:
     "@opentelemetry/sdk-trace-node": "npm:^1.6.0"
     "@opentelemetry/semantic-conventions": "npm:^1.6.0"
     "@pulumi/query": "npm:^0.3.0"
+    "@types/google-protobuf": "npm:^3.15.5"
     execa: "npm:^5.1.0"
     google-protobuf: "npm:^3.5.0"
     ini: "npm:^2.0.0"
@@ -4866,7 +4867,7 @@ __metadata:
     ts-node: "npm:^7.0.1"
     typescript: "npm:~3.8.3"
     upath: "npm:^1.1.0"
-  checksum: c92893ad89b26d6e6b177b6abfbd07557b2aedf124082dd6e865471de894e4b5ac602438a4e846ee2d56b9f2a1458ec25ee8e2c37908ba889a981b2578694ae0
+  checksum: 15070fdb8c7776fb50897fd9c8f5e23664f6fb3e8efc5a4eabcdb75e8eecc14346335c63ade2131a7b53d9f1556f49bd080477816a653d57d60075504badb057
   languageName: node
   linkType: hard
 
@@ -6244,6 +6245,13 @@ __metadata:
   version: 1.20.4
   resolution: "@types/expect@npm:1.20.4"
   checksum: 3404e72a2ecc74dfee1671504ac06e8e6a48c572b46df588a9d6a2dfed5c9f33c5a63d1aa51fc86e6e8323403924db8a14cbd923569470c841bc0353a9d397e0
+  languageName: node
+  linkType: hard
+
+"@types/google-protobuf@npm:^3.15.5":
+  version: 3.15.12
+  resolution: "@types/google-protobuf@npm:3.15.12"
+  checksum: 721783234e627f367dd710c345a1eaa9dca4ac64910032cef0c851c1821e05d06ffb51e9d1693080f1c0797a8674f89130fa56a390395ec7791ea8506d2f3bfb
   languageName: node
   linkType: hard
 
