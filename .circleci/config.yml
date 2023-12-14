@@ -80,6 +80,13 @@ commands:
         type: string
         default: dist
     steps:
+      - checkout
+      - node/install
+      - node/install-yarn
+      - node/install-packages:
+          pkg-manager: yarn-berry
+          cache-version: v2-deploy
+          override-ci-command: yarn workspaces focus @hackercamp/web @hackercamp/donut
       - run:
           name: Deploy website
           working_directory: << parameters.site_name >>
