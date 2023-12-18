@@ -12,7 +12,7 @@
     "@thi.ng/atom": "5.2.18",
     "@thi.ng/transducers": "8.8.15",
     "@ungap/structured-clone": "1.2.0",
-    "date-fns": "2.30.0",
+    "date-fns": "3.0.0",
     "lit": "3.1.0",
     "lit-html": "3.1.0",
     "marked": "11.0.0",
