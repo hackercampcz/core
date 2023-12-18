@@ -17,7 +17,7 @@ export default {
       {
         collection: "redirects",
         host: "https://donut.hackercamp.cz",
-        route: (x) => x,
+        route: (x) => x[0],
       },
     ],
   },
@@ -59,7 +59,9 @@ export default {
           return new URL(
             `?${new URLSearchParams({
               action: "TEMPLATE",
-              dates: `${format(d(event.startDate))}/${format(incDay(d(event.endDate)))}`,
+              dates: `${format(d(event.startDate))}/${format(
+                incDay(d(event.endDate))
+              )}`,
               text: event.name,
               location: event.location,
               details: event.details,

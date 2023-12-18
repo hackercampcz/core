@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import DefaultRegistry from "undertaker-registry";
 import logger from "fancy-log";
-import projectPath from "@topmonks/blendid/gulpfile.js/lib/projectPath.mjs";
+import gulpMode from "gulp-mode";
 import pathConfig from "./path-config.json" assert { type: "json" };
 import data from "../src/data/global.mjs";
 
