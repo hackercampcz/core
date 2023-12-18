@@ -2,10 +2,13 @@ import fs from "node:fs";
 import DefaultRegistry from "undertaker-registry";
 import logger from "fancy-log";
 import gulpMode from "gulp-mode";
+import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
 import pathConfig from "./path-config.json" assert { type: "json" };
 import data from "../src/data/global.mjs";
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
+
+const mode = gulpMode();
 
 class HackersRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -79,7 +82,9 @@ export default {
   svgSprite: true,
   stylesheets: true,
   javascripts: false,
-  esbuild: true,
+  esbuild: {
+    define: { __DEVELOPMENT__: mode.development() ? "true" : "undefined" },
+  },
 
   html: {
     dataFile: "global.mjs",

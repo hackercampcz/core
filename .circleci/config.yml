@@ -80,13 +80,6 @@ commands:
         type: string
         default: dist
     steps: 
-      - checkout
-      - node/install
-      - node/install-yarn
-      - node/install-packages: 
-          pkg-manager: yarn-berry
-          cache-version: v2-deploy
-          override-ci-command: yarn workspaces focus @hackercamp/web @hackercamp/donut @hackercamp/api
       - run: 
           name: Deploy website
           working_directory: << parameters.site_name >>
@@ -111,7 +104,7 @@ jobs:
       - node/install-yarn
       - node/install-packages: 
           pkg-manager: yarn-berry
-          cache-version: v2-machine-provision
+          cache-version: v2-provision
           override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/donut @hackercamp/api @hackercamp/lib
       - run: 
           working_directory: infrastructure
@@ -141,7 +134,7 @@ jobs:
       - node/install-yarn
       - node/install-packages: 
           pkg-manager: yarn-berry
-          cache-version: v1-machine-provision
+          cache-version: v1-provision
           override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/donut @hackercamp/api @hackercamp/lib
       - run: 
           working_directory: infrastructure
@@ -188,8 +181,8 @@ jobs:
       - node/install-yarn
       - node/install-packages: 
           pkg-manager: yarn-berry
-          cache-version: v1-machine-build
-          override-ci-command: yarn workspaces focus @hackercamp/core @hackercamp/donut @hackercamp/web @hackercamp/lib
+          cache-version: v2-build
+          override-ci-command: yarn workspaces focus @hackercamp/core @hackercamp/donut @hackercamp/web @hackercamp/api @hackercamp/lib
       - read_build_envs
       - run: 
           name: Export build metadata
@@ -241,6 +234,12 @@ jobs:
       - checkout
       - attach_workspace: 
           at: ~/project
+      - node/install
+      - node/install-yarn
+      - node/install-packages: 
+          pkg-manager: yarn-berry
+          cache-version: v2-build
+          override-ci-command: yarn workspaces focus @hackercamp/web @hackercamp/donut @hackercamp/api @hackercamp/core @hackercamp/lib
       - deploy_website: 
           project_name: << parameters.project_name >>
           site_name: << parameters.site_name >>
