@@ -22,6 +22,7 @@
     "@grpc/grpc-js": "1.9.13"
   },
   "scripts": {
+    "build:api.hackercamp.cz": "cp ./api.hackercamp.cz/public/* ./dist/api.hackercamp.cz",
     "build:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid -- build",
     "build:www.hackercamp.cz": "BLENDID_CONFIG_PATH=./www.hackercamp.cz/config/ dotenv blendid -- build",
     "start:donut.hackercamp.cz": "BLENDID_CONFIG_PATH=./donut.hackercamp.cz/config/ dotenv blendid",

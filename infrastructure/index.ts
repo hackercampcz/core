@@ -121,6 +121,7 @@ const wwwRecord = new cloudflare.Record(`${webDomain}/dns-record`, {
   ttl: 1,
   proxied: true,
 });
+
 const webPagesDomain = new cloudflare.PagesDomain("web-domain", {
   accountId: account.id,
   domain: wwwRecord.hostname,
@@ -149,8 +150,38 @@ const donutRecord = new cloudflare.Record(`${donutDomain}/dns-record`, {
   ttl: 1,
   proxied: true,
 });
+
 const donutPagesDomain = new cloudflare.PagesDomain("donut-domain", {
   accountId: account.id,
   domain: donutRecord.hostname,
   projectName: donutPages.name,
+});
+
+const apiPages = new cloudflare.PagesProject("api", {
+  accountId: account.id,
+  name: "hackercamp-api",
+  productionBranch: "trunk",
+  deploymentConfigs: {
+    production: {
+      compatibilityDate: "2023-09-29",
+      secrets: {
+        API_HOST: apiUrl,
+      },
+    },
+  },
+});
+
+const apiRecord = new cloudflare.Record(`${apiDomain}/dns-record`, {
+  zoneId: hackercampCzZone.id,
+  name: "api",
+  type: "CNAME",
+  value: apiPages.domains[0],
+  ttl: 1,
+  proxied: true,
+});
+
+const apiPagesDomain = new cloudflare.PagesDomain("api-domain", {
+  accountId: account.id,
+  domain: apiRecord.hostname,
+  projectName: apiPages.name,
 });

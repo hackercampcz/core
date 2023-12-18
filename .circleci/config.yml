@@ -1,6 +1,6 @@
 version: 2.1
 
-orbs:
+orbs: 
   aws-cli: circleci/aws-cli@4.1.2
   aws-cloudfront: topmonks/aws-cloudfront@1.0.0
   aws-s3: circleci/aws-s3@4.0.0
@@ -11,302 +11,313 @@ orbs:
   rollbar: rollbar/deploy@1.0.1
   slack: circleci/slack@4.12.5
 
-commands:
-  read_deployment_envs:
-    parameters:
-      stack_name:
+commands: 
+  read_deployment_envs: 
+    parameters: 
+      stack_name: 
         type: string
         default: prod
-      site_name:
+      site_name: 
         type: string
-    steps:
+    steps: 
       - pulumi/login
-      - run:
+      - run: 
           working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
-      - run:
+      - run: 
           name: Read S3 Bucket URI from Pulumi state for << parameters.site_name >>
           working_directory: infrastructure
           command: |
             S3_BUCKET_URI=$(pulumi stack output websites | jq -rM  '.["<< parameters.site_name >>"] | .s3BucketUri | @text')
             echo "export AWS_S3_BUCKET=\"${S3_BUCKET_URI}\"" >> $BASH_ENV
-      - run:
+      - run: 
           name: Read Cloudfront ID from Pulumi state for << parameters.site_name >>
           working_directory: infrastructure
           command: |
             CLOUDFRONT_ID=$(pulumi stack output websites | jq -rM  '.["<< parameters.site_name >>"] | .cloudFrontId | @text')
             echo "export AWS_CLOUDFRONT_DISTRIBUTION_ID=\"${CLOUDFRONT_ID}\"" >> $BASH_ENV
-  read_build_envs:
-    parameters:
-      stack_name:
+  read_build_envs: 
+    parameters: 
+      stack_name: 
         type: string
         default: prod
-    steps:
+    steps: 
       - pulumi/login
-      - run:
+      - run: 
           working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
-      - run:
+      - run: 
           name: Read HC_API_URL from Pulumi state
           working_directory: infrastructure
           command: |
             API_URL=$(pulumi stack output apiUrl)
             echo "export HC_API_URL=\"${API_URL}\"" >> $BASH_ENV
-      - run:
+      - run: 
           name: Read HC_SLACK_CLIENT_ID from Pulumi config
           working_directory: infrastructure
           command: |
             SLACK_CLIENT_ID=$(pulumi config get slack-client-id)
             echo "export HC_SLACK_CLIENT_ID=\"${SLACK_CLIENT_ID}\"" >> $BASH_ENV
-      - run:
+      - run: 
           name: Read HC_DONUT_HOSTNAME from Pulumi config
           working_directory: infrastructure
           command: |
             DONUT_HOSTNAME=$(pulumi config get donut-domain)
             echo "export HC_DONUT_HOSTNAME=\"${DONUT_HOSTNAME}\"" >> $BASH_ENV
-      - run:
+      - run: 
           name: Read HC_WEB_HOSTNAME from Pulumi config
           working_directory: infrastructure
           command: |
             WEB_HOSTNAME=$(pulumi config get web-domain)
             echo "export HC_WEB_HOSTNAME=\"${WEB_HOSTNAME}\"" >> $BASH_ENV
-  deploy_website:
-    parameters:
-      project_name:
+  deploy_website: 
+    parameters: 
+      project_name: 
         type: string
-      site_name:
+      site_name: 
         type: string
-      distribution_folder:
+      distribution_folder: 
         type: string
         default: dist
-    steps:
+    steps: 
       - checkout
       - node/install
       - node/install-yarn
-      - node/install-packages:
+      - node/install-packages: 
           pkg-manager: yarn-berry
           cache-version: v2-deploy
           override-ci-command: yarn workspaces focus @hackercamp/web @hackercamp/donut
-      - run:
+      - run: 
           name: Deploy website
           working_directory: << parameters.site_name >>
           command: yarn wrangler pages deploy ../<< parameters.distribution_folder >>/<< parameters.site_name >> --project-name << parameters.project_name >>
 
-jobs:
-  provision:
-    parameters:
-      stack_name:
+jobs: 
+  provision: 
+    parameters: 
+      stack_name: 
         type: string
         default: prod
-    docker:
+    docker: 
       - image: cimg/node:lts
     resource_class: arm.medium
-    environment:
+    environment: 
       AWS_STS_REGIONAL_ENDPOINTS: regional
       ROLLBAR_ACCESS_TOKEN: 5cf06f210c3e461d8ac668c7d5522519
-    steps:
+    steps: 
       - checkout
       - pulumi/login
       - node/install
       - node/install-yarn
-      - node/install-packages:
+      - node/install-packages: 
           pkg-manager: yarn-berry
           cache-version: v2-machine-provision
           override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/donut @hackercamp/api @hackercamp/lib
-      - run:
+      - run: 
           working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
-      - pulumi/update:
+      - pulumi/update: 
           working_directory: infrastructure
           stack: << parameters.stack_name >>
           skip-preview: true
       - rollbar/notify_deploy
-      - slack/notify:
+      - slack/notify: 
           event: fail
           template: basic_fail_1
           channel: ntf-donut
 
-  preview-provision:
-    parameters:
-      stack_name:
+  preview-provision: 
+    parameters: 
+      stack_name: 
         type: string
         default: prod
-    docker:
+    docker: 
       - image: cimg/node:lts
     resource_class: arm.medium
-    steps:
+    steps: 
       - checkout
       - pulumi/login
       - node/install
       - node/install-yarn
-      - node/install-packages:
+      - node/install-packages: 
           pkg-manager: yarn-berry
           cache-version: v1-machine-provision
           override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/donut @hackercamp/api @hackercamp/lib
-      - run:
+      - run: 
           working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
-      - pulumi/preview:
+      - pulumi/preview: 
           working_directory: infrastructure
           stack: << parameters.stack_name >>
-      - slack/notify:
+      - slack/notify: 
           event: fail
           template: basic_fail_1
           channel: ntf-donut
 
-  merge-pr:
-    docker:
+  merge-pr: 
+    docker: 
       - image: cimg/base:2023.12
-    steps:
+    steps: 
       - checkout
       - github/install
-      - github/merge_pr:
+      - github/merge_pr: 
           rebase: true
-      - slack/notify:
+      - slack/notify: 
           event: fail
           template: basic_fail_1
           channel: ntf-donut
 
-  build-website:
-    parameters:
-      site_name:
+  build-website: 
+    parameters: 
+      site_name: 
         type: string
-      environment:
+      environment: 
         type: string
         default: production
-      rollbar_access_token:
+      rollbar_access_token: 
         type: string
         default: ""
-    docker:
+    docker: 
       - image: cimg/node:lts
     resource_class: arm.large
-    environment:
+    environment: 
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
-    steps:
+    steps: 
       - checkout
       - node/install
       - node/install-yarn
-      - node/install-packages:
+      - node/install-packages: 
           pkg-manager: yarn-berry
           cache-version: v1-machine-build
           override-ci-command: yarn workspaces focus @hackercamp/core @hackercamp/donut @hackercamp/web @hackercamp/lib
       - read_build_envs
-      - run:
+      - run: 
           name: Export build metadata
           command: |
             echo '{}' | \
             jq --arg key0 'environment' \
-               --arg value0 '<< parameters.environment >>' \
-               --arg key1 'version' \
-               --arg value1 $CIRCLE_SHA1 \
-               --arg key2 'build' \
-               --arg value2 $CIRCLE_BUILD_NUM \
-               --arg key3 'hostname' \
-               --arg value3 "$HC_DONUT_HOSTNAME" \
-               --arg key4 'api-host' \
-               --arg value4 "$HC_API_URL" \
-               --arg key5 'slack/client-id' \
-               --arg value5 "$HC_SLACK_CLIENT_ID" \
-               --arg key5 'rollbar/access-token' \
-               --arg value5 "$ROLLBAR_ACCESS_TOKEN" \
-               '. | .[$key0]=$value0 | .[$key1]=$value1 | .[$key2]=$value2 | .[$key3]=$value3 | .[$key4]=$value4 | .[$key5]=$value5' \
+            --arg value0 '<< parameters.environment >>' \
+            --arg key1 'version' \
+            --arg value1 $CIRCLE_SHA1 \
+            --arg key2 'build' \
+            --arg value2 $CIRCLE_BUILD_NUM \
+            --arg key3 'hostname' \
+            --arg value3 "$HC_DONUT_HOSTNAME" \
+            --arg key4 'api-host' \
+            --arg value4 "$HC_API_URL" \
+            --arg key5 'slack/client-id' \
+            --arg value5 "$HC_SLACK_CLIENT_ID" \
+            --arg key5 'rollbar/access-token' \
+            --arg value5 "$ROLLBAR_ACCESS_TOKEN" \
+            '. | .[$key0]=$value0 | .[$key1]=$value1 | .[$key2]=$value2 | .[$key3]=$value3 | .[$key4]=$value4 | .[$key5]=$value5' \
             > << parameters.site_name >>/src/data/build.json
-      - run:
+      - run: 
           name: Build website << parameters.site_name >>
           command: yarn build:<< parameters.site_name >>
-      - persist_to_workspace:
+      - persist_to_workspace: 
           root: .
           paths: [ dist ]
-      - slack/notify:
+      - slack/notify: 
           event: fail
           template: basic_fail_1
           channel: ntf-donut
 
-  deploy-site:
-    parameters:
-      project_name:
+  deploy-site: 
+    parameters: 
+      project_name: 
         type: string
         default: prod
-      site_name:
+      site_name: 
         type: string
-      rollbar_access_token:
+      rollbar_access_token: 
         type: string
         default: ""
-    docker:
+    docker: 
       - image: cimg/node:lts
     resource_class: arm.medium
-    environment:
+    environment: 
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
-    steps:
+    steps: 
       - checkout
-      - attach_workspace:
+      - attach_workspace: 
           at: ~/project
-      - deploy_website:
+      - deploy_website: 
           project_name: << parameters.project_name >>
           site_name: << parameters.site_name >>
       - rollbar/notify_deploy
-      - slack/notify:
+      - slack/notify: 
           event: fail
           template: basic_fail_1
           channel: ntf-donut
 
-workflows:
-  ci:
-    jobs:
-      - preview-provision:
+workflows: 
+  ci: 
+    jobs: 
+      - preview-provision: 
           context: org-global
-          filters:
-            branches:
+          filters: 
+            branches: 
               ignore: trunk
-      - provision:
+      - provision: 
           context: org-global
-          filters:
-            branches:
+          filters: 
+            branches: 
               only: trunk
-      - merge-pr:
-          context:
+      - merge-pr: 
+          context: 
             - org-github
             - org-global
-          requires:
+          requires: 
             - preview-provision
             - build-donut
             - build-web
-          filters:
-            branches:
+          filters: 
+            branches: 
               only: /renovate\/.*/
-      - build-website:
+      - build-website: 
           name: build-donut
           site_name: donut.hackercamp.cz
           rollbar_access_token: 2ee8ed63889f4e28895cbca7c6f62f45
           context: org-global
-          requires:
+          requires: 
             - provision
-      - deploy-site:
+      - deploy-site: 
           name: deploy-donut
           project_name: hackercamp-donut
           site_name: donut.hackercamp.cz
           rollbar_access_token: 7e7b3e864db64b3692d42e8d9ec274a9
           context: org-global
-          requires:
+          requires: 
             - build-donut
-          filters:
-            branches:
+          filters: 
+            branches: 
               only: trunk
-      - build-website:
+      - build-website: 
           name: build-web
           site_name: www.hackercamp.cz
           rollbar_access_token: e10c4ff9ff024effb7c6fd80430ba646
           context: org-global
-          requires:
+          requires: 
             - provision
-      - deploy-site:
+      - deploy-site: 
           name: deploy-web
           project_name: hackercamp-web
           site_name: www.hackercamp.cz
           rollbar_access_token: fa19c9b04b6849f2b87deb7fd567a4f6
           context: org-global
-          requires:
+          requires: 
             - build-web
-          filters:
-            branches:
+          filters: 
+            branches: 
+              only: trunk
+      - deploy-site: 
+          name: deploy-api
+          project_name: hackercamp-api
+          site_name: api.hackercamp.cz
+          rollbar_access_token: 5cf06f210c3e461d8ac668c7d5522519
+          context: org-global
+          requires: 
+            - provision
+          filters: 
+            branches: 
               only: trunk
