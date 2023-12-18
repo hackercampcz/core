@@ -215,6 +215,28 @@ jobs:
           template: basic_fail_1
           channel: ntf-donut
 
+  build-api: 
+    parameters: 
+      site_name: 
+        type: string
+    docker: 
+      - image: cimg/base:2023.12
+    resource_class: arm.medium
+    steps: 
+      - checkout
+      - run: 
+          name: Build website << parameters.site_name >>
+          command: |
+            mkdir -p dist/<< parameters.site_name >>
+            cp << parameters.site_name >>/public/* dist/<< parameters.site_name >>/
+      - persist_to_workspace: 
+          root: .
+          paths: [ dist ]
+      - slack/notify: 
+          event: fail
+          template: basic_fail_1
+          channel: ntf-donut
+
   deploy-site: 
     parameters: 
       project_name: 
@@ -309,11 +331,8 @@ workflows:
           filters: 
             branches: 
               only: trunk
-      - build-website: 
-          name: build-api
+      - build-api: 
           site_name: api.hackercamp.cz
-          rollbar_access_token: 5cf06f210c3e461d8ac668c7d5522519
-          context: org-global
           requires: 
             - provision
       - deploy-site: 
