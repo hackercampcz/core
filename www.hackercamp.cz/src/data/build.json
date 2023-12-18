@@ -3,7 +3,7 @@
   "version": "HEAD",
   "build": "local",
   "hostname": "localhost:3000",
-  "api-host": "https://api.hackercamp.cz/v1/",
+  "api-host": "https://lbmqjyccga.execute-api.eu-central-1.amazonaws.com/v1/",
   "slack/client-id": "1990816352820.3334586910531",
   "rollbar/access-token": "e10c4ff9ff024effb7c6fd80430ba646"
 }
