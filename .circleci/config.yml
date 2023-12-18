@@ -310,6 +310,13 @@ workflows:
           filters: 
             branches: 
               only: trunk
+      - build-website: 
+          name: build-api
+          site_name: api.hackercamp.cz
+          rollbar_access_token: 5cf06f210c3e461d8ac668c7d5522519
+          context: org-global
+          requires: 
+            - provision
       - deploy-site: 
           name: deploy-api
           project_name: hackercamp-api
@@ -317,7 +324,7 @@ workflows:
           rollbar_access_token: 5cf06f210c3e461d8ac668c7d5522519
           context: org-global
           requires: 
-            - provision
+            - build-api
           filters: 
             branches: 
               only: trunk
