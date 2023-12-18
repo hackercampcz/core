@@ -135,6 +135,7 @@ const donutPages = new cloudflare.PagesProject("donut", {
   deploymentConfigs: {
     production: {
       compatibilityDate: "2023-09-29",
+      compatibilityFlags: ["nodejs_compat"],
       secrets: {
         HC_JWT_SECRET: config.require("private-key"),
       },
