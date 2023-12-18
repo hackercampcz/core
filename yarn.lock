@@ -3611,6 +3611,7 @@ __metadata:
     immutable: "npm:4.3.4"
     jsonwebtoken: "npm:9.0.2"
     rollbar: "npm:2.26.2"
+    wrangler: "npm:3.21.0"
   languageName: unknown
   linkType: soft
 
