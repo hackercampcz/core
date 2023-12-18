@@ -86,7 +86,7 @@ commands:
       - node/install-packages: 
           pkg-manager: yarn-berry
           cache-version: v2-deploy
-          override-ci-command: yarn workspaces focus @hackercamp/web @hackercamp/donut
+          override-ci-command: yarn workspaces focus @hackercamp/web @hackercamp/donut @hackercamp/api
       - run: 
           name: Deploy website
           working_directory: << parameters.site_name >>
