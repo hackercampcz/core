@@ -3,5 +3,6 @@ export async function onRequest({ request, env }) {
   const pathAndSearch = `${url.pathname}?${url.search}`;
   const originUrl = new URL(pathAndSearch, env.API_HOST).href;
   // TODO: convert auth cookie to Bearer
+  console.log({ originUrl, request });
   return fetch(originUrl, request);
 }
