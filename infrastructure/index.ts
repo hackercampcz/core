@@ -164,8 +164,8 @@ const apiPages = new cloudflare.PagesProject("api", {
   deploymentConfigs: {
     production: {
       compatibilityDate: "2023-09-29",
-      secrets: {
-        API_HOST: apiUrl,
+      environmentVariables: {
+        API_HOST: api.url.apply((x) => new URL("/v1/", x).href),
       },
     },
   },
