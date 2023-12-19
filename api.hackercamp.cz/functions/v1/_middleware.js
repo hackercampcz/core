@@ -1,3 +1,10 @@
+/**
+ * @typedef {import("../env.d.ts").Env} Env
+ */
+
+/**
+ * @param {EventContext<Env>} context
+ */
 export async function onRequest({ request, env }) {
   const url = new URL(request.url);
   const pathAndSearch = url.pathname + url.search;
@@ -5,7 +12,7 @@ export async function onRequest({ request, env }) {
   // TODO: convert auth cookie to Bearer
   const originRequest = {
     method: request.method,
-    headers: request.headers,
+    headers: Object.fromEntries(request.headers),
     body: request.body,
   };
   console.log({ originUrl, originRequest });

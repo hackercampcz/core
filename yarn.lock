@@ -3762,6 +3762,7 @@ __metadata:
     "@aws-sdk/client-dynamodb": "npm:3.476.0"
     "@aws-sdk/client-sqs": "npm:3.476.0"
     "@aws-sdk/util-dynamodb": "npm:3.476.0"
+    "@cloudflare/workers-types": "npm:4.20231121.0"
     "@fast-csv/format": "npm:4.3.5"
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
