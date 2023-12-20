@@ -15,7 +15,7 @@
     "date-fns": "3.0.1",
     "lit": "3.1.0",
     "lit-html": "3.1.0",
-    "marked": "11.0.0",
+    "marked": "11.1.0",
     "ramda": "0.29.1",
     "rollbar": "2.26.2",
     "workbox-window": "7.0.0"
