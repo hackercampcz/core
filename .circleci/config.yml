@@ -149,7 +149,7 @@ jobs:
 
   merge-pr: 
     docker: 
-      - image: cimg/base:2023.12
+      - image: cimg/base:2024.01
     steps: 
       - checkout
       - github/install
@@ -220,7 +220,7 @@ jobs:
       site_name: 
         type: string
     docker: 
-      - image: cimg/base:2023.12
+      - image: cimg/base:2024.01
     resource_class: arm.medium
     steps: 
       - checkout
