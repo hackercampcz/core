@@ -3817,7 +3817,7 @@ __metadata:
     date-fns: "npm:3.1.0"
     eslint: "npm:8.56.0"
     eslint-plugin-promise: "npm:6.1.1"
-    lit: "npm:3.1.0"
+    lit: "npm:3.1.1"
     lit-html: "npm:3.1.1"
     marked: "npm:11.1.1"
     ramda: "npm:0.29.1"
@@ -12624,14 +12624,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:3.1.0":
-  version: 3.1.0
-  resolution: "lit@npm:3.1.0"
+"lit@npm:3.1.1":
+  version: 3.1.1
+  resolution: "lit@npm:3.1.1"
   dependencies:
     "@lit/reactive-element": "npm:^2.0.0"
     lit-element: "npm:^4.0.0"
     lit-html: "npm:^3.1.0"
-  checksum: 7ca12c1b1593373d16b51b2220677d8936b4061de4f278ef2a85f15726bb4365a8eed89a0294816a10d6124dca81f02e83b5dfed9a6031e135a7bc68924eea6b
+  checksum: fea579d9e7e27bf984a9dfe2b617e4c21d3bd428a38de63719797b266b1548cc3a89155bbb630f46edf337641d9d02106f749b6ca4a439daba47a1e1045937b7
   languageName: node
   linkType: hard
 
