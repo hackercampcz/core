@@ -4,7 +4,7 @@
     "@aws-sdk/client-dynamodb": "3.490.0",
     "@aws-sdk/client-sqs": "3.490.0",
     "@aws-sdk/util-dynamodb": "3.490.0",
-    "@fast-csv/format": "4.3.5",
+    "@fast-csv/format": "5.0.0",
     "@hackercamp/infrastructure": "workspace:infrastructure",
     "@hackercamp/lib": "workspace:lib",
     "@thi.ng/transducers": "8.8.20",
