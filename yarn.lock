@@ -3624,7 +3624,7 @@ __metadata:
     immutable: "npm:4.3.4"
     jsonwebtoken: "npm:9.0.2"
     rollbar: "npm:2.26.2"
-    wrangler: "npm:3.22.4"
+    wrangler: "npm:3.22.5"
   languageName: unknown
   linkType: soft
 
@@ -3671,7 +3671,7 @@ __metadata:
     rollbar: "npm:2.26.2"
     web-types-lit: "npm:0.1.0"
     workbox-window: "npm:7.0.0"
-    wrangler: "npm:3.22.4"
+    wrangler: "npm:3.22.5"
   languageName: unknown
   linkType: soft
 
@@ -3708,7 +3708,7 @@ __metadata:
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
   dependencies:
     "@material/layout-grid": "npm:14.0.0"
-    wrangler: "npm:3.22.4"
+    wrangler: "npm:3.22.5"
   languageName: unknown
   linkType: soft
 
@@ -10212,6 +10212,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"function-bind@npm:^1.1.2":
+  version: 1.1.2
+  resolution: "function-bind@npm:1.1.2"
+  checksum: d8680ee1e5fcd4c197e4ac33b2b4dce03c71f4d91717292785703db200f5c21f977c568d28061226f9b5900cbcd2c84463646134fd5337e7925e0942bc3f46d5
+  languageName: node
+  linkType: hard
+
 "function.prototype.name@npm:^1.1.5":
   version: 1.1.5
   resolution: "function.prototype.name@npm:1.1.5"
@@ -11018,6 +11025,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"hasown@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "hasown@npm:2.0.0"
+  dependencies:
+    function-bind: "npm:^1.1.2"
+  checksum: 5d415b114f410661208c95e7ab4879f1cc2765b8daceff4dc8718317d1cb7b9ffa7c5d1eafd9a4389c9aab7445d6ea88e05f3096cb1e529618b55304956b87fc
+  languageName: node
+  linkType: hard
+
 "he@npm:^1.2.0":
   version: 1.2.0
   resolution: "he@npm:1.2.0"
@@ -11456,6 +11472,15 @@ __metadata:
   dependencies:
     has: "npm:^1.0.3"
   checksum: ff1d0dfc0b7851310d289398e416eb92ae8a9ac7ea8b8b9737fa8c0725f5a78c5f3db6edd4dff38c9ed731f3aaa1f6410a320233fcb52a2c8f1cf58eebf10a4b
+  languageName: node
+  linkType: hard
+
+"is-core-module@npm:^2.13.0":
+  version: 2.13.1
+  resolution: "is-core-module@npm:2.13.1"
+  dependencies:
+    hasown: "npm:^2.0.0"
+  checksum: 2cba9903aaa52718f11c4896dabc189bab980870aae86a62dc0d5cedb546896770ee946fb14c84b7adf0735f5eaea4277243f1b95f5cefa90054f92fbcac2518
   languageName: node
   linkType: hard
 
@@ -12956,9 +12981,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"miniflare@npm:3.20231218.1":
-  version: 3.20231218.1
-  resolution: "miniflare@npm:3.20231218.1"
+"miniflare@npm:3.20231218.2":
+  version: 3.20231218.2
+  resolution: "miniflare@npm:3.20231218.2"
   dependencies:
     "@cspotcode/source-map-support": "npm:0.8.1"
     acorn: "npm:^8.8.0"
@@ -12974,7 +12999,7 @@ __metadata:
     zod: "npm:^3.20.6"
   bin:
     miniflare: bootstrap.js
-  checksum: 2980888aeb5b50af3ad95ef7851e53b343838c3874dd1ee9e25174294a30e264b0f66497f8a105e8fbb701aac0f43e6f35bb4f06281ff27471dc1c88169cc42d
+  checksum: 9818abcc138cd3ee83e63bace7c678a385513ce095bd8f565d691eaa93827ecb270daeea89c455dd963b4d4e848fb26411ca8b7c333c5be8b6d8c63a13b895ed
   languageName: node
   linkType: hard
 
@@ -15453,6 +15478,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"resolve@npm:^1.22.8":
+  version: 1.22.8
+  resolution: "resolve@npm:1.22.8"
+  dependencies:
+    is-core-module: "npm:^2.13.0"
+    path-parse: "npm:^1.0.7"
+    supports-preserve-symlinks-flag: "npm:^1.0.0"
+  bin:
+    resolve: bin/resolve
+  checksum: 07e179f4375e1fd072cfb72ad66d78547f86e6196c4014b31cb0b8bb1db5f7ca871f922d08da0fbc05b94e9fd42206f819648fa3b5b873ebbc8e1dc68fec433a
+  languageName: node
+  linkType: hard
+
 "resolve@patch:resolve@npm%3A^1.1.6#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.1.7#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.14.2#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.19.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.22.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.4.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.7.1#optional!builtin<compat/resolve>":
   version: 1.22.3
   resolution: "resolve@patch:resolve@npm%3A1.22.3#optional!builtin<compat/resolve>::version=1.22.3&hash=c3c19d"
@@ -15463,6 +15501,19 @@ __metadata:
   bin:
     resolve: bin/resolve
   checksum: 6267bdbbbb1da23975463e979dadf5135fcc40c4b9281c5af4581afa848ced98090ab4e2dbc9085e58f8ea48c0eb7c4fe94b1e8f55ebdd17a725d86982eb5288
+  languageName: node
+  linkType: hard
+
+"resolve@patch:resolve@npm%3A^1.22.8#optional!builtin<compat/resolve>":
+  version: 1.22.8
+  resolution: "resolve@patch:resolve@npm%3A1.22.8#optional!builtin<compat/resolve>::version=1.22.8&hash=c3c19d"
+  dependencies:
+    is-core-module: "npm:^2.13.0"
+    path-parse: "npm:^1.0.7"
+    supports-preserve-symlinks-flag: "npm:^1.0.0"
+  bin:
+    resolve: bin/resolve
+  checksum: 0446f024439cd2e50c6c8fa8ba77eaa8370b4180f401a96abf3d1ebc770ac51c1955e12764cde449fde3fff480a61f84388e3505ecdbab778f4bef5f8212c729
   languageName: node
   linkType: hard
 
@@ -18203,21 +18254,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:3.22.4":
-  version: 3.22.4
-  resolution: "wrangler@npm:3.22.4"
+"wrangler@npm:3.22.5":
+  version: 3.22.5
+  resolution: "wrangler@npm:3.22.5"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:^0.2.0"
-    "@cspotcode/source-map-support": "npm:0.8.1"
     "@esbuild-plugins/node-globals-polyfill": "npm:^0.2.3"
     "@esbuild-plugins/node-modules-polyfill": "npm:^0.2.2"
     blake3-wasm: "npm:^2.1.5"
     chokidar: "npm:^3.5.3"
     esbuild: "npm:0.17.19"
     fsevents: "npm:~2.3.2"
-    miniflare: "npm:3.20231218.1"
+    miniflare: "npm:3.20231218.2"
     nanoid: "npm:^3.3.3"
     path-to-regexp: "npm:^6.2.0"
+    resolve: "npm:^1.22.8"
     resolve.exports: "npm:^2.0.2"
     selfsigned: "npm:^2.0.1"
     source-map: "npm:0.6.1"
@@ -18228,7 +18279,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 9b5d6a8a3b1ff323083f2491d4970b5e1d51b1cdbcbcfec0b352402c334f808580516fd9c2e7bb5638b15924857631cacb9fccd377e87c780d56800edcc4f666
+  checksum: 9290b6fb5621121694f17e46f6a925cbe8d975ef099bffa678748c0cfe8ae2a24493c1bba055bf3e1062740454498ba1d3e2fe4e0524410ebc3b9e5d165cd015
   languageName: node
   linkType: hard
 
