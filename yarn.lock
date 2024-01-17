@@ -234,9 +234,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.490.0":
-  version: 3.490.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.490.0"
+"@aws-sdk/client-dynamodb@npm:3.494.0":
+  version: 3.494.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.494.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
@@ -281,7 +281,7 @@ __metadata:
     "@smithy/util-waiter": "npm:^2.0.16"
     tslib: "npm:^2.5.0"
     uuid: "npm:^8.3.2"
-  checksum: 74c2643b62c99e1a06564d7a3704a81fbec57a0de3f3f5c2f721747b2da34ef12387448b9cb42f629c24a343eefb7a1234dec60d9bd170c4b7b58679dcc5b04a
+  checksum: 497bc4bb4b0664f10ff9f6aa0c9be50329017c35061404d72c4de6ce5e59e3396df2bb062479b88b71394a784a3b525db760ae4e54315f419a851ab114b099c9
   languageName: node
   linkType: hard
 
@@ -1123,14 +1123,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.490.0":
-  version: 3.490.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.490.0"
+"@aws-sdk/util-dynamodb@npm:3.494.0":
+  version: 3.494.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.494.0"
   dependencies:
     tslib: "npm:^2.5.0"
   peerDependencies:
     "@aws-sdk/client-dynamodb": ^3.0.0
-  checksum: 00fcefe8506d8f5ed85cfc3f62706d6a94f24d25e4039bdaccfa2a1349b12ed43373d293096de637266c46153b6c67d684421a99d9fa1245cbf72ab1aa712940
+  checksum: 356e9d5ece866206263b457281d1ec466b8d66064e6c992836d486654ef5abfcae00134b01e1a0f0d13dc63202f1db00afb09ee09177e0c4cda8bdb9e20da441
   languageName: node
   linkType: hard
 
@@ -3610,9 +3610,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-dynamodb": "npm:3.490.0"
+    "@aws-sdk/client-dynamodb": "npm:3.494.0"
     "@aws-sdk/client-sqs": "npm:3.490.0"
-    "@aws-sdk/util-dynamodb": "npm:3.490.0"
+    "@aws-sdk/util-dynamodb": "npm:3.494.0"
     "@cloudflare/workers-types": "npm:4.20240117.0"
     "@fast-csv/format": "npm:5.0.0"
     "@hackercamp/infrastructure": "workspace:infrastructure"
