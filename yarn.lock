@@ -3891,10 +3891,10 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
-    "@pulumi/aws": "npm:6.18.2"
+    "@pulumi/aws": "npm:6.19.0"
     "@pulumi/awsx": "npm:2.4.0"
     "@pulumi/cloudflare": "npm:5.19.0"
-    "@pulumi/pulumi": "npm:3.103.0"
+    "@pulumi/pulumi": "npm:3.103.1"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@typescript-eslint/eslint-plugin": "npm:6.20.0"
     "@typescript-eslint/parser": "npm:6.20.0"
@@ -4943,15 +4943,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:6.18.2":
-  version: 6.18.2
-  resolution: "@pulumi/aws@npm:6.18.2"
+"@pulumi/aws@npm:6.19.0":
+  version: 6.19.0
+  resolution: "@pulumi/aws@npm:6.19.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.0.0"
     builtin-modules: "npm:3.0.0"
     mime: "npm:^2.0.0"
     resolve: "npm:^1.7.1"
-  checksum: 4fbc33e9af407907d16efe86a32b26e0e42cd2b78208f9c944322a24496986ac712b33529e00293527241466c795e3fe12424ec820dd5ca8c7659f92ccf59832
+  checksum: ffe58dde3f1ddce2ccb6b105bd0c0637f2069fe111412618a39bdc9edd36272d8eea883f913fe061d51b9278b3f121403bfbe902699c070ac0a9557f995f433e
   languageName: node
   linkType: hard
 
@@ -5003,9 +5003,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.103.0":
-  version: 3.103.0
-  resolution: "@pulumi/pulumi@npm:3.103.0"
+"@pulumi/pulumi@npm:3.103.1":
+  version: 3.103.1
+  resolution: "@pulumi/pulumi@npm:3.103.1"
   dependencies:
     "@grpc/grpc-js": "npm:1.9.6"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -5019,6 +5019,7 @@ __metadata:
     "@opentelemetry/semantic-conventions": "npm:^1.6.0"
     "@pulumi/query": "npm:^0.3.0"
     "@types/google-protobuf": "npm:^3.15.5"
+    "@types/semver": "npm:^7.5.6"
     "@types/tmp": "npm:^0.2.6"
     execa: "npm:^5.1.0"
     google-protobuf: "npm:^3.5.0"
@@ -5036,7 +5037,7 @@ __metadata:
     ts-node: "npm:^7.0.1"
     typescript: "npm:~3.8.3"
     upath: "npm:^1.1.0"
-  checksum: 72d2c70a591e023f9c2e52c8b1d41a9edf56b238e695e326f38517d13b1169bd208db1378e0e8c87a38c736c755193deff9c73c94f5918b57b966f1051b3f402
+  checksum: c2e4371e1bfde5ddf1cfd033a3b99720ee29e5ced271ecd1285061c17830bccc283009e2e152d3505bb1f19c0cfeb32bd298f1c19b6fab12da0c7de08a9d696d
   languageName: node
   linkType: hard
 
@@ -6615,6 +6616,13 @@ __metadata:
   version: 7.5.0
   resolution: "@types/semver@npm:7.5.0"
   checksum: ca4ba4642b5972b6e88e73c5bc02bbaceb8d76bce71748d86e3e95042d4e5a44603113a1dcd2cb9b73ad6f91f6e4ab73185eb41bbfc9c73b11f0ed3db3b7443a
+  languageName: node
+  linkType: hard
+
+"@types/semver@npm:^7.5.6":
+  version: 7.5.6
+  resolution: "@types/semver@npm:7.5.6"
+  checksum: 196dc32db5f68cbcde2e6a42bb4aa5cbb100fa2b7bd9c8c82faaaf3e03fbe063e205dbb4f03c7cdf53da2edb70a0d34c9f2e601b54281b377eb8dc1743226acd
   languageName: node
   linkType: hard
 
