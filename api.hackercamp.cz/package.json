@@ -19,5 +19,5 @@
     "eslint": "8.56.0",
     "wrangler": "3.25.0"
   },
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.1.0"
 }
