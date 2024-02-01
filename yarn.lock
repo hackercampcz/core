@@ -3884,7 +3884,7 @@ __metadata:
     "@pulumi/aws": "npm:6.19.0"
     "@pulumi/awsx": "npm:2.5.0"
     "@pulumi/cloudflare": "npm:5.19.0"
-    "@pulumi/pulumi": "npm:3.103.1"
+    "@pulumi/pulumi": "npm:3.104.1"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@typescript-eslint/eslint-plugin": "npm:6.20.0"
     "@typescript-eslint/parser": "npm:6.20.0"
@@ -4993,11 +4993,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.103.1":
-  version: 3.103.1
-  resolution: "@pulumi/pulumi@npm:3.103.1"
+"@pulumi/pulumi@npm:3.104.1":
+  version: 3.104.1
+  resolution: "@pulumi/pulumi@npm:3.104.1"
   dependencies:
-    "@grpc/grpc-js": "npm:1.9.6"
+    "@grpc/grpc-js": "npm:^1.9.14"
     "@logdna/tail-file": "npm:^2.0.6"
     "@opentelemetry/api": "npm:^1.2.0"
     "@opentelemetry/exporter-zipkin": "npm:^1.6.0"
@@ -5027,7 +5027,7 @@ __metadata:
     ts-node: "npm:^7.0.1"
     typescript: "npm:~3.8.3"
     upath: "npm:^1.1.0"
-  checksum: 10c0/c2e4371e1bfde5ddf1cfd033a3b99720ee29e5ced271ecd1285061c17830bccc283009e2e152d3505bb1f19c0cfeb32bd298f1c19b6fab12da0c7de08a9d696d
+  checksum: 10c0/b4ea9036cdde84182d3ba30bf835e9a8b52eed80e9f78d97f14d6d02ebedf4cf4a68924be3d9ebd026729f4a15ebe58ce54dbdb4b2270553516c9500791d6d58
   languageName: node
   linkType: hard
 
