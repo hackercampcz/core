@@ -6,7 +6,7 @@
   "dependencies": {
     "@hackercamp/api": "workspace:api.hackercamp.cz",
     "@hackercamp/donut": "workspace:donut.hackercamp.cz",
-    "@pulumi/aws": "6.19.0",
+    "@pulumi/aws": "6.20.1",
     "@pulumi/awsx": "2.5.0",
     "@pulumi/cloudflare": "5.19.0",
     "@pulumi/pulumi": "3.104.2",
