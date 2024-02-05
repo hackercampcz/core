@@ -31,4 +31,4 @@ async function main({ year, email }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=./data/import-program.json,$HOME/.aws/credentials,$HOME/.aws/config move-registration-to-trash.js --year=2023 --email=$(pbpaste)
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=./data/import-program.json,$HOME/.aws/credentials,$HOME/.aws/config move-registration-to-trash.js --year=2023 --email=$(pbpaste)

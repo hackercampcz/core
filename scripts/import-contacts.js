@@ -14,4 +14,4 @@ async function main({}) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=./data/import-contacts.json,$HOME/.aws/credentials,$HOME/.aws/config import-contacts.js
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=./data/import-contacts.json,$HOME/.aws/credentials,$HOME/.aws/config import-contacts.js

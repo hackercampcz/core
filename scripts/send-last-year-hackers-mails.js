@@ -101,4 +101,4 @@ async function main({ token }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-last-year-hackers-mails.js
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-last-year-hackers-mails.js

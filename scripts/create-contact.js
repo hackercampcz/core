@@ -32,4 +32,4 @@ async function main({ email, token }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config create-contact.js --token=$(op read 'op://Hacker Camp/Slack Bot/credential') --email=$(pbpaste)
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config create-contact.js --token=$(op read 'op://Hacker Camp/Slack Bot/credential') --email=$(pbpaste)

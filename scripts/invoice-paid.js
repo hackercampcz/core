@@ -36,4 +36,4 @@ async function main({ invoiceId, paidAt }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=topmonks deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config invoice-paid.js --invoiceId 1 --paidAt 2022-07-12
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config invoice-paid.js --invoiceId 1 --paidAt 2022-07-12
