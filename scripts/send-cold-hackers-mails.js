@@ -7,7 +7,7 @@ const dynamo = createClient();
 async function getContacts() {
   console.log("Loading contacts…");
   const resp = await dynamo.scan({
-    TableName: "hc-contacts",
+    TableName: "contacts",
     AttributesToGet: ["email"],
   });
   const contacts = resp.Items.map((x) => x.email);
@@ -36,7 +36,7 @@ const hardBounce = new Set([
 async function getRegistrations() {
   console.log("Loading registrations…");
   const resp = await dynamo.scan({
-    TableName: "hc-registrations",
+    TableName: "registrations",
     FilterExpression: "#year = :year",
     ProjectionExpression: "email",
     ExpressionAttributeNames: { "#year": "year" },
@@ -49,7 +49,7 @@ async function getRegistrations() {
 async function getOptOuts() {
   console.log("Loading optouts…");
   const resp = await dynamo.scan({
-    TableName: "hc-optouts",
+    TableName: "optouts",
     FilterExpression: "#year = :year",
     ProjectionExpression: "email",
     ExpressionAttributeNames: { "#year": "year" },
@@ -83,4 +83,4 @@ async function main({ token }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-cold-hackers-mails.js --token $(op read 'op://Hacker Camp/Postmark/credential')
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-cold-hackers-mails.js --token $(op read 'op://HackerCamp/Postmark/credential')

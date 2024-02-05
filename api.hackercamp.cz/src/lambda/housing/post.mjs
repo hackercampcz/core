@@ -15,7 +15,7 @@ function saveAttendee(dynamo, data) {
   console.log({ event: "Save attendee", data });
   return dynamo.send(
     new UpdateItemCommand({
-      TableName: "hc-attendees",
+      TableName: "attendees",
       Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
       UpdateExpression:
         "SET housing = :housing, housingPlacement = :housingPlacement",

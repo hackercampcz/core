@@ -103,4 +103,4 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`;
 
 await main(parse(Deno.args));
 
-// deno run --allow-net=hooks.slack.com slack-webhook-test.js --token $(op read "op://Hacker Camp/Slack Bot/credential") --url $(op read "op://Hacker Camp/Slack Bot/incomming webhook")
+// deno run --allow-net=hooks.slack.com slack-webhook-test.js --token $(op read "op://HackerCamp/Slack Bot/credential") --url $(op read "op://HackerCamp/Slack Bot/incomming webhook")

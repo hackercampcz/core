@@ -6,7 +6,7 @@ const dynamo = createClient();
 
 async function getAttendees() {
   const result = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     ProjectionExpression: "slackID, checkIn, checkout",
     FilterExpression: "#year = :year AND attribute_exists(checkIn)",
     ExpressionAttributeValues: { ":year": 2023 },
@@ -17,7 +17,7 @@ async function getAttendees() {
 
 async function updateAttendee(year, slackID, days) {
   await dynamo.updateItem({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     Key: { year, slackID },
     UpdateExpression: "SET days = :days",
     ExpressionAttributeValues: { ":days": days },

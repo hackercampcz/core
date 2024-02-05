@@ -20,4 +20,4 @@ async function main({ token }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-volunteers-mails.js --token=$(op read 'op://Hacker Camp/Postmark/credential')
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-volunteers-mails.js --token=$(op read 'op://HackerCamp/Postmark/credential')

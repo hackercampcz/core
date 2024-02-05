@@ -6,7 +6,7 @@ const dynamo = createClient();
 
 async function getAttendees() {
   const result = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     ProjectionExpression: "email, nfcTronData",
     FilterExpression:
       "#year = :year AND attribute_exists(nfcTronData) AND NOT ticketType IN (:volunteer, :crew)",

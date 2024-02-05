@@ -21,7 +21,7 @@ export async function getContact(dynamodb, email) {
   console.log({ event: "Get contact", email });
   const res = await dynamo.send(
     new ScanCommand({
-      TableName: "hc-contacts",
+      TableName: "contacts",
       FilterExpression: "email = :email",
       ExpressionAttributeValues: marshall(
         { ":email": email },
@@ -36,7 +36,7 @@ function createAttendee(dynamo, contact, record) {
   console.log({ event: "Create attendee", contact, record });
   return dynamo.send(
     new PutItemCommand({
-      TableName: "hc-attendees",
+      TableName: "attendees",
       Item: marshall(
         Object.assign(
           {},

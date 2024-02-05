@@ -61,7 +61,7 @@ async function readCustomers() {
 
 async function getAttendees() {
   const result = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     ProjectionExpression: "slackID, #y, #n, company, nfcTronID, nfcTronData",
     ExpressionAttributeNames: {
       "#n": "name",
@@ -74,7 +74,7 @@ async function getAttendees() {
 function updateAttendee({ year, slackID }, nfcTronData) {
   if (!nfcTronData) return;
   return dynamo.updateItem({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     Key: { year, slackID },
     UpdateExpression: "SET nfcTronData = :nfcTronData",
     ExpressionAttributeValues: { ":nfcTronData": [nfcTronData] },

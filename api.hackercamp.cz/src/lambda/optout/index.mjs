@@ -33,7 +33,7 @@ export async function optout(event) {
 
     await db.send(
       new PutItemCommand({
-        TableName: "hc-optouts",
+        TableName: "optouts",
         Item: marshall(
           {
             email,

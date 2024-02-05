@@ -18,7 +18,7 @@ const dynamo = new DynamoDBClient({});
 async function getAttendees(dynamo, year) {
   const result = await dynamo.send(
     new ScanCommand({
-      TableName: "hc-attendees",
+      TableName: "attendees",
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "#y = :y",
       ExpressionAttributeNames: { "#y": "year" },

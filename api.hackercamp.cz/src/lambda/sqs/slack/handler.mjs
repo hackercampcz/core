@@ -20,7 +20,7 @@ async function getAttendee(slackID, year) {
   console.log({ event: "Get attendee", year, slackID });
   const resp = await db.send(
     new GetItemCommand({
-      TableName: "hc-attendees",
+      TableName: "attendees",
       Key: {
         slackID: { S: slackID },
         year: { N: year.toString() },
@@ -34,7 +34,7 @@ function createContact({ id, profile, name }) {
   console.log({ event: "Create contact", slackID: id });
   return db.send(
     new PutItemCommand({
-      TableName: "hc-contacts",
+      TableName: "contacts",
       Item: marshall(
         {
           email: profile.email,
@@ -53,7 +53,7 @@ async function createAttendee({ id, profile, name }, record) {
   console.log({ event: "Create attendee", slackID: id });
   return db.send(
     new PutItemCommand({
-      TableName: "hc-attendees",
+      TableName: "attendees",
       Item: marshall(
         Object.assign(
           {},
@@ -76,7 +76,7 @@ async function getContact(email, slackID) {
   console.log({ event: "Get contact", email, slackID });
   const resp = await db.send(
     new GetItemCommand({
-      TableName: "hc-contacts",
+      TableName: "contacts",
       Key: {
         email: { S: email },
         slackID: { S: slackID },
@@ -90,7 +90,7 @@ async function getAttendeeByEmail(email, year) {
   console.log({ event: "Get attendee", year, email });
   const resp = await db.send(
     new ScanCommand({
-      TableName: "hc-attendees",
+      TableName: "attendees",
       FilterExpression: "#email = :email and #year = :year",
       ExpressionAttributeValues: {
         ":email": { S: email },
@@ -109,7 +109,7 @@ async function deleteAttendee(slackID, year) {
   console.log({ event: "Delete attendee", slackID, year });
   return db.send(
     new DeleteItemCommand({
-      TableName: "hc-attendees",
+      TableName: "attendees",
       Key: {
         slackID: { S: slackID },
         year: { N: year.toString() },
@@ -122,7 +122,7 @@ async function getRegistration(email, year) {
   console.log({ event: "Get registration", email, year });
   const resp = await db.send(
     new GetItemCommand({
-      TableName: "hc-registrations",
+      TableName: "registrations",
       Key: {
         email: { S: email },
         year: { N: year.toString() },
@@ -136,7 +136,7 @@ function updateAttendee(attendee, user) {
   console.log({ event: "Update attendee", slackID: user.id });
   return db.send(
     new PutItemCommand({
-      TableName: "hc-attendees",
+      TableName: "attendees",
       Item: marshall(
         Object.assign({}, attendee, {
           email: user.profile.email ?? attendee.email,
@@ -154,7 +154,7 @@ function updateContact(contact, user) {
   console.log({ event: "Update contact", slackID: user.id });
   return db.send(
     new PutItemCommand({
-      TableName: "hc-contacts",
+      TableName: "contacts",
       Item: marshall(
         Object.assign({}, contact, {
           email: user.profile.email ?? contact.email,

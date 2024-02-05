@@ -54,7 +54,7 @@ async function getCrewReferrals(token) {
 
 async function getOptOuts() {
   const resp = await dynamo.scan({
-    TableName: "hc-optouts",
+    TableName: "optouts",
     ProjectionExpression: "#yr, email",
     ExpressionAttributeNames: { "#yr": "year" },
   });
@@ -64,7 +64,7 @@ async function getOptOuts() {
 async function getRegistrations() {
   const optOuts = await getOptOuts();
   const resp = await dynamo.scan({
-    TableName: "hc-registrations",
+    TableName: "registrations",
     ProjectionExpression: [
       "#year",
       "email",
@@ -98,7 +98,7 @@ async function getRegistrations() {
 
 async function getAttendees() {
   const resp = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     ProjectionExpression: [
       "#year",
       "slackID",

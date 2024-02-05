@@ -27,9 +27,9 @@ async function main({ email, token }) {
 
   const item = items.get(email);
   console.log(item);
-  await dynamo.putItem({ TableName: "hc-contacts", Item: item });
+  await dynamo.putItem({ TableName: "contacts", Item: item });
 }
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config create-contact.js --token=$(op read 'op://Hacker Camp/Slack Bot/credential') --email=$(pbpaste)
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config create-contact.js --token=$(op read 'op://HackerCamp/Slack Bot/credential') --email=$(pbpaste)

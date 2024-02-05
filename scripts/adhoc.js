@@ -6,7 +6,7 @@ const dynamo = createClient();
 
 async function* getAttendees() {
   const result = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     FilterExpression:
       "#year = :year AND attribute_exists(checkIn) AND not attribute_exists(checkout) AND ticketType IN (:volunteer, :staff, :crew)",
     ExpressionAttributeValues: {

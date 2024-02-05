@@ -21,7 +21,7 @@ async function main({}) {
   );
 
   for (const registration of data) {
-    await dynamo.putItem({ TableName: "hc-registrations", Item: registration });
+    await dynamo.putItem({ TableName: "registrations", Item: registration });
     process.stdout.write(".");
   }
 }

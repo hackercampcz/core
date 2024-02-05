@@ -8,7 +8,7 @@ async function main({}) {
   const data = JSON.parse(text);
 
   for (const contact of data) {
-    await dynamo.putItem({ TableName: "hc-contacts", Item: contact });
+    await dynamo.putItem({ TableName: "contacts", Item: contact });
   }
 }
 

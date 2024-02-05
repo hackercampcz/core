@@ -63,7 +63,7 @@ async function getExistingSlackAccounts(token) {
  */
 async function getPaidRegistrations(dynamo) {
   const result = await dynamo.scan({
-    TableName: "hc-registrations",
+    TableName: "registrations",
     Select: "ALL_ATTRIBUTES",
     FilterExpression:
       "attribute_exists(invoiced) and attribute_not_exists(cancelled)",
@@ -78,7 +78,7 @@ async function getPaidRegistrations(dynamo) {
  */
 function createAttendee(dynamo, attendee) {
   return dynamo.putItem({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     Item: attendee,
   });
 }
@@ -103,7 +103,7 @@ async function createAttendees(attendees, dynamo) {
 
 async function getAttendees(dynamo, year) {
   const result = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     FilterExpression: "#y = :year",
     ExpressionAttributeNames: { "#y": "year" },
     ExpressionAttributeValues: { ":year": year },
@@ -114,7 +114,7 @@ async function getAttendees(dynamo, year) {
 
 async function getOptOuts(dynamo, year = 2022) {
   const result = await dynamo.scan({
-    TableName: "hc-optouts",
+    TableName: "optouts",
     ProjectionExpression: "email",
     FilterExpression: "#y = :year",
     ExpressionAttributeNames: {

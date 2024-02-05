@@ -30,7 +30,7 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
     console.log({ event: "Marking as paid", ...registration });
     await db.send(
       new UpdateItemCommand({
-        TableName: "hc-registrations",
+        TableName: "registrations",
         Key: registration,
         UpdateExpression: "SET paid = :paid",
         ExpressionAttributeValues: marshall({
@@ -58,7 +58,7 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
     console.log({ event: "Marking as canceled", ...registration });
     await db.send(
       new UpdateItemCommand({
-        TableName: "hc-registrations",
+        TableName: "registrations",
         Key: registration,
         UpdateExpression: "SET cancelled = :now",
         ExpressionAttributeValues: marshall({
@@ -100,7 +100,7 @@ export async function fakturoidWebhook(event) {
     const { invoice_id, paid_at } = payload;
     const resp = await db.send(
       new ScanCommand({
-        TableName: "hc-registrations",
+        TableName: "registrations",
         ProjectionExpression: "email,#y",
         FilterExpression: "invoice_id = :invoice_id",
         ExpressionAttributeValues: marshall({

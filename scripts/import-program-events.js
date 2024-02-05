@@ -43,7 +43,7 @@ const topic = new Map([
 async function getAttendee(db, email) {
   if (!email) return null;
   const result = await db.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     ProjectionExpression: "slackID, events, image, slug, #n",
     FilterExpression: "email = :email",
     ExpressionAttributeNames: { "#n": "name" },
@@ -83,7 +83,7 @@ async function main({}) {
     const events = (attendee.events ?? []).concat([x3]);
     console.log(x3);
     await dynamo.updateItem({
-      TableName: "hc-attendees",
+      TableName: "attendees",
       Key: { slackID: attendee.slackID, year: 2022 },
       UpdateExpression: "SET events = :events",
       ExpressionAttributeValues: { ":events": events },
@@ -102,7 +102,7 @@ async function main({}) {
       approvedBy: "U0202S9SB1T",
     });
     console.log(x4);
-    await dynamo.putItem({ TableName: "hc-program", Item: x4 });
+    await dynamo.putItem({ TableName: "program", Item: x4 });
   }
 }
 

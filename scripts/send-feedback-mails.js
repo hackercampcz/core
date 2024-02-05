@@ -6,7 +6,7 @@ const dynamo = createClient();
 
 async function getAttendees() {
   const result = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
     ExpressionAttributeValues: { ":year": 2023 },
@@ -44,4 +44,4 @@ async function main({ token }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-feedback-mails.js --token $(op read 'op://Hacker Camp/Postmark/credential')
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-feedback-mails.js --token $(op read 'op://HackerCamp/Postmark/credential')

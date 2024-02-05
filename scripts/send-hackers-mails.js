@@ -6,7 +6,7 @@ const dynamo = createClient();
 
 async function getPaidRegistrations(year) {
   const result = await dynamo.scan({
-    TableName: "hc-registrations",
+    TableName: "registrations",
     ProjectionExpression: "email",
     FilterExpression:
       "attribute_exists(invoiced) AND attribute_not_exists(cancelled) AND #year = :year",
@@ -22,7 +22,7 @@ async function getPaidRegistrations(year) {
 
 async function getThisYearRegistrations(year) {
   const result = await dynamo.scan({
-    TableName: "hc-registrations",
+    TableName: "registrations",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
     ExpressionAttributeNames: {
@@ -37,7 +37,7 @@ async function getThisYearRegistrations(year) {
 
 async function getAttendees(year) {
   const result = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
     ExpressionAttributeNames: {
@@ -52,7 +52,7 @@ async function getAttendees(year) {
 
 async function getOptOuts(year) {
   const result = await dynamo.scan({
-    TableName: "hc-optouts",
+    TableName: "optouts",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
     ExpressionAttributeNames: {
@@ -69,7 +69,7 @@ const ignoreList = new Set();
 
 async function getContacts() {
   const result = await dynamo.scan({
-    TableName: "hc-contacts",
+    TableName: "contacts",
     ProjectionExpression: "email",
   });
   return result.Items.map((x) => x.email);
@@ -102,4 +102,4 @@ async function main({ token }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-hackers-mails.js --token $(op read 'op://Hacker Camp/Postmark/credential')
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config send-hackers-mails.js --token $(op read 'op://HackerCamp/Postmark/credential')

@@ -5,7 +5,7 @@ const dynamo = createClient();
 
 async function markAsPaid(registration, paidAt) {
   await dynamo.updateItem({
-    TableName: "hc-registrations",
+    TableName: "registrations",
     Key: registration,
     UpdateExpression: "SET paid = :paid",
     ExpressionAttributeValues: {
@@ -16,7 +16,7 @@ async function markAsPaid(registration, paidAt) {
 
 async function getRegistrations(invoiceId) {
   const result = await dynamo.scan({
-    TableName: "hc-registrations",
+    TableName: "registrations",
     ProjectionExpression: "email,#y",
     ExpressionAttributeNames: { "#y": "year" },
     FilterExpression: "invoice_id = :invoice_id",

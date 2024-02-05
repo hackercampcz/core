@@ -22,7 +22,7 @@ async function main({ token }) {
   }));
 
   for (const contact of items) {
-    await dynamo.putItem({ TableName: "hc-contacts", Item: contact });
+    await dynamo.putItem({ TableName: "contacts", Item: contact });
   }
 
   return;
@@ -41,4 +41,4 @@ async function main({ token }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config fetch-profiles.js --token $(op read 'op://Hacker Camp/Slack Bot/credential')
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config fetch-profiles.js --token $(op read 'op://HackerCamp/Slack Bot/credential')

@@ -16,7 +16,7 @@ async function main({}) {
   );
 
   for (const event of data) {
-    await dynamo.putItem({ TableName: "hc-program", Item: event });
+    await dynamo.putItem({ TableName: "program", Item: event });
   }
 }
 

@@ -4,7 +4,7 @@ import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod
 const dynamo = createClient();
 
 async function main({}) {
-  const resp = await dynamo.scan({ TableName: "hc-registrations" });
+  const resp = await dynamo.scan({ TableName: "registrations" });
   console.log(resp.Items);
 }
 

@@ -17,7 +17,7 @@ async function getRegistrationById(id) {
   console.log({ event: "Loading data by id", id });
   const resp = await db.send(
     new ScanCommand({
-      TableName: "hc-registrations",
+      TableName: "registrations",
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "id = :id",
       ExpressionAttributeValues: marshall(
@@ -41,13 +41,13 @@ async function getRegistrationByEmail(email, year, slackID) {
   const [contactResp, regResp] = await Promise.all([
     db.send(
       new GetItemCommand({
-        TableName: "hc-contacts",
+        TableName: "contacts",
         Key: marshall({ email, slackID }),
       })
     ),
     db.send(
       new GetItemCommand({
-        TableName: "hc-registrations",
+        TableName: "registrations",
         Key: marshall({ email, year: parseInt(year) }),
       })
     ),

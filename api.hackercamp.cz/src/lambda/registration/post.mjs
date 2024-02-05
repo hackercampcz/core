@@ -62,7 +62,7 @@ export async function handler(event) {
   await Promise.all([
     db.send(
       new PutItemCommand({
-        TableName: "hc-registrations",
+        TableName: "registrations",
         Item: marshall(
           {
             email,

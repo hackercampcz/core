@@ -6,7 +6,7 @@ const dynamo = createClient();
 
 async function* getAttendees(year) {
   const result = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     ProjectionExpression: "slackID, nfcTronData",
     FilterExpression: "#year = :year AND attribute_exists(nfcTronData)",
     ExpressionAttributeValues: { ":year": year },
@@ -23,7 +23,7 @@ async function* getAttendees(year) {
 
 async function updateAttendee(year, slackID, nfcTronData) {
   await dynamo.updateItem({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     Key: { year, slackID },
     UpdateExpression: "SET nfcTronData = :nfcTronData",
     ExpressionAttributeValues: { ":nfcTronData": nfcTronData },

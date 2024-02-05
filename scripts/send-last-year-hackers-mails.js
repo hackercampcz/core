@@ -6,7 +6,7 @@ const dynamo = createClient();
 
 async function getRegistrations() {
   const result = await dynamo.scan({
-    TableName: "hc-registrations",
+    TableName: "registrations",
     ProjectionExpression: "email",
     FilterExpression: "#ts > :ts",
     ExpressionAttributeNames: {
@@ -21,7 +21,7 @@ async function getRegistrations() {
 
 async function getContacts() {
   const result = await dynamo.scan({
-    TableName: "hc-contacts",
+    TableName: "contacts",
     ProjectionExpression: "email",
   });
   return result.Items.map((x) => x.email);
@@ -29,7 +29,7 @@ async function getContacts() {
 
 async function getAttendees() {
   const result = await dynamo.scan({
-    TableName: "hc-attendees",
+    TableName: "attendees",
     ProjectionExpression: "email",
   });
   return result.Items.map((x) => x.email);
@@ -37,7 +37,7 @@ async function getAttendees() {
 
 async function getOptOuts(year = 2022) {
   const result = await dynamo.scan({
-    TableName: "hc-optouts",
+    TableName: "optouts",
     ProjectionExpression: "email",
     FilterExpression: "#y = :year",
     ExpressionAttributeNames: {
