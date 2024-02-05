@@ -598,7 +598,7 @@ export function createApi(
   const api = new Api(name, {
     stageName: stage,
     description: "HackerCamp API",
-    cacheEnabled: true,
+    cacheEnabled: false,
     cacheSize: "0.5", // GB
     routes: Object.entries(routes).map(([name, route]) =>
       createHandlerRoute(name, route)
