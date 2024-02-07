@@ -3818,7 +3818,7 @@ __metadata:
     "@fast-csv/format": "npm:5.0.0"
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
-    "@thi.ng/transducers": "npm:8.8.26"
+    "@thi.ng/transducers": "npm:8.9.0"
     algoliasearch: "npm:4.22.1"
     eslint: "npm:8.56.0"
     fast-xml-parser: "npm:4.3.4"
@@ -3860,7 +3860,7 @@ __metadata:
     "@material/mwc-snackbar": "npm:0.27.0"
     "@material/web": "npm:1.2.0"
     "@thi.ng/atom": "npm:5.2.29"
-    "@thi.ng/transducers": "npm:8.8.26"
+    "@thi.ng/transducers": "npm:8.9.0"
     "@ungap/structured-clone": "npm:1.2.0"
     date-fns: "npm:3.3.1"
     eslint: "npm:8.56.0"
@@ -6368,12 +6368,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/math@npm:^5.8.4":
-  version: 5.8.4
-  resolution: "@thi.ng/math@npm:5.8.4"
+"@thi.ng/math@npm:^5.9.0":
+  version: 5.9.0
+  resolution: "@thi.ng/math@npm:5.9.0"
   dependencies:
     "@thi.ng/api": "npm:^8.9.22"
-  checksum: 10c0/bc420df09e8becf0725b544872570092281f58a1d33f65c77e41aba2a851b6465188925a5296b53861b52268f0ff87622fbb765d6d82d9f321d597766aa8f119
+  checksum: 10c0/e9f95194adbb9ec145016b0948ba09ea2414d300bc4f805f1075c390dbefef0cf657a44eba8ee8dda0cb4514a86c235a36ed5e09e2d968306e07bf41a6347c01
   languageName: node
   linkType: hard
 
@@ -6400,9 +6400,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/transducers@npm:8.8.26":
-  version: 8.8.26
-  resolution: "@thi.ng/transducers@npm:8.8.26"
+"@thi.ng/transducers@npm:8.9.0":
+  version: 8.9.0
+  resolution: "@thi.ng/transducers@npm:8.9.0"
   dependencies:
     "@thi.ng/api": "npm:^8.9.22"
     "@thi.ng/arrays": "npm:^2.7.19"
@@ -6410,9 +6410,9 @@ __metadata:
     "@thi.ng/compare": "npm:^2.2.18"
     "@thi.ng/compose": "npm:^2.1.61"
     "@thi.ng/errors": "npm:^2.4.15"
-    "@thi.ng/math": "npm:^5.8.4"
+    "@thi.ng/math": "npm:^5.9.0"
     "@thi.ng/random": "npm:^3.6.29"
-  checksum: 10c0/987df3db737f9b55b8b4c66499cbef40ef6be4be8799f45cd9d35e8cb552aa9349160e949c5844a9ef4cb0b5329fc3fc656195d537aecb422eaeae2dce21fd8a
+  checksum: 10c0/799fed5918fda0f97299a3065a7d5d347ad5f1b6ad1534a7dc539e7a09a5f46c009d2331d9b32b2abed77e5260f137d9adeb7e144ea642c02c01e437401859ef
   languageName: node
   linkType: hard
 
