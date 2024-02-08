@@ -3885,7 +3885,7 @@ __metadata:
     "@pulumi/aws": "npm:6.20.1"
     "@pulumi/awsx": "npm:2.5.0"
     "@pulumi/cloudflare": "npm:5.19.0"
-    "@pulumi/pulumi": "npm:3.104.2"
+    "@pulumi/pulumi": "npm:3.105.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@typescript-eslint/eslint-plugin": "npm:6.21.0"
     "@typescript-eslint/parser": "npm:6.21.0"
@@ -4994,9 +4994,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.104.2":
-  version: 3.104.2
-  resolution: "@pulumi/pulumi@npm:3.104.2"
+"@pulumi/pulumi@npm:3.105.0":
+  version: 3.105.0
+  resolution: "@pulumi/pulumi@npm:3.105.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.9.14"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -5028,7 +5028,7 @@ __metadata:
     ts-node: "npm:^7.0.1"
     typescript: "npm:~3.8.3"
     upath: "npm:^1.1.0"
-  checksum: 10c0/d1b9b3b12a33b229abade944c3c1f25565648ba64c432e4a3e649ad07edec947bac1eca14c26a6fe1f9d903eae5e42aafe8bda08ab8863666919b2a9851edf72
+  checksum: 10c0/f31b679e62489733e598476e248a5831c141c6b023da9cfb36904780e665a8a1eca0467e0dd01301750094064935daedfa80f673e8f60df0f835a033113b0bd5
   languageName: node
   linkType: hard
 
