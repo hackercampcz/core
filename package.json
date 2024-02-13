@@ -9,7 +9,7 @@
   "devDependencies": {
     "@hckr_/blendid": "7.0.4",
     "@types/nunjucks": "3.2.6",
-    "dotenv": "16.4.3",
+    "dotenv": "16.4.4",
     "dotenv-cli": "7.3.0",
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
