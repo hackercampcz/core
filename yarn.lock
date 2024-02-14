@@ -234,15 +234,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.513.0":
-  version: 3.513.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.513.0"
+"@aws-sdk/client-dynamodb@npm:3.514.0":
+  version: 3.514.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.514.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
     "@aws-sdk/client-sts": "npm:3.513.0"
     "@aws-sdk/core": "npm:3.513.0"
-    "@aws-sdk/credential-provider-node": "npm:3.513.0"
+    "@aws-sdk/credential-provider-node": "npm:3.514.0"
     "@aws-sdk/middleware-endpoint-discovery": "npm:3.511.0"
     "@aws-sdk/middleware-host-header": "npm:3.511.0"
     "@aws-sdk/middleware-logger": "npm:3.511.0"
@@ -281,7 +281,7 @@ __metadata:
     "@smithy/util-waiter": "npm:^2.1.1"
     tslib: "npm:^2.5.0"
     uuid: "npm:^8.3.2"
-  checksum: 10c0/0f5cbb9b7a58ab7894c234796e371b25471e76d07e0a1d6d92435296c7c4a956ad4918743cfde4a222b6d2eda1c0b6a10357f60fc33552ffe2cf6f7aee025a42
+  checksum: 10c0/d78672110f624df1f34a8e910647797c85324e0e6749b42d290d2558cb2126a990c00f83a47e0493eee34bde522c2a814621f899c4a2c24d7ac9f1ddf9a7839d
   languageName: node
   linkType: hard
 
@@ -331,15 +331,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-secrets-manager@npm:3.513.0":
-  version: 3.513.0
-  resolution: "@aws-sdk/client-secrets-manager@npm:3.513.0"
+"@aws-sdk/client-secrets-manager@npm:3.514.0":
+  version: 3.514.0
+  resolution: "@aws-sdk/client-secrets-manager@npm:3.514.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
     "@aws-sdk/client-sts": "npm:3.513.0"
     "@aws-sdk/core": "npm:3.513.0"
-    "@aws-sdk/credential-provider-node": "npm:3.513.0"
+    "@aws-sdk/credential-provider-node": "npm:3.514.0"
     "@aws-sdk/middleware-host-header": "npm:3.511.0"
     "@aws-sdk/middleware-logger": "npm:3.511.0"
     "@aws-sdk/middleware-recursion-detection": "npm:3.511.0"
@@ -376,19 +376,19 @@ __metadata:
     "@smithy/util-utf8": "npm:^2.1.1"
     tslib: "npm:^2.5.0"
     uuid: "npm:^8.3.2"
-  checksum: 10c0/cb55e0e20bef15e19dc0a413d5d8c4dacf034bf51117d975d994ef1660a18dfb81386dde75f7c5cce0b5362ab9eea91bfa75ba95b1f3c7437a1b2ac390e116b8
+  checksum: 10c0/1473445a0f83ce3eb0773f15e752d27130d3407032791c6bfb93a38c8ad19f4348e22f2b8df04154b7dbdb434572b6ed15570925b9c07d62f0a476faf59c9e75
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.513.0":
-  version: 3.513.0
-  resolution: "@aws-sdk/client-sqs@npm:3.513.0"
+"@aws-sdk/client-sqs@npm:3.514.0":
+  version: 3.514.0
+  resolution: "@aws-sdk/client-sqs@npm:3.514.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
     "@aws-sdk/client-sts": "npm:3.513.0"
     "@aws-sdk/core": "npm:3.513.0"
-    "@aws-sdk/credential-provider-node": "npm:3.513.0"
+    "@aws-sdk/credential-provider-node": "npm:3.514.0"
     "@aws-sdk/middleware-host-header": "npm:3.511.0"
     "@aws-sdk/middleware-logger": "npm:3.511.0"
     "@aws-sdk/middleware-recursion-detection": "npm:3.511.0"
@@ -426,7 +426,7 @@ __metadata:
     "@smithy/util-retry": "npm:^2.1.1"
     "@smithy/util-utf8": "npm:^2.1.1"
     tslib: "npm:^2.5.0"
-  checksum: 10c0/7d7ec8cab4fb76542aa79e04325f3c64d7cc7f4bd1fe9f92117c88bfd6845880a44a8854424f149ce0e005de495e44b3fc9d724c2ae6a332909b5f5a9a3d9b7e
+  checksum: 10c0/ea70f67dafb3299622ad5066b3547942b5ddec47a2c8020b62d1a7cfd85fba74a822e28281f7c3e6108efbbbae5a474661671d7b6568af16121afca7abc2eefd
   languageName: node
   linkType: hard
 
@@ -773,9 +773,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/credential-provider-node@npm:3.513.0":
-  version: 3.513.0
-  resolution: "@aws-sdk/credential-provider-node@npm:3.513.0"
+"@aws-sdk/credential-provider-node@npm:3.514.0":
+  version: 3.514.0
+  resolution: "@aws-sdk/credential-provider-node@npm:3.514.0"
   dependencies:
     "@aws-sdk/credential-provider-env": "npm:3.511.0"
     "@aws-sdk/credential-provider-http": "npm:3.511.0"
@@ -789,7 +789,7 @@ __metadata:
     "@smithy/shared-ini-file-loader": "npm:^2.3.1"
     "@smithy/types": "npm:^2.9.1"
     tslib: "npm:^2.5.0"
-  checksum: 10c0/b9cfa83637121ada8b04d6cb351b82bb488963aa95c2a4b9f1a08c7a67bec6cf1003bd6affccc828fd42524fb9c38e3312a99ebadefb62144ccc0f92f3f467bd
+  checksum: 10c0/65968d310aeb60ab08d5e7a57f51e527cd91c7b50040e0fbda640c50d35d469da719131aad27790e867f36b9d3933a908b6a6baccdb24f7f6a4918902b197f37
   languageName: node
   linkType: hard
 
@@ -1149,14 +1149,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.513.0":
-  version: 3.513.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.513.0"
+"@aws-sdk/util-dynamodb@npm:3.514.0":
+  version: 3.514.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.514.0"
   dependencies:
     tslib: "npm:^2.5.0"
   peerDependencies:
     "@aws-sdk/client-dynamodb": ^3.0.0
-  checksum: 10c0/1e2a68f60e4f40a1e42e696dd858538870dc264663e938f07aab79fece587961add4148d383160ae260c495c527fd55c854371c253adb040635bdb5c7d9a3f73
+  checksum: 10c0/1bc0f6fffa8dbebe318ee782e64cceb6b6f63d1362697e7259481daa0e550d43b6a56d613479418ae4c4b9e04d43575d0e41fadecbf0364bbc5c7601fbe8855a
   languageName: node
   linkType: hard
 
@@ -3797,9 +3797,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-dynamodb": "npm:3.513.0"
-    "@aws-sdk/client-sqs": "npm:3.513.0"
-    "@aws-sdk/util-dynamodb": "npm:3.513.0"
+    "@aws-sdk/client-dynamodb": "npm:3.514.0"
+    "@aws-sdk/client-sqs": "npm:3.514.0"
+    "@aws-sdk/util-dynamodb": "npm:3.514.0"
     "@cloudflare/workers-types": "npm:4.20240208.0"
     "@fast-csv/format": "npm:5.0.0"
     "@hackercamp/infrastructure": "workspace:infrastructure"
@@ -3836,7 +3836,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-secrets-manager": "npm:3.513.0"
+    "@aws-sdk/client-secrets-manager": "npm:3.514.0"
     "@cloudflare/workers-types": "npm:4.20240208.0"
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
