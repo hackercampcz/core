@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@aws-sdk/client-secrets-manager": "3.515.0",
-    "@cloudflare/workers-types": "4.20240208.0",
+    "@cloudflare/workers-types": "4.20240222.0",
     "eslint": "8.56.0",
     "eslint-plugin-promise": "6.1.1",
     "web-types-lit": "0.1.0",
