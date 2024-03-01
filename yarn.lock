@@ -3871,7 +3871,7 @@ __metadata:
     "@pulumi/aws": "npm:6.24.1"
     "@pulumi/awsx": "npm:2.5.0"
     "@pulumi/cloudflare": "npm:5.21.0"
-    "@pulumi/pulumi": "npm:3.108.0"
+    "@pulumi/pulumi": "npm:3.108.1"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@typescript-eslint/eslint-plugin": "npm:7.1.0"
     "@typescript-eslint/parser": "npm:7.1.0"
@@ -5155,9 +5155,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.108.0":
-  version: 3.108.0
-  resolution: "@pulumi/pulumi@npm:3.108.0"
+"@pulumi/pulumi@npm:3.108.1":
+  version: 3.108.1
+  resolution: "@pulumi/pulumi@npm:3.108.1"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -5171,7 +5171,6 @@ __metadata:
     "@opentelemetry/sdk-trace-node": "npm:^1.6.0"
     "@opentelemetry/semantic-conventions": "npm:^1.6.0"
     "@pulumi/query": "npm:^0.3.0"
-    "@types/glob": "npm:^8.1.0"
     "@types/google-protobuf": "npm:^3.15.5"
     "@types/semver": "npm:^7.5.6"
     "@types/tmp": "npm:^0.2.6"
@@ -5191,7 +5190,7 @@ __metadata:
     ts-node: "npm:^7.0.1"
     typescript: "npm:~3.8.3"
     upath: "npm:^1.1.0"
-  checksum: 10c0/622c0e5985f89fb2a7b6ce5558cef889feba5ced404607d6e5c191d309370b0190531367e6937a2f5ab4a46815147392a728ab227530311c69b4f95e78b01617
+  checksum: 10c0/07aec7284ad1642103a5a1e44efd3e2c074e3dbbbd98ae0f6499b87e075529579cfca775d72d87a6737a4b08511db8b08e021f1c43fbd33922b9c39504b41439
   languageName: node
   linkType: hard
 
@@ -6771,16 +6770,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/glob@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "@types/glob@npm:8.1.0"
-  dependencies:
-    "@types/minimatch": "npm:^5.1.2"
-    "@types/node": "npm:*"
-  checksum: 10c0/ded07aa0d7a1caf3c47b85e262be82989ccd7933b4a14712b79c82fd45a239249811d9fc3a135b3e9457afa163e74a297033d7245b0dc63cd3d032f3906b053f
-  languageName: node
-  linkType: hard
-
 "@types/google-protobuf@npm:^3.15.5":
   version: 3.15.12
   resolution: "@types/google-protobuf@npm:3.15.12"
@@ -6826,13 +6815,6 @@ __metadata:
   version: 4.0.2
   resolution: "@types/long@npm:4.0.2"
   checksum: 10c0/42ec66ade1f72ff9d143c5a519a65efc7c1c77be7b1ac5455c530ae9acd87baba065542f8847522af2e3ace2cc999f3ad464ef86e6b7352eece34daf88f8c924
-  languageName: node
-  linkType: hard
-
-"@types/minimatch@npm:^5.1.2":
-  version: 5.1.2
-  resolution: "@types/minimatch@npm:5.1.2"
-  checksum: 10c0/83cf1c11748891b714e129de0585af4c55dd4c2cafb1f1d5233d79246e5e1e19d1b5ad9e8db449667b3ffa2b6c80125c429dbee1054e9efb45758dbc4e118562
   languageName: node
   linkType: hard
 
