@@ -10,7 +10,7 @@
     "@hckr_/blendid": "7.0.4",
     "@types/nunjucks": "3.2.6",
     "dotenv": "16.4.5",
-    "dotenv-cli": "7.3.0",
+    "dotenv-cli": "7.4.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
     "eslint-plugin-prettier": "5.1.3",
