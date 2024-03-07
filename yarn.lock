@@ -234,9 +234,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.525.0":
-  version: 3.525.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.525.0"
+"@aws-sdk/client-dynamodb@npm:3.528.0":
+  version: 3.528.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.528.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
@@ -281,7 +281,7 @@ __metadata:
     "@smithy/util-waiter": "npm:^2.1.3"
     tslib: "npm:^2.5.0"
     uuid: "npm:^9.0.1"
-  checksum: 10c0/3c0aee822b79e5b348ec3408c68f5a5577b90150f789b6cd91489bb61ac184b537417c23f3d766f1f865b876bc6e2ec5946f0136d195448de55e1a7594774bc9
+  checksum: 10c0/77a072bdf01d5f28c6643ee02e049c040b4bdc659795cd0eaf7bc903e6ab1dbb76d91792a56b284f5df3a74e5882badb97139efa1ffdefa77d1f4f323a7eca3e
   languageName: node
   linkType: hard
 
@@ -1149,14 +1149,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.525.0":
-  version: 3.525.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.525.0"
+"@aws-sdk/util-dynamodb@npm:3.528.0":
+  version: 3.528.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.528.0"
   dependencies:
     tslib: "npm:^2.5.0"
   peerDependencies:
     "@aws-sdk/client-dynamodb": ^3.0.0
-  checksum: 10c0/9bbb9602a4679ef2a4eaaaf746305238409fe7a9ff375ce36b2fd3334331b54b40e2c9bef1f37029332c474700fd30e3414d11d3ebbd2953f9205691ed7e12f7
+  checksum: 10c0/e1e303b4c50449b03b667e6af3e1032059744bf5853a5678526c47aeebb6588899b21432a95f19c6af919b5bc081f2f433d78b0ff7ccb79cc38c498c9a2089af
   languageName: node
   linkType: hard
 
@@ -3797,9 +3797,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-dynamodb": "npm:3.525.0"
+    "@aws-sdk/client-dynamodb": "npm:3.528.0"
     "@aws-sdk/client-sqs": "npm:3.525.0"
-    "@aws-sdk/util-dynamodb": "npm:3.525.0"
+    "@aws-sdk/util-dynamodb": "npm:3.528.0"
     "@cloudflare/workers-types": "npm:4.20240222.0"
     "@fast-csv/format": "npm:5.0.0"
     "@hackercamp/infrastructure": "workspace:infrastructure"
