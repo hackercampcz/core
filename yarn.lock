@@ -3879,7 +3879,7 @@ __metadata:
     "@material/mwc-drawer": "npm:0.27.0"
     "@material/mwc-snackbar": "npm:0.27.0"
     "@material/web": "npm:1.3.0"
-    "@thi.ng/atom": "npm:5.2.36"
+    "@thi.ng/atom": "npm:5.2.37"
     "@thi.ng/transducers": "npm:8.9.11"
     "@ungap/structured-clone": "npm:1.2.0"
     date-fns: "npm:3.3.1"
@@ -6572,13 +6572,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/api@npm:^8.9.28":
-  version: 8.9.28
-  resolution: "@thi.ng/api@npm:8.9.28"
-  checksum: 10c0/df2a4de3af97e6106268866c8e0c4c1497ef59f37c4b266896c87299c9283269bcdacee0ec06dbb64a180ee07753a204e3edc9fae1cadabbadef79c996d1dbd7
-  languageName: node
-  linkType: hard
-
 "@thi.ng/api@npm:^8.9.29":
   version: 8.9.29
   resolution: "@thi.ng/api@npm:8.9.29"
@@ -6600,16 +6593,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/atom@npm:5.2.36":
-  version: 5.2.36
-  resolution: "@thi.ng/atom@npm:5.2.36"
+"@thi.ng/atom@npm:5.2.37":
+  version: 5.2.37
+  resolution: "@thi.ng/atom@npm:5.2.37"
   dependencies:
-    "@thi.ng/api": "npm:^8.9.28"
+    "@thi.ng/api": "npm:^8.9.29"
     "@thi.ng/equiv": "npm:^2.1.51"
     "@thi.ng/errors": "npm:^2.4.20"
-    "@thi.ng/paths": "npm:^5.1.71"
+    "@thi.ng/paths": "npm:^5.1.72"
     tslib: "npm:^2.6.2"
-  checksum: 10c0/294f1257bff26d1494ceb72b343cf677e7f7f97903125937fbe188800def4f5639d8e0281fdfef1cac7d9751d868c9e2e9ff93a7235009fad832ac31f5dbe123
+  checksum: 10c0/dbdbac512bff29d24cd07cf77b0ee6dab361937bc4f881ed562db327feb7270a45a9a4c97d53dac7fe150f132da832b2d4e82e9e0312558863ca263d60725d58
   languageName: node
   linkType: hard
 
@@ -6671,14 +6664,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/paths@npm:^5.1.71":
-  version: 5.1.71
-  resolution: "@thi.ng/paths@npm:5.1.71"
+"@thi.ng/paths@npm:^5.1.72":
+  version: 5.1.72
+  resolution: "@thi.ng/paths@npm:5.1.72"
   dependencies:
-    "@thi.ng/api": "npm:^8.9.28"
+    "@thi.ng/api": "npm:^8.9.29"
     "@thi.ng/checks": "npm:^3.5.2"
     "@thi.ng/errors": "npm:^2.4.20"
-  checksum: 10c0/e00b6876b50dde3f1b441f6b024a03b093b8bc269ef4080410c535002e3e8a3853df591d1605c2b41a65cd0264e07eb4e4a8fcbe5ba7c7b6648207162338ddd3
+  checksum: 10c0/89ba57d2facad1214c5af983f71b534e049dce72a0a7240fab7419928bd7b0d0f86f8b6deaa4650d6b9e745dbaca192a6af1d375a233d5c1978d976369010d04
   languageName: node
   linkType: hard
 
