@@ -15,7 +15,7 @@
     "rollbar": "2.26.3"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20240222.0",
+    "@cloudflare/workers-types": "4.20240312.0",
     "eslint": "8.57.0",
     "wrangler": "3.32.0"
   },
