@@ -3844,7 +3844,7 @@ __metadata:
     immutable: "npm:4.3.5"
     jsonwebtoken: "npm:9.0.2"
     rollbar: "npm:2.26.3"
-    wrangler: "npm:3.33.0"
+    wrangler: "npm:3.34.0"
   languageName: unknown
   linkType: soft
 
@@ -3891,7 +3891,7 @@ __metadata:
     rollbar: "npm:2.26.3"
     web-types-lit: "npm:0.1.0"
     workbox-window: "npm:7.0.0"
-    wrangler: "npm:3.33.0"
+    wrangler: "npm:3.34.0"
   languageName: unknown
   linkType: soft
 
@@ -3928,7 +3928,7 @@ __metadata:
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
   dependencies:
     "@material/layout-grid": "npm:14.0.0"
-    wrangler: "npm:3.33.0"
+    wrangler: "npm:3.34.0"
   languageName: unknown
   linkType: soft
 
@@ -19578,9 +19578,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:3.33.0":
-  version: 3.33.0
-  resolution: "wrangler@npm:3.33.0"
+"wrangler@npm:3.34.0":
+  version: 3.34.0
+  resolution: "wrangler@npm:3.34.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.3.1"
     "@esbuild-plugins/node-globals-polyfill": "npm:^0.2.3"
@@ -19608,7 +19608,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/cf2683ba97fe788bbda82247673184d20e3950d0cc0ba6c06d133b9108b582c3d45af987576ff8f370ee18f1150920f5e9184119e4a17fe02344102a541b7b05
+  checksum: 10c0/5c680d021f748d43b534f96ac9e2825a1e140bb24352a6bbea0f161b0ddecd81e254d759001267e62e965b2d24fd30d4ba371784991da2c59cb4129203848466
   languageName: node
   linkType: hard
 
