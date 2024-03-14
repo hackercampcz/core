@@ -331,9 +331,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-secrets-manager@npm:3.533.0":
-  version: 3.533.0
-  resolution: "@aws-sdk/client-secrets-manager@npm:3.533.0"
+"@aws-sdk/client-secrets-manager@npm:3.534.0":
+  version: 3.534.0
+  resolution: "@aws-sdk/client-secrets-manager@npm:3.534.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:3.0.0"
     "@aws-crypto/sha256-js": "npm:3.0.0"
@@ -376,7 +376,7 @@ __metadata:
     "@smithy/util-utf8": "npm:^2.2.0"
     tslib: "npm:^2.5.0"
     uuid: "npm:^9.0.1"
-  checksum: 10c0/be932c7ee7fcc2800682b1ac9a29f35251ba4d812e08863874dbf555b4b4a9106eb29f6ece7cfec8c6a8f4d922c50c2f2fe3fa109d63d4972f9d50601562362d
+  checksum: 10c0/879ea48dbd6906225aed6eb98224c98e50089f6252072ea0934181fcc0b825566a2d996266d2462f1d82e976af8f0b3ff392ecb46b002c6e1d6ea47cbfa6b4af
   languageName: node
   linkType: hard
 
@@ -3869,7 +3869,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-secrets-manager": "npm:3.533.0"
+    "@aws-sdk/client-secrets-manager": "npm:3.534.0"
     "@cloudflare/workers-types": "npm:4.20240312.0"
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
