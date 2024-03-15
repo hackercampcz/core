@@ -3802,13 +3802,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grpc/grpc-js@npm:1.10.2":
-  version: 1.10.2
-  resolution: "@grpc/grpc-js@npm:1.10.2"
+"@grpc/grpc-js@npm:1.10.3":
+  version: 1.10.3
+  resolution: "@grpc/grpc-js@npm:1.10.3"
   dependencies:
     "@grpc/proto-loader": "npm:^0.7.10"
     "@js-sdsl/ordered-map": "npm:^4.4.2"
-  checksum: 10c0/28418eee561fc9c5380b92e66975faebe7ba69be23be06879c91e01198045e62b5ab88f1cf79bf88ad051be6e01af31cabeaa36477399b7770d48b351e463656
+  checksum: 10c0/13b93979a336215459acb3fc94c8fb7ed849d8b5ca0aa836e0dc050439f66f3620ff3e465bb7c8715f38d550bbc764966e128bd179f6c71204fb6d8064ad9fef
   languageName: node
   linkType: hard
 
