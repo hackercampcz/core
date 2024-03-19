@@ -3843,7 +3843,7 @@ __metadata:
     fast-xml-parser: "npm:4.3.6"
     immutable: "npm:4.3.5"
     jsonwebtoken: "npm:9.0.2"
-    rollbar: "npm:2.26.3"
+    rollbar: "npm:2.26.4"
     wrangler: "npm:3.34.2"
   languageName: unknown
   linkType: soft
@@ -3888,7 +3888,7 @@ __metadata:
     lit-html: "npm:3.1.2"
     marked: "npm:12.0.1"
     ramda: "npm:0.29.1"
-    rollbar: "npm:2.26.3"
+    rollbar: "npm:2.26.4"
     web-types-lit: "npm:0.1.0"
     workbox-window: "npm:7.0.0"
     wrangler: "npm:3.34.2"
@@ -16826,9 +16826,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollbar@npm:2.26.3":
-  version: 2.26.3
-  resolution: "rollbar@npm:2.26.3"
+"rollbar@npm:2.26.4":
+  version: 2.26.4
+  resolution: "rollbar@npm:2.26.4"
   dependencies:
     async: "npm:~3.2.3"
     console-polyfill: "npm:0.3.0"
@@ -16841,7 +16841,7 @@ __metadata:
   dependenciesMeta:
     decache:
       optional: true
-  checksum: 10c0/b8f11cfad1ab312b683b6c80b3db095b0db9587355e98e414c6879374d0e5b1c0fbe9fc5e2f1df5b8f3a13fb186ac60e5dc3d48845bcb2747f453ae7f66b22e9
+  checksum: 10c0/46403936c191776702aff9a34844d36aa377979313faf78a6a065358fd9e849fbf2dff526a01403cf2d74d15f2c6c2fdb3e1d579ce7575ade57cd0663546ad22
   languageName: node
   linkType: hard
 
