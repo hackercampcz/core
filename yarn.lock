@@ -3902,7 +3902,7 @@ __metadata:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
     "@pulumi/aws": "npm:6.27.0"
-    "@pulumi/awsx": "npm:2.5.0"
+    "@pulumi/awsx": "npm:2.6.0"
     "@pulumi/cloudflare": "npm:5.22.0"
     "@pulumi/pulumi": "npm:3.111.1"
     "@topmonks/pulumi-aws": "npm:3.1.4"
@@ -5160,19 +5160,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/awsx@npm:2.5.0":
-  version: 2.5.0
-  resolution: "@pulumi/awsx@npm:2.5.0"
+"@pulumi/awsx@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@pulumi/awsx@npm:2.6.0"
   dependencies:
     "@aws-sdk/client-ecs": "npm:^3.405.0"
     "@pulumi/aws": "npm:^6.9.0"
-    "@pulumi/docker": "npm:^4.5.0"
+    "@pulumi/docker": "npm:^4.5.1"
     "@pulumi/pulumi": "npm:^3.0.0"
     "@types/aws-lambda": "npm:^8.10.23"
     aws-sdk: "npm:^2.1450.0"
     docker-classic: "npm:@pulumi/docker@3.6.1"
     mime: "npm:^2.0.0"
-  checksum: 10c0/77d4b62a7fb9337a4ea1a37c7c2406a49e71a6bf6841e025080799ab7e6c4f39795ec36ef2e94f7012d19f915a267e527acc45ee9a487fad57681e1394871695
+  checksum: 10c0/4f48bb5b006b2f427e8b120a81aa293ecf66b57233ca4c4d7554e1be4929ffefe09aa35849235be84d8e9a7564769ddc01c66727dec22ee52ca89cb9f9e0e3a0
   languageName: node
   linkType: hard
 
@@ -5185,13 +5185,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/docker@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "@pulumi/docker@npm:4.5.0"
+"@pulumi/docker@npm:^4.5.1":
+  version: 4.5.1
+  resolution: "@pulumi/docker@npm:4.5.1"
   dependencies:
     "@pulumi/pulumi": "npm:^3.0.0"
     semver: "npm:^5.4.0"
-  checksum: 10c0/47969f17e3e8bb13a5e7e62824aa6faf5dcac48d3f876261245e9da02a596c9248fe5faa5aad9b4b85416c741705aa9c80a5bf40afe038fd12435f7af7ed1855
+  checksum: 10c0/a49d71f352ee504c319d5d9e3a22e90419e9fb1a88a2d79cec33e5599329412030a9025cfc1a483d36874ef9214a5424ee6abe79706dafe8532d1afdae802ef7
   languageName: node
   linkType: hard
 
