@@ -21,7 +21,7 @@
     "workbox-window": "7.0.0"
   },
   "devDependencies": {
-    "@aws-sdk/client-secrets-manager": "3.535.0",
+    "@aws-sdk/client-secrets-manager": "3.540.0",
     "@cloudflare/workers-types": "4.20240320.1",
     "eslint": "8.57.0",
     "eslint-plugin-promise": "6.1.1",
