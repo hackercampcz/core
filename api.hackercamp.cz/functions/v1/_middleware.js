@@ -3,6 +3,7 @@
  */
 
 /**
+ * Proxy request to AWS API Gateway
  * @param {EventContext<Env>} context
  */
 export async function onRequest({ request, env }) {
