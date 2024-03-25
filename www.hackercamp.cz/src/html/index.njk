@@ -327,24 +327,6 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-
-  <!-- Google Tag Manager -->
-  <script>
-    (function (w, d, s, l, i) {
-      w[l] = w[l] || [];
-      w[l].push({
-        "gtm.start": new Date().getTime(),
-        event: "gtm.js"
-      });
-      var f = d.getElementsByTagName(s)[0],
-        j = d.createElement(s),
-        dl = l != "dataLayer" ? "&l=" + l : "";
-      j.async = true;
-      j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-      f.parentNode.insertBefore(j, f);
-    })(window, document, "script", "dataLayer", "GTM-5F59KHT");
-  </script>
-  <!-- End Google Tag Manager -->
 </head>
 
 <body vocab="https://schema.org" typeof="Festival">
@@ -353,16 +335,6 @@
   property="eventAttendanceMode"
   href="https://schema.org/MixedEventAttendanceMode"
 />
-<!-- Google Tag Manager (noscript) -->
-<noscript>
-  <iframe
-    src="https://www.googletagmanager.com/ns.html?id=GTM-5F59KHT"
-    height="0"
-    width="0"
-    style="display: none; visibility: hidden"
-  ></iframe>
-</noscript>
-<!-- End Google Tag Manager (noscript) -->
 <nav class="hc-navbar mdc-layout-grid" style="line-height: 1;">
   <div class="mdc-layout-grid__inner">
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
@@ -415,6 +387,7 @@
         class="hc-camp-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
         {% set publicId = images["header-camp.png"]["public_id"] %}
         <video aria-hidden="true" class="responsive" muted autoplay loop playsinline
+               width="622" height="622"
                poster="{{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr="auto") }}">
           <source
             media="screen and (max-width: 599px)"
