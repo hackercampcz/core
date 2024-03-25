@@ -113,6 +113,25 @@ const webPages = new cloudflare.PagesProject("web", {
   },
 });
 
+// APEX records for redirect to www (redirect is currently handled in hckr.studio/webs stack)
+new cloudflare.Record(`${webDomain}/apex-dns-record`, {
+  zoneId: hackercampCzZone.id,
+  name: "@",
+  type: "A",
+  value: "192.0.2.1",
+  ttl: 1,
+  proxied: true
+});
+
+new cloudflare.Record(`${webDomain}/apex-ipv6-dns-record`, {
+  zoneId: hackercampCzZone.id,
+  name: "@",
+  type: "AAAA",
+  value: "100::",
+  ttl: 1,
+  proxied: true
+});
+
 const wwwRecord = new cloudflare.Record(`${webDomain}/dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "www",
