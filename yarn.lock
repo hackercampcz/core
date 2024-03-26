@@ -3821,13 +3821,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grpc/grpc-js@npm:1.10.3":
-  version: 1.10.3
-  resolution: "@grpc/grpc-js@npm:1.10.3"
+"@grpc/grpc-js@npm:1.10.4":
+  version: 1.10.4
+  resolution: "@grpc/grpc-js@npm:1.10.4"
   dependencies:
     "@grpc/proto-loader": "npm:^0.7.10"
     "@js-sdsl/ordered-map": "npm:^4.4.2"
-  checksum: 10c0/13b93979a336215459acb3fc94c8fb7ed849d8b5ca0aa836e0dc050439f66f3620ff3e465bb7c8715f38d550bbc764966e128bd179f6c71204fb6d8064ad9fef
+  checksum: 10c0/9c198f4d9a3eee089d8d6518e308d2e2d0de8f2120df42d9c44e8aa2fb114aa4ef655c269508e16c1d8860c0a04b68230c0ba79d37ebfba1c4a286e55cc9f324
   languageName: node
   linkType: hard
 
