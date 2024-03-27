@@ -9,7 +9,7 @@
     "@material/mwc-drawer": "0.27.0",
     "@material/mwc-snackbar": "0.27.0",
     "@material/web": "1.4.0",
-    "@thi.ng/atom": "5.2.40",
+    "@thi.ng/atom": "5.2.41",
     "@thi.ng/transducers": "8.9.15",
     "@ungap/structured-clone": "1.2.0",
     "date-fns": "3.6.0",
