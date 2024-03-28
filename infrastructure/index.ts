@@ -1,6 +1,5 @@
 import * as fs from "node:fs";
 import * as pulumi from "@pulumi/pulumi";
-import * as aws from "@pulumi/aws";
 import * as cloudflare from "@pulumi/cloudflare";
 import { registerAutoTags } from "@topmonks/pulumi-aws";
 import {
@@ -55,14 +54,6 @@ const hckrCampZone = new cloudflare.Zone(
 );
 
 // TODO: cloudflare domains and pages
-
-const jwtSecret = new aws.secretsmanager.Secret("hc-jwt-secret", {
-  name: "HC-JWT-SECRET",
-});
-new aws.secretsmanager.SecretVersion("hc-jwt-secret", {
-  secretId: jwtSecret.arn,
-  secretString: config.require("private-key"),
-});
 
 const postmarkLayout = new postmark.Template("postmark-layout", {
   Name: "Hackercamp styling",
