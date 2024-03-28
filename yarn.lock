@@ -350,55 +350,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-secrets-manager@npm:3.543.0":
-  version: 3.543.0
-  resolution: "@aws-sdk/client-secrets-manager@npm:3.543.0"
-  dependencies:
-    "@aws-crypto/sha256-browser": "npm:3.0.0"
-    "@aws-crypto/sha256-js": "npm:3.0.0"
-    "@aws-sdk/client-sts": "npm:3.540.0"
-    "@aws-sdk/core": "npm:3.535.0"
-    "@aws-sdk/credential-provider-node": "npm:3.540.0"
-    "@aws-sdk/middleware-host-header": "npm:3.535.0"
-    "@aws-sdk/middleware-logger": "npm:3.535.0"
-    "@aws-sdk/middleware-recursion-detection": "npm:3.535.0"
-    "@aws-sdk/middleware-user-agent": "npm:3.540.0"
-    "@aws-sdk/region-config-resolver": "npm:3.535.0"
-    "@aws-sdk/types": "npm:3.535.0"
-    "@aws-sdk/util-endpoints": "npm:3.540.0"
-    "@aws-sdk/util-user-agent-browser": "npm:3.535.0"
-    "@aws-sdk/util-user-agent-node": "npm:3.535.0"
-    "@smithy/config-resolver": "npm:^2.2.0"
-    "@smithy/core": "npm:^1.4.0"
-    "@smithy/fetch-http-handler": "npm:^2.5.0"
-    "@smithy/hash-node": "npm:^2.2.0"
-    "@smithy/invalid-dependency": "npm:^2.2.0"
-    "@smithy/middleware-content-length": "npm:^2.2.0"
-    "@smithy/middleware-endpoint": "npm:^2.5.0"
-    "@smithy/middleware-retry": "npm:^2.2.0"
-    "@smithy/middleware-serde": "npm:^2.3.0"
-    "@smithy/middleware-stack": "npm:^2.2.0"
-    "@smithy/node-config-provider": "npm:^2.3.0"
-    "@smithy/node-http-handler": "npm:^2.5.0"
-    "@smithy/protocol-http": "npm:^3.3.0"
-    "@smithy/smithy-client": "npm:^2.5.0"
-    "@smithy/types": "npm:^2.12.0"
-    "@smithy/url-parser": "npm:^2.2.0"
-    "@smithy/util-base64": "npm:^2.3.0"
-    "@smithy/util-body-length-browser": "npm:^2.2.0"
-    "@smithy/util-body-length-node": "npm:^2.3.0"
-    "@smithy/util-defaults-mode-browser": "npm:^2.2.0"
-    "@smithy/util-defaults-mode-node": "npm:^2.3.0"
-    "@smithy/util-endpoints": "npm:^1.2.0"
-    "@smithy/util-middleware": "npm:^2.2.0"
-    "@smithy/util-retry": "npm:^2.2.0"
-    "@smithy/util-utf8": "npm:^2.3.0"
-    tslib: "npm:^2.6.2"
-    uuid: "npm:^9.0.1"
-  checksum: 10c0/b9954a81e50b5cae64d8b52d558411b043e44173574b1643c85bdf861b8b97991438d4b182d065c1f58408e01de2d2dcc363f28b364fd15805696a1ec6ccbdbc
-  languageName: node
-  linkType: hard
-
 "@aws-sdk/client-sqs@npm:3.540.0":
   version: 3.540.0
   resolution: "@aws-sdk/client-sqs@npm:3.540.0"
@@ -3888,7 +3839,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-secrets-manager": "npm:3.543.0"
     "@cloudflare/workers-types": "npm:4.20240320.1"
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
@@ -3922,7 +3872,7 @@ __metadata:
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
     "@pulumi/aws": "npm:6.28.1"
     "@pulumi/awsx": "npm:2.6.0"
-    "@pulumi/cloudflare": "npm:5.23.0"
+    "@pulumi/cloudflare": "npm:5.24.0"
     "@pulumi/pulumi": "npm:3.112.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@typescript-eslint/eslint-plugin": "npm:7.4.0"
@@ -5195,12 +5145,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/cloudflare@npm:5.23.0":
-  version: 5.23.0
-  resolution: "@pulumi/cloudflare@npm:5.23.0"
+"@pulumi/cloudflare@npm:5.24.0":
+  version: 5.24.0
+  resolution: "@pulumi/cloudflare@npm:5.24.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.0.0"
-  checksum: 10c0/d2c22e35c11f5363c2873bcb1b34f2f47a8e5eb3213e54c75f2cdaee61136f2bf6c677d0edc77ba4d7c14b4a0591842330c6a3b2a20472cee11ea9f1281fd636
+  checksum: 10c0/f4c739c4aca4cd81f6303f95be93e6c693787c1e3368bf8878f22d547502ab5ddba0f8424940cec17279be0760251cff0b0f4ee4d0fb7047f5f5b91edc1057ee
   languageName: node
   linkType: hard
 
