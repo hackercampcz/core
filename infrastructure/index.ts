@@ -53,8 +53,6 @@ const hckrCampZone = new cloudflare.Zone(
   { protect: true }
 );
 
-// TODO: cloudflare domains and pages
-
 const postmarkLayout = new postmark.Template("postmark-layout", {
   Name: "Hackercamp styling",
   Alias: `hc-basic`,
@@ -194,4 +192,58 @@ const apiPagesDomain = new cloudflare.PagesDomain("api-domain", {
   accountId: account.id,
   domain: apiRecord.hostname,
   projectName: apiPages.name,
+});
+
+new cloudflare.Record(`hckr.camp/apex-dns-record`, {
+  zoneId: hckrCampZone.id,
+  name: "@",
+  type: "A",
+  value: "192.0.2.1",
+  ttl: 1,
+  proxied: true
+});
+
+new cloudflare.Record(`hckr.camp/apex-ipv6-dns-record`, {
+  zoneId: hckrCampZone.id,
+  name: "@",
+  type: "AAAA",
+  value: "100::",
+  ttl: 1,
+  proxied: true
+});
+
+new cloudflare.Record(`hckr.camp/www-dns-record`, {
+  zoneId: hckrCampZone.id,
+  name: "www",
+  type: "A",
+  value: "192.0.2.1",
+  ttl: 1,
+  proxied: true
+});
+
+new cloudflare.Record(`hckr.camp/www-ipv6-dns-record`, {
+  zoneId: hckrCampZone.id,
+  name: "www",
+  type: "AAAA",
+  value: "100::",
+  ttl: 1,
+  proxied: true
+});
+
+new cloudflare.Record(`hckr.camp/donut-dns-record`, {
+  zoneId: hckrCampZone.id,
+  name: "donut",
+  type: "A",
+  value: "192.0.2.1",
+  ttl: 1,
+  proxied: true
+});
+
+new cloudflare.Record(`hckr.camp/donut-ipv6-dns-record`, {
+  zoneId: hckrCampZone.id,
+  name: "donut",
+  type: "AAAA",
+  value: "100::",
+  ttl: 1,
+  proxied: true
 });
