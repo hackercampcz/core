@@ -90,22 +90,20 @@ export async function auth(event) {
         slackID: profile.sub,
       });
       const payload = {
-        expiresIn: "6h",
-        audience: "https://donut.hackercamp.cz/",
-        issuer: "https://api.hackercamp.cz/",
         "https://hackercamp.cz/email": profile.email,
         "https://hackercamp.cz/is_admin": user?.is_admin,
         "https://slack.com/user_id": profile.sub,
         "https://slack.com/access_token": token,
       };
-      const idToken = signJWT(payload, process.env["private_key"]);
+      const options = {
+        audience: "https://donut.hackercamp.cz/",
+        issuer: "https://api.hackercamp.cz/",
+        expiresIn: "6h",
+      };
+      const idToken = signJWT(payload, process.env["private_key"], options);
       delete profile.ok;
       // For local development we need to relax Cross site security
-      const sameSite =
-        origin.includes("localhost") ||
-        origin.includes("7da2-145-224-120-68.ngrok-free.app")
-          ? "None"
-          : "Strict";
+      const sameSite = origin.includes("localhost") ? "None" : "Strict";
       return withCORS_(
         response(
           {
