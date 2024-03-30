@@ -21,7 +21,7 @@
     "workbox-window": "7.0.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20240320.1",
+    "@cloudflare/workers-types": "4.20240329.0",
     "eslint": "8.57.0",
     "eslint-plugin-promise": "6.1.1",
     "web-types-lit": "0.1.0",
