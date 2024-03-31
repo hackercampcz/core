@@ -45,6 +45,13 @@ export default {
             month: "numeric",
           }).format(new Date(x));
         },
+        price(x, currency) {
+          return new Intl.NumberFormat("cs-CZ", {
+            style: currency ? "currency" : undefined,
+            currency,
+            maximumFractionDigits: 0
+          }).format(x).replace(/\u00A0/, "\u202F");
+        },
         calendarURL(event) {
           const format = ({ y, m, d }) =>
             `${y}${m.toString().padStart(2, "0")}${d

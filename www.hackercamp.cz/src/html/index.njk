@@ -858,13 +858,13 @@
             </defs>
           </svg>
 
-          <h3>Táborník z neziskovky</h3>
+          <h3>{{ ticket["nonprofit"].name }}</h3>
         </div>
         <div class="hc-price-list__value hc-text--gay">
-          <data value="3000" property="price">3&thinsp;000</data>&nbsp;<data value="CZK" property="currency">Kč</data>
+          <data value="{{ ticket["nonprofit"].price }}" property="price">{{ ticket["nonprofit"].price | price }}</data>&nbsp;<data value="CZK" property="currency">Kč</data>
         </div>
         <p>Přijedu, ale rád využiju zvýhodněné vstupné. Studuju (a prokážu se
-          ISICem na místě), nebo pracuju v&nbsp;neziskovce.</p>
+          ISICem na místě), nebo pracuju v&nbsp;neziskovce, a nemůžu si dovolit zaplatit plné vstupné.</p>
       </article>
 
       <article
@@ -907,12 +907,12 @@
           </svg>
 
           <hgroup>
-            <h3>Hacker</h3>
+            <h3>{{ ticket["hacker"].name}}</h3>
             <h4>Normální vstupné</h4>
           </hgroup>
         </div>
         <div class="hc-price-list__value hc-text--gay">
-          <data value="6000" property="price">6&thinsp;000</data>&nbsp;<data value="CZK" property="currency">Kč</data>
+          <data value="{{ ticket["hacker"].price }}" property="price">{{ ticket["hacker"].price | price }}</data>&nbsp;<data value="CZK" property="currency">Kč</data>
         </div>
         <p>Zaplatím klasické vstupné. Přispěju tak na pokrytí nákladů na
           svoji&nbsp;účast.</p>
@@ -945,10 +945,10 @@
             </defs>
           </svg>
 
-          <h3>Hacker filantrop</h3>
+          <h3>{{ ticket["hacker-plus"].name }}</h3>
         </div>
         <div class="hc-price-list__value hc-text--gay">
-          <data value="9000" property="price">9&thinsp;000</data>&nbsp;<data value="CZK" property="currency">Kč</data>
+          <data value="{{ ticket["hacker-plus"].price }}" property="price">{{ ticket["hacker-plus"].price | price }}</data>&nbsp;<data value="CZK" property="currency">Kč</data>
         </div>
         <p>Kromě svého vstupného přispěju i&nbsp;na to, aby mohl za lepší
           cenu dorazit student, nebo někdo z&nbsp;neziskovky. Mě neubude a jim to
@@ -981,10 +981,11 @@
               </clipPath>
             </defs>
           </svg>
-          <h3>Patron Campu</h3>
+
+          <h3>{{ ticket["hacker-patron"].name }}</h3>
         </div>
         <div class="hc-price-list__value hc-text--gay">
-          <data value="10000" property="price">9&thinsp;000+</data>&nbsp;<data value="CZK" property="currency">Kč</data>
+          <data value="{{ ticket["hacker-patron"].price }}" property="price">{{ ticket["hacker-patron"].price | price }}+</data>&nbsp;<data value="CZK" property="currency">Kč</data>
         </div>
         <p>
           Chci podpořit neziskovku i vás, protože chci podobnou akci i za rok. Přispěju vyšší částkou.
