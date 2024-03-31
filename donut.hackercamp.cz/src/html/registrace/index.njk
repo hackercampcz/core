@@ -352,21 +352,21 @@
           <div class="choose">
             <input type="radio" name="ticketType" value="nonprofit" id="ticket-nonprofit"/>
             <label for="ticket-nonprofit">
-              <strong>Táborník z neziskovky</strong> - 3&thinsp;000&nbsp;CZK
+              <strong>{{ ticket["nonprofit"].name }}</strong> - {{ ticket["nonprofit"].price | price("CZK") }}
               <span>Zvýhodněné vstupné (pro neziskové organizace a studenty)</span>
             </label>
           </div>
           <div class="choose">
             <input type="radio" name="ticketType" value="hacker" checked="checked" id="ticket-hacker"/>
             <label for="ticket-hacker">
-              <strong>Hacker</strong> - 6&thinsp;000&nbsp;CZK<br/>
+              <strong>{{ ticket["hacker"].name }}</strong> - {{ ticket["hacker"].price | price("CZK") }}<br/>
               <span>Normální vstupné</span>
             </label>
           </div>
           <div class="choose">
             <input type="radio" name="ticketType" value="hacker-plus" id="ticket-hacker-plus"/>
             <label for="ticket-hacker-plus">
-              <strong>Hacker filantrop</strong> - 9&thinsp;000&nbsp;CZK
+              <strong>{{ ticket["hacker-plus"].name }}</strong> - {{ ticket["hacker-plus"].price | price("CZK") }}
               <span>Normální vstupné + příspěvek na vstupné pro neziskové organizace a studenty</span>
             </label>
           </div>
@@ -374,12 +374,12 @@
             <input type="radio" name="ticketType" value="hacker-patron" id="ticket-patron"/>
             <div>
               <label for="ticket-patron">
-                <strong>Patron campu</strong>
+                <strong>{{ ticket["hacker-patron"].name }}</strong>
                 <span>Chci podpořit neziskovku i vás, protože chci podobnou akci i za rok.</span>
               </label>
               <label class="patron-allowance">
-                Přispěju částkou 9&thinsp;000&nbsp;CZK +
-                <input type="text" name="patronAllowance"/>&nbsp;CZK
+                Přispěju částkou {{ ticket["hacker-patron"].price | price("CZK") }} +
+                <input type="text" name="patronAllowance"/>&nbsp;Kč
               </label>
             </div>
           </div>

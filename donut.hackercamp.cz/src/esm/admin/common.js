@@ -153,6 +153,18 @@ export const ticketPrice = new Map([
       ["staff", 0],
     ]),
   ],
+  [
+    2024,
+    new Map([
+      ["nonprofit", 3000],
+      ["hacker", 7000],
+      ["hacker-plus", 12000],
+      ["hacker-patron", 12000],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0],
+    ]),
+  ],
 ]);
 
 export function chip({ text, count, selected, view, year }) {
@@ -202,9 +214,14 @@ export function chip({ text, count, selected, view, year }) {
   `;
 }
 
-export function getTicketPrice({ patronAllowance, year, ticketType }) {
+export function getTicketPrice({
+  patronAllowance,
+  year,
+  ticketType,
+  ticketPrice: price,
+}) {
   const allowance = patronAllowance ? parseInt(patronAllowance) : 0;
-  return ticketPrice.get(year).get(ticketType) + allowance;
+  return (price ?? ticketPrice.get(year).get(ticketType)) + allowance;
 }
 
 export function ticketDetail({ year, ticketType, patronAllowance }) {
