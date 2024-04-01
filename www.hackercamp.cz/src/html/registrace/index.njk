@@ -690,21 +690,21 @@
         <div class="choose">
           <input type="radio" name="ticketType" value="nonprofit" id="ticket-nonprofit"/>
           <label for="ticket-nonprofit">
-            <strong>{{ ticket["nonprofit"] }}</strong> - {{ ticket["nonprofit"].price.name | price("CZK") }}
+            <strong>{{ ticket["nonprofit"].name }}</strong> - {{ ticket["nonprofit"].price | price("CZK") }}
             <span>Zvýhodněné vstupné (pro neziskové organizace a studenty)</span>
           </label>
         </div>
         <div class="choose">
           <input type="radio" name="ticketType" value="hacker" checked="checked" id="ticket-hacker"/>
           <label for="ticket-hacker">
-            <strong>{{ ticket["hacker"] }}</strong> - {{ ticket["hacker"].price.name | price("CZK") }}<br/>
+            <strong>{{ ticket["hacker"].name }}</strong> - {{ ticket["hacker"].price | price("CZK") }}<br/>
             <span>Normální vstupné</span>
           </label>
         </div>
         <div class="choose">
           <input type="radio" name="ticketType" value="hacker-plus" id="ticket-hacker-plus"/>
           <label for="ticket-hacker-plus">
-            <strong>{{ ticket["hacker-plus"] }}</strong> - {{ ticket["hacker-plus"].price.name | price("CZK") }}
+            <strong>{{ ticket["hacker-plus"].name }}</strong> - {{ ticket["hacker-plus"].price | price("CZK") }}
             <span>Normální vstupné + příspěvek na vstupné pro neziskové organizace a studenty</span>
           </label>
         </div>
