@@ -19,7 +19,7 @@
     "undertaker-registry": "2.0.0"
   },
   "resolutions": {
-    "@grpc/grpc-js": "1.10.4"
+    "@grpc/grpc-js": "1.10.5"
   },
   "scripts": {
     "build:api.hackercamp.cz": "mkdir -p dist/api.hackercamp.cz; cp ./api.hackercamp.cz/public/* ./dist/api.hackercamp.cz/",
