@@ -32,6 +32,7 @@ export async function sendEmailWithTemplate({
     method: "POST",
     headers: {
       Accept: "application/json",
+      "Content-Type": "application/json",
       "X-Postmark-Server-Token": token,
     },
     body: JSON.stringify({
