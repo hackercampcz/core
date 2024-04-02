@@ -6,6 +6,9 @@
     "group:aws-sdk-js-v3Monorepo",
     ":dependencyDashboard"
   ],
+  "automerge": true,
+  "automergeType": "pr",
+  "automergeStrategy": "rebase",
   "packageRules": [
     {
       "groupName": "eslint",
