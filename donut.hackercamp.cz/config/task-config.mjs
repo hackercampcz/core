@@ -98,6 +98,13 @@ export default {
           const date = new Date(s);
           return formatDateTime(date);
         },
+        price(x, currency) {
+          return new Intl.NumberFormat("cs-CZ", {
+            style: currency ? "currency" : undefined,
+            currency,
+            maximumFractionDigits: 0
+          }).format(x).replace(/\u00A0/, "\u202F");
+        },
       },
     },
   },
