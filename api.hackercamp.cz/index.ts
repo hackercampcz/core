@@ -8,6 +8,7 @@ import * as lambdaBuilder from "@hackercamp/infrastructure/lambda-builder";
 import * as path from "node:path";
 
 const config = new pulumi.Config();
+const postmarkConfig = new pulumi.Config("postmark");
 
 const algoliaEnv = {
   algolia_app_id: config.require("algolia-app-id"),
@@ -33,7 +34,7 @@ export function createRoutes({
             variables: {
               rollbar_access_token,
               db_table_attendees: db.attendeesDataTable,
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -49,7 +50,7 @@ export function createRoutes({
               private_key: config.get("private-key"),
               slack_client_id: config.get("slack-client-id"),
               slack_client_secret: config.get("slack-client-secret"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -62,7 +63,7 @@ export function createRoutes({
             variables: {
               rollbar_access_token,
               hostname: config.get("donut-domain"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -78,7 +79,7 @@ export function createRoutes({
               hostname: config.get("web-domain"),
               donut: config.get("donut-domain"),
               private_key: config.get("private-key"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -93,7 +94,7 @@ export function createRoutes({
               hostname: config.get("web-domain"),
               donut: config.get("donut-domain"),
               private_key: config.get("private-key"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -107,7 +108,7 @@ export function createRoutes({
               rollbar_access_token,
               private_key: config.get("private-key"),
               slack_bot_token: config.get("slack-bot-token"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -123,7 +124,7 @@ export function createRoutes({
               db_table_program: db.programDataTable,
               private_key: config.get("private-key"),
               slack_bot_token: config.get("slack-bot-token"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -149,7 +150,7 @@ export function createRoutes({
               db_table_registrations: db.registrationsDataTable,
               private_key: config.get("private-key"),
               fakturoid_token: config.get("fakturoid-token"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               algolia_index_name: config.get(
                 "algolia-registrations-index-name"
               ),
@@ -167,7 +168,7 @@ export function createRoutes({
               rollbar_access_token,
               db_table_attendees: db.attendeesDataTable,
               private_key: config.get("private-key"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               algolia_index_name: config.get("algolia-attendees-index-name"),
               ...algoliaEnv,
               ...postmarkTemplates,
@@ -183,7 +184,7 @@ export function createRoutes({
               rollbar_access_token,
               db_table_attendees: db.attendeesDataTable,
               private_key: config.get("private-key"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -198,7 +199,7 @@ export function createRoutes({
               db_table_attendees: db.attendeesDataTable,
               db_table_program: db.programDataTable,
               private_key: config.get("private-key"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -224,7 +225,7 @@ export function createRoutes({
             variables: {
               rollbar_access_token,
               TOKEN: config.get("fakturoid-webhook-token"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },
@@ -251,7 +252,7 @@ export function createRoutes({
               rollbar_access_token,
               slack_queue_url: queues.slackQueueUrl,
               slack_bot_token: config.get("slack-bot-token"),
-              postmark_token: config.get("postmark-token"),
+              postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,
             },
           },

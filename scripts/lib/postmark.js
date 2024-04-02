@@ -1,4 +1,5 @@
 export const Template = {
+  // TODO : update
   NewRegistration: 30944901,
   PlusOneRegistration: 30944876,
   HackerRegistration: 30944917,
