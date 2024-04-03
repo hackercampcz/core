@@ -1,7 +1,7 @@
 Ahoj!
 
 Moc nás těší Tvůj zájem o účast na Hacker Campu!  
-(31. srpna až 3. září 2023)
+(29. srpna až 1. září 2024)
 
 Prosím, zkontroluj nebo doplň o sobě základní info.
 

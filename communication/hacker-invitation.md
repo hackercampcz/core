@@ -1,5 +1,5 @@
 ---
-Subject: Pozvánka na Hacker Camp 2023
+Subject: Pozvánka na Hacker Camp 2024
 LayoutTemplate: hc-basic
 ---
 Ahoj, táborníci!
@@ -7,7 +7,7 @@ Ahoj, táborníci!
 Zdravíme vás v novém roce! Je čas si do kalendářů zapsat datum dalšího
 [Hacker Campu](https://www.hackercamp.cz/). Místo i čas zůstává stejné.
 **Těšíme se na vás zase na Sobeňáku** na přelomu srpna a září.
-Konkrétně tedy: **31. srpna – 3. září 2023**.
+Konkrétně tedy: **29. srpna – 1. září 2024**.
 
 Kapacita campu není nekonečná, znáte to dobře. Děláme akci maximálně pro 300 lidí.
 Takže si svoje místo nezapomeňte zajistit včas. Přihlásíte se na webu,
