@@ -3245,13 +3245,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@grpc/grpc-js@npm:1.10.5":
-  version: 1.10.5
-  resolution: "@grpc/grpc-js@npm:1.10.5"
+"@grpc/grpc-js@npm:1.10.6":
+  version: 1.10.6
+  resolution: "@grpc/grpc-js@npm:1.10.6"
   dependencies:
     "@grpc/proto-loader": "npm:^0.7.10"
     "@js-sdsl/ordered-map": "npm:^4.4.2"
-  checksum: 10c0/75ea0e7dbf0312830ce7abe78d1eac36f19519fb5fb9f5269b9054e2544409c16fb18179a2812c7c49029c8fc3c03951746eb3adb3eed97cbb47f2f9c7255d90
+  checksum: 10c0/5fc5ad0dd7fa49ddc3ccf05fa09b2c6ef20b9ff1933c574c8a3119de98b13f164c04b1bbf73bdea8f59b475d377771f4a6f8281d13b6636832676584399ef65f
   languageName: node
   linkType: hard
 
