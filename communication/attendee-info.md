@@ -67,7 +67,7 @@ Na online verzi programu právě pracujeme – čekej ho cca do 14 dnů. Uvid�
 kdy se co a kde děje, kam můžeš přidat ještě svoje nápady i na jaké kapely se třeba těšit :)
 
 Zase se k němu dostaneš přes svůj profil. Pokud už z registrace víme, jak se chceš zapojit,
-do prvního draftu se to pokusíme dostat. Na slacku se ti s podrobnostmi ozve Ir, Kája,
+do prvního draftu se to pokusíme dostat. Na slacku se ti s podrobnostmi ozve Ir
 nebo Jirka podle toho, jestli a co bude třeba doladit.
 
 No a pokud bereš kytaru, nebo jiné nástroje k ohni, tak super :) To se bude hodit.
@@ -86,4 +86,4 @@ Těšíme se na viděnou, táborníku!
 
 Už 31. 8. na Sobeňáku!
 
-Tvoje Hacker Camp @crew: Kačka, Kája, Pája, Kuba, Kosi, Jirka, Aleš & Ir
+Tvoje Hacker Camp @crew: Kačka, Pája, Kuba, Kosi, Jirka, Aleš & Ir

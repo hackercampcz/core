@@ -74,7 +74,7 @@ kam můžeš ještě přidat svoje nápady i na jaké kapely se třeba těšit�
 
 Zase se k němu dostaneš přes svůj profil. Pokud už z registrace víme,
 jak se chceš zapojit, do prvního draftu se to pokusíme dostat.
-Na Slacku se ti s podrobnostmi ozve Ir, Kája, nebo Jirka podle toho,
+Na Slacku se ti s podrobnostmi ozve Ir nebo Jirka podle toho,
 jestli a co bude třeba doladit.
 
 No a pokud bereš kytaru, nebo jiné nástroje k ohni, tak super :)
@@ -95,4 +95,4 @@ tak nám určitě napiš. Na Slack, na mail. Nebo volej.
 
 Těšíme se na viděnou na Sobeňáku, táborníku!
 
-Tvoje Hacker Camp @crew: Kačka, Kája, Pája, Kuba, Kosi, Jirka, Aleš & Ir
+Tvoje Hacker Camp @crew: Kačka, Pája, Kuba, Kosi, Jirka, Aleš & Ir

@@ -14,4 +14,4 @@ Dáš si ho do kalendáře? Počtvrté budeme na Sobeňáku 29. srpna - 1. zář
 
 Tak jak, vidíme se ještě letos? Od odpoledne příští čtvrtek do nedělního rána?
 
-Tvoje Hacker camp @crew: Kuba, Kosi, Pavla, Kája, Kačka, Jirka, Aleš a Ir
+Tvoje Hacker camp @crew: Kuba, Kosi, Pavla, Kačka, Jirka, Aleš a Ir

@@ -58,4 +58,4 @@ Pokud se Ti ještě něco honí hlavou, nenajdeš odpovědi ani v FAQ, ani v tom
 
 Těšíme se na viděnou už zítra odpoledne :)
 
-Tvoje Hacker Camp Crew: Kuba, Kosi, Pája, Kačka, Kája, Jirka, Aleš a Ir
+Tvoje Hacker Camp Crew: Kuba, Kosi, Pája, Kačka, Jirka, Aleš a Ir

@@ -19,7 +19,7 @@ ale chováme se k nim tak, abychom ctili pravidlo:
 
 Díky moc za vaši spolupráci. My jdeme sbírat síly na přípravu dalšího ročníku.
 
-Vaše @crew: Kája, Kačka, Pája, Kuba, Kosi, Jirka, Aleš a Ir.
+Vaše @crew: Kačka, Pája, Kuba, Kosi, Jirka, Aleš a Ir.
 
 PS. Další ročník už má termín! Je to tradičně od čtvrtka do neděle 35. týdnu. 
 Tak si ho dejte do kalendáře! :) Těšíme se na vás už teď

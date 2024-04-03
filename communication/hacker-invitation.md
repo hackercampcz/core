@@ -39,7 +39,7 @@ na prodloužení nočního klidu alespoň do 11 :) Držme si palce!
 
 Těšíme se na viděnou na konci prázdnin na Sobeňáku!
 
-Hacker Camp @crew: Kuba, Pája, Kosi, Kačka, Jirka, Kája, Aleš a Ir :)
+Hacker Camp @crew: Kuba, Pája, Kosi, Kačka, Jirka, Aleš a Ir :)
 
 P.S. A stejně jako loni platí, že pokud víte, že letos nejedete a nechcete od nás
 dostávat žádné maily, stačí se odhlásit z odběru mailů. Opt-out z další komunikace

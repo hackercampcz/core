@@ -25,4 +25,4 @@ napiš nám. Jsme na slacku i mailech a odpovídáme rychle :)
 
 Takže na Sobeňáku na konci srpna?! 🙂
 
-Hacker Camp @crew: Kuba, Kosi, Pája, Jirka, Kačka, Kája, Aleš a Ir
+Hacker Camp @crew: Kuba, Kosi, Pája, Jirka, Kačka, Aleš a Ir

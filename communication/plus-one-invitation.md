@@ -24,4 +24,4 @@ A až budeš ve Slacku, stačí kontaktovat někoho z @crew :)
 
 Těšíme se v září na viděnou :)
 
-Kuba, Kosi, Pája, Kačka, Kája, Jirka, Aleš a Ir
+Kuba, Kosi, Pája, Kačka, Jirka, Aleš a Ir

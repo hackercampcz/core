@@ -12,7 +12,7 @@ bude na to čas i prostor. A nezapomeň! **Zapojení je na tobě**. Program bu
 můžeš ho průběžně sledovat a svůj nápad kdykoliv upravit. Na to všechno ti postačí [Slack](https://hackercampworkspace.slack.com/).
 Pomůže nám, když se do slacku zapojíš a budeš ho sledovat.
 
-`@Ir` tam řeší přednášky a workshopy, `@Kája` sportovní program, co potrápí či potěší tvoje tělo,
+`@Ir` tam řeší přednášky, workshopy i sportovní program, co potrápí či potěší tvoje tělo,
 `@Kuba` a `@Kosi` kapely, DJs a zábavu a `@Jirka` další doprovodný program, `@Pája` ti odpoví
 na věci týkající se ubytování, `@Kačka` má na starosti finance a fakturaci a
 `@rarous` řeší Jungle Release a vše okolo informačního systému.
