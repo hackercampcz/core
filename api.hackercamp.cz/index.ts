@@ -369,26 +369,25 @@ export function createDB({ queues, postmarkTemplates }) {
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
   });
-  // TODO: make this work - this is trying to deploy empty code. WHY?!
-  // registrations.onEvent(
-  //   "paidRegistration",
-  //   getTableEventHandler(
-  //     "paid-registration",
-  //     "registrations/paid.mjs",
-  //     defaultLambdaRole,
-  //     {
-  //       environment: {
-  //         variables: {
-  //           rollbar_access_token,
-  //           slack_queue_url: queues.slackQueueUrl,
-  //           postmark_token: config.get("postmark-token"),
-  //           ...postmarkTemplates,
-  //         },
-  //       },
-  //     }
-  //   ),
-  //   { startingPosition: "LATEST" }
-  // );
+  registrations.onEvent(
+    "paidRegistration",
+    getTableEventHandler(
+      "paid-registration",
+      "registrations/paid.mjs",
+      defaultLambdaRole,
+      {
+        environment: {
+          variables: {
+            rollbar_access_token,
+            slack_queue_url: queues.slackQueueUrl,
+            postmark_token: config.get("postmark-token"),
+            ...postmarkTemplates,
+          },
+        },
+      }
+    ),
+    { startingPosition: "LATEST" }
+  );
   registrations.onEvent(
     "search-indexing-registrations",
     getTableEventHandler(
