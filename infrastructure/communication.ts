@@ -1,7 +1,6 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { marked } from "marked";
-import frontmatter from "front-matter";
 import type {TemplateInputs} from "./postmark";
 
 const markdownExt = ".md";
@@ -16,8 +15,8 @@ const hooks = {
     return html.replaceAll("/%7B%7BeditUrl%7D%7D/", "{{ editUrl }}");
   },
 };
-
 marked.use({ hooks });
+const frontmatter = require("front-matter");
 
 export function* readTemplates(relPath: string) : Generator<TemplateInputs> {
   const communication = path.resolve(relPath);
@@ -26,7 +25,7 @@ export function* readTemplates(relPath: string) : Generator<TemplateInputs> {
     const name = path.basename(template, markdownExt);
     const filePath = path.resolve(communication, template);
     const content = fs.readFileSync(filePath, { encoding: "utf-8" });
-    const { attributes, body } = frontmatter<TemplateInputs>(content);
+    const { attributes, body } = frontmatter(content);
     const html = marked(body);
     yield Object.assign({}, attributes, {
       Name: name,
