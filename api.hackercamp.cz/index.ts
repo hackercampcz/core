@@ -432,26 +432,25 @@ export function createDB({ queues, postmarkTemplates }) {
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
   });
-  // TODO: make this work - this is trying to deploy empty code. WHY?!
-  // attendees.onEvent(
-  //   "search-indexing-attendees",
-  //   getTableEventHandler(
-  //     "search-indexing-attendees",
-  //     "attendees/search-index.mjs",
-  //     defaultLambdaRole,
-  //     {
-  //       environment: {
-  //         variables: {
-  //           rollbar_access_token,
-  //           slack_bot_token: config.get("slack-bot-token"),
-  //           algolia_index_name: config.get("algolia-attendees-index-name"),
-  //           ...algoliaEnv,
-  //         },
-  //       },
-  //     }
-  //   ),
-  //   { startingPosition: "LATEST" }
-  // );
+  attendees.onEvent(
+    "search-indexing-attendees",
+    getTableEventHandler(
+      "search-indexing-attendees",
+      "attendees/search-index.mjs",
+      defaultLambdaRole,
+      {
+        environment: {
+          variables: {
+            rollbar_access_token,
+            slack_bot_token: config.get("slack-bot-token"),
+            algolia_index_name: config.get("algolia-attendees-index-name"),
+            ...algoliaEnv,
+          },
+        },
+      }
+    ),
+    { startingPosition: "LATEST" }
+  );
 
   const program = new aws.dynamodb.Table("program", {
     name: "program",
