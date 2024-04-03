@@ -389,25 +389,25 @@ export function createDB({ queues, postmarkTemplates }) {
   //   ),
   //   { startingPosition: "LATEST" }
   // );
-  // registrations.onEvent(
-  //   "search-indexing-registrations",
-  //   getTableEventHandler(
-  //     "search-indexing-registrations",
-  //     "registrations/search-index.mjs",
-  //     defaultLambdaRole,
-  //     {
-  //       environment: {
-  //         variables: {
-  //           rollbar_access_token,
-  //           slack_bot_token: config.get("slack-bot-token"),
-  //           algolia_index_name: config.get("algolia-registrations-index-name"),
-  //           ...algoliaEnv,
-  //         },
-  //       },
-  //     }
-  //   ),
-  //   { startingPosition: "LATEST" }
-  // );
+  registrations.onEvent(
+    "search-indexing-registrations",
+    getTableEventHandler(
+      "search-indexing-registrations",
+      "registrations/search-index.mjs",
+      defaultLambdaRole,
+      {
+        environment: {
+          variables: {
+            rollbar_access_token,
+            slack_bot_token: config.get("slack-bot-token"),
+            algolia_index_name: config.get("algolia-registrations-index-name"),
+            ...algoliaEnv,
+          },
+        },
+      }
+    ),
+    { startingPosition: "LATEST" }
+  );
 
   const contacts = new aws.dynamodb.Table("contacts", {
     name: "contacts",
