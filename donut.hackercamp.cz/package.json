@@ -25,6 +25,6 @@
     "eslint": "8.57.0",
     "eslint-plugin-promise": "6.1.1",
     "web-types-lit": "0.1.0",
-    "wrangler": "3.43.0"
+    "wrangler": "3.44.0"
   }
 }
