@@ -17,7 +17,7 @@ config:
   hackercamp:slack-incoming-webhook:
     secure: AAABABfMSRSXy/P/K3g3YeTNS571GjFL9QNP4rOQbgYYvU6+B58UH5mmf9GixbUJk3vLnEqKplGmYamfOF3utEKcH51JCkwp2NEuqhsGYJ76WMEmzYkyfIU80YtcxnYQWYUtgw83y8pg7oHIf2cOY9o=
   hackercamp:web-domain: www.hackercamp.cz
-  hackercamp:year: "2023"
+  hackercamp:year: "2024"
 environment:
   - hackercamp-algolia
   - hackercamp-aws
