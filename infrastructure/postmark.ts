@@ -3,11 +3,11 @@ import * as pulumi from "@pulumi/pulumi";
 const config = new pulumi.Config("postmark");
 let token = config.get("server-api-token") ?? "invalid token";
 
-export function setToken(serverApiToken) {
+export function setToken(serverApiToken: string) {
   token = serverApiToken;
 }
 
-interface TemplateInputs {
+export interface TemplateInputs {
   Name: string;
   Alias?: string;
   HtmlBody: string;
@@ -17,7 +17,7 @@ interface TemplateInputs {
   LayoutTemplate?: string;
 }
 
-interface TemplateOutputs {
+export interface TemplateOutputs {
   TemplateId: number;
   Name: string;
   Active: boolean;
