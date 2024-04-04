@@ -12,7 +12,7 @@
     "dest": "./"
   },
 
-  "esbuild": {
+  "esm": {
     "src": "esm",
     "dest": "assets/esm"
   },
