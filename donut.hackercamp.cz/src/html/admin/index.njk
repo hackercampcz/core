@@ -6,10 +6,11 @@
   <style>
     @font-face {
       font-display: block;
-      font-family: Material Icons Outlined;
+      font-family: "Material Icons Outlined";
       font-style: normal;
       font-weight: 400;
-      src: url(/assets/css/material-icons-outlined.woff2) format("woff2");
+      src: url({{ "material-icons-outlined.woff" | assetUrl("fonts") }}) format("woff"),
+           url({{ "material-icons-outlined.woff2" | assetUrl("fonts") }}) format("woff2");
     }
 
     #top {
@@ -127,7 +128,7 @@
     }
   </style>
 
-  <link rel="stylesheet" href="/assets/css/admin.css">
+  <link rel="stylesheet" href="{{ "admin.css" | assetUrl("stylesheets") }}">
 {% endblock %}
 
 {% block content %}
@@ -174,9 +175,12 @@
 
 {% block javascript %}
 <script type="module">
-  import { main } from "/assets/esm/admin.js";
+  import { main } from "{{ "admin.js" | assetUrl("esm") }}";
   const build = {{ build | dump(8) | safe }};
-  const env = Object.assign({ year: {{ year }} }, build);
+  const event = {{ event | dump(8) | safe }};
+  const tickets = {{ ticket | dump(8) | safe }};
+  const year = {{ year | safe }};
+  const env = Object.assign({ year, event, tickets }, build);
   main({
     searchParams: new URLSearchParams(location.search),
     appRoot: document.getElementById("app-root"),
