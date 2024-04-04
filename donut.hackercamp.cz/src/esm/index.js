@@ -100,7 +100,8 @@ async function authenticate({ searchParams, apiURL }) {
   throw new Error("Authentication error", { cause: data });
 }
 
-async function setDonutProfileUrl(user, token, slug) {
+async function setDonutProfileUrl(user, token, slug, company) {
+  // TODO: extended user permissions (aka Add to Slack, see Admin)
   const profile = await slack.getSlackProfile(user, token);
   if (!profile?.fields?.Xf039UMCJC1G?.value) {
     await setSlackProfile(user, token, {
@@ -109,13 +110,13 @@ async function setDonutProfileUrl(user, token, slug) {
     });
     console.log("Donut URL set");
   }
-  // if (!profile.fields.Xf03A7A5815F?.value) {
-  //   await setSlackProfile(user, token, {
-  //     name: "Xf03A7A5815F",
-  //     value: { alt: company },
-  //   });
-  //   console.log("Company set");
-  // }
+  if (!profile.fields.Xf03A7A5815F?.value) {
+    await setSlackProfile(user, token, {
+      name: "Xf03A7A5815F",
+      value: { alt: company },
+    });
+    console.log("Company set");
+  }
 }
 
 async function getRegistration(slackID, email, year, apiUrl) {
@@ -575,7 +576,12 @@ async function loadData(profile, year, apiURL) {
     Object.assign(x, { profile, contact, registration, attendee, program })
   );
   try {
-    await setDonutProfileUrl(profile.sub, getSlackAccessToken(), contact.slug);
+    await setDonutProfileUrl(
+      profile.sub,
+      getSlackAccessToken(),
+      contact.slug,
+      registration.company ?? attendee.company
+    );
   } catch (err) {
     rollbar.error(err);
   }
