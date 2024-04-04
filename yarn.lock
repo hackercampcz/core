@@ -3311,7 +3311,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@hckr_/blendid": "npm:8.0.3"
+    "@hckr_/blendid": "npm:8.0.4"
     "@types/nunjucks": "npm:3.2.6"
     dotenv: "npm:16.4.5"
     dotenv-cli: "npm:7.4.1"
@@ -3345,7 +3345,7 @@ __metadata:
     lit: "npm:3.1.2"
     lit-html: "npm:3.1.2"
     marked: "npm:12.0.1"
-    material-icons: "npm:^1.13.12"
+    material-icons: "npm:1.13.12"
     ramda: "npm:0.29.1"
     rollbar: "npm:2.26.4"
     web-types-lit: "npm:0.1.0"
@@ -3360,7 +3360,7 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
-    "@pulumi/aws": "npm:6.28.2"
+    "@pulumi/aws": "npm:6.29.0"
     "@pulumi/awsx": "npm:2.6.0"
     "@pulumi/cloudflare": "npm:5.24.1"
     "@pulumi/pulumi": "npm:3.112.0"
@@ -3391,9 +3391,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hckr_/blendid@npm:8.0.3":
-  version: 8.0.3
-  resolution: "@hckr_/blendid@npm:8.0.3"
+"@hckr_/blendid@npm:8.0.4":
+  version: 8.0.4
+  resolution: "@hckr_/blendid@npm:8.0.4"
   dependencies:
     "@vitejs/plugin-basic-ssl": "npm:1.1.0"
     browser-sync: "npm:3.0.2"
@@ -3413,7 +3413,6 @@ __metadata:
     gulp-markdown-to-json: "npm:1.1.0"
     gulp-merge-json: "npm:2.2.1"
     gulp-mode: "npm:1.1.0"
-    gulp-noop: "npm:1.0.1"
     gulp-notify: "npm:4.0.0"
     gulp-nunjucks-render: "npm:2.2.3"
     gulp-postcss: "npm:10.0.0"
@@ -3440,7 +3439,7 @@ __metadata:
     replace-ext: "npm:2.0.0"
     rev-hash: "npm:4.1.0"
     rev-path: "npm:3.0.0"
-    sass-embedded: "npm:1.72.0"
+    sass-embedded: "npm:1.74.1"
     sort-keys: "npm:5.0.0"
     strip-ansi: "npm:7.1.0"
     undertaker-registry: "npm:2.0.0"
@@ -3451,7 +3450,7 @@ __metadata:
     workbox-build: "npm:7.0.0"
   bin:
     blendid: bin/blendid.js
-  checksum: 10c0/a8a687f3792baa4c06986438175da171fbbf0991aca8d85d7c8e59e67db53ccd21fc5e983a0c3934354ff31425eb2e0285288ed53cf311e9116294b8edd6c17b
+  checksum: 10c0/1a729b95815153757199df66816ff990776396b6f79c1589f28c7e890963c88945e37e4afa9bce3b5ea90dd03b305e9adbcb95ef95c603f3756204faf112713f
   languageName: node
   linkType: hard
 
@@ -4545,7 +4544,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:6.28.2, @pulumi/aws@npm:^6.9.0":
+"@pulumi/aws@npm:6.29.0":
+  version: 6.29.0
+  resolution: "@pulumi/aws@npm:6.29.0"
+  dependencies:
+    "@pulumi/pulumi": "npm:^3.0.0"
+    builtin-modules: "npm:3.0.0"
+    mime: "npm:^2.0.0"
+    resolve: "npm:^1.7.1"
+  checksum: 10c0/5ac2234e6c12c01d44daaf10e75812d3761a2086c3fbd4e2b45c31fe031a2d44e6d90f9c0097ca192ddedd1295daf0d819f00709d9a6997a683fbec89a1d7eff
+  languageName: node
+  linkType: hard
+
+"@pulumi/aws@npm:^6.9.0":
   version: 6.28.2
   resolution: "@pulumi/aws@npm:6.28.2"
   dependencies:
@@ -9601,7 +9612,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gulp-noop@npm:1.0.1, gulp-noop@npm:^1.0.1":
+"gulp-noop@npm:^1.0.1":
   version: 1.0.1
   resolution: "gulp-noop@npm:1.0.1"
   dependencies:
@@ -11383,7 +11394,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"material-icons@npm:^1.13.12":
+"material-icons@npm:1.13.12":
   version: 1.13.12
   resolution: "material-icons@npm:1.13.12"
   checksum: 10c0/77517592a7048bbb1fc2b00d008c795c9560ef42c911cf66afc09ce3d319ce1f659d5d993c961015bbb3dce0305bc5fcc19df32a8a5885f39b4203f6bc35ad47
@@ -14066,166 +14077,176 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sass-embedded-android-arm64@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-android-arm64@npm:1.72.0"
+"sass-embedded-android-arm64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-android-arm64@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"sass-embedded-android-arm@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-android-arm@npm:1.72.0"
+"sass-embedded-android-arm@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-android-arm@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=android & cpu=arm
   languageName: node
   linkType: hard
 
-"sass-embedded-android-ia32@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-android-ia32@npm:1.72.0"
+"sass-embedded-android-ia32@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-android-ia32@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=android & cpu=ia32
   languageName: node
   linkType: hard
 
-"sass-embedded-android-x64@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-android-x64@npm:1.72.0"
+"sass-embedded-android-x64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-android-x64@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=android & cpu=x64
   languageName: node
   linkType: hard
 
-"sass-embedded-darwin-arm64@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-darwin-arm64@npm:1.72.0"
+"sass-embedded-darwin-arm64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-darwin-arm64@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"sass-embedded-darwin-x64@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-darwin-x64@npm:1.72.0"
+"sass-embedded-darwin-x64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-darwin-x64@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-arm64@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-linux-arm64@npm:1.72.0"
+"sass-embedded-linux-arm64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-linux-arm64@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-arm@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-linux-arm@npm:1.72.0"
+"sass-embedded-linux-arm@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-linux-arm@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-ia32@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-linux-ia32@npm:1.72.0"
+"sass-embedded-linux-ia32@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-linux-ia32@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=linux & cpu=ia32
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-musl-arm64@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-linux-musl-arm64@npm:1.72.0"
+"sass-embedded-linux-musl-arm64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-linux-musl-arm64@npm:1.74.1"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-musl-arm@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-linux-musl-arm@npm:1.72.0"
+"sass-embedded-linux-musl-arm@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-linux-musl-arm@npm:1.74.1"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-musl-ia32@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-linux-musl-ia32@npm:1.72.0"
+"sass-embedded-linux-musl-ia32@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-linux-musl-ia32@npm:1.74.1"
   conditions: os=linux & cpu=ia32
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-musl-x64@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-linux-musl-x64@npm:1.72.0"
+"sass-embedded-linux-musl-x64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-linux-musl-x64@npm:1.74.1"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"sass-embedded-linux-x64@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-linux-x64@npm:1.72.0"
+"sass-embedded-linux-x64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-linux-x64@npm:1.74.1"
   bin:
     sass: dart-sass/sass
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"sass-embedded-win32-ia32@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-win32-ia32@npm:1.72.0"
+"sass-embedded-win32-arm64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-win32-arm64@npm:1.74.1"
+  bin:
+    sass: dart-sass/sass.bat
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"sass-embedded-win32-ia32@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-win32-ia32@npm:1.74.1"
   bin:
     sass: dart-sass/sass.bat
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"sass-embedded-win32-x64@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded-win32-x64@npm:1.72.0"
+"sass-embedded-win32-x64@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded-win32-x64@npm:1.74.1"
   bin:
     sass: dart-sass/sass.bat
-  conditions: os=win32 & (cpu=arm64 | cpu=x64)
+  conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"sass-embedded@npm:1.72.0":
-  version: 1.72.0
-  resolution: "sass-embedded@npm:1.72.0"
+"sass-embedded@npm:1.74.1":
+  version: 1.74.1
+  resolution: "sass-embedded@npm:1.74.1"
   dependencies:
     "@bufbuild/protobuf": "npm:^1.0.0"
     buffer-builder: "npm:^0.2.0"
     immutable: "npm:^4.0.0"
     rxjs: "npm:^7.4.0"
-    sass-embedded-android-arm: "npm:1.72.0"
-    sass-embedded-android-arm64: "npm:1.72.0"
-    sass-embedded-android-ia32: "npm:1.72.0"
-    sass-embedded-android-x64: "npm:1.72.0"
-    sass-embedded-darwin-arm64: "npm:1.72.0"
-    sass-embedded-darwin-x64: "npm:1.72.0"
-    sass-embedded-linux-arm: "npm:1.72.0"
-    sass-embedded-linux-arm64: "npm:1.72.0"
-    sass-embedded-linux-ia32: "npm:1.72.0"
-    sass-embedded-linux-musl-arm: "npm:1.72.0"
-    sass-embedded-linux-musl-arm64: "npm:1.72.0"
-    sass-embedded-linux-musl-ia32: "npm:1.72.0"
-    sass-embedded-linux-musl-x64: "npm:1.72.0"
-    sass-embedded-linux-x64: "npm:1.72.0"
-    sass-embedded-win32-ia32: "npm:1.72.0"
-    sass-embedded-win32-x64: "npm:1.72.0"
+    sass-embedded-android-arm: "npm:1.74.1"
+    sass-embedded-android-arm64: "npm:1.74.1"
+    sass-embedded-android-ia32: "npm:1.74.1"
+    sass-embedded-android-x64: "npm:1.74.1"
+    sass-embedded-darwin-arm64: "npm:1.74.1"
+    sass-embedded-darwin-x64: "npm:1.74.1"
+    sass-embedded-linux-arm: "npm:1.74.1"
+    sass-embedded-linux-arm64: "npm:1.74.1"
+    sass-embedded-linux-ia32: "npm:1.74.1"
+    sass-embedded-linux-musl-arm: "npm:1.74.1"
+    sass-embedded-linux-musl-arm64: "npm:1.74.1"
+    sass-embedded-linux-musl-ia32: "npm:1.74.1"
+    sass-embedded-linux-musl-x64: "npm:1.74.1"
+    sass-embedded-linux-x64: "npm:1.74.1"
+    sass-embedded-win32-arm64: "npm:1.74.1"
+    sass-embedded-win32-ia32: "npm:1.74.1"
+    sass-embedded-win32-x64: "npm:1.74.1"
     supports-color: "npm:^8.1.1"
     varint: "npm:^6.0.0"
   dependenciesMeta:
@@ -14257,11 +14278,13 @@ __metadata:
       optional: true
     sass-embedded-linux-x64:
       optional: true
+    sass-embedded-win32-arm64:
+      optional: true
     sass-embedded-win32-ia32:
       optional: true
     sass-embedded-win32-x64:
       optional: true
-  checksum: 10c0/00b5c704c8703329a2702f5c71b2e68d858811dcba1fe4447c02ae89c2ce8b2557e5d80466927bc02f56680c5dbc0deb9d52eb9df61b22a4bdaa623e62f7b823
+  checksum: 10c0/d9ebeaa9a53b5417cd1494b771131c68e200380431a6118904f9930c39116fc51a35c64b4d8053acd8718e0f0fd84c82c6752be0a2ab555640f700df88329971
   languageName: node
   linkType: hard
 
