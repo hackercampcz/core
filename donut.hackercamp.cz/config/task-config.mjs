@@ -82,6 +82,7 @@ export default {
   svgSprite: true,
   stylesheets: true,
   javascripts: false,
+
   esbuild: {
     define: { __DEVELOPMENT__: mode.development() ? "true" : "undefined" },
   },

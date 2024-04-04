@@ -125,7 +125,9 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
                       type="search"
                     />
 
-                    ${when(profile.is_admin, () => `
+                    ${when(
+                      profile.is_admin,
+                      () => `
                       <button onclick="
                         event.preventDefault();
                         const input = event.target.previousElementSibling;
@@ -133,7 +135,8 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
                       " type="button">
                         unlock
                       </button>
-                    `)}
+                    `
+                    )}
                   </div>
                 `
                 )

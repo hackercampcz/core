@@ -128,7 +128,7 @@ export async function init({ profile: root, env }) {
     }
   });
   const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
-  state.swap((x) => Object.assign({}, x, { apiURL }));
+  state.resetIn(["apiURL"], apiURL);
   initRenderLoop(state, root);
   loadProfile();
   window.addEventListener("hc:profile", loadProfile);
