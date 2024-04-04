@@ -7,7 +7,7 @@
   "private": true,
   "packageManager": "yarn@4.1.1",
   "devDependencies": {
-    "@hckr_/blendid": "8.0.5",
+    "@hckr_/blendid": "8.0.6",
     "@types/nunjucks": "3.2.6",
     "dotenv": "16.4.5",
     "dotenv-cli": "7.4.1",
