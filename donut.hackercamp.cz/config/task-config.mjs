@@ -125,7 +125,7 @@ export default {
   },
 
   workboxBuild: {
-    swSrc: projectPath(pathConfig.src, pathConfig.esbuild.src, "sw.js"),
+    swSrc: projectPath(pathConfig.src, pathConfig.esm.src, "sw.js"),
     swDest: projectPath(pathConfig.dest, "sw.js"),
     globDirectory: pathConfig.dest,
     globPatterns: ["**/*.html", "assets/**/*.{js,mjs,css}"],
