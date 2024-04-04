@@ -78,10 +78,15 @@ export default {
   images: true,
   cloudinary: true,
   fonts: true,
-  static: true,
   svgSprite: true,
   stylesheets: true,
   javascripts: false,
+
+  static: {
+    srcConfig: {
+      encoding: false
+    }
+  },
 
   esbuild: {
     define: { __DEVELOPMENT__: mode.development() ? "true" : "undefined" },

@@ -6,11 +6,16 @@ export default {
   images: true,
   cloudinary: true,
   fonts: true,
-  static: true,
   svgSprite: true,
   javascripts: false,
   stylesheets: true,
   workboxBuild: false,
+  
+  static: {
+    srcConfig: {
+      encoding: false
+    }
+  },
 
   generate: {
     redirects: [
