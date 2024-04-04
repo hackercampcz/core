@@ -564,7 +564,7 @@ async function loadData(profile, year, apiURL) {
     getAttendee(profile.sub, year, apiURL),
     getProgram(year, apiURL),
   ]);
-  if (!attendee?.nfcTronData?.[0]?.totalSpent) {
+  if (attendee && !attendee?.nfcTronData?.[0]?.totalSpent) {
     // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
     // Load them async, because NFCTron API is slow as hell
     getNfcTronData(attendee, apiURL).then((attendee) =>
