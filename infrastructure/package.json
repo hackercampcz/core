@@ -16,8 +16,8 @@
     "marked": "12.0.1"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "7.5.0",
-    "@typescript-eslint/parser": "7.5.0",
+    "@typescript-eslint/eslint-plugin": "7.6.0",
+    "@typescript-eslint/parser": "7.6.0",
     "eslint": "9.0.0"
   }
 }
