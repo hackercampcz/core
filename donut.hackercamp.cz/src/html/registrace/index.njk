@@ -209,6 +209,7 @@
               window.location.href = "https://hackercamp.cz/";
             }
           } catch (E_r) {
+            // TODO: log with rollbar
             console.error(E_r);
             alert("Se nepovedlo, zkusim prosím jiny.");
           }
@@ -336,15 +337,6 @@
         </div>
       </div>
     </section>
-    <!-- <script type="module"> -->
-    <!--   document.querySelector("select#plus-one").addEventListener("change", (event) => { -->
-    <!--     if (parseInt(event.target.value)) { -->
-    <!--       document.querySelector("#plus-one-section").removeAttribute("aria-hidden"); -->
-    <!--     } else { -->
-    <!--       document.querySelector("#plus-one-section").setAttribute("aria-hidden", "true"); -->
-    <!--     } -->
-    <!--   }); -->
-    <!-- </script> -->
     <section id="ticket">
       <h2>Lístek</h2>
       <div class="hc-card">
@@ -359,8 +351,9 @@
           <div class="choose">
             <input type="radio" name="ticketType" value="hacker" checked="checked" id="ticket-hacker"/>
             <label for="ticket-hacker">
-              <strong>{{ ticket["hacker"].name }}</strong> - {{ ticket["hacker"].price | price("CZK") }}<br/>
-              <span>Normální vstupné</span>
+              <strong>{{ ticket["hacker"].name }}</strong> - <del>{{ ticket["hacker"].price | price("CZK") }}</del>&nbsp;<ins>{{ (ticket["hacker"].price - 1000) | price("CZK") }}</ins><br/>
+              <span><del>Normální vstupné</del>&nbsp;<ins>Loňská cena pro věrné hackery.
+                  <span class="allstars-hidden">Jen do konce června.</span></ins></span>
             </label>
           </div>
           <div class="choose">
@@ -477,7 +470,7 @@
       function showSection(id) {
         const section = document.getElementById(id);
         section.removeAttribute("aria-hidden");
-        if (section.tagName == "FIELDSET") {
+        if (section.tagName === "FIELDSET") {
           section.removeAttribute("disabled");
         }
         for (const fieldset of section.querySelectorAll("fieldset")) {
@@ -488,7 +481,7 @@
       function hideSection(id) {
         const section = document.getElementById(id);
         section.setAttribute("aria-hidden", "true");
-        if (section.tagName == "FIELDSET") {
+        if (section.tagName === "FIELDSET") {
           section.setAttribute("disabled", "true");
         }
         for (const fieldset of section.querySelectorAll("fieldset")) {
@@ -497,14 +490,14 @@
         }
       }
       hideSection("someone-else-will-pay");
-      document.querySelector("#email").addEventListener("blur", event => {
-        document.querySelector("#invoice-email").setAttribute("placeholder", event.target.value);
+      document.querySelector("#email").addEventListener("blur", e => {
+        document.querySelector("#invoice-email").setAttribute("placeholder", e.target.value);
       });
-      document.querySelector("#invoice-recipient").addEventListener("change", event => {
-        if (event.target.value == 0) {
+      document.querySelector("#invoice-recipient").addEventListener("change", e => {
+        if (e.target.value == 0) {
           showSection("I-will-pay");
           hideSection("someone-else-will-pay");
-        } else if (event.target.value == 1) {
+        } else if (e.target.value == 1) {
           hideSection("I-will-pay");
           showSection("someone-else-will-pay");
         }
@@ -601,8 +594,8 @@
       </div>
     </section>
     <script type="module">
-      document.querySelector("select#stay-time").addEventListener("change", event => {
-        if (event.target.value == 2) {
+      document.querySelector("select#stay-time").addEventListener("change", e => {
+        if (e.target.value == 2) {
           document.querySelector("#custom-stay-time").parentElement.removeAttribute("aria-hidden");
         } else {
           document.querySelector("#custom-stay-time").parentElement.setAttribute("aria-hidden", "true");
@@ -751,10 +744,10 @@
         document.querySelector("#plus-one-section").removeAttribute("aria-hidden");
       }
 
-      for (let key in data) {
+      for (const key in data) {
         const field = formElement.elements[key];
         let value = data[key];
-        if (!field || !value) continue;
+        if (!(field && value)) continue;
         const isRadio = field.length && field[0].type === "radio";
         const isCheckbox = field.type === "checkbox";
         if (isCheckbox) {
@@ -779,17 +772,18 @@
         }
       }
     } catch (o_O) {
+      // TODO: log with rollbar
       console.error(o_O);
       alert("Něco se kouslo, zkuste to jindy.");
     }
 
-    formElement.addEventListener("submit", event => {
-      event.preventDefault();
+    formElement.addEventListener("submit", e => {
+      e.preventDefault();
       submitButtonElement.setAttribute("disabled", "disabled");
 
-      fetch(event.target.action, {
+      fetch(e.target.action, {
         method: "POST",
-        body: new URLSearchParams(new FormData(event.target)),
+        body: new URLSearchParams(new FormData(e.target)),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/x-www-form-urlencoded"
@@ -805,6 +799,7 @@
           location.href = "/registrace/potvrzeno/";
         })
         .catch((o_O) => {
+          // TODO: log with rollbar
           console.error(o_O);
           alert("Se to někde zaseklo, zkuste to prosím znovu");
         })
