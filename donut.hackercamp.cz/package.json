@@ -22,8 +22,6 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20240405.0",
-    "eslint": "9.0.0",
-    "eslint-plugin-promise": "6.1.1",
     "material-icons": "1.13.12",
     "web-types-lit": "0.1.0",
     "wrangler": "3.50.0"
