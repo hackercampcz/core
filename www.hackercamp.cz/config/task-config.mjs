@@ -10,7 +10,7 @@ export default {
   javascripts: false,
   stylesheets: true,
   workboxBuild: false,
-  
+
   static: {
     srcConfig: {
       encoding: false
