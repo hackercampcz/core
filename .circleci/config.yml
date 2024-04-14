@@ -103,8 +103,8 @@ jobs:
       - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v2-provision
-          override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/donut @hackercamp/api @hackercamp/lib
+          cache-version: v3-provision
+          override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/api @hackercamp/lib
       - run:
           working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
@@ -133,8 +133,8 @@ jobs:
       - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v1-provision
-          override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/donut @hackercamp/api @hackercamp/lib
+          cache-version: v3-provision
+          override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/api @hackercamp/lib
       - run:
           working_directory: infrastructure
           command: pulumi stack select << parameters.stack_name >>
@@ -165,6 +165,7 @@ jobs:
       - checkout
       - node/install
       - node/install-yarn
+      # TODO: split install conditionally to razor thin focuses by sitename
       - node/install-packages:
           pkg-manager: yarn-berry
           cache-version: v2-build
@@ -244,6 +245,7 @@ jobs:
           at: ~/project
       - node/install
       - node/install-yarn
+      # TODO: split install conditionally to razor thin focuses by sitename
       - node/install-packages:
           pkg-manager: yarn-berry
           cache-version: v1-deploy
