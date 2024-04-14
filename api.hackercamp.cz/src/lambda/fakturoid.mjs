@@ -86,7 +86,7 @@ export async function createInvoice(data, token) {
         "User-Agent": "HackerCamp Donut (team@hackercamp.cz)",
       },
       body: JSON.stringify(data),
-    }
+    },
   );
 }
 
@@ -109,7 +109,7 @@ export async function createSubject(data, token) {
         "User-Agent": "HackerCamp Donut (team@hackercamp.cz)",
       },
       body: JSON.stringify(data),
-    }
+    },
   );
 }
 
@@ -125,7 +125,7 @@ export async function fetchInvoice(token, invoiceId) {
         "Content-Type": "application/json",
         "User-Agent": userAgent,
       },
-    }
+    },
   );
   if (!resp.ok) {
     throw new Error(resp.statusText);

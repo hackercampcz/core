@@ -42,7 +42,7 @@ async function getCrewReferrals() {
   if (getCrewReferralsCache?.size) return getCrewReferralsCache;
   const resp = await fetch(
     "https://slack.com/api/usergroups.users.list?usergroup=S03EQ1LLYCC",
-    { headers: { Authorization: `Bearer ${process.env.slack_bot_token}` } }
+    { headers: { Authorization: `Bearer ${process.env.slack_bot_token}` } },
   );
   const { users } = await resp.json();
   getCrewReferralsCache = new Set(users);
@@ -55,7 +55,7 @@ async function getCrewReferrals() {
  */
 async function deleteRemovedItems(event, searchIndex) {
   const deletedRegistrations = event.Records.filter(
-    (x) => x.eventName === "REMOVE"
+    (x) => x.eventName === "REMOVE",
   ).map((x) => `${x.dynamodb.OldImage.year.N}-${x.dynamodb.OldImage.email.S}`);
 
   if (deletedRegistrations.length > 0) {
@@ -74,7 +74,7 @@ async function deleteRemovedItems(event, searchIndex) {
 async function updateRegistrationsIndex(event, searchIndex) {
   const crewReferrals = await getCrewReferrals();
   const updatedRegistrations = event.Records.filter(
-    (x) => x.eventName !== "REMOVE"
+    (x) => x.eventName !== "REMOVE",
   )
     .map((x) => [
       fromJS(selectKeys(unmarshall(x.dynamodb.NewImage), keysToIndex)),

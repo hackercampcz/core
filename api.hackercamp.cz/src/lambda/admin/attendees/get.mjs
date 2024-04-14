@@ -2,9 +2,9 @@ import { BatchGetItemCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { partition } from "@thi.ng/transducers";
 import createSearchClient from "algoliasearch";
+import { resultsCount } from "../../algolia.mjs";
 import { getHeader } from "../../http.mjs";
 import { formatResponse } from "../csv.mjs";
-import { resultsCount } from "../../algolia.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -14,8 +14,7 @@ import { resultsCount } from "../../algolia.mjs";
 const db = new DynamoDBClient({});
 
 async function getAttendees(query, tag, year, page, pageSize) {
-  const { algolia_app_id, algolia_search_key, algolia_index_name } =
-    process.env;
+  const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
   console.log({
@@ -65,7 +64,6 @@ async function getAttendees(query, tag, year, page, pageSize) {
 }
 
 /**
- *
  * @param {DynamoDBClient} db
  * @param hits
  * @returns {Promise<Record<string, any>[]>}
@@ -82,12 +80,12 @@ async function getItemsFromDB(db, hits) {
     const items = await db.send(
       new BatchGetItemCommand({
         RequestItems: { [tableName]: { Keys: keys } },
-      })
+      }),
     );
     result.push(
       ...items.Responses[tableName]
         .map((x) => unmarshall(x))
-        .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp))
+        .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp)),
     );
   }
   return result;
@@ -107,7 +105,7 @@ export async function handler(event) {
       pageSize: "20",
       format: getHeader(event.headers, "Accept"),
     },
-    event.queryStringParameters
+    event.queryStringParameters,
   );
 
   const respData = await getAttendees(
@@ -115,7 +113,7 @@ export async function handler(event) {
     type,
     parseInt(year),
     parseInt(page),
-    parseInt(pageSize)
+    parseInt(pageSize),
   );
   return formatResponse(respData, {
     year,

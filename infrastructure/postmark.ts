@@ -82,7 +82,7 @@ export class Template extends pulumi.dynamic.Resource {
   constructor(
     name: string,
     args: TemplateResourceInputs,
-    opts?: pulumi.CustomResourceOptions
+    opts?: pulumi.CustomResourceOptions,
   ) {
     super(postmarkTemplateProvider, name, args, opts);
   }

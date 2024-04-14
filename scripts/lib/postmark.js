@@ -37,8 +37,8 @@ export async function sendEmailWithTemplate({
         MessageStream: messageStream,
         ReplyTo: replyTo,
         Attachments: attachments,
-      }).filter(([_, v]) => Boolean(v))
-    )
+      }).filter(([_, v]) => Boolean(v)),
+    ),
   );
   const resp = await fetch("https://api.postmarkapp.com/email/withTemplate", {
     method: "POST",

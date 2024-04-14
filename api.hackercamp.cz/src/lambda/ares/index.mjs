@@ -1,11 +1,5 @@
 import { getCompanyDetails } from "../ares.mjs";
-import {
-  errorResponse,
-  getHeader,
-  notFound,
-  response,
-  withCORS,
-} from "../http.mjs";
+import { errorResponse, getHeader, notFound, response, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -20,7 +14,7 @@ export async function ares(event) {
   rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "OPTIONS"],
-    getHeader(event?.headers, "Origin")
+    getHeader(event?.headers, "Origin"),
   );
   console.log("QS", event.queryStringParameters);
   const { ico } = event.queryStringParameters;

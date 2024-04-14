@@ -1,13 +1,5 @@
-import { SQSClient, SendMessageCommand } from "@aws-sdk/client-sqs";
-import {
-  accepted,
-  errorResponse,
-  getHeader,
-  readPayload,
-  response,
-  unprocessableEntity,
-  withCORS,
-} from "../http.mjs";
+import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
+import { accepted, errorResponse, getHeader, readPayload, response, unprocessableEntity, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 
 /** @typedef {import("@pulumi/awsx/classic/apigateway").Request} APIGatewayProxyEvent */
@@ -30,7 +22,7 @@ async function enqueueHandler(event, payload) {
     new SendMessageCommand({
       QueueUrl: process.env.slack_queue_url,
       MessageBody: JSON.stringify({ event, payload }),
-    })
+    }),
   );
   return resp;
 }
@@ -43,9 +35,7 @@ function dispatchByType(event) {
     case "team_join":
       return enqueueHandler("team-join", payload).then(() => accepted());
     case "user_profile_changed":
-      return enqueueHandler("user-profile-changed", payload).then(() =>
-        accepted()
-      );
+      return enqueueHandler("user-profile-changed", payload).then(() => accepted());
     default:
       console.log({ event: "Unknown event", payload: event });
       return Promise.resolve(unprocessableEntity());
@@ -60,14 +50,12 @@ export async function slackWebhook(event) {
   rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
-    getHeader(event.headers, "Origin")
+    getHeader(event.headers, "Origin"),
   );
   try {
     const payload = readPayload(event);
     // TODO: validate webhook token
-    return await dispatchByType(payload.event ?? payload).then((x) =>
-      withCORS_(x)
-    );
+    return await dispatchByType(payload.event ?? payload).then((x) => withCORS_(x));
   } catch (err) {
     rollbar.error(err);
     return withCORS_(errorResponse(err));

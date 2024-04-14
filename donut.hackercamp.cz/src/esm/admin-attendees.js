@@ -23,9 +23,9 @@ import {
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
-import { getContact } from "./lib/profile";
-import { getChipID } from "./lib/nfctron.js";
 import { map } from "lit-html/directives/map.js";
+import { getChipID } from "./lib/nfctron.js";
+import { getContact } from "./lib/profile";
 
 /**
  * @param {Object} attendee
@@ -46,9 +46,7 @@ export function edit(attendee, apiHost) {
  * @returns {Promise<void>}
  */
 export function add(attendee, apiHost) {
-  return executeCommand(apiHost, Endpoint.attendees, "add", attendee).then(() =>
-    location.reload()
-  );
+  return executeCommand(apiHost, Endpoint.attendees, "add", attendee).then(() => location.reload());
 }
 
 function selectRow(e) {
@@ -71,13 +69,15 @@ export function attendeesChips(
     volunteerAttendees,
     hackerAttendees,
   },
-  params
+  params,
 ) {
   return html`
     <search style="display: flex; gap: 8px">
-      ${when(
-        view === View.searchAttendees,
-        () => html`
+      ${
+    when(
+      view === View.searchAttendees,
+      () =>
+        html`
           <form style="flex-grow: 1">
             <input type="hidden" name="view" value="${View.searchAttendees}" />
             <input type="hidden" name="year" value="${year}" />
@@ -94,9 +94,9 @@ export function attendeesChips(
               <md-icon-button
                 slot="trailingicon"
                 href="/admin/?${new URLSearchParams({
-                  view: View.attendees,
-                  year,
-                })}"
+          view: View.attendees,
+          year,
+        })}"
                 title="Zavřít hledání"
               >
                 <md-icon>close</md-icon>
@@ -104,13 +104,14 @@ export function attendeesChips(
             </md-outlined-text-field>
           </form>
         `,
-        () => html`
+      () =>
+        html`
           <div>
             <md-icon-button
               href="/admin/?${new URLSearchParams({
-                view: View.searchAttendees,
-                year,
-              })}"
+          view: View.searchAttendees,
+          year,
+        })}"
             >
               <md-icon>search</md-icon>
             </md-icon-button>
@@ -123,59 +124,71 @@ export function attendeesChips(
             aria-multiselectable="false"
           >
             <span class="mdc-evolution-chip-set__chips" role="presentation">
-              ${chip({
-                text: "Všichni",
-                count: attendees,
-                selected: view === View.attendees,
-                view: View.attendees,
-                year,
-              })}
-              ${chip({
-                text: "Hackeři",
-                count: hackerAttendees,
-                selected: view === View.hackerAttendees,
-                view: View.hackerAttendees,
-                year,
-              })}
-              ${chip({
-                text: "Dobrovolníci",
-                count: volunteerAttendees,
-                selected: view === View.volunteerAttendees,
-                view: View.volunteerAttendees,
-                year,
-              })}
-              ${chip({
-                text: "Ostatní",
-                count: staffAttendees,
-                selected: view === View.staffAttendees,
-                view: View.staffAttendees,
-                year,
-              })}
-              ${chip({
-                text: "Crew",
-                count: crewAttendees,
-                selected: view === View.crewAttendees,
-                view: View.crewAttendees,
-                year,
-              })}
+              ${
+          chip({
+            text: "Všichni",
+            count: attendees,
+            selected: view === View.attendees,
+            view: View.attendees,
+            year,
+          })
+        }
+              ${
+          chip({
+            text: "Hackeři",
+            count: hackerAttendees,
+            selected: view === View.hackerAttendees,
+            view: View.hackerAttendees,
+            year,
+          })
+        }
+              ${
+          chip({
+            text: "Dobrovolníci",
+            count: volunteerAttendees,
+            selected: view === View.volunteerAttendees,
+            view: View.volunteerAttendees,
+            year,
+          })
+        }
+              ${
+          chip({
+            text: "Ostatní",
+            count: staffAttendees,
+            selected: view === View.staffAttendees,
+            view: View.staffAttendees,
+            year,
+          })
+        }
+              ${
+          chip({
+            text: "Crew",
+            count: crewAttendees,
+            selected: view === View.crewAttendees,
+            view: View.crewAttendees,
+            year,
+          })
+        }
             </span>
           </div>
           <div>
             <md-icon-button
               title="Zkopírovat statistiky"
-              @click="${copyToClipboard([
-                attendees,
-                hackerAttendees,
-                volunteerAttendees,
-                staffAttendees,
-                crewAttendees,
-              ])}"
+              @click="${
+          copyToClipboard([
+            attendees,
+            hackerAttendees,
+            volunteerAttendees,
+            staffAttendees,
+            crewAttendees,
+          ])
+        }"
             >
               <md-icon>content_copy</md-icon></md-icon-button
             ><md-icon-button
               href="https://api.hackercamp.cz/v1/admin/attendees?${new URLSearchParams(
-                { year, type: view, format: "csv", pageSize: 500 }
-              )}"
+          { year, type: view, format: "csv", pageSize: 500 },
+        )}"
               title="Stáhnout CSV"
               aria-label="Stáhnout CSV"
             >
@@ -187,8 +200,9 @@ export function attendeesChips(
               <md-icon>person_add</md-icon></md-icon-button
             >
           </div>
-        `
-      )}
+        `,
+    )
+  }
     </search>
   `;
 }
@@ -206,13 +220,13 @@ function copyToClipboard(counts) {
           <li>Crew: <b>${crew}</b>
         </ul>`,
       ],
-      { type: "text/html" }
+      { type: "text/html" },
     );
     const plain = new Blob(
       [
         `* Všichni: ${all}\n* Hackeři: ${hacker}\n* Dobrovolnící: ${volunteer}\n* Ostatní: ${staff}\n* Dobrovolníci: ${crew}`,
       ],
-      { type: "text/plain" }
+      { type: "text/plain" },
     );
     await navigator.clipboard.write([
       new ClipboardItem({ "text/html": rich, "text/plain": plain }),
@@ -224,7 +238,7 @@ function copyToClipboard(counts) {
 
 export function attendeesTableTemplate(
   data,
-  { page, pages, total, params, selection }
+  { page, pages, total, params, selection },
 ) {
   return html`
     <table>
@@ -242,19 +256,23 @@ export function attendeesTableTemplate(
       <tfoot>
         <tr>
           <td colspan="5">
-            ${paginationNavigation({
-              page,
-              pages,
-              total,
-              count: data.length,
-              params,
-            })}
+            ${
+    paginationNavigation({
+      page,
+      pages,
+      total,
+      count: data.length,
+      params,
+    })
+  }
           </td>
         </tr>
       </tfoot>
       <tbody>
-        ${data.map(
-          (row) => html`
+        ${
+    data.map(
+      (row) =>
+        html`
             <tr @click="${renderDetail(row)}">
               <td>
                 <md-checkbox
@@ -270,18 +288,21 @@ export function attendeesTableTemplate(
               <td>${ticketName.get(row.ticketType)}</td>
               <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
               <td>
-                ${row.nfcTronData
-                  ?.map(({ chipID }) => chipID)
-                  .filter(Boolean)
-                  .join(", ") || html`<em><small>nene</small></em>`}
+                ${
+          row.nfcTronData
+            ?.map(({ chipID }) => chipID)
+            .filter(Boolean)
+            .join(", ") || html`<em><small>nene</small></em>`
+        }
               </td>
               <td>
                 <hc-mail-button email="${row.email}"></hc-mail-button
                 ><hc-phone-button phone="${row.phone}"></hc-phone-button>
               </td>
             </tr>
-          `
-        )}
+          `,
+    )
+  }
       </tbody>
     </table>
   `;
@@ -315,14 +336,16 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
           <md-icon>edit</md-icon> </md-icon-button
         ><md-icon-button
           title="Check In"
-          @click="${renderModalDialog("check-in-modal", {
-            preDispatch() {
-              console.log("Check In", { isNFCSupported });
-              if (isNFCSupported) {
-                startChipScan();
-              }
-            },
-          })}"
+          @click="${
+    renderModalDialog("check-in-modal", {
+      preDispatch() {
+        console.log("Check In", { isNFCSupported });
+        if (isNFCSupported) {
+          startChipScan();
+        }
+      },
+    })
+  }"
         >
           <md-icon>where_to_vote</md-icon> </md-icon-button
         ><md-icon-button
@@ -336,10 +359,12 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
       <p>
         Ubytování:
         <strong>${housing.get(detail.housing) ?? "Ještě si nevybral"}</strong>
-        ${when(
-          detail.housingPlacement,
-          () => html` - <em>${detail.housingPlacement}</em>`
-        )}
+        ${
+    when(
+      detail.housingPlacement,
+      () => html` - <em>${detail.housingPlacement}</em>`,
+    )
+  }
       </p>
       <p>
         Doprava:
@@ -349,13 +374,17 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
         NFCtron ID(s):
         ${when(!detail.nfcTronData?.length, () => html`<em>nemá</em>`)}
       </p>
-      ${when(
-        detail.nfcTronData?.length,
-        () => html`
+      ${
+    when(
+      detail.nfcTronData?.length,
+      () =>
+        html`
           <ul>
-            ${map(
-              detail.nfcTronData.filter(({ chipID }) => chipID),
-              ({ chipID, spent, totalSpent, sn }) => html`
+            ${
+          map(
+            detail.nfcTronData.filter(({ chipID }) => chipID),
+            ({ chipID, spent, totalSpent, sn }) =>
+              html`
                 <li data-chip-sn="${sn}" data-chip-id="${chipID}">
                   <a
                     title="Online účet"
@@ -367,54 +396,66 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
                   <data value="${spent ?? totalSpent}"
                     >${formatMoney(spent ?? totalSpent)}</data
                   >
-                  ${when(
-                    detail.checkOutPaid,
-                    () => html` <strong>zaplaceno</strong>`
-                  )}
+                  ${
+                when(
+                  detail.checkOutPaid,
+                  () => html` <strong>zaplaceno</strong>`,
+                )
+              }
                 </li>
-              `
-            )}
+              `,
+          )
+        }
           </ul>
-        `
-      )}
+        `,
+    )
+  }
       ${when(detail.note, () => html`<p>${detail.note}</p>`)}
-      ${when(
-        detail.checkIn,
-        () =>
-          html`<p>
+      ${
+    when(
+      detail.checkIn,
+      () =>
+        html`<p>
             Check in:
             <time datetime="${detail.checkIn}"
               >${formatDateTime(new Date(detail.checkIn))}</time
             >
             provedl/a <strong>${detail.checkInBy}</strong>
-          </p>`
-      )}
+          </p>`,
+    )
+  }
       ${when(detail.checkInNote, () => html`<p>${detail.checkInNote}</p>`)}
-      ${when(
-        detail.checkout,
-        () =>
-          html`<p>
+      ${
+    when(
+      detail.checkout,
+      () =>
+        html`<p>
             Check out:
             <time datetime="${detail.checkout}"
               >${formatDateTime(new Date(detail.checkout))}</time
             >
             provedl/a <strong>${detail.checkOutBy}</strong>
-          </p>`
-      )}
-      ${when(
-        detail.checkOutTotal,
-        () =>
-          html`<p>
+          </p>`,
+    )
+  }
+      ${
+    when(
+      detail.checkOutTotal,
+      () =>
+        html`<p>
             Zaplaceno při odchodu:
             <data value="${detail.checkOutTotal}"
               >${formatMoney(parseInt(detail.checkOutTotal))}</data
             >
-          </p>`
-      )}
+          </p>`,
+    )
+  }
       ${when(detail.checkOutNote, () => html`<p>${detail.checkOutNote}</p>`)}
-      ${when(
-        detail.edited,
-        () => html`
+      ${
+    when(
+      detail.edited,
+      () =>
+        html`
           <p>
             Naposledy editováno
             <time datetime="${detail.edited}"
@@ -423,14 +464,19 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
             administrátorem
             <strong>${detail.editedBy}</strong>
           </p>
-        `
-      )}
-      ${when(
-        detail.events?.length,
-        () => html`
+        `,
+    )
+  }
+      ${
+    when(
+      detail.events?.length,
+      () =>
+        html`
           <h3>Program</h3>
-          ${detail.events?.map(
-            (event) => html`
+          ${
+          detail.events?.map(
+            (event) =>
+              html`
               <div
                 style="border: 1px solid var(--hc-text-color); padding: 8px 16px"
               >
@@ -438,24 +484,30 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
                 <p>
                   <code>${lineup(event.lineup)}</code>
                   ${when(event.topic, () => html`<code>${event.topic}</code>`)}
-                  ${when(
-                    event.startAt,
-                    () =>
-                      html`-
+                  ${
+                when(
+                  event.startAt,
+                  () =>
+                    html`-
                         <time datetime="${event.startAt}"
                           >${formatDateTime(new Date(event.startAt))}
-                        </time>`
-                  )}
+                        </time>`,
+                )
+              }
                 </p>
-                ${when(
+                ${
+                when(
                   event.description,
-                  () => html`<p>${event.description}</p>`
-                )}
+                  () => html`<p>${event.description}</p>`,
+                )
+              }
               </div>
-            `
-          )}
-        `
-      )}
+            `,
+          )
+        }
+        `,
+    )
+  }
     </div>
   `;
 }
@@ -658,7 +710,7 @@ function checkInModalDialog({
         apiHost,
         Endpoint.attendees,
         "checkIn",
-        data
+        data,
       );
       window.snackbar.labelText = "Check-in uložen";
       window.snackbar.show();
@@ -680,22 +732,25 @@ function checkInModalDialog({
       <h2>Check-in</h2>
       <fieldset>
         <legend>NCF Tron</legend>
-        ${when(
-          !isNFCSupported,
-          () =>
-            html`<p>
+        ${
+    when(
+      !isNFCSupported,
+      () =>
+        html`<p>
               Pro scanování chipů použij Chrome na mobilním telefonu se systémem
               Android.
             </p>`,
-          () =>
-            html`<p>
+      () =>
+        html`<p>
               Přilož čip pro načtení. Případně opiš druhý řádek na rubu čipu
               ručně.
-            </p>`
-        )}
-        ${map(nfcTronData, (sn, i) => {
-          const chipID = getChipID(sn);
-          return html`
+            </p>`,
+    )
+  }
+        ${
+    map(nfcTronData, (sn, i) => {
+      const chipID = getChipID(sn);
+      return html`
             <div class="field">
               <label for="nfc-tron-sn-${i}">S/N #${i + 1}</label>
               <md-outlined-text-field
@@ -704,10 +759,12 @@ function checkInModalDialog({
                 value="${sn}"
                 @change="${onChange}"
               >
-                ${when(
-                  sn === "",
-                  () => html`<md-icon slot="trailingicon">nfc</md-icon>`,
-                  () => html`
+                ${
+        when(
+          sn === "",
+          () => html`<md-icon slot="trailingicon">nfc</md-icon>`,
+          () =>
+            html`
                     <md-icon-button
                       slot="trailingicon"
                       type="button"
@@ -716,21 +773,24 @@ function checkInModalDialog({
                     >
                       <md-icon>remove</md-icon>
                     </md-icon-button>
-                  `
-                )}
+                  `,
+        )
+      }
               </md-outlined-text-field>
               <div>
                 <strong>ID čipu:</strong>
-                ${when(
-                  chipID,
-                  () =>
-                    html`<code><data value="${chipID}">${chipID}</data></code>`,
-                  () => html`<code>neznámý čip</code>`
-                )}
+                ${
+        when(
+          chipID,
+          () => html`<code><data value="${chipID}">${chipID}</data></code>`,
+          () => html`<code>neznámý čip</code>`,
+        )
+      }
               </div>
             </div>
           `;
-        })}
+    })
+  }
       </fieldset>
       <fieldset>
         <legend>Další</legend>
@@ -761,7 +821,7 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
         apiHost,
         Endpoint.attendees,
         "checkOut",
-        data
+        data,
       );
       window.snackbar.labelText = "Check-out uložen";
       window.snackbar.show();
@@ -799,9 +859,11 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
           <md-outlined-text-field
             id="total"
             name="checkOutTotal"
-            value="${detail.nfcTronData
-              ?.map((x) => x.spent ?? 0)
-              ?.reduce((a, b) => a + b, 0) ?? 0}"
+            value="${
+    detail.nfcTronData
+      ?.map((x) => x.spent ?? 0)
+      ?.reduce((a, b) => a + b, 0) ?? 0
+  }"
           ></md-outlined-text-field>
         </div>
       </fieldset>
@@ -830,45 +892,49 @@ export function attendeesTemplate(state) {
   } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${attendeesChips(
-        selectedView,
-        year,
-        {
-          [View.attendees]: data?.then((data) => data.counts.all),
-          [View.hackerAttendees]: data?.then((data) => data.counts.hacker),
-          [View.volunteerAttendees]: data?.then(
-            (data) => data.counts.volunteer
-          ),
-          [View.staffAttendees]: data?.then((data) => data.counts.staff),
-          [View.crewAttendees]: data?.then((data) => data.counts.crew),
-        },
-        params
-      )}
+      ${
+    attendeesChips(
+      selectedView,
+      year,
+      {
+        [View.attendees]: data?.then((data) => data.counts.all),
+        [View.hackerAttendees]: data?.then((data) => data.counts.hacker),
+        [View.volunteerAttendees]: data?.then(
+          (data) => data.counts.volunteer,
+        ),
+        [View.staffAttendees]: data?.then((data) => data.counts.staff),
+        [View.crewAttendees]: data?.then((data) => data.counts.crew),
+      },
+      params,
+    )
+  }
     </div>
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
     >
       <div class="hc-card hc-master-detail__list">
-        ${until(
-          data
-            ?.then((data) => {
-              return attendeesTableTemplate(sortBy("paid", data.items), {
-                page,
-                pages: data.pages,
-                total: data.total,
-                params,
-                selection,
-              });
-            })
-            ?.catch((data) => {
-              if (data.unauthorized) return unauthorized();
-            }),
-          html`
+        ${
+    until(
+      data
+        ?.then((data) => {
+          return attendeesTableTemplate(sortBy("paid", data.items), {
+            page,
+            pages: data.pages,
+            total: data.total,
+            params,
+            selection,
+          });
+        })
+        ?.catch((data) => {
+          if (data.unauthorized) return unauthorized();
+        }),
+      html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p style="padding: 16px">Načítám data&hellip;</p>
             </div>
-          `
-        )}
+          `,
+    )
+  }
       </div>
       ${when(detail, () => attendeeDetailTemplate({ detail, isNFCSupported }))}
     </div>

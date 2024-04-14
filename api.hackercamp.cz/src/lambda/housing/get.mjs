@@ -10,7 +10,6 @@ import { notFound, response } from "../http.mjs";
 const dynamo = new DynamoDBClient({});
 
 /**
- *
  * @param {DynamoDBClient} dynamo
  * @param {number} year
  * @returns {Promise<*>}
@@ -23,7 +22,7 @@ async function getAttendees(dynamo, year) {
       FilterExpression: "#y = :y",
       ExpressionAttributeNames: { "#y": "year" },
       ExpressionAttributeValues: marshall({ ":y": year }),
-    })
+    }),
   );
   const housingKeys = new Set([
     "name",

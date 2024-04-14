@@ -88,7 +88,7 @@ export async function createInvoice(data, token) {
         "User-Agent": userAgent,
       },
       body: JSON.stringify(data),
-    }
+    },
   );
   return resp.json();
 }
@@ -114,7 +114,7 @@ export async function createSubject(data, token) {
         "User-Agent": userAgent,
       },
       body: JSON.stringify(data),
-    }
+    },
   );
   return resp.json();
 }
@@ -131,7 +131,7 @@ export async function fetchInvoice(token, invoiceId) {
         "Content-Type": "application/json",
         "User-Agent": userAgent,
       },
-    }
+    },
   );
   if (!resp.ok) {
     throw new Error(resp.statusText);

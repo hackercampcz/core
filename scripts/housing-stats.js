@@ -1,6 +1,6 @@
 import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { difference } from "https://deno.land/std@0.201.0/datetime/mod.ts";
+import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 
 const dynamo = createClient();
 

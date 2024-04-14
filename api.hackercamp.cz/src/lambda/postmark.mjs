@@ -8,7 +8,7 @@ export const Template = {
   SlackInvite: parseInt(process.env["hc_slack_invitation"], 10),
   VolunteerSlackInvite: parseInt(
     process.env["hc_volunteer_slack_invitation"],
-    10
+    10,
   ),
   HackerInvitation: parseInt(process.env["hc_hacker_invitation"], 10),
   VolunteerInvitation: parseInt(process.env["hc_volunteer_invitation"], 10),

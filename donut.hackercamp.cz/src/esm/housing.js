@@ -1,7 +1,7 @@
+import { when } from "lit-html/directives/when.js";
 import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
-import { when } from "lit-html/directives/when.js";
 
 async function loadHousingData(apiBase, year) {
   try {
@@ -24,18 +24,18 @@ async function loadHousingData(apiBase, year) {
               reject({ unauthenticated: true });
             });
           },
-        }
+        },
       ),
     ]);
     const [housing, types, variants, backstage, hackers] = await Promise.all(
       responses.map((resp) => {
         if (!resp.ok) {
-          if (resp.status === 401)
+          if (resp.status === 401) {
             signOut((path) => new URL(path, apiBase).href);
-          else throw new Error(`${resp.status}: ${resp.statusText}`);
+          } else throw new Error(`${resp.status}: ${resp.statusText}`);
         }
         return resp.json();
-      })
+      }),
     );
     return { housing, types, variants, hackers, backstage };
   } catch (error) {
@@ -68,7 +68,7 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
     sectionElement.classList.add(`${variant.type}-housing`);
     sectionElement.setAttribute("aria-hidden", "true");
     const housingOfVariant = housing.filter(
-      (x) => x.type === variant.type && x.variant === variant.name
+      (x) => x.type === variant.type && x.variant === variant.name,
     );
     const [firstPhoto, ...photos] = variant.images;
     sectionElement.innerHTML = `
@@ -76,8 +76,8 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
       <div class="hc-card">
         <p>${variant.description}</p>
         ${
-          (firstPhoto || "") &&
-          `
+      (firstPhoto || "")
+      && `
           <div
             class="pswp-gallery pswp-gallery--single-column housing-gallery"
             ${(photos.length > 0 || "") && `data-count="${photos.length}"`}
@@ -88,13 +88,12 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
               data-pswp-width="${firstPhoto.width}"
               data-pswp-height="${firstPhoto.height}"
             >
-              <img width="100%" src="${
-                firstPhoto.src
-              }" alt="Obrázek ubytování" />
+              <img width="100%" src="${firstPhoto.src}" alt="Obrázek ubytování" />
             </a>
-            ${photos
-              .map(
-                (photo) => `
+            ${
+        photos
+          .map(
+            (photo) => `
                   <a href="${photo.src}"
                     data-pswp-src="${photo.src}"
                     data-pswp-width="${photo.width}"
@@ -102,21 +101,24 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
                     aria-hidden="true"
                   >
                   </a>
-                `
-              )
-              .join("")}
+                `,
+          )
+          .join("")
+      }
           </div>
         `
-        }
+    }
         <div class="placements" aria-hidden="true">
-          ${housingOfVariant
-            .map(
-              ({ type, placement, capacity }) => `
+          ${
+      housingOfVariant
+        .map(
+          ({ type, placement, capacity }) => `
               <h3>${placement}</h3>
               <div class="booking-grid">
-              ${Array.from({ length: capacity })
-                .map(
-                  (_, index) => `
+              ${
+            Array.from({ length: capacity })
+              .map(
+                (_, index) => `
                   <div class="booking-grid__cell">
                     <input
                       list="hackers"
@@ -125,9 +127,10 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
                       type="search"
                     />
 
-                    ${when(
-                      profile.is_admin,
-                      () => `
+                    ${
+                  when(
+                    profile.is_admin,
+                    () => `
                       <button onclick="
                         event.preventDefault();
                         const input = event.target.previousElementSibling;
@@ -135,16 +138,19 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
                       " type="button">
                         unlock
                       </button>
-                    `
-                    )}
+                    `,
+                  )
+                }
                   </div>
-                `
-                )
-                .join("")}
+                `,
+              )
+              .join("")
+          }
             </div>
-          `
-            )
-            .join("")}
+          `,
+        )
+        .join("")
+    }
           <button type="submit" class="hc-button">
             Uložit (se)
           </button>
@@ -218,8 +224,7 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
       if (inputElement.name === "custom") {
         inputElement.checked = true;
       }
-    }
-    // do not disabled custom housing options
+    } // do not disabled custom housing options
     else if (inputElement.type === "search") {
       inputElement.disabled = true;
     }
@@ -240,7 +245,7 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
 
   function handleInputBlur({ target }) {
     const filledHacker = hackersListElement.querySelector(
-      `[value="${target.value}"]`
+      `[value="${target.value}"]`,
     );
 
     // Allow only explicit values that matches any <option> of <datalist>
@@ -249,7 +254,7 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
       target.classList.remove("me");
       if (prevHackerValue) {
         const prevHacker = hackers.find(
-          (h) => inlineHackerName(h) === prevHackerValue
+          (h) => inlineHackerName(h) === prevHackerValue,
         );
         if (prevHacker) {
           const option = document.createElement("option");
@@ -258,8 +263,7 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
           hackersListElement.prepend(option);
         }
       }
-    }
-    // Highlight input with my name and remove it
+    } // Highlight input with my name and remove it
     //  from <datalist> to not be autocompleted anymore
     else {
       if (filledHacker.dataset.id === hacker.slackID) {
@@ -287,9 +291,11 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
 
 function renderBackstage(rootElement, { backstage }) {
   for (let { type, placement, label } of backstage) {
-    for (let inputElement of rootElement.querySelectorAll(
-      `input[name^="${type}['${placement}']"]`
-    )) {
+    for (
+      let inputElement of rootElement.querySelectorAll(
+        `input[name^="${type}['${placement}']"]`,
+      )
+    ) {
       inputElement.value = label;
       inputElement.disabled = true;
       inputElement.parentElement?.querySelector("button")?.remove();
@@ -301,7 +307,7 @@ function renderZimmerFrei(rootElement) {
   for (let sectionElement of rootElement.querySelectorAll("section")) {
     const counterElement = sectionElement.querySelector(".zimmer-frei");
     const { length: zimmerFrei } = Array.from(
-      sectionElement.querySelectorAll("input[type=search]")
+      sectionElement.querySelectorAll("input[type=search]"),
     ).filter(({ disabled }) => !disabled);
     counterElement.textContent = zimmerFrei;
   }
@@ -338,7 +344,6 @@ function autoShowHousingOfMine({ formElement, selectElement }) {
 const HOUSING_INPUT_REGEX = /^(cottage|house|tent)\['(.+)'\]\[(\d+)\]$/;
 
 /**
- *
  * @param {HTMLFormElement} formElement
  */
 function handlaFormaSubmita(formElement, { hackers, profile }) {
@@ -355,7 +360,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
         continue;
       }
       const inputedHacker = hackers.find(
-        (hacker) => inlineHackerName(hacker) === value
+        (hacker) => inlineHackerName(hacker) === value,
       );
       if (!inputedHacker) {
         continue;
@@ -372,7 +377,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
     // and cus this is bellow the collection loop, it will override your previously filled up placement (our :troll:)
     if (formData.get("type") === "custom" && formData.get("custom")) {
       jsonData.items = jsonData.items.filter(
-        ({ slackID }) => slackID !== profile.sub
+        ({ slackID }) => slackID !== profile.sub,
       );
       jsonData.items.push({
         slackID: profile.sub,
@@ -412,7 +417,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
             reject({ unauthenticated: true });
           });
         },
-      }
+      },
     );
     if (!response.ok) {
       throw await response.text();
@@ -429,7 +434,7 @@ async function initializeHousingGalleries() {
     el("link", {
       rel: "stylesheet",
       href: "https://unpkg.com/photoswipe@5.2.2/dist/photoswipe.css",
-    })
+    }),
   );
   const lightbox = new PhotoSwipeLightbox({
     gallery: ".housing-gallery",
@@ -450,8 +455,7 @@ export async function main({ formElement, variantsRootElement, env }) {
 
   const selectElement = formElement.elements.type;
   const profile = getSlackProfile();
-  const { housing, hackers, types, variants, backstage } =
-    await loadHousingData(env["api-host"], env.year);
+  const { housing, hackers, types, variants, backstage } = await loadHousingData(env["api-host"], env.year);
   const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
 
   if (!hacker) {

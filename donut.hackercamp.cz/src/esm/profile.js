@@ -8,8 +8,7 @@ const labels = new Map([
   ["hacker-patron", "Patron Campu"],
 ]);
 
-const plural = (nr, [singular, few, more]) =>
-  `${nr} ${nr === 1 ? singular : nr < 5 ? few : more}`;
+const plural = (nr, [singular, few, more]) => `${nr} ${nr === 1 ? singular : nr < 5 ? few : more}`;
 
 function extendedProfile({ year, ticketType, patronAllowance }) {
   if (!supporters.has(ticketType)) return null;

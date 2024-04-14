@@ -1,8 +1,8 @@
 import { checkAuthorization } from "../auth.mjs";
 import { errorResponse, getHeader, withCORS } from "../http.mjs";
+import Rollbar from "../rollbar.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
-import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
@@ -18,7 +18,7 @@ export async function housing(event) {
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*",
-    { allowCredentials: true }
+    { allowCredentials: true },
   );
   try {
     switch (event.httpMethod) {

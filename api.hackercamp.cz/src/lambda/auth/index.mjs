@@ -12,8 +12,9 @@ const rollbar = Rollbar.init({ lambdaName: "auth" });
  */
 function readBody(event) {
   rollbar.configure({ payload: { event } });
-  if (event.isBase64Encoded)
+  if (event.isBase64Encoded) {
     return Buffer.from(event.body, "base64").toString("utf-8");
+  }
   return event.body;
 }
 
@@ -70,8 +71,7 @@ async function getUsersInfo(user, token) {
  */
 export async function auth(event) {
   const params = getPayload(event);
-  const origin =
-    getHeader(event.headers, "Origin") ?? `https://${process.env.hostname}`;
+  const origin = getHeader(event.headers, "Origin") ?? `https://${process.env.hostname}`;
   const { resp, data } = await getJWT(params.code, process.env, origin);
   const withCORS_ = withCORS(["POST", "OPTIONS"], origin, {
     allowCredentials: true,
@@ -114,9 +114,10 @@ export async function auth(event) {
             slackAccessToken: data["access_token"],
           },
           {
-            "Set-Cookie": `hc-id=${idToken}; Max-Age=216000; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
-          }
-        )
+            "Set-Cookie":
+              `hc-id=${idToken}; Max-Age=216000; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
+          },
+        ),
       );
     }
     console.error({ token, profile });
@@ -125,7 +126,7 @@ export async function auth(event) {
   return withCORS_(
     unauthorized({
       "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
-    })
+    }),
   );
 }
 

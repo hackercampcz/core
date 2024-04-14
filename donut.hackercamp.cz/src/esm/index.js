@@ -1,7 +1,9 @@
 import { formatMoney } from "@hackercamp/lib/format.mjs";
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
+import { map } from "lit-html/directives/map.js";
 import { when } from "lit-html/directives/when.js";
+import { lineupText } from "./admin/common.js";
 import { renderEventForm } from "./event-form.js";
 import {
   getContact,
@@ -20,8 +22,6 @@ import { schedule } from "./lib/schedule.js";
 import * as slack from "./lib/slack.js";
 import { setSlackProfile } from "./lib/slack.js";
 import { showModalDialog } from "./modal-dialog.js";
-import { lineupText } from "./admin/common.js";
-import { map } from "lit-html/directives/map.js";
 
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
 /** @typedef {import("@thi.ng/atom").Path} Path */
@@ -162,7 +162,7 @@ async function getProgram(year, apiUrl) {
           reject({ unauthenticated: true });
         });
       },
-    }
+    },
   );
   return resp.json();
 }
@@ -302,31 +302,37 @@ function programCardTemplate({ events }) {
   return html`
     <div class="hc-card hc-card--decorated">
       <h2>Tvoje zapojení do programu</h2>
-      ${when(
-        events.length,
-        () => html`
+      ${
+    when(
+      events.length,
+      () =>
+        html`
           <ul style="list-style-type: none; text-align: left; padding: 0;">
-            ${events.map(
-              (event) => html`
+            ${
+          events.map(
+            (event) =>
+              html`
                 <li>
                   <a
                     style="text-decoration: none;"
                     href="#"
                     @click=${() => {
-                      showEventModalDialog(event);
-                    }}
+                showEventModalDialog(event);
+              }}
                   >
                     ${event.title}
                     (<code>${lineupText.get(event.lineup)}</code>) 👈
                     <strong>upravit</strong>
                   </a>
                 </li>
-              `
-            )}
+              `,
+          )
+        }
           </ul>
         `,
-        () => html` <p>Hacker Camp bude jen takový, jaký si ho uděláme.</p> `
-      )}
+      () => html` <p>Hacker Camp bude jen takový, jaký si ho uděláme.</p> `,
+    )
+  }
       <div style="text-align: center">
         <a
           class="hc-link hc-link--decorated"
@@ -352,36 +358,41 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
   return html`
     <div class="hc-card hc-card--decorated">
       <h2>Útrata</h2>
-      ${when(
-        total > 0,
-        () =>
-          html`<p>
+      ${
+    when(
+      total > 0,
+      () =>
+        html`<p>
             Celkem:
             <strong><data value="${total}">${formatMoney(total)}</data></strong>
-          </p>`
-      )}
+          </p>`,
+    )
+  }
       <ul>
-        ${map(
-          chips,
-          (x) => html`
+        ${
+    map(
+      chips,
+      (x) =>
+        html`
             <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
               SN chipu:
               <code title="SN najdete na zadní straně čipu - pod páskem"
                 >${x.sn.toUpperCase()}</code
               >
               -
-              ${when(
-                checkOutPaid || x.paid,
-                () =>
-                  html`<strong style="color: forestgreen">Zaplaceno</strong>`,
-                () =>
-                  html`<strong style="color: darkred"
+              ${
+          when(
+            checkOutPaid || x.paid,
+            () => html`<strong style="color: forestgreen">Zaplaceno</strong>`,
+            () =>
+              html`<strong style="color: darkred"
                     >Nezaplaceno
                     <data value="${x.spent ?? x.totalSpent}"
                       >${formatMoney(x.spent ?? x.totalSpent)}</data
                     ></strong
-                  >`
-              )}
+                  >`,
+          )
+        }
 
               <a
                 href="https://pass.nfctron.com/receipt/${x.chipID}"
@@ -389,8 +400,9 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
                 >Účet</a
               >
             </li>
-          `
-        )}
+          `,
+    )
+  }
       </ul>
     </div>
   `;
@@ -428,7 +440,7 @@ function plusOneCard(referralLink) {
 
 function renderDashboardScreen(
   { housing, housingPlacement, travel, events = [], nfcTronData, checkOutPaid },
-  referralLink
+  referralLink,
 ) {
   return html`
     <div class="mdc-layout-grid__inner">
@@ -567,20 +579,16 @@ async function loadData(profile, year, apiURL) {
   if (attendee && !attendee?.nfcTronData?.[0]?.totalSpent) {
     // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
     // Load them async, because NFCTron API is slow as hell
-    getNfcTronData(attendee, apiURL).then((attendee) =>
-      swapIn("attendee", () => attendee)
-    );
+    getNfcTronData(attendee, apiURL).then((attendee) => swapIn("attendee", () => attendee));
   }
   const contact = getContact();
-  transact((x) =>
-    Object.assign(x, { profile, contact, registration, attendee, program })
-  );
+  transact((x) => Object.assign(x, { profile, contact, registration, attendee, program }));
   try {
     await setDonutProfileUrl(
       profile.sub,
       getSlackAccessToken(),
       contact.slug,
-      registration.company ?? attendee.company
+      registration.company ?? attendee.company,
     );
   } catch (err) {
     rollbar.error(err);
@@ -597,8 +605,8 @@ export async function main({ searchParams, rootElement, env }) {
   const apiURL = (endpoint) => new URL(endpoint, apiHost).href;
 
   if (
-    searchParams.has("returnUrl") &&
-    searchParams.get("state") === "not-authenticated"
+    searchParams.has("returnUrl")
+    && searchParams.get("state") === "not-authenticated"
   ) {
     setReturnUrl(searchParams.has("returnUrl"));
     signOut(apiURL);

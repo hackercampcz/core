@@ -1,13 +1,7 @@
 import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { checkAuthorization } from "../auth.mjs";
-import {
-  errorResponse,
-  getHeader,
-  notFound,
-  response,
-  withCORS,
-} from "../http.mjs";
+import { errorResponse, getHeader, notFound, response, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -23,9 +17,9 @@ async function getContact(dynamo, slackID, email) {
       TableName: process.env.db_table_contacts,
       Key: marshall(
         { slackID, email },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -39,7 +33,7 @@ export async function contacts(event) {
   const withCORS_ = withCORS(
     ["GET", "OPTIONS"],
     getHeader(event?.headers, "Origin") ?? "*",
-    { allowCredentials: true }
+    { allowCredentials: true },
   );
   try {
     await checkAuthorization(event);

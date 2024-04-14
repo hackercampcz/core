@@ -1,16 +1,11 @@
-import * as fs from "node:fs";
-import * as pulumi from "@pulumi/pulumi";
+import { createApi, createDB, createQueues, createRoutes } from "@hackercamp/api";
 import * as cloudflare from "@pulumi/cloudflare";
+import * as pulumi from "@pulumi/pulumi";
+import { Output } from "@pulumi/pulumi";
 import { registerAutoTags } from "@topmonks/pulumi-aws";
-import {
-  createApi,
-  createDB,
-  createQueues,
-  createRoutes,
-} from "@hackercamp/api";
+import * as fs from "node:fs";
 import { readTemplates } from "./communication";
 import * as postmark from "./postmark";
-import { Output } from "@pulumi/pulumi";
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),
@@ -30,7 +25,7 @@ const account = new cloudflare.Account(
     name: "rarous",
     enforceTwofactor: true,
   },
-  { protect: true }
+  { protect: true },
 );
 
 const hackercampCzZone = new cloudflare.Zone(
@@ -40,7 +35,7 @@ const hackercampCzZone = new cloudflare.Zone(
     plan: "free",
     zone: domain,
   },
-  { protect: true }
+  { protect: true },
 );
 
 const hckrCampZone = new cloudflare.Zone(
@@ -50,7 +45,7 @@ const hckrCampZone = new cloudflare.Zone(
     plan: "free",
     zone: "hckr.camp",
   },
-  { protect: true }
+  { protect: true },
 );
 
 const postmarkLayout = new postmark.Template("postmark-layout", {
@@ -68,7 +63,7 @@ for (const args of readTemplates("../communication/")) {
   const template = new postmark.Template(
     `postmark-template-${args.Name}`,
     args,
-    { dependsOn: [postmarkLayout] }
+    { dependsOn: [postmarkLayout] },
   );
   const key = args.Alias.replace(/-/g, "_");
   postmarkTemplates[key] = template.id;
@@ -109,7 +104,7 @@ new cloudflare.Record(`${webDomain}/apex-dns-record`, {
   type: "A",
   value: "192.0.2.1",
   ttl: 1,
-  proxied: true
+  proxied: true,
 });
 
 new cloudflare.Record(`${webDomain}/apex-ipv6-dns-record`, {
@@ -118,7 +113,7 @@ new cloudflare.Record(`${webDomain}/apex-ipv6-dns-record`, {
   type: "AAAA",
   value: "100::",
   ttl: 1,
-  proxied: true
+  proxied: true,
 });
 
 const wwwRecord = new cloudflare.Record(`${webDomain}/dns-record`, {
@@ -200,7 +195,7 @@ new cloudflare.Record(`hckr.camp/apex-dns-record`, {
   type: "A",
   value: "192.0.2.1",
   ttl: 1,
-  proxied: true
+  proxied: true,
 });
 
 new cloudflare.Record(`hckr.camp/apex-ipv6-dns-record`, {
@@ -209,7 +204,7 @@ new cloudflare.Record(`hckr.camp/apex-ipv6-dns-record`, {
   type: "AAAA",
   value: "100::",
   ttl: 1,
-  proxied: true
+  proxied: true,
 });
 
 new cloudflare.Record(`hckr.camp/www-dns-record`, {
@@ -218,7 +213,7 @@ new cloudflare.Record(`hckr.camp/www-dns-record`, {
   type: "A",
   value: "192.0.2.1",
   ttl: 1,
-  proxied: true
+  proxied: true,
 });
 
 new cloudflare.Record(`hckr.camp/www-ipv6-dns-record`, {
@@ -227,7 +222,7 @@ new cloudflare.Record(`hckr.camp/www-ipv6-dns-record`, {
   type: "AAAA",
   value: "100::",
   ttl: 1,
-  proxied: true
+  proxied: true,
 });
 
 new cloudflare.Record(`hckr.camp/donut-dns-record`, {
@@ -236,7 +231,7 @@ new cloudflare.Record(`hckr.camp/donut-dns-record`, {
   type: "A",
   value: "192.0.2.1",
   ttl: 1,
-  proxied: true
+  proxied: true,
 });
 
 new cloudflare.Record(`hckr.camp/donut-ipv6-dns-record`, {
@@ -245,5 +240,5 @@ new cloudflare.Record(`hckr.camp/donut-ipv6-dns-record`, {
   type: "AAAA",
   value: "100::",
   ttl: 1,
-  proxied: true
+  proxied: true,
 });

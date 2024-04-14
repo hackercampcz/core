@@ -1,8 +1,4 @@
-import {
-  DynamoDBClient,
-  GetItemCommand,
-  ScanCommand,
-} from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, GetItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { notFound, response } from "../http.mjs";
 
@@ -22,9 +18,9 @@ async function getRegistrationById(id) {
       FilterExpression: "id = :id",
       ExpressionAttributeValues: marshall(
         { ":id": id },
-        { removeUndefinedValues: true }
+        { removeUndefinedValues: true },
       ),
-    })
+    }),
   );
   const [data] = resp.Items.map((x) => unmarshall(x));
   console.log(data);
@@ -43,13 +39,13 @@ async function getRegistrationByEmail(email, year, slackID) {
       new GetItemCommand({
         TableName: "contacts",
         Key: marshall({ email, slackID }),
-      })
+      }),
     ),
     db.send(
       new GetItemCommand({
         TableName: "registrations",
         Key: marshall({ email, year: parseInt(year) }),
-      })
+      }),
     ),
   ]);
 

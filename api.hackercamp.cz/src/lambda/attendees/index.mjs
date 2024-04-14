@@ -1,8 +1,4 @@
-import {
-  DynamoDBClient,
-  ScanCommand,
-  GetItemCommand,
-} from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, GetItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { errorResponse, getHeader, response, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
@@ -22,7 +18,7 @@ async function getAttendees(dynamo, year) {
       FilterExpression: "#y = :y",
       ExpressionAttributeNames: { "#y": "year" },
       ExpressionAttributeValues: marshall({ ":y": year }),
-    })
+    }),
   );
   return result.Items.map((x) => unmarshall(x));
 }
@@ -32,7 +28,7 @@ async function getAttendee(dynamo, slackID, year) {
     new GetItemCommand({
       TableName: process.env.db_table_attendees,
       Key: marshall({ slackID, year }),
-    })
+    }),
   );
   return result.Item ? unmarshall(result.Item) : null;
 }
@@ -45,7 +41,7 @@ export async function attendees(event) {
   rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    getHeader(event?.headers, "Origin") ?? "*"
+    getHeader(event?.headers, "Origin") ?? "*",
   );
   if (event.httpMethod === "OPTIONS") {
     return withCORS_({

@@ -1,8 +1,4 @@
-import {
-  DynamoDBClient,
-  PutItemCommand,
-  ScanCommand,
-} from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
@@ -25,9 +21,9 @@ export async function getContact(dynamodb, email) {
       FilterExpression: "email = :email",
       ExpressionAttributeValues: marshall(
         { ":email": email },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
   return res.Items.map((x) => unmarshall(x))?.[0];
 }
@@ -41,10 +37,10 @@ function createAttendee(dynamo, contact, record) {
         Object.assign(
           {},
           selectKeys(contact, new Set(["slackID", "name", "image", "slug"])),
-          selectKeys(record, attributes, mapper)
-        )
+          selectKeys(record, attributes, mapper),
+        ),
       ),
-    })
+    }),
   );
 }
 
@@ -69,7 +65,7 @@ function enqueueSlackWelcomeMessage(user) {
         slackID: user.id,
         year: user.year,
       }),
-    })
+    }),
   );
 }
 
@@ -80,7 +76,7 @@ function enqueueSlackWelcomeMessage(user) {
 async function paidRegistrations(event) {
   rollbar.configure({ payload: { event } });
   const newlyPaidRegistrations = event.Records.filter(
-    (x) => x.eventName === "MODIFY"
+    (x) => x.eventName === "MODIFY",
   )
     .map((x) => ({
       newImage: unmarshall(x.dynamodb.NewImage),

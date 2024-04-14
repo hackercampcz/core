@@ -1,10 +1,10 @@
-import * as pulumi from "@pulumi/pulumi";
+import * as lambdaBuilder from "@hackercamp/infrastructure/lambda-builder";
 import * as aws from "@pulumi/aws";
 import { lambda } from "@pulumi/aws/types/input";
 import { LambdaAuthorizer, Method } from "@pulumi/awsx/classic/apigateway";
 import { Parameter } from "@pulumi/awsx/classic/apigateway/requestValidator";
+import * as pulumi from "@pulumi/pulumi";
 import { Api, ApiRoute, CacheSettings } from "@topmonks/pulumi-aws";
-import * as lambdaBuilder from "@hackercamp/infrastructure/lambda-builder";
 import * as path from "node:path";
 
 const config = new pulumi.Config();
@@ -152,7 +152,7 @@ export function createRoutes({
               fakturoid_token: config.get("fakturoid-token"),
               postmark_token: postmarkConfig.get("server-api-token"),
               algolia_index_name: config.get(
-                "algolia-registrations-index-name"
+                "algolia-registrations-index-name",
               ),
               ...algoliaEnv,
               ...postmarkTemplates,
@@ -288,14 +288,14 @@ const buildAssets = (fileName: string) =>
         "@aws-sdk/util-dynamodb",
         "@aws-sdk/client-sqs",
       ],
-    }
+    },
   );
 
 const getHandler = (
   name: string,
   fileName: string,
   role: aws.iam.Role,
-  { environment, timeout = 15, memorySize = 128 }: HandlerArgs
+  { environment, timeout = 15, memorySize = 128 }: HandlerArgs,
 ): aws.lambda.Function =>
   new aws.lambda.Function(name, {
     publish: true,
@@ -313,34 +313,33 @@ const getRouteHandler = (
   name: string,
   fileName: string,
   role: aws.iam.Role,
-  { stage, ...args }: RouteHandlerArgs
-): aws.lambda.Function =>
-  getHandler(hcName(`api-${name}-lambda`, { stage }), fileName, role, args);
+  { stage, ...args }: RouteHandlerArgs,
+): aws.lambda.Function => getHandler(hcName(`api-${name}-lambda`, { stage }), fileName, role, args);
 
 const getTableEventHandler = (
   name: string,
   fileName: string,
   role: aws.iam.Role,
-  args: HandlerArgs
+  args: HandlerArgs,
 ): aws.lambda.Function =>
   getHandler(
     hcName(`dynamodb-${name}-lambda`),
     path.join("dynamodb", fileName),
     role,
-    args
+    args,
   );
 
 const getSQSHandler = (
   name: string,
   fileName: string,
   role: aws.iam.Role,
-  args: HandlerArgs
+  args: HandlerArgs,
 ): aws.lambda.Function =>
   getHandler(
     hcName(`sqs-${name}-lambda`),
     path.join("sqs", fileName),
     role,
-    args
+    args,
   );
 
 export function createDB({ queues, postmarkTemplates }) {
@@ -384,9 +383,9 @@ export function createDB({ queues, postmarkTemplates }) {
             ...postmarkTemplates,
           },
         },
-      }
+      },
     ),
-    { startingPosition: "LATEST" }
+    { startingPosition: "LATEST" },
   );
   registrations.onEvent(
     "search-indexing-registrations",
@@ -403,9 +402,9 @@ export function createDB({ queues, postmarkTemplates }) {
             ...algoliaEnv,
           },
         },
-      }
+      },
     ),
-    { startingPosition: "LATEST" }
+    { startingPosition: "LATEST" },
   );
 
   const contacts = new aws.dynamodb.Table("contacts", {
@@ -446,9 +445,9 @@ export function createDB({ queues, postmarkTemplates }) {
             ...algoliaEnv,
           },
         },
-      }
+      },
     ),
-    { startingPosition: "LATEST" }
+    { startingPosition: "LATEST" },
   );
 
   const program = new aws.dynamodb.Table("program", {
@@ -500,9 +499,9 @@ export function createDefaultLambdaRole(stage) {
     hcName("default-lambda-role", { stage }),
     {
       assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal(
-        aws.iam.Principals.LambdaPrincipal
+        aws.iam.Principals.LambdaPrincipal,
       ),
-    }
+    },
   );
 
   new aws.iam.RolePolicyAttachment(
@@ -510,7 +509,7 @@ export function createDefaultLambdaRole(stage) {
     {
       policyArn: aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
       role: defaultLambdaRole,
-    }
+    },
   );
 
   new aws.iam.RolePolicyAttachment(
@@ -518,7 +517,7 @@ export function createDefaultLambdaRole(stage) {
     {
       policyArn: aws.iam.ManagedPolicy.AmazonDynamoDBFullAccess,
       role: defaultLambdaRole,
-    }
+    },
   );
 
   new aws.iam.RolePolicyAttachment(
@@ -526,7 +525,7 @@ export function createDefaultLambdaRole(stage) {
     {
       policyArn: aws.iam.ManagedPolicy.AmazonS3ReadOnlyAccess,
       role: defaultLambdaRole,
-    }
+    },
   );
 
   new aws.iam.RolePolicyAttachment(hcName("lambda-sqs-attachment", { stage }), {
@@ -552,7 +551,7 @@ export function createQueues({ postmarkTemplates }) {
           ...postmarkTemplates,
         },
       },
-    })
+    }),
   );
   return { slackQueueUrl: slackQueue.url };
 }
@@ -561,7 +560,7 @@ export function createApi(
   name: string,
   stage: string,
   domain: string,
-  routes: Record<string, RouteArgs> | undefined
+  routes: Record<string, RouteArgs> | undefined,
 ) {
   if (!routes) throw new Error("No routes provided");
   const defaultLambdaRole = createDefaultLambdaRole(stage);
@@ -578,7 +577,7 @@ export function createApi(
       memorySize,
       authorizers,
       environment,
-    }: RouteArgs
+    }: RouteArgs,
   ): ApiRoute => ({
     type: "handler",
     handler: getRouteHandler(name, fileName, role ?? defaultLambdaRole, {
@@ -599,9 +598,7 @@ export function createApi(
     description: "HackerCamp API",
     cacheEnabled: false,
     cacheSize: "0.5", // GB
-    routes: Object.entries(routes).map(([name, route]) =>
-      createHandlerRoute(name, route)
-    ),
+    routes: Object.entries(routes).map(([name, route]) => createHandlerRoute(name, route)),
   });
 
   return { url: api.gateway.url };

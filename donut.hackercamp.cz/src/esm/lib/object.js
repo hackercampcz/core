@@ -11,7 +11,7 @@ import { isISODateTime } from "./validation.js";
  * @returns {Object} Returns the given object.
  */
 export function objectForeach(obj, callback) {
-  Object.keys(obj).forEach(function (prop) {
+  Object.keys(obj).forEach(function(prop) {
     callback(obj[prop], prop, obj);
   });
   return obj;
@@ -31,18 +31,16 @@ export function objectForeach(obj, callback) {
  * @returns {Object} Returns the object with empty values removed.
  */
 export function objectWalk(obj, descentionFn, ascentionFn) {
-  descentionFn =
-    descentionFn ||
-    function () {
+  descentionFn = descentionFn
+    || function() {
       return null;
     };
-  ascentionFn =
-    ascentionFn ||
-    function () {
+  ascentionFn = ascentionFn
+    || function() {
       return null;
     };
   function walk(obj) {
-    objectForeach(obj, function (val, prop, aObj) {
+    objectForeach(obj, function(val, prop, aObj) {
       descentionFn(val, prop, aObj);
       if (val instanceof Object) {
         walk(val);

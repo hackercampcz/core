@@ -9,7 +9,6 @@ import { notFound, response } from "../http.mjs";
 const dynamo = new DynamoDBClient({});
 
 /**
- *
  * @param {DynamoDBClient} dynamo
  * @param {number} year
  * @returns {Promise<*>}
@@ -21,7 +20,7 @@ async function getProgram(dynamo, year) {
       FilterExpression: "#year = :year AND attribute_exists(approved)",
       ExpressionAttributeNames: { "#year": "year" },
       ExpressionAttributeValues: marshall({ ":year": year }),
-    })
+    }),
   );
   return result.Items.map((x) => unmarshall(x));
 }

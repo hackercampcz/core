@@ -1,6 +1,6 @@
 import "@material/web/iconbutton/icon-button.js";
 import "@material/web/icon/icon.js";
-import { LitElement, html } from "lit";
+import { html, LitElement } from "lit";
 
 export class MailButton extends LitElement {
   static properties = {

@@ -1,6 +1,6 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { response, notFound } from "../../http.mjs";
+import { notFound, response } from "../../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -14,15 +14,14 @@ async function getHousing(year) {
   const res = await db.send(
     new ScanCommand({
       TableName: process.env.db_table_attendees,
-      ProjectionExpression:
-        "#n, company, email, housing, housingPlacement, ticketType",
+      ProjectionExpression: "#n, company, email, housing, housingPlacement, ticketType",
       FilterExpression: "#yr = :yr",
       ExpressionAttributeNames: { "#yr": "year", "#n": "name" },
       ExpressionAttributeValues: marshall(
         { ":yr": year },
-        { removeUndefinedValues: true }
+        { removeUndefinedValues: true },
       ),
-    })
+    }),
   );
   return res.Items.map((x) => unmarshall(x));
 }

@@ -44,7 +44,7 @@ async function main({ year }) {
       await updateAttendee(
         year,
         attendee.slackID,
-        attendee.nfcTronData.filter((x) => x.sn)
+        attendee.nfcTronData.filter((x) => x.sn),
       );
     }
   }

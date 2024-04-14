@@ -8,8 +8,7 @@ async function getPaidRegistrations(year) {
   const result = await dynamo.scan({
     TableName: "registrations",
     ProjectionExpression: "email",
-    FilterExpression:
-      "attribute_exists(invoiced) AND attribute_not_exists(cancelled) AND #year = :year",
+    FilterExpression: "attribute_exists(invoiced) AND attribute_not_exists(cancelled) AND #year = :year",
     ExpressionAttributeNames: {
       "#year": "year",
     },
@@ -82,12 +81,12 @@ async function main({ token }) {
   const contacts = await getContacts();
   const thisYearRegistrations = await getThisYearRegistrations(year);
   for (const email of thisYearRegistrations) ignoreList.add(email);
-  //const attendees = await getAttendees(year);
-  //const paidRegistrations = await getPaidRegistrations(year);
+  // const attendees = await getAttendees(year);
+  // const paidRegistrations = await getPaidRegistrations(year);
   const coldHackers = new Set(contacts.filter((x) => !ignoreList.has(x)));
 
   console.log(coldHackers.size);
-  //return;
+  // return;
   for (const email of coldHackers) {
     console.log(`"${email}",`);
     await sendEmailWithTemplate({

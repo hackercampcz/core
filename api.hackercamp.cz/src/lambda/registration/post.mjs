@@ -45,7 +45,7 @@ export async function handler(event) {
   rest = Object.fromEntries(
     Object.entries(rest)
       .map(([k, v]) => [k, v?.trim()])
-      .filter(([, v]) => Boolean(v))
+      .filter(([, v]) => Boolean(v)),
   );
   const isVolunteer = rest.ticketType === "volunteer";
   const id = crypto.randomBytes(20).toString("hex");
@@ -76,9 +76,9 @@ export async function handler(event) {
             convertEmptyValues: true,
             removeUndefinedValues: true,
             convertClassInstanceToMap: true,
-          }
+          },
         ),
-      })
+      }),
     ),
     sendEmailWithTemplate({
       token: process.env["postmark_token"],

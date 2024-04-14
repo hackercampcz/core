@@ -19,13 +19,13 @@ async function main({ year, email }) {
     await dynamo.putItem({
       TableName: "trash",
       Item: reg,
-    })
+    }),
   );
   console.log(
     await dynamo.deleteItem({
       TableName: "registrations",
       Key: { email, year },
-    })
+    }),
   );
 }
 

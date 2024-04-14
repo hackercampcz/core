@@ -1,6 +1,6 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { response, notFound } from "../../http.mjs";
+import { notFound, response } from "../../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -18,9 +18,9 @@ async function getProgram(year) {
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         { ":yr": year },
-        { removeUndefinedValues: true }
+        { removeUndefinedValues: true },
       ),
-    })
+    }),
   );
   return res.Items.map((x) => unmarshall(x));
 }
@@ -34,9 +34,9 @@ async function getApprovalQueue(year) {
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall(
         { ":yr": year },
-        { removeUndefinedValues: true }
+        { removeUndefinedValues: true },
       ),
-    })
+    }),
   );
   return res.Items.map((x) => unmarshall(x));
 }
@@ -60,7 +60,7 @@ export async function handler(event) {
   console.log("QS", event.queryStringParameters);
   const { type, year } = Object.assign(
     { year: "2022" },
-    event.queryStringParameters
+    event.queryStringParameters,
   );
   const data = await getData(type, parseInt(year));
   if (!data) return notFound();

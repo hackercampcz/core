@@ -59,7 +59,7 @@ async function main({}) {
       Object.entries(e)
         .map(([k, v]) => [k.trim(), v.trim()])
         .filter(([k, v]) => Boolean(v))
-        .filter(([k, v]) => v !== "null")
+        .filter(([k, v]) => v !== "null"),
     );
     const attendee = await getAttendee(dynamo, x1.email);
     if (!attendee) continue;
@@ -73,10 +73,10 @@ async function main({}) {
         duration: x1.duration?.split("M")?.[0]?.replace("1H", "60"),
         lineup: lineup.get(x1.Stage),
         topic: topic.get(x1.topic),
-      }
+      },
     );
     const x3 = Object.fromEntries(
-      Object.entries(x2).filter(([k, v]) => Boolean(v))
+      Object.entries(x2).filter(([k, v]) => Boolean(v)),
     );
     if (x3.lineup !== "liback") continue;
     if (!x3.topic) continue;

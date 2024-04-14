@@ -1,8 +1,4 @@
-import {
-  formatLongDayName,
-  formatShortDayName,
-  formatTime,
-} from "@hackercamp/lib/format.mjs";
+import { formatLongDayName, formatShortDayName, formatTime } from "@hackercamp/lib/format.mjs";
 import { defAtom, updateAsTransaction } from "@thi.ng/atom";
 import structuredClone from "@ungap/structured-clone";
 import { html } from "lit-html";
@@ -83,13 +79,13 @@ function makeDayline(startAt, endAt) {
     startAt.getFullYear(),
     startAt.getMonth(),
     startAt.getDate(),
-    DAY_START_HOUR
+    DAY_START_HOUR,
   );
   const dayEnd = new Date(
     endAt.getFullYear(),
     endAt.getMonth(),
     endAt.getDate() + 1,
-    DAY_START_HOUR
+    DAY_START_HOUR,
   );
   const days = makeTimeline(dayStart, dayEnd, 24 * 60);
   return days;
@@ -132,8 +128,7 @@ function handleLineupsScroll(event) {
   const scrollElement = document.getElementById("lineups");
   const { campStartAt } = state.deref();
   const visibleDate = new Date(campStartAt.getTime());
-  const minutesScrolledOut =
-    (event.target.scrollLeft / getSlotWidth(scrollElement)) * SLOT_MINUTES;
+  const minutesScrolledOut = (event.target.scrollLeft / getSlotWidth(scrollElement)) * SLOT_MINUTES;
 
   visibleDate.setMinutes(campStartAt.getMinutes() + minutesScrolledOut);
   location.hash = `#${visibleDate.toISOString()}`;
@@ -151,16 +146,18 @@ function eventTemplate({
 }) {
   const durationInSlots = eventDurationInSlots(event);
   return html`
-    ${when(
+    ${
+    when(
       !event.topic,
       () =>
         html`<div
-          class="${classMap({
+          class="${
+          classMap({
             lineup__event: true,
-            "lineup__event--narrow":
-              durationInSlots === 1 && event.title?.length > 3,
+            "lineup__event--narrow": durationInSlots === 1 && event.title?.length > 3,
             [`lineup__event--${event.type}`]: event.type,
-          })}"
+          })
+        }"
           data-lineup=${lineup.id}
           id=${event.id || event._id}
           style=${`
@@ -168,8 +165,7 @@ function eventTemplate({
         --slot-duration: ${durationInSlots};
         --slot-top-offset: ${event._top ?? "calc(var(--spacing) / 4)"};
       `}
-          @click=${() =>
-            showModalDialog(`event-detail-${event.id || event._id}`)}
+          @click=${() => showModalDialog(`event-detail-${event.id || event._id}`)}
         >
           <p
             style="${`
@@ -182,8 +178,10 @@ function eventTemplate({
             ${event.title}
           </p>
           <div class="people-list">
-            ${event.people?.map(
-              (speaker) => html`
+            ${
+          event.people?.map(
+            (speaker) =>
+              html`
                 <figure class="speaker speaker--photo">
                   <img
                     alt="${speaker.name}"
@@ -192,33 +190,43 @@ function eventTemplate({
                     height="32"
                   />
                 </figure>
-              `
-            )}
-            ${when(
-              event.type === "topic" && event.people?.length,
-              () => html` <figure class="speaker speaker--add">+</figure> `
-            )}
+              `,
+          )
+        }
+            ${
+          when(
+            event.type === "topic" && event.people?.length,
+            () => html` <figure class="speaker speaker--add">+</figure> `,
+          )
+        }
           </div>
-        </div>`
-    )}
+        </div>`,
+    )
+  }
     <dialog class="event__detail" id="event-detail-${event.id || event._id}">
       <h1>${event.title}</h1>
-      ${when(
-        !event.topic,
-        () => html`
+      ${
+    when(
+      !event.topic,
+      () =>
+        html`
           <p>
             ${formatEventTimeInfo(event)}
             <code>${lineup.name}</code><br />
           </p>
-        `
-      )}
-      ${when(
-        event.type !== "topic",
-        () => html`
+        `,
+    )
+  }
+      ${
+    when(
+      event.type !== "topic",
+      () =>
+        html`
           <div class="people-list">
-            ${event.people?.map(
-              (speaker) =>
-                html` <figure class="speaker speaker--full">
+            ${
+          event.people?.map(
+            (speaker) =>
+              html` <figure class="speaker speaker--full">
                   <img
                     alt="${speaker.name}"
                     src="${speaker.image}"
@@ -227,57 +235,68 @@ function eventTemplate({
                   />
                   <a href=${`/hackers/${speaker.slug}`}>${speaker.name}</a>
                   ${when(speaker.company, () => html`z ${speaker.company}`)}
-                </figure>`
-            )}
+                </figure>`,
+          )
+        }
           </div>
-        `
-      )}
+        `,
+    )
+  }
 
       <p>${event.description}</p>
-      ${when(
-        event.place,
-        () => html`<p><strong>Kde to bude:</strong> ${event.place}</p>`
-      )}
+      ${
+    when(
+      event.place,
+      () => html`<p><strong>Kde to bude:</strong> ${event.place}</p>`,
+    )
+  }
 
       <div class="people-list">
-        ${(topicEvents || []).map(
-          ({ id, _id, title, people = [] }) => html`
+        ${
+    (topicEvents || []).map(
+      ({ id, _id, title, people = [] }) =>
+        html`
             <figure class="speaker speaker--full">
-              ${people.map(
-                ({ name, image }) =>
-                  html`<img width="32" height="32" alt=${name} src=${image} />`
-              )}
+              ${
+          people.map(
+            ({ name, image }) => html`<img width="32" height="32" alt=${name} src=${image} />`,
+          )
+        }
               <a
                 href="#"
                 @click=${(e) => {
-                  e.preventDefault();
+          e.preventDefault();
 
-                  showModalDialog(`event-detail-${id || _id}`);
-                }}
+          showModalDialog(`event-detail-${id || _id}`);
+        }}
                 >${title}</a
               >
             </figure>
-          `
-        )}
+          `,
+    )
+  }
       </div>
-      ${when(
-        event.type === "topic",
-        () => html`
+      ${
+    when(
+      event.type === "topic",
+      () =>
+        html`
           <a
             class="hc-link hc-link--decorated"
             style="margin: calc(var(--spacing) / 2) 0; padding: calc(var(--spacing) / 4);"
             @click=${(e) => {
-              e.preventDefault();
-              renderAndShowAddEventForm(lineup.id, {
-                selectedTopic: event.id || event._id,
-              });
-            }}
+          e.preventDefault();
+          renderAndShowAddEventForm(lineup.id, {
+            selectedTopic: event.id || event._id,
+          });
+        }}
           >
             Zapojit se
           </a>
           <hr />
-        `
-      )}
+        `,
+    )
+  }
       <button name="close">Zavřít</button>
     </dialog>
   `;
@@ -306,12 +325,12 @@ function renderProgram({
 }) {
   const eventStartAtSlot = (event) => getSlotNumber(campStartAt, event.startAt);
   const eventDurationInSlots = (event) =>
-    getSlotNumber(campStartAt, event.endAt) -
-    getSlotNumber(campStartAt, event.startAt);
+    getSlotNumber(campStartAt, event.endAt)
+    - getSlotNumber(campStartAt, event.startAt);
 
   const renderAndShowAddEventForm = (
     lineupId,
-    { preferredTime, selectedTopic = null } = {}
+    { preferredTime, selectedTopic = null } = {},
   ) => {
     renderEventForm(document.getElementById("add-event-form"), {
       apiHost,
@@ -685,47 +704,53 @@ function renderProgram({
           class="hc-link hc-link--decorated"
           style="font-size: 120%;"
           @click=${(e) => {
-            e.preventDefault();
-            renderAndShowAddEventForm();
-          }}
+    e.preventDefault();
+    renderAndShowAddEventForm();
+  }}
         >
           Zapoj se do programu
         </a>
       </div>
       <div class="program__dayline">
         <div class="dayline">
-          ${makeDayline(campStartAt, campEndAt).map(
-            (day) => html`
+          ${
+    makeDayline(campStartAt, campEndAt).map(
+      (day) =>
+        html`
               <a
-                class=${classMap({
-                  dayline__tick: true,
-                  "dayline__tick--visible":
-                    visibleDate.getDate() === day.getDate(),
-                })}
+                class=${
+          classMap({
+            dayline__tick: true,
+            "dayline__tick--visible": visibleDate.getDate() === day.getDate(),
+          })
+        }
                 href="#${day.toISOString()}"
                 @click=${() => {
-                  const scrollElement = document.getElementById("lineups");
-                  const date = new Date(day);
-                  date.setHours(DAY_START_HOUR);
-                  scrollToDate(scrollElement, date);
-                }}
+          const scrollElement = document.getElementById("lineups");
+          const date = new Date(day);
+          date.setHours(DAY_START_HOUR);
+          scrollToDate(scrollElement, date);
+        }}
               >
                 ${formatLongDayName(day)}
               </a>
-            `
-          )}
+            `,
+    )
+  }
         </div>
       </div>
       <div class="program__lineups" id="lineups" @scroll=${onLineupsScroll}>
-        ${lineups.map(
-          (lineup) => html`
+        ${
+    lineups.map(
+      (lineup) =>
+        html`
             <div class="lineup">
               <div
                 class="lineup__info"
                 data-name=${lineup.name}
                 @click=${() => {
-                  showModalDialog(`lineup-detail-${lineup.id}`);
-                }}
+          showModalDialog(`lineup-detail-${lineup.id}`);
+        }}
               >
                 <h2>${lineup.name}</h2>
                 <pre>${lineup.description}</pre>
@@ -733,69 +758,77 @@ function renderProgram({
               <a
                 class="lineup__sticky"
                 @click=${(e) => {
-                  e.preventDefault();
-                  showModalDialog(`lineup-detail-${lineup.id}`);
-                }}
+          e.preventDefault();
+          showModalDialog(`lineup-detail-${lineup.id}`);
+        }}
                 >${lineup.name}</a
               >
               <dialog class="lineup__detail" id="lineup-detail-${lineup.id}">
                 <h1>${lineup.name}</h1>
                 <p>${lineup.description}</p>
                 <p>${lineup.detail}</p>
-                ${when(
-                  lineup.id !== "liorg",
-                  () =>
-                    html`<a
+                ${
+          when(
+            lineup.id !== "liorg",
+            () =>
+              html`<a
                       class="hc-link hc-link--decorated"
                       style="padding: calc(var(--spacing) / 4);"
                       @click=${(e) => {
-                        e.preventDefault();
-                        renderAndShowAddEventForm(lineup.id);
-                      }}
+                e.preventDefault();
+                renderAndShowAddEventForm(lineup.id);
+              }}
                     >
                       Zapoj se do programu
-                    </a> `
-                )}
+                    </a> `,
+          )
+        }
                 <hr />
                 <button name="close">Zavřít</button>
               </dialog>
               <div class="lineup__eventsline">
-                ${lineUpEvents(lineup, events).map((event) =>
-                  eventTemplate({
-                    lineup,
-                    event,
-                    topicEvents: topicEvents(event, events),
-                    eventStartAtSlot,
-                    eventDurationInSlots,
-                    renderAndShowAddEventForm,
-                  })
-                )}
+                ${
+          lineUpEvents(lineup, events).map((event) =>
+            eventTemplate({
+              lineup,
+              event,
+              topicEvents: topicEvents(event, events),
+              eventStartAtSlot,
+              eventDurationInSlots,
+              renderAndShowAddEventForm,
+            })
+          )
+        }
               </div>
               <div class="lineup__timeline">
-                ${makeTimeline(campStartAt, campEndAt, 15).map(
-                  (time) => html`
+                ${
+          makeTimeline(campStartAt, campEndAt, 15).map(
+            (time) =>
+              html`
                     <a
                       class="lineup__slot"
                       ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
                       data-tick=${makeTick(time)}
                       data-day=${formatShortDayName(time)}
                       @click=${(e) => {
-                        e.preventDefault();
-                        // timezone hotfix
-                        time.setHours(time.getHours() + 2);
-                        renderAndShowAddEventForm(lineup.id, {
-                          preferredTime: time,
-                        });
-                      }}
+                e.preventDefault();
+                // timezone hotfix
+                time.setHours(time.getHours() + 2);
+                renderAndShowAddEventForm(lineup.id, {
+                  preferredTime: time,
+                });
+              }}
                     >
                       &nbsp;
                     </a>
-                  `
-                )}
+                  `,
+          )
+        }
               </div>
             </div>
-          `
-        )}
+          `,
+    )
+  }
       </div>
       <div class="program__beside">
         <h2>Další program</h2>
@@ -809,9 +842,9 @@ function renderProgram({
           class="hc-link hc-link--decorated"
           style="padding: calc(var(--spacing) / 4)"
           @click=${(e) => {
-            e.preventDefault();
-            renderAndShowAddEventForm("liother");
-          }}
+    e.preventDefault();
+    renderAndShowAddEventForm("liother");
+  }}
         >
           Zapoj se do programu
         </a>
@@ -855,7 +888,7 @@ async function fetchEvents(apiHost) {
           reject({ unauthenticated: true });
         });
       },
-    }
+    },
   );
   return resp.json();
 }
@@ -874,7 +907,6 @@ function joinTopicPeople(events) {
 }
 
 /**
- *
  * @param {HTMLElement} rootElement
  * @param env
  * @returns {Promise<void>}
@@ -893,7 +925,7 @@ export async function main({ rootElement, env }) {
         profile: getSlackProfile(),
         featureToggles: { fullProgram: env["feature-toggle/full-program"] },
       },
-      schedule.get(env.year)
+      schedule.get(env.year),
     )
   );
 

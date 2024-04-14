@@ -8,8 +8,7 @@ async function getAttendees() {
   const result = await dynamo.scan({
     TableName: "attendees",
     ProjectionExpression: "email, nfcTronData",
-    FilterExpression:
-      "#year = :year AND attribute_exists(nfcTronData) AND NOT ticketType IN (:volunteer, :crew)",
+    FilterExpression: "#year = :year AND attribute_exists(nfcTronData) AND NOT ticketType IN (:volunteer, :crew)",
     ExpressionAttributeValues: {
       ":year": 2023,
       ":volunteer": "volunteer",
@@ -69,9 +68,7 @@ const transactionsToRefund = new Set([
 async function main({}) {
   const result = [];
   const attendees = await getAttendees();
-  const data = attendees.flatMap((a) =>
-    a.nfcTronData.filter((x) => x.sn).map((x) => [a.email, x.chipID])
-  );
+  const data = attendees.flatMap((a) => a.nfcTronData.filter((x) => x.sn).map((x) => [a.email, x.chipID]));
   for (const [email, chipID] of data) {
     const transactions = await getTransactions(chipID);
     for (const { transactionId, total } of transactions) {
@@ -85,7 +82,7 @@ async function main({}) {
     individuals.set(email, individuals.get(email) + totalSpent);
   }
   console.log(
-    JSON.stringify(Object.fromEntries(Array.from(individuals)), null, 2)
+    JSON.stringify(Object.fromEntries(Array.from(individuals)), null, 2),
   );
   console.log({ total: result.reduce((a, [, total]) => a + total, 0) });
 }

@@ -1,12 +1,6 @@
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import {
-  accepted,
-  errorResponse,
-  getHeader,
-  readPayload,
-  withCORS,
-} from "../http.mjs";
+import { accepted, errorResponse, getHeader, readPayload, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -25,7 +19,7 @@ export async function optout(event) {
   rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
-    getHeader(event?.headers, "Origin") ?? "*"
+    getHeader(event?.headers, "Origin") ?? "*",
   );
 
   try {
@@ -44,9 +38,9 @@ export async function optout(event) {
             convertEmptyValues: true,
             removeUndefinedValues: true,
             convertClassInstanceToMap: true,
-          }
+          },
         ),
-      })
+      }),
     );
     return withCORS_(accepted());
   } catch (err) {

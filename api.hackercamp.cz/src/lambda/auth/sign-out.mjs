@@ -11,25 +11,23 @@ const rollbar = Rollbar.init({ lambdaName: "auth-signout" });
  */
 export async function signOut(event) {
   rollbar.configure({ payload: { event } });
-  const origin =
-    getHeader(event.headers, "Origin") ??
-    getHeader(event.headers, "Referer") ??
-    `https://${process.env.hostname}/`;
+  const origin = getHeader(event.headers, "Origin")
+    ?? getHeader(event.headers, "Referer")
+    ?? `https://${process.env.hostname}/`;
   const withCORS_ = withCORS(["GET", "OPTIONS"], origin, {
     allowCredentials: true,
   });
 
   // For local development we need to relax Cross site security
-  const sameSite =
-    origin.includes("localhost") ||
-    origin.includes("7da2-145-224-120-68.ngrok-free.app")
-      ? "None"
-      : "Strict";
+  const sameSite = origin.includes("localhost")
+      || origin.includes("7da2-145-224-120-68.ngrok-free.app")
+    ? "None"
+    : "Strict";
   const expired = new Date(0).toUTCString();
   return withCORS_(
     found(origin, {
       "Set-Cookie": `hc-id=; Expires=${expired}; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
-    })
+    }),
   );
 }
 

@@ -1,7 +1,7 @@
 import { errorResponse, getHeader, withCORS } from "../http.mjs";
+import Rollbar from "../rollbar.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
-import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
@@ -16,7 +16,7 @@ export async function registration(event) {
   rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "POST", "OPTIONS"],
-    getHeader(event?.headers, "Origin")
+    getHeader(event?.headers, "Origin"),
   );
   try {
     switch (event.httpMethod) {

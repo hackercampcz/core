@@ -1,13 +1,9 @@
-import {
-  BatchGetItemCommand,
-  DynamoDBClient,
-  ScanCommand,
-} from "@aws-sdk/client-dynamodb";
+import { BatchGetItemCommand, DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { partition } from "@thi.ng/transducers";
 import createSearchClient from "algoliasearch";
-import { getHeader } from "../../http.mjs";
 import { resultsCount } from "../../algolia.mjs";
+import { getHeader } from "../../http.mjs";
 import { formatResponse } from "../csv.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -26,13 +22,12 @@ async function getOptOuts(year) {
       FilterExpression: "#yr = :yr",
       ExpressionAttributeNames: { "#yr": "year" },
       ExpressionAttributeValues: marshall({ ":yr": year }),
-    })
+    }),
   );
   return res.Items.map((x) => x.email.S);
 }
 
 /**
- *
  * @param {DynamoDBClient} db
  * @param hits
  * @returns {Promise<Record<string, any>[]>}
@@ -43,8 +38,8 @@ async function getItemsFromDB(db, hits) {
   const result = [];
   const deduplicatedHits = hits.filter(
     (value, index, self) =>
-      index ===
-      self.findIndex((t) => t.email === value.email && t.year === value.year)
+      index
+        === self.findIndex((t) => t.email === value.email && t.year === value.year),
   );
 
   for (const batch of partition(100, true, deduplicatedHits)) {
@@ -57,12 +52,12 @@ async function getItemsFromDB(db, hits) {
     const items = await db.send(
       new BatchGetItemCommand({
         RequestItems: { [tableName]: { Keys: keys } },
-      })
+      }),
     );
     result.push(
       ...items.Responses[tableName]
         .map((x) => unmarshall(x))
-        .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp))
+        .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp)),
     );
   }
   return result;
@@ -70,12 +65,11 @@ async function getItemsFromDB(db, hits) {
 
 function findDuplicates(arr) {
   return arr.filter(
-    (currentValue, currentIndex) => arr.indexOf(currentValue) !== currentIndex
+    (currentValue, currentIndex) => arr.indexOf(currentValue) !== currentIndex,
   );
 }
 
 /**
- *
  * @param {string} query
  * @param {string} tag
  * @param {number} year
@@ -83,8 +77,7 @@ function findDuplicates(arr) {
  * @param {number} pageSize
  */
 async function getRegistrations(query, tag, year, page, pageSize) {
-  const { algolia_app_id, algolia_search_key, algolia_index_name } =
-    process.env;
+  const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
   console.log({
@@ -103,7 +96,7 @@ async function getRegistrations(query, tag, year, page, pageSize) {
       params: {
         attributesToRetrieve: ["year", "email"],
         tagFilters: [year.toString(), tag === "search" ? null : tag].filter(
-          Boolean
+          Boolean,
         ),
         hitsPerPage: pageSize,
         page,
@@ -119,7 +112,7 @@ async function getRegistrations(query, tag, year, page, pageSize) {
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
   const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map(
-    (x) => x.nbHits
+    (x) => x.nbHits,
   );
 
   const duplicates = findDuplicates(hits);
@@ -149,7 +142,7 @@ export async function handler(event) {
       pageSize: "20",
       format: getHeader(event.headers, "Accept"),
     },
-    event.queryStringParameters
+    event.queryStringParameters,
   );
 
   if (type === "optouts") {
@@ -167,7 +160,7 @@ export async function handler(event) {
     type,
     parseInt(year),
     parseInt(page),
-    parseInt(pageSize)
+    parseInt(pageSize),
   );
   return formatResponse(data, {
     year,

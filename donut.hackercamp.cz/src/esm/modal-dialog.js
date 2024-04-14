@@ -1,5 +1,4 @@
 /**
- *
  * @param {string} id ID of <dialog> element
  */
 export function showModalDialog(id) {

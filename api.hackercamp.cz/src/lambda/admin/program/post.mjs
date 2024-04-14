@@ -1,9 +1,4 @@
-import {
-  DeleteItemCommand,
-  DynamoDBClient,
-  GetItemCommand,
-  UpdateItemCommand,
-} from "@aws-sdk/client-dynamodb";
+import { DeleteItemCommand, DynamoDBClient, GetItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
@@ -27,9 +22,9 @@ function deleteEvent(db, { event_id, year }) {
       TableName: process.env.db_table_program,
       Key: marshall(
         { _id: event_id, year },
-        { convertEmptyValues: true, removeUndefinedValues: true }
+        { convertEmptyValues: true, removeUndefinedValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -45,14 +40,14 @@ function approveEvent(db, { event_id, year }, slackID) {
       TableName: process.env.db_table_program,
       Key: marshall(
         { _id: event_id, year },
-        { convertEmptyValues: true, removeUndefinedValues: true }
+        { convertEmptyValues: true, removeUndefinedValues: true },
       ),
       UpdateExpression: "SET approved = :now, approvedBy = :slackID",
       ExpressionAttributeValues: marshall(
         { ":now": new Date().toISOString(), ":slackID": slackID },
-        { convertEmptyValues: true, removeUndefinedValues: true }
+        { convertEmptyValues: true, removeUndefinedValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -67,7 +62,7 @@ function editEvent(db, { event_id, year, ...updates }) {
       TableName: process.env.db_table_program,
       Key: marshall(
         { _id: event_id, year: parseInt(year, 10) },
-        { convertEmptyValues: true, removeUndefinedValues: true }
+        { convertEmptyValues: true, removeUndefinedValues: true },
       ),
       UpdateExpression:
         "SET title = :title, description = :desc, place = :place, startAt = :startAt, #duration = :duration",
@@ -80,9 +75,9 @@ function editEvent(db, { event_id, year, ...updates }) {
           ":startAt": updates.startAt,
           ":duration": updates.duration,
         },
-        { convertEmptyValues: true, removeUndefinedValues: true }
+        { convertEmptyValues: true, removeUndefinedValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -94,9 +89,9 @@ async function getAttendee(dynamo, slackID, year) {
       ProjectionExpression: "events",
       Key: marshall(
         { slackID, year },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
   return result.Item ? unmarshall(result.Item) : null;
 }
@@ -110,9 +105,9 @@ function saveAttendee(dynamo, data) {
       UpdateExpression: "SET events = :events",
       ExpressionAttributeValues: marshall(
         { ":events": data.events },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -147,20 +142,20 @@ async function processRequest(db, data, slackID) {
       const sanitizedData = Object.fromEntries(
         Object.entries(data.params)
           .map(([k, v]) => [k, v?.trim ? v?.trim() : v])
-          .filter(([k, v]) => Boolean(v))
+          .filter(([k, v]) => Boolean(v)),
       );
       sanitizedData.year = year;
       if (sanitizedData.duration && sanitizedData.startAt) {
         const duration = parseInt(sanitizedData.duration, 10) * 60 * 1000;
         const startTime = Date.parse(
-          sanitizedData.startAt + sanitizedData.timezone
+          sanitizedData.startAt + sanitizedData.timezone,
         );
         sanitizedData.endAt = new Date(startTime + duration).toISOString();
       }
       const events = Array.from(
         new Map(attendee.events?.map((e) => [e._id, e]))
           .set(sanitizedData._id, sanitizedData)
-          .values()
+          .values(),
       ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
       await saveAttendee(db, { year, events, slackID: sanitizedData.slackID });
       sanitizedData.people = [

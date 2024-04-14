@@ -12,8 +12,7 @@ export default {
       return today >= threeDaysBefore;
     },
     location: "Sobeňák, Starý Rožmitál 148, Rožmitál pod Třemšínem",
-    details:
-      "Zažijte netradiční třídenní festival pro lidi z české tech scény.",
+    details: "Zažijte netradiční třídenní festival pro lidi z české tech scény.",
   },
   ticket: {
     nonprofit: { name: "Táborník z neziskovky", price: 3000 },

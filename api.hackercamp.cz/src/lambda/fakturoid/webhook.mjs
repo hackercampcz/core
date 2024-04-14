@@ -1,8 +1,4 @@
-import {
-  DynamoDBClient,
-  UpdateItemCommand,
-  ScanCommand,
-} from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import {
   errorResponse,
@@ -36,7 +32,7 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
         ExpressionAttributeValues: marshall({
           ":paid": new Date(paid_at).toISOString(),
         }),
-      })
+      }),
     );
     await sendEmailWithTemplate({
       token: process.env["postmark_token"],
@@ -64,7 +60,7 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
         ExpressionAttributeValues: marshall({
           ":now": new Date(paid_at).toISOString(),
         }),
-      })
+      }),
     );
     console.log({
       event: "Invoice marked as cancelled",
@@ -82,7 +78,7 @@ export async function fakturoidWebhook(event) {
   rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
-    getHeader(event.headers, "Origin")
+    getHeader(event.headers, "Origin"),
   );
 
   try {
@@ -107,7 +103,7 @@ export async function fakturoidWebhook(event) {
           ":invoice_id": invoice_id,
         }),
         ExpressionAttributeNames: { "#y": "year" },
-      })
+      }),
     );
     const registrations = resp.Items;
     if (!registrations.length) {

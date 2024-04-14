@@ -40,9 +40,9 @@ function openAlgoliaIndex() {
  */
 async function deleteRemovedItems(event, searchIndex) {
   const deletedAttendees = event.Records.filter(
-    (x) => x.eventName === "REMOVE"
+    (x) => x.eventName === "REMOVE",
   ).map(
-    (x) => `${x.dynamodb.OldImage.year.N}-${x.dynamodb.OldImage.slackID.S}`
+    (x) => `${x.dynamodb.OldImage.year.N}-${x.dynamodb.OldImage.slackID.S}`,
   );
 
   if (deletedAttendees.length > 0) {

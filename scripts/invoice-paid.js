@@ -30,8 +30,9 @@ async function getRegistrations(invoiceId) {
 async function main({ invoiceId, paidAt }) {
   console.log({ invoiceId, paidAt: new Date(paidAt).toISOString() });
   const registrations = await getRegistrations(invoiceId);
-  for (const registration of registrations)
+  for (const registration of registrations) {
     await markAsPaid(registration, paidAt);
+  }
 }
 
 await main(parse(Deno.args));

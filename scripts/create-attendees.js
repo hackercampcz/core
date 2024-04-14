@@ -13,8 +13,7 @@ async function inviteSlackUser(email, token) {
     body: JSON.stringify({
       email,
       team_id: "T01V4Q0ACQ4",
-      channel_ids:
-        "C01V4Q0AZ0U,C01URRQ2CR4,C01URRT4Z8W,C026KB0G8V8,C026CD74YJ2,C0278R69JUQ,C026G4WA64D,C026XQ8AKU1",
+      channel_ids: "C01V4Q0AZ0U,C01URRQ2CR4,C01URRT4Z8W,C026KB0G8V8,C026CD74YJ2,C0278R69JUQ,C026G4WA64D,C026XQ8AKU1",
     }),
   });
   if (!resp.ok) {
@@ -43,21 +42,20 @@ async function getExistingSlackAccounts(token) {
   });
   const data = await resp.json();
   const users = data.members.filter(
-    (x) => !(x.is_bot || x.deleted || skip.has(x.name))
+    (x) => !(x.is_bot || x.deleted || skip.has(x.name)),
   );
 
   const idsByEmail = new Map(
-    [].concat(users.map((x) => [x.profile.email, x.id]))
+    [].concat(users.map((x) => [x.profile.email, x.id])),
   );
   const imagesByEmail = new Map(
-    users.map((x) => [x.profile.email, x.profile.image_512])
+    users.map((x) => [x.profile.email, x.profile.image_512]),
   );
   const slugByEmail = new Map(users.map((x) => [x.profile.email, x.name]));
   return { idsByEmail, imagesByEmail, slugByEmail };
 }
 
 /**
- *
  * @param {DynamoDBClient} dynamo
  * @returns {Promise<*>}
  */
@@ -65,14 +63,12 @@ async function getPaidRegistrations(dynamo) {
   const result = await dynamo.scan({
     TableName: "registrations",
     Select: "ALL_ATTRIBUTES",
-    FilterExpression:
-      "attribute_exists(invoiced) and attribute_not_exists(cancelled)",
+    FilterExpression: "attribute_exists(invoiced) and attribute_not_exists(cancelled)",
   });
   return result.Items;
 }
 
 /**
- *
  * @param {DynamoDBClient} dynamo
  * @returns {Promise<*>}
  */
@@ -133,20 +129,19 @@ async function getOptOuts(dynamo, year = 2022) {
  */
 function selectKeys(obj, keys) {
   return Object.fromEntries(
-    Object.entries(obj).filter(([key]) => keys.has(key))
+    Object.entries(obj).filter(([key]) => keys.has(key)),
   );
 }
 
 async function main({ slackToken, postmarkToken }) {
   const dynamo = createClient();
-  const { idsByEmail, imagesByEmail, slugByEmail } =
-    await getExistingSlackAccounts(slackToken);
+  const { idsByEmail, imagesByEmail, slugByEmail } = await getExistingSlackAccounts(slackToken);
   const ignoreList = new Set([]);
   const optOuts = await getOptOuts(dynamo);
   for (const email of optOuts) ignoreList.add(email);
   const paidRegistrations = await getPaidRegistrations(dynamo);
   const registrations = paidRegistrations.filter(
-    (x) => !ignoreList.has(x.email)
+    (x) => !ignoreList.has(x.email),
   );
   const keys = new Set([
     "housing",
@@ -175,9 +170,9 @@ async function main({ slackToken, postmarkToken }) {
       });
     })
     .map((x) => Object.fromEntries(Object.entries(x).filter(([, v]) => v)));
-  //const slackInvites = attendees.filter((x) => !x.slackID).map((x) => x.email);
-  //await sendSlackInvitation(slackInvites, postmarkToken);
-  //console.log(JSON.stringify(attendees, null, 2));
+  // const slackInvites = attendees.filter((x) => !x.slackID).map((x) => x.email);
+  // await sendSlackInvitation(slackInvites, postmarkToken);
+  // console.log(JSON.stringify(attendees, null, 2));
   console.log(attendees.length);
   await createAttendees(attendees, dynamo);
 }

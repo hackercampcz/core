@@ -10,7 +10,7 @@ async function main({ email, token }) {
   });
   const data = await resp.json();
   const users = data.members.filter(
-    (x) => !(x.is_bot || x.deleted || skip.has(x.name))
+    (x) => !(x.is_bot || x.deleted || skip.has(x.name)),
   );
   const items = new Map(
     users.map((x) => [
@@ -22,7 +22,7 @@ async function main({ email, token }) {
         name: x.profile.real_name,
         image: x.profile.image_512,
       },
-    ])
+    ]),
   );
 
   const item = items.get(email);

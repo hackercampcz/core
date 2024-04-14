@@ -2,8 +2,7 @@ import { Workbox } from "workbox-window/build/workbox-window.prod.mjs";
 
 /** @typedef {import("workbox-window").WorkboxLifecycleWaitingEvent} WorkboxLifecycleWaitingEvent */
 
-const isProduction = () =>
-  ["localhost", "127"].indexOf(location.hostname) === -1;
+const isProduction = () => ["localhost", "127"].indexOf(location.hostname) === -1;
 
 /**
  * @param {function(Workbox): function(WorkboxLifecycleWaitingEvent)} showSkipWaitingPrompt

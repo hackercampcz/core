@@ -1,11 +1,8 @@
 import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
-import createSearchClient from "https://esm.sh/algoliasearch@4.16.0";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
+import createSearchClient from "https://esm.sh/algoliasearch@4.16.0";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
-import {
-  getAttendeesProjection,
-  getRegistrationProjection,
-} from "../lib/search.mjs";
+import { getAttendeesProjection, getRegistrationProjection } from "../lib/search.mjs";
 
 const dynamo = createClient();
 const indexes = new Map([
@@ -46,7 +43,7 @@ const indexes = new Map([
 async function getCrewReferrals(token) {
   const resp = await fetch(
     "https://slack.com/api/usergroups.users.list?usergroup=S03EQ1LLYCC",
-    { headers: { Authorization: `Bearer ${token}` } }
+    { headers: { Authorization: `Bearer ${token}` } },
   );
   const { users } = await resp.json();
   return new Set(users);
@@ -162,8 +159,8 @@ await main(
       adminToken: Deno.env.get("ALGOLIA_ADMIN_API_KEY"),
       slackBotToken: Deno.env.get("SLACK_TOKEN"),
     },
-    parse(Deno.args)
-  )
+    parse(Deno.args),
+  ),
 );
 
 // op run --env-file=../.env -- deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config algolia-import.js

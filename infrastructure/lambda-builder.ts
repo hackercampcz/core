@@ -8,7 +8,7 @@ function build(
   entrypoint: string,
   minify: boolean,
   format: "cjs" | "esm",
-  external
+  external,
 ) {
   const result = buildSync({
     bundle: true,
@@ -37,12 +37,12 @@ export function buildCodeAsset(
     minify: false,
     format: "cjs",
     external: [],
-  }
+  },
 ): pulumi.asset.AssetArchive {
   const ext = format === "esm" ? "mjs" : "js";
   return new pulumi.asset.AssetArchive({
     [`index.${ext}`]: new pulumi.asset.StringAsset(
-      build(entrypoint, minify, format, external)
+      build(entrypoint, minify, format, external),
     ),
   });
 }

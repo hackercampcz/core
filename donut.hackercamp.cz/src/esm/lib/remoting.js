@@ -1,7 +1,6 @@
 const noop = () => {};
 
 /**
- *
  * @param {Promise<Response>} response
  * @param {function()} onUnauthenticated
  * @param {function()} onUnauthorized
@@ -12,7 +11,7 @@ export async function withAuthHandler(
   { onUnauthenticated, onUnauthorized } = {
     onUnauthenticated: noop,
     onUnauthorized: noop,
-  }
+  },
 ) {
   const resp = await response;
   if (resp.status === 401) {

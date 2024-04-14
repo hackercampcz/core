@@ -13,8 +13,8 @@ export default {
 
   static: {
     srcConfig: {
-      encoding: false
-    }
+      encoding: false,
+    },
   },
 
   generate: {
@@ -54,14 +54,16 @@ export default {
           return new Intl.NumberFormat("cs-CZ", {
             style: currency ? "currency" : undefined,
             currency,
-            maximumFractionDigits: 0
+            maximumFractionDigits: 0,
           }).format(x).replace(/\u00A0/, "\u202F");
         },
         calendarURL(event) {
           const format = ({ y, m, d }) =>
-            `${y}${m.toString().padStart(2, "0")}${d
-              .toString()
-              .padStart(2, "0")}`;
+            `${y}${m.toString().padStart(2, "0")}${
+              d
+                .toString()
+                .padStart(2, "0")
+            }`;
           const d = (d) => ({
             y: d.getFullYear(),
             m: d.getMonth() + 1,
@@ -71,15 +73,17 @@ export default {
           return new URL(
             `?${new URLSearchParams({
               action: "TEMPLATE",
-              dates: `${format(d(event.startDate))}/${format(
-                incDay(d(event.endDate))
-              )}`,
+              dates: `${format(d(event.startDate))}/${
+                format(
+                  incDay(d(event.endDate)),
+                )
+              }`,
               text: event.name,
               location: event.location,
               details: event.details,
               sf: true,
             })}`,
-            "https://calendar.google.com/calendar/event"
+            "https://calendar.google.com/calendar/event",
           ).toString();
         },
       },

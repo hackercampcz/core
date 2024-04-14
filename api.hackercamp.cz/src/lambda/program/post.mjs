@@ -1,12 +1,7 @@
-import {
-  DynamoDBClient,
-  GetItemCommand,
-  PutItemCommand,
-  UpdateItemCommand,
-} from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, GetItemCommand, PutItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
 import crypto from "crypto";
 import { getHeader, notFound, readPayload, seeOther } from "../http.mjs";
 
@@ -25,9 +20,9 @@ async function getAttendee(dynamo, slackID, year) {
       ExpressionAttributeNames: { "#name": "name" },
       Key: marshall(
         { slackID, year },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
   return result.Item ? unmarshall(result.Item) : null;
 }
@@ -41,9 +36,9 @@ function saveAttendee(dynamo, data) {
       UpdateExpression: "SET events = :events",
       ExpressionAttributeValues: marshall(
         { ":events": data.events },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -56,7 +51,7 @@ async function createEvent(dynamo, data) {
         removeUndefinedValues: true,
         convertEmptyValues: true,
       }),
-    })
+    }),
   );
 }
 
@@ -79,7 +74,7 @@ export async function handler(event) {
   const sanitizedData = Object.fromEntries(
     Object.entries(data)
       .map(([k, v]) => [k, v?.trim ? v?.trim() : v])
-      .filter(([k, v]) => Boolean(v))
+      .filter(([k, v]) => Boolean(v)),
   );
   if (freeStages.has(sanitizedData.lineup)) {
     sanitizedData.approved = new Date().toISOString();
@@ -88,7 +83,7 @@ export async function handler(event) {
   if (sanitizedData.duration && sanitizedData.startAt) {
     const duration = parseInt(sanitizedData.duration, 10) * 60 * 1000;
     const startTime = Date.parse(
-      sanitizedData.startAt + sanitizedData.timezone
+      sanitizedData.startAt + sanitizedData.timezone,
     );
     sanitizedData.endAt = new Date(startTime + duration).toISOString();
   }
@@ -98,7 +93,7 @@ export async function handler(event) {
   const events = Array.from(
     new Map(attendee.events?.map((e) => [e._id, e]))
       .set(sanitizedData._id, sanitizedData)
-      .values()
+      .values(),
   ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
   await saveAttendee(dynamo, { slackID: submittedBy, year, events });
   sanitizedData.people = [

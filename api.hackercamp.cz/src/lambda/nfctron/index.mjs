@@ -13,7 +13,7 @@ async function getNfcTronData(chipID) {
     {
       headers: { accept: "application/json" },
       referrer: "https://pass.nfctron.com/",
-    }
+    },
   );
   return resp.json();
 }
@@ -26,7 +26,7 @@ export async function attendees(event) {
   rollbar.configure({ payload: { event } });
   const withCORS_ = withCORS(
     ["GET", "OPTIONS"],
-    getHeader(event?.headers, "Origin") ?? "*"
+    getHeader(event?.headers, "Origin") ?? "*",
   );
   if (event.httpMethod === "OPTIONS") {
     return withCORS_({

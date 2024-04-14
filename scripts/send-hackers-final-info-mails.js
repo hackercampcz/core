@@ -37,8 +37,7 @@ async function getRegistrations() {
   console.log("Loading registrations…");
   const resp = await dynamo.scan({
     TableName: "registrations",
-    FilterExpression:
-      "#year = :year AND NOT ticketType IN (:volunteer, :staff)",
+    FilterExpression: "#year = :year AND NOT ticketType IN (:volunteer, :staff)",
     ProjectionExpression: "email",
     ExpressionAttributeNames: { "#year": "year" },
     ExpressionAttributeValues: {

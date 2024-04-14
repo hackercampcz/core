@@ -1,6 +1,6 @@
 import Rollbar from "rollbar/src/browser/core";
-import telemeter from "rollbar/src/telemetry";
 import instrumenter from "rollbar/src/browser/telemetry";
+import telemeter from "rollbar/src/telemetry";
 
 export function init(env) {
   Rollbar.setComponents({ telemeter, instrumenter });

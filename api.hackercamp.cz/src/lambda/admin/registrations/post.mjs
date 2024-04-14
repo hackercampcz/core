@@ -7,10 +7,10 @@ import {
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { getContact } from "../../dynamodb/registrations/paid.mjs";
 import { fetchInvoice } from "../../fakturoid.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
-import { getContact } from "../../dynamodb/registrations/paid.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -32,9 +32,9 @@ async function optout(db, { email, year }) {
         {
           convertEmptyValues: true,
           removeUndefinedValues: true,
-        }
+        },
       ),
-    })
+    }),
   );
 }
 
@@ -47,7 +47,7 @@ async function getRegistration(db, { email, year }) {
         email: { S: email },
         year: { N: year.toString() },
       },
-    })
+    }),
   );
   return resp.Item;
 }
@@ -67,7 +67,7 @@ async function moveToTrash(db, { email, year, slackID }) {
         deletedBy: { S: slackID },
         deleted: { S: new Date().toISOString() },
       }),
-    })
+    }),
   );
   await db.send(
     new DeleteItemCommand({
@@ -76,7 +76,7 @@ async function moveToTrash(db, { email, year, slackID }) {
         email: { S: email },
         year: { N: year.toString() },
       },
-    })
+    }),
   );
 }
 
@@ -95,9 +95,9 @@ function addRegistration(db, data) {
         {
           convertEmptyValues: true,
           removeUndefinedValues: true,
-        }
+        },
       ),
-    })
+    }),
   );
 }
 
@@ -108,14 +108,14 @@ async function approve(db, { email, year, referral }) {
       TableName: process.env.db_table_registrations,
       Key: marshall(
         { email, year },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
       UpdateExpression: "SET approved = :approved, approvedBy = :approvedBy",
       ExpressionAttributeValues: marshall({
         ":approved": new Date().toISOString(),
         ":approvedBy": referral,
       }),
-    })
+    }),
   );
   return sendEmailWithTemplate({
     token: process.env.postmark_token,
@@ -148,7 +148,7 @@ async function approveVolunteer(db, { registrations, referral }) {
       console.log({ event: "No contact found", email: registration.email });
       await sendVolunteerSlackInvitation(
         registration.email,
-        process.env.postmark_token
+        process.env.postmark_token,
       );
     }
 
@@ -159,14 +159,13 @@ async function approveVolunteer(db, { registrations, referral }) {
           removeUndefinedValues: true,
           convertEmptyValues: true,
         }),
-        UpdateExpression:
-          "SET paid = :paid, approved = :approved, approvedBy = :approvedBy",
+        UpdateExpression: "SET paid = :paid, approved = :approved, approvedBy = :approvedBy",
         ExpressionAttributeValues: marshall({
           ":paid": new Date().toISOString(),
           ":approved": new Date().toISOString(),
           ":approvedBy": referral,
         }),
-      })
+      }),
     );
   }
 }
@@ -193,9 +192,9 @@ async function invoiced(db, { registrations, invoiceId }) {
           {
             removeUndefinedValues: true,
             convertEmptyValues: true,
-          }
+          },
         ),
-      })
+      }),
     );
   }
 }
@@ -212,9 +211,9 @@ async function editRegistration(db, { key, data }) {
           year: { N: key.year.toString() },
         },
         UpdateExpression:
-          "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid," +
-          "invRecipient = :invRecipient, invRecipientEmail = :invRecipientEmail, invRecipientPhone = :invRecipientPhone, invRecipientFirstname = :invRecipientFirstname, invRecipientLastname = :invRecipientLastname," +
-          "invName = :invName, invAddress = :invAddress, invRegNo = :invRegNo, invVatNo = :invVatNo, invText = :invText, invEmail = :invEmail",
+          "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid,"
+          + "invRecipient = :invRecipient, invRecipientEmail = :invRecipientEmail, invRecipientPhone = :invRecipientPhone, invRecipientFirstname = :invRecipientFirstname, invRecipientLastname = :invRecipientLastname,"
+          + "invName = :invName, invAddress = :invAddress, invRegNo = :invRegNo, invVatNo = :invVatNo, invText = :invText, invEmail = :invEmail",
         ExpressionAttributeValues: marshall(
           {
             ":firstName": data.firstName,
@@ -237,9 +236,9 @@ async function editRegistration(db, { key, data }) {
             ":invText": data.invText,
             ":invEmail": data.invEmail,
           },
-          { removeUndefinedValues: true, convertEmptyValues: true }
+          { removeUndefinedValues: true, convertEmptyValues: true },
         ),
-      })
+      }),
     );
   }
 
@@ -249,12 +248,11 @@ async function editRegistration(db, { key, data }) {
     {
       convertEmptyValues: true,
       removeUndefinedValues: true,
-    }
+    },
   );
 
   console.log({
-    event:
-      "Update registration with new email - deleting old item and adding new one",
+    event: "Update registration with new email - deleting old item and adding new one",
     key,
     originalData,
     formData,
@@ -279,7 +277,7 @@ async function editRegistration(db, { key, data }) {
           },
         },
       ],
-    })
+    }),
   );
 }
 

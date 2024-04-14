@@ -48,14 +48,17 @@ function headerProfilePopup(contact, profile, signOut) {
             </a>
           </div>
         </li>
-        ${when(
-          is_admin,
-          () => html`
+        ${
+    when(
+      is_admin,
+      () =>
+        html`
             <li>
               <a href="/admin/">Administrace</a>
             </li>
-          `
-        )}
+          `,
+    )
+  }
         <!--li>
           <a href="/program/">Program kempu</a>
         </li-->
@@ -88,9 +91,7 @@ function header(profile, contact, isPopupVisible, togglePopup) {
 function renderProfile({ profile, contact, isPopupVisible }) {
   if (!profile) return;
   return header(profile, contact, isPopupVisible, () => {
-    state.swap((x) =>
-      Object.assign({}, x, { isPopupVisible: !isPopupVisible })
-    );
+    state.swap((x) => Object.assign({}, x, { isPopupVisible: !isPopupVisible }));
   });
 }
 
@@ -122,7 +123,7 @@ export async function init({ profile: root, env }) {
         html`<md-text-button slot="action" @click="${update}"
           >AKTUALIZOVAT</md-text-button
         >`,
-        snackbar
+        snackbar,
       );
       snackbar.show();
     }

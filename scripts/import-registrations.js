@@ -16,9 +16,7 @@ function getTimestamp(x) {
 
 async function main({}) {
   const text = await Deno.readTextFile("./data/import-registrations.json");
-  const data = JSON.parse(text).map((x) =>
-    Object.assign(x, { timestamp: getTimestamp(x) })
-  );
+  const data = JSON.parse(text).map((x) => Object.assign(x, { timestamp: getTimestamp(x) }));
 
   for (const registration of data) {
     await dynamo.putItem({ TableName: "registrations", Item: registration });

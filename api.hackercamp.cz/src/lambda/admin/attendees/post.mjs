@@ -1,12 +1,8 @@
-import {
-  DynamoDBClient,
-  PutItemCommand,
-  UpdateItemCommand,
-} from "@aws-sdk/client-dynamodb";
-import { selectKeys } from "@hackercamp/lib/object.mjs";
+import { DynamoDBClient, PutItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
 import crypto from "crypto";
+import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -40,12 +36,12 @@ function editAttendee(db, data) {
           ":editedBy": data.editedBy,
           ":ticketType": data.ticketType,
         },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
       ExpressionAttributeNames: {
         "#name": "name",
       },
-    })
+    }),
   );
 }
 
@@ -69,7 +65,7 @@ function addAttendee(db, data) {
         convertEmptyValues: true,
         removeUndefinedValues: true,
       }),
-    })
+    }),
   );
 }
 
@@ -95,9 +91,9 @@ async function checkIn(db, data) {
           ":checkInNote": data.note,
           ":nfcTronData": data.nfcTronData,
         },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -124,9 +120,9 @@ async function checkOut(db, data) {
           ":checkOutPaid": data.paid,
           ":checkOutTotal": data.amount,
         },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
 }
 

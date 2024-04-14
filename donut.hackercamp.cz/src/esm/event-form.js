@@ -105,7 +105,8 @@ const lineupsFieldsTemplates = new Map([
   ["", html`<em>nah.</em>`, ""],
   [
     "limain",
-    ({ lineupTopicEvents, selectedTopic, editingEvent }) => html`
+    ({ lineupTopicEvents, selectedTopic, editingEvent }) =>
+      html`
       <div class="field">
         <label for="topic">Téma přednášky / talku</label>
         <select
@@ -120,25 +121,31 @@ const lineupsFieldsTemplates = new Map([
           <option value="" disabled ?selected=${!selectedTopic}>
             Vyberte vaše téma
           </option>
-          ${lineupTopicEvents.map(
-            (topic) =>
-              html`<option
+          ${
+        lineupTopicEvents.map(
+          (topic) =>
+            html`<option
                 value=${topic.id}
                 ?selected=${selectedTopic && selectedTopic === topic.id}
               >
                 ${topic.title}
-              </option>`
-          )}
+              </option>`,
+        )
+      }
         </select>
       </div>
-      ${when(
-        selectedTopic,
-        () =>
-          html`<p style="font-style: italic;">
-            ${lineupTopicEvents.find(({ id }) => id === selectedTopic)
-              ?.description}
-          </p>`
-      )}
+      ${
+        when(
+          selectedTopic,
+          () =>
+            html`<p style="font-style: italic;">
+            ${
+              lineupTopicEvents.find(({ id }) => id === selectedTopic)
+                ?.description
+            }
+          </p>`,
+        )
+      }
       <div
         style=${`display: ${selectedTopic || editingEvent ? "block" : "none"}`}
       >
@@ -192,7 +199,8 @@ const lineupsFieldsTemplates = new Map([
   ["libase", () => html`<em>copy of limain.</em>`],
   [
     "liback",
-    ({ campStartAt, campEndAt, preferredTime }) => html`
+    ({ campStartAt, campEndAt, preferredTime }) =>
+      html`
       <div class="field">
         <label for="title">Název workshopu </label>
         <input id="title" name="title" type="text" required />
@@ -241,8 +249,8 @@ const lineupsFieldsTemplates = new Map([
   [
     "liother",
     ({ campStartAt, campEndAt, preferredTime, editingEvent }) =>
-      console.log(editingEvent) ||
-      html`
+      console.log(editingEvent)
+      || html`
         <div class="field">
           <label for="title"
             >Název aktivity, anotace (co si pod tím představit)</label
@@ -330,7 +338,8 @@ const lineupsFieldsTemplates = new Map([
   ["lijungle", html`<em>liwood copy</em>`],
   [
     "lipeep",
-    ({ preferredTime, campStartAt, campEndAt, editingEvent }) => html`
+    ({ preferredTime, campStartAt, campEndAt, editingEvent }) =>
+      html`
       <div class="field">
         <label for="title">Název aktivity</label>
         <input
@@ -402,7 +411,8 @@ const lineupsFieldsTemplates = new Map([
   ],
   [
     "liwood",
-    ({ selectedTopic, lineupTopicEvents, editingEvent }) => html`
+    ({ selectedTopic, lineupTopicEvents, editingEvent }) =>
+      html`
       <div class="field">
         <label for="topic">Téma přednášky / talku</label>
         <select
@@ -417,15 +427,17 @@ const lineupsFieldsTemplates = new Map([
           <option value="" disabled ?selected=${!selectedTopic}>
             Vyberte vaše téma
           </option>
-          ${lineupTopicEvents.map(
-            (topic) =>
-              html`<option
+          ${
+        lineupTopicEvents.map(
+          (topic) =>
+            html`<option
                 value=${topic.id}
                 ?selected=${selectedTopic && selectedTopic === topic.id}
               >
                 ${topic.title}
-              </option>`
-          )}
+              </option>`,
+        )
+      }
         </select>
       </div>
       <p>
@@ -468,8 +480,7 @@ const lineupsFieldsTemplates = new Map([
   ],
   [
     "liorg",
-    ({ selectedTopic, lineupTopicEvents, preferredTime }) =>
-      html`<em>copy of liother</em>`,
+    ({ selectedTopic, lineupTopicEvents, preferredTime }) => html`<em>copy of liother</em>`,
   ],
 ]);
 lineupsFieldsTemplates.set("lijungle", lineupsFieldsTemplates.get("liwood"));
@@ -497,9 +508,9 @@ export function signpostTemplate() {
             class="hc-link--decorated"
             href="#"
             @click=${(e) => {
-              e.preventDefault();
-              showLineupEventForm("limain");
-            }}
+    e.preventDefault();
+    showLineupEventForm("limain");
+  }}
             >Mainframe</a
           >
         </div>
@@ -509,9 +520,9 @@ export function signpostTemplate() {
             class="hc-link--decorated"
             href="#"
             @click=${(e) => {
-              e.preventDefault();
-              showLineupEventForm("libase");
-            }}
+    e.preventDefault();
+    showLineupEventForm("libase");
+  }}
             >Basecamp</a
           >
         </div>
@@ -522,9 +533,9 @@ export function signpostTemplate() {
           class="hc-link--decorated"
           href="#"
           @click=${(e) => {
-            e.preventDefault();
-            showLineupEventForm("liback");
-          }}
+    e.preventDefault();
+    showLineupEventForm("liback");
+  }}
           >Backend</a
         >
       </div>
@@ -534,9 +545,9 @@ export function signpostTemplate() {
           class="hc-link--decorated"
           href="#"
           @click=${(e) => {
-            e.preventDefault();
-            showLineupEventForm("lipeep");
-          }}
+    e.preventDefault();
+    showLineupEventForm("lipeep");
+  }}
           >PeopleWare</a
         >
       </div>
@@ -546,9 +557,9 @@ export function signpostTemplate() {
           class="hc-link--decorated"
           href="#"
           @click=${(e) => {
-            e.preventDefault();
-            showLineupEventForm("liwood");
-          }}
+    e.preventDefault();
+    showLineupEventForm("liwood");
+  }}
           >WoodStack /<br />Jungle release</a
         >
       </div>
@@ -558,9 +569,9 @@ export function signpostTemplate() {
           class="hc-link--decorated"
           href="#"
           @click=${(e) => {
-            e.preventDefault();
-            showLineupEventForm("liother");
-          }}
+    e.preventDefault();
+    showLineupEventForm("liother");
+  }}
           >Doprovodný program</a
         >
       </div>
@@ -589,7 +600,7 @@ export function eventFormTemplate({
     campEndAt,
     preferredTime,
     lineupTopicEvents: events.filter(
-      ({ lineup, type }) => lineup === lineupId && type === "topic"
+      ({ lineup, type }) => lineup === lineupId && type === "topic",
     ),
     selectedTopic,
     editingEvent,
@@ -599,10 +610,12 @@ export function eventFormTemplate({
     ${eventFormStyles} ${headHtml}
     <form method="post" action="${apiHost}program" @submit=${onEventSubmit}>
       <input type="hidden" name="lineup" value=${lineupId} />
-      ${when(
-        editingEvent,
-        () => html`<input type="hidden" name="_id" value=${editingEvent._id} />`
-      )}
+      ${
+    when(
+      editingEvent,
+      () => html`<input type="hidden" name="_id" value=${editingEvent._id} />`,
+    )
+  }
       <input
         type="hidden"
         name="slackID"
@@ -631,7 +644,7 @@ export async function renderEventForm(
     selectedTopic,
     editingEvent,
     onEventSubmit,
-  }
+  },
 ) {
   initRenderLoop(state, rootElement);
   const view = lineupId ? eventFormTemplate : signpostTemplate;
@@ -670,7 +683,7 @@ export async function renderEventForm(
               reject({ unauthenticated: true });
             });
           },
-        }
+        },
       );
       const housing = await response.json();
       const hackers = housing.map(({ name, slackID }) => ({

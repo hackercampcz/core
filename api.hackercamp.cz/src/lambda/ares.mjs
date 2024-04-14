@@ -35,7 +35,7 @@ export async function getCompanyDetails(ico) {
   const resp = await fetch(
     `https://wwwinfo.mfcr.cz/cgi-bin/ares/darv_or.cgi?${new URLSearchParams({
       ico,
-    })}`
+    })}`,
   );
   if (!resp.ok) {
     const err = await resp.text();

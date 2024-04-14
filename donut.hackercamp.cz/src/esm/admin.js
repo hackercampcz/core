@@ -9,27 +9,15 @@ import "@material/web/textfield/outlined-text-field.js";
 import "@material/web/textfield/filled-text-field.js";
 import { defAtom, updateAsTransaction } from "@thi.ng/atom";
 import { html, render } from "lit-html";
-import {
-  Action,
-  dispatchAction,
-  Endpoint,
-  executeCommand,
-  getDialog,
-  View,
-} from "./admin/common.js";
-import {
-  getContact,
-  getSlackProfile,
-  setReturnUrl,
-  signOut,
-} from "./lib/profile.js";
+import { Action, dispatchAction, Endpoint, executeCommand, getDialog, View } from "./admin/common.js";
+import { renderEventForm } from "./event-form.js";
+import { instatializeDates } from "./lib/object.js";
+import { getContact, getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop, renderScheduler } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
-import { renderEventForm } from "./event-form.js";
 import { schedule } from "./lib/schedule.js";
 import { showModalDialog } from "./modal-dialog.js";
-import { instatializeDates } from "./lib/object.js";
 
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
 /** @typedef {import("@thi.ng/atom").Path} Path */
@@ -84,8 +72,8 @@ export function createOptOut(email, year, apiHost) {
 function optout(email) {
   const { apiHost, year } = state.deref();
   return (
-    confirm("Opravdu chceš táborníka vyřadit?") &&
-    createOptOut(email, year, apiHost)
+    confirm("Opravdu chceš táborníka vyřadit?")
+    && createOptOut(email, year, apiHost)
   );
 }
 
@@ -108,12 +96,12 @@ function optin(email) {
   const { apiHost, year, contact } = state.deref();
   if (!contact) {
     return alert(
-      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj."
+      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.",
     );
   }
   return (
-    confirm("Opravdu chceš táborníka potvrdit?") &&
-    createOptIn(email, year, contact.slackID, apiHost)
+    confirm("Opravdu chceš táborníka potvrdit?")
+    && createOptIn(email, year, contact.slackID, apiHost)
   );
 }
 
@@ -129,12 +117,12 @@ function trashRegistration(email) {
   const { apiHost, year, contact } = state.deref();
   if (!contact) {
     return alert(
-      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj."
+      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.",
     );
   }
   return (
-    confirm("Opravdu chceš táborníka smáznout?") &&
-    moveToTrash(email, year, contact.slackID, apiHost)
+    confirm("Opravdu chceš táborníka smáznout?")
+    && moveToTrash(email, year, contact.slackID, apiHost)
   );
 }
 
@@ -168,7 +156,7 @@ function approveSelectedVolunteers() {
 
   if (!contact) {
     return alert(
-      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj."
+      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.",
     );
   }
 
@@ -212,8 +200,8 @@ export function saveEditedEvent(event_id, year, updates, apiHost) {
 function deleteEvent(event_id, people) {
   const { apiHost, year } = state.deref();
   return (
-    confirm("Opravdu chceš event smazat?") &&
-    markEventAsRemoved(event_id, year, people, apiHost)
+    confirm("Opravdu chceš event smazat?")
+    && markEventAsRemoved(event_id, year, people, apiHost)
   );
 }
 
@@ -233,8 +221,8 @@ export function markEventAsApproved(event_id, year, apiHost) {
 function approveEvent(event_id) {
   const { apiHost, year } = state.deref();
   return (
-    confirm("Opravdu chceš event schválit?") &&
-    markEventAsApproved(event_id, year, apiHost)
+    confirm("Opravdu chceš event schválit?")
+    && markEventAsApproved(event_id, year, apiHost)
   );
 }
 
@@ -284,7 +272,7 @@ async function showEditEventModalDialog(event, { editEvent }) {
     apiHost,
     profile: getSlackProfile(),
     lineupId: event.lineup,
-    //header: adminEditEventHeaderTemplate(),
+    // header: adminEditEventHeaderTemplate(),
     campStartAt,
     campEndAt,
     preferredTime: new Date(event.startAt),
@@ -389,7 +377,7 @@ async function fetchData({ selectedView, year, page, query }, apiHost) {
       onUnauthorized() {
         return Promise.reject({ unauthorized: true });
       },
-    }
+    },
   );
   return resp.json();
 }
@@ -419,7 +407,7 @@ function loadData(selectedView, year, page, query, apiHost) {
     swapIn(
       "data",
       () => fetchData({ selectedView, year, page, query }, apiHost),
-      t
+      t,
     );
     return true;
   });
@@ -563,7 +551,7 @@ export async function main({
   yearSelector.value = year;
   yearSelector.addEventListener("change", (e) => {
     location.assign(
-      `?${new URLSearchParams({ year: e.target.value, view: selectedView })}`
+      `?${new URLSearchParams({ year: e.target.value, view: selectedView })}`,
     );
   });
 
@@ -581,7 +569,7 @@ export async function main({
         params: searchParams,
         isNFCSupported,
       },
-      schedule.get(year)
+      schedule.get(year),
     )
   );
   initRenderLoop(state, appRoot, { keepContent: true });

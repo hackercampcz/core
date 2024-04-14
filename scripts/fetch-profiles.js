@@ -11,7 +11,7 @@ async function main({ token }) {
   });
   const data = await resp.json();
   const users = data.members.filter(
-    (x) => !(x.is_bot || x.deleted || skip.has(x.name))
+    (x) => !(x.is_bot || x.deleted || skip.has(x.name)),
   );
   const items = users.map((x) => ({
     email: x.profile.email,

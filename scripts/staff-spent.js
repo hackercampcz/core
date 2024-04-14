@@ -24,9 +24,7 @@ async function getAttendees() {
 async function main({}) {
   const result = [];
   const attendees = await getAttendees();
-  const data = attendees.flatMap((a) =>
-    a.nfcTronData.filter((x) => x.sn).map((x) => [a.email, x.chipID])
-  );
+  const data = attendees.flatMap((a) => a.nfcTronData.filter((x) => x.sn).map((x) => [a.email, x.chipID]));
   for (const [email, chipID] of data) {
     const totalSpent = await getTotalSpent(chipID);
     result.push([email, totalSpent]);
@@ -40,8 +38,8 @@ async function main({}) {
     JSON.stringify(
       Object.fromEntries(Array.from(individuals).sort((a, b) => a[1] - b[1])),
       null,
-      2
-    )
+      2,
+    ),
   );
   console.log({
     total: result.map((x) => x[1]).reduce((acc, x) => acc + x, 0),

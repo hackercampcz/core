@@ -1,12 +1,12 @@
 import { withAuthHandler } from "./remoting";
 export async function signIn(
   { idToken, slackProfile, slackToken, slackAccessToken },
-  apiURL
+  apiURL,
 ) {
   const contact = await getContactFromDb(
     slackProfile.id,
     slackProfile.email,
-    apiURL
+    apiURL,
   );
   setContact(contact);
   localStorage.setItem("hc:id_token", idToken);
@@ -40,7 +40,7 @@ async function getContactFromDb(slackID, email, apiUrl) {
           reject({ unauthenticated: true });
         });
       },
-    }
+    },
   );
   return resp.json();
 }

@@ -16,9 +16,7 @@ async function retry(callback, retryCount = 3) {
 }
 
 export async function getTransactions(chipID) {
-  const resp = await retry(() =>
-    fetch(`https://api.nfctron.com/receipt/v2/${chipID}/transaction`)
-  );
+  const resp = await retry(() => fetch(`https://api.nfctron.com/receipt/v2/${chipID}/transaction`));
   if (!resp) return [];
   const data = await resp.json();
   if (Array.isArray(data.transactions)) {
@@ -28,9 +26,7 @@ export async function getTransactions(chipID) {
 }
 
 export async function getTotalSpent(chipID) {
-  const resp = await retry(() =>
-    fetch(`https://api.nfctron.com/receipt/v2/${chipID}/transaction`)
-  );
+  const resp = await retry(() => fetch(`https://api.nfctron.com/receipt/v2/${chipID}/transaction`));
   if (!resp) return 0;
   const data = await resp.json();
   return (data.totalSpent ?? 0) / 100;
@@ -45,7 +41,7 @@ async function getAllChips(token) {
         authorization: `Bearer ${token}`,
         referer: "https://hub.nfctron.com/",
       },
-    }
+    },
   );
   const data = await resp.json();
   return data;

@@ -8,8 +8,8 @@ import {
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
-import { postChatMessage, sendMessageToSlack } from "../../slack.mjs";
 import Rollbar from "../../rollbar.mjs";
+import { postChatMessage, sendMessageToSlack } from "../../slack.mjs";
 
 /** @typedef {import("aws-lambda").SQSEvent} SQSEvent */
 
@@ -25,7 +25,7 @@ async function getAttendee(slackID, year) {
         slackID: { S: slackID },
         year: { N: year.toString() },
       },
-    })
+    }),
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -43,9 +43,9 @@ function createContact({ id, profile, name }) {
           name: profile.real_name,
           image: profile.image_512,
         },
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -64,11 +64,11 @@ async function createAttendee({ id, profile, name }, record) {
             name: profile.real_name,
             image: profile.image_512,
           },
-          selectKeys(record, attributes, mapper)
+          selectKeys(record, attributes, mapper),
         ),
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -81,7 +81,7 @@ async function getContact(email, slackID) {
         email: { S: email },
         slackID: { S: slackID },
       },
-    })
+    }),
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -100,7 +100,7 @@ async function getAttendeeByEmail(email, year) {
         "#email": "email",
         "#year": "year",
       },
-    })
+    }),
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -114,7 +114,7 @@ async function deleteAttendee(slackID, year) {
         slackID: { S: slackID },
         year: { N: year.toString() },
       },
-    })
+    }),
   );
 }
 
@@ -127,7 +127,7 @@ async function getRegistration(email, year) {
         email: { S: email },
         year: { N: year.toString() },
       },
-    })
+    }),
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -144,9 +144,9 @@ function updateAttendee(attendee, user) {
           image: user.profile.image_512,
           company: user.profile?.fields?.Xf03A7A5815F?.alt ?? attendee.company,
         }),
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -162,9 +162,9 @@ function updateContact(contact, user) {
           image: user.profile.image_512,
           company: user.profile?.fields?.Xf03A7A5815F?.alt ?? contact.company,
         }),
-        { removeUndefinedValues: true, convertEmptyValues: true }
+        { removeUndefinedValues: true, convertEmptyValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -214,7 +214,7 @@ Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda.
 Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni.
 Důležité novinky najdeš v kanále #general.
 
-Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
       ),
     ]);
   } else if (registration && !registration.paid) {
@@ -232,7 +232,7 @@ Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají.
 Nejspíše ses sem dostals dříve než bys měls. Na další kroky budeš muset počkat,
 až ti přijde faktura a ty ji zaplatíš. :) Zatím užívej naší komunitu!
 
-Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
       ),
     ]);
   } else if (registration?.paid) {
@@ -257,7 +257,7 @@ Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda.
 Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni.
 Důležité novinky najdeš v kanále #general.
 
-Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
       ),
       sendWelcomeMessage({ slackID: user.id, year }),
     ]);

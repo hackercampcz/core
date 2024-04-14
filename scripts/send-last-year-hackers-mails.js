@@ -71,7 +71,7 @@ const ignoreList = new Set([
   "lucie@apify.com",
   "barsukov.kirill@seznam.cz",
 
-  //neexistuje
+  // neexistuje
   "samuel.kozuch@keboola.com",
 ]);
 
@@ -85,7 +85,7 @@ async function main({ token }) {
   const contacts = await getContacts();
   const pushContacts = contacts.filter((x) => !ignoreList.has(x));
 
-  //console.log(registrations);
+  // console.log(registrations);
   console.log(pushContacts.length);
   for (const email of pushContacts) {
     await sendEmailWithTemplate({

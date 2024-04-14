@@ -1,7 +1,7 @@
 import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
+import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../http.mjs";
 import { postChatMessage } from "../slack.mjs";
 
@@ -17,16 +17,15 @@ function saveAttendee(dynamo, data) {
     new UpdateItemCommand({
       TableName: "attendees",
       Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
-      UpdateExpression:
-        "SET housing = :housing, housingPlacement = :housingPlacement",
+      UpdateExpression: "SET housing = :housing, housingPlacement = :housingPlacement",
       ExpressionAttributeValues: marshall(
         {
           ":housing": data.housing,
           ":housingPlacement": data.housingPlacement,
         },
-        { removeUndefinedValues: true }
+        { removeUndefinedValues: true },
       ),
-    })
+    }),
   );
 }
 
@@ -45,12 +44,13 @@ const placement = (p) => (p === "custom" ? "" : ` ${p}`);
 
 function sendSlackMessage(submittedBy, item) {
   console.log({ event: "Sending Slack message", submittedBy, item });
-  const message =
-    submittedBy === item.slackID
-      ? `Super! Právě sis vybral svoje ubytko na Campu.
-Držíme Ti místo ${housing.get(item.housing)}${placement(
-          item.housingPlacement
-        )}, jak sis přál.
+  const message = submittedBy === item.slackID
+    ? `Super! Právě sis vybral svoje ubytko na Campu.
+Držíme Ti místo ${housing.get(item.housing)}${
+      placement(
+        item.housingPlacement,
+      )
+    }, jak sis přál.
 
 Potřebuješ to změnit? Stačí si <https://donut.hackercamp.cz/|upravit ve svém profilu>, ale pozor, jen do 21. 8.!
 Pak už to půjde jen po osobní domluvě s Pájou.
@@ -58,12 +58,14 @@ Pak už to půjde jen po osobní domluvě s Pájou.
 Vidíme se na Sobeňáku,
 
 Tvoje Hacker Camp Crew`
-      : `Gratulujeme, milý hackere,
+    : `Gratulujeme, milý hackere,
 
 Právě ti někdo zamluvil ubytko na Campu. Tvoje poděkování si zaslouží <@${submittedBy}>.
-Takže teď Ti držíme místo ${housing.get(item.housing)}${placement(
-          item.housingPlacement
-        )}.
+Takže teď Ti držíme místo ${housing.get(item.housing)}${
+      placement(
+        item.housingPlacement,
+      )
+    }.
 Chceš si zkontrolovat, co to znamená? Koukni na <https://donut.hackercamp.cz/ubytovani/|svůj profil s ubytkem>.
 
 Máš bydlení bez práce! Super. Užij si ušetřené minuty na fajn relax, nebo milá slova tomu, kdo Ti pomohl :)

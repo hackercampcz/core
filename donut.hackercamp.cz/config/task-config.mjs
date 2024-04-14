@@ -1,10 +1,10 @@
-import fs from "node:fs";
-import DefaultRegistry from "undertaker-registry";
+import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
 import logger from "fancy-log";
 import gulpMode from "gulp-mode";
-import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
-import pathConfig from "./path-config.json" assert { type: "json" };
+import fs from "node:fs";
+import DefaultRegistry from "undertaker-registry";
 import data from "../src/data/global.mjs";
+import pathConfig from "./path-config.json" assert { type: "json" };
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
@@ -17,7 +17,7 @@ class HackersRegistry extends DefaultRegistry {
     this.dest = projectPath(
       pathConfig.src,
       pathConfig.data.src,
-      "hackers.json"
+      "hackers.json",
     );
   }
   init({ task }) {
@@ -34,14 +34,14 @@ class HackersRegistry extends DefaultRegistry {
       return new Map(
         data.members
           ?.filter((x) => !(x.is_bot || skip.has(x.name)))
-          ?.map((x) => [x.id, x.profile])
+          ?.map((x) => [x.id, x.profile]),
       );
     }
 
     async function getAttendees(year) {
       logger.info(`Loading ${year} attendees…`);
       const resp = await fetch(
-        `https://lbmqjyccga.execute-api.eu-central-1.amazonaws.com/v1/attendees?year=${year}`
+        `https://lbmqjyccga.execute-api.eu-central-1.amazonaws.com/v1/attendees?year=${year}`,
       );
       return resp.json();
     }
@@ -55,7 +55,7 @@ class HackersRegistry extends DefaultRegistry {
       return fs.promises.writeFile(
         this.dest,
         JSON.stringify(attendees, null, 2),
-        { encoding: "utf-8" }
+        { encoding: "utf-8" },
       );
     });
   }
@@ -84,8 +84,8 @@ export default {
 
   static: {
     srcConfig: {
-      encoding: false
-    }
+      encoding: false,
+    },
   },
 
   esbuild: {
@@ -108,7 +108,7 @@ export default {
           return new Intl.NumberFormat("cs-CZ", {
             style: currency ? "currency" : undefined,
             currency,
-            maximumFractionDigits: 0
+            maximumFractionDigits: 0,
           }).format(x).replace(/\u00A0/, "\u202F");
         },
       },
@@ -151,7 +151,7 @@ export default {
   registries: [
     new HackersRegistry(
       { slackToken: process.env["SLACK_TOKEN"], year: data.year },
-      pathConfig
+      pathConfig,
     ),
   ],
 

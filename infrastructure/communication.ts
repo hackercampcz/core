@@ -1,7 +1,7 @@
+import { marked } from "marked";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { marked } from "marked";
-import type {TemplateInputs} from "./postmark";
+import type { TemplateInputs } from "./postmark";
 
 const markdownExt = ".md";
 
@@ -18,7 +18,7 @@ const hooks = {
 marked.use({ hooks });
 const frontmatter = require("front-matter");
 
-export function* readTemplates(relPath: string) : Generator<TemplateInputs> {
+export function* readTemplates(relPath: string): Generator<TemplateInputs> {
   const communication = path.resolve(relPath);
   const templates = fs.readdirSync(communication);
   for (const template of templates.filter(x => path.extname(x) === markdownExt)) {

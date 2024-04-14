@@ -46,7 +46,7 @@ async function main({ adminToken }) {
   ]);
 
   const [paid, invoiced, confirmed, waitingList] = resp.results.map(
-    (x) => x.nbHits
+    (x) => x.nbHits,
   );
 
   console.log({ paid, invoiced, confirmed, waitingList });
@@ -55,6 +55,6 @@ async function main({ adminToken }) {
 await main(
   Object.assign(
     { adminToken: Deno.env.get("ALGOLIA_ADMIN_API_KEY") },
-    parse(Deno.args)
-  )
+    parse(Deno.args),
+  ),
 );

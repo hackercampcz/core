@@ -1,7 +1,4 @@
-import {
-  readCSVObjects,
-  writeCSVObjects,
-} from "https://deno.land/x/csv@v0.7.5/mod.ts";
+import { readCSVObjects, writeCSVObjects } from "https://deno.land/x/csv@v0.7.5/mod.ts";
 import * as date from "https://deno.land/x/date_fns@v2.22.1/parse/index.js";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
 
@@ -45,7 +42,7 @@ async function readCustomers() {
         paid: x["zůstatek"] === "0 Kč",
         spent: parseInt(
           x["útrata"].replace("Kč", "").replace(/\s/, "").trim(),
-          10
+          10,
         ),
         firstTransaction: parseDate(x.first_transaction).toISOString(),
         lastTransaction: parseDate(x.last_transaction).toISOString(),
@@ -86,7 +83,7 @@ const attendees = await getAttendees();
 const namesByChipID = new Map(
   attendees
     .flatMap((x) => x.nfcTronData?.map((y) => [y.chipID, x.name]))
-    .filter(Boolean)
+    .filter(Boolean),
 );
 const items = Array.from(customersData.values()).map((x) =>
   Object.assign({ name: namesByChipID.get(x.chipID) ?? "-" }, x)
