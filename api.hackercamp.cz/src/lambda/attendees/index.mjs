@@ -14,7 +14,7 @@ async function getAttendees(dynamo, year) {
   const result = await dynamo.send(
     new ScanCommand({
       TableName: process.env.db_table_attendees,
-      ProjectionExpression: "slackID, #name, company, events, image, ticketType",
+      ProjectionExpression: "slackID, #name, company, events, image, travel, ticketType",
       FilterExpression: "#year = :year",
       ExpressionAttributeNames: { "#year": "year", "#name": "name" },
       ExpressionAttributeValues: { ":year": { N: year.toString() } },
