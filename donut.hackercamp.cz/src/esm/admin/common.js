@@ -228,8 +228,8 @@ export function getTicketPrice({
   return (price ?? ticketPrice.get(year).get(ticketType)) + allowance;
 }
 
-export function ticketDetail({ year, ticketType, patronAllowance }) {
-  const price = getTicketPrice({ patronAllowance, year, ticketType });
+export function ticketDetail({ year, ticketType, ticketPrice, patronAllowance }) {
+  const price = getTicketPrice({ patronAllowance, year, ticketType, ticketPrice });
   return html`
     <p>
       Lístek: <strong>${ticketName.get(ticketType)}</strong>
