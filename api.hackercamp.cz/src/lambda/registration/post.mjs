@@ -48,6 +48,7 @@ export async function handler(event) {
       .filter(([, v]) => Boolean(v)),
   );
   const isVolunteer = rest.ticketType === "volunteer";
+  const isHacker = rest.ticketType === "hacker";
   const id = crypto.randomBytes(20).toString("hex");
   console.log({
     event: "Put registration",
@@ -69,6 +70,8 @@ export async function handler(event) {
             year,
             firstTime: isNewbee,
             ...rest,
+            // TODO: make this until the end of June and then for allstars
+            ticketPrice: isHacker && !isNewbee ? 6000 : undefined,
             id,
             timestamp: new Date().toISOString(),
           },
