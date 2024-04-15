@@ -9,15 +9,18 @@ Tak už je to tady!
 
 Zítra (ve čtvrtek) v 17.00 to všechno vypukne a my se už nemůžeme dočkat.
 
-**Posíláme poslední mail, kde najdeš snad všechno**, co by tě mohlo zajímat :) Na začátek to nejdůležitější, **rozhodně nesmíš chybět ve [slacku](https://join.slack.com/t/hackercampworkspace/shared_invite/zt-v5o05yts-vxo7SIaPg0oXKCRlqUww4g).** Tam se řeší všechny změny, announcementy a vše podstané. **Může se hodit si [donut.hackercamp.cz](https://donut.hackercamp.cz/), slack i [program](https://hackercampworkspace.slack.com/archives/C01V4Q0AZ0U/p1693293705164429) stáhnout do mobilu ještě než vyrazíte na Sobeňák.**
+**Posíláme poslední mail, kde najdeš snad všechno**, co by tě mohlo zajímat :) Na začátek to nejdůležitější,
+**rozhodně nesmíš chybět ve [slacku](https://join.slack.com/t/hackercampworkspace/shared_invite/zt-v5o05yts-vxo7SIaPg0oXKCRlqUww4g).** Tam se řeší všechny změny, announcementy a vše podstané.
+**Může se hodit si [donut.hackercamp.cz](https://donut.hackercamp.cz/), slack i [program](https://hackercampworkspace.slack.com/archives/C01V4Q0AZ0U/p1693293705164429) stáhnout do mobilu ještě než vyrazíte na Sobeňák.**
 
-A než se začneš ptát, vřele doporučujeme mít pročteno [FAQs](https://www.hackercamp.cz/faq/) na našem webu (prosíme pejsky nechte doma, děti dle uvážení, ale raději taky :) - program tu pro ně nemáme)
+A než se začneš ptát, vřele doporučujeme mít pročteno [FAQs](https://www.hackercamp.cz/faq/) na našem webu
+(prosíme pejsky nechte doma, děti dle uvážení, ale raději taky :) - program tu pro ně nemáme)
 
 Co tedy potřebuješ vědět?
 
 1. **Začátek a konec akce**
-   - &nbsp;31. srpna 2023 (**17:00**) - 3. září 2021 (jak se vyspíme ze sobotní párty)
-   - **registrace a ubytování** se v areálu možné od 31. 8. 2023 **od 14:00**
+   - &nbsp;29. srpna 2024 (**17:00**) - 1. září 2024 (jak se vyspíme ze sobotní párty)
+   - **registrace a ubytování** se v areálu možné od 29. 8. 2024 **od 14:00**
    - na loginu (naší recepci u krbu) vždy někdo bude od 8:00 do 24:00
 2. **Místo konání**
    - Rekreační středisko Sobeňák, Starý Rožmitál 148, Rožmitál pod Třemšínem
@@ -26,7 +29,7 @@ Co tedy potřebuješ vědět?
 3. **Doprava a parking**
    - parkování bude zajištěno přímo v areálu Sobeňáku (včetně obytňáků)
    - prosíme, na cestu naplň své auto - ať nemáme z lesa jen parkoviště, ale i kus lesa
-   - spolujízdu nabízej nebo hledej ve slacku[ #spolujízda](https://hackercampworkspace.slack.com/archives/C0278R69JUQ), nebo ideálně [vyplň tabulku](https://docs.google.com/spreadsheets/d/1EkthrK_s-5-xxWDHGNudz6PEJs15jk0Jd6UWyeipAAI/edit?usp=sharing)
+   - spolujízdu nabízej nebo hledej ve slacku[#spolujízda](https://hackercampworkspace.slack.com/archives/C0278R69JUQ), nebo ideálně [vyplň tabulku](https://docs.google.com/spreadsheets/d/1EkthrK_s-5-xxWDHGNudz6PEJs15jk0Jd6UWyeipAAI/edit?usp=sharing)
    - pokud přijedeš do Rožmitálu vlakem nebo busem (použij idos :)) a budeš chtít odvoz do areálu, napiš nám SMS s časem, kdy přijedeš, nebo rovnou zavolej na [792 365 678](tel:+420792365678). Pokud bys radši procházku, nejbližší bus zastávka je Věšín, Buková (2 km od kempu).
 4. **Ubytování**
    - pokud máš vlastní stan či obytňák, máme pro tebe luxusní místo na louce

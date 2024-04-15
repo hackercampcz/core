@@ -2,6 +2,7 @@
 Subject: Registrace na Hacker Camp
 LayoutTemplate: hc-basic
 ---
+
 Ahoj, táborníku!
 
 Jsme rádi, že s námi chceš vyrazit na další Hacker Camp!
@@ -73,7 +74,7 @@ Uff. Dlouhý mail a dlouhé čtení. Ale nezapomeň, všechno
 **podstatné je, že camp bude jen takový, jaký si ho uděláme!**
 Takže úsměv a klid a bude to super :)
 
-Vidíme se ve čtvrtek 31. srpna v pozdním odpolku na Sobeňáku
+Vidíme se ve čtvrtek 29. srpna v pozdním odpolku na Sobeňáku
 (začínat budeme podobně jako loni cca okolo 5. a rozloučíme se ideálně v neděli po snídani :)
 Teda pokud nezůstaneš až do odpoledne (střízlivět, u čehož nám můžeš pomoci s bouráním tábora:))
 
@@ -81,8 +82,6 @@ Všechny další věci, na které tenhle mail neodpovídá najdeš
 [na webu v FAQs](https://www.hackercamp.cz/faq/). Pokud by ti tohle info ještě nestačilo,
 tak nám určitě napiš. Na Slack, na mail. Nebo volej.
 
-Těšíme se na viděnou, táborníku!
-
-Už 31. 8. na Sobeňáku!
+Těšíme se na viděnou na Sobeňáku, táborníku!
 
 Tvoje Hacker Camp @crew: Kačka, Pája, Kuba, Kosi, Jirka, Aleš & Ir

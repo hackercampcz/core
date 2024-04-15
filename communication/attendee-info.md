@@ -34,7 +34,7 @@ Pokud chceš bydlení pod střechou, nebo potřebuješ stan od nás,
 vyber si konkrétní místo a ulož se. [Tohle je tvůj kouzelný link](https://donut.hackercamp.cz/) :)
 (A nezapomeň se přihlásit do Hacker Camp workspace na slacku, jinak Tě to dál nepustí :))
 
-Ubytko si hlídá Pája Verflová. Pokud do 21. srpna nebudeš mít booklou svoji postel,
+Ubytko si hlídá Pája Verflová. Pokud do 19. srpna nebudeš mít booklou svoji postel,
 buď tě bude nahánět, nebo ti prostě vybere volnou postel. Kde spíš si vždycky můžeš
 [zkouknout u sebe na profilu](https://donut.hackercamp.cz/) a případně i upravit.
 
@@ -75,15 +75,13 @@ Loni byla hlavně sobotní noc úplná pecka a rádi si to zopakujeme. Takže se
 i hudební tvorbou :) A nejen u ohně. Prostě fantazii se meze nekladou.
 
 Uff. Dlouhý mail a dlouhé čtení. Ale nezapomeň, všechno podstatné je, že camp bude jen takový,
-jaký si ho uděláme! Takže úsměv a klid a bude to super :) Vidíme se ve čtvrtek 31. 8.
+jaký si ho uděláme! Takže úsměv a klid a bude to super :) Vidíme se ve čtvrtek 29. 8.
 v pozdním odpolku na Sobeňáku (začínat budeme podobně jako loni cca okolo 5.) a rozloučíme se
 ideálně v neděli po snídani :) Teda pokud nezůstaneš až do odpoledne
 (střízlivět, u čehož nám můžeš pomoci s bouráním tábora:))
 
 **Všechny další věci, na které tenhle mail neodpovídá [najdeš na webu ve FAQs](https://www.hackercamp.cz/faq/). Pokud by ti tohle info ještě nestačilo, tak nám zkrátka napiš. Na slack, na mail. Nebo volej.**
 
-Těšíme se na viděnou, táborníku!
-
-Už 31. 8. na Sobeňáku!
+Těšíme se na viděnou na Sobeňáku, táborníku!
 
 Tvoje Hacker Camp @crew: Kačka, Pája, Kuba, Kosi, Jirka, Aleš & Ir
