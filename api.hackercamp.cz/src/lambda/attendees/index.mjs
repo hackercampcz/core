@@ -14,10 +14,9 @@ async function getAttendees(dynamo, year) {
   const result = await dynamo.send(
     new ScanCommand({
       TableName: process.env.db_table_attendees,
-      Select: "ALL_ATTRIBUTES",
       FilterExpression: "#y = :y",
       ExpressionAttributeNames: { "#y": "year" },
-      ExpressionAttributeValues: marshall({ ":y": year }),
+      ExpressionAttributeValues: { ":y": { N: year } },
     }),
   );
   return result.Items.map((x) => unmarshall(x));

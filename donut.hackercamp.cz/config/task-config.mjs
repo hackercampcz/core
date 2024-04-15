@@ -40,9 +40,7 @@ class HackersRegistry extends DefaultRegistry {
 
     async function getAttendees(year) {
       logger.info(`Loading ${year} attendees…`);
-      const resp = await fetch(
-        `https://lbmqjyccga.execute-api.eu-central-1.amazonaws.com/v1/attendees?year=${year}`,
-      );
+      const resp = await fetch(`https://api.hackercamp.cz/v1/attendees?year=${year}`);
       return resp.json();
     }
 
