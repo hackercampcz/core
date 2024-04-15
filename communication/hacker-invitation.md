@@ -1,5 +1,5 @@
 ---
-Subject: Pozvánka na Hacker Camp 2024
+Subject: "Hacker Camp 2024: Spouštíme registrace. Pro hackery, co už na campu byli, držíme loňskou cenu (do 1. 7.)!"
 LayoutTemplate: hc-basic
 ---
 
