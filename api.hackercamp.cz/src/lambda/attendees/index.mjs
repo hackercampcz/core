@@ -17,7 +17,7 @@ async function getAttendees(dynamo, year) {
       Select: "ALL_ATTRIBUTES",
       FilterExpression: "#y = :y",
       ExpressionAttributeNames: { "#y": "year" },
-      ExpressionAttributeValues: { ":y": { N: year } },
+      ExpressionAttributeValues: { ":y": { N: year.toString() } },
     }),
   );
   return result.Items.map((x) => unmarshall(x));
