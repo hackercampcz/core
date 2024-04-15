@@ -206,7 +206,7 @@
               }
             )
             if (confirm("Ohlášeno. Díky za ochotu.")) {
-              window.location.href = "https://hackercamp.cz/";
+              location.assign("https://donut.hackercamp.cz/");
             }
           } catch (E_r) {
             // TODO: log with rollbar
@@ -282,7 +282,7 @@
           </div>
           <div class="choose">
             <input type="checkbox" name="volunteerSport" id="sport">
-            <label for="sport">Budu pomáhat Káje se sportovními doprovodnými aktivitami</label>
+            <label for="sport">Budu pomáhat se sportovními doprovodnými aktivitami</label>
           </div>
         </div>
       </fieldset>
@@ -490,10 +490,10 @@
         }
       }
       hideSection("someone-else-will-pay");
-      document.querySelector("#email").addEventListener("blur", e => {
-        document.querySelector("#invoice-email").setAttribute("placeholder", e.target.value);
+      document.getElementById("email").addEventListener("blur", e => {
+        document.getElementById("invoice-email").setAttribute("placeholder", e.target.value);
       });
-      document.querySelector("#invoice-recipient").addEventListener("change", e => {
+      document.getElementById("invoice-recipient").addEventListener("change", e => {
         if (e.target.value == 0) {
           showSection("I-will-pay");
           hideSection("someone-else-will-pay");
@@ -594,11 +594,11 @@
       </div>
     </section>
     <script type="module">
-      document.querySelector("select#stay-time").addEventListener("change", e => {
+      document.getElementById("stay-time").addEventListener("change", e => {
         if (e.target.value == 2) {
-          document.querySelector("#custom-stay-time").parentElement.removeAttribute("aria-hidden");
+          document.getElementById("custom-stay-time").parentElement.removeAttribute("aria-hidden");
         } else {
-          document.querySelector("#custom-stay-time").parentElement.setAttribute("aria-hidden", "true");
+          document.getElementById("custom-stay-time").parentElement.setAttribute("aria-hidden", "true");
         }
       });
     </script>
@@ -708,8 +708,8 @@
         </div>
       </div>
       <script type="module">
-        const shirt = document.querySelector("#shirt");
-        const shirtSize = document.querySelector("#shirt-size");
+        const shirt = document.getElementById("shirt");
+        const shirtSize = document.getElementById("shirt-size");
         shirt.addEventListener("change", (e) => {
           shirtSize.disabled = !e.target.checked;
         });
@@ -724,7 +724,7 @@
     <input type="hidden" name="referral"/>
   </form>
   <script type="module">
-    const formElement = document.querySelector("#reg");
+    const formElement = document.getElementById("reg");
     const submitButtonElement = formElement.querySelector("button[type=submit]");
 
     const {searchParams} = new URL(location.href);
@@ -741,7 +741,7 @@
       if (data.invoiced || data.paid) disableForm();
 
       if (data.plusFirstName || data.plusLastName) {
-        document.querySelector("#plus-one-section").removeAttribute("aria-hidden");
+        document.getElementById("plus-one-section").removeAttribute("aria-hidden");
       }
 
       for (const key in data) {
