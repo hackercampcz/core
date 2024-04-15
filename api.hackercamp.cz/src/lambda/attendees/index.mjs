@@ -14,10 +14,10 @@ async function getAttendees(dynamo, year) {
   const result = await dynamo.send(
     new ScanCommand({
       TableName: process.env.db_table_attendees,
-      Select: "ALL_ATTRIBUTES",
-      FilterExpression: "#y = :y",
-      ExpressionAttributeNames: { "#y": "year" },
-      ExpressionAttributeValues: { ":y": { N: year.toString() } },
+      ProjectionExpression: "slackID, #name, company, events, image, ticketType",
+      FilterExpression: "#year = :year",
+      ExpressionAttributeNames: { "#year": "year", "#name": "name" },
+      ExpressionAttributeValues: { ":year": { N: year.toString() } },
     }),
   );
   return result.Items.map((x) => unmarshall(x));
