@@ -444,7 +444,7 @@ function renderDashboardScreen(
 ) {
   return html`
     <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <!--div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         <div class="hc-card hc-card--decorated">
           <h2>Zpětná vazba</h2>
           <p>
@@ -464,7 +464,7 @@ function renderDashboardScreen(
             na slacku.
           </p>
         </div>
-      </div>
+      </div-->
       <div
         style="${!nfcTronData ? "display: none" : ""}"
         class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
