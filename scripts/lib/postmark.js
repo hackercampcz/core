@@ -74,10 +74,10 @@ export async function sendEmailsWithTemplate({
   templateId,
   templateAlias,
   data,
-  from,
+  from = "Hacker Camp Crew <team@hackercamp.cz>",
   replyTo,
   attachments,
-  messageStream,
+  messageStream = "broadcast",
   tag,
 }) {
   if (emails.length > 500) throw new Error("Maximum number of emails exceeded");
@@ -89,7 +89,7 @@ export async function sendEmailsWithTemplate({
           To: to,
           TemplateId: templateId,
           TemplateAlias: templateAlias,
-          TemplateModel: data,
+          TemplateModel: templateId ? data ?? {} : data,
           Tag: tag,
           MessageStream: messageStream,
           ReplyTo: replyTo,
