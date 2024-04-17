@@ -7,8 +7,9 @@ Ahoj, táborníku!
 
 Jsme rádi, že s námi chceš vyrazit na další Hacker Camp!
 Máš za sebou první krok: Registraci. Pro potvrzení svého místa ještě musíš svůj vstup zaplatit.
-Věříme, že máš vyplněné fakturační údaje (alespoň adresu, bez té Ti fakturu nevystavíme).
-Se zaplacením faktury Ti přijde potvrzení na Slack a otevře se ti možnost vybratsi
+Faktura ti přijde během týdne, jak se to podaří Kačce odbavit.
+Mezi tím se ujisti, že máš vyplněné fakturační údaje (alespoň adresu, bez té Ti fakturu nevystavíme).
+Se zaplacením faktury Ti přijde potvrzení na Slack a otevře se ti možnost vybrat si
 postel nebo zadat se do programu v adminu Tvého profilu.
 
 **Ani letos se bez [Hacker Camp Slacku](https://hackercampworkspace.slack.com/) rozhodně neobejdeš!**
