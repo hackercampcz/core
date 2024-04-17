@@ -473,6 +473,18 @@ export function createDB({ queues, postmarkTemplates }) {
     streamEnabled: true,
     streamViewType: "NEW_IMAGE",
   });
+  postmark.onEvent(
+    "postmark-subscription-change",
+    getTableEventHandler("postmark-subscription-change", "postmark/subscription-change.mjs", defaultLambdaRole, {
+      environment: {
+        variables: {
+          db_table_optouts: optOuts.name,
+          year: config.require("year"),
+        },
+      },
+    }),
+    { startingPosition: "LATEST" },
+  );
 
   const trash = new aws.dynamodb.Table("trash", {
     name: "trash",
