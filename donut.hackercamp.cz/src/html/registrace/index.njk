@@ -13,8 +13,9 @@
     }
 
     #reg p.disclaimer {
-      text-align: center;
       font-size: 14px;
+      text-align: center;
+      text-wrap: balance;
       padding: 24px;
     }
 
@@ -263,22 +264,29 @@
         <div class="hc-card">
           <input type="hidden" name="ticketType" value="volunteer">
           <h3>Jak se zapojím</h3>
-          <p>Zde je výčet hlavních aktivit. Můžeš zaškrtnout i více odpovědí. Prosím počítej s tím, že některé aktivity jsou spíše nárazové, takže je možné, že tě využijeme i někde jinde a síly rozložíme dle potřeby.</p>
+          <p>Zde je výčet hlavních aktivit. Můžeš zaškrtnout i&nbsp;více odpovědí.
+            Prosím počítej s&nbsp;tím, že některé aktivity jsou spíše nárazové,
+            takže je možné, že tě využijeme i&nbsp;někde jinde a síly rozložíme dle
+            potřeby. Nejsi si ještě jistý svým zapojením? K&nbsp;dotazníku se můžeš
+            zpětně vrátit, teď potřebujeme zjistit, s&nbsp;kým můžeme počítat&nbsp;:)</p>
           <div class="choose">
             <input type="checkbox" name="volunteerInfoDeskAndRegistration" id="volunteer-info-reg">
-            <label for="volunteer-info-reg">Budu pomáhat s registrací a ubytováním účastníků, úschovnou a info stánkem</label>
+            <label for="volunteer-info-reg">Budu pomáhat s registrací a ubytováním účastníků,
+              úschovnou a info stánkem (<strong>Dobrovolník Makám během campu</strong>)</label>
           </div>
           <div class="choose">
             <input type="checkbox" name="volunteerBar" id="bar">
-            <label for="bar">Budu pomáhat na baru</label>
+            <label for="bar">Budu pomáhat na baru (<strong>Dobrovolník Makám během campu</strong>)</label>
           </div>
           <div class="choose">
             <input type="checkbox" name="volunteerConstruction" id="construction">
-            <label for="construction">Budu pomáhat primárně s výstavbou a likvidací areálu, parkingem aut a další</label>
+            <label for="construction">Budu pomáhat primárně s výstavbou a likvidací areálu,
+              parkingem aut a další (<strong>Dobrovolník Stavím a bourám</strong>)</label>
           </div>
           <div class="choose">
             <input type="checkbox" name="volunteerDriver" id="driver">
-            <label for="driver">Budu k dispozici jako možný řidič pro účastníky, kteří budou potřebovat někam přiblížit</label>
+            <label for="driver">Budu k dispozici jako možný řidič pro účastníky, kteří budou
+              potřebovat někam přiblížit (<strong>Dobrovolník Makám během campu</strong>)</label>
           </div>
           <div class="choose">
             <input type="checkbox" name="volunteerSport" id="sport">
@@ -303,10 +311,10 @@
             <input id="plus-firstname" name="plusFirstName" type="text"/>
           </div>
           <div class="field">
-            <label for="lastname">
+            <label for="plus-lastname">
               Příjmení
             </label>
-            <input id="plus-lastname" name="plusLastName" type="text"/>
+            <input id="plus-lastname" name="plusLastName" type="text">
           </div>
         </div>
         <div class="group">
@@ -434,7 +442,7 @@
             <input id="invoice-email" name="invEmail" type="email" autocomplete="email" placeholder="invoices@hrad.cz"/>
           </div>
         </fieldset>
-        <fieldset id="someone-else-will-pay" aria-hidden="true" disabled="true">
+        <fieldset id="someone-else-will-pay" aria-hidden="true" disabled>
           <div class="group">
             <div class="field">
               <label for="invoice-recipient-firstname">
@@ -524,13 +532,13 @@
             <input id="custom-stay-time" name="stayTimeCustom" type="text"/>
           </div>
         </fieldset>
-        <fieldset aria-hidden="true" disabled="true" id="stay-time-volunteer-section">
+        <fieldset aria-hidden="true" disabled id="stay-time-volunteer-section">
           <div class="field">
             <label for="stay-time-volunteer">
               Kdy přijedeš?
             </label>
             <select name="volunteerArrivalDay" id="stay-time-volunteer">
-              <option value="we">Můžu dorazit už ve středu a pomoci s přípravou (den před oficiálním začátkem)</option>
+              <option value="we">Dorazím ve středu ráno</option>
               <option value="th">Dorazím ve čtvrtek</option>
             </select>
           </div>
