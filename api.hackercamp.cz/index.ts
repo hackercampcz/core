@@ -470,6 +470,8 @@ export function createDB({ queues, postmarkTemplates }) {
       { name: "RecordType", type: "S" },
     ],
     billingMode: "PAY_PER_REQUEST",
+    streamEnabled: true,
+    streamViewType: "NEW_IMAGE",
   });
 
   const trash = new aws.dynamodb.Table("trash", {
