@@ -203,7 +203,6 @@ async function editRegistration(db, { key, data }) {
   console.log({ event: "Update registration", key, data });
   if (key.email === data.email) {
     return db.send(
-      // TODO: maybe use PutItem, to prevent loss of unknown attributes
       new UpdateItemCommand({
         TableName: process.env.db_table_registrations,
         Key: {
