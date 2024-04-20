@@ -87,8 +87,8 @@ export async function handler(event) {
       token: process.env["postmark_token"],
       templateId: getTemplateId(isNewbee, isVolunteer, rest),
       data: { editUrl },
-      from: "Hacker Camp Crew <team@hackercamp.cz>",
       to: email,
+      tag: "registration",
     }),
   ]);
   if (getHeader(event.headers, "Accept") === "application/json") {

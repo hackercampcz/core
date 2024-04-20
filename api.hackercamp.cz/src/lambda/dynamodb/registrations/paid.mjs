@@ -47,10 +47,10 @@ function createAttendee(dynamo, contact, record) {
 async function sendSlackInvitation(email, postmarkToken) {
   await sendEmailWithTemplate({
     token: postmarkToken,
-    from: "Hacker Camp Crew <team@hackercamp.cz>",
     to: email,
     templateId: Template.SlackInvite,
     data: {},
+    tag: "slack-invitation",
   });
   console.log({ event: "Slack invitation sent", email });
 }

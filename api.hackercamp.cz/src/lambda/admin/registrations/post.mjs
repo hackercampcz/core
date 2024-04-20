@@ -121,18 +121,18 @@ async function approve(db, { email, year, referral }) {
     token: process.env.postmark_token,
     templateId: Template.RegistrationApproved,
     data: {},
-    from: "Hacker Camp Crew <team@hackercamp.cz>",
     to: email,
+    tag: "registration-approved",
   });
 }
 
 async function sendVolunteerSlackInvitation(email, postmarkToken) {
   await sendEmailWithTemplate({
     token: postmarkToken,
-    from: "Hacker Camp Crew <team@hackercamp.cz>",
     to: email,
     templateId: Template.VolunteerSlackInvite,
     data: {},
+    tag: "volunteer-slack-invitation",
   });
   console.log({ event: "Volunteer slack invitation sent", email });
 }
