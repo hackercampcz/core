@@ -728,7 +728,7 @@ export function registrationsTemplate(state) {
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
     >
-      <form class="hc-card hc-master-detail__list">
+      <div class="hc-card hc-master-detail__list">
         ${
     until(
       data
@@ -774,7 +774,7 @@ export function registrationsTemplate(state) {
           `,
     )
   }
-      </form>
+      </div>
       ${when(detail, () => registrationDetailTemplate({ detail, selectedView }))}
     </div>
   `;
