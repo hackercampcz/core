@@ -379,7 +379,7 @@ export function createDB({ queues, postmarkTemplates }) {
           variables: {
             rollbar_access_token,
             slack_queue_url: queues.slackQueueUrl,
-            postmark_token: config.get("postmark-token"),
+            postmark_token: postmarkConfig.get("server-api-token"),
             ...postmarkTemplates,
           },
         },
@@ -561,7 +561,7 @@ export function createQueues({ postmarkTemplates }) {
           slack_announcement_url: config.get("slack-incoming-webhook"),
           year: config.getNumber("year"),
           slack_bot_token: config.get("slack-bot-token"),
-          postmark_token: config.get("postmark-token"),
+          postmark_token: postmarkConfig.get("server-api-token"),
           ...postmarkTemplates,
         },
       },
