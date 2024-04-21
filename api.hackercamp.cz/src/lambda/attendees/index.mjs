@@ -20,6 +20,7 @@ async function getAttendees(dynamo, year) {
       ExpressionAttributeValues: { ":year": { N: year.toString() } },
     }),
   );
+  console.log(result);
   return result.Items.map((x) => unmarshall(x));
 }
 
