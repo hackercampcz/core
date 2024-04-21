@@ -35,6 +35,10 @@ export function createRoutes({
               rollbar_access_token,
               db_table_attendees: db.attendeesDataTable,
               postmark_token: postmarkConfig.get("server-api-token"),
+              algolia_index_name: config.get(
+                "algolia-attendees-index-name",
+              ),
+              ...algoliaEnv,
               ...postmarkTemplates,
             },
           },

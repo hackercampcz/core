@@ -1,5 +1,7 @@
 import { DynamoDBClient, GetItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import createSearchClient from "algoliasearch";
+import { getItemsFromDB } from "../attendees.js";
 import { errorResponse, getHeader, response, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 
@@ -11,17 +13,21 @@ const dynamo = new DynamoDBClient({});
 const rollbar = Rollbar.init({ lambdaName: "attendees" });
 
 async function getAttendees(dynamo, year) {
-  const result = await dynamo.send(
-    new ScanCommand({
-      TableName: process.env.db_table_attendees,
-      ProjectionExpression: "slackID, #name, company, events, image, travel, ticketType",
-      FilterExpression: "#year = :year",
-      ExpressionAttributeNames: { "#year": "year", "#name": "name" },
-      ExpressionAttributeValues: { ":year": { N: year.toString() } },
-    }),
-  );
-  console.log(result);
-  return result.Items.map((x) => unmarshall(x));
+  const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
+  const client = createSearchClient(algolia_app_id, algolia_search_key);
+  const index = client.initIndex(algolia_index_name);
+  const { hits } = await index.search("", {
+    attributesToRetrieve: ["year", "slackID"],
+    tagFilters: [year.toString()],
+    hitsPerPage: 500,
+  });
+
+  const items = await getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
+    ProjectionExpression: "slackID, #name, company, events, image, travel, ticketType",
+    ExpressionAttributeNames: { "#name": "name" },
+  });
+  console.log(items);
+  return items;
 }
 
 async function getAttendee(dynamo, slackID, year) {

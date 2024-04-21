@@ -1,8 +1,7 @@
-import { BatchGetItemCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { unmarshall } from "@aws-sdk/util-dynamodb";
-import { partition } from "@thi.ng/transducers";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import createSearchClient from "algoliasearch";
 import { resultsCount } from "../../algolia.mjs";
+import { getItemsFromDB } from "../../attendees.js";
 import { getHeader } from "../../http.mjs";
 import { formatResponse } from "../csv.mjs";
 
@@ -52,7 +51,8 @@ async function getAttendees(query, tag, year, page, pageSize) {
   const [{ hits, nbHits, nbPages }, ...counts] = results;
   const [all, hacker, volunteer, staff, crew] = counts.map((x) => x.nbHits);
 
-  const items = await getItemsFromDB(db, hits);
+  const tableName = process.env.db_table_attendees;
+  const items = await getItemsFromDB(db, tableName, hits);
 
   return {
     items,
@@ -61,34 +61,6 @@ async function getAttendees(query, tag, year, page, pageSize) {
     total: nbHits,
     counts: { all, hacker, volunteer, staff, crew },
   };
-}
-
-/**
- * @param {DynamoDBClient} db
- * @param hits
- * @returns {Promise<Record<string, any>[]>}
- */
-async function getItemsFromDB(db, hits) {
-  if (hits.length === 0) return [];
-  const tableName = process.env.db_table_attendees;
-  const result = [];
-  for (const batch of partition(100, true, hits)) {
-    const keys = batch.map(({ year, slackID }) => ({
-      year: { N: year.toString() },
-      slackID: { S: slackID },
-    }));
-    const items = await db.send(
-      new BatchGetItemCommand({
-        RequestItems: { [tableName]: { Keys: keys } },
-      }),
-    );
-    result.push(
-      ...items.Responses[tableName]
-        .map((x) => unmarshall(x))
-        .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp)),
-    );
-  }
-  return result;
 }
 
 /**
