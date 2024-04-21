@@ -56,6 +56,7 @@ async function sendSlackInvitation(email, postmarkToken) {
 }
 
 function enqueueSlackWelcomeMessage(user) {
+  console.log({ event: "Scheduling announcement on Slack", slackID: user.id });
   return queue.send(
     new SendMessageCommand({
       QueueUrl: process.env.slack_queue_url,
