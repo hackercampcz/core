@@ -50,16 +50,18 @@ export async function sendEmailWithTemplate({
       "X-Postmark-Server-Token": token,
     },
     body: JSON.stringify(
-      Object.fromEntries(Object.entries({
-        TemplateId: templateId,
-        TemplateModel: data,
-        From: from,
-        To: to,
-        Tag: tag,
-        ReplyTo: replyTo,
-        Attachments: attachments,
-        MessageStream: messageStream,
-      })).filter(([_, v]) => Boolean(v)),
+      Object.fromEntries(
+        Object.entries({
+          TemplateId: templateId,
+          TemplateModel: data,
+          From: from,
+          To: to,
+          Tag: tag,
+          ReplyTo: replyTo,
+          Attachments: attachments,
+          MessageStream: messageStream,
+        }).filter(([_, v]) => Boolean(v)),
+      ),
     ),
   });
   if (!resp.ok) {
