@@ -124,8 +124,9 @@ export async function sendEmailsWithTemplate({
     body,
   });
   if (!resp.ok) {
-    console.error(await resp.json());
-    throw new Error("Mail not send");
+    const error = await resp.json();
+    console.error(error);
+    throw new Error("Mail not send", { cause: error });
   }
   return resp.json();
 }
