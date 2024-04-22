@@ -110,6 +110,7 @@ export function createRoutes({
           environment: {
             variables: {
               rollbar_access_token,
+              db_table_attendees: db.attendeesDataTable,
               private_key: config.get("private-key"),
               slack_bot_token: config.get("slack-bot-token"),
               algolia_index_name: config.get(
