@@ -1,4 +1,4 @@
-import { DynamoDBClient, GetItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import createSearchClient from "algoliasearch";
 import { getItemsFromDB } from "../attendees.js";
@@ -22,12 +22,10 @@ async function getAttendees(dynamo, year) {
     hitsPerPage: 500,
   });
 
-  const items = await getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
+  return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
     ProjectionExpression: "slackID, #name, company, events, image, travel, ticketType",
     ExpressionAttributeNames: { "#name": "name" },
   });
-  console.log(items);
-  return items;
 }
 
 async function getAttendee(dynamo, slackID, year) {

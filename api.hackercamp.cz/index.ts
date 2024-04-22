@@ -112,8 +112,10 @@ export function createRoutes({
               rollbar_access_token,
               private_key: config.get("private-key"),
               slack_bot_token: config.get("slack-bot-token"),
-              postmark_token: postmarkConfig.get("server-api-token"),
-              ...postmarkTemplates,
+              algolia_index_name: config.get(
+                "algolia-attendees-index-name",
+              ),
+              ...algoliaEnv,
             },
           },
         },
