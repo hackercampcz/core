@@ -26,7 +26,7 @@ async function getProgram(year) {
 }
 
 async function getApprovalQueue(year) {
-  console.log("Loading approved program", { year });
+  console.log("Loading program for approval", { year });
   const res = await db.send(
     new ScanCommand({
       TableName: process.env.db_table_program,
