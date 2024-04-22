@@ -374,11 +374,15 @@ export function createDB({ queues, postmarkTemplates }) {
       { name: "email", type: "S" },
       { name: "year", type: "N" },
       { name: "id", type: "S" },
+      { name: "invoice_id", type: "N" },
     ],
     billingMode: "PAY_PER_REQUEST",
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
-    globalSecondaryIndexes: [{ name: "registrations-by-id", hashKey: "id", projectionType: "KEYS_ONLY" }],
+    globalSecondaryIndexes: [
+      { name: "registrations-by-id", hashKey: "id", projectionType: "KEYS_ONLY" },
+      { name: "registrations-by-invoice-id", hashKey: "invoice_id", rangeKey: "email", projectionType: "KEYS_ONLY" },
+    ],
   });
   registrations.onEvent(
     "paidRegistration",
