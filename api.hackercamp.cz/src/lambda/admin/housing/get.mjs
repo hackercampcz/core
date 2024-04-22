@@ -1,5 +1,6 @@
-import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
-import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import createSearchClient from "algoliasearch";
+import { getItemsFromDB } from "../../attendees.js";
 import { notFound, response } from "../../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -7,23 +8,22 @@ import { notFound, response } from "../../http.mjs";
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
 
 /** @type DynamoDBClient */
-const db = new DynamoDBClient({});
+const dynamo = new DynamoDBClient({});
 
 async function getHousing(year) {
   console.log("Loading housing", { year });
-  const res = await db.send(
-    new ScanCommand({
-      TableName: process.env.db_table_attendees,
-      ProjectionExpression: "#n, company, email, housing, housingPlacement, ticketType",
-      FilterExpression: "#yr = :yr",
-      ExpressionAttributeNames: { "#yr": "year", "#n": "name" },
-      ExpressionAttributeValues: marshall(
-        { ":yr": year },
-        { removeUndefinedValues: true },
-      ),
-    }),
-  );
-  return res.Items.map((x) => unmarshall(x));
+  const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
+  const client = createSearchClient(algolia_app_id, algolia_search_key);
+  const index = client.initIndex(algolia_index_name);
+  const { hits } = await index.search("", {
+    attributesToRetrieve: ["year", "slackID"],
+    tagFilters: [year.toString()],
+    hitsPerPage: 500,
+  });
+  return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
+    ProjectionExpression: "slackID, #name, company, housing, housingPlacement",
+    ExpressionAttributeNames: { "#name": "name" },
+  });
 }
 
 /**
