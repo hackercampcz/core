@@ -95,7 +95,7 @@ export function createRoutes({
           environment: {
             variables: {
               rollbar_access_token,
-              db_table_registration: db.registrationsDataTable,
+              db_table_registrations: db.registrationsDataTable,
               hostname: config.get("web-domain"),
               donut: config.get("donut-domain"),
               private_key: config.get("private-key"),
