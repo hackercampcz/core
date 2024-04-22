@@ -1,4 +1,4 @@
-import { DynamoDBClient, GetItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, GetItemCommand, QueryCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { notFound, response } from "../http.mjs";
 
@@ -11,20 +11,23 @@ const db = new DynamoDBClient({});
 
 async function getRegistrationById(id) {
   console.log({ event: "Loading data by id", id });
-  const resp = await db.send(
-    new ScanCommand({
-      TableName: "registrations",
-      Select: "ALL_ATTRIBUTES",
-      FilterExpression: "id = :id",
-      ExpressionAttributeValues: marshall(
-        { ":id": id },
-        { removeUndefinedValues: true },
-      ),
+  const indexResp = await db.send(
+    new QueryCommand({
+      TableName: process.env.db_table_registrations,
+      IndexName: "registrations-by-id",
+      KeyConditionExpression: "id = :id",
+      ExpressionAttributeValues: { ":id": { S: id } },
+      ProjectionExpression: "slackID, email",
     }),
   );
-  const [data] = resp.Items.map((x) => unmarshall(x));
-  console.log(data);
-  return data;
+  console.log(indexResp);
+  const resp = await db.send(
+    new GetItemCommand({
+      TableName: process.env.db_table_registrations,
+      Key: indexResp.Items[0],
+    }),
+  );
+  return unmarshall(resp.Item);
 }
 
 async function getRegistrationByEmail(email, year, slackID) {
