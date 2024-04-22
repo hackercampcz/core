@@ -373,6 +373,7 @@ export function createDB({ queues, postmarkTemplates }) {
     attributes: [
       { name: "email", type: "S" },
       { name: "year", type: "N" },
+      { name: "id", type: "S" },
     ],
     billingMode: "PAY_PER_REQUEST",
     streamEnabled: true,
