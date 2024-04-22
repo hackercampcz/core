@@ -376,6 +376,7 @@ export function createDB({ queues, postmarkTemplates }) {
     billingMode: "PAY_PER_REQUEST",
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
+    globalSecondaryIndexes: [{ name: "registrations-by-id", hashKey: "id", projectionType: "KEYS_ONLY" }],
   });
   registrations.onEvent(
     "paidRegistration",
