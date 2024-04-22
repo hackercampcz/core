@@ -6,7 +6,7 @@ import * as post from "./post.mjs";
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
 
-const rollbar = Rollbar.init({ lambdaName: "contacts" });
+const rollbar = Rollbar.init({ lambdaName: "registration" });
 
 /**
  * @param {APIGatewayProxyEvent} event

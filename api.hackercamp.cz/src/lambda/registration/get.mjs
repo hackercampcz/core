@@ -11,19 +11,21 @@ const db = new DynamoDBClient({});
 
 async function getRegistrationById(id) {
   console.log({ event: "Loading data by id", id });
+  const tableName = process.env.db_table_registrations;
   const indexResp = await db.send(
     new QueryCommand({
-      TableName: process.env.db_table_registrations,
-      IndexName: "registrations-by-id",
+      TableName: tableName,
+      IndexName: `${tableName}-by-id`,
       KeyConditionExpression: "id = :id",
       ExpressionAttributeValues: { ":id": { S: id } },
-      ProjectionExpression: "slackID, email",
+      ExpressionAttributeNames: { "#year": "year" },
+      ProjectionExpression: "#year, email",
     }),
   );
   console.log(indexResp);
   const resp = await db.send(
     new GetItemCommand({
-      TableName: process.env.db_table_registrations,
+      TableName: tableName,
       Key: indexResp.Items[0],
     }),
   );
