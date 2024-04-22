@@ -22,7 +22,6 @@ async function getRegistrationById(id) {
       ProjectionExpression: "#year, email",
     }),
   );
-  console.log(indexResp);
   const resp = await db.send(
     new GetItemCommand({
       TableName: tableName,
