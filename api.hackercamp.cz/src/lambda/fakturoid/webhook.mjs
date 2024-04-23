@@ -70,7 +70,7 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
   }
 }
 
-async function getPaidRegistrations(db, invoice_id) {
+async function getInvoicedRegistrations(db, invoice_id) {
   const tableName = process.env.db_table_registrations;
   const resp = await db.send(
     new QueryCommand({
@@ -91,6 +91,7 @@ async function getPaidRegistrations(db, invoice_id) {
  */
 export async function fakturoidWebhook(event) {
   rollbar.configure({ payload: { event } });
+  console.log(event);
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
     getHeader(event.headers, "Origin"),
@@ -99,6 +100,7 @@ export async function fakturoidWebhook(event) {
   try {
     const { token } = event.queryStringParameters;
     if (token !== process.env.TOKEN) {
+      console.log({ event: "Invalid token", token });
       return withCORS_(unauthorized());
     }
 
@@ -109,7 +111,7 @@ export async function fakturoidWebhook(event) {
     }
 
     const { invoice_id, paid_at } = payload;
-    const registrations = await getPaidRegistrations(db, invoice_id);
+    const registrations = await getInvoicedRegistrations(db, invoice_id);
     if (!registrations.length) {
       console.log({ event: "Registrations not found", invoice_id });
       return withCORS_(notFound());
@@ -123,6 +125,7 @@ export async function fakturoidWebhook(event) {
     return withCORS_(response({}));
   } catch (err) {
     rollbar.error(err);
+    console.error(err);
     return withCORS_(errorResponse(err));
   }
 }
