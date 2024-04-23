@@ -234,6 +234,7 @@ export function createRoutes({
           environment: {
             variables: {
               rollbar_access_token,
+              db_table_registrations: db.registrationsDataTable,
               TOKEN: config.get("fakturoid-webhook-token"),
               postmark_token: postmarkConfig.get("server-api-token"),
               ...postmarkTemplates,

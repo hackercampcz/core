@@ -1,5 +1,4 @@
-import { DynamoDBClient, ScanCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
-import { marshall } from "@aws-sdk/util-dynamodb";
+import { BatchGetItemCommand, DynamoDBClient, QueryCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import {
   errorResponse,
   getHeader,
@@ -29,9 +28,9 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
         TableName: "registrations",
         Key: registration,
         UpdateExpression: "SET paid = :paid",
-        ExpressionAttributeValues: marshall({
-          ":paid": new Date(paid_at).toISOString(),
-        }),
+        ExpressionAttributeValues: {
+          ":paid": { S: new Date(paid_at).toISOString() },
+        },
       }),
     );
     await sendEmailWithTemplate({
@@ -58,9 +57,9 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
         TableName: "registrations",
         Key: registration,
         UpdateExpression: "SET cancelled = :now",
-        ExpressionAttributeValues: marshall({
-          ":now": new Date(paid_at).toISOString(),
-        }),
+        ExpressionAttributeValues: {
+          ":now": { S: new Date(paid_at).toISOString() },
+        },
       }),
     );
     console.log({
@@ -69,6 +68,32 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
       ...registration,
     });
   }
+}
+
+async function getPaidRegistrations(db, invoice_id) {
+  const tableName = process.env.db_table_registrations;
+  const indexResp = await db.send(
+    new QueryCommand({
+      TableName: tableName,
+      IndexName: `${tableName}_by_invoice_id`,
+      KeyConditionExpression: "invoice_id = :id",
+      ExpressionAttributeValues: { ":id": { N: invoice_id.toString() } },
+      ExpressionAttributeNames: { "#year": "year" },
+      ProjectionExpression: "#year, email",
+    }),
+  );
+  const resp = await db.send(
+    new BatchGetItemCommand({
+      RequestItems: {
+        [tableName]: {
+          Keys: indexResp.Items,
+          ProjectionExpression: "email, #year",
+          ExpressionAttributeValues: { "#year": "year" },
+        },
+      },
+    }),
+  );
+  return resp.Responses[tableName];
 }
 
 /**
@@ -95,18 +120,7 @@ export async function fakturoidWebhook(event) {
     }
 
     const { invoice_id, paid_at } = payload;
-    const resp = await db.send(
-      new ScanCommand({
-        TableName: "registrations",
-        ProjectionExpression: "email,#y",
-        FilterExpression: "invoice_id = :invoice_id",
-        ExpressionAttributeValues: marshall({
-          ":invoice_id": invoice_id,
-        }),
-        ExpressionAttributeNames: { "#y": "year" },
-      }),
-    );
-    const registrations = resp.Items;
+    const registrations = await getPaidRegistrations(db, invoice_id);
     if (!registrations.length) {
       console.log({ event: "Registrations not found", invoice_id });
       return withCORS_(notFound());
