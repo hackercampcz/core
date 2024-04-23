@@ -75,7 +75,7 @@ async function getPaidRegistrations(db, invoice_id) {
   const indexResp = await db.send(
     new QueryCommand({
       TableName: tableName,
-      IndexName: `${tableName}_by_invoice_id`,
+      IndexName: `${tableName}-by-invoice-id`,
       KeyConditionExpression: "invoice_id = :id",
       ExpressionAttributeValues: { ":id": { N: invoice_id.toString() } },
       ExpressionAttributeNames: { "#year": "year" },
