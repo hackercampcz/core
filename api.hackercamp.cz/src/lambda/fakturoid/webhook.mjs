@@ -90,8 +90,6 @@ async function getInvoicedRegistrations(db, invoice_id) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function fakturoidWebhook(event) {
-  rollbar.configure({ payload: { event } });
-  console.log(event);
   const withCORS_ = withCORS(
     ["POST", "OPTIONS"],
     getHeader(event.headers, "Origin"),
@@ -105,6 +103,8 @@ export async function fakturoidWebhook(event) {
     }
 
     const payload = readPayload(event);
+    rollbar.configure({ payload });
+    console.log({ payload });
     if (payload.event_name !== "invoice_paid") {
       console.log({ event: "Unknown event", payload });
       return withCORS_(unprocessableEntity());
