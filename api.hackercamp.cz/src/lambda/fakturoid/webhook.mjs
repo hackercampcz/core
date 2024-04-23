@@ -72,7 +72,7 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
 
 async function getPaidRegistrations(db, invoice_id) {
   const tableName = process.env.db_table_registrations;
-  const indexResp = await db.send(
+  const resp = await db.send(
     new QueryCommand({
       TableName: tableName,
       IndexName: `${tableName}-by-invoice-id`,
@@ -82,18 +82,7 @@ async function getPaidRegistrations(db, invoice_id) {
       ProjectionExpression: "#year, email",
     }),
   );
-  const resp = await db.send(
-    new BatchGetItemCommand({
-      RequestItems: {
-        [tableName]: {
-          Keys: indexResp.Items,
-          ProjectionExpression: "email, #year",
-          ExpressionAttributeValues: { "#year": "year" },
-        },
-      },
-    }),
-  );
-  return resp.Responses[tableName];
+  return resp.Items;
 }
 
 /**
