@@ -1,4 +1,4 @@
-import { BatchGetItemCommand, DynamoDBClient, QueryCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, QueryCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import {
   errorResponse,
   getHeader,
@@ -25,7 +25,7 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
     console.log({ event: "Marking as paid", ...registration });
     await db.send(
       new UpdateItemCommand({
-        TableName: "registrations",
+        TableName: process.env.db_table_registrations,
         Key: registration,
         UpdateExpression: "SET paid = :paid",
         ExpressionAttributeValues: {
@@ -54,7 +54,7 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
     console.log({ event: "Marking as canceled", ...registration });
     await db.send(
       new UpdateItemCommand({
-        TableName: "registrations",
+        TableName: process.env.db_table_registrations,
         Key: registration,
         UpdateExpression: "SET cancelled = :now",
         ExpressionAttributeValues: {
