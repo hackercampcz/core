@@ -442,10 +442,17 @@ export function createDB({ queues, postmarkTemplates }) {
     attributes: [
       { name: "slackID", type: "S" },
       { name: "year", type: "N" },
+      { name: "email", type: "S" },
     ],
     billingMode: "PAY_PER_REQUEST",
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
+    globalSecondaryIndexes: [{
+      name: "attendees-by-email",
+      hashKey: "email",
+      rangeKey: "year",
+      projectionType: "KEYS_ONLY",
+    }],
   });
   attendees.onEvent(
     "search-indexing-attendees",
