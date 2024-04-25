@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
+import { parse } from "https://deno.land/std/flags/mod.ts";
 
 const actions = [
   "Znáte se? → 😈",
@@ -78,9 +78,9 @@ export async function postChatMessage(channel, message, token) {
 async function main({ url, token }) {
   console.log({ url, token });
   const resp = await sendMessageToSlack(url, {
-    slackID: "U05BH02AFFT",
-    name: "Anita SVOBODA-LÉVÁRDI",
-    image: "https://ca.slack-edge.com/T01V4Q0ACQ4-U05BH02AFFT-gc8d684c4108-512",
+    slackID: "U02CUP3D8GK",
+    name: "Tomáš Belada",
+    image: "https://ca.slack-edge.com/T01V4Q0ACQ4-U02CUP3D8GK-927c26e25abe-512",
   });
   console.log(resp);
   return;

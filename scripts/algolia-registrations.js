@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std@0.181.0/flags/mod.ts";
+import { parse } from "https://deno.land/std/flags/mod.ts";
 import createSearchClient from "https://esm.sh/algoliasearch@4.16.0";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 

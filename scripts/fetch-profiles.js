@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std@0.140.0/flags/mod.ts";
+import { parse } from "https://deno.land/std/flags/mod.ts";
 import { writeCSVObjects } from "https://deno.land/x/csv@v0.7.5/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 
