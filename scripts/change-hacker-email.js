@@ -3,6 +3,11 @@ import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 
 const dynamo = createClient();
 
+/**
+ * Gets contact by slackID. Fetches all attributes, so we can recreate the contact without data loss.
+ * @param {String} slackID
+ * @returns {Promise<Object>}
+ */
 async function getContact(slackID) {
   const result = await dynamo.scan({
     TableName: "contacts",
@@ -13,6 +18,13 @@ async function getContact(slackID) {
   return result.Items[0];
 }
 
+/**
+ * Updates contact with a new e-mail address. E-mail is part of the contact primary key,
+ * so we have to actually recreate the entity with a new key.
+ * @param {Object} contact Has to have all attributes, otherwise there is possible data loss
+ * @param {String} email New e-mail address
+ * @returns {Promise<void>}
+ */
 async function updateContact(contact, email) {
   await dynamo.deleteItem({
     TableName: "contacts",
@@ -24,6 +36,11 @@ async function updateContact(contact, email) {
   });
 }
 
+/**
+ * Result can be async iterator or just array. This collects all the result to the array
+ * @param result
+ * @returns {Promise<Object[]>}
+ */
 async function collect(result) {
   if (result.Items) return result.Items;
   const items = [];
@@ -33,6 +50,11 @@ async function collect(result) {
   return items;
 }
 
+/**
+ * Get all tickets of the user
+ * @param {String} slackID
+ * @returns {Promise<Object[]>}
+ */
 async function getAttendees(slackID) {
   const result = await dynamo.scan({
     TableName: "attendees",
@@ -44,6 +66,12 @@ async function getAttendees(slackID) {
   return collect(result);
 }
 
+/**
+ * Sets new e-mail to the attendee
+ * @param {Object} attendee
+ * @param {String} email
+ * @returns {Promise<void>}
+ */
 async function updateAttendee(attendee, email) {
   await dynamo.updateItem({
     TableName: "attendees",
@@ -53,6 +81,11 @@ async function updateAttendee(attendee, email) {
   });
 }
 
+/**
+ * Gets all user registrations. fetches all attributes, so we can recreate the registration without data loss.
+ * @param {String} email
+ * @returns {Promise<Object[]>}
+ */
 async function getRegistrations(email) {
   const result = await dynamo.scan({
     TableName: "registrations",
