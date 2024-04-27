@@ -23,7 +23,7 @@ async function getAttendees(dynamo, year) {
   });
 
   return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
-    ProjectionExpression: "slackID, #name, company, events, image, travel, ticketType",
+    ProjectionExpression: "slackID, #name, company, events, image, travel, ticketType, slug",
     ExpressionAttributeNames: { "#name": "name" },
   });
 }
