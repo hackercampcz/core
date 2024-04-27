@@ -106,3 +106,35 @@ export async function postChatMessage(channel, message) {
   }
   return body;
 }
+
+export async function getMessage(token, { channel, ts }) {
+  console.log({ event: "Get Slack message", channel, ts });
+  const params = new URLSearchParams({
+    channel,
+    latest: ts,
+    inclusive: true,
+    limit: 1,
+  });
+  const resp = await fetch(`https://slack.com/api/conversations.history?${params}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const { messages } = await resp.json();
+  return messages[0];
+}
+
+export async function updateMessage(token, { channel, ts }, section) {
+  console.log({ event: "Update Slack message", channel, ts });
+  const resp = await fetch(`https://slack.com/api/chat.update`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ channel, ts, blocks: [section] }),
+  });
+  return resp.json();
+}

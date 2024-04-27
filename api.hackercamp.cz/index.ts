@@ -387,40 +387,30 @@ export function createDB({ queues, postmarkTemplates }) {
   });
   registrations.onEvent(
     "paidRegistration",
-    getTableEventHandler(
-      "paid-registration",
-      "registrations/paid.mjs",
-      defaultLambdaRole,
-      {
-        environment: {
-          variables: {
-            rollbar_access_token,
-            slack_queue_url: queues.slackQueueUrl,
-            postmark_token: postmarkConfig.get("server-api-token"),
-            ...postmarkTemplates,
-          },
+    getTableEventHandler("paid-registration", "registrations/paid.mjs", defaultLambdaRole, {
+      environment: {
+        variables: {
+          rollbar_access_token,
+          slack_queue_url: queues.slackQueueUrl,
+          postmark_token: postmarkConfig.get("server-api-token"),
+          ...postmarkTemplates,
         },
       },
-    ),
+    }),
     { startingPosition: "LATEST" },
   );
   registrations.onEvent(
     "search-indexing-registrations",
-    getTableEventHandler(
-      "search-indexing-registrations",
-      "registrations/search-index.mjs",
-      defaultLambdaRole,
-      {
-        environment: {
-          variables: {
-            rollbar_access_token,
-            slack_bot_token: config.get("slack-bot-token"),
-            algolia_index_name: config.get("algolia-registrations-index-name"),
-            ...algoliaEnv,
-          },
+    getTableEventHandler("search-indexing-registrations", "registrations/search-index.mjs", defaultLambdaRole, {
+      environment: {
+        variables: {
+          rollbar_access_token,
+          slack_bot_token: config.get("slack-bot-token"),
+          algolia_index_name: config.get("algolia-registrations-index-name"),
+          ...algoliaEnv,
         },
       },
-    ),
+    }),
     { startingPosition: "LATEST" },
   );
 
@@ -433,7 +423,23 @@ export function createDB({ queues, postmarkTemplates }) {
       { name: "slackID", type: "S" },
     ],
     billingMode: "PAY_PER_REQUEST",
+    streamEnabled: true,
+    streamViewType: "NEW_AND_OLD_IMAGES",
   });
+  contacts.onEvent(
+    "contact-image-changed",
+    getTableEventHandler("contact-image-changed", "contacts/image-changed.mjs", defaultLambdaRole, {
+      environment: {
+        variables: {
+          year: config.require("year"),
+          rollbar_access_token,
+          slack_bot_token: config.get("slack-bot-token"),
+          db_table_attendees: "attendees",
+        },
+      },
+    }),
+    { startingPosition: "LATEST" },
+  );
 
   const attendees = new aws.dynamodb.Table("attendees", {
     name: "attendees",
@@ -456,21 +462,16 @@ export function createDB({ queues, postmarkTemplates }) {
   });
   attendees.onEvent(
     "search-indexing-attendees",
-    getTableEventHandler(
-      "search-indexing-attendees",
-      "attendees/search-index.mjs",
-      defaultLambdaRole,
-      {
-        environment: {
-          variables: {
-            rollbar_access_token,
-            slack_bot_token: config.get("slack-bot-token"),
-            algolia_index_name: config.get("algolia-attendees-index-name"),
-            ...algoliaEnv,
-          },
+    getTableEventHandler("search-indexing-attendees", "attendees/search-index.mjs", defaultLambdaRole, {
+      environment: {
+        variables: {
+          rollbar_access_token,
+          slack_bot_token: config.get("slack-bot-token"),
+          algolia_index_name: config.get("algolia-attendees-index-name"),
+          ...algoliaEnv,
         },
       },
-    ),
+    }),
     { startingPosition: "LATEST" },
   );
 
