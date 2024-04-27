@@ -582,10 +582,11 @@ export function createQueues({ postmarkTemplates }) {
       environment: {
         variables: {
           rollbar_access_token,
-          slack_announcement_url: config.get("slack-incoming-webhook"),
           year: config.getNumber("year"),
-          slack_bot_token: config.get("slack-bot-token"),
-          postmark_token: postmarkConfig.get("server-api-token"),
+          db_table_attendees: "attendees",
+          slack_announcement_channel: config.require("slack-announcement-channel"),
+          slack_bot_token: config.require("slack-bot-token"),
+          postmark_token: postmarkConfig.require("server-api-token"),
           ...postmarkTemplates,
         },
       },

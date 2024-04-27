@@ -4,6 +4,7 @@ import {
   GetItemCommand,
   PutItemCommand,
   ScanCommand,
+  UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
@@ -168,6 +169,21 @@ function updateContact(contact, user) {
   );
 }
 
+async function updateAttendeeAnnouncement({ slackID, year }, announcement) {
+  const result = await db.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_attendees,
+      Key: {
+        slackID: { S: slackID },
+        year: { N: year.toString() },
+      },
+      UpdateExpression: "SET announcement = :announcement",
+      ExpressionAttributeValues: { ":announcement": marshall(announcement) },
+    }),
+  );
+  return result;
+}
+
 async function sendWelcomeMessage({ slackID, year }) {
   console.log({ event: "Send welcome message", slackID });
   const attendee = await getAttendee(slackID, year);
@@ -175,13 +191,14 @@ async function sendWelcomeMessage({ slackID, year }) {
     console.log({ event: "No attendee found", slackID });
     return;
   }
-  await sendMessageToSlack({
+  const { channel, ts } = await sendMessageToSlack({
     slackID: attendee.slackID,
     name: attendee.name,
     image: attendee.image,
     travel: attendee.travel,
     ticketType: attendee.ticketType,
   });
+  await updateAttendeeAnnouncement(attendee, { channel, ts });
 }
 
 async function onTeamJoin({ user }) {

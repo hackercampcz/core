@@ -40,10 +40,17 @@ function getTravel(travel) {
 }
 
 export async function sendMessageToSlack(profile) {
-  const resp = await fetch(process.env.slack_announcement_url, {
+  const { slack_announcement_channel: channel, slack_bot_token: token } = process.env;
+  console.log({ event: "Send message to slack", channel });
+  const resp = await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify({
+      channel,
       blocks: [
         {
           type: "section",
@@ -63,7 +70,7 @@ export async function sendMessageToSlack(profile) {
       ],
     }),
   });
-  return resp.text();
+  return resp.json();
 }
 
 export async function postChatMessage(channel, message) {
@@ -79,6 +86,7 @@ export async function postChatMessage(channel, message) {
   const resp = await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
     headers: {
+      Accept: "application/json",
       "Content-Type": "application/json",
       Authorization: `Bearer ${process.env.slack_bot_token}`,
     },
