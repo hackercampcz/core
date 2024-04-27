@@ -12,7 +12,7 @@ config:
     secure: AAABAC7xWGnAjPQWfgJOAVN6YcRB89HWc9sDFa3oC2V/PdezbM1W8lbzri3h+wiTxHzy5I5CdvpMu+9yY1PrEA==
   hackercamp:private-key:
     secure: AAABALEi/CWh7glkyY7gDR/2P+FpQX56VWoMLpSM0UuOR7rvfME1myIWxtewIPC8P8flBw2ORaushAWR2lGJfeBFKWiAjJFqpJYVLg6BuvQ=
-  hackercamp:slack-announcement-channel: C07115TEEAG
+  hackercamp:slack-announcement-channel: C026KB0G8V8
   hackercamp:slack-bot-token:
     secure: AAABAPVKNBH+3caqm5hEgc2T0CgPxs5CJc4gkWRDYtcLBlPPny2aJc2bDVdtNk2zbxWUTks8m5n4CN+XcmTkd+y/wlrJtIS25/aqZTMLo4uvc1uFCFFtEd4=
   hackercamp:web-domain: www.hackercamp.cz
