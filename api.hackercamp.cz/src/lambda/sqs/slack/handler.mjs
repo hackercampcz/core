@@ -170,6 +170,13 @@ function updateContact(contact, user) {
 }
 
 async function updateAttendeeAnnouncement({ slackID, year }, announcement) {
+  console.log({
+    event: "Update attendee announcement",
+    slackID,
+    year,
+    announcement,
+    tableName: process.env.db_table_attendees,
+  });
   const result = await db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_attendees,
