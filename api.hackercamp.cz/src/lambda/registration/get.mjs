@@ -22,6 +22,10 @@ async function getRegistrationById(id) {
       ProjectionExpression: "#year, email",
     }),
   );
+  if (!indexResp.Items.length) {
+    console.log({ event: "Registration not found", id });
+    return null;
+  }
   const resp = await db.send(
     new GetItemCommand({
       TableName: tableName,

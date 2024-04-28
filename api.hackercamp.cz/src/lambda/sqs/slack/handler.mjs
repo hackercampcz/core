@@ -178,7 +178,9 @@ async function updateAttendeeAnnouncement({ slackID, year }, announcement) {
         year: { N: year.toString() },
       },
       UpdateExpression: "SET announcement = :announcement",
-      ExpressionAttributeValues: { ":announcement": marshall(announcement) },
+      ExpressionAttributeValues: {
+        ":announcement": marshall(announcement, { removeUndefinedValues: true }),
+      },
     }),
   );
   return result;
