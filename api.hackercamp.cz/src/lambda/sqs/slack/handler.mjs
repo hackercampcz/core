@@ -237,7 +237,9 @@ Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda.
 Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni.
 Důležité novinky najdeš v kanále #general.
 
-Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz
+
+#EE771B,#E62271,#2FA659,#3E7ABC`,
       ),
     ]);
   } else if (registration && !registration.paid) {
@@ -255,7 +257,9 @@ Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají.
 Nejspíše ses sem dostals dříve než bys měls. Na další kroky budeš muset počkat,
 až ti přijde faktura a ty ji zaplatíš. :) Zatím užívej naší komunitu!
 
-Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz
+
+#EE771B,#E62271,#2FA659,#3E7ABC`,
       ),
     ]);
   } else if (registration?.paid) {
@@ -280,7 +284,9 @@ Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda.
 Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni.
 Důležité novinky najdeš v kanále #general.
 
-Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz
+
+#EE771B,#E62271,#2FA659,#3E7ABC`,
       ),
       sendWelcomeMessage({ slackID: user.id, year }),
     ]);
