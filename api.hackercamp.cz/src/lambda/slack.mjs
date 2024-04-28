@@ -46,7 +46,7 @@ export async function sendMessageToSlack(profile) {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
+      "Content-Type": "application/json; charset=utf-8",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
@@ -87,7 +87,7 @@ export async function postChatMessage(channel, message) {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
+      "Content-Type": "application/json; charset=utf-8",
       Authorization: `Bearer ${process.env.slack_bot_token}`,
     },
     body: JSON.stringify({
@@ -131,7 +131,7 @@ export async function updateMessage(token, { channel, ts }, section) {
     method: "POST",
     headers: {
       Accept: "application/json",
-      "Content-Type": "application/json",
+      "Content-Type": "application/json; charset=utf-8",
       Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({ channel, ts, blocks: [section] }),
