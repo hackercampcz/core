@@ -175,7 +175,6 @@ async function updateAttendeeAnnouncement({ slackID, year }, announcement) {
     slackID,
     year,
     announcement,
-    tableName: process.env.db_table_attendees,
   });
   const result = await db.send(
     new UpdateItemCommand({
@@ -185,9 +184,7 @@ async function updateAttendeeAnnouncement({ slackID, year }, announcement) {
         year: { N: year.toString() },
       },
       UpdateExpression: "SET announcement = :announcement",
-      ExpressionAttributeValues: {
-        ":announcement": marshall(announcement, { removeUndefinedValues: true }),
-      },
+      ExpressionAttributeValues: { ":announcement": announcement },
     }),
   );
   console.log(result);
