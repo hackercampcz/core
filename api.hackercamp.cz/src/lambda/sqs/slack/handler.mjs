@@ -169,14 +169,14 @@ function updateContact(contact, user) {
   );
 }
 
-async function updateAttendeeAnnouncement({ slackID, year }, announcement) {
+function saveAttendeeAnnouncementRef({ slackID, year }, announcement) {
   console.log({
     event: "Update attendee announcement",
     slackID,
     year,
     announcement,
   });
-  const result = await db.send(
+  return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_attendees,
       Key: {
@@ -194,14 +194,13 @@ async function updateAttendeeAnnouncement({ slackID, year }, announcement) {
       },
     }),
   );
-  return result;
 }
 
-async function sendWelcomeMessage({ slackID, year }) {
-  console.log({ event: "Send welcome message", slackID });
+async function sendAttendeeAnnouncement({ slackID, year }) {
+  console.log({ event: "Send announcement message", slackID, year });
   const attendee = await getAttendee(slackID, year);
   if (!attendee) {
-    console.log({ event: "No attendee found", slackID });
+    console.log({ event: "No attendee found", slackID, year });
     return;
   }
   const { ok, channel, ts, ...rest } = await sendMessageToSlack({
@@ -212,7 +211,7 @@ async function sendWelcomeMessage({ slackID, year }) {
     ticketType: attendee.ticketType,
   });
   if (ok) {
-    await updateAttendeeAnnouncement(attendee, { channel, ts });
+    await saveAttendeeAnnouncementRef(attendee, { channel, ts });
   } else {
     rollbar.error(rest);
   }
@@ -238,7 +237,7 @@ async function onTeamJoin({ user }) {
 Vítej v našem slacku. Hacker Camp se blíží. Snad se těšíš stejně jako my.
 
 Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají nejen
-v kanále #kdo_prijede_na_camp (za 15 min tě tam ohlásíme, tak šup).
+v kanále #kdo_prijede_na_camp.
 
 Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá.
 Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce.
@@ -281,7 +280,7 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
 Vítej v našem slacku. Hacker Camp se blíží. Snad se těšíš stejně jako my.
 
 Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají nejen
-v kanále #kdo_prijede_na_camp (za 15 min tě tam ohlásíme, tak šup).
+v kanále #kdo_prijede_na_camp.
 
 Můžeš se připojit k jakémukoliv kanálu, který Tě zajímá.
 Můžeš sledovat novinky o #program, festivalovém line-upu i nám z org týmu koukat pod ruce.
@@ -293,7 +292,7 @@ Důležité novinky najdeš v kanále #general.
 
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
       ),
-      sendWelcomeMessage({ slackID: user.id, year }),
+      sendAttendeeAnnouncement({ slackID: user.id, year }),
     ]);
   }
 }
@@ -323,7 +322,7 @@ async function dispatchMessageByType(message) {
       await onUserProfileChanged(message.payload);
       break;
     case "send-welcome-message":
-      await sendWelcomeMessage(message);
+      await sendAttendeeAnnouncement(message);
       break;
     // TODO: Move all slack messages here
     default:
