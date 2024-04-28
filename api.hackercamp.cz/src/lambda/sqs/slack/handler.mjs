@@ -200,6 +200,7 @@ async function sendWelcomeMessage({ slackID, year }) {
     travel: attendee.travel,
     ticketType: attendee.ticketType,
   });
+  console.log({ event: "debug", ok, channel, ts, ...rest });
   if (ok) {
     await updateAttendeeAnnouncement(attendee, { channel, ts });
   } else {
