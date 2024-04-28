@@ -183,6 +183,7 @@ async function updateAttendeeAnnouncement({ slackID, year }, announcement) {
       },
     }),
   );
+  console.log(result);
   return result;
 }
 
