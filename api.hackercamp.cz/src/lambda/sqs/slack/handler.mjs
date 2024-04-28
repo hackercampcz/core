@@ -10,18 +10,19 @@ import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
 import Rollbar from "../../rollbar.mjs";
-import { postChatMessage, sendMessageToSlack } from "../../slack.mjs";
+import { attendeeAnnouncement, postChatMessage, postMessage } from "../../slack.mjs";
 
 /** @typedef {import("aws-lambda").SQSEvent} SQSEvent */
 
 const db = new DynamoDBClient({});
 const rollbar = Rollbar.init({ lambdaName: "sqs-slack" });
+const { db_table_attendees, db_table_contacts, db_table_registrations } = process.env;
 
 async function getAttendee(slackID, year) {
   console.log({ event: "Get attendee", year, slackID });
   const resp = await db.send(
     new GetItemCommand({
-      TableName: "attendees",
+      TableName: db_table_attendees,
       Key: {
         slackID: { S: slackID },
         year: { N: year.toString() },
@@ -35,7 +36,7 @@ function createContact({ id, profile, name }) {
   console.log({ event: "Create contact", slackID: id });
   return db.send(
     new PutItemCommand({
-      TableName: "contacts",
+      TableName: db_table_contacts,
       Item: marshall(
         {
           email: profile.email,
@@ -54,7 +55,7 @@ async function createAttendee({ id, profile, name }, record) {
   console.log({ event: "Create attendee", slackID: id });
   return db.send(
     new PutItemCommand({
-      TableName: "attendees",
+      TableName: db_table_attendees,
       Item: marshall(
         Object.assign(
           {},
@@ -77,7 +78,7 @@ async function getContact(email, slackID) {
   console.log({ event: "Get contact", email, slackID });
   const resp = await db.send(
     new GetItemCommand({
-      TableName: "contacts",
+      TableName: db_table_contacts,
       Key: {
         email: { S: email },
         slackID: { S: slackID },
@@ -91,7 +92,7 @@ async function getAttendeeByEmail(email, year) {
   console.log({ event: "Get attendee", year, email });
   const resp = await db.send(
     new ScanCommand({
-      TableName: "attendees",
+      TableName: db_table_attendees,
       FilterExpression: "#email = :email and #year = :year",
       ExpressionAttributeValues: {
         ":email": { S: email },
@@ -110,7 +111,7 @@ async function deleteAttendee(slackID, year) {
   console.log({ event: "Delete attendee", slackID, year });
   return db.send(
     new DeleteItemCommand({
-      TableName: "attendees",
+      TableName: db_table_attendees,
       Key: {
         slackID: { S: slackID },
         year: { N: year.toString() },
@@ -123,7 +124,7 @@ async function getRegistration(email, year) {
   console.log({ event: "Get registration", email, year });
   const resp = await db.send(
     new GetItemCommand({
-      TableName: "registrations",
+      TableName: db_table_registrations,
       Key: {
         email: { S: email },
         year: { N: year.toString() },
@@ -137,7 +138,7 @@ function updateAttendee(attendee, user) {
   console.log({ event: "Update attendee", slackID: user.id });
   return db.send(
     new PutItemCommand({
-      TableName: "attendees",
+      TableName: db_table_attendees,
       Item: marshall(
         Object.assign({}, attendee, {
           email: user.profile.email ?? attendee.email,
@@ -155,7 +156,7 @@ function updateContact(contact, user) {
   console.log({ event: "Update contact", slackID: user.id });
   return db.send(
     new PutItemCommand({
-      TableName: "contacts",
+      TableName: db_table_contacts,
       Item: marshall(
         Object.assign({}, contact, {
           email: user.profile.email ?? contact.email,
@@ -178,7 +179,7 @@ function saveAttendeeAnnouncementRef({ slackID, year }, announcement) {
   });
   return db.send(
     new UpdateItemCommand({
-      TableName: process.env.db_table_attendees,
+      TableName: db_table_attendees,
       Key: {
         slackID: { S: slackID },
         year: { N: year.toString() },
@@ -196,20 +197,24 @@ function saveAttendeeAnnouncementRef({ slackID, year }, announcement) {
   );
 }
 
-async function sendAttendeeAnnouncement({ slackID, year }) {
+async function sendAttendeeAnnouncement({ slackID, year }, { slack_bot_token, slack_announcement_channel }) {
   console.log({ event: "Send announcement message", slackID, year });
   const attendee = await getAttendee(slackID, year);
   if (!attendee) {
     console.log({ event: "No attendee found", slackID, year });
     return;
   }
-  const { ok, channel, ts, ...rest } = await sendMessageToSlack({
-    slackID: attendee.slackID,
-    name: attendee.name,
-    image: attendee.image,
-    travel: attendee.travel,
-    ticketType: attendee.ticketType,
-  });
+  const { ok, channel, ts, ...rest } = await postMessage(
+    slack_bot_token,
+    slack_announcement_channel,
+    attendeeAnnouncement({
+      slackID: attendee.slackID,
+      name: attendee.name,
+      image: attendee.image,
+      travel: attendee.travel,
+      ticketType: attendee.ticketType,
+    }),
+  );
   if (ok) {
     await saveAttendeeAnnouncementRef(attendee, { channel, ts });
   } else {
@@ -217,9 +222,8 @@ async function sendAttendeeAnnouncement({ slackID, year }) {
   }
 }
 
-async function onTeamJoin({ user }) {
+async function onTeamJoin({ user }, { year }) {
   const { email } = user.profile;
-  const { year } = process.env;
   console.log({ event: "Team join", email });
   const [registration, attendee] = await Promise.all([
     getRegistration(email, year),
@@ -297,9 +301,8 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
   }
 }
 
-async function onUserProfileChanged({ user }) {
+async function onUserProfileChanged({ user }, { year }) {
   const { email } = user.profile;
-  const { year } = process.env;
   console.log({ event: "Profile update", email });
   const [contact, attendee] = await Promise.all([
     getContact(email, user.id),
@@ -316,13 +319,13 @@ async function onUserProfileChanged({ user }) {
 async function dispatchMessageByType(message) {
   switch (message.event) {
     case "team-join":
-      await onTeamJoin(message.payload);
+      await onTeamJoin(message.payload, process.env);
       break;
     case "user-profile-changed":
-      await onUserProfileChanged(message.payload);
+      await onUserProfileChanged(message.payload, process.env);
       break;
     case "send-welcome-message":
-      await sendAttendeeAnnouncement(message);
+      await sendAttendeeAnnouncement(message, process.env);
       break;
     // TODO: Move all slack messages here
     default:

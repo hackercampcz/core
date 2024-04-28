@@ -39,38 +39,33 @@ function getTravel(travel) {
   }
 }
 
-export async function sendMessageToSlack(profile) {
-  const { slack_announcement_channel: channel, slack_bot_token: token } = process.env;
-  console.log({ event: "Send message to slack", channel });
-  const resp = await fetch("https://slack.com/api/chat.postMessage", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${token}`,
+export function attendeeAnnouncement({ image, name, slackID, travel }) {
+  return [
+    {
+      type: "section",
+      text: {
+        type: "mrkdwn",
+        text: [`Hey! <@${slackID}> s námi letos jede na camp.`]
+          .concat(getTravel(travel))
+          .concat(getActions())
+          .join("\n"),
+      },
+      accessory: {
+        type: "image",
+        image_url: image,
+        alt_text: name,
+      },
     },
-    body: JSON.stringify({
-      channel,
-      blocks: [
-        {
-          type: "section",
-          text: {
-            type: "mrkdwn",
-            text: [`Hey! <@${profile.slackID}> s námi letos jede na camp.`]
-              .concat(getTravel(profile.travel))
-              .concat(getActions())
-              .join("\n"),
-          },
-          accessory: {
-            type: "image",
-            image_url: profile.image,
-            alt_text: profile.name,
-          },
-        },
-      ],
-    }),
-  });
-  return resp.json();
+  ];
+}
+
+export function markdownMessage(message) {
+  return [
+    {
+      type: "section",
+      text: { type: "mrkdwn", text: message },
+    },
+  ];
 }
 
 export async function postChatMessage(channel, message) {
@@ -82,29 +77,29 @@ export async function postChatMessage(channel, message) {
     });
     return null;
   }
-  console.log({ event: "Send message to slack", channel });
+  const token = process.env.slack_bot_token;
+  const body = await postMessage(token, channel, markdownMessage(message));
+  if (!body.ok) {
+    rollbar.error("Slack API error", body);
+  }
+  return body;
+}
+
+export async function postMessage(token, channel, blocks) {
+  console.log({ event: "Post message to Slack", channel });
   const resp = await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${process.env.slack_bot_token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       channel,
-      blocks: [
-        {
-          type: "section",
-          text: { type: "mrkdwn", text: message },
-        },
-      ],
+      blocks,
     }),
   });
-  const body = await resp.json();
-  if (!body.ok) {
-    rollbar.error("Slack API error", body);
-  }
-  return body;
+  return resp.json();
 }
 
 export async function getMessage(token, { channel, ts }) {

@@ -585,6 +585,8 @@ export function createQueues({ postmarkTemplates }) {
           rollbar_access_token,
           year: config.getNumber("year"),
           db_table_attendees: "attendees",
+          db_table_contacts: "contacts",
+          db_table_registrations: "registrations",
           slack_announcement_channel: config.require("slack-announcement-channel"),
           slack_bot_token: config.require("slack-bot-token"),
           postmark_token: postmarkConfig.require("server-api-token"),
