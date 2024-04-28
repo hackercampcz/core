@@ -193,14 +193,18 @@ async function sendWelcomeMessage({ slackID, year }) {
     console.log({ event: "No attendee found", slackID });
     return;
   }
-  const { channel, ts } = await sendMessageToSlack({
+  const { ok, channel, ts, ...rest } = await sendMessageToSlack({
     slackID: attendee.slackID,
     name: attendee.name,
     image: attendee.image,
     travel: attendee.travel,
     ticketType: attendee.ticketType,
   });
-  await updateAttendeeAnnouncement(attendee, { channel, ts });
+  if (ok) {
+    await updateAttendeeAnnouncement(attendee, { channel, ts });
+  } else {
+    rollbar.error(rest);
+  }
 }
 
 async function onTeamJoin({ user }) {
