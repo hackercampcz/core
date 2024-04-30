@@ -1,6 +1,7 @@
 import signJWT from "jsonwebtoken/sign.js";
 import { getHeader, response, unauthorized, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
+import { getUserInfo, getUsersInfo } from "../slack.mjs";
 
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
@@ -29,37 +30,16 @@ function getPayload(event) {
 async function getJWT(code, env, origin) {
   const resp = await fetch("https://slack.com/api/openid.connect.token", {
     method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
     body: new URLSearchParams({
       code,
       client_id: env["slack_client_id"],
       client_secret: env["slack_client_secret"],
       redirect_uri: new URL("/", origin).href,
     }),
-  });
-  const data = await resp.json();
-  return { resp, data };
-}
-
-async function getUserInfo(token) {
-  const resp = await fetch("https://slack.com/api/openid.connect.userInfo", {
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const data = await resp.json();
-  return { resp, data };
-}
-
-async function getUsersInfo(user, token) {
-  const resp = await fetch("https://slack.com/api/users.info", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: new URLSearchParams({ user }),
   });
   const data = await resp.json();
   return { resp, data };

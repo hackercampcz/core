@@ -133,3 +133,27 @@ export async function updateMessage(token, { channel, ts }, section) {
   });
   return resp.json();
 }
+
+export async function getUserInfo(token) {
+  const resp = await fetch("https://slack.com/api/openid.connect.userInfo", {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const data = await resp.json();
+  return { resp, data };
+}
+
+export async function getUsersInfo(user, token) {
+  const resp = await fetch("https://slack.com/api/users.info", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: new URLSearchParams({ user }),
+  });
+  const data = await resp.json();
+  return { resp, data };
+}

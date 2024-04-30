@@ -1,7 +1,6 @@
 import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
-import { selectKeys } from "@hackercamp/lib/object.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../http.mjs";
 import { postChatMessage } from "../slack.mjs";
 
@@ -16,7 +15,10 @@ function saveAttendee(dynamo, data) {
   return dynamo.send(
     new UpdateItemCommand({
       TableName: "attendees",
-      Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
+      Key: {
+        slackID: { S: data.slackID },
+        year: { N: data.year.toString() },
+      },
       UpdateExpression: "SET housing = :housing, housingPlacement = :housingPlacement",
       ExpressionAttributeValues: marshall(
         {
