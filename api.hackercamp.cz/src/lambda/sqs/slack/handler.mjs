@@ -296,7 +296,7 @@ Důležité novinky najdeš v kanále #general.
 
 Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
       ),
-      sendAttendeeAnnouncement({ slackID: user.id, year }),
+      sendAttendeeAnnouncement({ slackID: user.id, year }, process.env),
     ]);
   }
 }
