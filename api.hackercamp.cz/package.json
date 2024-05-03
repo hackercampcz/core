@@ -18,5 +18,5 @@
     "@cloudflare/workers-types": "4.20240423.0",
     "wrangler": "3.53.1"
   },
-  "packageManager": "yarn@4.1.1"
+  "packageManager": "yarn@4.2.1"
 }
