@@ -139,7 +139,7 @@ export async function handler(event) {
   console.log({ queryString: event.queryStringParameters });
   const { type, year, page, pageSize, format, query } = Object.assign(
     {
-      year: "2022",
+      year: process.env.year ?? "2022",
       query: "",
       page: "0",
       pageSize: "20",

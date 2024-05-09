@@ -59,7 +59,7 @@ function getData(type, year) {
 export async function handler(event) {
   console.log("QS", event.queryStringParameters);
   const { type, year } = Object.assign(
-    { year: "2022" },
+    { year: process.env.year ?? "2022" },
     event.queryStringParameters,
   );
   const data = await getData(type, parseInt(year));

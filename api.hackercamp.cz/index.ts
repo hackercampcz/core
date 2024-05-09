@@ -153,6 +153,7 @@ export function createRoutes({
           fileName: "admin/registrations/index.mjs",
           environment: {
             variables: {
+              year: config.getNumber("year"),
               rollbar_access_token,
               db_table_optouts: db.optOutsDataTable,
               db_table_registrations: db.registrationsDataTable,
@@ -173,6 +174,7 @@ export function createRoutes({
           fileName: "admin/attendees/index.mjs",
           environment: {
             variables: {
+              year: config.getNumber("year"),
               rollbar_access_token,
               db_table_attendees: db.attendeesDataTable,
               private_key: config.get("private-key"),
@@ -189,6 +191,7 @@ export function createRoutes({
           fileName: "admin/housing/index.mjs",
           environment: {
             variables: {
+              year: config.getNumber("year"),
               rollbar_access_token,
               db_table_attendees: db.attendeesDataTable,
               private_key: config.get("private-key"),
@@ -205,6 +208,7 @@ export function createRoutes({
           fileName: "admin/program/index.mjs",
           environment: {
             variables: {
+              year: config.getNumber("year"),
               rollbar_access_token,
               db_table_attendees: db.attendeesDataTable,
               db_table_program: db.programDataTable,

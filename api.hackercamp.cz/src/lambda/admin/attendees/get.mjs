@@ -12,7 +12,7 @@ import { formatResponse } from "../csv.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
-async function getAttendees(query, tag, year, page, pageSize) {
+async function getAttendees(query, tag, year, page, pageSize, { allYears }) {
   const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
@@ -23,6 +23,7 @@ async function getAttendees(query, tag, year, page, pageSize) {
     page,
     pageSize,
     query,
+    allYears,
   });
 
   const { results } = await client.multipleQueries([
@@ -32,7 +33,7 @@ async function getAttendees(query, tag, year, page, pageSize) {
       params: {
         attributesToRetrieve: ["year", "slackID"],
         tagFilters: [
-          year.toString(),
+          allYears ? null : year.toString(),
           tag === "searchAttendees" || tag === "attendees"
             ? null
             : tag.replace("Attendees", ""),
@@ -71,7 +72,7 @@ export async function handler(event) {
   console.log({ queryString: event.queryStringParameters });
   const { type, year, page, pageSize, format, query } = Object.assign(
     {
-      year: "2022",
+      year: process.env.year ?? "2022",
       query: "",
       page: "0",
       pageSize: "20",
@@ -86,6 +87,7 @@ export async function handler(event) {
     parseInt(year),
     parseInt(page),
     parseInt(pageSize),
+    { allYears: format === "csv" || format === "text/csv" && !event.queryStringParameters.year },
   );
   return formatResponse(respData, {
     year,

@@ -32,7 +32,10 @@ async function getHousing(year) {
  */
 export async function handler(event) {
   console.log("QS", event.queryStringParameters);
-  const { year } = Object.assign({ year: "2022" }, event.queryStringParameters);
+  const { year } = Object.assign(
+    { year: process.env.year ?? "2022" },
+    event.queryStringParameters,
+  );
   const data = await getHousing(parseInt(year));
   if (!data) return notFound();
   return response(data);
