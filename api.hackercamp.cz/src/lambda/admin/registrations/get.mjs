@@ -75,8 +75,10 @@ function findDuplicates(arr) {
  * @param {number} year
  * @param {number} page
  * @param {number} pageSize
+ * @param {Object} options
+ * @param {boolean} options.allYears
  */
-async function getRegistrations(query, tag, year, page, pageSize) {
+async function getRegistrations(query, tag, year, page, pageSize, { allYears }) {
   const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
   const client = createSearchClient(algolia_app_id, algolia_search_key);
 
@@ -87,6 +89,7 @@ async function getRegistrations(query, tag, year, page, pageSize) {
     page,
     pageSize,
     query,
+    allYears,
   });
 
   const { results } = await client.multipleQueries([
@@ -95,7 +98,7 @@ async function getRegistrations(query, tag, year, page, pageSize) {
       indexName: algolia_index_name,
       params: {
         attributesToRetrieve: ["year", "email"],
-        tagFilters: [year.toString(), tag === "search" ? null : tag].filter(
+        tagFilters: [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(
           Boolean,
         ),
         hitsPerPage: pageSize,
@@ -161,6 +164,7 @@ export async function handler(event) {
     parseInt(year),
     parseInt(page),
     parseInt(pageSize),
+    { allYears: format === "csv" || format === "text/csv" && !event.queryStringParameters.year },
   );
   return formatResponse(data, {
     year,
