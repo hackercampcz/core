@@ -3933,10 +3933,10 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
-    "@pulumi/aws": "npm:6.34.1"
+    "@pulumi/aws": "npm:6.35.0"
     "@pulumi/awsx": "npm:2.9.0"
     "@pulumi/cloudflare": "npm:5.28.0"
-    "@pulumi/pulumi": "npm:3.115.2"
+    "@pulumi/pulumi": "npm:3.116.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     esbuild: "npm:0.21.2"
     front-matter: "npm:4.0.2"
@@ -5082,15 +5082,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:6.34.1":
-  version: 6.34.1
-  resolution: "@pulumi/aws@npm:6.34.1"
+"@pulumi/aws@npm:6.35.0":
+  version: 6.35.0
+  resolution: "@pulumi/aws@npm:6.35.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.0.0"
     builtin-modules: "npm:3.0.0"
     mime: "npm:^2.0.0"
     resolve: "npm:^1.7.1"
-  checksum: 10c0/d4e5e611d2b8a6fe86e1839bf765c561ce19428c3f62fa73d4da30bc999e2344d5c8ec2c19de1e6473b27e021b8a81928ae0e5f22c43ef9ed438cd7ebe93bb1c
+  checksum: 10c0/f57466165e0ca5c1db1b892e7a5b0a44508274fc5eb98fa7fabc5ea5586c4c40cca3c958c06b01189f951afca4acb7c9ddc8c6c998c17d61caeeddaceeaadaaa
   languageName: node
   linkType: hard
 
@@ -5141,9 +5141,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.115.2":
-  version: 3.115.2
-  resolution: "@pulumi/pulumi@npm:3.115.2"
+"@pulumi/pulumi@npm:3.116.0":
+  version: 3.116.0
+  resolution: "@pulumi/pulumi@npm:3.116.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -5183,7 +5183,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/3a820a3bd075dd9a331892cb8a3f63331dd0286a03fe6980cb2112c82c34c56a408d7ac1912bb44b7468dc0ef8886f19a5bc49c51d7119eb0e5d720d4506d025
+  checksum: 10c0/1c97815638ce1259488edfb92dbad124a8fc1e02159e955aedc3ee670c56ec7406bf9a5d9396cc4dc9c5c23ea1f341bae016c67d89de8167e5aac9c6087db100
   languageName: node
   linkType: hard
 
