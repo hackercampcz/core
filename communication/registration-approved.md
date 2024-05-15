@@ -2,13 +2,15 @@
 Subject: Potvrzení registrace na Hacker Camp
 LayoutTemplate: hc-basic
 ---
+
 Ahoj, táborníku!
 
 Čekat se vyplatilo! My už se na Tebe těšíme! Hacker Camp už se nám blíží,
 tak je kromě těšení se dobré si říct pár praktikálií, aby se nám camp vydařil :)
 
 Právě jsi udělal/a první krok: Registraci. Pro potvrzení svého místa ještě musíš
-svůj vstup zaplatit. Tak pokud nemáš platbu faktur pod palcem, zkus na ni zatlačit.
+svůj vstup zaplatit. Faktura ti přijde během týdne, jak se to podaří Kačce odbavit.
+Pokud nemáš platbu faktur pod palcem, zkus na ni zatlačit.
 Protože až se zaplacením Faktury Ti přijde pozvánka na Slack. Pokud ji pod palcem máš
 a nevyplnil/a jsi fakturační údaje (alespoň adresu), tak je prosím doplň.
 
