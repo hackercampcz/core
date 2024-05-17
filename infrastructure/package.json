@@ -8,7 +8,7 @@
     "@hackercamp/donut": "workspace:donut.hackercamp.cz",
     "@pulumi/aws": "6.36.0",
     "@pulumi/awsx": "2.10.0",
-    "@pulumi/cloudflare": "5.28.0",
+    "@pulumi/cloudflare": "5.29.0",
     "@pulumi/pulumi": "3.116.1",
     "@topmonks/pulumi-aws": "3.1.4",
     "esbuild": "0.21.3",
