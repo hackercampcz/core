@@ -35,9 +35,8 @@ async function imageChanged(event) {
       newImage: unmarshall(x.dynamodb.NewImage),
       oldImage: unmarshall(x.dynamodb.OldImage),
     }))
-    .filter((x) => x.newImage.image && !x.oldImage.image)
+    .filter((x) => x.newImage.image !== x.oldImage.image)
     .map((x) => x.newImage);
-  console.dir({ changedImages, records: event.Records }, { depth: null });
   for (const record of changedImages) {
     const { slackID, image } = record;
     const { announcement } = await getAttendee(slackID, year);
