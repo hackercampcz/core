@@ -37,7 +37,7 @@ async function imageChanged(event) {
     }))
     .filter((x) => x.newImage.image && !x.oldImage.image)
     .map((x) => x.newImage);
-  console.log({ changedImages, event });
+  console.dir({ changedImages, records: event.Records }, { depth: null });
   for (const record of changedImages) {
     const { slackID, image } = record;
     const { announcement } = await getAttendee(slackID, year);
