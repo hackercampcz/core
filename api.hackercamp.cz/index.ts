@@ -410,33 +410,6 @@ export function createDB({ queues, postmarkTemplates }) {
     { startingPosition: "LATEST" },
   );
 
-  const contacts = new aws.dynamodb.Table("contacts", {
-    name: "contacts",
-    hashKey: "email",
-    rangeKey: "slackID",
-    attributes: [
-      { name: "email", type: "S" },
-      { name: "slackID", type: "S" },
-    ],
-    billingMode: "PAY_PER_REQUEST",
-    streamEnabled: true,
-    streamViewType: "NEW_AND_OLD_IMAGES",
-  });
-  contacts.onEvent(
-    "contact-image-changed",
-    getTableEventHandler("contact-image-changed", "contacts/image-changed.mjs", defaultLambdaRole, {
-      environment: {
-        variables: {
-          year: config.require("year"),
-          rollbar_access_token,
-          slack_bot_token: config.get("slack-bot-token"),
-          db_table_attendees: "attendees",
-        },
-      },
-    }),
-    { startingPosition: "LATEST" },
-  );
-
   const attendees = new aws.dynamodb.Table("attendees", {
     name: "attendees",
     hashKey: "slackID",
@@ -465,6 +438,33 @@ export function createDB({ queues, postmarkTemplates }) {
           slack_bot_token: config.get("slack-bot-token"),
           algolia_index_name: config.get("algolia-attendees-index-name"),
           ...algoliaEnv,
+        },
+      },
+    }),
+    { startingPosition: "LATEST" },
+  );
+
+  const contacts = new aws.dynamodb.Table("contacts", {
+    name: "contacts",
+    hashKey: "email",
+    rangeKey: "slackID",
+    attributes: [
+      { name: "email", type: "S" },
+      { name: "slackID", type: "S" },
+    ],
+    billingMode: "PAY_PER_REQUEST",
+    streamEnabled: true,
+    streamViewType: "NEW_AND_OLD_IMAGES",
+  });
+  contacts.onEvent(
+    "contact-image-changed",
+    getTableEventHandler("contact-image-changed", "contacts/image-changed.mjs", defaultLambdaRole, {
+      environment: {
+        variables: {
+          year: config.require("year"),
+          rollbar_access_token,
+          slack_bot_token: config.require("slack-bot-token"),
+          db_table_attendees: attendees.name,
         },
       },
     }),
