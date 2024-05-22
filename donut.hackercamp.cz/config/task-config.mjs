@@ -1,7 +1,10 @@
+import postcssGamutMapping from "@csstools/postcss-gamut-mapping";
 import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
 import logger from "fancy-log";
 import gulpMode from "gulp-mode";
 import fs from "node:fs";
+import OpenProps from "open-props";
+import jitProps from "postcss-jit-props";
 import DefaultRegistry from "undertaker-registry";
 import data from "../src/data/global.mjs";
 import pathConfig from "./path-config.json" assert { type: "json" };
@@ -77,8 +80,17 @@ export default {
   cloudinary: true,
   fonts: true,
   svgSprite: true,
-  stylesheets: true,
   javascripts: false,
+  stylesheets: {
+    postcss: {
+      postcss: {
+        plugins: [
+          postcssGamutMapping(),
+          jitProps(OpenProps),
+        ],
+      },
+    },
+  },
 
   static: {
     srcConfig: {
