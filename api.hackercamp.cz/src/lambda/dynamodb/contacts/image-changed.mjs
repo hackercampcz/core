@@ -39,14 +39,14 @@ async function imageChanged(event) {
     .map((x) => x.newImage);
   for (const record of changedImages) {
     const { slackID, image } = record;
-    const { announcement } = await getAttendee(slackID, year);
-    if (!announcement) {
-      console.log({ event: "Announcement not found", slackID, year });
+    const attendee = await getAttendee(slackID, year);
+    if (!attendee?.announcement) {
+      console.log({ event: "Announcement or attendee not found", slackID, year });
       continue;
     }
-    const { blocks: [section] } = await getMessage(token, announcement);
+    const { blocks: [section] } = await getMessage(token, attendee.announcement);
     section.accessory.image_url = image;
-    await updateMessage(token, announcement, section);
+    await updateMessage(token, attendee.announcement, section);
   }
 }
 
