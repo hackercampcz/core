@@ -544,7 +544,7 @@ export function registrationsTableTemplate(
 export function registrationDetailTemplate({ detail, selectedView }) {
   if (!detail) return null;
   return html`
-    <div class="hc-card hc-master-detail__detail"">
+    <div class="hc-card hc-master-detail__detail">
     <div style="display: flex;align-items: center;gap: 12px;">
       <md-icon-button
         aria-label="Zavřít detail"

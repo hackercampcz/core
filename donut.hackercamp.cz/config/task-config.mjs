@@ -7,7 +7,7 @@ import OpenProps from "open-props";
 import jitProps from "postcss-jit-props";
 import DefaultRegistry from "undertaker-registry";
 import data from "../src/data/global.mjs";
-import pathConfig from "./path-config.json" assert { type: "json" };
+import pathConfig from "./path-config.json" with { type: "json" };
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
