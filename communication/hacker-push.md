@@ -1,28 +1,31 @@
 ---
-Subject: "Hacker Camp 2023: Do konce dubna ti držíme místo"
+Subject: "Hacker camp 2024 se blíží a ty nám chybíš! Do konce června můžeš ušetřit."
 LayoutTemplate: hc-basic
 ---
 
-Ahoj táborníku,
+Ahoj, táborníku.
 
-Blíží se konec dubna a my už se těšíme na další ročník Hacker Campu.
-Připomínáme, že do konce dubna držíme místo a přednostně odbavujeme registrace těch,
-kdo už s námi camp zažili -> takže i Tobě. Od května pak budeme posílat potvrzení registrace
-všem novým tvářím, které může pozvat každý táborník. Připomínáme, že svůj zvací link najdeš,
-v [donutu](https://donut.hackercamp.cz/). A pokud na camp nemůžeš ty, nezapomeň,
-že můžeš někoho pozvat i tak. Buď přes svůj +1 link nebo přes [registraci na webu](https://www.hackercamp.cz/registrace/).
-Pozvání od táborníka, který camp zná, bereme jako právoplatnou pozvánku.
+Hacker camp už pro tebe není žádnou neznámou. Na Sobeňáku to letos vypukne 29. srpna a počítáme s koncem v neděli 1. září ráno.
 
-Moc nás těší, že už takto na konci dubna máme téměř čtvrtinu kapacity letošního campu plnou.
-Pro Tebe to znamená, že pokud chceš svoje místo i na letošním campu, registruj se raději hned :)
-A pokud potřebuješ motivaci, nabízíme třeba přehled těch, kdo letos na camp jedou.
-Najdeš ho taky v naší [hackercampí “apce”](https://donut.hackercamp.cz/hackers/)
-nebo ve [slacku: #kdo_prijede_na_camp](https://hackercampworkspace.slack.com/archives/C026KB0G8V8).
+Abychom tě mohli na místě uvítat, nesmíš se zapomenout registrovat!
+[Přihlaš se přes donut](https://donut.hackercamp.cz/registrace/).
+Kdyby tě to zlobilo, pingni ve slacku @rarous nebo mu napiš mail na rarous@hckr.camp.
 
-My se každopádně těšíme na viděnou :) Pokud máš jakékoliv otázky,
-které neodpovídají naše [FAQs](https://www.hackercamp.cz/faq/) na [webu](https://www.hackercamp.cz/),
-napiš nám. Jsme na slacku i mailech a odpovídáme rychle :)
+**Jako zkušený hacker, co už atmošku campu zažil, máš nárok ne cenovku jako loni.
+Ale jen pokud se přihlásíš a zaplatíš vstup do konce června.** Pak už i pro Tebe platí cenovky jako pro nováčky.
+Které i ty můžeš pozvat. Na tom se nic nemění, k tomu [máš v donutu svůj +1 link](https://donut.hackercamp.cz/).
+A neboj, můžeš ho použít víc než jednou 🙂
 
-Takže na Sobeňáku na konci srpna?! 🙂
+Pokud máš už tři Hacker Campí zářezy, termín do konce června neřeš.
+Za svoji přízeň campu máš od nás sníženou cenovku až do posledního srpnového dne.
+Moc díky, že s námi pořád jsi. Vážíme si toho a doufáme, že se vidíme i letos :)
 
-Hacker Camp @crew: Kuba, Kosi, Pája, Jirka, Kačka, Aleš a Ir
+NGOs cenovku pro ty, kdo si nemůžou dovolit za vstup zaplatit hacker vstupné, necháváme stejnou.
+Pokud si to naopak dovolit můžeš a máš zlaté srdce, co nejen pomůže dorovnat vstupenku pro lidi z nezisku nebo studenty,
+**můžeš si vyzkoušet být pro letošek Patronem campu** :) Poděkování bude :)
+
+Tak neváhej s přihlášením, ať máš ubytko dle představ i zajištěné místo.
+
+Těšíme se na Tebe!
+
+Tvoje Hacker camp @crew: Kuba, Kosi, Pavla, Kačka, Jirka, Aleš a Ir
