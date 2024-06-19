@@ -204,12 +204,6 @@
     "variant": "glamping"
   },
   {
-    "type": "tent",
-    "placement": "Stan č. 5",
-    "capacity": 5,
-    "variant": "glamping"
-  },
-  {
     "type": "house",
     "placement": "Pokoj č. 1",
     "capacity": 2,
