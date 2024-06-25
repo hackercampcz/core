@@ -3609,7 +3609,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@hckr_/blendid": "npm:8.3.0"
+    "@hckr_/blendid": "npm:8.4.2"
     "@types/nunjucks": "npm:3.2.6"
     dotenv-cli: "npm:7.4.2"
     dprint: "npm:0.46.3"
@@ -3683,9 +3683,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hckr_/blendid@npm:8.3.0":
-  version: 8.3.0
-  resolution: "@hckr_/blendid@npm:8.3.0"
+"@hckr_/blendid@npm:8.4.2":
+  version: 8.4.2
+  resolution: "@hckr_/blendid@npm:8.4.2"
   dependencies:
     "@vitejs/plugin-basic-ssl": "npm:1.1.0"
     browser-sync: "npm:3.0.2"
@@ -3715,7 +3715,7 @@ __metadata:
     gulp-svgstore: "npm:9.0.0"
     gulplog: "npm:2.2.0"
     lodash-es: "npm:4.17.21"
-    marked: "npm:13.0.0"
+    marked: "npm:13.0.1"
     marked-gfm-heading-id: "npm:4.0.0"
     marked-highlight: "npm:2.1.3"
     marked-mangle: "npm:1.1.8"
@@ -3733,6 +3733,7 @@ __metadata:
     sass: "npm:1.77.6"
     sort-keys: "npm:5.0.0"
     strip-ansi: "npm:7.1.0"
+    through2: "npm:^4.0.2"
     undertaker-registry: "npm:2.0.0"
     vinyl: "npm:3.0.0"
     vinyl-file: "npm:5.0.0"
@@ -3741,7 +3742,7 @@ __metadata:
     workbox-build: "npm:7.1.1"
   bin:
     blendid: bin/blendid.js
-  checksum: 10c0/28cb7681a4329b92233b39e809e6fe49c744de496facce8b1ff09ec41160ed0a5db8890bee04c4fac122cf2bb14b4fb38b6cde16acabd9321897e744bcfa2b63
+  checksum: 10c0/9ecd81cf8f8315ff472099aaa5225d151047aa5fda5e858e1cfefc7cca6952a8d37b6aac5d370091e840ec1ef14dd70080d20797075b8ca8ff44093e9ce36f34
   languageName: node
   linkType: hard
 
@@ -11733,15 +11734,6 @@ __metadata:
   peerDependencies:
     marked: ">=4 <14"
   checksum: 10c0/67aabc990cbd2c6b91b8354b02776cd091f4dcf2ec9ad7f5060468e347b4a21ad8fa6ee0e6d7844202e45495e8f2dc61f24589564922b40e48ebc99f7a19030b
-  languageName: node
-  linkType: hard
-
-"marked@npm:13.0.0":
-  version: 13.0.0
-  resolution: "marked@npm:13.0.0"
-  bin:
-    marked: bin/marked.js
-  checksum: 10c0/ddae525b0f4ad3805b6bce5e12a65d6286ca557e4357006aedd92494e9613113b4773a8821894d63947818686853e40177d654e53a85cb4999de4003adf1472d
   languageName: node
   linkType: hard
 
