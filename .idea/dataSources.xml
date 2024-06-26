@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="HC Dynamo" uuid="b867e4fa-80eb-42de-a7b0-37fcf1647bc4">
+      <driver-ref>dynamo</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.jetbrains.DynamoDriver</jdbc-driver>
+      <jdbc-url>jdbc:dynamodb://?region=eu-central-1</jdbc-url>
+      <jdbc-additional-properties>
+        <property name="Profile" value="hackercamp" />
+      </jdbc-additional-properties>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
