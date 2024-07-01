@@ -16,6 +16,7 @@ function build(
     format,
     charset: "utf8",
     platform: "node",
+    packages: "bundle",
     target: "node20.10",
     mainFields: ["module", "main"],
     external,
