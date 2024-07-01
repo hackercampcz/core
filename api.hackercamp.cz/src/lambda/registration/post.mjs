@@ -8,6 +8,33 @@ import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
 
+const unusedAllstars = new Set([
+  "U0293EN5KPF",
+  "U029HDHPE8J",
+  "U029W65SCTS",
+  "U02C9JJP2SJ",
+  "U02C3C6GDFG",
+  "U02AV7F591U",
+  "U02C1NGPURH",
+  "U02BG1JAK6G",
+  "U02CUMJLJQN",
+  "U0296F759JN",
+  "U02CKKMCLM8",
+  "U0293ELJFQD",
+  "U02AV7EN58W",
+  "U02AB696S77",
+  "U02AE77KAR0",
+  "U02DAR21FSP",
+  "U02AE77HK3L",
+  "U02CP28HDN1",
+  "U02C9JJKYVC",
+  "U02D5PUDV33",
+  "U03SW8VTUDS",
+  "U02CVJXS6NA",
+  "U0296F8DY2E",
+  "U02C1JXJTNK",
+]);
+
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
@@ -38,7 +65,7 @@ function getEditUrl(isNewbee, id) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  let { email, year, firstTime, ...rest } = readPayload(event);
+  let { email, year, firstTime, slackID, ...rest } = readPayload(event);
   const isNewbee = firstTime === "1";
   email = email.trim().toLowerCase();
   year = parseInt(year, 10);
@@ -49,6 +76,7 @@ export async function handler(event) {
   );
   const isVolunteer = rest.ticketType === "volunteer";
   const isHacker = rest.ticketType === "hacker";
+  const isAllstar = unusedAllstars.has(slackID);
   const id = crypto.randomBytes(20).toString("hex");
   console.log({
     event: "Put registration",
@@ -72,7 +100,7 @@ export async function handler(event) {
             ...rest,
             // TODO: make this until the end of June and then for allstars
             // isHacker && !isNewbee ? 6000 : undefined
-            ticketPrice: undefined,
+            ticketPrice: isAllstar ? 6000 : undefined,
             id,
             timestamp: new Date().toISOString(),
           },
