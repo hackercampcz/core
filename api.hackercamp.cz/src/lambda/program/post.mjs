@@ -2,7 +2,7 @@ import { DynamoDBClient, GetItemCommand, PutItemCommand, UpdateItemCommand } fro
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
 import { selectKeys } from "@hackercamp/lib/object.mjs";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { getHeader, notFound, readPayload, seeOther } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */

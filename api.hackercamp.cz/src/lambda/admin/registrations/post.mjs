@@ -6,7 +6,7 @@ import {
   TransactWriteItemsCommand,
   UpdateItemCommand,
 } from "@aws-sdk/client-dynamodb";
-import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { marshall } from "@aws-sdk/util-dynamodb";
 import { getContact } from "../../dynamodb/registrations/paid.mjs";
 import { fetchInvoice } from "../../fakturoid.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";

@@ -1,6 +1,6 @@
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import crypto from "crypto";
+import crypto from "node:crypto";
 import { accepted, getHeader, readPayload, seeOther } from "../http.mjs";
 import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 
