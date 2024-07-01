@@ -71,7 +71,8 @@ export async function handler(event) {
             firstTime: isNewbee,
             ...rest,
             // TODO: make this until the end of June and then for allstars
-            ticketPrice: isHacker && !isNewbee ? 6000 : undefined,
+            // isHacker && !isNewbee ? 6000 : undefined
+            ticketPrice: undefined,
             id,
             timestamp: new Date().toISOString(),
           },
