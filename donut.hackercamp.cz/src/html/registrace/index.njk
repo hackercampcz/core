@@ -212,7 +212,6 @@
     </header>
   </div>
   <form action='{{ build["api-host"] }}registration' method="post" class="mdc-layout-grid" id="reg">
-    <input type="hidden" name="slackID">
     <section id="contact">
       <h2>Hacker</h2>
       <div class="hc-card">
@@ -351,10 +350,17 @@
             </label>
           </div>
           <div class="choose">
+            <input type="hidden" name="slackID">
             <input type="radio" name="ticketType" value="hacker" checked="checked" id="ticket-hacker">
-            <label for="ticket-hacker">
+            <label for="ticket-hacker" id="normal-hacker-ticket" aria-hidden="false">
               <strong>{{ ticket["hacker"].name }}</strong> - {{ ticket["hacker"].price | price("CZK") }}<br>
               <span>Normální vstupné</span>
+            </label>
+            <label for="ticket-hacker" id="discounted-hacker-ticket" aria-hidden="true">
+              <strong>{{ ticket["hacker"].name }}</strong> - <del>{{ ticket["hacker"].price | price("CZK") }}</del
+              >&nbsp;<ins>{{ (ticket["hacker"].price - 1000) | price("CZK") }}</ins><br>
+              <span><del>Normální vstupné</del>&nbsp;<ins>Loňská cena pro věrné hackery.
+                  <span class="allstars-hidden">Jen do konce června.</span></ins></span>
             </label>
           </div>
           <div class="choose">
@@ -379,6 +385,23 @@
           </div>
         </fieldset>
       </div>
+      <script type="module">
+        // TODO: add logic for early birds for next year (inject date from env)
+        const { slackID, hasAllstarDiscount } = JSON.parse(localStorage.getItem("hc:contact"));
+        document.forms.reg.slackID.value = slackID;
+        if (hasAllstarDiscount) {
+          const discountedTicket = document.getElementById("discounted-hacker-ticket");
+          discountedTicket.classList.add("has-allstar-discount");
+          discountedTicket.ariaHidden = "false";
+          const normalTicket = document.getElementById("normal-hacker-ticket");
+          normalTicket.ariaHidden = "true";
+        }
+      </script>
+      <style>
+        #reg .has-allstar-discount .allstars-hidden {
+          display: none;
+        }
+      </style>
     </section>
     <section id="invoice">
       <h2>Fakturace</h2>
@@ -756,7 +779,6 @@
         document.getElementById("plus-one-section").removeAttribute("aria-hidden");
       }
 
-      formElement.slackID.value = sid;
       for (const key in data) {
         const field = formElement[key];
         let value = data[key];
