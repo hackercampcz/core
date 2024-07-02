@@ -40,15 +40,6 @@ const indexes = new Map([
   ],
 ]);
 
-async function getCrewReferrals(token) {
-  const resp = await fetch(
-    "https://slack.com/api/usergroups.users.list?usergroup=S03EQ1LLYCC",
-    { headers: { Authorization: `Bearer ${token}` } },
-  );
-  const { users } = await resp.json();
-  return new Set(users);
-}
-
 async function getOptOuts() {
   const resp = await dynamo.scan({
     TableName: "optouts",
@@ -129,9 +120,8 @@ async function indexRegistrations(client, slackBotToken) {
   const index = client.initIndex("hc-registrations");
   await index.setSettings(indexes.get("hc-registrations"));
 
-  const crewReferrals = await getCrewReferrals(slackBotToken);
   const registrations = await getRegistrations();
-  const records = registrations.map(getRegistrationProjection(crewReferrals));
+  const records = registrations.map(getRegistrationProjection());
   console.log(`Importing ${records.length} registrations to Algolia`);
   return index.saveObjects(records);
 }

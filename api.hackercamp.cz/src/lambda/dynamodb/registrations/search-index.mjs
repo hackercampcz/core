@@ -36,19 +36,6 @@ function openAlgoliaIndex() {
   return algolia.initIndex(algolia_index_name);
 }
 
-let getCrewReferralsCache = null;
-
-async function getCrewReferrals() {
-  if (getCrewReferralsCache?.size) return getCrewReferralsCache;
-  const resp = await fetch(
-    "https://slack.com/api/usergroups.users.list?usergroup=S03EQ1LLYCC",
-    { headers: { Authorization: `Bearer ${process.env.slack_bot_token}` } },
-  );
-  const { users } = await resp.json();
-  getCrewReferralsCache = new Set(users);
-  return getCrewReferralsCache;
-}
-
 /**
  * @param {DynamoDBStreamEvent} event
  * @param {SearchIndex} searchIndex
@@ -72,7 +59,6 @@ async function deleteRemovedItems(event, searchIndex) {
  * @param {SearchIndex} searchIndex
  */
 async function updateRegistrationsIndex(event, searchIndex) {
-  const crewReferrals = await getCrewReferrals();
   const updatedRegistrations = event.Records.filter(
     (x) => x.eventName !== "REMOVE",
   )
@@ -84,7 +70,7 @@ async function updateRegistrationsIndex(event, searchIndex) {
     ])
     .filter(([n, o]) => !n.equals(o))
     .map(([n]) => n.toJS())
-    .map(getRegistrationProjection(crewReferrals));
+    .map(getRegistrationProjection());
   if (updatedRegistrations.length > 0) {
     console.log({
       event: "Updating registrations index",
