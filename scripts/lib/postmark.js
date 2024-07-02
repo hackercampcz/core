@@ -27,7 +27,7 @@ export async function sendEmailWithTemplate({
   templateId,
   templateAlias,
   data,
-  from,
+  from = "Hacker Camp Crew <team@hackercamp.cz>",
   to,
   replyTo,
   attachments,
