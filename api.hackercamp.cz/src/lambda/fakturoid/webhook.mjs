@@ -1,5 +1,6 @@
 import { DynamoDBClient, QueryCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import {
+  accepted,
   errorResponse,
   getHeader,
   notFound,
@@ -105,24 +106,32 @@ export async function fakturoidWebhook(event) {
     const payload = readPayload(event);
     rollbar.configure({ payload });
     console.log({ payload });
-    if (payload.event_name !== "invoice_paid") {
-      console.log({ event: "Unknown event", payload });
-      return withCORS_(unprocessableEntity());
-    }
+    switch (payload.event_name) {
+      case "invoice_overdue": {
+        // there is nothing we want to do, just accept it for now.
+        return withCORS_(accepted());
+      }
+      case "invoice_paid": {
+        const { invoice_id, paid_at } = payload;
+        const registrations = await getInvoicedRegistrations(db, invoice_id);
+        if (!registrations.length) {
+          console.log({ event: "Registrations not found", invoice_id });
+          return withCORS_(notFound());
+        }
 
-    const { invoice_id, paid_at } = payload;
-    const registrations = await getInvoicedRegistrations(db, invoice_id);
-    if (!registrations.length) {
-      console.log({ event: "Registrations not found", invoice_id });
-      return withCORS_(notFound());
+        if (payload.total < 0) {
+          // cancelled invoice has negative total to compensate the balance
+          await markAsCancelled(registrations, paid_at, invoice_id);
+        } else {
+          await markAsPaid(registrations, paid_at, invoice_id);
+        }
+        return withCORS_(response({}));
+      }
+      default: {
+        console.log({ event: "Unknown event", payload });
+        return withCORS_(unprocessableEntity());
+      }
     }
-
-    if (payload.total < 0) {
-      await markAsCancelled(registrations, paid_at, invoice_id);
-    } else {
-      await markAsPaid(registrations, paid_at, invoice_id);
-    }
-    return withCORS_(response({}));
   } catch (err) {
     rollbar.error(err);
     console.error(err);
