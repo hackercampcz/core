@@ -1,4 +1,5 @@
-import { withAuthHandler } from "./remoting";
+import { withAuthHandler } from "./remoting.js";
+
 export async function signIn(
   { idToken, slackProfile, slackToken, slackAccessToken },
   apiURL,

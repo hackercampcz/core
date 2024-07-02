@@ -1,5 +1,5 @@
 import { formatLongDayName, formatShortDayName, formatTime } from "@hackercamp/lib/format.mjs";
-import { defAtom, updateAsTransaction } from "@thi.ng/atom";
+import { defAtom } from "@thi.ng/atom";
 import structuredClone from "@ungap/structured-clone";
 import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";

@@ -26,7 +26,7 @@ import {
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
-import { getContact } from "./lib/profile";
+import { getContact } from "./lib/profile.js";
 
 function optout(email) {
   return (e) => {
