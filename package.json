@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "repository": "https://github.com/hackercampcz/core.git",
   "author": "Aleš Roubíček <ales@roubicek.name>",
-  "license": "EPL-2.0",
+  "license": "EUPL-1.2",
   "private": true,
   "packageManager": "yarn@4.3.1",
   "devDependencies": {
