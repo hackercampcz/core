@@ -3778,7 +3778,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@hckr_/blendid": "npm:8.4.3"
+    "@hckr_/blendid": "npm:8.4.4"
     "@types/nunjucks": "npm:3.2.6"
     dotenv-cli: "npm:7.4.2"
     dprint: "npm:0.47.0"
@@ -3852,9 +3852,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hckr_/blendid@npm:8.4.3":
-  version: 8.4.3
-  resolution: "@hckr_/blendid@npm:8.4.3"
+"@hckr_/blendid@npm:8.4.4":
+  version: 8.4.4
+  resolution: "@hckr_/blendid@npm:8.4.4"
   dependencies:
     "@vitejs/plugin-basic-ssl": "npm:1.1.0"
     browser-sync: "npm:3.0.2"
@@ -3895,7 +3895,6 @@ __metadata:
     open: "npm:10.1.0"
     plugin-error: "npm:2.0.1"
     postcss: "npm:8.4.39"
-    postcss-functions: "npm:4.0.2"
     postcss-preset-env: "npm:9.5.15"
     replace-ext: "npm:2.0.0"
     rev-hash: "npm:4.1.0"
@@ -3912,7 +3911,7 @@ __metadata:
     workbox-build: "npm:7.1.1"
   bin:
     blendid: bin/blendid.js
-  checksum: 10c0/f9d611df3319480e48ad02304db77bdbf124069c948784f9e7916248a7deead7681fc4a0ea2f41ede40ea11c5c2894949088feb2a280198cae6eb266d7583c90
+  checksum: 10c0/a4d1565337e08ca9de87c467e3de212054b342580bdcec4b982d90264a4a369793cb9c6e1d29d16948dae05159549c66f18c9aa110be9829e170972515e0aa37
   languageName: node
   linkType: hard
 
@@ -13373,17 +13372,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-functions@npm:4.0.2":
-  version: 4.0.2
-  resolution: "postcss-functions@npm:4.0.2"
-  dependencies:
-    postcss-value-parser: "npm:^4.0.0"
-  peerDependencies:
-    postcss: ^8.0.0
-  checksum: 10c0/1ee271a639ba08a7abdb53eddd434eb4f13574ef7d26adf4b8623fd141422713672044becb9273c9d7373ddc7f399b4ef5659afb5c1073a2a344b7cd1f460489
-  languageName: node
-  linkType: hard
-
 "postcss-gap-properties@npm:^5.0.1":
   version: 5.0.1
   resolution: "postcss-gap-properties@npm:5.0.1"
@@ -13865,7 +13853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.2.0":
+"postcss-value-parser@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
   checksum: 10c0/f4142a4f56565f77c1831168e04e3effd9ffcc5aebaf0f538eee4b2d465adfd4b85a44257bb48418202a63806a7da7fe9f56c330aebb3cac898e46b4cbf49161
