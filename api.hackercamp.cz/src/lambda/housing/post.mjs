@@ -1,6 +1,7 @@
 import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 import { getToken, validateToken } from "@hackercamp/lib/auth.mjs";
+import { housingToText } from "@hackercamp/lib/housing.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../http.mjs";
 import { postChatMessage } from "../slack.mjs";
 
@@ -31,24 +32,13 @@ function saveAttendee(dynamo, data) {
   );
 }
 
-const housing = new Map([
-  ["own-car", "v tvém autě"],
-  ["own-caravan", "ve vlastním karavanu"],
-  ["open-air", "pod širákem nebo v hamace"],
-  ["own-tent", "ve stanu"],
-  ["glamping", "v Glamping stanu"],
-  ["cottage", "v chatce"],
-  ["nearby", "v okolí"],
-  ["house", "v domku"],
-]);
-
 const placement = (p) => (p === "custom" ? "" : ` ${p}`);
 
 function sendSlackMessage(submittedBy, item) {
   console.log({ event: "Sending Slack message", submittedBy, item });
   const message = submittedBy === item.slackID
     ? `Super! Právě sis vybral svoje ubytko na Campu.
-Držíme Ti místo ${housing.get(item.housing)}${
+Držíme Ti místo ${housingToText.get(item.housing)}${
       placement(
         item.housingPlacement,
       )
@@ -63,7 +53,7 @@ Tvoje Hacker Camp Crew`
     : `Gratulujeme, milý hackere,
 
 Právě ti někdo zamluvil ubytko na Campu. Tvoje poděkování si zaslouží <@${submittedBy}>.
-Takže teď Ti držíme místo ${housing.get(item.housing)}${
+Takže teď Ti držíme místo ${housingToText.get(item.housing)}${
       placement(
         item.housingPlacement,
       )

@@ -1,4 +1,5 @@
 import { formatMoney } from "@hackercamp/lib/format.mjs";
+import { housingToText } from "@hackercamp/lib/housing.mjs";
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { map } from "lit-html/directives/map.js";
@@ -204,16 +205,6 @@ function renderPaidScreen(referralLink) {
   `;
 }
 
-const housingToText = new Map([
-  ["own-car", "v tvém autě"],
-  ["own-caravan", "ve vlastním karavanu"],
-  ["open-air", "pod širákem nebo v hamace"],
-  ["own-tent", "ve stanu"],
-  ["glamping", "v Glamping stanu"],
-  ["cottage", "v chatce"],
-  ["nearby", "v okolí"],
-  ["house", "v domku"],
-]);
 const placement = (p) => (p === "custom" ? "" : ` ${p}`);
 function housingText(housing, housingPlacement) {
   return html`<strong
