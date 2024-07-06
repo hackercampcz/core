@@ -11,12 +11,12 @@
   "automergeStrategy": "rebase",
   "packageRules": [
     {
-      "groupName": "eslint",
-      "matchPackagePatterns": ["eslint"]
-    },
-    {
       "groupName": "pulumi",
       "matchPackagePrefixes": ["@pulumi/"]
+    },
+    {
+      "groupName": "thi.ng",
+      "matchPackagePrefixes": ["@thi.ng/"]
     }
   ]
 }
