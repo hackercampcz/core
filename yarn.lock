@@ -3876,7 +3876,7 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:api.hackercamp.cz"
     "@hackercamp/donut": "workspace:donut.hackercamp.cz"
-    "@pulumi/aws": "npm:6.43.0"
+    "@pulumi/aws": "npm:6.44.0"
     "@pulumi/awsx": "npm:2.13.0"
     "@pulumi/cloudflare": "npm:5.33.1"
     "@pulumi/pulumi": "npm:3.122.0"
@@ -5026,15 +5026,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:6.43.0":
-  version: 6.43.0
-  resolution: "@pulumi/aws@npm:6.43.0"
+"@pulumi/aws@npm:6.44.0":
+  version: 6.44.0
+  resolution: "@pulumi/aws@npm:6.44.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.0.0"
     builtin-modules: "npm:3.0.0"
     mime: "npm:^2.0.0"
     resolve: "npm:^1.7.1"
-  checksum: 10c0/9619234e63ed9b6fc736ea8369fa121105803e663707a95e1aee9e572a53b0ab8b9bc5d20f384ecd0168770397a096bf394294abfc2bf3864c09b440393e97a8
+  checksum: 10c0/91506730be1b1acf982a57753535068bb4b27b57a9375b0aaa69d042ca536f1830b965a45f1b000067f2acf4cebba2d20e8fd86636c910bd024de12c42d05cf2
   languageName: node
   linkType: hard
 
