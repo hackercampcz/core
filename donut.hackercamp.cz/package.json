@@ -21,7 +21,7 @@
     "workbox-window": "7.1.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20240701.0",
+    "@cloudflare/workers-types": "4.20240712.0",
     "@csstools/postcss-gamut-mapping": "1.0.11",
     "material-icons": "1.13.12",
     "open-props": "1.7.5",
