@@ -90,5 +90,5 @@ export async function handler(event) {
   if (getHeader(event.headers, "Accept") === "application/json") {
     return accepted();
   }
-  return seeOther();
+  return seeOther(`https://${process.env.donut}/ubytovani/ulozeno/`);
 }

@@ -109,6 +109,7 @@ export function createRoutes({
           environment: {
             variables: {
               rollbar_access_token,
+              donut: config.require("donut-domain"),
               db_table_attendees: db.attendeesDataTable,
               private_key: config.require("private-key"),
               slack_bot_token: config.require("slack-bot-token"),
