@@ -1,15 +1,13 @@
-async function sleep(number) {
-  return new Promise((resolve, reject) => setTimeout(resolve, number));
-}
+import { setTimeout as sleep } from "node:timers/promises";
 
 async function retry(callback, retryCount = 3) {
-  var lastResult = null;
+  let lastResult = null;
   for (let i = 0; i < retryCount; i++) {
     const result = await callback();
     lastResult = result;
     if (result.ok) return result;
     else if (result.status === 404) return null;
-    else await sleep(2 ** (i + 1) * 10000);
+    else await sleep(2 ** (i + 1) * 10_000);
   }
   console.log(await lastResult.json());
   throw new Error();
@@ -43,6 +41,5 @@ async function getAllChips(token) {
       },
     },
   );
-  const data = await resp.json();
-  return data;
+  return resp.json();
 }
