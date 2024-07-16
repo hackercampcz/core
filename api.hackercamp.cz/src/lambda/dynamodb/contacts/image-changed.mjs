@@ -28,6 +28,7 @@ async function getAttendee(slackID, year) {
 async function imageChanged(event) {
   rollbar.configure({ payload: { event } });
   const { year, slack_bot_token: token } = process.env;
+  console.log({ event: "updated contact", records: event.Records });
   const changedImages = event.Records.filter(
     (x) => x.eventName === "MODIFY",
   )
@@ -37,6 +38,7 @@ async function imageChanged(event) {
     }))
     .filter((x) => x.newImage.image !== x.oldImage.image)
     .map((x) => x.newImage);
+  console.log({ event: "changed images", count: changedImages.length });
   for (const record of changedImages) {
     const { slackID, image } = record;
     const attendee = await getAttendee(slackID, year);
