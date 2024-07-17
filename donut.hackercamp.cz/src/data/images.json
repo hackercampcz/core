@@ -21,5 +21,28 @@
     "existing": false,
     "original_filename": "areal-map",
     "api_key": "389916164315219"
+  },
+  "glamping-stan.jpeg": {
+    "asset_id": "27f112c75e9cb231566b8b056f4c4937",
+    "public_id": "donut.hackercamp.cz/glamping-stan",
+    "version": 1721219976,
+    "version_id": "c5b3cdce82464fe014add42ccc7ed631",
+    "signature": "f641d8c0396c14942b11ab534663a025290e953f",
+    "width": 1024,
+    "height": 768,
+    "format": "jpg",
+    "resource_type": "image",
+    "created_at": "2024-07-17T12:39:36Z",
+    "tags": [],
+    "bytes": 176228,
+    "type": "upload",
+    "etag": "1b7a8e8346ab567c7664668c8d93d98c",
+    "placeholder": false,
+    "url": "http://res.cloudinary.com/hackercamp/image/upload/v1721219976/donut.hackercamp.cz/glamping-stan.jpg",
+    "secure_url": "https://res.cloudinary.com/hackercamp/image/upload/v1721219976/donut.hackercamp.cz/glamping-stan.jpg",
+    "folder": "donut.hackercamp.cz",
+    "existing": false,
+    "original_filename": "glamping-stan",
+    "api_key": "375716383121574"
   }
 }
