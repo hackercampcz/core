@@ -11,10 +11,11 @@ export async function onRequestGet({ request }) {
     ? "None"
     : "Strict";
   const expired = new Date(0).toUTCString();
-  const response = Response.redirect("https://donut.hackercamp.cz");
-  response.headers.set(
-    "Set-Cookie",
-    `hc-id=; Expires=${expired}; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
-  );
-  return response;
+  return new Response(null, {
+    status: 302,
+    headers: {
+      "Location": origin,
+      "Set-Cookie": `hc-id=; Expires=${expired}; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
+    },
+  });
 }
