@@ -504,7 +504,7 @@ function canSelectHousing(registration, attendee) {
 }
 
 function renderIndex({ profile, attendee, selectedView }) {
-  const referralLink = `https://www.hackercamp.cz/registrace/?referral=${profile?.sub}`;
+  const referralLink = `https://hckr.camp/r/${profile?.sub}`;
   switch (selectedView) {
     case View.loading:
       return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
@@ -526,10 +526,6 @@ function renderIndex({ profile, attendee, selectedView }) {
                 Chceš se podívat, kdo už se na tebe těší? Tak tady je
                 <a href="/hackers/">seznam účastníků</a>.
               </p>
-              <!--p>
-          Taky se můžeš podívat na <a href="/program/">předběžný program</a> a po
-          zaplacení si budeš moct zadat vlastní návrhy.
-        </p-->
               <p>
                 Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
                 e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
