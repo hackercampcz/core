@@ -3,9 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/api.hackercamp.cz.iml" filepath="$PROJECT_DIR$/.idea/modules/api.hackercamp.cz.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/core.iml" filepath="$PROJECT_DIR$/.idea/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/donut.hackercamp.cz.iml" filepath="$PROJECT_DIR$/.idea/modules/donut.hackercamp.cz.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/hackercamp.iml" filepath="$PROJECT_DIR$/.idea/modules/hackercamp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hackercamp.core.iml" filepath="$PROJECT_DIR$/.idea/hackercamp.core.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib.iml" filepath="$PROJECT_DIR$/.idea/modules/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/scripts.iml" filepath="$PROJECT_DIR$/.idea/modules/scripts.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/www.hackercamp.cz.iml" filepath="$PROJECT_DIR$/.idea/modules/www.hackercamp.cz.iml" />
