@@ -24,7 +24,7 @@ export function signOut(apiURL) {
   localStorage.removeItem("slack:id_token");
   localStorage.removeItem("slack:access_token");
   localStorage.removeItem("slack:profile");
-  location.assign(apiURL("auth/sign-out"));
+  location.assign(apiURL("/v2/auth/sign-out"));
 }
 
 async function getContactFromDb(slackID, email, apiUrl) {
