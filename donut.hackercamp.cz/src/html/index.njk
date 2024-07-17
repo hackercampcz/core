@@ -68,9 +68,9 @@
       <h2>Ahoj táborníku!</h2>
       <p>Vstupuješ do zóny,<br> která je pouze pro účastníky Hacker Campu.<br>
         Tato zóna využívá k přihlášení tvůj <strong>Hacker Camp Slack účet</strong>.</p>
-      <p>Ujisti se, že jsi přihlášen/a do správného workspace<br>
+      <p>Nejprve se ujisti, že jsi přihlášen/a do správného Slack workspace<br>
         <strong><a href="https://hackercampworkspace.slack.com/">hackercampworkspace.slack.com</a></strong>,<br>
-        aby ti přihlášení fungovalo správně.</p>
+        aby ti přihlášení přes Slack fungovalo správně.</p>
       <a class="hc-slack-btn"
           href="https://slack.com/openid/connect/authorize?scope=openid%20email%20profile&amp;response_type=code&amp;redirect_uri=https%3A%2F%2F{{ build.hostname }}%2F&amp;client_id={{ build["slack/client-id"] }}&amp;team=T01V4Q0ACQ4">
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -89,7 +89,7 @@
             fill="#ecb22e"></path>
         </svg>
         Přihlaš se přes Slack</a>
-      <p><small>Máš problém se přes Slack přihlásit?<br><a href="/help/#slack-prihlaseni">Zkus tenhle návod</a>.</small></p>
+      <p><small>Máš problém se přes Slack přihlásit?<br><a href="//{{ build.hostname }}/help/#slack-prihlaseni">Zkus tenhle návod</a>.</small></p>
     </div>
   </div>
 {% endblock %}
