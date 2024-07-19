@@ -155,7 +155,9 @@ export default {
   },
 
   production: {
-    rev: true,
+    rev: {
+      exclude: ["favicon.ico", "robots.txt", "humans.txt", "_redirects", "_headers"],
+    },
   },
 
   registries: [

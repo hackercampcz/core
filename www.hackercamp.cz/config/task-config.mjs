@@ -98,7 +98,7 @@ export default {
 
   production: {
     rev: {
-      exclude: ["robots.txt", "humans.txt", "_redirects", "_headers"],
+      exclude: ["favicon.ico", "robots.txt", "humans.txt", "_redirects", "_headers"],
     },
   },
 };
