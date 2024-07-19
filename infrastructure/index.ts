@@ -93,6 +93,11 @@ const webPages = new cloudflare.PagesProject("web", {
   deploymentConfigs: {
     production: {
       compatibilityDate: "2023-09-29",
+      environmentVariables: {
+        HC_API_HOSTNAME: config.require("api-domain"),
+        HC_DONUT_HOSTNAME: config.require("donut-domain"),
+        HC_WEB_HOSTNAME: config.require("domain"),
+      },
     },
   },
 });
@@ -138,6 +143,11 @@ const donutPages = new cloudflare.PagesProject("donut", {
   deploymentConfigs: {
     production: {
       compatibilityDate: "2023-09-29",
+      environmentVariables: {
+        HC_API_HOSTNAME: config.require("api-domain"),
+        HC_DONUT_HOSTNAME: config.require("donut-domain"),
+        HC_WEB_HOSTNAME: config.require("domain"),
+      },
       secrets: {
         HC_JWT_SECRET: config.require("private-key"),
       },
@@ -168,6 +178,9 @@ const apiPages = new cloudflare.PagesProject("api", {
     production: {
       compatibilityDate: "2023-09-29",
       environmentVariables: {
+        HC_API_HOSTNAME: config.require("api-domain"),
+        HC_DONUT_HOSTNAME: config.require("donut-domain"),
+        HC_WEB_HOSTNAME: config.require("domain"),
         API_HOST: api.url.apply((x) => new URL("/v1/", x).href),
       },
     },

@@ -9,7 +9,7 @@ const authorizedOnly = [
 ];
 
 /**
- * @param {EventContext} context
+ * @param {EventContext<Env>} context
  */
 export async function onRequest({ request, next, env }) {
   const url = new URL(request.url);
@@ -25,5 +25,5 @@ export async function onRequest({ request, next, env }) {
     state: "not-authenticated",
     returnUrl: request.url,
   });
-  return Response.redirect(`https://donut.hackercamp.cz/?${query}`, 307);
+  return Response.redirect(`https://${env.HC_DONUT_HOSTNAME}/?${query}`, 307);
 }
