@@ -97,6 +97,8 @@ export default {
   },
 
   production: {
-    rev: true,
+    rev: {
+      exclude: ["robots.txt", "humans.txt", "_redirects", "_headers"],
+    },
   },
 };
