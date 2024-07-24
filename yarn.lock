@@ -292,9 +292,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.616.0":
-  version: 3.616.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.616.0"
+"@aws-sdk/client-dynamodb@npm:3.619.0":
+  version: 3.619.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.619.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:5.2.0"
     "@aws-crypto/sha256-js": "npm:5.2.0"
@@ -340,7 +340,7 @@ __metadata:
     "@smithy/util-waiter": "npm:^3.1.2"
     tslib: "npm:^2.6.2"
     uuid: "npm:^9.0.1"
-  checksum: 10c0/73a79710cdd10d776b07016862e39b240d1fc6caf69c481e6eaceb0ba7de3c2f9bfa1a1a29a85caf4abb046110b8fd4a36f705a5a088831dca01623306bb7607
+  checksum: 10c0/47e6d24034613552f4df194e6af45fc449d94770724ae0d0e0a40f0385aa4d57299b4d3ef0832a87d603b4f23b341200aa198d3538c150e9fcb0390bdaf36c2b
   languageName: node
   linkType: hard
 
@@ -1193,14 +1193,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.616.0":
-  version: 3.616.0
-  resolution: "@aws-sdk/util-dynamodb@npm:3.616.0"
+"@aws-sdk/util-dynamodb@npm:3.619.0":
+  version: 3.619.0
+  resolution: "@aws-sdk/util-dynamodb@npm:3.619.0"
   dependencies:
     tslib: "npm:^2.6.2"
   peerDependencies:
-    "@aws-sdk/client-dynamodb": ^3.616.0
-  checksum: 10c0/b8ae7fb37ed59fb04c194d1f0e4bca92b0599f379a690e13bbdab735f0fcb75dd6e53c38acb73c35bd19cfb6d0a98a86798939ee81cf9cd5b6493bd3c4320891
+    "@aws-sdk/client-dynamodb": ^3.619.0
+  checksum: 10c0/e4b92456be74a8f9c3c98c11835d1dd24226dab85ed3da29602d265873dc8544d14f00e530870afd4bb56f2de49439fbb3f6ffb4486559850222bf256913950f
   languageName: node
   linkType: hard
 
@@ -3777,9 +3777,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-dynamodb": "npm:3.616.0"
+    "@aws-sdk/client-dynamodb": "npm:3.619.0"
     "@aws-sdk/client-sqs": "npm:3.616.0"
-    "@aws-sdk/util-dynamodb": "npm:3.616.0"
+    "@aws-sdk/util-dynamodb": "npm:3.619.0"
     "@cloudflare/workers-types": "npm:4.20240722.0"
     "@fast-csv/format": "npm:5.0.0"
     "@hackercamp/infrastructure": "workspace:infrastructure"
