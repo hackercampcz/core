@@ -8,7 +8,7 @@
     "@material/layout-grid": "14.0.0",
     "@material/mwc-drawer": "0.27.0",
     "@material/mwc-snackbar": "0.27.0",
-    "@material/web": "1.5.1",
+    "@material/web": "2.0.0",
     "@thi.ng/atom": "5.3.7",
     "@thi.ng/transducers": "9.0.12",
     "@ungap/structured-clone": "1.2.0",

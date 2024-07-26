@@ -3820,7 +3820,7 @@ __metadata:
     "@material/layout-grid": "npm:14.0.0"
     "@material/mwc-drawer": "npm:0.27.0"
     "@material/mwc-snackbar": "npm:0.27.0"
-    "@material/web": "npm:1.5.1"
+    "@material/web": "npm:2.0.0"
     "@thi.ng/atom": "npm:5.3.7"
     "@thi.ng/transducers": "npm:9.0.12"
     "@ungap/structured-clone": "npm:1.2.0"
@@ -4547,13 +4547,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/web@npm:1.5.1":
-  version: 1.5.1
-  resolution: "@material/web@npm:1.5.1"
+"@material/web@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@material/web@npm:2.0.0"
   dependencies:
     lit: "npm:^2.7.4 || ^3.0.0"
     tslib: "npm:^2.4.0"
-  checksum: 10c0/abf9913fb5bfbbfe9a062a09f781d296da9692f1c23d7e1d7dad001e0b6f8f3cb84847639726c58140e1d437042811f3e78eec302f441120d48547a2f7e24edf
+  checksum: 10c0/a62d4da893d7149e2ca7550883006423a1b7885add2b91d76e6916b2a6533b146736cacc6db8237f1d33d2a59c66328e56289d5d56a71888236a91a26754490d
   languageName: node
   linkType: hard
 
