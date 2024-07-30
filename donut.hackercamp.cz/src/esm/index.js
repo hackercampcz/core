@@ -107,7 +107,7 @@ async function setDonutProfileUrl(user, token, slug, company) {
   if (!profile?.fields?.Xf039UMCJC1G?.value) {
     await setSlackProfile(user, token, {
       name: "Xf039UMCJC1G",
-      value: `https://donut.hackercamp.cz/hackers/${slug}/`,
+      value: `https://donut.hckr.camp/hackers/${slug}/`,
     });
     console.log("Donut URL set");
   }
@@ -192,10 +192,6 @@ function renderPaidScreen(referralLink) {
           <a class="hc-link--decorated" href="/ubytovani/"
             >Vybrat si ubytování</a
           >
-          <!--p>
-        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
-        brzy si budeš moct zadat vlastní návrhy.
-      </p-->
         </div>
       </div>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
@@ -219,13 +215,9 @@ function travelText(travel) {
         <p>
           Chceš pomoci s nalezením odvozu na kemp? Můžeš se domluvit buď
           <a href="https://hackercampworkspace.slack.com/archives/C0278R69JUQ"
-            >v kanále <code>#spolujizda</code></a
-          >
+          >v kanále <code>#spolujizda</code></a>
           nebo se
-          <a
-            href="https://docs.google.com/spreadsheets/d/1EkthrK_s-5-xxWDHGNudz6PEJs15jk0Jd6UWyeipAAI/edit#gid=0"
-            >vyplnit v tabulce Spolujízda</a
-          >.
+          <a href="/spolujizda">vyplnit v tabulce Spolujízda</a>.
         </p>
       `;
     case "free-car":
@@ -235,13 +227,9 @@ function travelText(travel) {
           zaplnit auta co to jde. Je super, že nabízíš místo dalším hackerům.
           Můžete se
           <a href="https://hackercampworkspace.slack.com/archives/C0278R69JUQ"
-            >domluvit v kanále <code>#spolujizda</code></a
-          >
+          >domluvit v kanále <code>#spolujizda</code></a>
           nebo rovnou nabídnout své kapacity
-          <a
-            href="https://docs.google.com/spreadsheets/d/1EkthrK_s-5-xxWDHGNudz6PEJs15jk0Jd6UWyeipAAI/edit#gid=0"
-            >v tabulce Spolujízda</a
-          >.
+          <a href="/spolujizda">v tabulce Spolujízda</a>.
         </p>
       `;
     default:
@@ -282,10 +270,6 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
         Chceš se podívat, kdo už se na tebe těší? Tak tady je
         <a href="/hackers/">seznam účastníků</a>.
       </p>
-      <!--p>
-        Taky se můžeš podívat na <a href="/program/">předběžný program</a> a
-        brzy si budeš moct zadat vlastní návrhy.
-      </p-->
     </div>
   `;
 }
@@ -455,7 +439,7 @@ function renderDashboardScreen(
             času.
           </p>
           <p>
-            <a href="https://forms.gle/q2cJzpoL4e4wphk38"
+            <a href="https://hckr.camp/feedback"
               >Dejte nám prosím zpětnou vazbu</a
             >
           </p>
@@ -596,9 +580,6 @@ export async function main({ searchParams, rootElement, env }) {
   rollbar.init(env);
   const year = searchParams.get("year") ?? env.year;
   const apiHost = env["api-host"];
-
-  initRenderLoop(state, rootElement);
-
   const apiURL = (endpoint) => new URL(endpoint, apiHost).href;
 
   if (
@@ -606,17 +587,19 @@ export async function main({ searchParams, rootElement, env }) {
     && searchParams.get("state") === "not-authenticated"
   ) {
     setReturnUrl(searchParams.has("returnUrl"));
-    signOut(apiURL);
+    return signOut(apiURL);
   }
+
+  initRenderLoop(state, rootElement);
 
   if (isSignedIn()) {
     transact((x) => Object.assign(x, { apiHost, year }, schedule.get(year)));
     try {
       const profile = getSlackProfile();
       await loadData(profile, year, apiURL);
-    } catch (e) {
-      console.error(e);
-      signOut(apiURL);
+    } catch (err) {
+      rollbar.error(err);
+      return signOut(apiURL);
     }
   }
 
@@ -629,8 +612,8 @@ export async function main({ searchParams, rootElement, env }) {
       transact((x) => Object.assign({}, x));
       await authenticate({ searchParams, apiURL });
       handleReturnUrl();
-    } catch (e) {
-      console.error(e);
+    } catch (err) {
+      rollbar.error(err);
       signOut(apiURL);
     }
   }

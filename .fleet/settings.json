@@ -1,5 +1,0 @@
-{
-  "backend.maxHeapSizeMb": 3584,
-  "nodejs.editor.formatOnSave.prettier.mode": "Enabled",
-  "nodejs.editor.formatOnSave.prettier.glob": "{**/*,*}.{mjs,js,ts,jsx,tsx,json}"
-}
