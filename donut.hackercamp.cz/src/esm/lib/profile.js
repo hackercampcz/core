@@ -5,7 +5,7 @@ export async function signIn(
   apiURL,
 ) {
   const contact = await getContactFromDb(
-    slackProfile.id,
+    slackProfile.id ?? slackProfile.sub,
     slackProfile.email,
     apiURL,
   );
