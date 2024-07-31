@@ -1,4 +1,3 @@
-import { JWTInvalid } from "jose/dist/node/esm/util/errors.js";
 import { errorResponse, getHeader, unauthorized, withCORS } from "../../http.mjs";
 import Rollbar from "../../rollbar.mjs";
 import { checkAuthorization } from "../authorization.mjs";
@@ -41,7 +40,7 @@ export async function attendees(event) {
         });
     }
   } catch (err) {
-    if ((err instanceof JWTInvalid) || err.message === "Unauthorized") {
+    if (err.name === "JWTInvalid" || err.message === "Unauthorized") {
       return withCORS_(unauthorized());
     }
     rollbar.error(err);
