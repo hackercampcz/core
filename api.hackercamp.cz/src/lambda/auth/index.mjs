@@ -28,6 +28,7 @@ function getPayload(event) {
 }
 
 async function getJWT(code, env, origin) {
+  // TODO: retry
   const resp = await fetch("https://slack.com/api/openid.connect.token", {
     method: "POST",
     headers: {

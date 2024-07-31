@@ -728,8 +728,7 @@
           objednat.
         </p>
         <div class="choose">
-          <input type="checkbox" name="t-shirt" value="1" id="shirt">
-          <label for="shirt">Chci tričko</label>
+          <input type="checkbox" name="t-shirt" value="1" id="shirt"> <label for="shirt">Chci tričko</label>
         </div>
         <div class="field">
           <label for="shirt-size">Velikost</label>
@@ -763,7 +762,7 @@
     const submitButtonElement = formElement.querySelector("button[type=submit]");
 
     const { searchParams } = new URL(location.href);
-    const year = formElement.elements.year.value;
+    const year = formElement.year.value;
 
     try {
       const { email, sub: sid } = JSON.parse(localStorage.getItem("slack:profile"));
@@ -788,9 +787,7 @@
         if (isCheckbox) {
           field.checked = value;
         } else if (isRadio) {
-          formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
-        } else if (field.type === "textarea") {
-          field.innerText = value;
+          formElement.querySelector(`[value="${value}"]`).checked = true;
         } else if (field.type === "select-one") {
           if (value === true) value = "1";
           field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
@@ -800,10 +797,10 @@
           if (option) {
             option.setAttribute("selected", "selected");
           } else {
-            field.setAttribute("value", value);
+            field.value = value;
           }
         } else {
-          field.setAttribute("value", value);
+          field.value = value;
         }
       }
     } catch (o_O) {
