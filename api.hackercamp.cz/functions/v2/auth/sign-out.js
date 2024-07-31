@@ -7,7 +7,7 @@ export async function onRequestGet({ request, env }) {
     ?? request.headers.get("Referer")
     ?? `https://${env.HC_DONUT_HOSTNAME}/`;
 
-  // For local development we need to relax Cross site security
+  // For local development, we need to relax Cross site security
   const sameSite = origin.includes("localhost")
     ? "None"
     : "Strict";

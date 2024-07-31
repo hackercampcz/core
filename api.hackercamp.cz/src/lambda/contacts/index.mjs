@@ -1,7 +1,8 @@
 import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { JWTInvalid } from "jose/dist/node/esm/util/errors.js";
 import { checkAuthorization } from "../auth.mjs";
-import { errorResponse, getHeader, notFound, response, withCORS } from "../http.mjs";
+import { errorResponse, getHeader, notFound, response, unauthorized, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -43,6 +44,9 @@ export async function contacts(event) {
     if (!contact) return withCORS_(notFound());
     return withCORS_(response(contact));
   } catch (err) {
+    if ((err instanceof JWTInvalid) || err.message === "Unauthorized") {
+      return withCORS_(unauthorized());
+    }
     rollbar.error(err);
     return withCORS_(errorResponse(err));
   }

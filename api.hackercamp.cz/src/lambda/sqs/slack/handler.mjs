@@ -309,8 +309,7 @@ async function onUserProfileChanged({ user }, { year }) {
     getAttendee(slackID, year),
   ]);
   if (!contact) {
-    console.log({ event: "Contact not found", email, slackID });
-    return;
+    return console.log({ event: "Contact not found", email, slackID });
   }
   await updateContact(contact, user);
   if (attendee) await updateAttendee(attendee, user);

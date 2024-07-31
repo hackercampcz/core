@@ -1,5 +1,6 @@
+import { JWTInvalid } from "jose/dist/node/esm/util/errors.js";
 import { checkAuthorization } from "../auth.mjs";
-import { errorResponse, getHeader, withCORS } from "../http.mjs";
+import { errorResponse, getHeader, unauthorized, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
 import * as get from "./get.mjs";
 import * as post from "./post.mjs";
@@ -41,6 +42,9 @@ export async function housing(event) {
         });
     }
   } catch (err) {
+    if ((err instanceof JWTInvalid) || err.message === "Unauthorized") {
+      return withCORS_(unauthorized());
+    }
     rollbar.error(err);
     return withCORS_(errorResponse(err));
   }

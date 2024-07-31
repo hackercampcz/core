@@ -84,6 +84,7 @@ async function getRegistrationByEmail(email, year, slackID) {
 }
 
 function getData({ queryStringParameters }) {
+  if (!queryStringParameters) return null;
   const { id, email, year, slackID } = queryStringParameters;
   if (id) {
     return getRegistrationById(id);
