@@ -82,7 +82,7 @@ export async function handler(event) {
   const payload = await validateToken(token, process.env.private_key);
   const submittedBy = payload["https://slack.com/user_id"];
   const year = parseInt(data.year, 10);
-  console.log({ method: "POST", data });
+  console.log({ method: "POST", data, token: payload });
   for (const item of data.items) {
     await saveAttendee(dynamo, Object.assign({ year }, item));
     await sendSlackMessage(submittedBy, item);
