@@ -634,14 +634,14 @@
       <h2>Zapojení</h2>
       <div class="hc-card">
         <p>
-          Každý z účastníků je zároveň aktivní tvůrce programu. Ať jsi jednotlivec, nebo se hlásíš za tým, jak náš
+          Každý z&nbsp;účastníků je zároveň aktivní tvůrce programu. Ať jsi jednotlivec, nebo se hlásíš za tým, jak náš
           Hacker Camp můžeš obohatit? Nápady nelimitujeme :) Můžeš přispět přednáškou, workshopem, panelovkou,
-          zorganizovat ranní výběh nebo turnaj ve fotbálku. Přivést můžeš i jakýkoliv doprovodný program – uvítáme vše
-          od pípy, baristy a přípravy kávy až po DJs.
+          zorganizovat ranní výběh nebo turnaj ve fotbálku. Přivést můžeš i&nbsp;jakýkoliv doprovodný
+          program&nbsp;&ndash; uvítáme vše od pípy, baristy a přípravy kávy až po&nbsp;DJs.
         </p>
         <p>
-          V každé aktivitě respektujeme základní pravidlo: Hacker Camp je z principu nekomerční akce. Svoji vlastní
-          službu nebo produkt můžeš propagovat a nabízet jen pokud to obohatí samotnou akci.
+          V&nbsp;každé aktivitě respektujeme základní pravidlo: Hacker Camp je z&nbsp;principu nekomerční akce. Svoji
+          vlastní službu nebo produkt můžeš propagovat a nabízet jen pokud to obohatí samotnou&nbsp;akci.
         </p>
         <fieldset>
           <div class="field field--block">
@@ -758,6 +758,8 @@
     <input type="hidden" name="referral">
   </form>
   <script type="module">
+    const build = {{ build | dump(8) | safe }};
+    const env = Object.assign({ year: {{ year }} }, build);
     const formElement = document.forms.reg;
     const submitButtonElement = formElement.querySelector("button[type=submit]");
 
@@ -765,9 +767,9 @@
     const year = formElement.year.value;
 
     try {
-      const { email, sub: sid } = JSON.parse(localStorage.getItem("slack:profile"));
+      const { email, sub: slackID } = JSON.parse(localStorage.getItem("slack:profile"));
       const response = await fetch(
-        `https://api.hackercamp.cz/v1/registration?${new URLSearchParams({ email, year, slackID: sid })}`,
+        `${env["api-host"]}registration?${new URLSearchParams({ email, year, slackID })}`,
         { headers: { Accept: "application/json" } },
       );
       const data = await response.json();
@@ -790,12 +792,12 @@
           formElement.querySelector(`[value="${value}"]`).checked = true;
         } else if (field.type === "select-one") {
           if (value === true) value = "1";
-          field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
+          field.querySelector(`[value="${value}"]`).selected = true;
           field.dispatchEvent(new Event("change"));
         } else if (field.length) {
           const option = Array.from(field).find(option => option.value === value);
           if (option) {
-            option.setAttribute("selected", "selected");
+            option.selected = true;
           } else {
             field.value = value;
           }

@@ -196,7 +196,7 @@ jobs:
           command: yarn build:<< parameters.site_name >>
       - persist_to_workspace:
           root: .
-          paths: [ dist ]
+          paths: [dist]
       - slack/notify:
           event: fail
           template: basic_fail_1
@@ -218,7 +218,7 @@ jobs:
             cp << parameters.site_name >>/public/* dist/<< parameters.site_name >>/
       - persist_to_workspace:
           root: .
-          paths: [ dist ]
+          paths: [dist]
       - slack/notify:
           event: fail
           template: basic_fail_1

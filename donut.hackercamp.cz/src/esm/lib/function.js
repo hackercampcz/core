@@ -28,7 +28,7 @@ export function throttle(func, wait, options) {
   let timeout = null;
   let previous = 0;
   if (!options) options = {};
-  const later = function () {
+  const later = function() {
     previous = options.leading === false ? 0 : Date.now();
     timeout = null;
     result = func.apply(context, args);
