@@ -91,7 +91,7 @@ jobs:
         type: string
         default: prod
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:current
     resource_class: arm.medium
     environment:
       AWS_STS_REGIONAL_ENDPOINTS: regional
@@ -124,7 +124,7 @@ jobs:
         type: string
         default: prod
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:current
     resource_class: arm.medium
     steps:
       - checkout
@@ -235,7 +235,7 @@ jobs:
         type: string
         default: ""
     docker:
-      - image: cimg/node:lts
+      - image: cimg/node:current
     resource_class: arm.medium
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
