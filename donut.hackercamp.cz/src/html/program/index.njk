@@ -144,21 +144,21 @@
     form.activity.value = data.activity ?? "";
     form.activityCrew.value = data.activityCrew ?? "";
     form.activityPlace.value = data.activityPlace ?? "";
-
-    form.addEventListener("submit", async e => {
-      const resp = await fetch(`${env["api-host"]}program`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body : new URLSearchParams(new FormData(e.target))
-      });
-      console.log({ ok: resp.ok });
-    });
   } catch (o_O) {
     // TODO: log with rollbar
     console.error(o_O);
     alert("Něco se kouslo, zkuste to jindy.");
   }
+
+  form.addEventListener("submit", async e => {
+    const resp = await fetch(`${env["api-host"]}program`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body : new URLSearchParams(new FormData(e.target))
+    });
+    console.log({ ok: resp.ok });
+  });
 </script>
 {% endblock %}
