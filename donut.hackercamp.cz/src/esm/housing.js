@@ -181,7 +181,7 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
  * 1. Create <datalist> with all homeless hackers for autocompletion
  * 2. Fill in <input>s with housed hackers
  * 3. Disable other located hackers, but highlight me
- * 4. Once hacker is autocompleted, remove him from <datalist> and vise versa
+ * 4. Once a hacker is autocompleted, remove him from <datalist> and vice versa
  * 5. Allow hackers to change housing from custom to specific placement
  */
 function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
@@ -355,7 +355,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
       items: [],
     };
 
-    for (let [key, value] of formData.entries()) {
+    for (let [key, value] of formData) {
       if (HOUSING_INPUT_REGEX.test(key) === false) {
         continue;
       }

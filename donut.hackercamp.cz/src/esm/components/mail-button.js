@@ -6,6 +6,7 @@ export class MailButton extends LitElement {
   static properties = {
     email: {},
   };
+
   render() {
     if (!this.email) return null;
     return html`<md-icon-button

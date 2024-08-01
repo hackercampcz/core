@@ -14,6 +14,7 @@ export class PhoneButton extends LitElement {
   static properties = {
     phone: {},
   };
+
   render() {
     if (!this.phone) return null;
     return html`<md-icon-button

@@ -513,6 +513,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
 }
 
 registerDialog("edit-attendee-modal", editAttendeeModalDialog);
+
 function editAttendeeModalDialog({ detail, apiHost }) {
   const onSubmit = async (e) => {
     const form = new FormData(e.target);
@@ -554,6 +555,7 @@ function editAttendeeModalDialog({ detail, apiHost }) {
 }
 
 registerDialog("add-attendee-modal", addAttendeeModalDialog);
+
 function addAttendeeModalDialog({ year, apiHost }) {
   const onSubmit = async (e) => {
     const form = new FormData(e.target);
@@ -805,6 +807,7 @@ function checkInModalDialog({
 }
 
 registerDialog("check-out-modal", checkOutModalDialog);
+
 function checkOutModalDialog({ apiHost, year, detail, contact }) {
   const onSubmit = async (e) => {
     const formData = new FormData(e.target);

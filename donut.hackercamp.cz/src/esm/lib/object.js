@@ -39,6 +39,7 @@ export function objectWalk(obj, descentionFn, ascentionFn) {
     || function() {
       return null;
     };
+
   function walk(obj) {
     objectForeach(obj, function(val, prop, aObj) {
       descentionFn(val, prop, aObj);
@@ -49,6 +50,7 @@ export function objectWalk(obj, descentionFn, ascentionFn) {
     });
     return obj;
   }
+
   return walk(obj);
 }
 

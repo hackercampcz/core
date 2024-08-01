@@ -145,6 +145,7 @@ function invoiceSummary(selection) {
     `;
   };
 }
+
 function approveVolunteersSummary(selection) {
   return ({ items }) => {
     const registrations = new Map(
@@ -478,19 +479,19 @@ export function registrationsTableTemplate(
   return html`
     <table>
       <thead>
-        <tr>
-          <th></th>
-          <th>Jméno</th>
-          <th>Společnost</th>
-          <th>${timeHeader}</th>
-          ${when(selectedView === View.search, () => html`<th>Stav</th>`)}
-          <th>Akce</th>
-        </tr>
+      <tr>
+        <th></th>
+        <th>Jméno</th>
+        <th>Společnost</th>
+        <th>${timeHeader}</th>
+        ${when(selectedView === View.search, () => html`<th>Stav</th>`)}
+        <th>Akce</th>
+      </tr>
       </thead>
       <tfoot>
-        <tr>
-          <td colspan="5">
-            ${
+      <tr>
+        <td colspan="5">
+          ${
     paginationNavigation({
       page,
       pages,
@@ -499,41 +500,42 @@ export function registrationsTableTemplate(
       params,
     })
   }
-          </td>
-        </tr>
+        </td>
+      </tr>
       </tfoot>
       <tbody>
-        ${
+      ${
     data.map(
       (row) =>
         html`
-            <tr @click="${renderDetail(row)}">
-              <td>
-                <md-checkbox
-                  aria-label="vybrat"
-                  value="${row.email}"
-                  @click="${selectRow}"
-                  touch-target="wrapper"
-                  ?checked="${selection.has(row.email)}"
-                ></md-checkbox>
-              </td>
-              <td>${row.name}</td>
-              <td>${row.company}</td>
-              <td>
-                ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
-              </td>
-              ${
+              <tr @click="${renderDetail(row)}">
+                <td>
+                  <md-checkbox
+                    aria-label="vybrat"
+                    value="${row.email}"
+                    @click="${selectRow}"
+                    touch-target="wrapper"
+                    ?checked="${selection.has(row.email)}"
+                  ></md-checkbox>
+                </td>
+                <td>${row.name}</td>
+                <td>${row.company}</td>
+                <td>
+                  ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
+                </td>
+                ${
           when(
             selectedView === View.search,
             () => html`<td>${registrationStatus(row)}</td>`,
           )
         }
-              <td>
-                <hc-mail-button email="${row.email}"></hc-mail-button
-                ><hc-phone-button phone="${row.phone}"></hc-phone-button>
-              </td>
-            </tr>
-          `,
+                <td>
+                  <hc-mail-button email="${row.email}"></hc-mail-button
+                  >
+                  <hc-phone-button phone="${row.phone}"></hc-phone-button>
+                </td>
+              </tr>
+            `,
     )
   }
       </tbody>
@@ -545,23 +547,26 @@ export function registrationDetailTemplate({ detail, selectedView }) {
   if (!detail) return null;
   return html`
     <div class="hc-card hc-master-detail__detail">
-    <div style="display: flex;align-items: center;gap: 12px;">
-      <md-icon-button
-        aria-label="Zavřít detail"
-        title="Zavřít detail"
-        @click="${closeDetail()}">
-        <md-icon>arrow_back</md-icon>
-      </md-icon-button>
-      <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
-      ${ticketBadge.get(detail.ticketType)}</div>
-    <p>${detail.company}</p>
-    <div class="hc-detail__tools">
-      <hc-mail-button
-        email="${detail.email}"></hc-mail-button
-      ><hc-phone-button
+      <div style="display: flex;align-items: center;gap: 12px;">
+        <md-icon-button
+          aria-label="Zavřít detail"
+          title="Zavřít detail"
+          @click="${closeDetail()}">
+          <md-icon>arrow_back</md-icon>
+        </md-icon-button>
+        <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
+        ${ticketBadge.get(detail.ticketType)}
+      </div>
+      <p>${detail.company}</p>
+      <div class="hc-detail__tools">
+        <hc-mail-button
+          email="${detail.email}"></hc-mail-button
+        >
+        <hc-phone-button
           phone="${detail.phone}"
-          ></hc-phone-button
-    >${
+        ></hc-phone-button
+        >
+        ${
     when(
       selectedView === View.waitingList,
       () =>
@@ -588,29 +593,31 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           <md-icon>request_quote</md-icon>
         </md-icon-button>`,
     )
-  }<md-icon-button
-        title="Upravit registraci"
-        @click="${renderModalDialog("registration-modal")}"
-      >
-        <md-icon>edit</md-icon>
-      </md-icon-button
-      ><md-icon-button
-        title="Odstranit registraci"
-        @click="${trashRegistration(detail.email)}"
-      >
-            <md-icon>delete</md-icon>
+  }
+        <md-icon-button
+          title="Upravit registraci"
+          @click="${renderModalDialog("registration-modal")}"
+        >
+          <md-icon>edit</md-icon>
+        </md-icon-button
+        >
+        <md-icon-button
+          title="Odstranit registraci"
+          @click="${trashRegistration(detail.email)}"
+        >
+          <md-icon>delete</md-icon>
         </md-icon-button>
-    </div>
-    ${ticketDetail(detail)}
-    ${
+      </div>
+      ${ticketDetail(detail)}
+      ${
     when(
       detail.inviter,
       () => html`<p>Pozval ho <strong>${detail.inviter}</strong></p>`,
     )
   }
-    <p>Ubytování: <strong>${housing.get(detail.housing) ?? "Ještě si nevybral"}</strong></p>
-    <p>Doprava: <strong>${travel.get(detail.travel) ?? "Ještě si nevybral"}</strong></p>
-    ${
+      <p>Ubytování: <strong>${housing.get(detail.housing) ?? "Ještě si nevybral"}</strong></p>
+      <p>Doprava: <strong>${travel.get(detail.travel) ?? "Ještě si nevybral"}</strong></p>
+      ${
     when(
       detail.activity,
       () =>
@@ -632,7 +639,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       `,
     )
   }
-    ${
+      ${
     when(
       detail.invRecipient === "1",
       () =>
@@ -649,8 +656,8 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       `,
     )
   }
-    ${when(detail.invAddress, () => invoiceDetails(detail))}
-    ${
+      ${when(detail.invAddress, () => invoiceDetails(detail))}
+      ${
     when(
       detail.edited,
       () =>
@@ -667,6 +674,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
     </div>
   `;
 }
+
 function invoiceDetails(detail) {
   return html`
     <address style="border: 1px solid #ddd; padding: 16px; font-size: 14px;">

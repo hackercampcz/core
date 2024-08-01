@@ -30,9 +30,11 @@ export function dispatchAction(type, payload) {
 }
 
 const dialogRegistry = new Map();
+
 export function registerDialog(name, template) {
   dialogRegistry.set(name, template);
 }
+
 export function getDialog(name) {
   return dialogRegistry.get(name);
 }
@@ -252,11 +254,13 @@ export const lineupText = new Map([
 export function lineup(x) {
   return html`<code>${lineupText.get(x)}</code>`;
 }
+
 export function paginationNavigation({ page, pages, count, total, params }) {
   const pageSize = 20;
   const offset = page * pageSize;
   const first = offset + 1;
   const last = offset + count;
+
   function search(p) {
     const qs = new URLSearchParams(params);
     for (const [k, v] of Object.entries(p)) {
@@ -264,6 +268,7 @@ export function paginationNavigation({ page, pages, count, total, params }) {
     }
     return `?${qs}`;
   }
+
   return html`
     <div class="hc-pagination">
       <data class="hc-pagination__total" value="${total}"

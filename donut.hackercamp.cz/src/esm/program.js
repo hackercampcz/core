@@ -305,6 +305,7 @@ function eventTemplate({
 function lineUpEvents(lineup, events) {
   return events.filter((event) => event.lineup === lineup.id);
 }
+
 function topicEvents({ id }, events) {
   return events.filter(({ topic }) => topic && topic === id);
 }
@@ -351,6 +352,7 @@ function renderProgram({
       body {
         overflow-anchor: none;
       }
+
       /**
        * top level container
        */
@@ -361,27 +363,32 @@ function renderProgram({
         --tick-color: #eee;
         --tick-highlight-color: #aaa;
       }
+
       @media screen and (min-width: 480px) and (max-width: 839px) {
         .program {
           --spacing: var(--mdc-layout-grid-margin-tablet, 16px);
         }
       }
+
       @media screen and (min-width: 840px) {
         .program {
           --spacing: var(--mdc-layout-grid-margin-desktop, 24px);
         }
       }
+
       @media (prefers-color-scheme: dark) {
         .program {
           --tick-color: #666;
           --tick-highlight-color: #888;
         }
       }
+
       .program__header {
         box-sizing: border-box;
         padding: var(--spacing);
         margin-bottom: var(--spacing);
       }
+
       .program__lineups {
         max-width: 100vw;
         overflow-x: auto;
@@ -389,18 +396,21 @@ function renderProgram({
         scroll-behavior: smooth;
         font-size: 16px;
       }
+
       @media (min-width: 600px) {
         .program {
           --info-width: calc(100vw / 3);
           --slot-width: calc(100vw / 6 / 3);
         }
       }
+
       @media (min-width: 900px) {
         .program {
           --info-width: calc(100vw / 4);
           --slot-width: calc(100vw / 6 / 4);
         }
       }
+
       @media (min-width: 1600px) {
         .program {
           --info-width: calc(100vw / 5);
@@ -416,6 +426,7 @@ function renderProgram({
         top: 0;
         z-index: 4;
       }
+
       .dayline {
         padding: calc(var(--spacing) / 2);
         display: flex;
@@ -430,15 +441,18 @@ function renderProgram({
         z-index: 4;
         border-bottom: 1px solid var(--tick-color);
       }
+
       a.dayline__tick {
         flex: 1;
         text-decoration: none;
         color: var(--hc-text-color);
         text-align: center;
       }
+
       a.dayline__tick:hover {
         text-decoration: underline;
       }
+
       a.dayline__tick.dayline__tick--visible {
         font-weight: bold;
         font-size: 120%;
@@ -450,6 +464,7 @@ function renderProgram({
       .lineup {
         display: flex;
       }
+
       .lineup__info {
         min-width: var(--info-width);
         background-color: var(--hc-background-color);
@@ -462,11 +477,13 @@ function renderProgram({
         flex-direction: column;
         cursor: pointer;
       }
+
       @media (min-width: 1200px) {
         .lineup__info {
           padding: calc(var(--spacing));
         }
       }
+
       .lineup__sticky {
         position: absolute;
         margin: calc(var(--spacing) / 2);
@@ -477,11 +494,13 @@ function renderProgram({
         background: var(--hc-background-image);
         padding: 8px;
       }
+
       .lineup__timeline {
         display: flex;
         align-items: center;
         padding-right: var(--slot-width);
       }
+
       .lineup__slot {
         display: block;
         text-decoration: none;
@@ -492,9 +511,11 @@ function renderProgram({
         border-right: 1px solid var(--tick-color);
         position: relative;
       }
+
       .lineup__slot:nth-child(4n) {
         border-right: 1px solid var(--tick-highlight-color);
       }
+
       .lineup:nth-child(2n) .lineup__slot:before {
         content: attr(data-day);
         display: block;
@@ -506,9 +527,11 @@ function renderProgram({
         font-size: 12px;
         color: var(--tick-color);
       }
+
       .lineup__slot[data-tick$="h"]:after {
         color: var(--tick-highlight-color) !important;
       }
+
       .lineup:nth-child(2n + 1) .lineup__slot:after {
         content: attr(data-tick);
         display: block;
@@ -520,18 +543,22 @@ function renderProgram({
         font-size: 12px;
         color: var(--tick-color);
       }
+
       .lineup__slot[data-tick$="h"]:after {
         color: var(--tick-highlight-color) !important;
       }
+
       .lineup:last-child .lineup__info,
       .lineup:last-child .lineup__slot {
         border-bottom: 1px solid var(--tick-color);
       }
+
       .lineup__eventsline {
         position: relative;
         width: 0;
         padding: var(--spacing) 0;
       }
+
       .lineup__event {
         position: absolute;
         z-index: 1;
@@ -558,25 +585,31 @@ function renderProgram({
         pointer-events: fill;
         opacity: 0.8;
       }
+
       .lineup__event.lineup__event--topic {
         height: calc(100% - 8px);
       }
+
       .lineup__event.lineup__event--topic p {
         margin-bottom: calc(var(--spacing) / 4);
       }
+
       .lineup__event.lineup__event--narrow {
         writing-mode: vertical-lr;
         font-size: 80%;
         padding: 4px;
       }
+
       .lineup__event.lineup__event--narrow p {
         line-height: 1;
       }
+
       @media (min-width: 800px) {
         .lineup__event.lineup__event--narrow {
           font-size: 100%;
         }
       }
+
       @media (min-width: 1024px) {
         .lineup__event.lineup__event--narrow {
           font-size: 110%;
@@ -588,24 +621,28 @@ function renderProgram({
         margin: 0;
         line-height: 1.2;
       }
+
       .lineup__info pre {
         line-height: 1.5;
         line-break: auto;
         word-break: break-word;
         white-space: break-spaces;
       }
+
       @media (min-width: 400px) {
         .lineup__event,
         .lineup__info {
           font-size: 14px;
         }
       }
+
       @media (min-width: 800px) {
         .lineup__event,
         .lineup__info {
           font-size: 16px;
         }
       }
+
       @media (min-width: 1600px) {
         .lineup__event,
         .lineup__info {
@@ -632,17 +669,20 @@ function renderProgram({
       .lineup:first-child {
         font-style: italic;
       }
+
       .lineup:first-child .lineup__event {
         border: 1px solid var(--tick-color);
         background-color: var(--hc-background-color);
         background-image: var(--hc-background-image, none);
       }
+
       .lineup:first-child .lineup__slot {
         pointer-events: none;
       }
 
       .people-list {
       }
+
       .people-list:after {
         content: "";
         display: block;
@@ -658,6 +698,7 @@ function renderProgram({
         float: left;
         margin: calc(var(--spacing) / 4) calc(var(--spacing) / 4) 0 0;
       }
+
       figure.speaker img {
         border-radius: 50%;
         min-width: 32px;
@@ -669,6 +710,7 @@ function renderProgram({
         padding: 2px;
         color: var(--hc-background-color);
       }
+
       figure.speaker.speaker--add {
         display: flex;
         align-items: center;
@@ -683,10 +725,10 @@ function renderProgram({
         padding: 2px;
         color: var(--hc-background-color);
       }
+
       figure.speaker.speaker--full {
         width: auto;
-        margin: calc(var(--spacing) / 2) var(--spacing) calc(var(--spacing) / 2)
-          0;
+        margin: calc(var(--spacing) / 2) var(--spacing) calc(var(--spacing) / 2) 0;
       }
     </style>
     <div class="program">
@@ -851,7 +893,7 @@ function renderProgram({
       </div>
       <dialog id="add-event">
         <div id="add-event-form"></div>
-        <hr />
+        <hr/>
         <button name="close" type="reset">Zavřít</button>
       </dialog>
     </div>

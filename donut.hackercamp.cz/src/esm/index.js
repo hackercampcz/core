@@ -190,7 +190,7 @@ function renderPaidScreen(referralLink) {
             svoje ubytování.
           </p>
           <a class="hc-link--decorated" href="/ubytovani/"
-            >Vybrat si ubytování</a
+          >Vybrat si ubytování</a
           >
         </div>
       </div>
@@ -202,9 +202,10 @@ function renderPaidScreen(referralLink) {
 }
 
 const placement = (p) => (p === "custom" ? "" : ` ${p}`);
+
 function housingText(housing, housingPlacement) {
   return html`<strong
-    >${housingToText.get(housing) + placement(housingPlacement)}</strong
+  >${housingToText.get(housing) + placement(housingPlacement)}</strong
   >`;
 }
 
@@ -262,7 +263,9 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
         výběru.
       </p>
       <p>
-        Do <date datetime="2023-08-21">21. srpna</date> si ještě můžeš
+        Do
+        <date datetime="2023-08-21">21. srpna</date>
+        si ještě můžeš
         <a class="hc-link" href="/ubytovani/">změnit ubytování</a>.
       </p>
       ${travelText(travel)}
@@ -273,6 +276,7 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
     </div>
   `;
 }
+
 function programCardTemplate({ events }) {
   return html`
     <div class="hc-card hc-card--decorated">
@@ -282,29 +286,29 @@ function programCardTemplate({ events }) {
       events.length,
       () =>
         html`
-          <ul style="list-style-type: none; text-align: left; padding: 0;">
-            ${
+              <ul style="list-style-type: none; text-align: left; padding: 0;">
+                ${
           events.map(
             (event) =>
               html`
-                <li>
-                  <a
-                    style="text-decoration: none;"
-                    href="#"
-                    @click=${() => {
+                        <li>
+                          <a
+                            style="text-decoration: none;"
+                            href="#"
+                            @click=${() => {
                 showEventModalDialog(event);
               }}
-                  >
-                    ${event.title}
-                    (<code>${lineupText.get(event.lineup)}</code>) 👈
-                    <strong>upravit</strong>
-                  </a>
-                </li>
-              `,
+                          >
+                            ${event.title}
+                            (<code>${lineupText.get(event.lineup)}</code>) 👈
+                            <strong>upravit</strong>
+                          </a>
+                        </li>
+                      `,
           )
         }
-          </ul>
-        `,
+              </ul>
+            `,
       () => html` <p>Hacker Camp bude jen takový, jaký si ho uděláme.</p> `,
     )
   }
@@ -320,7 +324,7 @@ function programCardTemplate({ events }) {
     </div>
     <dialog id="program-modal">
       <div id="program-modal-root">nah</div>
-      <hr />
+      <hr/>
       <button name="close" type="reset">Zavřít</button>
     </dialog>
   `;
@@ -337,10 +341,13 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
     when(
       total > 0,
       () =>
-        html`<p>
-            Celkem:
-            <strong><data value="${total}">${formatMoney(total)}</data></strong>
-          </p>`,
+        html`
+              <p>
+                Celkem:
+                <strong>
+                  <data value="${total}">${formatMoney(total)}</data>
+                </strong>
+              </p>`,
     )
   }
       <ul>
@@ -349,33 +356,35 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
       chips,
       (x) =>
         html`
-            <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
-              SN chipu:
-              <code title="SN najdete na zadní straně čipu - pod páskem"
-                >${x.sn.toUpperCase()}</code
-              >
-              -
-              ${
+                <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
+                  SN chipu:
+                  <code title="SN najdete na zadní straně čipu - pod páskem"
+                  >${x.sn.toUpperCase()}</code
+                  >
+                  -
+                  ${
           when(
             checkOutPaid || x.paid,
             () => html`<strong style="color: forestgreen">Zaplaceno</strong>`,
             () =>
               html`<strong style="color: darkred"
-                    >Nezaplaceno
-                    <data value="${x.spent ?? x.totalSpent}"
-                      >${formatMoney(x.spent ?? x.totalSpent)}</data
-                    ></strong
-                  >`,
+                        >Nezaplaceno
+                          <data value="${x.spent ?? x.totalSpent}"
+                          >${formatMoney(x.spent ?? x.totalSpent)}
+                          </data
+                          >
+                        </strong
+                        >`,
           )
         }
 
-              <a
-                href="https://pass.nfctron.com/receipt/${x.chipID}"
-                target="nfcTron"
-                >Účet</a
-              >
-            </li>
-          `,
+                  <a
+                    href="https://pass.nfctron.com/receipt/${x.chipID}"
+                    target="nfcTron"
+                  >Účet</a
+                  >
+                </li>
+              `,
     )
   }
       </ul>
@@ -483,6 +492,7 @@ function renderDashboardScreen(
 }
 
 const freeTickets = new Set(["crew", "staff"]);
+
 function canSelectHousing(registration, attendee) {
   return registration.paid || freeTickets.has(attendee?.ticketType);
 }
@@ -514,7 +524,7 @@ function renderIndex({ profile, attendee, selectedView }) {
                 Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
                 e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
                 <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
-                  ><code>@rarous</code></a
+                ><code>@rarous</code></a
                 >
                 nebo e-mail na
                 <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a on to
@@ -536,7 +546,7 @@ function renderIndex({ profile, attendee, selectedView }) {
               i díky tobě.
             </p>
             <a class="hc-link--decorated" href="/registrace/"
-              >Zaregistrovat se</a
+            >Zaregistrovat se</a
             >
             <p>
               Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
