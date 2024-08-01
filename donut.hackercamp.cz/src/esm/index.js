@@ -4,8 +4,6 @@ import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { map } from "lit-html/directives/map.js";
 import { when } from "lit-html/directives/when.js";
-import { lineupText } from "./admin/common.js";
-import { renderEventForm } from "./event-form.js";
 import {
   getContact,
   getSlackAccessToken,
@@ -22,7 +20,6 @@ import * as rollbar from "./lib/rollbar.js";
 import { schedule } from "./lib/schedule.js";
 import * as slack from "./lib/slack.js";
 import { setSlackProfile } from "./lib/slack.js";
-import { showModalDialog } from "./modal-dialog.js";
 
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
 /** @typedef {import("@thi.ng/atom").Path} Path */
@@ -42,7 +39,6 @@ const state = defAtom({
   contact: null,
   profile: null,
   registration: null,
-  program: null,
   view: renderIndex,
   forcedView: null,
   campStartAt: new Date(),
@@ -148,26 +144,6 @@ async function getAttendee(slackID, year, apiUrl) {
   return resp.json();
 }
 
-async function getProgram(year, apiUrl) {
-  const params = new URLSearchParams({ year });
-  const resp = await withAuthHandler(
-    fetch(apiUrl(`program?${params}`), {
-      headers: { Accept: "application/json" },
-      credentials: "include",
-    }),
-    {
-      onUnauthenticated() {
-        setReturnUrl(location.href);
-        return new Promise((resolve, reject) => {
-          signOut(apiUrl);
-          reject({ unauthenticated: true });
-        });
-      },
-    },
-  );
-  return resp.json();
-}
-
 async function getNfcTronData(attendee, apiUrl) {
   for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
     const params = new URLSearchParams({ chipID: chip.chipID });
@@ -238,23 +214,6 @@ function travelText(travel) {
   }
 }
 
-async function showEventModalDialog(editingEvent) {
-  const { apiHost, profile, campStartAt, campEndAt, program } = state.deref();
-  const root = document.getElementById("program-modal-root");
-  renderEventForm(root, {
-    apiHost,
-    profile,
-    lineupId: editingEvent?.lineup,
-    campStartAt,
-    campEndAt,
-    preferredTime: editingEvent ? new Date(editingEvent.startAt) : undefined,
-    events: program,
-    selectedTopic: editingEvent?.topic,
-    editingEvent,
-  });
-  showModalDialog("program-modal");
-}
-
 function housedCardTemplate({ housing, housingPlacement, travel }) {
   return html`
     <div class="hc-card hc-card--decorated">
@@ -274,59 +233,6 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
         <a href="/hackers/">seznam účastníků</a>.
       </p>
     </div>
-  `;
-}
-
-function programCardTemplate({ events }) {
-  return html`
-    <div class="hc-card hc-card--decorated">
-      <h2>Tvoje zapojení do programu</h2>
-      ${
-    when(
-      events.length,
-      () =>
-        html`
-              <ul style="list-style-type: none; text-align: left; padding: 0;">
-                ${
-          events.map(
-            (event) =>
-              html`
-                        <li>
-                          <a
-                            style="text-decoration: none;"
-                            href="#"
-                            @click=${() => {
-                showEventModalDialog(event);
-              }}
-                          >
-                            ${event.title}
-                            (<code>${lineupText.get(event.lineup)}</code>) 👈
-                            <strong>upravit</strong>
-                          </a>
-                        </li>
-                      `,
-          )
-        }
-              </ul>
-            `,
-      () => html` <p>Hacker Camp bude jen takový, jaký si ho uděláme.</p> `,
-    )
-  }
-      <div style="text-align: center">
-        <a
-          class="hc-link hc-link--decorated"
-          style="font-size: 120%;"
-          href="/program"
-        >
-          Přejít na program
-        </a>
-      </div>
-    </div>
-    <dialog id="program-modal">
-      <div id="program-modal-root">nah</div>
-      <hr/>
-      <button name="close" type="reset">Zavřít</button>
-    </dialog>
   `;
 }
 
@@ -470,12 +376,6 @@ function renderDashboardScreen(
       >
         ${housedCardTemplate({ housing, housingPlacement, travel })}
       </div>
-      <div
-        style="${!events.length ? "display: none" : ""}"
-        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-8-tablet"
-      >
-        ${programCardTemplate({ events })}
-      </div>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         ${plusOneCard(referralLink)}
       </div>
@@ -562,10 +462,9 @@ function renderIndex({ profile, attendee, selectedView }) {
 }
 
 async function loadData(profile, year, apiURL) {
-  const [registration, attendee, program] = await Promise.all([
+  const [registration, attendee] = await Promise.all([
     getRegistration(profile.sub, profile.email, year, apiURL),
     getAttendee(profile.sub, year, apiURL),
-    getProgram(year, apiURL),
   ]);
   if (attendee && !attendee?.nfcTronData?.[0]?.totalSpent) {
     // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
@@ -573,7 +472,7 @@ async function loadData(profile, year, apiURL) {
     getNfcTronData(attendee, apiURL).then((attendee) => swapIn("attendee", () => attendee));
   }
   const contact = getContact();
-  transact((x) => Object.assign(x, { profile, contact, registration, attendee, program }));
+  transact((x) => Object.assign(x, { profile, contact, registration, attendee }));
   try {
     await setDonutProfileUrl(
       profile.sub,
