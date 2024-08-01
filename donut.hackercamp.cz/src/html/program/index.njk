@@ -130,6 +130,7 @@
   const build = {{ build | dump(8) | safe }};
   const env = Object.assign({ year: {{ year }} }, build);
   const form = document.forms.editor;
+  const modal = document.getElementById("proposal-editor");
 
   try {
     const { year } = env;
@@ -161,7 +162,9 @@
       body : new URLSearchParams(new FormData(e.target)),
       referrerPolicy: "no-referrer",
     });
-    console.log({ ok: resp.ok });
+    snackbar.labelText = "Data uložena";
+    snackbar.show()
+    modal.close();
   });
 </script>
 {% endblock %}
