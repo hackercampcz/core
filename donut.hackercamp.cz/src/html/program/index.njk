@@ -153,6 +153,7 @@
   form.addEventListener("submit", async e => {
     const resp = await fetch(`${env["api-host"]}program`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
