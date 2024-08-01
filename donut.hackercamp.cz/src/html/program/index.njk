@@ -81,10 +81,10 @@
     mohou hackeři jen nahlásit na začátku každého bloku před Mainframe.
     Zkrátka: Program se může a bude měnit za chodu :) Takže se těš a sleduj
     co se děje online i&nbsp;offline.</p>
-  <p><button class="hc-button" popovertarget="proposal-editor">Chci upravit svůj návrh programu</button> </p>
+  <p><button class="hc-button" onclick="document.all['proposal-editor'].showModal()">Chci upravit svůj návrh programu</button> </p>
 </div>
 
-<dialog popover id="proposal-editor">
+<dialog id="proposal-editor">
   <form method="dialog" class="hc-card" id="editor">
     <p>Každý z&nbsp;účastníků je zároveň aktivní tvůrce programu. Ať jsi
       jednotlivec, nebo se hlásíš za tým, jak náš Hacker Camp můžeš obohatit?
@@ -162,7 +162,7 @@
       body : new URLSearchParams(new FormData(e.target)),
       referrerPolicy: "no-referrer",
     });
-    snackbar.labelText = "Data uložena";
+    snackbar.labelText = resp.ok ? "Data uložena" : "Došlo k chybě";
     snackbar.show()
     modal.close();
   });
