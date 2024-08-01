@@ -1,6 +1,6 @@
 import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { getHeader, readPayload, seeOther } from "../http.mjs";
+import { accepted, readPayload } from "../http.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -38,5 +38,5 @@ export async function handler(event) {
       ),
     }),
   );
-  return seeOther(getHeader(event.headers, "Referer"));
+  return accepted();
 }

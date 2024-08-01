@@ -154,10 +154,12 @@
     const resp = await fetch(`${env["api-host"]}program`, {
       method: "POST",
       credentials: "include",
+      mode: "cors",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      body : new URLSearchParams(new FormData(e.target))
+      body : new URLSearchParams(new FormData(e.target)),
+      referrerPolicy: "no-referrer",
     });
     console.log({ ok: resp.ok });
   });
