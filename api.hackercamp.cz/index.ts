@@ -125,12 +125,8 @@ export function createRoutes({
           environment: {
             variables: {
               rollbar_access_token,
-              db_table_attendees: db.attendeesDataTable,
-              db_table_program: db.programDataTable,
+              db_table_registrations: db.registrationsDataTable,
               private_key: config.require("private-key"),
-              slack_bot_token: config.require("slack-bot-token"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates,
             },
           },
         },
