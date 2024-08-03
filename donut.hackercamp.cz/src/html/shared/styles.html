@@ -1,8 +1,10 @@
+<meta name="color-scheme" content="light dark">
+
 <style>
   :root {
     --hc-dialog-width: 800px;
 
-    color-scheme: dark light;
+    color-scheme: light dark;
     --hc-layout-width: 1600px;
     --hc-font-family: PT Mono, monospace;
     --hc-background-color: #fff;
@@ -79,8 +81,7 @@
     color-scheme: light dark;
   }
 
-  html,
-  body {
+  html, body {
     margin: 0;
     padding: 0;
   }
@@ -96,8 +97,7 @@
     font-kerning: normal;
     font-variant-numeric: lining-nums slashed-zero;
     font-variant-ligatures: common-ligatures contextual;
-    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum",
-      "zero";
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
     font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -138,9 +138,7 @@
     margin-right: auto;
   }
 
-  header,
-  footer,
-  section {
+  header, footer, section {
     margin: 0 auto;
     max-width: var(--hc-layout-width);
   }
@@ -152,8 +150,7 @@
     background-image: var(--hc-gradient);
   }
 
-  h1,
-  h2 {
+  h1, h2 {
     font-weight: bold;
     color: var(--hc-heading-color);
   }
@@ -172,8 +169,7 @@
     text-transform: capitalize;
   }
 
-  h2,
-  .hc-text--gay {
+  h2, .hc-text--gay {
     color: #fff;
     background-image: var(--hc-gradient);
     -webkit-background-clip: text;
@@ -224,8 +220,7 @@
     transition: width 0.4s ease;
   }
 
-  .hc-card.hc-card--decorated:active::before,
-  .hc-card.hc-card--decorated:hover::before {
+  .hc-card.hc-card--decorated:active::before, .hc-card.hc-card--decorated:hover::before {
     width: 100%;
   }
 
@@ -259,9 +254,7 @@
     }
   }
 
-  .hc-cta,
-  .hc-cta:link,
-  .hc-cta:visited {
+  .hc-cta, .hc-cta:link, .hc-cta:visited {
     color: #fff;
     background-image: var(--hc-gradient-btn);
     background-size: 200% 100%;
@@ -272,13 +265,11 @@
     transition: background-position 0.4s ease-in-out;
   }
 
-  .hc-cta:active,
-  .hc-cta:hover {
+  .hc-cta:active, .hc-cta:hover {
     background-position: 100% 0;
   }
 
-  .hc-icon-link:link,
-  .hc-icon-link:visited {
+  .hc-icon-link:link, .hc-icon-link:visited {
     --icon-color: var(--hc-text-color);
     color: var(--hc-text-color);
     text-decoration: none;
@@ -354,8 +345,7 @@
     margin-top: 2em;
   }
 
-  header hr,
-  dialog hr {
+  header hr, dialog hr {
     border: 0 none;
     height: 1px;
     background-color: var(--hc-text-color);
@@ -396,9 +386,7 @@
     font-size: 14px;
   }
 
-  search input,
-  form input,
-  form select {
+  search input, form input, form select {
     font-family: var(--hc-font-family);
     font-size: 16px;
     letter-spacing: 0;
@@ -406,8 +394,7 @@
     font-kerning: normal;
     font-variant-numeric: lining-nums slashed-zero;
     font-variant-ligatures: common-ligatures contextual;
-    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum",
-      "zero";
+    -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
     font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
     -webkit-text-size-adjust: 100%;
     -webkit-font-smoothing: antialiased;
@@ -415,8 +402,7 @@
     text-rendering: geometricPrecision;
   }
 
-  search .field,
-  form .field {
+  search .field, form .field {
     display: flex;
     flex-direction: column;
     padding-bottom: 4px;
@@ -441,9 +427,7 @@
     padding-bottom: 2px;
   }
 
-  form .field input,
-  form .field textarea,
-  form .field select {
+  form .field input, form .field textarea, form .field select {
     flex: 2;
     font-size: 16px;
     padding: 4px;
@@ -492,8 +476,7 @@
     height: 16px;
   }
 
-  form .choose > label,
-  form .choose > div {
+  form .choose > label, form .choose > div {
     padding-left: 8px;
     display: block;
     flex: 1;
