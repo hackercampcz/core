@@ -15,9 +15,7 @@ const dynamo = new DynamoDBClient({});
 export async function handler(event) {
   const data = readPayload(event);
   const sanitizedData = Object.fromEntries(
-    Object.entries(data)
-      .map(([k, v]) => [k, v?.trim ? v?.trim() : v])
-      .filter(([k, v]) => Boolean(v)),
+    Object.entries(data).map(([k, v]) => [k, v?.trim ? v.trim() : v]),
   );
 
   await dynamo.send(
