@@ -1,4 +1,4 @@
 export async function onRequestGet(context) {
-  console.dir(context);
+  console.log(context);
   return new Response("ok");
 }
