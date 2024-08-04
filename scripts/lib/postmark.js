@@ -18,6 +18,7 @@ export const Template = {
   SlackInvite: 34068981,
   AttendeesInfoMail: 34068963,
   VolunteerInvitation: 34068992,
+  ColdHackerPush: 34068979,
   HackerPush: 34068980,
   Feedback: 34068945,
 };
