@@ -13,7 +13,7 @@
     "@thi.ng/transducers": "9.0.12",
     "@ungap/structured-clone": "1.2.0",
     "date-fns": "3.6.0",
-    "lit": "3.1.4",
+    "lit": "3.2.0",
     "lit-html": "3.1.4",
     "marked": "13.0.3",
     "ramda": "0.30.1",
