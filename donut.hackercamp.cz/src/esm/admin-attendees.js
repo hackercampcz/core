@@ -517,7 +517,7 @@ registerDialog("edit-attendee-modal", editAttendeeModalDialog);
 function editAttendeeModalDialog({ detail, apiHost }) {
   const onSubmit = async (e) => {
     const form = new FormData(e.target);
-    await edit(Object.fromEntries(form.entries()), apiHost);
+    await edit(Object.fromEntries(form), apiHost);
   };
   return html`
     <form method="dialog" @submit="${onSubmit}">
@@ -544,6 +544,10 @@ function editAttendeeModalDialog({ detail, apiHost }) {
       <div class="field">
         <label for="company">Společnost</label>
         <input id="company" name="company" value="${detail.company}" />
+      </div>
+      <div class="field">
+        <label for="housingPlacement">Ubytování</label>
+        <input id="housingPlacement" name="housingPlacement" value="${detail.housingPlacement}" />
       </div>
       <div class="field">
         <label for="note">Poznámka</label>

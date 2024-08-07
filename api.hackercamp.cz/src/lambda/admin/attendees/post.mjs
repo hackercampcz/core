@@ -24,13 +24,14 @@ function editAttendee(db, data) {
         slackID: { S: data.slackID },
       },
       UpdateExpression:
-        "SET #name = :name, email = :email, ticketType = :ticketType, note = :note, company = :company, edited = :now, editedBy = :editedBy",
+        "SET #name = :name, email = :email, ticketType = :ticketType, note = :note, company = :company, housingPlacement = :housingPlacement, edited = :now, editedBy = :editedBy",
       ExpressionAttributeValues: marshall(
         {
           ":name": data.name,
           ":email": data.email,
           ":note": data.note,
           ":company": data.company,
+          ":housingPlacement": data.housingPlacement,
           ":now": new Date().toISOString(),
           ":editedBy": data.editedBy,
           ":ticketType": data.ticketType,
