@@ -39,7 +39,7 @@ function headerProfilePopup(contact, profile, signOut) {
         <li>
           <div class="hc-header__profile-photo">
             <a href="/hackers/${slug}">
-              <img alt="${name}" src="${image}" width="48" height="48" />
+              <img alt="${name}" src="${image}" width="48" height="48"/>
             </a>
           </div>
           <div class="hc-header__profile-name">
@@ -49,32 +49,18 @@ function headerProfilePopup(contact, profile, signOut) {
           </div>
         </li>
         ${
-    when(
-      is_admin,
-      () =>
-        html`
-            <li>
-              <a href="/admin/">Administrace</a>
-            </li>
-          `,
-    )
+    when(is_admin, () =>
+      html`
+          <li><a href="/admin/">Administrace</a></li>`)
   }
-        <!--li>
-          <a href="/program/">Program kempu</a>
-        </li-->
-        <li>
-          <a href="/hackers/">Seznam účastníků</a>
-        </li>
-        <li>
-          <a href="https://www.hackercamp.cz/faq/">Často kladené dotazy</a>
-        </li>
+        <li><a href="/program/">Program kempu</a></li>
+        <li><a href="/hackers/">Seznam účastníků</a></li>
+        <li><a href="https://www.hackercamp.cz/faq/">Často kladené dotazy</a></li>
         <li>
           <button
             class="hc-btn hc-btn__sign-out"
             @click="${() => signOut(apiURL)}"
-          >
-            Odhlásit se
-          </button>
+          >Odhlásit se</button>
         </li>
       </ul>
     </div>
@@ -120,9 +106,8 @@ export async function init({ profile: root, env }) {
         wb.messageSkipWaiting();
       };
       render(
-        html`<md-text-button slot="action" @click="${update}"
-          >AKTUALIZOVAT</md-text-button
-        >`,
+        html`
+          <md-text-button slot="action" @click="${update}">AKTUALIZOVAT</md-text-button>`,
         snackbar,
       );
       snackbar.show();
