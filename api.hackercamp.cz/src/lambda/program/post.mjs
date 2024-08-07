@@ -25,12 +25,14 @@ export async function handler(event) {
         email: { S: data.email },
         year: { N: data.year.toString() },
       },
-      UpdateExpression: "SET activity = :activity, activityCrew = :activityCrew, activityPlace = :activityPlace",
+      UpdateExpression:
+        "SET activity = :activity, activityCrew = :activityCrew, activityPlace = :activityPlace, programEdited = :programEdited",
       ExpressionAttributeValues: marshall(
         {
           ":activity": sanitizedData.activity,
           ":activityCrew": sanitizedData.activityCrew,
           ":activityPlace": sanitizedData.activityPlace,
+          ":programEdited": new Date().toISOString(),
         },
         { removeUndefinedValues: true, convertEmptyValues: true },
       ),
