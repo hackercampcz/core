@@ -6,42 +6,27 @@ import * as rollbar from "./lib/rollbar.js";
 async function loadHousingData(apiBase, year) {
   try {
     const params = new URLSearchParams({ year });
-    const responses = await Promise.all([
-      fetch(`/housing/index.json`),
-      fetch(`/housing/types.json`),
-      fetch(`/housing/variants.json`),
-      fetch(`/housing/backstage.json`),
-      withAuthHandler(
-        fetch(new URL(`housing?${params}`, apiBase).href, {
-          headers: { Accept: "application/json" },
-          credentials: "include",
-        }),
-        {
-          onUnauthenticated() {
-            setReturnUrl(location.href);
-            return new Promise((resolve, reject) => {
-              signOut((path) => new URL(path, apiBase).href);
-              reject({ unauthenticated: true });
-            });
-          },
-        },
-      ),
-    ]);
-    const [housing, types, variants, backstage, hackers] = await Promise.all(
-      responses.map((resp) => {
-        if (!resp.ok) {
-          if (resp.status === 401) {
-            signOut((path) => new URL(path, apiBase).href);
-          } else throw new Error(`${resp.status}: ${resp.statusText}`);
-        }
-        return resp.json();
+    const resp = await withAuthHandler(
+      fetch(new URL(`housing?${params}`, apiBase).href, {
+        headers: { Accept: "application/json" },
+        credentials: "include",
       }),
+      {
+        onUnauthenticated() {
+          setReturnUrl(location.href);
+          return new Promise((resolve, reject) => {
+            signOut((path) => new URL(path, apiBase).href);
+            reject({ unauthenticated: true });
+          });
+        },
+      },
     );
-    return { housing, types, variants, hackers, backstage };
-  } catch (error) {
-    console.error(error);
+    const hackers = await resp.json();
+    return { hackers };
+  } catch (err) {
+    rollbar.error(err);
     alert("Nepodařilo se načíst data o ubytování.");
-    return { housing: [], types: [], variants: [], hackers: [], backstage: [] };
+    return { hackers: [] };
   }
 }
 
@@ -52,11 +37,10 @@ function inlineHackerName({ name, company }) {
   return name;
 }
 
-function renderHousingTypes(selectElement, { types, hacker }) {
+function renderHousingTypes(selectElement, { types }) {
   for (const type of types) {
     const option = document.createElement("option");
     option.value = type.name;
-    option.selected = type.name === hacker.housing;
     option.textContent = type.title;
     selectElement.appendChild(option);
   }
@@ -66,7 +50,7 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
   for (const variant of variants) {
     const sectionElement = document.createElement("section");
     sectionElement.classList.add(`${variant.type}-housing`);
-    sectionElement.setAttribute("aria-hidden", "true");
+    sectionElement.ariaHidden = "true";
     const housingOfVariant = housing.filter(
       (x) => x.type === variant.type && x.variant === variant.name,
     );
@@ -76,8 +60,7 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
       <div class="hc-card">
         <p>${variant.description}</p>
         ${
-      (firstPhoto || "")
-      && `
+      (firstPhoto || "") && `
           <div
             class="pswp-gallery pswp-gallery--single-column housing-gallery"
             ${(photos.length > 0 || "") && `data-count="${photos.length}"`}
@@ -91,9 +74,7 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
               <img width="100%" src="${firstPhoto.src}" alt="Obrázek ubytování" />
             </a>
             ${
-        photos
-          .map(
-            (photo) => `
+        photos.map((photo) => `
                   <a href="${photo.src}"
                     data-pswp-src="${photo.src}"
                     data-pswp-width="${photo.width}"
@@ -101,8 +82,7 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
                     aria-hidden="true"
                   >
                   </a>
-                `,
-          )
+                `)
           .join("")
       }
           </div>
@@ -110,15 +90,13 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
     }
         <div class="placements" aria-hidden="true">
           ${
-      housingOfVariant
-        .map(
-          ({ type, placement, capacity }) => `
+      housingOfVariant.map(({ type, placement, capacity }) => `
               <h3>${placement}</h3>
               <div class="booking-grid">
               ${
-            Array.from({ length: capacity })
-              .map(
-                (_, index) => `
+        Array.from({ length: capacity })
+          .map(
+            (_, index) => `
                   <div class="booking-grid__cell">
                     <input
                       list="hackers"
@@ -128,9 +106,7 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
                     />
 
                     ${
-                  when(
-                    profile.is_admin,
-                    () => `
+              when(profile.is_admin, () => `
                       <button onclick="
                         event.preventDefault();
                         const input = event.target.previousElementSibling;
@@ -138,17 +114,15 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
                       " type="button">
                         unlock
                       </button>
-                    `,
-                  )
-                }
+                    `)
+            }
                   </div>
                 `,
-              )
-              .join("")
-          }
+          )
+          .join("")
+      }
             </div>
-          `,
-        )
+          `)
         .join("")
     }
           <button type="submit" class="hc-button">
@@ -160,19 +134,15 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
           <a class="hc-link hc-link--decorated" href="#">chci sem</a>
         </div>
       </div>
-    `.trim();
+    `;
     rootElement.appendChild(sectionElement);
 
     sectionElement
       .querySelector(".show-placements a")
       .addEventListener("click", (event) => {
         event.preventDefault();
-        sectionElement
-          .querySelector(".placements")
-          .setAttribute("aria-hidden", "false");
-        sectionElement
-          .querySelector(".show-placements")
-          .setAttribute("aria-hidden", "true");
+        sectionElement.querySelector(".placements").ariaHidden = "false";
+        sectionElement.querySelector(".show-placements").ariaHidden = "true";
       });
   }
 }
@@ -185,6 +155,8 @@ function renderHousingVariants(rootElement, { variants, housing, profile }) {
  * 5. Allow hackers to change housing from custom to specific placement
  */
 function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
+  selectElement.value = hacker.housing;
+
   const hackersListElement = document.createElement("datalist");
   hackersListElement.id = "hackers";
   const hackersByName = hackers
@@ -317,9 +289,9 @@ function autoShowHousingOfMine({ formElement, selectElement }) {
   selectElement.addEventListener("change", ({ target }) => {
     for (let section of formElement.querySelectorAll("section")) {
       if (section.classList.contains(`${target.value}-housing`)) {
-        section.setAttribute("aria-hidden", "false");
+        section.ariaHidden = "false";
       } else if (!section.classList.contains("housing-type")) {
-        section.setAttribute("aria-hidden", "true");
+        section.ariaHidden = "true";
       }
 
       const placementsElement = section.querySelector(".placements");
@@ -328,11 +300,11 @@ function autoShowHousingOfMine({ formElement, selectElement }) {
         const inputWithMyName = section.querySelector("input.me");
 
         if (inputWithMyName) {
-          placementsElement.setAttribute("aria-hidden", "false");
-          showRoomsElement.setAttribute("aria-hidden", "true");
+          placementsElement.ariaHidden = "false";
+          showRoomsElement.ariaHidden = "true";
         } else {
-          placementsElement.setAttribute("aria-hidden", "true");
-          showRoomsElement.setAttribute("aria-hidden", "false");
+          placementsElement.ariaHidden = "true";
+          showRoomsElement.ariaHidden = "false";
         }
       }
     }
@@ -389,9 +361,9 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
       .then(() => {
         return location.assign("/ubytovani/ulozeno/");
       })
-      .catch((O_o) => {
-        console.error(O_o);
-        alert("Něco se pokazilo:" + O_o);
+      .catch((err) => {
+        rollbar.error(err);
+        alert("Něco se pokazilo:" + err);
       });
   });
 
@@ -450,31 +422,30 @@ async function initializeHousingGalleries() {
   }
 }
 
-export async function main({ formElement, variantsRootElement, env }) {
+export async function main(
+  { formElement, variantsRootElement, env, housing: { housing, types, variants, reservations } },
+) {
   rollbar.init(env);
 
   const selectElement = formElement.elements.type;
-  const profile = getSlackProfile();
-  const { housing, hackers, types, variants, backstage } = await loadHousingData(env["api-host"], env.year);
-  const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
-
-  if (!hacker) {
-    alert("Nenašlo jsem tě v seznamu hackerů 😭");
-  }
-
   renderHousingTypes(selectElement, {
     types,
-    formElement,
-    hacker,
   });
+  const profile = getSlackProfile();
   renderHousingVariants(variantsRootElement, {
     variants,
     housing,
     formElement,
     profile,
   });
+
+  const { hackers } = await loadHousingData(env["api-host"], env.year);
+  const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
+  if (!hacker) {
+    alert("Nenašlo jsem tě v seznamu hackerů 😭");
+  }
   renderHackers({ formElement, selectElement }, { hackers, hacker });
-  renderBackstage(formElement, { backstage });
+  renderBackstage(formElement, { backstage: reservations });
   renderZimmerFrei(variantsRootElement);
   autoShowHousingOfMine({ formElement, selectElement });
   handlaFormaSubmita(formElement, { hackers, profile });

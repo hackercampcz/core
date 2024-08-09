@@ -272,13 +272,20 @@
   import { main } from "/assets/esm/housing.js";
   const formElement = document.getElementById("housing");
   const build = {{ build | dump(8) | safe }};
+  const housing = {
+      housing: {{ housing_index | dump(8) | safe }},
+      types: {{ housing_types | dump(8) | safe }},
+      variants: {{ housing_variants | dump(8) | safe }},
+      reservations: {{ housing_reservations | dump(8) | safe }},
+    };
   const env = Object.assign({ year: {{ year }} }, build);
   main({
     formElement,
     variantsRootElement: document.getElementById(
       "generated-housing-variant-sections"
     ),
-    env
+    env,
+    housing
   });
 </script>
 {% endblock %}

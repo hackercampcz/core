@@ -104,7 +104,15 @@ export default {
 
   html: {
     dataFile: "global.mjs",
-    collections: ["build", "images", "hackers"],
+    collections: [
+      "build",
+      "images",
+      "hackers",
+      "housing_index",
+      "housing_types",
+      "housing_variants",
+      "housing_reservations",
+    ],
     nunjucksRender: {
       globals: {
         currentYear: new Date().getFullYear(),
