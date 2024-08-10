@@ -56,7 +56,7 @@ export function programModalDialog() {
   return html`
     <dialog id="program-modal">
       <div id="program-modal-root">nah</div>
-      <hr />
+      <hr>
       <button name="close" type="reset">Zavřít</button>
     </dialog>
   `;

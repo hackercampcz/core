@@ -198,7 +198,7 @@ function groupInvoiceModal({ data, selection }) {
             required
             pattern="[0-9]*"
             inputmode="numeric"
-          />
+         >
         </div>
         <button class="hc-button" type="submit">Potvrdit</button>
       </fieldset>
@@ -261,8 +261,8 @@ export function registrationsChips(
       view === View.search,
       () =>
         html`<form style="flex-grow: 1">
-            <input type="hidden" name="view" value="${View.search}" />
-            <input type="hidden" name="year" value="${year}" />
+            <input type="hidden" name="view" value="${View.search}">
+            <input type="hidden" name="year" value="${year}">
             <md-outlined-text-field
               name="query"
               style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px; width: 100%; max-width: 480px"
@@ -819,7 +819,7 @@ function registrationModalDialog({ detail, apiHost }) {
   };
   return html`
     <form method="post" @submit="${onSubmit}">
-      <input type="hidden" name="year" value="${detail.year}" />
+      <input type="hidden" name="year" value="${detail.year}">
       <div class="group">
         <div class="field">
           <label for="firstName">Jméno</label>
@@ -828,7 +828,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="firstName"
             value="${detail.firstName}"
             required
-          />
+         >
         </div>
         <div class="field">
           <label for="lastName">Příjmení</label>
@@ -837,7 +837,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="lastName"
             value="${detail.lastName}"
             required
-          />
+         >
         </div>
       </div>
       <div class="group">
@@ -849,7 +849,7 @@ function registrationModalDialog({ detail, apiHost }) {
             value="${detail.email}"
             type="email"
             required
-          />
+         >
         </div>
         <div class="field">
           <label for="phone">Tel</label>
@@ -860,7 +860,7 @@ function registrationModalDialog({ detail, apiHost }) {
             type="tel"
             autocomplete="tel"
             required
-          />
+         >
         </div>
       </div>
       ${
@@ -870,19 +870,19 @@ function registrationModalDialog({ detail, apiHost }) {
         html`
           <div class="field">
             <label for="paid">Čas zaplacení</label>
-            <input id="paid" name="paid" value="${detail.paid}" required />
+            <input id="paid" name="paid" value="${detail.paid}" required>
           </div>
         `,
     )
   }
       <div class="field">
         <label for="company">Společnost</label>
-        <input id="company" name="company" value="${detail.company}" />
+        <input id="company" name="company" value="${detail.company}">
       </div>
 
       <div class="field">
         <label for="ticketType">Lístek</label>
-        <input id="ticketType" name="ticketType" value="${detail.ticketType}" />
+        <input id="ticketType" name="ticketType" value="${detail.ticketType}">
       </div>
 
       <h3>Fakturace</h3>
@@ -895,7 +895,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="invName"
             type="text"
             value="${detail.invName}"
-          />
+         >
         </div>
         <div class="field">
           <label for="invoice-address"> Adresa (Ulice č.p., PSČ, Město) </label>
@@ -904,7 +904,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="invAddress"
             type="text"
             value="${detail.invAddress}"
-          />
+         >
         </div>
         <div class="group">
           <div class="field">
@@ -914,7 +914,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRegNo"
               type="text"
               value="${detail.invRegNo}"
-            />
+           >
           </div>
           <div class="field">
             <label for="invoice-vatno"> DIČ </label>
@@ -923,7 +923,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invVatNo"
               type="text"
               value="${detail.invVatNo}"
-            />
+           >
           </div>
         </div>
         <div class="field">
@@ -933,7 +933,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="invText"
             type="text"
             value="${detail.invText}"
-          />
+         >
         </div>
         <div class="field">
           <label for="invoice-email"> Kontakt pro fakturaci </label>
@@ -943,7 +943,7 @@ function registrationModalDialog({ detail, apiHost }) {
             value="${detail.invEmail}"
             type="email"
             autocomplete="email"
-          />
+         >
         </div>
       </fieldset>
 
@@ -957,7 +957,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRecipientFirstname"
               value="${detail.invRecipientFirstname}"
               type="text"
-            />
+           >
           </div>
           <div class="field">
             <label for="invoice-recipient-lastname"> Příjmení </label>
@@ -966,7 +966,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRecipientLastname"
               value="${detail.invRecipientLastname}"
               type="text"
-            />
+           >
           </div>
         </div>
         <div class="group">
@@ -977,7 +977,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRecipientEmail"
               value="${detail.invRecipientEmail}"
               type="email"
-            />
+           >
           </div>
           <div class="field">
             <label for="invoice-recipient-phone"> Telefon </label>
@@ -986,7 +986,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRecipientPhone"
               value="${detail.invRecipientPhone}"
               type="tel"
-            />
+           >
           </div>
         </div>
       </fieldset>

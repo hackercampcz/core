@@ -79,8 +79,8 @@ export function attendeesChips(
       () =>
         html`
           <form style="flex-grow: 1">
-            <input type="hidden" name="view" value="${View.searchAttendees}" />
-            <input type="hidden" name="year" value="${year}" />
+            <input type="hidden" name="view" value="${View.searchAttendees}">
+            <input type="hidden" name="year" value="${year}">
             <md-outlined-text-field
               name="query"
               style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px; width: 100%; max-width: 480px"
@@ -521,11 +521,11 @@ function editAttendeeModalDialog({ detail, apiHost }) {
   };
   return html`
     <form method="dialog" @submit="${onSubmit}">
-      <input type="hidden" name="year" value="${detail.year}" />
-      <input type="hidden" name="slackID" value="${detail.slackID}" />
+      <input type="hidden" name="year" value="${detail.year}">
+      <input type="hidden" name="slackID" value="${detail.slackID}">
       <div class="field">
         <label for="name">Jméno</label>
-        <input id="name" name="name" value="${detail.name}" required />
+        <input id="name" name="name" value="${detail.name}" required>
       </div>
       <div class="field">
         <label for="email">E-mail</label>
@@ -535,23 +535,23 @@ function editAttendeeModalDialog({ detail, apiHost }) {
           value="${detail.email}"
           type="email"
           required
-        />
+       >
       </div>
       <div class="field">
         <label for="ticketType">Typ lístku</label>
-        <input id="ticketType" name="ticketType" value="${detail.ticketType}" />
+        <input id="ticketType" name="ticketType" value="${detail.ticketType}">
       </div>
       <div class="field">
         <label for="company">Společnost</label>
-        <input id="company" name="company" value="${detail.company}" />
+        <input id="company" name="company" value="${detail.company}">
       </div>
       <div class="field">
         <label for="housingPlacement">Ubytování</label>
-        <input id="housingPlacement" name="housingPlacement" value="${detail.housingPlacement}" />
+        <input id="housingPlacement" name="housingPlacement" value="${detail.housingPlacement}">
       </div>
       <div class="field">
         <label for="note">Poznámka</label>
-        <input id="note" name="note" value="${detail.note}" />
+        <input id="note" name="note" value="${detail.note}">
       </div>
       <button type="submit" class="hc-button">Odeslat to</button>
     </form>
@@ -567,30 +567,30 @@ function addAttendeeModalDialog({ year, apiHost }) {
   };
   return html`
     <form method="dialog" @submit="${onSubmit}">
-      <input type="hidden" name="year" value="${year}" />
+      <input type="hidden" name="year" value="${year}">
       <div class="field">
         <label for="slackID">Slack ID</label>
-        <input id="slackID" name="slackID" />
+        <input id="slackID" name="slackID">
       </div>
       <div class="field">
         <label for="name">Jméno</label>
-        <input id="name" name="name" required />
+        <input id="name" name="name" required>
       </div>
       <div class="field">
         <label for="email">E-mail</label>
-        <input id="email" name="email" type="email" required />
+        <input id="email" name="email" type="email" required>
       </div>
       <div class="field">
         <label for="ticketType">Lístek</label>
-        <input id="ticketType" name="ticketType" required value="staff" />
+        <input id="ticketType" name="ticketType" required value="staff">
       </div>
       <div class="field">
         <label for="company">Společnost</label>
-        <input id="company" name="company" />
+        <input id="company" name="company">
       </div>
       <div class="field">
         <label for="note">Poznámka</label>
-        <input id="note" name="note" />
+        <input id="note" name="note">
       </div>
 
       <h3>Fakturace</h3>
@@ -598,25 +598,25 @@ function addAttendeeModalDialog({ year, apiHost }) {
         <legend>Zaplatí sám</legend>
         <div class="field">
           <label for="invoice-name"> Jméno / název společnosti </label>
-          <input id="invoice-name" name="invName" type="text" />
+          <input id="invoice-name" name="invName" type="text">
         </div>
         <div class="field">
           <label for="invoice-address"> Adresa (Ulice č.p., PSČ, Město) </label>
-          <input id="invoice-address" name="invAddress" type="text" />
+          <input id="invoice-address" name="invAddress" type="text">
         </div>
         <div class="group">
           <div class="field">
             <label for="invoice-regno"> IČO </label>
-            <input id="invoice-regno" name="invRegNo" type="text" />
+            <input id="invoice-regno" name="invRegNo" type="text">
           </div>
           <div class="field">
             <label for="invoice-vatno"> DIČ </label>
-            <input id="invoice-vatno" name="invVatNo" type="text" />
+            <input id="invoice-vatno" name="invVatNo" type="text">
           </div>
         </div>
         <div class="field">
           <label for="invoice-text"> Text na faktuře </label>
-          <input id="invoice-text" name="invText" type="text" />
+          <input id="invoice-text" name="invText" type="text">
         </div>
         <div class="field">
           <label for="invoice-email"> Kontakt pro fakturaci </label>
@@ -625,7 +625,7 @@ function addAttendeeModalDialog({ year, apiHost }) {
             name="invEmail"
             type="email"
             autocomplete="email"
-          />
+         >
         </div>
       </fieldset>
 
@@ -638,7 +638,7 @@ function addAttendeeModalDialog({ year, apiHost }) {
               id="invoice-recipient-firstname"
               name="invRecipientFirstname"
               type="text"
-            />
+           >
           </div>
           <div class="field">
             <label for="invoice-recipient-lastname"> Příjmení </label>
@@ -646,7 +646,7 @@ function addAttendeeModalDialog({ year, apiHost }) {
               id="invoice-recipient-lastname"
               name="invRecipientLastname"
               type="text"
-            />
+           >
           </div>
         </div>
         <div class="group">
@@ -656,7 +656,7 @@ function addAttendeeModalDialog({ year, apiHost }) {
               id="invoice-recipient-email"
               name="invRecipientEmail"
               type="email"
-            />
+           >
           </div>
           <div class="field">
             <label for="invoice-recipient-phone"> Telefon </label>
@@ -664,7 +664,7 @@ function addAttendeeModalDialog({ year, apiHost }) {
               id="invoice-recipient-phone"
               name="invRecipientPhone"
               type="tel"
-            />
+           >
           </div>
         </div>
       </fieldset>
@@ -733,8 +733,8 @@ function checkInModalDialog({
   };
   return html`
     <form method="dialog" @submit="${onSubmit}">
-      <input type="hidden" name="year" value="${year}" />
-      <input type="hidden" name="slackID" value="${detail.slackID}" />
+      <input type="hidden" name="year" value="${year}">
+      <input type="hidden" name="slackID" value="${detail.slackID}">
       <h2>Check-in</h2>
       <fieldset>
         <legend>NCF Tron</legend>
@@ -841,8 +841,8 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
   };
   return html`
     <form method="dialog" @submit="${onSubmit}">
-      <input type="hidden" name="year" value="${year}" />
-      <input type="hidden" name="slackID" value="${detail.slackID}" />
+      <input type="hidden" name="year" value="${year}">
+      <input type="hidden" name="slackID" value="${detail.slackID}">
       <h2>Check out</h2>
       <fieldset>
         <legend>Vyúčtování</legend>
@@ -851,26 +851,19 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
           V případě, že platba probhla, tak to odškrtněte a zadejte i částku.
         </p>
         <div class="field">
-          <label for="paid"
-            ><input
+          <label for="paid"><input
               type="checkbox"
               id="paid"
               name="checkOutPaid"
-              value="true"
-            />
-            Zaplaceno</label
-          >
+              value="true">
+            Zaplaceno</label>
         </div>
         <div class="field">
           <label for="total">Částka</label>
           <md-outlined-text-field
             id="total"
             name="checkOutTotal"
-            value="${
-    detail.nfcTronData
-      ?.map((x) => x.spent ?? 0)
-      ?.reduce((a, b) => a + b, 0) ?? 0
-  }"
+            value="${detail.nfcTronData?.map((x) => x.spent ?? 0)?.reduce((a, b) => a + b, 0) ?? 0}"
           ></md-outlined-text-field>
         </div>
       </fieldset>

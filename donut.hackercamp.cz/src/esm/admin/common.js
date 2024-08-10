@@ -102,8 +102,7 @@ export function unauthorized() {
       klikněte na následující tlačítko a potvrďte požadovaná oprávnění:
     </p>
     <div style="padding: 16px">
-      <a
-        href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F"
+      <a href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F"
       >
         <img
           alt="Add to Slack"
@@ -116,8 +115,7 @@ export function unauthorized() {
           srcset="
             https://platform.slack-edge.com/img/add_to_slack.png    1x,
             https://platform.slack-edge.com/img/add_to_slack@2x.png 2x
-          "
-      /></a>
+          "></a>
     </div>`;
 }
 

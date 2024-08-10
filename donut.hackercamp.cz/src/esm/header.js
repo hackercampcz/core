@@ -21,7 +21,7 @@ function headerProfile({ name, picture }, togglePopup) {
         title="Profile menu"
         @click="${() => togglePopup()}"
       >
-        <img alt="${name}" src="${picture}" width="48" height="48" />
+        <img alt="${name}" src="${picture}" width="48" height="48">
       </button>
     </span>
   `;
