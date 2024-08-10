@@ -1,4 +1,3 @@
-import { when } from "lit-html/directives/when.js";
 import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
@@ -30,135 +29,65 @@ async function loadHousingData(apiBase, year) {
   }
 }
 
-function inlineHackerName({ name, company }) {
+function formatHackerName({ name, company }) {
   if (company) {
     return `${name} z ${company}`;
   }
   return name;
 }
 
-function renderHousingTypes(selectElement, { types }) {
-  for (const type of types) {
-    const option = document.createElement("option");
-    option.value = type.name;
-    option.textContent = type.title;
-    selectElement.appendChild(option);
-  }
+function handleUnlock(e) {
+  e.preventDefault();
+  e.target.previousElementSibling.disabled = false;
 }
 
-function renderHousingVariants(rootElement, { variants, housing, profile }) {
+function handlePlacementSelection(e) {
+  e.preventDefault();
+  const form = e.target.form;
+  const section = e.target.parentElement.parentElement.parentElement;
+  form.querySelectorAll(`.${section.className} .placements`).forEach(el => {
+    el.ariaHidden = "true";
+  });
+  form.querySelectorAll(`.${section.className} .show-placements`).forEach(el => {
+    el.ariaHidden = "false";
+  });
+  section.querySelector(".placements").ariaHidden = "false";
+  section.querySelector(".show-placements").ariaHidden = "true";
+}
+
+function initHousingVariants(formElement, { variants, profile }) {
   for (const variant of variants) {
-    const sectionElement = document.createElement("section");
-    sectionElement.classList.add(`${variant.type}-housing`);
-    sectionElement.ariaHidden = "true";
-    const housingOfVariant = housing.filter(
-      (x) => x.type === variant.type && x.variant === variant.name,
-    );
-    const [firstPhoto, ...photos] = variant.images;
-    sectionElement.innerHTML = `
-      <h2>${variant.title}</h2>
-      <div class="hc-card">
-        <p>${variant.description}</p>
-        ${
-      (firstPhoto || "") && `
-          <div
-            class="pswp-gallery pswp-gallery--single-column housing-gallery"
-            ${(photos.length > 0 || "") && `data-count="${photos.length}"`}
-          >
-            <a
-              href="${firstPhoto.src}"
-              target="_blank"
-              data-pswp-width="${firstPhoto.width}"
-              data-pswp-height="${firstPhoto.height}"
-            >
-              <img width="100%" src="${firstPhoto.src}" alt="Obrázek ubytování" />
-            </a>
-            ${
-        photos.map((photo) => `
-                  <a href="${photo.src}"
-                    data-pswp-src="${photo.src}"
-                    data-pswp-width="${photo.width}"
-                    data-pswp-height="${photo.height}"
-                    aria-hidden="true"
-                  >
-                  </a>
-                `)
-          .join("")
+    for (const section of formElement.querySelectorAll(`.${variant.type}-housing`)) {
+      for (const cell of section.querySelectorAll(".booking-grid__cell")) {
+        const btn = cell.querySelector("button.unlock");
+        if (profile.is_admin) {
+          btn.disabled = false;
+        } else {
+          btn.remove();
+        }
       }
-          </div>
-        `
     }
-        <div class="placements" aria-hidden="true">
-          ${
-      housingOfVariant.map(({ type, placement, capacity }) => `
-              <h3>${placement}</h3>
-              <div class="booking-grid">
-              ${
-        Array.from({ length: capacity })
-          .map(
-            (_, index) => `
-                  <div class="booking-grid__cell">
-                    <input
-                      list="hackers"
-                      name="${type}['${placement}'][${index}]"
-                      placeholder="-- Volno --"
-                      type="search"
-                    />
-
-                    ${
-              when(profile.is_admin, () => `
-                      <button onclick="
-                        event.preventDefault();
-                        const input = event.target.previousElementSibling;
-                        input.disabled = false;
-                      " type="button">
-                        unlock
-                      </button>
-                    `)
-            }
-                  </div>
-                `,
-          )
-          .join("")
-      }
-            </div>
-          `)
-        .join("")
-    }
-          <button type="submit" class="hc-button">
-            Uložit (se)
-          </button>
-        </div>
-        <div class="show-placements">
-          <p><strong>Volných míst: <span class="zimmer-frei">${0}</span></strong></p>
-          <a class="hc-link hc-link--decorated" href="#">chci sem</a>
-        </div>
-      </div>
-    `;
-    rootElement.appendChild(sectionElement);
-
-    sectionElement
-      .querySelector(".show-placements a")
-      .addEventListener("click", (event) => {
-        event.preventDefault();
-        sectionElement.querySelector(".placements").ariaHidden = "false";
-        sectionElement.querySelector(".show-placements").ariaHidden = "true";
-      });
   }
+  formElement.addEventListener("click", (e) => {
+    if (e.target.classList.contains("unlock")) {
+      handleUnlock(e);
+    } else if (e.target.classList.contains("placement-selection")) {
+      handlePlacementSelection(e);
+    }
+  });
 }
 
 /**
- * 1. Create <datalist> with all homeless hackers for autocompletion
+ * 1. Fill <datalist> with all homeless hackers for autocompletion
  * 2. Fill in <input>s with housed hackers
  * 3. Disable other located hackers, but highlight me
  * 4. Once a hacker is autocompleted, remove him from <datalist> and vice versa
  * 5. Allow hackers to change housing from custom to specific placement
  */
 function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
-  selectElement.value = hacker.housing;
+  selectElement.querySelector(`option[value="${hacker.housing}"]`)?.setAttribute("selected", "selected");
 
-  const hackersListElement = document.createElement("datalist");
-  hackersListElement.id = "hackers";
+  const hackersListElement = formElement.querySelector("#hackers");
   const hackersByName = hackers
     .filter((x) => x.name)
     .sort((a, b) => a.name.localeCompare(b.name));
@@ -166,7 +95,7 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
   for (const otherHacker of hackersByName) {
     const { slackID, name, company, housing, housingPlacement } = otherHacker;
     const isHomeless = !housingPlacement;
-    const inlineValue = inlineHackerName({ name, company });
+    const inlineValue = formatHackerName({ name, company });
 
     if (isHomeless) {
       const option = document.createElement("option");
@@ -202,11 +131,9 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
     }
   }
 
-  formElement.appendChild(hackersListElement);
-
-  for (let inputElement of formElement.querySelectorAll("input[type=search]")) {
-    inputElement.addEventListener("focus", handleInputFocus);
-    inputElement.addEventListener("blur", handleInputBlur);
+  for (const input of formElement.querySelectorAll("input[type=search]")) {
+    input.addEventListener("focus", handleInputFocus);
+    input.addEventListener("blur", handleInputBlur);
   }
 
   let prevHackerValue;
@@ -226,11 +153,11 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
       target.classList.remove("me");
       if (prevHackerValue) {
         const prevHacker = hackers.find(
-          (h) => inlineHackerName(h) === prevHackerValue,
+          (h) => formatHackerName(h) === prevHackerValue,
         );
         if (prevHacker) {
           const option = document.createElement("option");
-          option.value = inlineHackerName(prevHacker);
+          option.value = formatHackerName(prevHacker);
           option.dataset.id = prevHacker.sub;
           hackersListElement.prepend(option);
         }
@@ -251,7 +178,7 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
   //  changed from custom AND there is no search input with my name yet
   function handleSelectChange({ target }) {
     if (target.value === "custom") return;
-    const myInlinedHackerName = inlineHackerName(hacker);
+    const myInlinedHackerName = formatHackerName(hacker);
     if (!hackersListElement.querySelector(`[value="${myInlinedHackerName}"]`)) {
       const option = document.createElement("option");
       option.value = myInlinedHackerName;
@@ -261,33 +188,28 @@ function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
   }
 }
 
-function renderBackstage(rootElement, { backstage }) {
-  for (let { type, placement, label } of backstage) {
-    for (
-      let inputElement of rootElement.querySelectorAll(
-        `input[name^="${type}['${placement}']"]`,
-      )
-    ) {
-      inputElement.value = label;
-      inputElement.disabled = true;
-      inputElement.parentElement?.querySelector("button")?.remove();
+function renderReservations(rootElement, { reservations }) {
+  for (const { type, placement, label } of reservations) {
+    for (const input of rootElement.querySelectorAll(`input[name^="${type}['${placement}']"]`)) {
+      input.value = label;
+      input.disabled = true;
+      input.parentElement?.querySelector("button")?.remove();
     }
   }
 }
 
-function renderZimmerFrei(rootElement) {
-  for (let sectionElement of rootElement.querySelectorAll("section")) {
-    const counterElement = sectionElement.querySelector(".zimmer-frei");
-    const { length: zimmerFrei } = Array.from(
-      sectionElement.querySelectorAll("input[type=search]"),
-    ).filter(({ disabled }) => !disabled);
-    counterElement.textContent = zimmerFrei;
+function renderFreeCapacity(rootElement) {
+  for (const sectionElement of rootElement.querySelectorAll("section:has(.free-capacity)")) {
+    const capacity = sectionElement.querySelector(".free-capacity");
+    const { length: freeCapacity } = sectionElement.querySelectorAll("input[type=search]:enabled");
+    capacity.textContent = freeCapacity;
+    capacity.value = freeCapacity;
   }
 }
 
 function autoShowHousingOfMine({ formElement, selectElement }) {
   selectElement.addEventListener("change", ({ target }) => {
-    for (let section of formElement.querySelectorAll("section")) {
+    for (const section of formElement.querySelectorAll("section")) {
       if (section.classList.contains(`${target.value}-housing`)) {
         section.ariaHidden = "false";
       } else if (!section.classList.contains("housing-type")) {
@@ -319,7 +241,7 @@ const HOUSING_INPUT_REGEX = /^(cottage|house|tent)\['(.+)'\]\[(\d+)\]$/;
  * @param {HTMLFormElement} formElement
  */
 function handlaFormaSubmita(formElement, { hackers, profile }) {
-  formElement.addEventListener("submit", (event) => {
+  formElement.addEventListener("submit", async (event) => {
     event.preventDefault();
     const formData = new FormData(formElement);
     const jsonData = {
@@ -327,16 +249,10 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
       items: [],
     };
 
-    for (let [key, value] of formData) {
-      if (HOUSING_INPUT_REGEX.test(key) === false) {
-        continue;
-      }
-      const inputedHacker = hackers.find(
-        (hacker) => inlineHackerName(hacker) === value,
-      );
-      if (!inputedHacker) {
-        continue;
-      }
+    for (const [key, value] of formData) {
+      if (!HOUSING_INPUT_REGEX.test(key)) continue;
+      const inputedHacker = hackers.find((hacker) => formatHackerName(hacker) === value);
+      if (!inputedHacker) continue;
       const [, housing, housingPlacement] = key.match(HOUSING_INPUT_REGEX);
       jsonData.items.push({
         slackID: inputedHacker.slackID,
@@ -345,8 +261,8 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
       });
     }
 
-    // This allow you to fillup somebody else to any placement but yourself to custom housing variant (your :troll:)
-    // and cus this is bellow the collection loop, it will override your previously filled up placement (our :troll:)
+    // This allows you to fill somebody else to any placement but yourself to custom housing variant (your :troll:)
+    // and because this is bellow the collection loop, it will override your previously filled up placement (our :troll:)
     if (formData.get("type") === "custom" && formData.get("custom")) {
       jsonData.items = jsonData.items.filter(
         ({ slackID }) => slackID !== profile.sub,
@@ -357,21 +273,19 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
         housingPlacement: "custom",
       });
     }
-    sendHousingData(jsonData)
-      .then(() => {
-        return location.assign("/ubytovani/ulozeno/");
-      })
+    sendHousingData(formElement.action, jsonData)
+      .then(() => location.assign("/ubytovani/ulozeno/"))
       .catch((err) => {
         rollbar.error(err);
         alert("Něco se pokazilo:" + err);
       });
   });
 
-  async function sendHousingData(data) {
+  async function sendHousingData(url, data) {
     const body = JSON.stringify(data);
     console.info("Sending housing data to server...", body);
     const response = await withAuthHandler(
-      fetch(formElement.action, {
+      fetch(url, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -385,7 +299,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
         onUnauthenticated() {
           setReturnUrl(location.href);
           return new Promise((resolve, reject) => {
-            signOut((path) => new URL(path, formElement.action).href);
+            signOut((path) => new URL(path, url).href);
             reject({ unauthenticated: true });
           });
         },
@@ -423,21 +337,13 @@ async function initializeHousingGalleries() {
 }
 
 export async function main(
-  { formElement, variantsRootElement, env, housing: { housing, types, variants, reservations } },
+  { formElement, env, housing: { reservations, variants } },
 ) {
   rollbar.init(env);
 
   const selectElement = formElement.elements.type;
-  renderHousingTypes(selectElement, {
-    types,
-  });
   const profile = getSlackProfile();
-  renderHousingVariants(variantsRootElement, {
-    variants,
-    housing,
-    formElement,
-    profile,
-  });
+  initHousingVariants(formElement, { variants, profile });
 
   const { hackers } = await loadHousingData(env["api-host"], env.year);
   const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
@@ -445,8 +351,8 @@ export async function main(
     alert("Nenašlo jsem tě v seznamu hackerů 😭");
   }
   renderHackers({ formElement, selectElement }, { hackers, hacker });
-  renderBackstage(formElement, { backstage: reservations });
-  renderZimmerFrei(variantsRootElement);
+  renderReservations(formElement, { reservations });
+  renderFreeCapacity(formElement);
   autoShowHousingOfMine({ formElement, selectElement });
   handlaFormaSubmita(formElement, { hackers, profile });
   initializeHousingGalleries();

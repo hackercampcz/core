@@ -1,3 +1,7 @@
+function byVariant({ name, type }) {
+  return (x) => x.type === type && x.variant === name;
+}
+
 export default {
   year: 2024,
   event: {
@@ -20,4 +24,5 @@ export default {
     "hacker-plus": { name: "Hacker filantrop", price: 12000 },
     "hacker-patron": { name: "Patron Campu", price: 12000 },
   },
+  byVariant,
 };
