@@ -3,6 +3,7 @@ import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
 import logger from "fancy-log";
 import gulpMode from "gulp-mode";
 import fs from "node:fs";
+import path from "node:path";
 import OpenProps from "open-props";
 import jitProps from "postcss-jit-props";
 import DefaultRegistry from "undertaker-registry";
@@ -12,6 +13,11 @@ import pathConfig from "./path-config.json" with { type: "json" };
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
 const mode = gulpMode();
+
+function assetPath(destPath, key) {
+  const manifest = JSON.parse(fs.readFileSync(path.join(destPath, "rev-manifest.json")).toString());
+  return path.join(destPath, manifest[key]);
+}
 
 class HackersRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
@@ -149,7 +155,7 @@ export default {
   },
 
   workboxBuild: {
-    swSrc: projectPath(pathConfig.src, pathConfig.esm.src, "sw.js"),
+    swSrc: () => assetPath(projectPath(pathConfig.dest), "assets/esm/sw.js"),
     swDest: projectPath(pathConfig.dest, "sw.js"),
     globDirectory: pathConfig.dest,
     globPatterns: ["**/*.html", "assets/**/*.{js,mjs,css}"],
