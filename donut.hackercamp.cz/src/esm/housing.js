@@ -84,7 +84,8 @@ function initHousingVariants(formElement, { variants, profile }) {
  * 4. Once a hacker is autocompleted, remove him from <datalist> and vice versa
  * 5. Allow hackers to change housing from custom to specific placement
  */
-function renderHackers({ formElement, selectElement }, { hackers, hacker }) {
+function renderHackers(formElement, { hackers, hacker }) {
+  const selectElement = formElement.elements.type;
   selectElement.querySelector(`option[value="${hacker.housing}"]`)?.setAttribute("selected", "selected");
 
   const hackersListElement = formElement.querySelector("#hackers");
@@ -207,7 +208,8 @@ function renderFreeCapacity(rootElement) {
   }
 }
 
-function autoShowHousingOfMine({ formElement, selectElement }) {
+function autoShowHousingOfMine(formElement) {
+  const selectElement = formElement.elements.type;
   selectElement.addEventListener("change", ({ target }) => {
     for (const section of formElement.querySelectorAll("section")) {
       if (section.classList.contains(`${target.value}-housing`)) {
@@ -341,7 +343,6 @@ export async function main(
 ) {
   rollbar.init(env);
 
-  const selectElement = formElement.elements.type;
   const profile = getSlackProfile();
   initHousingVariants(formElement, { variants, profile });
 
@@ -350,10 +351,10 @@ export async function main(
   if (!hacker) {
     alert("Nenašlo jsem tě v seznamu hackerů 😭");
   }
-  renderHackers({ formElement, selectElement }, { hackers, hacker });
+  renderHackers(formElement, { hackers, hacker });
   renderReservations(formElement, { reservations });
   renderFreeCapacity(formElement);
-  autoShowHousingOfMine({ formElement, selectElement });
+  autoShowHousingOfMine(formElement);
   handlaFormaSubmita(formElement, { hackers, profile });
   initializeHousingGalleries();
 }

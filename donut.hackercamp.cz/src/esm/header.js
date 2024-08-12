@@ -43,24 +43,15 @@ function headerProfilePopup(contact, profile, signOut) {
             </a>
           </div>
           <div class="hc-header__profile-name">
-            <a href="/hackers/${slug}">
-              <strong>${name}</strong>
-            </a>
+            <a href="/hackers/${slug}"><strong>${name}</strong></a>
           </div>
         </li>
-        ${
-    when(is_admin, () =>
-      html`
-          <li><a href="/admin/">Administrace</a></li>`)
-  }
+        ${when(is_admin, () => html`<li><a href="/admin/">Administrace</a></li>`)}
         <li><a href="/program/">Program kempu</a></li>
         <li><a href="/hackers/">Seznam účastníků</a></li>
         <li><a href="https://www.hackercamp.cz/faq/">Často kladené dotazy</a></li>
         <li>
-          <button
-            class="hc-btn hc-btn__sign-out"
-            @click="${() => signOut(apiURL)}"
-          >Odhlásit se</button>
+          <button class="hc-btn hc-btn__sign-out" @click="${() => signOut(apiURL)}">Odhlásit se</button>
         </li>
       </ul>
     </div>
