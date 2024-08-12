@@ -1,4 +1,4 @@
-import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
+import { getContact, getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
 
@@ -342,19 +342,24 @@ export async function main(
   { formElement, env, housing: { reservations, variants } },
 ) {
   rollbar.init(env);
+  try {
+    const profile = getSlackProfile();
+    const contact = getContact();
+    rollbar.info("Housing profile", { profile, contact });
+    initHousingVariants(formElement, { variants, profile });
 
-  const profile = getSlackProfile();
-  initHousingVariants(formElement, { variants, profile });
-
-  const { hackers } = await loadHousingData(env["api-host"], env.year);
-  const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
-  if (!hacker) {
-    alert("Nenašlo jsem tě v seznamu hackerů 😭");
+    const { hackers } = await loadHousingData(env["api-host"], env.year);
+    const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
+    if (!hacker) {
+      alert("Nenašlo jsem tě v seznamu hackerů 😭");
+    }
+    renderHackers(formElement, { hackers, hacker });
+    renderReservations(formElement, { reservations });
+    renderFreeCapacity(formElement);
+    autoShowHousingOfMine(formElement);
+    handlaFormaSubmita(formElement, { hackers, profile });
+    await initializeHousingGalleries();
+  } catch (err) {
+    rollbar.error(err);
   }
-  renderHackers(formElement, { hackers, hacker });
-  renderReservations(formElement, { reservations });
-  renderFreeCapacity(formElement);
-  autoShowHousingOfMine(formElement);
-  handlaFormaSubmita(formElement, { hackers, profile });
-  initializeHousingGalleries();
 }
