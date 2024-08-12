@@ -60,6 +60,7 @@ function initHousingVariants(formElement, { variants, profile }) {
     for (const section of formElement.querySelectorAll(`.${variant.type}-housing`)) {
       for (const cell of section.querySelectorAll(".booking-grid__cell")) {
         const btn = cell.querySelector("button.unlock");
+        if (!btn) continue;
         if (profile.is_admin) {
           btn.disabled = false;
         } else {
