@@ -1,4 +1,5 @@
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/6.4.1/workbox-sw.min.js");
+import { precacheAndRoute } from "workbox-precaching";
+import { imageCache, pageCache, staticResourceCache } from "workbox-recipes";
 
 addEventListener("message", (event) => {
   if (event.data && event.data.type === "SKIP_WAITING") {
@@ -6,8 +7,8 @@ addEventListener("message", (event) => {
   }
 });
 
-workbox.precaching.precacheAndRoute(self.__WB_MANIFEST);
+precacheAndRoute(self.__WB_MANIFEST);
 
-workbox.recipes.pageCache();
-workbox.recipes.staticResourceCache();
-workbox.recipes.imageCache();
+pageCache();
+staticResourceCache();
+imageCache();

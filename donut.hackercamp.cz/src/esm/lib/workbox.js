@@ -1,4 +1,4 @@
-import { Workbox } from "workbox-window/build/workbox-window.prod.mjs";
+import { Workbox } from "workbox-window";
 
 /** @typedef {import("workbox-window").WorkboxLifecycleWaitingEvent} WorkboxLifecycleWaitingEvent */
 
