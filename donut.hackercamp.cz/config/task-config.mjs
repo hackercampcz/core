@@ -156,7 +156,7 @@ export default {
 
   workboxBuild: {
     swSrc: () => assetPath(projectPath(pathConfig.dest), "assets/esm/sw.js"),
-    swDest: projectPath(pathConfig.dest, "sw.js"),
+    swDest: projectPath(pathConfig.dest, "assets/esm/sw.js"),
     globDirectory: pathConfig.dest,
     globPatterns: ["**/*.html", "assets/**/*.{js,mjs,css}"],
     globIgnores: [
