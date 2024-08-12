@@ -9,7 +9,7 @@ const isProduction = () => ["localhost", "127"].indexOf(location.hostname) === -
  */
 export function init(showSkipWaitingPrompt) {
   if ("serviceWorker" in navigator && isProduction()) {
-    const wb = new Workbox("/assets/esm/sw.js", { type: "module" });
+    const wb = new Workbox("/assets/esm/sw.js", { type: "module", scope: "/" });
     wb.addEventListener("waiting", showSkipWaitingPrompt(wb));
     wb.register().catch((ex) => console.error(ex));
   }
