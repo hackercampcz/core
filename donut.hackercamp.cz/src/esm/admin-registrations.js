@@ -243,8 +243,7 @@ function copyToClipboard(counts) {
     await navigator.clipboard.write([
       new ClipboardItem({ "text/html": rich, "text/plain": plain }),
     ]);
-    window.snackbar.labelText = "Statistiky zkopírovány do schránky";
-    window.snackbar.show();
+    globalThis.showSnackbar("Statistiky zkopírovány do schránky");
   };
 }
 

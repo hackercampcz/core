@@ -231,8 +231,7 @@ function copyToClipboard(counts) {
     await navigator.clipboard.write([
       new ClipboardItem({ "text/html": rich, "text/plain": plain }),
     ]);
-    window.snackbar.labelText = "Statistiky zkopírovány do schránky";
-    window.snackbar.show();
+    globalThis.showSnackbar("Statistiky zkopírovány do schránky");
   };
 }
 
@@ -682,8 +681,7 @@ function removeChip(sn) {
   return (e) => {
     e.preventDefault();
     dispatchAction(Action.removeChip, { sn });
-    window.snackbar.labelText = "Chip odebrán";
-    window.snackbar.show();
+    globalThis.showSnackbar("Chip odebrán");
   };
 }
 
@@ -718,13 +716,10 @@ function checkInModalDialog({
         "checkIn",
         data,
       );
-      window.snackbar.labelText = "Check-in uložen";
-      window.snackbar.show();
+      globalThis.showSnackbar("Check-in uložen");
       return result;
     } catch (err) {
-      window.snackbar.labelText = "Check-in neuložen";
-      window.snackbar.timeoutMs = -1;
-      window.snackbar.show();
+      globalThis.showPersistentSnackbar("Check-in neuložen");
     }
   };
   const onChange = (e) => {
@@ -830,13 +825,10 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
         "checkOut",
         data,
       );
-      window.snackbar.labelText = "Check-out uložen";
-      window.snackbar.show();
+      globalThis.showSnackbar("Check-out uložen");
       return result;
     } catch (err) {
-      window.snackbar.labelText = "Check-out neuložen";
-      window.snackbar.timeoutMs = -1;
-      window.snackbar.show();
+      globalThis.showPersistentSnackbar("Check-out neuložen");
     }
   };
   return html`

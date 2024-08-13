@@ -1,3 +1,4 @@
+import "@material/web/button/text-button.js";
 import { defAtom } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import { when } from "lit-html/directives/when.js";
@@ -88,21 +89,19 @@ function loadProfile() {
 
 export async function init({ profile: root, env }) {
   workbox.init((wb) => () => {
-    if (globalThis.snackbar) {
-      const snackbar = globalThis.snackbar;
-      snackbar.labelText = "Je k dispozici nová verze.";
-      snackbar.timeoutMs = -1;
-      const update = () => {
-        wb.addEventListener("controlling", () => location.reload(), true);
-        wb.messageSkipWaiting();
-      };
-      render(
-        html`
-          <md-text-button slot="action" @click="${update}">AKTUALIZOVAT</md-text-button>`,
-        snackbar,
-      );
-      snackbar.show();
-    }
+    if (!globalThis.snackbar) return;
+    const snackbar = globalThis.snackbar;
+    snackbar.labelText = "Je k dispozici nová verze.";
+    snackbar.timeoutMs = -1;
+    const update = () => {
+      wb.addEventListener("controlling", () => location.reload(), true);
+      wb.messageSkipWaiting();
+    };
+    render(
+      html`<md-text-button slot="action" @click="${update}">AKTUALIZOVAT</md-text-button>`,
+      snackbar,
+    );
+    snackbar.show();
   });
   const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
   state.resetIn(["apiURL"], apiURL);
