@@ -244,8 +244,12 @@ const HOUSING_INPUT_REGEX = /^(cottage|house|tent)\['(.+)'\]\[(\d+)\]$/;
  * @param {HTMLFormElement} formElement
  */
 function handlaFormaSubmita(formElement, { hackers, profile }) {
-  formElement.addEventListener("submit", async (event) => {
-    event.preventDefault();
+  formElement.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    for (const el of formElement.querySelectorAll("button[type='submit']")) {
+      el.disabled = true;
+    }
+    globalThis.showSnackbar("Ukládám tě…");
     const formData = new FormData(formElement);
     const jsonData = {
       year: formData.get("year"),
@@ -277,10 +281,16 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
       });
     }
     sendHousingData(formElement.action, jsonData)
+      .then(() => {
+        globalThis.showSnackbar("Uloženo");
+      })
       .then(() => location.assign("/ubytovani/ulozeno/"))
       .catch((err) => {
         rollbar.error(err);
         alert("Něco se pokazilo:" + err);
+        for (const el of formElement.querySelectorAll("button[type='submit']")) {
+          el.disabled = false;
+        }
       });
   });
 
