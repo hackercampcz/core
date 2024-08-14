@@ -71,13 +71,10 @@ export function attendeesChips(
   },
   params,
 ) {
-  return html`
-    <search style="display: flex; gap: 8px">
+  return html`<search style="display: flex; gap: 8px">
       ${
-    when(
-      view === View.searchAttendees,
-      () =>
-        html`
+    when(view === View.searchAttendees, () =>
+      html`
           <form style="flex-grow: 1">
             <input type="hidden" name="view" value="${View.searchAttendees}">
             <input type="hidden" name="year" value="${year}">
@@ -93,25 +90,18 @@ export function attendeesChips(
               </md-icon-button>
               <md-icon-button
                 slot="trailingicon"
-                href="/admin/?${new URLSearchParams({
-          view: View.attendees,
-          year,
-        })}"
+                href="/admin/?${new URLSearchParams({ view: View.attendees, year })}"
                 title="Zavřít hledání"
               >
                 <md-icon>close</md-icon>
               </md-icon-button>
             </md-outlined-text-field>
           </form>
-        `,
-      () =>
-        html`
+        `, () =>
+      html`
           <div>
             <md-icon-button
-              href="/admin/?${new URLSearchParams({
-          view: View.searchAttendees,
-          year,
-        })}"
+              href="/admin/?${new URLSearchParams({ view: View.searchAttendees, year })}"
             >
               <md-icon>search</md-icon>
             </md-icon-button>
@@ -125,70 +115,69 @@ export function attendeesChips(
           >
             <span class="mdc-evolution-chip-set__chips" role="presentation">
               ${
-          chip({
-            text: "Všichni",
-            count: attendees,
-            selected: view === View.attendees,
-            view: View.attendees,
-            year,
-          })
-        }
+        chip({
+          text: "Všichni",
+          count: attendees,
+          selected: view === View.attendees,
+          view: View.attendees,
+          year,
+        })
+      }
               ${
-          chip({
-            text: "Hackeři",
-            count: hackerAttendees,
-            selected: view === View.hackerAttendees,
-            view: View.hackerAttendees,
-            year,
-          })
-        }
+        chip({
+          text: "Hackeři",
+          count: hackerAttendees,
+          selected: view === View.hackerAttendees,
+          view: View.hackerAttendees,
+          year,
+        })
+      }
               ${
-          chip({
-            text: "Dobrovolníci",
-            count: volunteerAttendees,
-            selected: view === View.volunteerAttendees,
-            view: View.volunteerAttendees,
-            year,
-          })
-        }
+        chip({
+          text: "Dobrovolníci",
+          count: volunteerAttendees,
+          selected: view === View.volunteerAttendees,
+          view: View.volunteerAttendees,
+          year,
+        })
+      }
               ${
-          chip({
-            text: "Ostatní",
-            count: staffAttendees,
-            selected: view === View.staffAttendees,
-            view: View.staffAttendees,
-            year,
-          })
-        }
+        chip({
+          text: "Ostatní",
+          count: staffAttendees,
+          selected: view === View.staffAttendees,
+          view: View.staffAttendees,
+          year,
+        })
+      }
               ${
-          chip({
-            text: "Crew",
-            count: crewAttendees,
-            selected: view === View.crewAttendees,
-            view: View.crewAttendees,
-            year,
-          })
-        }
+        chip({
+          text: "Crew",
+          count: crewAttendees,
+          selected: view === View.crewAttendees,
+          view: View.crewAttendees,
+          year,
+        })
+      }
             </span>
           </div>
           <div>
             <md-icon-button
               title="Zkopírovat statistiky"
               @click="${
-          copyToClipboard([
-            attendees,
-            hackerAttendees,
-            volunteerAttendees,
-            staffAttendees,
-            crewAttendees,
-          ])
-        }"
-            >
+        copyToClipboard([
+          attendees,
+          hackerAttendees,
+          volunteerAttendees,
+          staffAttendees,
+          crewAttendees,
+        ])
+      }">
               <md-icon>content_copy</md-icon></md-icon-button
             ><md-icon-button
               href="https://api.hackercamp.cz/v1/admin/attendees?${new URLSearchParams(
-          { year, type: view, format: "csv", pageSize: 500 },
-        )}"
+        { year, type: view, format: "csv", pageSize: 500 },
+      )}"
               title="Stáhnout CSV"
               aria-label="Stáhnout CSV"
             >
@@ -200,8 +189,7 @@ export function attendeesChips(
               <md-icon>person_add</md-icon></md-icon-button
             >
           </div>
-        `,
-    )
+        `)
   }
     </search>
   `;

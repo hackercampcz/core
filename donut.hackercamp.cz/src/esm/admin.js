@@ -10,9 +10,7 @@ import "@material/web/textfield/filled-text-field.js";
 import { defAtom, updateAsTransaction } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import { Action, dispatchAction, Endpoint, executeCommand, getDialog, View } from "./admin/common.js";
-import { renderEventForm } from "./event-form.js";
-import { instatializeDates } from "./lib/object.js";
-import { getContact, getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
+import { getContact, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop, renderScheduler } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
@@ -263,35 +261,6 @@ async function renderModalDialog(name) {
       },
     });
   });
-}
-
-async function showEditEventModalDialog(event, { editEvent }) {
-  const { campStartAt, campEndAt, apiHost, data } = state.deref();
-  const root = document.getElementById("program-modal-root");
-  renderEventForm(root, {
-    apiHost,
-    profile: getSlackProfile(),
-    lineupId: event.lineup,
-    // header: adminEditEventHeaderTemplate(),
-    campStartAt,
-    campEndAt,
-    preferredTime: new Date(event.startAt),
-    hijackHacker: true,
-    events: instatializeDates(await data),
-    selectedTopic: event.topic,
-    editingEvent: event,
-    onEventSubmit(e) {
-      e.preventDefault(); // super important here
-      const data = new FormData(e.target);
-      const json = Object.fromEntries(data.entries());
-      editEvent(event._id, json).catch((error) => {
-        console.error(error);
-        window.snackbar.labelText = error.message;
-        window.snackbar.show();
-      });
-    },
-  });
-  showModalDialog("program-modal");
 }
 
 const registrationViews = new Set([
