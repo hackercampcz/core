@@ -21,7 +21,7 @@ async function getHousing(year) {
     hitsPerPage: 500,
   });
   return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
-    ProjectionExpression: "slackID, #name, company, housing, housingPlacement",
+    ProjectionExpression: "slackID, #name, company, housing, housingPlacement, ticketType",
     ExpressionAttributeNames: { "#name": "name" },
   });
 }
