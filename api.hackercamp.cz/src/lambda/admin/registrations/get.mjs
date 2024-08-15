@@ -1,7 +1,7 @@
 import { BatchGetItemCommand, DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { partition } from "@thi.ng/transducers";
-import createSearchClient from "algoliasearch";
+import { liteClient } from "algoliasearch/lite";
 import { resultsCount } from "../../algolia.mjs";
 import { getHeader } from "../../http.mjs";
 import { formatResponse } from "../csv.mjs";
@@ -80,7 +80,7 @@ function findDuplicates(arr) {
  */
 async function getRegistrations(query, tag, year, page, pageSize, { allYears }) {
   const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
-  const client = createSearchClient(algolia_app_id, algolia_search_key);
+  const client = liteClient(algolia_app_id, algolia_search_key);
 
   console.log({
     event: "Loading registrations",
@@ -92,26 +92,28 @@ async function getRegistrations(query, tag, year, page, pageSize, { allYears }) 
     allYears,
   });
 
-  const { results } = await client.multipleQueries([
-    {
-      query,
-      indexName: algolia_index_name,
-      params: {
-        attributesToRetrieve: ["year", "email"],
-        tagFilters: [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(
-          Boolean,
-        ),
-        hitsPerPage: pageSize,
-        page,
+  const { results } = await client.search({
+    requests: [
+      {
+        query,
+        indexName: algolia_index_name,
+        params: {
+          attributesToRetrieve: ["year", "email"],
+          tagFilters: [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(
+            Boolean,
+          ),
+          hitsPerPage: pageSize,
+          page,
+        },
       },
-    },
-    resultsCount(algolia_index_name, year, "paid"),
-    resultsCount(algolia_index_name, year, "invoiced"),
-    resultsCount(algolia_index_name, year, "confirmed"),
-    resultsCount(algolia_index_name, year, "waitingList"),
-    resultsCount(algolia_index_name, year, "volunteer"),
-    resultsCount(algolia_index_name, year, "staff"),
-  ]);
+      resultsCount(algolia_index_name, year, "paid"),
+      resultsCount(algolia_index_name, year, "invoiced"),
+      resultsCount(algolia_index_name, year, "confirmed"),
+      resultsCount(algolia_index_name, year, "waitingList"),
+      resultsCount(algolia_index_name, year, "volunteer"),
+      resultsCount(algolia_index_name, year, "staff"),
+    ],
+  });
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
   const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map(

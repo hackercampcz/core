@@ -1,6 +1,6 @@
 import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import createSearchClient from "algoliasearch";
+import { liteClient } from "algoliasearch/lite";
 import { getItemsFromDB } from "../attendees.js";
 import { errorResponse, getHeader, response, withCORS } from "../http.mjs";
 import Rollbar from "../rollbar.mjs";
@@ -14,12 +14,15 @@ const rollbar = Rollbar.init({ lambdaName: "attendees" });
 
 async function getAttendees(dynamo, year) {
   const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
-  const client = createSearchClient(algolia_app_id, algolia_search_key);
-  const index = client.initIndex(algolia_index_name);
-  const { hits } = await index.search("", {
-    attributesToRetrieve: ["year", "slackID"],
-    tagFilters: [year.toString()],
-    hitsPerPage: 500,
+  const client = liteClient(algolia_app_id, algolia_search_key);
+  const { results: [{ hits }] } = await client.search({
+    requests: [{
+      indexName: algolia_index_name,
+      query: "",
+      attributesToRetrieve: ["year", "slackID"],
+      tagFilters: [year.toString()],
+      hitsPerPage: 500,
+    }],
   });
 
   return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {

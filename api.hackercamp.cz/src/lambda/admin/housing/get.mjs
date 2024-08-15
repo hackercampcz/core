@@ -1,5 +1,5 @@
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import createSearchClient from "algoliasearch";
+import { liteClient } from "algoliasearch/lite";
 import { getItemsFromDB } from "../../attendees.js";
 import { notFound, response } from "../../http.mjs";
 
@@ -13,12 +13,15 @@ const dynamo = new DynamoDBClient({});
 async function getHousing(year) {
   console.log("Loading housing", { year });
   const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
-  const client = createSearchClient(algolia_app_id, algolia_search_key);
-  const index = client.initIndex(algolia_index_name);
-  const { hits } = await index.search("", {
-    attributesToRetrieve: ["year", "slackID"],
-    tagFilters: [year.toString()],
-    hitsPerPage: 500,
+  const client = liteClient(algolia_app_id, algolia_search_key);
+  const { results: [{ hits }] } = await client.search({
+    requests: [{
+      indexName: algolia_index_name,
+      query: "",
+      attributesToRetrieve: ["year", "slackID"],
+      tagFilters: [year.toString()],
+      hitsPerPage: 500,
+    }],
   });
   return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
     ProjectionExpression: "slackID, #name, company, housing, housingPlacement, ticketType",
