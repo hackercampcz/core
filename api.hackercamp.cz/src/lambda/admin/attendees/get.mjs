@@ -31,17 +31,15 @@ async function getAttendees(query, tag, year, page, pageSize, { allYears }) {
       {
         query,
         indexName: algolia_index_name,
-        params: {
-          attributesToRetrieve: ["year", "slackID"],
-          tagFilters: [
-            allYears ? null : year.toString(),
-            tag === "searchAttendees" || tag === "attendees"
-              ? null
-              : tag.replace("Attendees", ""),
-          ].filter(Boolean),
-          hitsPerPage: pageSize,
-          page,
-        },
+        attributesToRetrieve: ["year", "slackID"],
+        tagFilters: [
+          allYears ? null : year.toString(),
+          tag === "searchAttendees" || tag === "attendees"
+            ? null
+            : tag.replace("Attendees", ""),
+        ].filter(Boolean),
+        hitsPerPage: pageSize,
+        page,
       },
       resultsCount(algolia_index_name, year, null),
       resultsCount(algolia_index_name, year, "hacker"),

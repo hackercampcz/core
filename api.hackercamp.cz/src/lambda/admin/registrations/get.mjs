@@ -95,16 +95,14 @@ async function getRegistrations(query, tag, year, page, pageSize, { allYears }) 
   const { results } = await client.search({
     requests: [
       {
-        query,
         indexName: algolia_index_name,
-        params: {
-          attributesToRetrieve: ["year", "email"],
-          tagFilters: [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(
-            Boolean,
-          ),
-          hitsPerPage: pageSize,
-          page,
-        },
+        query,
+        attributesToRetrieve: ["year", "email"],
+        tagFilters: [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(
+          Boolean,
+        ),
+        hitsPerPage: pageSize,
+        page,
       },
       resultsCount(algolia_index_name, year, "paid"),
       resultsCount(algolia_index_name, year, "invoiced"),
