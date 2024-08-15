@@ -3,7 +3,7 @@ import pathConfig from "./path-config.json" with { type: "json" };
 /** @typedef {import("@types/nunjucks").Environment} Environment */
 
 export default {
-  images: true,
+  images: false,
   cloudinary: true,
   fonts: true,
   svgSprite: true,
