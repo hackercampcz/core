@@ -28,7 +28,7 @@ async function getAttendee(slackID, year) {
 async function imageChanged(event) {
   rollbar.configure({ payload: { event } });
   const { year, slack_bot_token: token } = process.env;
-  console.log({ event: "updated contact", records: event.Records });
+  console.log({ event: "updated contact", records: event.Records.map(x => x.dynamodb) });
   const changedImages = event.Records.filter(
     (x) => x.eventName === "MODIFY",
   )
