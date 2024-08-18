@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20240815.0",
-    "@csstools/postcss-gamut-mapping": "2.0.1",
+    "@csstools/postcss-gamut-mapping": "2.0.2",
     "@types/w3c-web-nfc": "^1.0.4",
     "material-icons": "1.13.12",
     "open-props": "1.7.5",
