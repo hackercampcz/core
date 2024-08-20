@@ -12,7 +12,7 @@ async function onUrlVerification({ challenge }) {
   return response({ challenge });
 }
 
-async function enqueueHandler(event, payload) {
+async function enqueueHandler(event, payload, delay) {
   console.log({
     event: "Enqueue handler",
     eventType: event,
@@ -22,6 +22,7 @@ async function enqueueHandler(event, payload) {
     new SendMessageCommand({
       QueueUrl: process.env.slack_queue_url,
       MessageBody: JSON.stringify({ event, payload }),
+      DelaySeconds: delay,
     }),
   );
   return resp;
@@ -35,7 +36,10 @@ function dispatchByType(event) {
     case "team_join":
       return enqueueHandler("team-join", payload).then(() => accepted());
     case "user_profile_changed":
-      return enqueueHandler("user-profile-changed", payload).then(() => accepted());
+      // Delay user profile change, because it can occur before `team-join` in some circumstances
+      // and we can lose this change due to race condition (contact or attendee doesn't exist yet)
+      // so it is better to wait a minute with this
+      return enqueueHandler("user-profile-changed", payload, 60).then(() => accepted());
     default:
       console.log({ event: "Unknown event", payload: event });
       return Promise.resolve(unprocessableEntity());
