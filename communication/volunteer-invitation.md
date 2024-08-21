@@ -23,7 +23,7 @@ nebo tě baví být ve víru akce a výpomoc v rámci konání HC je pro tebe to
 O co bych vás teď poprosili?
 
 1. Pojedeš s námi jako dobrovolník na příští Hacker Camp? (29. 8.- 1. 9. 2024).
-   **Prosím [vyplň nám tento formulář](https://www.hackercamp.cz/registrace/?volunteer=1) do 30. 4. 2024.**
+   **Prosím [vyplň nám tento formulář](https://hckr.camp/r/dobrovolnik) do 30. 4. 2024.**
    Potom začneme oslovovat další dobrovolníky (zájemce máme a počet máme limitovaný).
    Pokud rovnou víš, že nepojedeš, stačí vyplnit na linku, nebo mi prosím napiš info obratem na tento e-mail.
    Pokud máš ke svojí účasti dotazy, určitě se na mě obrať.

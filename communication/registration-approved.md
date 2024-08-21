@@ -14,7 +14,7 @@ Pokud nemáš platbu faktur pod palcem, zkus na ni zatlačit.
 Protože až se zaplacením Faktury Ti přijde pozvánka na Slack. Pokud ji pod palcem máš
 a nevyplnil/a jsi fakturační údaje (alespoň adresu), tak je prosím doplň.
 
-A Slack je důležitý. **Bez [Hacker Camp Slacku](https://hackercampworkspace.slack.com/) se rozhodně neobejdeš!**
+A Slack je důležitý. **Bez [Hacker Camp Slacku](https://hckr.camp/slack) se rozhodně neobejdeš!**
 
 Pozvánka na Slack ti přistane na mail po uhrazení faktury.
 Pozvání stačí přijmout a přidat se k nám.
@@ -23,8 +23,8 @@ Kromě sledování aktuálního dění, informací a řešení otázek, co tě m
 totiž Slack slouží jako tvůj identifikátor. Je potřeba pro přihlášení se do zóny
 určené pouze táborníkům.
 
-Tam si budeš moct [zobrazit profil](https://donut.hackercamp.cz/) svůj
-i [dalších táborníků](https://donut.hackercamp.cz/hackers/), ale hlavně **vybrat konkrétní postel**
+Tam si budeš moct [zobrazit profil](https://donut.hckr.camp/) svůj
+i [dalších táborníků](https://donut.hckr.camp/hackers/), ale hlavně **vybrat konkrétní postel**
 a uložit se dle svých preferencí a kapacit Sobeňáku. Stejně tak tam budeš moct **nabídnout**
 nějakou svoji přednášku, workshop, sportovní aktivitu, nebo jinou vychytávku,
 co sis pro táborníky připravil – a navíc ji budeš moct kdykoliv online upravit –
@@ -37,13 +37,13 @@ Pokud si bereš vlastní stan, karavan, či auto na spaní, tak víš přesně,
 kde hlavu složíš – teda pokud vůbec budeš čas na campu trávit spánkem.
 
 Pokud chceš bydlení pod střechou, nebo potřebuješ stan od nás,
-vyber si konkrétní místo a ulož se. Tohle je [tvůj kouzelný link](https://donut.hackercamp.cz/) :)
-(A nezapomeň se přihlásit do [Hacker Camp workspacu na Slacku](https://hackercampworkspace.slack.com/),
+vyber si konkrétní místo a ulož se. Tohle je [tvůj kouzelný link](https://donut.hckr.camp/) :)
+(A nezapomeň se přihlásit do [Hacker Camp workspacu na Slacku](https://hckr.camp/slack),
 jinak Tě to dál nepustí :))
 
 Ubytko si hlídá Pája Verflová. Pokud nebudeš mít týden před kempem booklou svoji postel,
 buď tě bude nahánět, nebo ti prostě vybere volnou postel.
-Kde spíš si vždycky můžeš zkouknout [u sebe na profilu](https://donut.hackercamp.cz/)
+Kde spíš si vždycky můžeš zkouknout [u sebe na profilu](https://donut.hckr.camp/)
 a případně i upravit.
 
 **Jak se zapojím do programu?**
@@ -92,7 +92,7 @@ Vidíme se ve čtvrtek v pozdním odpoledni na Sobeňáku (začínat budeme cca
 (střízlivět, u čehož nám můžeš pomoci s bouráním tábora:))
 
 Všechny další věci, na které tenhle mail neodpovídá najdeš
-[na webu v FAQs](https://www.hackercamp.cz/faq/). Pokud by ti tohle info ještě nestačilo,
+[na webu ve FAQs](https://hckr.camp/faq/). Pokud by ti tohle info ještě nestačilo,
 tak nám určitě napiš. Na Slack, na mail. Nebo volej.
 
 Těšíme se na viděnou na Sobeňáku, táborníku!

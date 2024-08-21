@@ -11,10 +11,13 @@ Na Sobeňák vyraž ve čtvrtek **29. 8. 2024** a návrat domů si ideálně dom
 Víkend na konci března jsme strávili plánováním a přípravami dalšího ročníku.
 A i letos se máte na co těšit :) My se teda těšíme moc, a to hlavně na vás!
 No, a abyste mohli přijet, **nesmíte se zapomenout registrovat!** Jako hackeři, co už na campu byli,
-se prosím **[přihlašujte přes donut](https://donut.hackercamp.cz/registrace/)**, aka přes náš registrovaný prostor.
+se prosím **[přihlašujte přes donut](https://donut.hckr.camp/registrace/)**, aka přes náš registrovaný prostor.
 
 - Táborníkům držíme místa přednostně. V dubnu odbavujeme jen hackery!
-- Nováčky, a to včetně těch, které můžeš pozvat i ty, (pokud se jim camp bude líbit a ty se za ně zaručíš, že atmošku campu ještě víc obohatí), budeme v dubnu dávat na waiting list a odbavovat je až od května. Připomínáme, že o nováčcích se dozvíme přes [registraci na webu](https://www.hackercamp.cz/registrace/), nebo když jim pošleš **svůj zvací link, který najdeš, v [donutu](https://donut.hackercamp.cz/)**.
+- Nováčky, a to včetně těch, které můžeš pozvat i ty, (pokud se jim camp bude líbit a ty se za ně zaručíš,
+  že atmošku campu ještě víc obohatí), budeme v dubnu dávat na waiting list a odbavovat je až od května.
+  Připomínáme, že o nováčcích se dozvíme přes [registraci na webu](https://hckr.camp/registrace/), nebo když jim
+  pošleš **svůj zvací link, který najdeš, v [donutu](https://donut.hckr.camp/)**.
 
 Kapacita campu je opět omezená. Příjemnou atmosféru prostě dělá jen omezený počet super lidí a taky víme,
 že areál prostě není nafukovací :)
@@ -38,17 +41,23 @@ Ale i tak nás dobíhají vyšší náklady. Proto jsme museli pro letošek cenu
 Zároveň si uvědomujeme, že aktuální doba není snadná pro nikoho, obzvlášť v tech firmách…
 Tak jsem se rozhodli pro kompromis:
 
-- **Všichni hackeři, kteří s námi už na campu někdy byli a svůj vstup nám do konce června i zaplatí, mají vstup za 6 000 Kč jako loni.** Nemusíte pro to dělat nic speciálního. Registrace přes donut stačí. Ten totiž pozná, že už jsi táborník s minimálně jedním kempovým zářezem. Takže pokud potřebujete co nejnižší vstupné, neváhejte a registrujte se ještě dneska. **Včasná platba vstupného ušetří tisícovku.**
-- **Ti, co s námi byli na všech třech předchozích ročnících**, si za svoji přízeň campu vysloužili také tuhle sníženou cenovku až do posledního srpnového dne. Moc díky, že s námi pořád jste. Vážíme si toho a doufáme, že se vidíme i letos :)
-- NGOs cenovku pro ty, kdo si nemůžou dovolit za vstup zaplatit hacker vstupné, necháváme stejnou. Fakt chceme na akci diverzitu a chceme na campu i studenty, nebo ty, kdo v nezisku pracují naplno.
-- Pokud si to naopak dovolit můžete a máte zlaté srdce, co nejen pomůže dorovnat právě vstupenku pro lidi z nezisku nebo studenty, můžete si vyzkoušet být pro letošek Patrony campu :) Můžeme už teď slíbit, že právě patroni od nás letos dostanou ještě jedno malé poděkování navíc. Ale víc už neprozradíme. Počkejte si na camp :)
+- **Všichni hackeři, kteří s námi už na campu někdy byli a svůj vstup nám do konce června i zaplatí, mají vstup za 6 000 Kč jako loni.**
+  Nemusíte pro to dělat nic speciálního. Registrace přes donut stačí. Ten totiž pozná, že už jsi táborník s minimálně jedním kempovým zářezem.
+  Takže pokud potřebujete co nejnižší vstupné, neváhejte a registrujte se ještě dneska. **Včasná platba vstupného ušetří tisícovku.**
+- **Ti, co s námi byli na všech třech předchozích ročnících**, si za svoji přízeň campu vysloužili také tuhle sníženou
+  cenovku až do posledního srpnového dne. Moc díky, že s námi pořád jste. Vážíme si toho a doufáme, že se vidíme i letos :)
+- NGOs cenovku pro ty, kdo si nemůžou dovolit za vstup zaplatit hacker vstupné, necháváme stejnou. Fakt chceme na
+  akci diverzitu a chceme na campu i studenty, nebo ty, kdo v nezisku pracují naplno.
+- Pokud si to naopak dovolit můžete a máte zlaté srdce, co nejen pomůže dorovnat právě vstupenku pro lidi
+  z nezisku nebo studenty, můžete si vyzkoušet být pro letošek Patrony campu :) Můžeme už teď slíbit, že právě patroni
+  od nás letos dostanou ještě jedno malé poděkování navíc. Ale víc už neprozradíme. Počkejte si na camp :)
 
 Takže s registracemi ani platbami neváhejte!
 Nezapomeňte, že můžete s sebou vzít kámoše, co nám obohatí camp.
 Buďte ve slacku, kde můžete kromě jiného sledovat i [#kdo_prijede_na_camp](https://hackercampworkspace.slack.com/archives/C026KB0G8V8).
 
 My se každopádně těšíme na viděnou :) Pokud máš jakékoliv otázky, které neodpovídají naše
-[FAQs](https://www.hackercamp.cz/faq/) na [webu](https://www.hackercamp.cz/), napiš nám.
+[FAQs](https://hckr.camp/faq/) na [webu](https://www.hackercamp.cz/), napiš nám.
 Jsme na slacku i mailech a odpovídáme rychle :)
 
 Takže na Sobeňáku na konci srpna?! :)

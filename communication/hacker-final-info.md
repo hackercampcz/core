@@ -10,10 +10,10 @@ Tak už je to tady!
 Zítra (ve čtvrtek) v 17.00 to všechno vypukne a my se už nemůžeme dočkat.
 
 **Posíláme poslední mail, kde najdeš snad všechno**, co by tě mohlo zajímat :) Na začátek to nejdůležitější,
-**rozhodně nesmíš chybět ve [slacku](https://join.slack.com/t/hackercampworkspace/shared_invite/zt-v5o05yts-vxo7SIaPg0oXKCRlqUww4g).** Tam se řeší všechny změny, announcementy a vše podstané.
+**rozhodně nesmíš chybět ve [slacku](https://hckr.camp/join/slack).** Tam se řeší všechny změny, announcementy a vše podstané.
 **Může se hodit si [donut.hackercamp.cz](https://donut.hackercamp.cz/), slack i [program](https://hackercampworkspace.slack.com/archives/C01V4Q0AZ0U/p1693293705164429) stáhnout do mobilu ještě než vyrazíte na Sobeňák.**
 
-A než se začneš ptát, vřele doporučujeme mít pročteno [FAQs](https://www.hackercamp.cz/faq/) na našem webu
+A než se začneš ptát, vřele doporučujeme mít pročteno [FAQs](https://hckr.camp/faq/) na našem webu
 (prosíme pejsky nechte doma, děti dle uvážení, ale raději taky :) - program tu pro ně nemáme)
 
 Co tedy potřebuješ vědět?
@@ -36,7 +36,7 @@ Co tedy potřebuješ vědět?
    - pokud jsi chtěl/a jiné ubytování, budeme tu v chatkách či malých budovách, počítej s táborovým stylem (více lidí pohromadě, palandy). Lůžkoviny (povlečení, peřiny) budou na místě zajištěny. **Pokud ti ale bývá zima, přibal si spacák, nebo teplé oblečení, nebo oboje! V noci bude chladno :) A jako to myslíme vážně. Teplé oblečení sebou, zimomřivky** (předpověď říká 8 - 10 stupňů v noci).
    - pokud si ještě nejsi jistý svým ubytováním, koukni na [https://donut.hackercamp.cz/](https://donut.hackercamp.cz/), v případě velké nutnosti můžeš i kontaktovat na slacku Páju Verflovou.
 5. **Program**
-   - aktuální (a neustále aktualizovaný) program [najdeš zde](https://docs.google.com/spreadsheets/d/1jd_0vEHhLxoIfV9PxYmyQEAAjTQlhdxTAgyTqJ4n3qI/edit?usp=sharing), dále sleduj kanál na [slacku #Program](https://hackercampworkspace.slack.com/archives/C01URRT4Z8W)
+   - aktuální (a neustále aktualizovaný) program [najdeš zde](https://donut.hckr.camp/program/2024), dále sleduj kanál na [slacku #Program](https://hackercampworkspace.slack.com/archives/C01URRT4Z8W)
    - můžeš si program stáhnout jako google kalendář (přihlaš se k odběru kalendáře s ID: **c_afd9546ec33f93662ac0338da6d23a6b7daa6b5a1cc181afabaf6a8b11691b3a@group.calendar.google.com**, nebo si jeho aktuální verzi přidat [iCalem](mailto:c_afd9546ec33f93662ac0338da6d23a6b7daa6b5a1cc181afabaf6a8b11691b3a@group.calendar.google.com). Návod a další podrobnosti [najdeš na slacku](https://hackercampworkspace.slack.com/archives/C01V4Q0AZ0U/p1693293705164429)
 6. **Jídlo a pití**
    - po celou dobu konání bude na campu k dispozici veganská, vegetariánská i masová variantu jídla :) Pokud máš nějakou další special dietu, prosím vem si i svoje jídlo.
