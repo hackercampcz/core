@@ -79,7 +79,7 @@ export async function auth(event) {
       const options = {
         audience: "https://donut.hackercamp.cz/",
         issuer: "https://api.hackercamp.cz/",
-        expiresIn: "6h",
+        expiresIn: "14 days",
       };
       const idToken = signJWT(payload, process.env["private_key"], options);
       delete profile.ok;
@@ -96,7 +96,7 @@ export async function auth(event) {
           },
           {
             "Set-Cookie":
-              `hc-id=${idToken}; Max-Age=216000; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
+              `hc-id=${idToken}; Max-Age=1209600; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`,
           },
         ),
       );
