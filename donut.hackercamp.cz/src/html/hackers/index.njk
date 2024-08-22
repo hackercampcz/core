@@ -91,6 +91,7 @@
             {% set slug = hacker[0] %}
             {% set profile = hacker[1] %}
             {% set attendee = hacker[2] %}
+            {% if attendee.slackID != "U07H6JWHEJU" %}
             {% if attendee.ticketType != "crew" %}
               <li class="hc-profile hc-profile--card">
                 <a href="/hackers/{{ slug }}">
@@ -101,6 +102,7 @@
                   </div>
                 </a>
               </li>
+            {% endif %}
             {% endif %}
           {% endfor %}
         </ul>
