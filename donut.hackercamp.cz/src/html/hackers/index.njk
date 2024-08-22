@@ -96,7 +96,7 @@
               <li class="hc-profile hc-profile--card">
                 <a href="/hackers/{{ slug }}">
                   <div>
-                    <img alt="" src="{{ attendee.image }}" width="192" height="192" loading="lazy"/>
+                    <img alt="" src="{{ profile.image_192 }}" srcset="{{ profile.image_192 }} 1x, {{ profile.image_512 }} 2x" width="192" height="192" loading="lazy"/>
                     <span class="hc-profile__name">{{ attendee.name }}</span>
                     <span class="hc-profile__company">{{ attendee.company if attendee.company }}</span>
                   </div>
