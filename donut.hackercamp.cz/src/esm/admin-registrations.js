@@ -657,18 +657,27 @@ export function registrationDetailTemplate({ detail, selectedView }) {
   }
       ${when(detail.invAddress, () => invoiceDetails(detail))}
       ${
-    when(
-      detail.edited,
-      () =>
-        html`
+    when(detail.invoiced, () =>
+      html`
+        <p>
+          Vyfakturováno
+          <strong>${formatDateTime(new Date(detail.invoiced))}</strong>;
+          ID faktury
+          <a href="https://app.fakturoid.cz/hackercampcrew/invoices/${detail.invoice_id}"><code>${detail.invoice_id}</code></a>
+          </p>
+      `)
+  }
+      ${when(detail.paid, () => html`<p>Zaplaceno: ${formatDateTime(new Date(detail.paid))}</p>`)}
+      ${
+    when(detail.edited, () =>
+      html`
         <p>
           Naposledy editováno
           <strong>${formatDateTime(new Date(detail.edited))}</strong>
           administrátorem
           <strong>${detail.editedBy}</strong>
         </p>
-      `,
-    )
+      `)
   }
     </div>
   `;
@@ -817,7 +826,7 @@ function registrationModalDialog({ detail, apiHost }) {
     );
   };
   return html`
-    <form method="post" @submit="${onSubmit}">
+    <form method="dialog" @submit="${onSubmit}">
       <input type="hidden" name="year" value="${detail.year}">
       <div class="group">
         <div class="field">
@@ -863,16 +872,13 @@ function registrationModalDialog({ detail, apiHost }) {
         </div>
       </div>
       ${
-    when(
-      detail.paid,
-      () =>
-        html`
+    when(detail.paid, () =>
+      html`
           <div class="field">
             <label for="paid">Čas zaplacení</label>
             <input id="paid" name="paid" value="${detail.paid}" required>
           </div>
-        `,
-    )
+        `)
   }
       <div class="field">
         <label for="company">Společnost</label>

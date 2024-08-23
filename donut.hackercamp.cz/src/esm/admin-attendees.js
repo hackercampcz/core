@@ -357,6 +357,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
         Doprava:
         <strong>${travel.get(detail.travel) ?? "Ještě si nevybral"}</strong>
       </p>
+      <p>Slack ID: <code>${detail.slackID}</code></p>
       <p>
         NFCtron ID(s):
         ${when(!detail.nfcTronData?.length, () => html`<em>nemá</em>`)}
