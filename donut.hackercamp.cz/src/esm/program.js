@@ -32,7 +32,7 @@ const state = defAtom({
   events: [],
   profile: {},
   year: 0,
-  featureToggles: {},
+  featureToggles: {}
 });
 
 /**
@@ -75,18 +75,8 @@ function makeTick(time) {
 }
 
 function makeDayline(startAt, endAt) {
-  const dayStart = new Date(
-    startAt.getFullYear(),
-    startAt.getMonth(),
-    startAt.getDate(),
-    DAY_START_HOUR,
-  );
-  const dayEnd = new Date(
-    endAt.getFullYear(),
-    endAt.getMonth(),
-    endAt.getDate() + 1,
-    DAY_START_HOUR,
-  );
+  const dayStart = new Date(startAt.getFullYear(), startAt.getMonth(), startAt.getDate(), DAY_START_HOUR);
+  const dayEnd = new Date(endAt.getFullYear(), endAt.getMonth(), endAt.getDate() + 1, DAY_START_HOUR);
   const days = makeTimeline(dayStart, dayEnd, 24 * 60);
   return days;
 }
@@ -136,28 +126,21 @@ function handleLineupsScroll(event) {
   swapIn("visibleDate", () => visibleDate);
 }
 
-function eventTemplate({
-  lineup,
-  event,
-  topicEvents,
-  eventStartAtSlot,
-  eventDurationInSlots,
-  renderAndShowAddEventForm,
-}) {
+function eventTemplate(
+  { lineup, event, topicEvents, eventStartAtSlot, eventDurationInSlots, renderAndShowAddEventForm }
+) {
   const durationInSlots = eventDurationInSlots(event);
   return html`
     ${
-    when(
-      !event.topic,
-      () =>
-        html`<div
+    when(!event.topic, () =>
+      html`<div
           class="${
-          classMap({
-            lineup__event: true,
-            "lineup__event--narrow": durationInSlots === 1 && event.title?.length > 3,
-            [`lineup__event--${event.type}`]: event.type,
-          })
-        }"
+        classMap({
+          lineup__event: true,
+          "lineup__event--narrow": durationInSlots === 1 && event.title?.length > 3,
+          [`lineup__event--${event.type}`]: event.type
+        })
+      }"
           data-lineup=${lineup.id}
           id=${event.id || event._id}
           style=${`
@@ -179,9 +162,8 @@ function eventTemplate({
           </p>
           <div class="people-list">
             ${
-          event.people?.map(
-            (speaker) =>
-              html`
+        event.people?.map((speaker) =>
+          html`
                 <figure class="speaker speaker--photo">
                   <img
                     alt="${speaker.name}"
@@ -190,43 +172,34 @@ function eventTemplate({
                     height="32"
                   />
                 </figure>
-              `,
-          )
-        }
+              `
+        )
+      }
             ${
-          when(
-            event.type === "topic" && event.people?.length,
-            () => html` <figure class="speaker speaker--add">+</figure> `,
-          )
-        }
+        when(event.type === "topic" && event.people?.length, () =>
+          html` <figure class="speaker speaker--add">+</figure> `)
+      }
           </div>
-        </div>`,
-    )
+        </div>`)
   }
     <dialog class="event__detail" id="event-detail-${event.id || event._id}">
       <h1>${event.title}</h1>
       ${
-    when(
-      !event.topic,
-      () =>
-        html`
+    when(!event.topic, () =>
+      html`
           <p>
             ${formatEventTimeInfo(event)}
             <code>${lineup.name}</code><br />
           </p>
-        `,
-    )
+        `)
   }
       ${
-    when(
-      event.type !== "topic",
-      () =>
-        html`
+    when(event.type !== "topic", () =>
+      html`
           <div class="people-list">
             ${
-          event.people?.map(
-            (speaker) =>
-              html` <figure class="speaker speaker--full">
+        event.people?.map((speaker) =>
+          html` <figure class="speaker speaker--full">
                   <img
                     alt="${speaker.name}"
                     src="${speaker.image}"
@@ -235,67 +208,51 @@ function eventTemplate({
                   />
                   <a href=${`/hackers/${speaker.slug}`}>${speaker.name}</a>
                   ${when(speaker.company, () => html`z ${speaker.company}`)}
-                </figure>`,
-          )
-        }
+                </figure>`
+        )
+      }
           </div>
-        `,
-    )
+        `)
   }
 
       <p>${event.description}</p>
-      ${
-    when(
-      event.place,
-      () => html`<p><strong>Kde to bude:</strong> ${event.place}</p>`,
-    )
-  }
+      ${when(event.place, () => html`<p><strong>Kde to bude:</strong> ${event.place}</p>`)}
 
       <div class="people-list">
         ${
-    (topicEvents || []).map(
-      ({ id, _id, title, people = [] }) =>
-        html`
+    (topicEvents || []).map(({ id, _id, title, people = [] }) =>
+      html`
             <figure class="speaker speaker--full">
-              ${
-          people.map(
-            ({ name, image }) => html`<img width="32" height="32" alt=${name} src=${image} />`,
-          )
-        }
+              ${people.map(({ name, image }) => html`<img width="32" height="32" alt=${name} src=${image} />`)}
               <a
                 href="#"
                 @click=${(e) => {
-          e.preventDefault();
+        e.preventDefault();
 
-          showModalDialog(`event-detail-${id || _id}`);
-        }}
+        showModalDialog(`event-detail-${id || _id}`);
+      }}
                 >${title}</a
               >
             </figure>
-          `,
+          `
     )
   }
       </div>
       ${
-    when(
-      event.type === "topic",
-      () =>
-        html`
+    when(event.type === "topic", () =>
+      html`
           <a
             class="hc-link hc-link--decorated"
             style="margin: calc(var(--spacing) / 2) 0; padding: calc(var(--spacing) / 4);"
             @click=${(e) => {
-          e.preventDefault();
-          renderAndShowAddEventForm(lineup.id, {
-            selectedTopic: event.id || event._id,
-          });
-        }}
+        e.preventDefault();
+        renderAndShowAddEventForm(lineup.id, { selectedTopic: event.id || event._id });
+      }}
           >
             Zapojit se
           </a>
           <hr />
-        `,
-    )
+        `)
   }
       <button name="close">Zavřít</button>
     </dialog>
@@ -314,25 +271,12 @@ function topicEvents({ id }, events) {
  * TODO: split me?
  * @param {any} state
  */
-function renderProgram({
-  lineups,
-  campStartAt,
-  campEndAt,
-  events,
-  visibleDate,
-  onLineupsScroll,
-  apiHost,
-  profile,
-}) {
+function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, onLineupsScroll, apiHost, profile }) {
   const eventStartAtSlot = (event) => getSlotNumber(campStartAt, event.startAt);
   const eventDurationInSlots = (event) =>
-    getSlotNumber(campStartAt, event.endAt)
-    - getSlotNumber(campStartAt, event.startAt);
+    getSlotNumber(campStartAt, event.endAt) - getSlotNumber(campStartAt, event.startAt);
 
-  const renderAndShowAddEventForm = (
-    lineupId,
-    { preferredTime, selectedTopic = null } = {},
-  ) => {
+  const renderAndShowAddEventForm = (lineupId, { preferredTime, selectedTopic = null } = {}) => {
     renderEventForm(document.getElementById("add-event-form"), {
       apiHost,
       profile,
@@ -341,7 +285,7 @@ function renderProgram({
       campEndAt,
       preferredTime,
       events,
-      selectedTopic,
+      selectedTopic
     });
     // mby close previous modal here
     showModalDialog("add-event");
@@ -756,43 +700,38 @@ function renderProgram({
       <div class="program__dayline">
         <div class="dayline">
           ${
-    makeDayline(campStartAt, campEndAt).map(
-      (day) =>
-        html`
+    makeDayline(campStartAt, campEndAt).map((day) =>
+      html`
               <a
                 class=${
-          classMap({
-            dayline__tick: true,
-            "dayline__tick--visible": visibleDate.getDate() === day.getDate(),
-          })
-        }
+        classMap({ dayline__tick: true, "dayline__tick--visible": visibleDate.getDate() === day.getDate() })
+      }
                 href="#${day.toISOString()}"
                 @click=${() => {
-          const scrollElement = document.getElementById("lineups");
-          const date = new Date(day);
-          date.setHours(DAY_START_HOUR);
-          scrollToDate(scrollElement, date);
-        }}
+        const scrollElement = document.getElementById("lineups");
+        const date = new Date(day);
+        date.setHours(DAY_START_HOUR);
+        scrollToDate(scrollElement, date);
+      }}
               >
                 ${formatLongDayName(day)}
               </a>
-            `,
+            `
     )
   }
         </div>
       </div>
       <div class="program__lineups" id="lineups" @scroll=${onLineupsScroll}>
         ${
-    lineups.map(
-      (lineup) =>
-        html`
+    lineups.map((lineup) =>
+      html`
             <div class="lineup">
               <div
                 class="lineup__info"
                 data-name=${lineup.name}
                 @click=${() => {
-          showModalDialog(`lineup-detail-${lineup.id}`);
-        }}
+        showModalDialog(`lineup-detail-${lineup.id}`);
+      }}
               >
                 <h2>${lineup.name}</h2>
                 <pre>${lineup.description}</pre>
@@ -800,9 +739,9 @@ function renderProgram({
               <a
                 class="lineup__sticky"
                 @click=${(e) => {
-          e.preventDefault();
-          showModalDialog(`lineup-detail-${lineup.id}`);
-        }}
+        e.preventDefault();
+        showModalDialog(`lineup-detail-${lineup.id}`);
+      }}
                 >${lineup.name}</a
               >
               <dialog class="lineup__detail" id="lineup-detail-${lineup.id}">
@@ -810,65 +749,59 @@ function renderProgram({
                 <p>${lineup.description}</p>
                 <p>${lineup.detail}</p>
                 ${
-          when(
-            lineup.id !== "liorg",
-            () =>
-              html`<a
+        when(lineup.id !== "liorg", () =>
+          html`<a
                       class="hc-link hc-link--decorated"
                       style="padding: calc(var(--spacing) / 4);"
                       @click=${(e) => {
-                e.preventDefault();
-                renderAndShowAddEventForm(lineup.id);
-              }}
+            e.preventDefault();
+            renderAndShowAddEventForm(lineup.id);
+          }}
                     >
                       Zapoj se do programu
-                    </a> `,
-          )
-        }
+                    </a> `)
+      }
                 <hr />
                 <button name="close">Zavřít</button>
               </dialog>
               <div class="lineup__eventsline">
                 ${
-          lineUpEvents(lineup, events).map((event) =>
-            eventTemplate({
-              lineup,
-              event,
-              topicEvents: topicEvents(event, events),
-              eventStartAtSlot,
-              eventDurationInSlots,
-              renderAndShowAddEventForm,
-            })
-          )
-        }
+        lineUpEvents(lineup, events).map((event) =>
+          eventTemplate({
+            lineup,
+            event,
+            topicEvents: topicEvents(event, events),
+            eventStartAtSlot,
+            eventDurationInSlots,
+            renderAndShowAddEventForm
+          })
+        )
+      }
               </div>
               <div class="lineup__timeline">
                 ${
-          makeTimeline(campStartAt, campEndAt, 15).map(
-            (time) =>
-              html`
+        makeTimeline(campStartAt, campEndAt, 15).map((time) =>
+          html`
                     <a
                       class="lineup__slot"
                       ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
                       data-tick=${makeTick(time)}
                       data-day=${formatShortDayName(time)}
                       @click=${(e) => {
-                e.preventDefault();
-                // timezone hotfix
-                time.setHours(time.getHours() + 2);
-                renderAndShowAddEventForm(lineup.id, {
-                  preferredTime: time,
-                });
-              }}
+            e.preventDefault();
+            // timezone hotfix
+            time.setHours(time.getHours() + 2);
+            renderAndShowAddEventForm(lineup.id, { preferredTime: time });
+          }}
                     >
                       &nbsp;
                     </a>
-                  `,
-          )
-        }
+                  `
+        )
+      }
               </div>
             </div>
-          `,
+          `
     )
   }
       </div>
@@ -905,10 +838,7 @@ async function fetchLineups(apiHost) {
   const params = new URLSearchParams({ year });
   // TODO: move to DB/API
   const url = `/program/lineups.json?${params}`;
-  const resp = await fetch(url, {
-    headers: { Accept: "application/json" },
-    credentials: "include",
-  });
+  const resp = await fetch(url, { headers: { Accept: "application/json" }, credentials: "include" });
 
   return resp.json();
 }
@@ -918,10 +848,7 @@ async function fetchEvents(apiHost) {
   const params = new URLSearchParams({ year });
   const endpoint = new URL(`program/?${params}`, apiHost).href;
   const resp = await withAuthHandler(
-    fetch(endpoint, {
-      headers: { Accept: "application/json" },
-      credentials: "include",
-    }),
+    fetch(endpoint, { headers: { Accept: "application/json" }, credentials: "include" }),
     {
       onUnauthenticated() {
         setReturnUrl(location.href);
@@ -929,8 +856,8 @@ async function fetchEvents(apiHost) {
           signOut((path) => new URL(path, apiHost).href);
           reject({ unauthenticated: true });
         });
-      },
-    },
+      }
+    }
   );
   return resp.json();
 }
@@ -939,10 +866,7 @@ function joinTopicPeople(events) {
   const output = structuredClone(events);
   for (const event of output) {
     if (event.type === "topic") {
-      event.people = [
-        ...(event.people || []),
-        ...topicEvents(event, events).flatMap(({ people }) => people),
-      ];
+      event.people = [...(event.people || []), ...topicEvents(event, events).flatMap(({ people }) => people)];
     }
   }
   return output;
@@ -959,16 +883,12 @@ export async function main({ rootElement, env }) {
   initRenderLoop(state, shadow);
 
   transact((x) =>
-    Object.assign(
-      x,
-      {
-        year: env.year,
-        apiHost: env["api-host"],
-        profile: getSlackProfile(),
-        featureToggles: { fullProgram: env["feature-toggle/full-program"] },
-      },
-      schedule.get(env.year),
-    )
+    Object.assign(x, {
+      year: env.year,
+      apiHost: env["api-host"],
+      profile: getSlackProfile(),
+      featureToggles: { fullProgram: env["feature-toggle/full-program"] }
+    }, schedule.get(env.year))
   );
 
   const { campStartAt: startAt, campEndAt: endAt } = state.deref();

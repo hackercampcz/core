@@ -17,10 +17,7 @@ const rollbar = Rollbar.init({ lambdaName: "optout" });
  */
 export async function optout(event) {
   rollbar.configure({ payload: { event } });
-  const withCORS_ = withCORS(
-    ["POST", "OPTIONS"],
-    getHeader(event?.headers, "Origin") ?? "*",
-  );
+  const withCORS_ = withCORS(["POST", "OPTIONS"], getHeader(event?.headers, "Origin") ?? "*");
 
   try {
     const { email, year } = readPayload(event);
@@ -28,19 +25,12 @@ export async function optout(event) {
     await db.send(
       new PutItemCommand({
         TableName: "optouts",
-        Item: marshall(
-          {
-            email,
-            year: parseInt(year, 10),
-            timestamp: new Date().toISOString(),
-          },
-          {
-            convertEmptyValues: true,
-            removeUndefinedValues: true,
-            convertClassInstanceToMap: true,
-          },
-        ),
-      }),
+        Item: marshall({ email, year: parseInt(year, 10), timestamp: new Date().toISOString() }, {
+          convertEmptyValues: true,
+          removeUndefinedValues: true,
+          convertClassInstanceToMap: true
+        })
+      })
     );
     return withCORS_(accepted());
   } catch (err) {

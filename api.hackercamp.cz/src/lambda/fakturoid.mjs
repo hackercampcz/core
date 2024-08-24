@@ -76,18 +76,15 @@ const userAgent = "HackerCamp Donut (team@hackercamp.cz)";
 // }
 export async function createInvoice(data, token) {
   const basic = btoa(`${email}:${token}`);
-  const resp = await fetch(
-    `https://app.fakturoid.cz/api/v2/accounts/${slug}/invoices.json`,
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Basic ${basic}`,
-        "User-Agent": "HackerCamp Donut (team@hackercamp.cz)",
-      },
-      body: JSON.stringify(data),
+  const resp = await fetch(`https://app.fakturoid.cz/api/v2/accounts/${slug}/invoices.json`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Basic ${basic}`,
+      "User-Agent": "HackerCamp Donut (team@hackercamp.cz)"
     },
-  );
+    body: JSON.stringify(data)
+  });
 }
 
 // {
@@ -99,34 +96,28 @@ export async function createInvoice(data, token) {
 // }
 export async function createSubject(data, token) {
   const basic = btoa(`${email}:${token}`);
-  const resp = await fetch(
-    `https://app.fakturoid.cz/api/v2/accounts/${slug}/subjects.json`,
-    {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Basic ${basic}`,
-        "User-Agent": "HackerCamp Donut (team@hackercamp.cz)",
-      },
-      body: JSON.stringify(data),
+  const resp = await fetch(`https://app.fakturoid.cz/api/v2/accounts/${slug}/subjects.json`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Basic ${basic}`,
+      "User-Agent": "HackerCamp Donut (team@hackercamp.cz)"
     },
-  );
+    body: JSON.stringify(data)
+  });
 }
 
 export async function fetchInvoice(token, invoiceId) {
   const basic = btoa(`${email}:${token}`);
-  const resp = await fetch(
-    `https://app.fakturoid.cz/api/v2/accounts/${slug}/invoices/${invoiceId}.json`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: `Basic ${basic}`,
-        "Content-Type": "application/json",
-        "User-Agent": userAgent,
-      },
-    },
-  );
+  const resp = await fetch(`https://app.fakturoid.cz/api/v2/accounts/${slug}/invoices/${invoiceId}.json`, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: `Basic ${basic}`,
+      "Content-Type": "application/json",
+      "User-Agent": userAgent
+    }
+  });
   if (!resp.ok) {
     throw new Error(resp.statusText);
   }

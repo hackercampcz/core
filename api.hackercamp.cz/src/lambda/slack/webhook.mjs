@@ -13,17 +13,13 @@ async function onUrlVerification({ challenge }) {
 }
 
 async function enqueueHandler(event, payload, delay) {
-  console.log({
-    event: "Enqueue handler",
-    eventType: event,
-    email: payload.user?.profile?.email,
-  });
+  console.log({ event: "Enqueue handler", eventType: event, email: payload.user?.profile?.email });
   const resp = await queue.send(
     new SendMessageCommand({
       QueueUrl: process.env.slack_queue_url,
       MessageBody: JSON.stringify({ event, payload }),
-      DelaySeconds: delay,
-    }),
+      DelaySeconds: delay
+    })
   );
   return resp;
 }
@@ -52,10 +48,7 @@ function dispatchByType(event) {
  */
 export async function slackWebhook(event) {
   rollbar.configure({ payload: { event } });
-  const withCORS_ = withCORS(
-    ["POST", "OPTIONS"],
-    getHeader(event.headers, "Origin"),
-  );
+  const withCORS_ = withCORS(["POST", "OPTIONS"], getHeader(event.headers, "Origin"));
   try {
     const payload = readPayload(event);
     // TODO: validate webhook token

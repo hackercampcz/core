@@ -17,10 +17,7 @@ const rollbar = Rollbar.init({ lambdaName: "postmark-webhook" });
  */
 export async function postmarkWebhook(event) {
   rollbar.configure({ payload: { event } });
-  const withCORS_ = withCORS(
-    ["POST", "OPTIONS"],
-    getHeader(event.headers, "Origin"),
-  );
+  const withCORS_ = withCORS(["POST", "OPTIONS"], getHeader(event.headers, "Origin"));
   try {
     const [, token] = getHeader(event.headers, "Authorization").split(" ");
     if (token !== process.env.token) {
@@ -28,12 +25,7 @@ export async function postmarkWebhook(event) {
     }
 
     const payload = readPayload(event);
-    await db.send(
-      new PutItemCommand({
-        TableName: process.env.db_table_postmark,
-        Item: marshall(payload),
-      }),
-    );
+    await db.send(new PutItemCommand({ TableName: process.env.db_table_postmark, Item: marshall(payload) }));
 
     return withCORS_(accepted());
   } catch (err) {

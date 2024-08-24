@@ -1,14 +1,7 @@
 import { withAuthHandler } from "./remoting.js";
 
-export async function signIn(
-  { idToken, slackProfile, slackToken, slackAccessToken },
-  apiURL,
-) {
-  const contact = await getContactFromDb(
-    slackProfile.id ?? slackProfile.sub,
-    slackProfile.email,
-    apiURL,
-  );
+export async function signIn({ idToken, slackProfile, slackToken, slackAccessToken }, apiURL) {
+  const contact = await getContactFromDb(slackProfile.id ?? slackProfile.sub, slackProfile.email, apiURL);
   setContact(contact);
   localStorage.setItem("hc:id_token", idToken);
   localStorage.setItem("slack:id_token", slackToken);
@@ -29,20 +22,15 @@ export function signOut(apiURL) {
 
 async function getContactFromDb(slackID, email, apiUrl) {
   const params = new URLSearchParams({ slackID, email });
-  const resp = await withAuthHandler(
-    fetch(apiUrl(`contacts?${params}`), {
-      credentials: "include",
-    }),
-    {
-      onUnauthenticated() {
-        setReturnUrl(location.href);
-        return new Promise((resolve, reject) => {
-          signOut(apiUrl);
-          reject({ unauthenticated: true });
-        });
-      },
-    },
-  );
+  const resp = await withAuthHandler(fetch(apiUrl(`contacts?${params}`), { credentials: "include" }), {
+    onUnauthenticated() {
+      setReturnUrl(location.href);
+      return new Promise((resolve, reject) => {
+        signOut(apiUrl);
+        reject({ unauthenticated: true });
+      });
+    }
+  });
   return resp.json();
 }
 

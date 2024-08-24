@@ -31,7 +31,7 @@ const state = defAtom({
   campStartAt: new Date(),
   campEndAt: new Date(),
   selection: new Set(),
-  nfcTronData: new Set(),
+  nfcTronData: new Set()
 });
 
 /**
@@ -61,18 +61,12 @@ if (globalThis.__DEVELOPMENT__) {
  * @returns {Promise<void>}
  */
 export function createOptOut(email, year, apiHost) {
-  return executeCommand(apiHost, Endpoint.registrations, "optout", {
-    email,
-    year,
-  }).then(() => location.reload());
+  return executeCommand(apiHost, Endpoint.registrations, "optout", { email, year }).then(() => location.reload());
 }
 
 function optout(email) {
   const { apiHost, year } = state.deref();
-  return (
-    confirm("Opravdu chceš táborníka vyřadit?")
-    && createOptOut(email, year, apiHost)
-  );
+  return (confirm("Opravdu chceš táborníka vyřadit?") && createOptOut(email, year, apiHost));
 }
 
 /**
@@ -83,45 +77,29 @@ function optout(email) {
  * @returns {Promise<void>}
  */
 export function createOptIn(email, year, slackID, apiHost) {
-  return executeCommand(apiHost, Endpoint.registrations, "approve", {
-    email,
-    referral: slackID,
-    year,
-  }).then(() => location.reload());
+  return executeCommand(apiHost, Endpoint.registrations, "approve", { email, referral: slackID, year }).then(() =>
+    location.reload()
+  );
 }
 
 function optin(email) {
   const { apiHost, year, contact } = state.deref();
   if (!contact) {
-    return alert(
-      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.",
-    );
+    return alert("Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.");
   }
-  return (
-    confirm("Opravdu chceš táborníka potvrdit?")
-    && createOptIn(email, year, contact.slackID, apiHost)
-  );
+  return (confirm("Opravdu chceš táborníka potvrdit?") && createOptIn(email, year, contact.slackID, apiHost));
 }
 
 function moveToTrash(email, year, slackID, apiHost) {
-  return executeCommand(apiHost, Endpoint.registrations, "move-to-trash", {
-    email,
-    year,
-    slackID,
-  });
+  return executeCommand(apiHost, Endpoint.registrations, "move-to-trash", { email, year, slackID });
 }
 
 function trashRegistration(email) {
   const { apiHost, year, contact } = state.deref();
   if (!contact) {
-    return alert(
-      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.",
-    );
+    return alert("Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.");
   }
-  return (
-    confirm("Opravdu chceš táborníka smáznout?")
-    && moveToTrash(email, year, contact.slackID, apiHost)
-  );
+  return (confirm("Opravdu chceš táborníka smáznout?") && moveToTrash(email, year, contact.slackID, apiHost));
 }
 
 /**
@@ -134,7 +112,7 @@ function trashRegistration(email) {
 export function markAsInvoiced(emails, year, invoiceId, apiHost) {
   return executeCommand(apiHost, Endpoint.registrations, "invoiced", {
     registrations: emails.map((email) => ({ email, year })),
-    invoiceId,
+    invoiceId
   }).then(() => location.reload());
 }
 
@@ -153,15 +131,13 @@ function approveSelectedVolunteers() {
   const { apiHost, year, selection, contact } = state.deref();
 
   if (!contact) {
-    return alert(
-      "Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.",
-    );
+    return alert("Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.");
   }
 
   const emails = Array.from(selection);
   return executeCommand(apiHost, Endpoint.registrations, "approveVolunteer", {
     registrations: emails.map((email) => ({ email, year })),
-    referral: contact.slackID,
+    referral: contact.slackID
   }).then(() => location.reload());
 }
 
@@ -173,11 +149,7 @@ function approveSelectedVolunteers() {
  * @returns {Promise<void>}
  */
 export function markEventAsRemoved(event_id, year, people, apiHost) {
-  return executeCommand(apiHost, Endpoint.program, "delete", {
-    event_id,
-    people,
-    year,
-  }).then(() => location.reload());
+  return executeCommand(apiHost, Endpoint.program, "delete", { event_id, people, year }).then(() => location.reload());
 }
 
 /**
@@ -188,19 +160,14 @@ export function markEventAsRemoved(event_id, year, people, apiHost) {
  * @returns {Promise<void>}
  */
 export function saveEditedEvent(event_id, year, updates, apiHost) {
-  return executeCommand(apiHost, Endpoint.program, "edit", {
-    event_id,
-    year,
-    ...updates,
-  }).then(() => location.reload());
+  return executeCommand(apiHost, Endpoint.program, "edit", { event_id, year, ...updates }).then(() =>
+    location.reload()
+  );
 }
 
 function deleteEvent(event_id, people) {
   const { apiHost, year } = state.deref();
-  return (
-    confirm("Opravdu chceš event smazat?")
-    && markEventAsRemoved(event_id, year, people, apiHost)
-  );
+  return (confirm("Opravdu chceš event smazat?") && markEventAsRemoved(event_id, year, people, apiHost));
 }
 
 /**
@@ -210,18 +177,12 @@ function deleteEvent(event_id, people) {
  * @returns {Promise<void>}
  */
 export function markEventAsApproved(event_id, year, apiHost) {
-  return executeCommand(apiHost, Endpoint.program, "approve", {
-    event_id,
-    year,
-  }).then(() => location.reload());
+  return executeCommand(apiHost, Endpoint.program, "approve", { event_id, year }).then(() => location.reload());
 }
 
 function approveEvent(event_id) {
   const { apiHost, year } = state.deref();
-  return (
-    confirm("Opravdu chceš event schválit?")
-    && markEventAsApproved(event_id, year, apiHost)
-  );
+  return (confirm("Opravdu chceš event schválit?") && markEventAsApproved(event_id, year, apiHost));
 }
 
 function editEvent(event_id, updates) {
@@ -230,9 +191,7 @@ function editEvent(event_id, updates) {
 }
 
 function renderDetail(detail) {
-  const items = detail.nfcTronData?.length
-    ? detail.nfcTronData.map((x) => x.sn)
-    : [""];
+  const items = detail.nfcTronData?.length ? detail.nfcTronData.map((x) => x.sn) : [""];
   transaction((t) => {
     swapIn("detail", () => detail, t);
     swapIn("nfcTronData", () => new Set(items), t);
@@ -258,7 +217,7 @@ async function renderModalDialog(name) {
       async render() {
         console.log("Modal re-render");
         render(template(state.deref()), root);
-      },
+      }
     });
   });
 }
@@ -272,7 +231,7 @@ const registrationViews = new Set([
   View.volunteer,
   View.staff,
   View.optouts,
-  View.search,
+  View.search
 ]);
 const attendeeViews = new Set([
   View.attendees,
@@ -280,7 +239,7 @@ const attendeeViews = new Set([
   View.staffAttendees,
   View.crewAttendees,
   View.volunteerAttendees,
-  View.searchAttendees,
+  View.searchAttendees
 ]);
 
 const programViews = new Set(["program", "programApproval"]);
@@ -326,37 +285,32 @@ const endpointForView = new Map([
   [View.staffAttendees, Endpoint.attendees],
   [View.program, Endpoint.program],
   [View.programApproval, Endpoint.program],
-  [View.housing, Endpoint.housing],
+  [View.housing, Endpoint.housing]
 ]);
 
 async function fetchData({ selectedView, year, page, query }, apiHost) {
   const params = new URLSearchParams({ type: selectedView, year, page, query });
   const endpoint = endpointForView.get(selectedView);
   const resource = new URL(`admin/${endpoint}?${params}`, apiHost).href;
-  const resp = await withAuthHandler(
-    fetch(resource, { credentials: "include" }),
-    {
-      onUnauthenticated() {
-        setReturnUrl(location.href);
-        return new Promise((resolve, reject) => {
-          signOut((path) => new URL(path, apiHost).href);
-          reject({ unauthenticated: true });
-        });
-      },
-      onUnauthorized() {
-        return Promise.reject({ unauthorized: true });
-      },
+  const resp = await withAuthHandler(fetch(resource, { credentials: "include" }), {
+    onUnauthenticated() {
+      setReturnUrl(location.href);
+      return new Promise((resolve, reject) => {
+        signOut((path) => new URL(path, apiHost).href);
+        reject({ unauthenticated: true });
+      });
     },
-  );
+    onUnauthorized() {
+      return Promise.reject({ unauthorized: true });
+    }
+  });
   return resp.json();
 }
 
 async function getNfcTronData(attendee, apiUrl) {
   for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
     const params = new URLSearchParams({ chipID: chip.chipID });
-    const resp = await fetch(apiUrl(`nfctron?${params}`), {
-      headers: { Accept: "application/json" },
-    });
+    const resp = await fetch(apiUrl(`nfctron?${params}`), { headers: { Accept: "application/json" } });
     const data = await resp.json();
     chip.spent = data.totalSpent / 100;
   }
@@ -373,21 +327,15 @@ async function getNfcTronData(attendee, apiUrl) {
 function loadData(selectedView, year, page, query, apiHost) {
   transaction((t) => {
     swapIn("selectedView", () => selectedView, t);
-    swapIn(
-      "data",
-      () => fetchData({ selectedView, year, page, query }, apiHost),
-      t,
-    );
+    swapIn("data", () => fetchData({ selectedView, year, page, query }, apiHost), t);
     return true;
   });
 }
 
-const endpointName = new Map([
-  [Endpoint.registrations, "Registrace"],
-  [Endpoint.attendees, "Účastníci"],
-  [Endpoint.housing, "Ubytování"],
-  [Endpoint.program, "Program"],
-]);
+const endpointName = new Map([[Endpoint.registrations, "Registrace"], [Endpoint.attendees, "Účastníci"], [
+  Endpoint.housing,
+  "Ubytování"
+], [Endpoint.program, "Program"]]);
 
 function changeTitle(viewTitle, view) {
   const endpoint = endpointForView.get(view);
@@ -499,13 +447,7 @@ async function handleMessage(e) {
   }
 }
 
-export async function main({
-  appRoot,
-  searchParams,
-  env,
-  viewTitle,
-  yearSelector,
-}) {
+export async function main({ appRoot, searchParams, env, viewTitle, yearSelector }) {
   rollbar.init(env);
 
   const year = parseInt(searchParams.get("year") ?? env.year);
@@ -519,27 +461,13 @@ export async function main({
 
   yearSelector.value = year;
   yearSelector.addEventListener("change", (e) => {
-    location.assign(
-      `?${new URLSearchParams({ year: e.target.value, view: selectedView })}`,
-    );
+    location.assign(`?${new URLSearchParams({ year: e.target.value, view: selectedView })}`);
   });
 
   addEventListener("message", handleMessage);
 
   transact((x) =>
-    Object.assign(
-      x,
-      {
-        apiHost,
-        year,
-        page,
-        query,
-        contact,
-        params: searchParams,
-        isNFCSupported,
-      },
-      schedule.get(year),
-    )
+    Object.assign(x, { apiHost, year, page, query, contact, params: searchParams, isNFCSupported }, schedule.get(year))
   );
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, selectedView);

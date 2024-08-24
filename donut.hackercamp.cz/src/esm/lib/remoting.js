@@ -8,10 +8,7 @@ const noop = () => {};
  */
 export async function withAuthHandler(
   response,
-  { onUnauthenticated, onUnauthorized } = {
-    onUnauthenticated: noop,
-    onUnauthorized: noop,
-  },
+  { onUnauthenticated, onUnauthorized } = { onUnauthenticated: noop, onUnauthorized: noop }
 ) {
   const resp = await response;
   if (resp.status === 401) {

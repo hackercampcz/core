@@ -3,10 +3,7 @@ import { ticketBadge } from "./lib/attendee.js";
 import * as rollbar from "./lib/rollbar.js";
 
 const supporters = new Set(["hacker-plus", "hacker-patron"]);
-const labels = new Map([
-  ["hacker-plus", "Hacker filantrop"],
-  ["hacker-patron", "Patron Campu"],
-]);
+const labels = new Map([["hacker-plus", "Hacker filantrop"], ["hacker-patron", "Patron Campu"]]);
 
 const plural = (nr, [singular, few, more]) => `${nr} ${nr === 1 ? singular : nr < 5 ? few : more}`;
 

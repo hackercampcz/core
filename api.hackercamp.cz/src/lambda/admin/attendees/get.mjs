@@ -16,15 +16,7 @@ async function getAttendees(query, tag, year, page, pageSize, { allYears }) {
   const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
   const client = liteClient(algolia_app_id, algolia_search_key);
 
-  console.log({
-    event: "Loading Attendees",
-    tag,
-    year,
-    page,
-    pageSize,
-    query,
-    allYears,
-  });
+  console.log({ event: "Loading Attendees", tag, year, page, pageSize, query, allYears });
 
   const { results } = await client.search({
     requests: [
@@ -34,19 +26,17 @@ async function getAttendees(query, tag, year, page, pageSize, { allYears }) {
         attributesToRetrieve: ["year", "slackID"],
         tagFilters: [
           allYears ? null : year.toString(),
-          tag === "searchAttendees" || tag === "attendees"
-            ? null
-            : tag.replace("Attendees", ""),
+          tag === "searchAttendees" || tag === "attendees" ? null : tag.replace("Attendees", "")
         ].filter(Boolean),
         hitsPerPage: pageSize,
-        page,
+        page
       },
       resultsCount(algolia_index_name, year, null),
       resultsCount(algolia_index_name, year, "hacker"),
       resultsCount(algolia_index_name, year, "volunteer"),
       resultsCount(algolia_index_name, year, "staff"),
-      resultsCount(algolia_index_name, year, "crew"),
-    ],
+      resultsCount(algolia_index_name, year, "crew")
+    ]
   });
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
@@ -55,13 +45,7 @@ async function getAttendees(query, tag, year, page, pageSize, { allYears }) {
   const tableName = process.env.db_table_attendees;
   const items = await getItemsFromDB(db, tableName, hits);
 
-  return {
-    items,
-    page,
-    pages: nbPages,
-    total: nbHits,
-    counts: { all, hacker, volunteer, staff, crew },
-  };
+  return { items, page, pages: nbPages, total: nbHits, counts: { all, hacker, volunteer, staff, crew } };
 }
 
 /**
@@ -70,29 +54,16 @@ async function getAttendees(query, tag, year, page, pageSize, { allYears }) {
  */
 export async function handler(event) {
   console.log({ queryString: event.queryStringParameters });
-  const { type, year, page, pageSize, format, query } = Object.assign(
-    {
-      year: process.env.year ?? "2022",
-      query: "",
-      page: "0",
-      pageSize: "20",
-      format: getHeader(event.headers, "Accept"),
-    },
-    event.queryStringParameters,
-  );
+  const { type, year, page, pageSize, format, query } = Object.assign({
+    year: process.env.year ?? "2022",
+    query: "",
+    page: "0",
+    pageSize: "20",
+    format: getHeader(event.headers, "Accept")
+  }, event.queryStringParameters);
 
-  const respData = await getAttendees(
-    query,
-    type,
-    parseInt(year),
-    parseInt(page),
-    parseInt(pageSize),
-    { allYears: format === "csv" || format === "text/csv" && !event.queryStringParameters.year },
-  );
-  return formatResponse(respData, {
-    year,
-    resource: "attendees",
-    type,
-    format,
+  const respData = await getAttendees(query, type, parseInt(year), parseInt(page), parseInt(pageSize), {
+    allYears: format === "csv" || format === "text/csv" && !event.queryStringParameters.year
   });
+  return formatResponse(respData, { year, resource: "attendees", type, format });
 }

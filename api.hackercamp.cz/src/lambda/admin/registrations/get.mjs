@@ -21,8 +21,8 @@ async function getOptOuts(year) {
       ProjectionExpression: "email",
       FilterExpression: "#yr = :yr",
       ExpressionAttributeNames: { "#yr": "year" },
-      ExpressionAttributeValues: marshall({ ":yr": year }),
-    }),
+      ExpressionAttributeValues: marshall({ ":yr": year })
+    })
   );
   return res.Items.map((x) => x.email.S);
 }
@@ -36,37 +36,26 @@ async function getItemsFromDB(db, hits) {
   if (hits.length === 0) return [];
   const tableName = process.env.db_table_registrations;
   const result = [];
-  const deduplicatedHits = hits.filter(
-    (value, index, self) =>
-      index
-        === self.findIndex((t) => t.email === value.email && t.year === value.year),
+  const deduplicatedHits = hits.filter((value, index, self) =>
+    index === self.findIndex((t) => t.email === value.email && t.year === value.year)
   );
 
   for (const batch of partition(100, true, deduplicatedHits)) {
-    const keys = batch.map(({ year, email }) => ({
-      year: { N: year.toString() },
-      email: { S: email },
-    }));
+    const keys = batch.map(({ year, email }) => ({ year: { N: year.toString() }, email: { S: email } }));
     console.log("KEYS TO LOAD", keys);
 
-    const items = await db.send(
-      new BatchGetItemCommand({
-        RequestItems: { [tableName]: { Keys: keys } },
-      }),
-    );
+    const items = await db.send(new BatchGetItemCommand({ RequestItems: { [tableName]: { Keys: keys } } }));
     result.push(
-      ...items.Responses[tableName]
-        .map((x) => unmarshall(x))
-        .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp)),
+      ...items.Responses[tableName].map((x) => unmarshall(x)).sort((a, b) =>
+        -1 * a.timestamp?.localeCompare(b.timestamp)
+      )
     );
   }
   return result;
 }
 
 function findDuplicates(arr) {
-  return arr.filter(
-    (currentValue, currentIndex) => arr.indexOf(currentValue) !== currentIndex,
-  );
+  return arr.filter((currentValue, currentIndex) => arr.indexOf(currentValue) !== currentIndex);
 }
 
 /**
@@ -82,15 +71,7 @@ async function getRegistrations(query, tag, year, page, pageSize, { allYears }) 
   const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
   const client = liteClient(algolia_app_id, algolia_search_key);
 
-  console.log({
-    event: "Loading registrations",
-    tag,
-    year,
-    page,
-    pageSize,
-    query,
-    allYears,
-  });
+  console.log({ event: "Loading registrations", tag, year, page, pageSize, query, allYears });
 
   const { results } = await client.search({
     requests: [
@@ -98,25 +79,21 @@ async function getRegistrations(query, tag, year, page, pageSize, { allYears }) 
         indexName: algolia_index_name,
         query,
         attributesToRetrieve: ["year", "email"],
-        tagFilters: [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(
-          Boolean,
-        ),
+        tagFilters: [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(Boolean),
         hitsPerPage: pageSize,
-        page,
+        page
       },
       resultsCount(algolia_index_name, year, "paid"),
       resultsCount(algolia_index_name, year, "invoiced"),
       resultsCount(algolia_index_name, year, "confirmed"),
       resultsCount(algolia_index_name, year, "waitingList"),
       resultsCount(algolia_index_name, year, "volunteer"),
-      resultsCount(algolia_index_name, year, "staff"),
-    ],
+      resultsCount(algolia_index_name, year, "staff")
+    ]
   });
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
-  const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map(
-    (x) => x.nbHits,
-  );
+  const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map((x) => x.nbHits);
 
   const duplicates = findDuplicates(hits);
   console.log(hits, duplicates);
@@ -127,7 +104,7 @@ async function getRegistrations(query, tag, year, page, pageSize, { allYears }) 
     page,
     pages: nbPages,
     total: nbHits,
-    counts: { paid, invoiced, confirmed, waitingList, volunteer, staff },
+    counts: { paid, invoiced, confirmed, waitingList, volunteer, staff }
   };
 }
 
@@ -137,39 +114,21 @@ async function getRegistrations(query, tag, year, page, pageSize, { allYears }) 
  */
 export async function handler(event) {
   console.log({ queryString: event.queryStringParameters });
-  const { type, year, page, pageSize, format, query } = Object.assign(
-    {
-      year: process.env.year ?? "2022",
-      query: "",
-      page: "0",
-      pageSize: "20",
-      format: getHeader(event.headers, "Accept"),
-    },
-    event.queryStringParameters,
-  );
+  const { type, year, page, pageSize, format, query } = Object.assign({
+    year: process.env.year ?? "2022",
+    query: "",
+    page: "0",
+    pageSize: "20",
+    format: getHeader(event.headers, "Accept")
+  }, event.queryStringParameters);
 
   if (type === "optouts") {
     const optouts = await getOptOuts(parseInt(year));
-    return formatResponse(optouts, {
-      year,
-      resource: "registrations",
-      type,
-      format,
-    });
+    return formatResponse(optouts, { year, resource: "registrations", type, format });
   }
 
-  const data = await getRegistrations(
-    query,
-    type,
-    parseInt(year),
-    parseInt(page),
-    parseInt(pageSize),
-    { allYears: format === "csv" || format === "text/csv" && !event.queryStringParameters.year },
-  );
-  return formatResponse(data, {
-    year,
-    resource: "registrations",
-    type,
-    format,
+  const data = await getRegistrations(query, type, parseInt(year), parseInt(page), parseInt(pageSize), {
+    allYears: format === "csv" || format === "text/csv" && !event.queryStringParameters.year
   });
+  return formatResponse(data, { year, resource: "registrations", type, format });
 }

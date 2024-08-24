@@ -21,7 +21,7 @@ import {
   ticketDetail,
   ticketName,
   unauthorized,
-  View,
+  View
 } from "./admin/common.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
@@ -90,32 +90,22 @@ registerDialog("group-approve", groupApproveVolunteerSelectionModal);
 
 function invoiceSummary(selection) {
   return ({ items }) => {
-    const registrations = new Map(
-      items.map((x) => [
-        x.email,
-        Object.assign(
-          {
-            get name() {
-              return `${this.firstName} ${this.lastName}`;
-            },
-            get price() {
-              return getTicketPrice(this);
-            },
-          },
-          x,
-        ),
-      ]),
-    );
+    const registrations = new Map(items.map((x) => [
+      x.email,
+      Object.assign({
+        get name() {
+          return `${this.firstName} ${this.lastName}`;
+        },
+        get price() {
+          return getTicketPrice(this);
+        }
+      }, x)
+    ]));
     const regs = Array.from(selection).map((email) => registrations.get(email));
     const total = regs.map((x) => x.price).reduce((a, b) => a + b, 0);
     const invContacts = new Set(regs.map((x) => x.invRecipientEmail));
     return html`
-      ${
-      map(
-        regs.filter((x) => x.invAddress),
-        invoiceDetails,
-      )
-    }
+      ${map(regs.filter((x) => x.invAddress), invoiceDetails)}
       <p>
         Fakturu zaslat na:
         ${map(invContacts, (x) => html`<a href="mailto:${x}">${x}</a>`)}
@@ -148,19 +138,14 @@ function invoiceSummary(selection) {
 
 function approveVolunteersSummary(selection) {
   return ({ items }) => {
-    const registrations = new Map(
-      items.map((x) => [
-        x.email,
-        Object.assign(
-          {
-            get name() {
-              return `${this.firstName} ${this.lastName}`;
-            },
-          },
-          x,
-        ),
-      ]),
-    );
+    const registrations = new Map(items.map((x) => [
+      x.email,
+      Object.assign({
+        get name() {
+          return `${this.firstName} ${this.lastName}`;
+        }
+      }, x)
+    ]));
 
     return html`
       <h4>Výběr kanditátů na dobrovolníky ke schválení</h4>
@@ -221,28 +206,18 @@ function groupApproveVolunteerSelectionModal({ data, selection }) {
 function copyToClipboard(counts) {
   return async () => {
     const [paid, invoiced, confirmed, waitingList, volunteer, staff] = await Promise.all(counts);
-    const rich = new Blob(
-      [
-        `<ul>
+    const rich = new Blob([`<ul>
           <li>Zaplacení: <b>${paid}</b>
           <li>Vyfakturovaní: <b>${invoiced}</b>
           <li>Potvrzení: <b>${confirmed}</b>
           <li>Waiting list: <b>${waitingList}</b>
           <li>Dobrovolníci: <b>${volunteer}</b>
           <li>Ostatní: <b>${staff}</b>
-        </ul>`,
-      ],
-      { type: "text/html" },
-    );
-    const plain = new Blob(
-      [
-        `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}\n* Dobrovolnící: ${volunteer}\n* Ostatní: ${staff}`,
-      ],
-      { type: "text/plain" },
-    );
-    await navigator.clipboard.write([
-      new ClipboardItem({ "text/html": rich, "text/plain": plain }),
-    ]);
+        </ul>`], { type: "text/html" });
+    const plain = new Blob([
+      `* Zaplacení: ${paid}\n* Vyfakturovaní: ${invoiced}\n* Potvrzení: ${confirmed}\n* Waiting list: ${waitingList}\n* Dobrovolnící: ${volunteer}\n* Ostatní: ${staff}`
+    ], { type: "text/plain" });
+    await navigator.clipboard.write([new ClipboardItem({ "text/html": rich, "text/plain": plain })]);
     globalThis.showSnackbar("Statistiky zkopírovány do schránky");
   };
 }
@@ -251,15 +226,13 @@ export function registrationsChips(
   view,
   year,
   { waitingList, confirmed, invoiced, paid, optouts, volunteer, staff },
-  params,
+  params
 ) {
   return html`
     <search style="display: flex; gap: 8px">
       ${
-    when(
-      view === View.search,
-      () =>
-        html`<form style="flex-grow: 1">
+    when(view === View.search, () =>
+      html`<form style="flex-grow: 1">
             <input type="hidden" name="view" value="${View.search}">
             <input type="hidden" name="year" value="${year}">
             <md-outlined-text-field
@@ -280,15 +253,11 @@ export function registrationsChips(
                 <md-icon>close</md-icon>
               </md-icon-button>
             </md-outlined-text-field>
-          </form>`,
-      () =>
-        html`
+          </form>`, () =>
+      html`
           <div>
             <md-icon-button
-              href="/admin/?${new URLSearchParams({
-          view: View.search,
-          year,
-        })}"
+              href="/admin/?${new URLSearchParams({ view: View.search, year })}"
             >
               <md-icon>search</md-icon>
             </md-icon-button>
@@ -301,99 +270,47 @@ export function registrationsChips(
             aria-multiselectable="false"
           >
             <span class="mdc-evolution-chip-set__chips" role="presentation">
+              ${chip({ text: "Zaplacení", count: paid, selected: view === View.paid, view: View.paid, year })}
               ${
-          chip({
-            text: "Zaplacení",
-            count: paid,
-            selected: view === View.paid,
-            view: View.paid,
-            year,
-          })
-        }
+        chip({ text: "Vyfakturovaní", count: invoiced, selected: view === View.invoiced, view: View.invoiced, year })
+      }
               ${
-          chip({
-            text: "Vyfakturovaní",
-            count: invoiced,
-            selected: view === View.invoiced,
-            view: View.invoiced,
-            year,
-          })
-        }
+        chip({ text: "Potvrzení", count: confirmed, selected: view === View.confirmed, view: View.confirmed, year })
+      }
               ${
-          chip({
-            text: "Potvrzení",
-            count: confirmed,
-            selected: view === View.confirmed,
-            view: View.confirmed,
-            year,
-          })
-        }
+        chip({
+          text: "Waiting list",
+          count: waitingList,
+          selected: view === View.waitingList,
+          view: View.waitingList,
+          year
+        })
+      }
               ${
-          chip({
-            text: "Waiting list",
-            count: waitingList,
-            selected: view === View.waitingList,
-            view: View.waitingList,
-            year,
-          })
-        }
-              ${
-          chip({
-            text: "Dobrovolníci",
-            count: volunteer,
-            selected: view === View.volunteer,
-            view: View.volunteer,
-            year,
-          })
-        }
-              ${
-          chip({
-            text: "Ostatní",
-            count: staff,
-            selected: view === View.staff,
-            view: View.staff,
-            year,
-          })
-        }
-              ${
-          chip({
-            text: "Opt-outs",
-            count: optouts,
-            selected: view === View.optouts,
-            view: View.optouts,
-            year,
-          })
-        }
+        chip({ text: "Dobrovolníci", count: volunteer, selected: view === View.volunteer, view: View.volunteer, year })
+      }
+              ${chip({ text: "Ostatní", count: staff, selected: view === View.staff, view: View.staff, year })}
+              ${chip({ text: "Opt-outs", count: optouts, selected: view === View.optouts, view: View.optouts, year })}
             </span>
           </div>
           <div>
             <md-icon-button
               title="Zkopírovat statistiky"
-              @click="${
-          copyToClipboard([
-            paid,
-            invoiced,
-            confirmed,
-            waitingList,
-            volunteer,
-            staff,
-          ])
-        }"
+              @click="${copyToClipboard([paid, invoiced, confirmed, waitingList, volunteer, staff])}"
             >
               <md-icon>content_copy</md-icon></md-icon-button
             ><md-icon-button
               href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
-          // TODO: add support for search queries
-          { year, type: view, format: "csv", pageSize: 500 },
-        )}"
+        // TODO: add support for search queries
+        { year, type: view, format: "csv", pageSize: 500 }
+      )}"
               title="Stáhnout CSV"
               aria-label="Stáhnout CSV"
             >
               <md-icon>download</md-icon>
             </md-icon-button>
           </div>
-        `,
-    )
+        `)
   }
     </search>
   `;
@@ -422,24 +339,18 @@ export async function selectionBar(selectedView, selection, data) {
         touch-target="wrapper"
       ></md-checkbox>
       ${
-    when(
-      selectedView === View.confirmed,
-      () =>
-        html`<md-icon-button
+    when(selectedView === View.confirmed, () =>
+      html`<md-icon-button
             title="Vyfakturovat"
             @click="${invoiceSelected()}"
             ><md-icon>request_quote</md-icon>
-          </md-icon-button>`,
-    )
+          </md-icon-button>`)
   }
       ${
-    when(
-      selectedView === View.volunteer || selectedView === View.staff,
-      () =>
-        html`<md-icon-button title="Schválit" @click="${approveSelected()}"
+    when(selectedView === View.volunteer || selectedView === View.staff, () =>
+      html`<md-icon-button title="Schválit" @click="${approveSelected()}"
             ><md-icon>person_add</md-icon>
-          </md-icon-button>`,
-    )
+          </md-icon-button>`)
   }
     </div>
   `;
@@ -457,11 +368,7 @@ function selectRow(e) {
 
 const registrationStatus = (row) => {
   if (["staff", "volunteer"].includes(row.ticketType)) return row.ticketType;
-  else if (
-    ["hacker", "hacker-plus", "hacker-patron", "nonprofit"].includes(
-      row.ticketType,
-    )
-  ) {
+  else if (["hacker", "hacker-plus", "hacker-patron", "nonprofit"].includes(row.ticketType)) {
     if (row.paid) return "paid";
     if (row.invoiced) return "invoiced";
     if (row.approved) return "approved";
@@ -473,7 +380,7 @@ export function registrationsTableTemplate(
   data,
   { timeHeader, timeAttr },
   { page, pages, total, params, selection },
-  selectedView,
+  selectedView
 ) {
   return html`
     <table>
@@ -490,23 +397,14 @@ export function registrationsTableTemplate(
       <tfoot>
       <tr>
         <td colspan="5">
-          ${
-    paginationNavigation({
-      page,
-      pages,
-      total,
-      count: data.length,
-      params,
-    })
-  }
+          ${paginationNavigation({ page, pages, total, count: data.length, params })}
         </td>
       </tr>
       </tfoot>
       <tbody>
       ${
-    data.map(
-      (row) =>
-        html`
+    data.map((row) =>
+      html`
               <tr @click="${renderDetail(row)}">
                 <td>
                   <md-checkbox
@@ -522,19 +420,14 @@ export function registrationsTableTemplate(
                 <td>
                   ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
                 </td>
-                ${
-          when(
-            selectedView === View.search,
-            () => html`<td>${registrationStatus(row)}</td>`,
-          )
-        }
+                ${when(selectedView === View.search, () => html`<td>${registrationStatus(row)}</td>`)}
                 <td>
                   <hc-mail-button email="${row.email}"></hc-mail-button
                   >
                   <hc-phone-button phone="${row.phone}"></hc-phone-button>
                 </td>
               </tr>
-            `,
+            `
     )
   }
       </tbody>
@@ -566,32 +459,23 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         ></hc-phone-button
         >
         ${
-    when(
-      selectedView === View.waitingList,
-      () =>
-        html`<md-icon-button title="Opt in" @click="${optin(detail.email)}">
+    when(selectedView === View.waitingList, () =>
+      html`<md-icon-button title="Opt in" @click="${optin(detail.email)}">
           <md-icon>person_add</md-icon>
-        </md-icon-button>`,
-    )
+        </md-icon-button>`)
   }${
-    when(
-      selectedView !== View.paid,
-      () =>
-        html`<md-icon-button title="Opt out" @click="${optout(detail.email)}">
+    when(selectedView !== View.paid, () =>
+      html`<md-icon-button title="Opt out" @click="${optout(detail.email)}">
           <md-icon>person_remove</md-icon>
-        </md-icon-button>`,
-    )
+        </md-icon-button>`)
   }${
-    when(
-      selectedView === View.confirmed,
-      () =>
-        html`<md-icon-button
+    when(selectedView === View.confirmed, () =>
+      html`<md-icon-button
           title="Vyfakturovat"
           @click="${invoiced(detail.email)}"
         >
           <md-icon>request_quote</md-icon>
-        </md-icon-button>`,
-    )
+        </md-icon-button>`)
   }
         <md-icon-button
           title="Upravit registraci"
@@ -608,41 +492,21 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         </md-icon-button>
       </div>
       ${ticketDetail(detail)}
-      ${
-    when(
-      detail.inviter,
-      () => html`<p>Pozval ho <strong>${detail.inviter}</strong></p>`,
-    )
-  }
+      ${when(detail.inviter, () => html`<p>Pozval ho <strong>${detail.inviter}</strong></p>`)}
       <p>Ubytování: <strong>${housing.get(detail.housing) ?? "Ještě si nevybral"}</strong></p>
       <p>Doprava: <strong>${travel.get(detail.travel) ?? "Ještě si nevybral"}</strong></p>
       ${
-    when(
-      detail.activity,
-      () =>
-        html`
+    when(detail.activity, () =>
+      html`
         <h3>Aktivita</h3>
         ${unsafeHTML(marked.parse(detail.activity))}
-        ${
-          when(
-            detail.activityCrew,
-            () => html`<p>Parťáci: ${detail.activityCrew}</p>`,
-          )
-        }
-        ${
-          when(
-            detail.activityPlace,
-            () => html`<p>Zázemí: ${detail.activityPlace}</p>`,
-          )
-        }
-      `,
-    )
+        ${when(detail.activityCrew, () => html`<p>Parťáci: ${detail.activityCrew}</p>`)}
+        ${when(detail.activityPlace, () => html`<p>Zázemí: ${detail.activityPlace}</p>`)}
+      `)
   }
       ${
-    when(
-      detail.invRecipient === "1",
-      () =>
-        html`
+    when(detail.invRecipient === "1", () =>
+      html`
         <p>
           Fakturovat za něj bude
           <a href="mailto:${detail.invRecipientEmail}"
@@ -652,8 +516,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
             >${detail.invRecipientPhone}</a
           >
         </p>
-      `,
-    )
+      `)
   }
       ${when(detail.invAddress, () => invoiceDetails(detail))}
       ${
@@ -690,16 +553,13 @@ function invoiceDetails(detail) {
       <p>${detail.invName}</p>
       <p>${detail.invAddress}</p>
       ${
-    when(
-      detail.invEmail || detail["invoice-contact"],
-      () =>
-        html`
+    when(detail.invEmail || detail["invoice-contact"], () =>
+      html`
           <p>
             E-mail:
             <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
           </p>
-        `,
-    )
+        `)
   }
       <p>
         ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
@@ -710,35 +570,28 @@ function invoiceDetails(detail) {
   `;
 }
 
-const timeColumn = new Map([
-  [View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
-  [View.attendees, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
-  [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }],
-]);
+const timeColumn = new Map([[View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }], [View.attendees, {
+  timeHeader: "Čas zaplacení",
+  timeAttr: "paid"
+}], [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }]]);
 
 export function registrationsTemplate(state) {
   const { data, selectedView, detail, year, page, params, selection } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${
-    when(
-      selection.size,
-      () => until(selectionBar(selectedView, selection, data)),
-      () =>
-        registrationsChips(
-          selectedView,
-          year,
-          {
-            [View.paid]: data?.then((data) => data.counts.paid),
-            [View.invoiced]: data?.then((data) => data.counts.invoiced),
-            [View.confirmed]: data?.then((data) => data.counts.confirmed),
-            [View.waitingList]: data?.then((data) => data.counts.waitingList),
-            [View.volunteer]: data?.then((data) => data.counts.volunteer),
-            [View.staff]: data?.then((data) => data.counts.staff),
-          },
-          params,
+    when(selection.size, () =>
+      until(selectionBar(selectedView, selection, data)), () =>
+      registrationsChips(selectedView, year, {
+        [View.paid]: data?.then((data) => data.counts.paid),
+        [View.invoiced]: data?.then((data) =>
+          data.counts.invoiced
         ),
-    )
+        [View.confirmed]: data?.then((data) => data.counts.confirmed),
+        [View.waitingList]: data?.then((data) => data.counts.waitingList),
+        [View.volunteer]: data?.then((data) => data.counts.volunteer),
+        [View.staff]: data?.then((data) => data.counts.staff)
+      }, params))
   }
     </div>
     <div
@@ -747,47 +600,33 @@ export function registrationsTemplate(state) {
       <div class="hc-card hc-master-detail__list">
         ${
     until(
-      data
-        ?.then((data) => {
-          const timeColumnSettings = timeColumn.get(selectedView) ?? {
-            timeHeader: "Čas registrace",
-            timeAttr: "timestamp",
-          };
-          if (selectedView === View.optouts) {
-            return html`
+      data?.then((data) => {
+        const timeColumnSettings = timeColumn.get(selectedView)
+          ?? { timeHeader: "Čas registrace", timeAttr: "timestamp" };
+        if (selectedView === View.optouts) {
+          return html`
                   <ul>
                     ${data.map((x) => html` <li>${x}</li>`)}
                   </ul>
                 `;
-          }
-          return registrationsTableTemplate(
-            sortBy(
-              timeColumnSettings.timeAttr,
-              data.items.map((x) =>
-                Object.assign({}, x, {
-                  name: x.name ?? `${x.firstName} ${x.lastName}`,
-                })
-              ),
-            ),
-            timeColumnSettings,
-            {
-              page,
-              pages: data.pages,
-              total: data.total,
-              params,
-              selection,
-            },
-            selectedView,
-          );
-        })
-        ?.catch((data) => {
-          if (data.unauthorized) return unauthorized();
-        }),
+        }
+        return registrationsTableTemplate(
+          sortBy(
+            timeColumnSettings.timeAttr,
+            data.items.map((x) => Object.assign({}, x, { name: x.name ?? `${x.firstName} ${x.lastName}` }))
+          ),
+          timeColumnSettings,
+          { page, pages: data.pages, total: data.total, params, selection },
+          selectedView
+        );
+      })?.catch((data) => {
+        if (data.unauthorized) return unauthorized();
+      }),
       html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p style="padding: 16px">Načítám data&hellip;</p>
             </div>
-          `,
+          `
     )
   }
       </div>
@@ -802,9 +641,7 @@ export function registrationsTemplate(state) {
  * @returns {Promise<void>}
  */
 export function edit(payload, apiHost) {
-  return executeCommand(apiHost, Endpoint.registrations, "edit", payload).then(
-    () => location.reload(),
-  );
+  return executeCommand(apiHost, Endpoint.registrations, "edit", payload).then(() => location.reload());
 }
 
 registerDialog("registration-modal", registrationModalDialog);
@@ -814,16 +651,10 @@ function registrationModalDialog({ detail, apiHost }) {
     e.preventDefault();
     const form = new FormData(e.target);
     const contact = getContact();
-    await edit(
-      {
-        key: { email: detail.email, year: detail.year },
-        data: {
-          ...Object.fromEntries(form.entries()),
-          editedBy: contact?.email,
-        },
-      },
-      apiHost,
-    );
+    await edit({
+      key: { email: detail.email, year: detail.year },
+      data: { ...Object.fromEntries(form.entries()), editedBy: contact?.email }
+    }, apiHost);
   };
   return html`
     <form method="dialog" @submit="${onSubmit}">

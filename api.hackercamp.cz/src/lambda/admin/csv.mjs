@@ -17,10 +17,7 @@ export async function formatResponse(data, { year, resource, type, format }) {
     const headers = getAllHeaders(data);
     const text = await csv.writeToString(data.items, { headers });
     const fileName = `hc-${year}-${resource}-${type}.csv`;
-    return response(text, {
-      "Content-Type": "text/csv",
-      "Content-Disposition": `attachment; filename=${fileName}`,
-    });
+    return response(text, { "Content-Type": "text/csv", "Content-Disposition": `attachment; filename=${fileName}` });
   }
   return response(data);
 }

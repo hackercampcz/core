@@ -20,11 +20,8 @@ function deleteEvent(db, { event_id, year }) {
   return db.send(
     new DeleteItemCommand({
       TableName: process.env.db_table_program,
-      Key: marshall(
-        { _id: event_id, year },
-        { convertEmptyValues: true, removeUndefinedValues: true },
-      ),
-    }),
+      Key: marshall({ _id: event_id, year }, { convertEmptyValues: true, removeUndefinedValues: true })
+    })
   );
 }
 
@@ -38,16 +35,13 @@ function approveEvent(db, { event_id, year }, slackID) {
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_program,
-      Key: marshall(
-        { _id: event_id, year },
-        { convertEmptyValues: true, removeUndefinedValues: true },
-      ),
+      Key: marshall({ _id: event_id, year }, { convertEmptyValues: true, removeUndefinedValues: true }),
       UpdateExpression: "SET approved = :now, approvedBy = :slackID",
-      ExpressionAttributeValues: marshall(
-        { ":now": new Date().toISOString(), ":slackID": slackID },
-        { convertEmptyValues: true, removeUndefinedValues: true },
-      ),
-    }),
+      ExpressionAttributeValues: marshall({ ":now": new Date().toISOString(), ":slackID": slackID }, {
+        convertEmptyValues: true,
+        removeUndefinedValues: true
+      })
+    })
   );
 }
 
@@ -60,24 +54,21 @@ function editEvent(db, { event_id, year, ...updates }) {
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_program,
-      Key: marshall(
-        { _id: event_id, year: parseInt(year, 10) },
-        { convertEmptyValues: true, removeUndefinedValues: true },
-      ),
+      Key: marshall({ _id: event_id, year: parseInt(year, 10) }, {
+        convertEmptyValues: true,
+        removeUndefinedValues: true
+      }),
       UpdateExpression:
         "SET title = :title, description = :desc, place = :place, startAt = :startAt, #duration = :duration",
       ExpressionAttributeNames: { "#duration": "duration" },
-      ExpressionAttributeValues: marshall(
-        {
-          ":title": updates.title,
-          ":desc": updates.description,
-          ":place": updates.place,
-          ":startAt": updates.startAt,
-          ":duration": updates.duration,
-        },
-        { convertEmptyValues: true, removeUndefinedValues: true },
-      ),
-    }),
+      ExpressionAttributeValues: marshall({
+        ":title": updates.title,
+        ":desc": updates.description,
+        ":place": updates.place,
+        ":startAt": updates.startAt,
+        ":duration": updates.duration
+      }, { convertEmptyValues: true, removeUndefinedValues: true })
+    })
   );
 }
 
@@ -87,11 +78,8 @@ async function getAttendee(dynamo, slackID, year) {
     new GetItemCommand({
       TableName: process.env.db_table_attendees,
       ProjectionExpression: "events",
-      Key: marshall(
-        { slackID, year },
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+      Key: marshall({ slackID, year }, { removeUndefinedValues: true, convertEmptyValues: true })
+    })
   );
   return result.Item ? unmarshall(result.Item) : null;
 }
@@ -103,11 +91,11 @@ function saveAttendee(dynamo, data) {
       TableName: process.env.db_table_attendees,
       Key: marshall(selectKeys(data, new Set(["year", "slackID"]))),
       UpdateExpression: "SET events = :events",
-      ExpressionAttributeValues: marshall(
-        { ":events": data.events },
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+      ExpressionAttributeValues: marshall({ ":events": data.events }, {
+        removeUndefinedValues: true,
+        convertEmptyValues: true
+      })
+    })
   );
 }
 
@@ -140,27 +128,19 @@ async function processRequest(db, data, slackID) {
       const year = parseInt(data.params.year, 10);
       const attendee = await getAttendee(db, data.params.slackID, year);
       const sanitizedData = Object.fromEntries(
-        Object.entries(data.params)
-          .map(([k, v]) => [k, v?.trim ? v?.trim() : v])
-          .filter(([k, v]) => Boolean(v)),
+        Object.entries(data.params).map(([k, v]) => [k, v?.trim ? v?.trim() : v]).filter(([k, v]) => Boolean(v))
       );
       sanitizedData.year = year;
       if (sanitizedData.duration && sanitizedData.startAt) {
         const duration = parseInt(sanitizedData.duration, 10) * 60 * 1000;
-        const startTime = Date.parse(
-          sanitizedData.startAt + sanitizedData.timezone,
-        );
+        const startTime = Date.parse(sanitizedData.startAt + sanitizedData.timezone);
         sanitizedData.endAt = new Date(startTime + duration).toISOString();
       }
       const events = Array.from(
-        new Map(attendee.events?.map((e) => [e._id, e]))
-          .set(sanitizedData._id, sanitizedData)
-          .values(),
+        new Map(attendee.events?.map((e) => [e._id, e])).set(sanitizedData._id, sanitizedData).values()
       ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
       await saveAttendee(db, { year, events, slackID: sanitizedData.slackID });
-      sanitizedData.people = [
-        selectKeys(attendee, new Set(["slackID", "image", "slug", "name"])),
-      ];
+      sanitizedData.people = [selectKeys(attendee, new Set(["slackID", "image", "slug", "name"]))];
       return editEvent(db, sanitizedData);
   }
 }

@@ -22,9 +22,8 @@ function housingTable(data) {
       </thead>
       <tbody>
         ${
-    data.map(
-      (row) =>
-        html`
+    data.map((row) =>
+      html`
             <tr>
               <td>${row.name}</td>
               <td>${row.company}</td>
@@ -37,7 +36,7 @@ function housingTable(data) {
                 ><hc-phone-button phone="${row.phone}"></hc-phone-button>
               </td>
             </tr>
-          `,
+          `
     )
   }
       </tbody>
@@ -52,18 +51,16 @@ export function housingTemplate(state) {
       <div class="hc-card">
         ${
     until(
-      data
-        ?.then((data) => {
-          return housingTable(sortBy("housing", data));
-        })
-        ?.catch((data) => {
-          if (data.unauthorized) return unauthorized();
-        }),
+      data?.then((data) => {
+        return housingTable(sortBy("housing", data));
+      })?.catch((data) => {
+        if (data.unauthorized) return unauthorized();
+      }),
       html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p style="padding: 16px">Načítám data&hellip;</p>
             </div>
-          `,
+          `
     )
   }
       </div>

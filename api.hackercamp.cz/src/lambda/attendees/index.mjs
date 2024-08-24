@@ -21,22 +21,19 @@ async function getAttendees(dynamo, year) {
       query: "",
       attributesToRetrieve: ["year", "slackID"],
       tagFilters: [year.toString()],
-      hitsPerPage: 500,
-    }],
+      hitsPerPage: 500
+    }]
   });
 
   return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
     ProjectionExpression: "slackID, #name, company, events, image, travel, ticketType, slug",
-    ExpressionAttributeNames: { "#name": "name" },
+    ExpressionAttributeNames: { "#name": "name" }
   });
 }
 
 async function getAttendee(dynamo, slackID, year) {
   const result = await dynamo.send(
-    new GetItemCommand({
-      TableName: process.env.db_table_attendees,
-      Key: marshall({ slackID, year }),
-    }),
+    new GetItemCommand({ TableName: process.env.db_table_attendees, Key: marshall({ slackID, year }) })
   );
   return result.Item ? unmarshall(result.Item) : null;
 }
@@ -47,15 +44,9 @@ async function getAttendee(dynamo, slackID, year) {
  */
 export async function attendees(event) {
   rollbar.configure({ payload: { event } });
-  const withCORS_ = withCORS(
-    ["GET", "POST", "OPTIONS"],
-    getHeader(event?.headers, "Origin") ?? "*",
-  );
+  const withCORS_ = withCORS(["GET", "POST", "OPTIONS"], getHeader(event?.headers, "Origin") ?? "*");
   if (event.httpMethod === "OPTIONS") {
-    return withCORS_({
-      statusCode: 204,
-      body: "",
-    });
+    return withCORS_({ statusCode: 204, body: "" });
   }
   try {
     const params = Object.assign({ year: "2022" }, event.queryStringParameters);

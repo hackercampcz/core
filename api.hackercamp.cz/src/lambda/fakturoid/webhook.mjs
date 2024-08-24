@@ -8,7 +8,7 @@ import {
   response,
   unauthorized,
   unprocessableEntity,
-  withCORS,
+  withCORS
 } from "../http.mjs";
 import { Attachments, sendEmailWithTemplate, Template } from "../postmark.mjs";
 import Rollbar from "../rollbar.mjs";
@@ -29,10 +29,8 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
         TableName: process.env.db_table_registrations,
         Key: registration,
         UpdateExpression: "SET paid = :paid",
-        ExpressionAttributeValues: {
-          ":paid": { S: new Date(paid_at).toISOString() },
-        },
-      }),
+        ExpressionAttributeValues: { ":paid": { S: new Date(paid_at).toISOString() } }
+      })
     );
     await sendEmailWithTemplate({
       token: process.env["postmark_token"],
@@ -40,13 +38,9 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
       data: {},
       to: registration.email.S,
       attachments: [Attachments.Event2024],
-      tag: "registration-paid",
+      tag: "registration-paid"
     });
-    console.log({
-      event: "Invoice marked as paid",
-      invoice_id,
-      ...registration,
-    });
+    console.log({ event: "Invoice marked as paid", invoice_id, ...registration });
   }
 }
 
@@ -58,16 +52,10 @@ async function markAsCancelled(registrations, paid_at, invoice_id) {
         TableName: process.env.db_table_registrations,
         Key: registration,
         UpdateExpression: "SET cancelled = :now",
-        ExpressionAttributeValues: {
-          ":now": { S: new Date(paid_at).toISOString() },
-        },
-      }),
+        ExpressionAttributeValues: { ":now": { S: new Date(paid_at).toISOString() } }
+      })
     );
-    console.log({
-      event: "Invoice marked as cancelled",
-      invoice_id,
-      ...registration,
-    });
+    console.log({ event: "Invoice marked as cancelled", invoice_id, ...registration });
   }
 }
 
@@ -80,8 +68,8 @@ async function getInvoicedRegistrations(db, invoice_id) {
       KeyConditionExpression: "invoice_id = :id",
       ExpressionAttributeValues: { ":id": { N: invoice_id.toString() } },
       ExpressionAttributeNames: { "#year": "year" },
-      ProjectionExpression: "#year, email",
-    }),
+      ProjectionExpression: "#year, email"
+    })
   );
   return resp.Items;
 }
@@ -91,10 +79,7 @@ async function getInvoicedRegistrations(db, invoice_id) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function fakturoidWebhook(event) {
-  const withCORS_ = withCORS(
-    ["POST", "OPTIONS"],
-    getHeader(event.headers, "Origin"),
-  );
+  const withCORS_ = withCORS(["POST", "OPTIONS"], getHeader(event.headers, "Origin"));
 
   try {
     const { token } = event.queryStringParameters;

@@ -19,11 +19,11 @@ export async function getContact(dynamodb, email) {
     new ScanCommand({
       TableName: "contacts",
       FilterExpression: "email = :email",
-      ExpressionAttributeValues: marshall(
-        { ":email": email },
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+      ExpressionAttributeValues: marshall({ ":email": email }, {
+        removeUndefinedValues: true,
+        convertEmptyValues: true
+      })
+    })
   );
   return res.Items.map((x) => unmarshall(x))?.[0];
 }
@@ -37,10 +37,10 @@ function createAttendee(dynamo, contact, record) {
         Object.assign(
           {},
           selectKeys(contact, new Set(["slackID", "name", "image", "slug"])),
-          selectKeys(record, attributes, mapper),
-        ),
-      ),
-    }),
+          selectKeys(record, attributes, mapper)
+        )
+      )
+    })
   );
 }
 
@@ -50,7 +50,7 @@ async function sendSlackInvitation(email, postmarkToken) {
     to: email,
     templateId: Template.SlackInvite,
     data: {},
-    tag: "slack-invitation",
+    tag: "slack-invitation"
   });
   console.log({ event: "Slack invitation sent", email });
 }
@@ -61,12 +61,8 @@ function enqueueSlackWelcomeMessage(user) {
     new SendMessageCommand({
       QueueUrl: process.env.slack_queue_url,
       DelaySeconds: 900, // 15 min delay
-      MessageBody: JSON.stringify({
-        event: "send-welcome-message",
-        slackID: user.id,
-        year: user.year,
-      }),
-    }),
+      MessageBody: JSON.stringify({ event: "send-welcome-message", slackID: user.id, year: user.year })
+    })
   );
 }
 
@@ -76,15 +72,10 @@ function enqueueSlackWelcomeMessage(user) {
  */
 async function paidRegistrations(event) {
   rollbar.configure({ payload: { event } });
-  const newlyPaidRegistrations = event.Records.filter(
-    (x) => x.eventName === "MODIFY",
-  )
-    .map((x) => ({
-      newImage: unmarshall(x.dynamodb.NewImage),
-      oldImage: unmarshall(x.dynamodb.OldImage),
-    }))
-    .filter((x) => x.newImage.paid && !x.oldImage.paid)
-    .map((x) => x.newImage);
+  const newlyPaidRegistrations = event.Records.filter((x) => x.eventName === "MODIFY").map((x) => ({
+    newImage: unmarshall(x.dynamodb.NewImage),
+    oldImage: unmarshall(x.dynamodb.OldImage)
+  })).filter((x) => x.newImage.paid && !x.oldImage.paid).map((x) => x.newImage);
   for (const record of newlyPaidRegistrations) {
     const { email, year } = record;
     const contact = await getContact(dynamo, email);
@@ -94,10 +85,7 @@ async function paidRegistrations(event) {
     } else {
       await Promise.all([
         createAttendee(dynamo, contact, record),
-        enqueueSlackWelcomeMessage({
-          id: contact.slackID,
-          year: parseInt(year),
-        }),
+        enqueueSlackWelcomeMessage({ id: contact.slackID, year: parseInt(year) })
       ]);
     }
   }

@@ -13,7 +13,7 @@ export default {
       captureLambdaTimeouts: true,
       captureUncaught: true,
       captureUnhandledRejections: true,
-      ...contextConfig,
+      ...contextConfig
     });
-  },
+  }
 };

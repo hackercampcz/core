@@ -15,11 +15,8 @@ async function getContact(dynamo, slackID, email) {
   const resp = await dynamo.send(
     new GetItemCommand({
       TableName: process.env.db_table_contacts,
-      Key: marshall(
-        { slackID, email },
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+      Key: marshall({ slackID, email }, { removeUndefinedValues: true, convertEmptyValues: true })
+    })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -30,11 +27,9 @@ async function getContact(dynamo, slackID, email) {
  */
 export async function contacts(event) {
   rollbar.configure({ payload: { event } });
-  const withCORS_ = withCORS(
-    ["GET", "OPTIONS"],
-    getHeader(event?.headers, "Origin") ?? "*",
-    { allowCredentials: true },
-  );
+  const withCORS_ = withCORS(["GET", "OPTIONS"], getHeader(event?.headers, "Origin") ?? "*", {
+    allowCredentials: true
+  });
   try {
     await checkAuthorization(event);
     const params = event.queryStringParameters;

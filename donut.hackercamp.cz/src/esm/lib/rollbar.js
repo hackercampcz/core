@@ -10,10 +10,7 @@ export function init(env) {
     captureIp: "anonymize",
     captureUncaught: true,
     captureUnhandledRejections: true,
-    payload: {
-      environment: env.environment,
-      code_version: env.version,
-    },
+    payload: { environment: env.environment, code_version: env.version }
   });
 }
 

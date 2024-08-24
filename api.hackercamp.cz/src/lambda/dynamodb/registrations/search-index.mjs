@@ -22,7 +22,7 @@ const keysToIndex = new Set([
   "firstTime",
   "referral",
   "ticketType",
-  "approved",
+  "approved"
 ]);
 
 /**
@@ -31,15 +31,12 @@ const keysToIndex = new Set([
  * @param {String} indexName
  */
 async function deleteRemovedItems(event, searchClient, indexName) {
-  const objectIDs = event.Records
-    .filter((x) => x.eventName === "REMOVE")
-    .map((x) => `${x.dynamodb.OldImage.year.N}-${x.dynamodb.OldImage.email.S}`);
+  const objectIDs = event.Records.filter((x) => x.eventName === "REMOVE").map((x) =>
+    `${x.dynamodb.OldImage.year.N}-${x.dynamodb.OldImage.email.S}`
+  );
 
   if (objectIDs.length > 0) {
-    console.log({
-      event: "Removing registrations from index",
-      deletedRegistrations: objectIDs,
-    });
+    console.log({ event: "Removing registrations from index", deletedRegistrations: objectIDs });
     await searchClient.deleteObjects({ indexName, objectIDs });
   }
 }
@@ -50,21 +47,16 @@ async function deleteRemovedItems(event, searchClient, indexName) {
  * @param {String} indexName
  */
 async function updateRegistrationsIndex(event, searchIndex, indexName) {
-  const updatedRegistrations = event.Records
-    .filter((x) => x.eventName !== "REMOVE")
-    .map((x) => [
-      fromJS(selectKeys(unmarshall(x.dynamodb.NewImage), keysToIndex)),
-      x.dynamodb.OldImage
-        ? fromJS(selectKeys(unmarshall(x.dynamodb.OldImage), keysToIndex))
-        : null,
-    ])
-    .filter(([n, o]) => !n.equals(o))
-    .map(([n]) => n.toJS())
-    .map(getRegistrationProjection());
+  const updatedRegistrations = event.Records.filter((x) => x.eventName !== "REMOVE").map((
+    x
+  ) => [
+    fromJS(selectKeys(unmarshall(x.dynamodb.NewImage), keysToIndex)),
+    x.dynamodb.OldImage ? fromJS(selectKeys(unmarshall(x.dynamodb.OldImage), keysToIndex)) : null
+  ]).filter(([n, o]) => !n.equals(o)).map(([n]) => n.toJS()).map(getRegistrationProjection());
   if (updatedRegistrations.length > 0) {
     console.log({
       event: "Updating registrations index",
-      updatedRegistrations: updatedRegistrations.map((x) => x.objectID),
+      updatedRegistrations: updatedRegistrations.map((x) => x.objectID)
     });
     await searchIndex.saveObjects({ indexName, objects: updatedRegistrations });
   }
@@ -81,7 +73,7 @@ async function indexUpdate(event) {
     const client = algoliasearch(algolia_app_id, algolia_admin_key);
     await Promise.all([
       deleteRemovedItems(event, client, algolia_index_name),
-      updateRegistrationsIndex(event, client, algolia_index_name),
+      updateRegistrationsIndex(event, client, algolia_index_name)
     ]);
   } catch (err) {
     rollbar.error(err);

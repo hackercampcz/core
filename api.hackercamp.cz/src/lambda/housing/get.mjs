@@ -23,13 +23,13 @@ async function getAttendees(dynamo, year) {
       query: "",
       attributesToRetrieve: ["year", "slackID"],
       tagFilters: [year.toString()],
-      hitsPerPage: 500,
-    }],
+      hitsPerPage: 500
+    }]
   });
 
   const items = await getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
     ProjectionExpression: "slackID, #name, company, housing, housingPlacement",
-    ExpressionAttributeNames: { "#name": "name" },
+    ExpressionAttributeNames: { "#name": "name" }
   });
   return items.map((x) => Object.assign({ isEditable: true }, x));
 }

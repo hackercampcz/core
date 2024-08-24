@@ -15,11 +15,9 @@ const rollbar = Rollbar.init({ lambdaName: "admin-attendees" });
  */
 export async function attendees(event) {
   rollbar.configure({ payload: { event } });
-  const withCORS_ = withCORS(
-    ["GET", "POST", "OPTIONS"],
-    getHeader(event?.headers, "Origin") ?? "*",
-    { allowCredentials: true },
-  );
+  const withCORS_ = withCORS(["GET", "POST", "OPTIONS"], getHeader(event?.headers, "Origin") ?? "*", {
+    allowCredentials: true
+  });
   try {
     switch (event.httpMethod) {
       case "GET":
@@ -29,15 +27,9 @@ export async function attendees(event) {
         await checkAuthorization(event);
         return await post.handler(event).then((x) => withCORS_(x));
       case "OPTIONS":
-        return withCORS_({
-          statusCode: 204,
-          body: "",
-        });
+        return withCORS_({ statusCode: 204, body: "" });
       default:
-        return withCORS_({
-          statusCode: 405,
-          body: "Method Not Allowed",
-        });
+        return withCORS_({ statusCode: 405, body: "Method Not Allowed" });
     }
   } catch (err) {
     if (err.name === "JWTInvalid" || err.message === "Unauthorized") {

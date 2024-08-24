@@ -20,12 +20,12 @@ async function getHousing(year) {
       query: "",
       attributesToRetrieve: ["year", "slackID"],
       tagFilters: [year.toString()],
-      hitsPerPage: 500,
-    }],
+      hitsPerPage: 500
+    }]
   });
   return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
     ProjectionExpression: "slackID, #name, company, housing, housingPlacement, ticketType",
-    ExpressionAttributeNames: { "#name": "name" },
+    ExpressionAttributeNames: { "#name": "name" }
   });
 }
 
@@ -35,10 +35,7 @@ async function getHousing(year) {
  */
 export async function handler(event) {
   console.log("QS", event.queryStringParameters);
-  const { year } = Object.assign(
-    { year: process.env.year ?? "2022" },
-    event.queryStringParameters,
-  );
+  const { year } = Object.assign({ year: process.env.year ?? "2022" }, event.queryStringParameters);
   const data = await getHousing(parseInt(year));
   if (!data) return notFound();
   return response(data);

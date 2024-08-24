@@ -39,7 +39,7 @@ export function initRenderLoop(state, root, { keepContent } = {}) {
       },
       async render() {
         render(await view(curr), root);
-      },
+      }
     });
   });
 }

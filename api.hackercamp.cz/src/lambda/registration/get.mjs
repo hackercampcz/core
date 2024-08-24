@@ -19,42 +19,22 @@ async function getRegistrationById(id) {
       KeyConditionExpression: "id = :id",
       ExpressionAttributeValues: { ":id": { S: id } },
       ExpressionAttributeNames: { "#year": "year" },
-      ProjectionExpression: "#year, email",
-    }),
+      ProjectionExpression: "#year, email"
+    })
   );
   if (!indexResp.Items.length) {
     console.log({ event: "Registration not found", id });
     return null;
   }
-  const resp = await db.send(
-    new GetItemCommand({
-      TableName: tableName,
-      Key: indexResp.Items[0],
-    }),
-  );
+  const resp = await db.send(new GetItemCommand({ TableName: tableName, Key: indexResp.Items[0] }));
   return unmarshall(resp.Item);
 }
 
 async function getRegistrationByEmail(email, year, slackID) {
-  console.log({
-    event: "Loading data by registered used",
-    email,
-    year,
-    slackID,
-  });
+  console.log({ event: "Loading data by registered used", email, year, slackID });
   const [contactResp, regResp] = await Promise.all([
-    db.send(
-      new GetItemCommand({
-        TableName: "contacts",
-        Key: marshall({ email, slackID }),
-      }),
-    ),
-    db.send(
-      new GetItemCommand({
-        TableName: "registrations",
-        Key: marshall({ email, year: parseInt(year) }),
-      }),
-    ),
+    db.send(new GetItemCommand({ TableName: "contacts", Key: marshall({ email, slackID }) })),
+    db.send(new GetItemCommand({ TableName: "registrations", Key: marshall({ email, year: parseInt(year) }) }))
   ]);
 
   if (regResp.Item) {
@@ -75,7 +55,7 @@ async function getRegistrationByEmail(email, year, slackID) {
       invVatNo: contact.vatID,
       invAddress: contact.address,
       invEmail: contact.invoiceEmail || contact.email,
-      invName: contact.company || contact.name,
+      invName: contact.company || contact.name
     };
   }
 

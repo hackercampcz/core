@@ -357,7 +357,7 @@ const mapping = new Map([
   ["046976f2b91290", "aH12ZPpZrX3"],
   ["04b0cbf2b91290", "aH12ZR6NZ13"],
   ["04fa8df2b91290", "aH12zrhyfb3"],
-  ["04ea9ef2b91290", "aH12zseA2j3"],
+  ["04ea9ef2b91290", "aH12zseA2j3"]
 ]);
 
 export function getChipID(serialNumber) {

@@ -32,7 +32,7 @@ const unusedAllstars = new Set([
   "U03SW8VTUDS",
   "U02CVJXS6NA",
   "U0296F8DY2E",
-  "U02C1JXJTNK",
+  "U02C1JXJTNK"
 ]);
 
 /** @type DynamoDBClient */
@@ -69,56 +69,38 @@ export async function handler(event) {
   const isNewbee = firstTime === "1";
   email = email.trim().toLowerCase();
   year = parseInt(year, 10);
-  rest = Object.fromEntries(
-    Object.entries(rest)
-      .map(([k, v]) => [k, v?.trim()])
-      .filter(([, v]) => Boolean(v)),
-  );
+  rest = Object.fromEntries(Object.entries(rest).map(([k, v]) => [k, v?.trim()]).filter(([, v]) => Boolean(v)));
   const isVolunteer = rest.ticketType === "volunteer";
   const isHacker = rest.ticketType === "hacker";
   const isAllstar = unusedAllstars.has(slackID);
   const id = crypto.randomBytes(20).toString("hex");
-  console.log({
-    event: "Put registration",
-    email,
-    year,
-    isNewbee,
-    isVolunteer,
-    ...rest,
-  });
+  console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
   const editUrl = getEditUrl(isNewbee, id);
 
   await Promise.all([
     db.send(
       new PutItemCommand({
         TableName: "registrations",
-        Item: marshall(
-          {
-            email,
-            year,
-            firstTime: isNewbee,
-            ...rest,
-            // TODO: make this until the end of June and then for allstars
-            // isHacker && !isNewbee ? 6000 : undefined
-            ticketPrice: isAllstar ? 6000 : undefined,
-            id,
-            timestamp: new Date().toISOString(),
-          },
-          {
-            convertEmptyValues: true,
-            removeUndefinedValues: true,
-            convertClassInstanceToMap: true,
-          },
-        ),
-      }),
+        Item: marshall({
+          email,
+          year,
+          firstTime: isNewbee,
+          ...rest,
+          // TODO: make this until the end of June and then for allstars
+          // isHacker && !isNewbee ? 6000 : undefined
+          ticketPrice: isAllstar ? 6000 : undefined,
+          id,
+          timestamp: new Date().toISOString()
+        }, { convertEmptyValues: true, removeUndefinedValues: true, convertClassInstanceToMap: true })
+      })
     ),
     sendEmailWithTemplate({
       token: process.env["postmark_token"],
       templateId: getTemplateId(isNewbee, isVolunteer, rest),
       data: { editUrl },
       to: email,
-      tag: "registration",
-    }),
+      tag: "registration"
+    })
   ]);
   if (getHeader(event.headers, "Accept") === "application/json") {
     return accepted({ editUrl });

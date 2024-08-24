@@ -16,11 +16,8 @@ async function getProgram(year) {
       TableName: process.env.db_table_program,
       FilterExpression: "#yr = :yr AND attribute_exists(approved)",
       ExpressionAttributeNames: { "#yr": "year" },
-      ExpressionAttributeValues: marshall(
-        { ":yr": year },
-        { removeUndefinedValues: true },
-      ),
-    }),
+      ExpressionAttributeValues: marshall({ ":yr": year }, { removeUndefinedValues: true })
+    })
   );
   return res.Items.map((x) => unmarshall(x));
 }
@@ -32,11 +29,8 @@ async function getApprovalQueue(year) {
       TableName: process.env.db_table_program,
       FilterExpression: "#yr = :yr AND attribute_not_exists(approved)",
       ExpressionAttributeNames: { "#yr": "year" },
-      ExpressionAttributeValues: marshall(
-        { ":yr": year },
-        { removeUndefinedValues: true },
-      ),
-    }),
+      ExpressionAttributeValues: marshall({ ":yr": year }, { removeUndefinedValues: true })
+    })
   );
   return res.Items.map((x) => unmarshall(x));
 }
@@ -58,10 +52,7 @@ function getData(type, year) {
  */
 export async function handler(event) {
   console.log("QS", event.queryStringParameters);
-  const { type, year } = Object.assign(
-    { year: process.env.year ?? "2022" },
-    event.queryStringParameters,
-  );
+  const { type, year } = Object.assign({ year: process.env.year ?? "2022" }, event.queryStringParameters);
   const data = await getData(type, parseInt(year));
   if (!data) return notFound();
   return response(data);

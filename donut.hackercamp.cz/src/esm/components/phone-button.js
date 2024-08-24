@@ -11,9 +11,7 @@ function getInternationalPhoneFormat(phone) {
 }
 
 export class PhoneButton extends LitElement {
-  static properties = {
-    phone: {},
-  };
+  static properties = { phone: {} };
 
   render() {
     if (!this.phone) return null;

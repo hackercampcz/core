@@ -19,29 +19,21 @@ function editAttendee(db, data) {
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_attendees,
-      Key: {
-        year: { N: data.year.toString() },
-        slackID: { S: data.slackID },
-      },
+      Key: { year: { N: data.year.toString() }, slackID: { S: data.slackID } },
       UpdateExpression:
         "SET #name = :name, email = :email, ticketType = :ticketType, note = :note, company = :company, housingPlacement = :housingPlacement, edited = :now, editedBy = :editedBy",
-      ExpressionAttributeValues: marshall(
-        {
-          ":name": data.name,
-          ":email": data.email,
-          ":note": data.note,
-          ":company": data.company,
-          ":housingPlacement": data.housingPlacement,
-          ":now": new Date().toISOString(),
-          ":editedBy": data.editedBy,
-          ":ticketType": data.ticketType,
-        },
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-      ExpressionAttributeNames: {
-        "#name": "name",
-      },
-    }),
+      ExpressionAttributeValues: marshall({
+        ":name": data.name,
+        ":email": data.email,
+        ":note": data.note,
+        ":company": data.company,
+        ":housingPlacement": data.housingPlacement,
+        ":now": new Date().toISOString(),
+        ":editedBy": data.editedBy,
+        ":ticketType": data.ticketType
+      }, { removeUndefinedValues: true, convertEmptyValues: true }),
+      ExpressionAttributeNames: { "#name": "name" }
+    })
   );
 }
 
@@ -54,18 +46,15 @@ function addAttendee(db, data) {
   const attendee = Object.assign({}, data, {
     year: parseInt(data.year, 10),
     slackID: data.slackID || id,
-    slug: data.slackID || id,
+    slug: data.slackID || id
   });
   console.log({ event: "Put attendee", attendee });
 
   return db.send(
     new PutItemCommand({
       TableName: process.env.db_table_attendees,
-      Item: marshall(attendee, {
-        convertEmptyValues: true,
-        removeUndefinedValues: true,
-      }),
-    }),
+      Item: marshall(attendee, { convertEmptyValues: true, removeUndefinedValues: true })
+    })
   );
 }
 
@@ -78,22 +67,16 @@ async function checkIn(db, data) {
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_attendees,
-      Key: {
-        year: { N: data.year.toString() },
-        slackID: { S: data.slackID },
-      },
+      Key: { year: { N: data.year.toString() }, slackID: { S: data.slackID } },
       UpdateExpression:
         "SET checkIn = :checkIn, checkInBy = :checkInBy, checkInNote = :checkInNote, nfcTronData = :nfcTronData",
-      ExpressionAttributeValues: marshall(
-        {
-          ":checkIn": new Date().toISOString(),
-          ":checkInBy": data.admin,
-          ":checkInNote": data.note,
-          ":nfcTronData": data.nfcTronData,
-        },
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+      ExpressionAttributeValues: marshall({
+        ":checkIn": new Date().toISOString(),
+        ":checkInBy": data.admin,
+        ":checkInNote": data.note,
+        ":nfcTronData": data.nfcTronData
+      }, { removeUndefinedValues: true, convertEmptyValues: true })
+    })
   );
 }
 
@@ -106,23 +89,17 @@ async function checkOut(db, data) {
   return db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_attendees,
-      Key: {
-        year: { N: data.year.toString() },
-        slackID: { S: data.slackID },
-      },
+      Key: { year: { N: data.year.toString() }, slackID: { S: data.slackID } },
       UpdateExpression:
         "SET checkout = :checkOut, checkOutBy = :checkOutBy, checkOutNote = :checkOutNote, checkOutPaid = :checkOutPaid, checkOutTotal = :checkOutTotal",
-      ExpressionAttributeValues: marshall(
-        {
-          ":checkOut": new Date().toISOString(),
-          ":checkOutBy": data.admin,
-          ":checkOutNote": data.note,
-          ":checkOutPaid": data.paid,
-          ":checkOutTotal": data.amount,
-        },
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+      ExpressionAttributeValues: marshall({
+        ":checkOut": new Date().toISOString(),
+        ":checkOutBy": data.admin,
+        ":checkOutNote": data.note,
+        ":checkOutPaid": data.paid,
+        ":checkOutTotal": data.amount
+      }, { removeUndefinedValues: true, convertEmptyValues: true })
+    })
   );
 }
 

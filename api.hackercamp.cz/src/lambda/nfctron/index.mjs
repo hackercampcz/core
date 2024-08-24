@@ -8,13 +8,10 @@ import Rollbar from "../rollbar.mjs";
 const rollbar = Rollbar.init({ lambdaName: "attendees" });
 
 async function getNfcTronData(chipID) {
-  const resp = await fetch(
-    `https://api.nfctron.com/receipt/v2/${chipID}/transaction`,
-    {
-      headers: { accept: "application/json" },
-      referrer: "https://pass.nfctron.com/",
-    },
-  );
+  const resp = await fetch(`https://api.nfctron.com/receipt/v2/${chipID}/transaction`, {
+    headers: { accept: "application/json" },
+    referrer: "https://pass.nfctron.com/"
+  });
   return resp.json();
 }
 
@@ -24,15 +21,9 @@ async function getNfcTronData(chipID) {
  */
 export async function attendees(event) {
   rollbar.configure({ payload: { event } });
-  const withCORS_ = withCORS(
-    ["GET", "OPTIONS"],
-    getHeader(event?.headers, "Origin") ?? "*",
-  );
+  const withCORS_ = withCORS(["GET", "OPTIONS"], getHeader(event?.headers, "Origin") ?? "*");
   if (event.httpMethod === "OPTIONS") {
-    return withCORS_({
-      statusCode: 204,
-      body: "",
-    });
+    return withCORS_({ statusCode: 204, body: "" });
   }
   try {
     const params = Object.assign(event.queryStringParameters);

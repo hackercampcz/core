@@ -4,6 +4,6 @@ export function resultsCount(indexName, year, tag) {
     query: "",
     tagFilters: [year.toString(), tag].filter(Boolean),
     attributesToRetrieve: [],
-    responseFields: ["nbHits"],
+    responseFields: ["nbHits"]
   };
 }

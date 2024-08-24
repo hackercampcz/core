@@ -14,10 +14,7 @@ const rollbar = Rollbar.init({ lambdaName: "registration" });
  */
 export async function registration(event) {
   rollbar.configure({ payload: { event } });
-  const withCORS_ = withCORS(
-    ["GET", "POST", "OPTIONS"],
-    getHeader(event?.headers, "Origin"),
-  );
+  const withCORS_ = withCORS(["GET", "POST", "OPTIONS"], getHeader(event?.headers, "Origin"));
   try {
     switch (event.httpMethod) {
       case "GET":

@@ -12,7 +12,7 @@ import {
   isSignedIn,
   setReturnUrl,
   signIn,
-  signOut,
+  signOut
 } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
@@ -31,7 +31,7 @@ const View = {
   dashboard: "dashboard",
   selectHousing: "select-housing",
   paymentPending: "payment-pending",
-  notRegistered: "not-registered",
+  notRegistered: "not-registered"
 };
 
 const state = defAtom({
@@ -58,7 +58,7 @@ const state = defAtom({
       return View.paymentPending;
     }
     return View.notRegistered;
-  },
+  }
 });
 
 /**
@@ -87,7 +87,7 @@ async function authenticate({ searchParams, apiURL }) {
   const resp = await fetch(apiURL("auth"), {
     method: "POST",
     body: new URLSearchParams({ code }),
-    credentials: "include",
+    credentials: "include"
   });
   if (resp.ok) {
     const data = await resp.json();
@@ -101,17 +101,11 @@ async function setDonutProfileUrl(user, token, slug, company) {
   // TODO: extended user permissions (aka Add to Slack, see Admin)
   const profile = await slack.getSlackProfile(user, token);
   if (!profile?.fields?.Xf039UMCJC1G?.value) {
-    await setSlackProfile(user, token, {
-      name: "Xf039UMCJC1G",
-      value: `https://donut.hckr.camp/hackers/${slug}/`,
-    });
+    await setSlackProfile(user, token, { name: "Xf039UMCJC1G", value: `https://donut.hckr.camp/hackers/${slug}/` });
     console.log("Donut URL set");
   }
   if (!profile.fields.Xf03A7A5815F?.value) {
-    await setSlackProfile(user, token, {
-      name: "Xf03A7A5815F",
-      value: { alt: company },
-    });
+    await setSlackProfile(user, token, { name: "Xf03A7A5815F", value: { alt: company } });
     console.log("Company set");
   }
 }
@@ -125,7 +119,7 @@ async function getRegistration(slackID, email, year, apiUrl) {
         signOut(apiUrl);
         reject({ unauthenticated: true });
       });
-    },
+    }
   });
   return resp.json();
 }
@@ -139,7 +133,7 @@ async function getAttendee(slackID, year, apiUrl) {
         signOut(apiUrl);
         reject({ unauthenticated: true });
       });
-    },
+    }
   });
   return resp.json();
 }
@@ -147,9 +141,7 @@ async function getAttendee(slackID, year, apiUrl) {
 async function getNfcTronData(attendee, apiUrl) {
   for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
     const params = new URLSearchParams({ chipID: chip.chipID });
-    const resp = await fetch(apiUrl(`nfctron?${params}`), {
-      headers: { Accept: "application/json" },
-    });
+    const resp = await fetch(apiUrl(`nfctron?${params}`), { headers: { Accept: "application/json" } });
     const data = await resp.json();
     chip.spent = data.totalSpent / 100; // NFCTron has spent in halíř
   }
@@ -244,24 +236,19 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
     <div class="hc-card hc-card--decorated">
       <h2>Útrata</h2>
       ${
-    when(
-      total > 0,
-      () =>
-        html`
+    when(total > 0, () =>
+      html`
               <p>
                 Celkem:
                 <strong>
                   <data value="${total}">${formatMoney(total)}</data>
                 </strong>
-              </p>`,
-    )
+              </p>`)
   }
       <ul>
         ${
-    map(
-      chips,
-      (x) =>
-        html`
+    map(chips, (x) =>
+      html`
                 <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
                   SN chipu:
                   <code title="SN najdete na zadní straně čipu - pod páskem"
@@ -269,20 +256,16 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
                   >
                   -
                   ${
-          when(
-            checkOutPaid || x.paid,
-            () => html`<strong style="color: forestgreen">Zaplaceno</strong>`,
-            () =>
-              html`<strong style="color: darkred"
+        when(checkOutPaid || x.paid, () => html`<strong style="color: forestgreen">Zaplaceno</strong>`, () =>
+          html`<strong style="color: darkred"
                         >Nezaplaceno
                           <data value="${x.spent ?? x.totalSpent}"
                           >${formatMoney(x.spent ?? x.totalSpent)}
                           </data
                           >
                         </strong
-                        >`,
-          )
-        }
+                        >`)
+      }
 
                   <a
                     href="https://pass.nfctron.com/receipt/${x.chipID}"
@@ -290,8 +273,7 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
                   >Účet</a
                   >
                 </li>
-              `,
-    )
+              `)
   }
       </ul>
     </div>
@@ -340,7 +322,7 @@ function plusOneCard(referralLink) {
 
 function renderDashboardScreen(
   { housing, housingPlacement, travel, events = [], nfcTronData, checkOutPaid },
-  referralLink,
+  referralLink
 ) {
   return html`
     <div class="mdc-layout-grid__inner">
@@ -464,7 +446,7 @@ function renderIndex({ profile, attendee, selectedView }) {
 async function loadData(profile, year, apiURL) {
   const [registration, attendee] = await Promise.all([
     getRegistration(profile.sub, profile.email, year, apiURL),
-    getAttendee(profile.sub, year, apiURL),
+    getAttendee(profile.sub, year, apiURL)
   ]);
   if (attendee && !attendee?.nfcTronData?.[0]?.totalSpent) {
     // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
@@ -478,7 +460,7 @@ async function loadData(profile, year, apiURL) {
       profile.sub,
       getSlackAccessToken(),
       contact.slug,
-      registration.company ?? attendee.company,
+      registration.company ?? attendee.company
     );
   } catch (err) {
     rollbar.error(err);
@@ -491,10 +473,7 @@ export async function main({ searchParams, rootElement, env }) {
   const apiHost = env["api-host"];
   const apiURL = (endpoint) => new URL(endpoint, apiHost).href;
 
-  if (
-    searchParams.has("returnUrl")
-    && searchParams.get("state") === "not-authenticated"
-  ) {
+  if (searchParams.has("returnUrl") && searchParams.get("state") === "not-authenticated") {
     setReturnUrl(searchParams.has("returnUrl"));
     return signOut(apiURL);
   }

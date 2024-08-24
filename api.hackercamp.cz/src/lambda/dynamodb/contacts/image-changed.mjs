@@ -15,8 +15,8 @@ async function getAttendee(slackID, year) {
     new GetItemCommand({
       TableName: process.env.db_table_attendees,
       Key: { slackID: { S: slackID }, year: { N: year.toString() } },
-      ProjectionExpression: "announcement",
-    }),
+      ProjectionExpression: "announcement"
+    })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -29,15 +29,10 @@ async function imageChanged(event) {
   rollbar.configure({ payload: { event } });
   const { year, slack_bot_token: token } = process.env;
   console.dir({ event: "updated contact", records: event.Records.map(x => x.dynamodb) }, { depth: 8 });
-  const changedImages = event.Records.filter(
-    (x) => x.eventName === "MODIFY",
-  )
-    .map((x) => ({
-      newImage: unmarshall(x.dynamodb.NewImage),
-      oldImage: unmarshall(x.dynamodb.OldImage),
-    }))
-    .filter((x) => x.newImage.image !== x.oldImage.image)
-    .map((x) => x.newImage);
+  const changedImages = event.Records.filter((x) => x.eventName === "MODIFY").map((x) => ({
+    newImage: unmarshall(x.dynamodb.NewImage),
+    oldImage: unmarshall(x.dynamodb.OldImage)
+  })).filter((x) => x.newImage.image !== x.oldImage.image).map((x) => x.newImage);
   console.log({ event: "changed images", count: changedImages.length });
   for (const record of changedImages) {
     const { slackID, image } = record;

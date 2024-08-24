@@ -29,22 +29,14 @@ export function programChips(view, year, { program, programApproval }) {
       aria-multiselectable="false"
     >
       <span class="mdc-evolution-chip-set__chips" role="presentation">
-        ${
-    chip({
-      text: "Schváleno",
-      count: program,
-      selected: view === View.program,
-      view: View.program,
-      year,
-    })
-  }
+        ${chip({ text: "Schváleno", count: program, selected: view === View.program, view: View.program, year })}
         ${
     chip({
       text: "Ke schválení",
       count: programApproval,
       selected: view === View.programApproval,
       view: View.programApproval,
-      year,
+      year
     })
   }
       </span>
@@ -80,9 +72,8 @@ function programTable(data) {
       </thead>
       <tbody>
         ${
-    data.map(
-      (row) =>
-        html`
+    data.map((row) =>
+      html`
             <tr data-id="${row._id}">
               <td>${when(row.id, () => html`<code>${row.id}</code>`)}</td>
               <td
@@ -100,17 +91,14 @@ function programTable(data) {
               <td>${row.endAt ? formatDateTime(new Date(row.endAt)) : null}</td>
               <td style="white-space: nowrap;">
                 ${
-          when(
-            !row.approved,
-            () =>
-              html`<md-icon-button
+        when(!row.approved, () =>
+          html`<md-icon-button
                       title="Schválit event"
                       @click="${approveEvent(row._id)}"
                     >
                       <md-icon>done</md-icon>
-                    </md-icon-button>`,
-          )
-        }
+                    </md-icon-button>`)
+      }
                 <md-icon-button
                   title="Upravit event"
                   @click="${renderModalDialog("edit-event")}"
@@ -119,18 +107,13 @@ function programTable(data) {
                 </md-icon-button>
                 <md-icon-button
                   title="Smazat event"
-                  @click="${
-          deleteEvent(
-            row._id,
-            row.people?.map((x) => x.slackID) ?? [],
-          )
-        }"
+                  @click="${deleteEvent(row._id, row.people?.map((x) => x.slackID) ?? [])}"
                 >
                   <md-icon>delete_forever</md-icon>
                 </md-icon-button>
               </td>
             </tr>
-          `,
+          `
     )
   }
       </tbody>
@@ -146,30 +129,22 @@ export function programTemplate(state) {
   const { data, selectedView, year } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${
-    programChips(selectedView, year, {
-      [selectedView]: data?.then((data) => data.length),
-    })
-  }
+      ${programChips(selectedView, year, { [selectedView]: data?.then((data) => data.length) })}
     </div>
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       <div class="hc-card">
         ${
     until(
-      data
-        ?.then((data) => {
-          return programTable(
-            sortBy("startAt", filterEvents(data), { asc: true }),
-          );
-        })
-        ?.catch((data) => {
-          if (data.unauthorized) return unauthorized();
-        }),
+      data?.then((data) => {
+        return programTable(sortBy("startAt", filterEvents(data), { asc: true }));
+      })?.catch((data) => {
+        if (data.unauthorized) return unauthorized();
+      }),
       html`
             <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
               <p style="padding: 16px">Načítám data&hellip;</p>
             </div>
-          `,
+          `
     )
   }
       </div>

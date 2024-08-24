@@ -6,21 +6,14 @@
  * @returns {APIGatewayProxyResult}
  */
 export function response(body, headers) {
-  return {
-    statusCode: 200,
-    body: typeof body === "string" ? body : JSON.stringify(body),
-    headers,
-  };
+  return { statusCode: 200, body: typeof body === "string" ? body : JSON.stringify(body), headers };
 }
 
 /**
  * @returns {APIGatewayProxyResult}
  */
 export function accepted(body = "") {
-  return {
-    statusCode: 202,
-    body: typeof body === "string" ? body : JSON.stringify(body),
-  };
+  return { statusCode: 202, body: typeof body === "string" ? body : JSON.stringify(body) };
 }
 
 /**
@@ -28,11 +21,7 @@ export function accepted(body = "") {
  * @returns {APIGatewayProxyResult}
  */
 export function movedPermanently(location) {
-  return {
-    statusCode: 301,
-    headers: { Location: location },
-    body: "",
-  };
+  return { statusCode: 301, headers: { Location: location }, body: "" };
 }
 
 /**
@@ -41,11 +30,7 @@ export function movedPermanently(location) {
  * @returns {APIGatewayProxyResult}
  */
 export function found(location, headers) {
-  return {
-    statusCode: 302,
-    headers: Object.assign({ Location: location }, headers),
-    body: "",
-  };
+  return { statusCode: 302, headers: Object.assign({ Location: location }, headers), body: "" };
 }
 
 /**
@@ -53,11 +38,7 @@ export function found(location, headers) {
  * @returns {APIGatewayProxyResult}
  */
 export function seeOther(location) {
-  return {
-    statusCode: 303,
-    headers: { Location: location },
-    body: "",
-  };
+  return { statusCode: 303, headers: { Location: location }, body: "" };
 }
 
 /**
@@ -65,11 +46,7 @@ export function seeOther(location) {
  * @returns {APIGatewayProxyResult}
  */
 export function unauthorized(headers = {}) {
-  return {
-    statusCode: 401,
-    body: "",
-    headers,
-  };
+  return { statusCode: 401, body: "", headers };
 }
 
 /**
@@ -77,11 +54,7 @@ export function unauthorized(headers = {}) {
  * @returns {APIGatewayProxyResult}
  */
 export function forbidden(headers = {}) {
-  return {
-    statusCode: 403,
-    body: "",
-    headers,
-  };
+  return { statusCode: 403, body: "", headers };
 }
 
 /**
@@ -89,30 +62,21 @@ export function forbidden(headers = {}) {
  * @returns {APIGatewayProxyResult}
  */
 export function notFound(body = { error: "Data not found" }) {
-  return {
-    statusCode: 404,
-    body: JSON.stringify(body),
-  };
+  return { statusCode: 404, body: JSON.stringify(body) };
 }
 
 /**
  * @returns {APIGatewayProxyResult}
  */
 export function unprocessableEntity() {
-  return {
-    statusCode: 422,
-    body: "",
-  };
+  return { statusCode: 422, body: "" };
 }
 
 /**
  * @returns {APIGatewayProxyResult}
  */
 export function internalError() {
-  return {
-    statusCode: 500,
-    body: "",
-  };
+  return { statusCode: 500, body: "" };
 }
 
 /**
@@ -139,10 +103,10 @@ export function withCORS(methods, origin = "*", { allowCredentials } = {}) {
           "Content-Type",
           "X-Amz-Date",
           "X-Api-Key",
-          "X-Amz-Security-Token",
+          "X-Amz-Security-Token"
         ].join(),
-        "Access-Control-Allow-Credentials": allowCredentials,
-      }),
+        "Access-Control-Allow-Credentials": allowCredentials
+      })
     });
 }
 
@@ -151,9 +115,7 @@ export function withCORS(methods, origin = "*", { allowCredentials } = {}) {
  * @returns {Object}
  */
 export function readPayload(event) {
-  const body = event.isBase64Encoded
-    ? Buffer.from(event.body, "base64").toString("utf-8")
-    : event.body;
+  const body = event.isBase64Encoded ? Buffer.from(event.body, "base64").toString("utf-8") : event.body;
 
   if (getHeader(event.headers, "Content-Type") === "application/json") {
     return JSON.parse(body);
@@ -170,9 +132,7 @@ export function errorResponse(err) {
     case "AuthorizationError":
       return forbidden();
     case "JsonWebTokenError":
-      return unauthorized({
-        "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"`,
-      });
+      return unauthorized({ "WWW-Authenticate": `Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"` });
     default:
       return internalError();
   }

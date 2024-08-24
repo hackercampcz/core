@@ -12,10 +12,7 @@ const rollbar = Rollbar.init({ lambdaName: "ares" });
  */
 export async function ares(event) {
   rollbar.configure({ payload: { event } });
-  const withCORS_ = withCORS(
-    ["GET", "OPTIONS"],
-    getHeader(event?.headers, "Origin"),
-  );
+  const withCORS_ = withCORS(["GET", "OPTIONS"], getHeader(event?.headers, "Origin"));
   console.log("QS", event.queryStringParameters);
   const { ico } = event.queryStringParameters;
 

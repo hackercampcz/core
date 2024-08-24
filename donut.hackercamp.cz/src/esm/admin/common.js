@@ -22,7 +22,7 @@ export const Action = {
   trashRegistration: "trashRegistration",
   startNfcScan: "startNfcScan",
   addChip: "addChip",
-  removeChip: "removeChip",
+  removeChip: "removeChip"
 };
 
 export function dispatchAction(type, payload) {
@@ -57,14 +57,14 @@ export const View = {
   volunteerAttendees: "volunteerAttendees",
   housing: "housing",
   program: "program",
-  programApproval: "programApproval",
+  programApproval: "programApproval"
 };
 
 export const Endpoint = {
   registrations: "registrations",
   attendees: "attendees",
   housing: "housing",
-  program: "program",
+  program: "program"
 };
 
 export async function executeCommand(apiHost, endpoint, command, params) {
@@ -72,16 +72,10 @@ export async function executeCommand(apiHost, endpoint, command, params) {
   const resp = await withAuthHandler(
     fetch(resource, {
       method: "POST",
-      headers: [
-        ["Accept", "application/json"],
-        ["Content-Type", "application/json"],
-      ],
-      body: JSON.stringify({
-        command: command,
-        params: params,
-      }),
+      headers: [["Accept", "application/json"], ["Content-Type", "application/json"]],
+      body: JSON.stringify({ command: command, params: params }),
       credentials: "include",
-      referrerPolicy: "no-referrer",
+      referrerPolicy: "no-referrer"
     }),
     {
       onUnauthenticated() {
@@ -90,8 +84,8 @@ export async function executeCommand(apiHost, endpoint, command, params) {
           signOut((path) => new URL(path, apiHost).href);
           reject({ unauthenticated: true });
         });
-      },
-    },
+      }
+    }
   );
   if (!resp.ok) throw new Error(resp.status);
 }
@@ -126,46 +120,27 @@ export const ticketName = new Map([
   ["hacker-patron", "Patron Campu"],
   ["volunteer", "Dobrovolník"],
   ["crew", "Crew"],
-  ["staff", "Ostatní"],
+  ["staff", "Ostatní"]
 ]);
-export const ticketPrice = new Map([
-  [
-    2022,
-    new Map([
-      ["nonprofit", 2500],
-      ["hacker", 5000],
-      ["hacker-plus", 7500],
-      ["hacker-patron", 7500],
-      ["volunteer", 0],
-      ["crew", 0],
-      ["staff", 0],
-    ]),
-  ],
-  [
-    2023,
-    new Map([
-      ["nonprofit", 3000],
-      ["hacker", 6000],
-      ["hacker-plus", 9000],
-      ["hacker-patron", 9000],
-      ["volunteer", 0],
-      ["crew", 0],
-      ["staff", 0],
-    ]),
-  ],
-  [
-    2024,
-    new Map([
-      ["nonprofit", 3000],
-      ["hacker", 7000],
-      ["hacker-plus", 12000],
-      ["hacker-patron", 12000],
-      ["volunteer", 0],
-      ["crew", 0],
-      ["staff", 0],
-    ]),
-  ],
-]);
+export const ticketPrice = new Map([[
+  2022,
+  new Map([["nonprofit", 2500], ["hacker", 5000], ["hacker-plus", 7500], ["hacker-patron", 7500], ["volunteer", 0], [
+    "crew",
+    0
+  ], ["staff", 0]])
+], [
+  2023,
+  new Map([["nonprofit", 3000], ["hacker", 6000], ["hacker-plus", 9000], ["hacker-patron", 9000], ["volunteer", 0], [
+    "crew",
+    0
+  ], ["staff", 0]])
+], [
+  2024,
+  new Map([["nonprofit", 3000], ["hacker", 7000], ["hacker-plus", 12000], ["hacker-patron", 12000], ["volunteer", 0], [
+    "crew",
+    0
+  ], ["staff", 0]])
+]]);
 
 export function chip({ text, count, selected, view, year }) {
   return html`
@@ -176,7 +151,7 @@ export function chip({ text, count, selected, view, year }) {
       "mdc-evolution-chip--selectable": true,
       "mdc-evolution-chip--filter": true,
       "hc-chip": true,
-      "hc-chip--selected": selected,
+      "hc-chip--selected": selected
     })
   }"
       role="presentation"
@@ -207,23 +182,14 @@ export function chip({ text, count, selected, view, year }) {
           </span>
         </span>
         <span class="mdc-evolution-chip__text-label"
-          >${text}${
-    until(
-      count?.then((x) => html`<data value="${x}">${x}</data>`, ""),
-    )
-  }</span
+          >${text}${until(count?.then((x) => html`<data value="${x}">${x}</data>`, ""))}</span
         >
       </a>
     </span>
   `;
 }
 
-export function getTicketPrice({
-  patronAllowance,
-  year,
-  ticketType,
-  ticketPrice: price,
-}) {
+export function getTicketPrice({ patronAllowance, year, ticketType, ticketPrice: price }) {
   const allowance = patronAllowance ? parseInt(patronAllowance) : 0;
   return (price ?? ticketPrice.get(year).get(ticketType)) + allowance;
 }
@@ -246,7 +212,7 @@ export const lineupText = new Map([
   ["lipeep", "Peopleware"],
   ["liwood", "WoodStack"],
   ["lijungle", "Jungle Release"],
-  ["liother", "Doprovodné aktivity"],
+  ["liother", "Doprovodné aktivity"]
 ]);
 
 export function lineup(x) {
@@ -288,11 +254,7 @@ export function paginationNavigation({ page, pages, count, total, params }) {
       </md-icon-button>
       <md-icon-button
         title="Další strana"
-        href="${
-    page >= pages - 1
-      ? ""
-      : search({ page: Math.min(page + 1, pages - 1) })
-  }"
+        href="${page >= pages - 1 ? "" : search({ page: Math.min(page + 1, pages - 1) })}"
         ?disabled="${page >= pages - 1}"
       >
         <md-icon>chevron_right</md-icon>

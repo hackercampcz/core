@@ -6,13 +6,7 @@ import { getContact, signOut } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as workbox from "./lib/workbox.js";
 
-const state = defAtom({
-  apiURL: () => "",
-  contact: null,
-  profile: null,
-  idPopupVisible: false,
-  view: renderProfile,
-});
+const state = defAtom({ apiURL: () => "", contact: null, profile: null, idPopupVisible: false, view: renderProfile });
 
 function headerProfile({ name, picture }, togglePopup) {
   return html`
@@ -97,10 +91,7 @@ export async function init({ profile: root, env }) {
       wb.addEventListener("controlling", () => location.reload(), true);
       wb.messageSkipWaiting();
     };
-    render(
-      html`<md-text-button slot="action" @click="${update}">AKTUALIZOVAT</md-text-button>`,
-      snackbar,
-    );
+    render(html`<md-text-button slot="action" @click="${update}">AKTUALIZOVAT</md-text-button>`, snackbar);
     snackbar.show();
   });
   const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;

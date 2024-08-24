@@ -8,7 +8,7 @@ async function loadHousingData(apiBase, year) {
     const resp = await withAuthHandler(
       fetch(new URL(`housing?${params}`, apiBase).href, {
         headers: { Accept: "application/json" },
-        credentials: "include",
+        credentials: "include"
       }),
       {
         onUnauthenticated() {
@@ -17,8 +17,8 @@ async function loadHousingData(apiBase, year) {
             signOut((path) => new URL(path, apiBase).href);
             reject({ unauthenticated: true });
           });
-        },
-      },
+        }
+      }
     );
     const hackers = await resp.json();
     return { hackers };
@@ -90,9 +90,7 @@ function renderHackers(formElement, { hackers, hacker }) {
   selectElement.querySelector(`option[value="${hacker.housing}"]`)?.setAttribute("selected", "selected");
 
   const hackersListElement = formElement.querySelector("#hackers");
-  const hackersByName = hackers
-    .filter((x) => x.name)
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const hackersByName = hackers.filter((x) => x.name).sort((a, b) => a.name.localeCompare(b.name));
 
   for (const otherHacker of hackersByName) {
     const { slackID, name, company, housing, housingPlacement } = otherHacker;
@@ -145,18 +143,14 @@ function renderHackers(formElement, { hackers, hacker }) {
   }
 
   function handleInputBlur({ target }) {
-    const filledHacker = hackersListElement.querySelector(
-      `[value="${target.value}"]`,
-    );
+    const filledHacker = hackersListElement.querySelector(`[value="${target.value}"]`);
 
     // Allow only explicit values that matches any <option> of <datalist>
     if (!filledHacker) {
       target.value = "";
       target.classList.remove("me");
       if (prevHackerValue) {
-        const prevHacker = hackers.find(
-          (h) => formatHackerName(h) === prevHackerValue,
-        );
+        const prevHacker = hackers.find((h) => formatHackerName(h) === prevHackerValue);
         if (prevHacker) {
           const option = document.createElement("option");
           option.value = formatHackerName(prevHacker);
@@ -251,47 +245,31 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
     }
     globalThis.showSnackbar("Ukládám tě…");
     const formData = new FormData(formElement);
-    const jsonData = {
-      year: formData.get("year"),
-      items: [],
-    };
+    const jsonData = { year: formData.get("year"), items: [] };
 
     for (const [key, value] of formData) {
       if (!HOUSING_INPUT_REGEX.test(key)) continue;
       const inputedHacker = hackers.find((hacker) => formatHackerName(hacker) === value);
       if (!inputedHacker) continue;
       const [, housing, housingPlacement] = key.match(HOUSING_INPUT_REGEX);
-      jsonData.items.push({
-        slackID: inputedHacker.slackID,
-        housing,
-        housingPlacement,
-      });
+      jsonData.items.push({ slackID: inputedHacker.slackID, housing, housingPlacement });
     }
 
     // This allows you to fill somebody else to any placement but yourself to custom housing variant (your :troll:)
     // and because this is bellow the collection loop, it will override your previously filled up placement (our :troll:)
     if (formData.get("type") === "custom" && formData.get("custom")) {
-      jsonData.items = jsonData.items.filter(
-        ({ slackID }) => slackID !== profile.sub,
-      );
-      jsonData.items.push({
-        slackID: profile.sub,
-        housing: formData.get("custom"),
-        housingPlacement: "custom",
-      });
+      jsonData.items = jsonData.items.filter(({ slackID }) => slackID !== profile.sub);
+      jsonData.items.push({ slackID: profile.sub, housing: formData.get("custom"), housingPlacement: "custom" });
     }
-    sendHousingData(formElement.action, jsonData)
-      .then(() => {
-        globalThis.showSnackbar("Uloženo");
-      })
-      .then(() => location.assign("/ubytovani/ulozeno/"))
-      .catch((err) => {
-        rollbar.error(err);
-        alert("Něco se pokazilo:" + err);
-        for (const el of formElement.querySelectorAll("button[type='submit']")) {
-          el.disabled = false;
-        }
-      });
+    sendHousingData(formElement.action, jsonData).then(() => {
+      globalThis.showSnackbar("Uloženo");
+    }).then(() => location.assign("/ubytovani/ulozeno/")).catch((err) => {
+      rollbar.error(err);
+      alert("Něco se pokazilo:" + err);
+      for (const el of formElement.querySelectorAll("button[type='submit']")) {
+        el.disabled = false;
+      }
+    });
   });
 
   async function sendHousingData(url, data) {
@@ -301,12 +279,9 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
       fetch(url, {
         method: "POST",
         credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+        headers: { Accept: "application/json", "Content-Type": "application/json" },
         body,
-        referrerPolicy: "no-referrer",
+        referrerPolicy: "no-referrer"
       }),
       {
         onUnauthenticated() {
@@ -315,8 +290,8 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
             signOut((path) => new URL(path, url).href);
             reject({ unauthenticated: true });
           });
-        },
-      },
+        }
+      }
     );
     if (!response.ok) {
       throw await response.text();
@@ -325,20 +300,15 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
 }
 
 async function initializeHousingGalleries() {
-  const { default: PhotoSwipeLightbox } = await import(
-    "https://unpkg.com/photoswipe/dist/photoswipe-lightbox.esm.js"
-  );
+  const { default: PhotoSwipeLightbox } = await import("https://unpkg.com/photoswipe/dist/photoswipe-lightbox.esm.js");
 
   document.head.appendChild(
-    el("link", {
-      rel: "stylesheet",
-      href: "https://unpkg.com/photoswipe@5.2.2/dist/photoswipe.css",
-    }),
+    el("link", { rel: "stylesheet", href: "https://unpkg.com/photoswipe@5.2.2/dist/photoswipe.css" })
   );
   const lightbox = new PhotoSwipeLightbox({
     gallery: ".housing-gallery",
     children: "a",
-    pswpModule: () => import("https://unpkg.com/photoswipe"),
+    pswpModule: () => import("https://unpkg.com/photoswipe")
   });
   lightbox.init();
 
@@ -349,9 +319,7 @@ async function initializeHousingGalleries() {
   }
 }
 
-export async function main(
-  { formElement, env, housing: { reservations, variants } },
-) {
+export async function main({ formElement, env, housing: { reservations, variants } }) {
   rollbar.init(env);
   try {
     const profile = getSlackProfile();

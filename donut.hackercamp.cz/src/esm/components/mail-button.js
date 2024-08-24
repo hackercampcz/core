@@ -3,9 +3,7 @@ import "@material/web/icon/icon.js";
 import { html, LitElement } from "lit";
 
 export class MailButton extends LitElement {
-  static properties = {
-    email: {},
-  };
+  static properties = { email: {} };
 
   render() {
     if (!this.email) return null;

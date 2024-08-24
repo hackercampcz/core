@@ -15,15 +15,12 @@ function getJSONData(ico, data) {
     companyName: legal["D:OF"],
     address: {
       street: address["D:NU"],
-      streetNumber: {
-        orientation: address["D:CO"],
-        house: address["D:CD"],
-      },
+      streetNumber: { orientation: address["D:CO"], house: address["D:CD"] },
       town: address["D:NCO"],
       county: address["D:NOK"],
       city: address["D:N"],
-      postalCode: address["D:PSC"],
-    },
+      postalCode: address["D:PSC"]
+    }
   };
 }
 
@@ -32,11 +29,7 @@ export async function getCompanyDetails(ico) {
   if (!ico) {
     throw new Error("Missing GET parameter ico");
   }
-  const resp = await fetch(
-    `https://wwwinfo.mfcr.cz/cgi-bin/ares/darv_or.cgi?${new URLSearchParams({
-      ico,
-    })}`,
-  );
+  const resp = await fetch(`https://wwwinfo.mfcr.cz/cgi-bin/ares/darv_or.cgi?${new URLSearchParams({ ico })}`);
   if (!resp.ok) {
     const err = await resp.text();
     throw new Error(err);

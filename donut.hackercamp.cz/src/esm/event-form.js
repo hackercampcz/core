@@ -10,12 +10,7 @@ import * as rollbar from "./lib/rollbar.js";
 /** @typedef {import("@thi.ng/atom").Path} Path */
 /** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
 
-const state = defAtom({
-  view: signpostTemplate,
-  year: 2023,
-  apiHost: "",
-  profile: {},
-});
+const state = defAtom({ view: signpostTemplate, year: 2023, apiHost: "", profile: {} });
 
 /**
  * @param {SwapFn<T, T>} fn
@@ -62,51 +57,40 @@ const eventFormStyles = html`
   </style>
 `;
 
-const lineupHeadersTemplates = new Map([
-  ["", html`<em>nah.</em>`],
-  [
-    "limain",
-    html`<h2>Mainframe</h2>
-      <p>Data. Dev. Hacks.</p>`,
-  ],
-  [
-    "libase",
-    html`<h2>Basecamp</h2>
-      <p>Data. Devs. BI. Code.</p>`,
-  ],
-  [
-    "liback",
-    html`<h2>Backend</h2>
-      <p>Workshops</p>`,
-  ],
-  [
-    "lipeep",
-    html`<h2>PeopleWare</h2>
-      <p>Sport / Meditace</p>`,
-  ],
-  [
-    "liwood",
-    html`<h2>WoodStack / Jungle release</h2>
-      <p>Hudební program</p>`,
-  ],
-  [
-    "lijungle",
-    html`<h2>WoodStack / Jungle release</h2>
-      <p>Hudební program</p>`,
-  ],
-  [
-    "liother",
-    html`<h2>Doprovodný program</h2>
-      <p>Další / jiný doprovodný program</p>`,
-  ],
-]);
+const lineupHeadersTemplates = new Map([["", html`<em>nah.</em>`], [
+  "limain",
+  html`<h2>Mainframe</h2>
+      <p>Data. Dev. Hacks.</p>`
+], [
+  "libase",
+  html`<h2>Basecamp</h2>
+      <p>Data. Devs. BI. Code.</p>`
+], [
+  "liback",
+  html`<h2>Backend</h2>
+      <p>Workshops</p>`
+], [
+  "lipeep",
+  html`<h2>PeopleWare</h2>
+      <p>Sport / Meditace</p>`
+], [
+  "liwood",
+  html`<h2>WoodStack / Jungle release</h2>
+      <p>Hudební program</p>`
+], [
+  "lijungle",
+  html`<h2>WoodStack / Jungle release</h2>
+      <p>Hudební program</p>`
+], [
+  "liother",
+  html`<h2>Doprovodný program</h2>
+      <p>Další / jiný doprovodný program</p>`
+]]);
 
 const lineupsFieldsTemplates = new Map([
   ["", html`<em>nah.</em>`, ""],
-  [
-    "limain",
-    ({ lineupTopicEvents, selectedTopic, editingEvent }) =>
-      html`
+  ["limain", ({ lineupTopicEvents, selectedTopic, editingEvent }) =>
+    html`
       <div class="field">
         <label for="topic">Téma přednášky / talku</label>
         <select
@@ -122,30 +106,23 @@ const lineupsFieldsTemplates = new Map([
             Vyberte vaše téma
           </option>
           ${
-        lineupTopicEvents.map(
-          (topic) =>
-            html`<option
+      lineupTopicEvents.map((topic) =>
+        html`<option
                 value=${topic.id}
                 ?selected=${selectedTopic && selectedTopic === topic.id}
               >
                 ${topic.title}
-              </option>`,
-        )
-      }
+              </option>`
+      )
+    }
         </select>
       </div>
       ${
-        when(
-          selectedTopic,
-          () =>
-            html`<p style="font-style: italic;">
-            ${
-              lineupTopicEvents.find(({ id }) => id === selectedTopic)
-                ?.description
-            }
-          </p>`,
-        )
-      }
+      when(selectedTopic, () =>
+        html`<p style="font-style: italic;">
+            ${lineupTopicEvents.find(({ id }) => id === selectedTopic)?.description}
+          </p>`)
+    }
       <div
         style=${`display: ${selectedTopic || editingEvent ? "block" : "none"}`}
       >
@@ -194,13 +171,10 @@ const lineupsFieldsTemplates = new Map([
         </div>
         <button type="submit" class="hc-button">Odeslat to</button>
       </div>
-    `,
-  ],
+    `],
   ["libase", () => html`<em>copy of limain.</em>`],
-  [
-    "liback",
-    ({ campStartAt, campEndAt, preferredTime }) =>
-      html`
+  ["liback", ({ campStartAt, campEndAt, preferredTime }) =>
+    html`
       <div class="field">
         <label for="title">Název workshopu </label>
         <input id="title" name="title" type="text" required />
@@ -244,13 +218,9 @@ const lineupsFieldsTemplates = new Map([
         <input id="buddy" name="buddy" type="text" />
       </div>
       <button type="submit" class="hc-button">Odeslat to</button>
-    `,
-  ],
-  [
-    "liother",
-    ({ campStartAt, campEndAt, preferredTime, editingEvent }) =>
-      console.log(editingEvent)
-      || html`
+    `],
+  ["liother", ({ campStartAt, campEndAt, preferredTime, editingEvent }) =>
+    console.log(editingEvent) || html`
         <div class="field">
           <label for="title"
             >Název aktivity, anotace (co si pod tím představit)</label
@@ -333,13 +303,10 @@ const lineupsFieldsTemplates = new Map([
           />
         </div>
         <button type="submit" class="hc-button">Odeslat to</button>
-      `,
-  ],
+      `],
   ["lijungle", html`<em>liwood copy</em>`],
-  [
-    "lipeep",
-    ({ preferredTime, campStartAt, campEndAt, editingEvent }) =>
-      html`
+  ["lipeep", ({ preferredTime, campStartAt, campEndAt, editingEvent }) =>
+    html`
       <div class="field">
         <label for="title">Název aktivity</label>
         <input
@@ -407,12 +374,9 @@ const lineupsFieldsTemplates = new Map([
         />
       </div>
       <button type="submit" class="hc-button">Odeslat to</button>
-    `,
-  ],
-  [
-    "liwood",
-    ({ selectedTopic, lineupTopicEvents, editingEvent }) =>
-      html`
+    `],
+  ["liwood", ({ selectedTopic, lineupTopicEvents, editingEvent }) =>
+    html`
       <div class="field">
         <label for="topic">Téma přednášky / talku</label>
         <select
@@ -428,16 +392,15 @@ const lineupsFieldsTemplates = new Map([
             Vyberte vaše téma
           </option>
           ${
-        lineupTopicEvents.map(
-          (topic) =>
-            html`<option
+      lineupTopicEvents.map((topic) =>
+        html`<option
                 value=${topic.id}
                 ?selected=${selectedTopic && selectedTopic === topic.id}
               >
                 ${topic.title}
-              </option>`,
-        )
-      }
+              </option>`
+      )
+    }
         </select>
       </div>
       <p>
@@ -476,12 +439,8 @@ const lineupsFieldsTemplates = new Map([
         </div>
         <button type="submit" class="hc-button">Odeslat to</button>
       </div>
-    `,
-  ],
-  [
-    "liorg",
-    ({ selectedTopic, lineupTopicEvents, preferredTime }) => html`<em>copy of liother</em>`,
-  ],
+    `],
+  ["liorg", ({ selectedTopic, lineupTopicEvents, preferredTime }) => html`<em>copy of liother</em>`]
 ]);
 lineupsFieldsTemplates.set("lijungle", lineupsFieldsTemplates.get("liwood"));
 lineupsFieldsTemplates.set("libase", lineupsFieldsTemplates.get("limain"));
@@ -579,43 +538,38 @@ export function signpostTemplate() {
   `;
 }
 
-export function eventFormTemplate({
-  lineupId,
-  profile,
-  year,
-  apiHost,
-  header,
-  campStartAt,
-  campEndAt,
-  preferredTime,
-  hackers = [],
-  events = [],
-  selectedTopic,
-  editingEvent,
-  onEventSubmit = () => {},
-}) {
+export function eventFormTemplate(
+  {
+    lineupId,
+    profile,
+    year,
+    apiHost,
+    header,
+    campStartAt,
+    campEndAt,
+    preferredTime,
+    hackers = [],
+    events = [],
+    selectedTopic,
+    editingEvent,
+    onEventSubmit = () => {}
+  }
+) {
   const headHtml = header ?? lineupHeadersTemplates.get(lineupId);
   const fieldsHtml = lineupsFieldsTemplates.get(lineupId)({
     campStartAt,
     campEndAt,
     preferredTime,
-    lineupTopicEvents: events.filter(
-      ({ lineup, type }) => lineup === lineupId && type === "topic",
-    ),
+    lineupTopicEvents: events.filter(({ lineup, type }) => lineup === lineupId && type === "topic"),
     selectedTopic,
-    editingEvent,
+    editingEvent
   });
 
   return html`
     ${eventFormStyles} ${headHtml}
     <form method="post" action="${apiHost}program" @submit=${onEventSubmit}>
       <input type="hidden" name="lineup" value=${lineupId} />
-      ${
-    when(
-      editingEvent,
-      () => html`<input type="hidden" name="_id" value=${editingEvent._id} />`,
-    )
-  }
+      ${when(editingEvent, () => html`<input type="hidden" name="_id" value=${editingEvent._id} />`)}
       <input
         type="hidden"
         name="slackID"
@@ -628,24 +582,21 @@ export function eventFormTemplate({
   `;
 }
 
-export async function renderEventForm(
-  rootElement,
-  {
-    year,
-    apiHost,
-    profile,
-    lineupId,
-    header,
-    campStartAt,
-    campEndAt,
-    preferredTime,
-    hijackHacker = false, // mby change to hackers[] that are passed
-    events = [],
-    selectedTopic,
-    editingEvent,
-    onEventSubmit,
-  },
-) {
+export async function renderEventForm(rootElement, {
+  year,
+  apiHost,
+  profile,
+  lineupId,
+  header,
+  campStartAt,
+  campEndAt,
+  preferredTime,
+  hijackHacker = false, // mby change to hackers[] that are passed
+  events = [],
+  selectedTopic,
+  editingEvent,
+  onEventSubmit
+}) {
   initRenderLoop(state, rootElement);
   const view = lineupId ? eventFormTemplate : signpostTemplate;
 
@@ -662,7 +613,7 @@ export async function renderEventForm(
       events,
       selectedTopic,
       editingEvent,
-      onEventSubmit,
+      onEventSubmit
     })
   );
 
@@ -673,7 +624,7 @@ export async function renderEventForm(
         // TODO: read it from attendees instead
         fetch(new URL(`housing?${params}`, apiHost).href, {
           headers: { Accept: "application/json" },
-          credentials: "include",
+          credentials: "include"
         }),
         {
           onUnauthenticated() {
@@ -682,14 +633,11 @@ export async function renderEventForm(
               signOut((path) => new URL(path, apiHost).href);
               reject({ unauthenticated: true });
             });
-          },
-        },
+          }
+        }
       );
       const housing = await response.json();
-      const hackers = housing.map(({ name, slackID }) => ({
-        name,
-        slackID,
-      }));
+      const hackers = housing.map(({ name, slackID }) => ({ name, slackID }));
       swapIn("hackers", () => hackers);
     } catch (o_O) {
       rollbar.error(o_O);

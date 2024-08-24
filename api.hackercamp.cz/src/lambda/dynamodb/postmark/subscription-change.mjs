@@ -25,19 +25,12 @@ async function subscriptionChange(event) {
       await db.send(
         new PutItemCommand({
           TableName: db_table_optouts,
-          Item: marshall(
-            {
-              email: image.Recipient,
-              year: parseInt(year, 10),
-              timestamp: new Date().toISOString(),
-            },
-            {
-              convertEmptyValues: true,
-              removeUndefinedValues: true,
-              convertClassInstanceToMap: true,
-            },
-          ),
-        }),
+          Item: marshall({ email: image.Recipient, year: parseInt(year, 10), timestamp: new Date().toISOString() }, {
+            convertEmptyValues: true,
+            removeUndefinedValues: true,
+            convertClassInstanceToMap: true
+          })
+        })
       );
     }
   } catch (err) {

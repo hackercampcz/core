@@ -4,7 +4,7 @@ import {
   GetItemCommand,
   PutItemCommand,
   ScanCommand,
-  UpdateItemCommand,
+  UpdateItemCommand
 } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { attributes, mapper } from "@hackercamp/lib/attendee.mjs";
@@ -23,11 +23,8 @@ async function getAttendee(slackID, year) {
   const resp = await db.send(
     new GetItemCommand({
       TableName: db_table_attendees,
-      Key: {
-        slackID: { S: slackID },
-        year: { N: year.toString() },
-      },
-    }),
+      Key: { slackID: { S: slackID }, year: { N: year.toString() } }
+    })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -37,17 +34,14 @@ function createContact({ id, profile, name }) {
   return db.send(
     new PutItemCommand({
       TableName: db_table_contacts,
-      Item: marshall(
-        {
-          email: profile.email,
-          slackID: id,
-          slug: name,
-          name: profile.real_name,
-          image: profile.image_512,
-        },
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+      Item: marshall({
+        email: profile.email,
+        slackID: id,
+        slug: name,
+        name: profile.real_name,
+        image: profile.image_512
+      }, { removeUndefinedValues: true, convertEmptyValues: true })
+    })
   );
 }
 
@@ -57,33 +51,23 @@ async function createAttendee({ id, profile, name }, record) {
     new PutItemCommand({
       TableName: db_table_attendees,
       Item: marshall(
-        Object.assign(
-          {},
-          {
-            email: profile.email,
-            slackID: id,
-            slug: name,
-            name: profile.real_name,
-            image: profile.image_512,
-          },
-          selectKeys(record, attributes, mapper),
-        ),
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+        Object.assign({}, {
+          email: profile.email,
+          slackID: id,
+          slug: name,
+          name: profile.real_name,
+          image: profile.image_512
+        }, selectKeys(record, attributes, mapper)),
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      )
+    })
   );
 }
 
 async function getContact(email, slackID) {
   console.log({ event: "Get contact", email, slackID });
   const resp = await db.send(
-    new GetItemCommand({
-      TableName: db_table_contacts,
-      Key: {
-        email: { S: email },
-        slackID: { S: slackID },
-      },
-    }),
+    new GetItemCommand({ TableName: db_table_contacts, Key: { email: { S: email }, slackID: { S: slackID } } })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -94,15 +78,9 @@ async function getAttendeeByEmail(email, year) {
     new ScanCommand({
       TableName: db_table_attendees,
       FilterExpression: "#email = :email and #year = :year",
-      ExpressionAttributeValues: {
-        ":email": { S: email },
-        ":year": { N: year.toString() },
-      },
-      ExpressionAttributeNames: {
-        "#email": "email",
-        "#year": "year",
-      },
-    }),
+      ExpressionAttributeValues: { ":email": { S: email }, ":year": { N: year.toString() } },
+      ExpressionAttributeNames: { "#email": "email", "#year": "year" }
+    })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -112,11 +90,8 @@ async function deleteAttendee(slackID, year) {
   return db.send(
     new DeleteItemCommand({
       TableName: db_table_attendees,
-      Key: {
-        slackID: { S: slackID },
-        year: { N: year.toString() },
-      },
-    }),
+      Key: { slackID: { S: slackID }, year: { N: year.toString() } }
+    })
   );
 }
 
@@ -125,11 +100,8 @@ async function getRegistration(email, year) {
   const resp = await db.send(
     new GetItemCommand({
       TableName: db_table_registrations,
-      Key: {
-        email: { S: email },
-        year: { N: year.toString() },
-      },
-    }),
+      Key: { email: { S: email }, year: { N: year.toString() } }
+    })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -144,11 +116,11 @@ function updateAttendee(attendee, user) {
           email: user.profile.email ?? attendee.email,
           name: user.profile.real_name ?? attendee.name,
           image: user.profile.image_512,
-          company: user.profile?.fields?.Xf03A7A5815F?.alt ?? attendee.company,
+          company: user.profile?.fields?.Xf03A7A5815F?.alt ?? attendee.company
         }),
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      )
+    })
   );
 }
 
@@ -162,38 +134,25 @@ function updateContact(contact, user) {
           email: user.profile.email ?? contact.email,
           name: user.profile.real_name ?? contact.name,
           image: user.profile.image_512,
-          company: user.profile?.fields?.Xf03A7A5815F?.alt ?? contact.company,
+          company: user.profile?.fields?.Xf03A7A5815F?.alt ?? contact.company
         }),
-        { removeUndefinedValues: true, convertEmptyValues: true },
-      ),
-    }),
+        { removeUndefinedValues: true, convertEmptyValues: true }
+      )
+    })
   );
 }
 
 function saveAttendeeAnnouncementRef({ slackID, year }, announcement) {
-  console.log({
-    event: "Update attendee announcement",
-    slackID,
-    year,
-    announcement,
-  });
+  console.log({ event: "Update attendee announcement", slackID, year, announcement });
   return db.send(
     new UpdateItemCommand({
       TableName: db_table_attendees,
-      Key: {
-        slackID: { S: slackID },
-        year: { N: year.toString() },
-      },
+      Key: { slackID: { S: slackID }, year: { N: year.toString() } },
       UpdateExpression: "SET announcement = :announcement",
       ExpressionAttributeValues: {
-        ":announcement": {
-          M: {
-            channel: { S: announcement.channel },
-            ts: { S: announcement.ts },
-          },
-        },
-      },
-    }),
+        ":announcement": { M: { channel: { S: announcement.channel }, ts: { S: announcement.ts } } }
+      }
+    })
   );
 }
 
@@ -212,8 +171,8 @@ async function sendAttendeeAnnouncement({ slackID, year }, { slack_bot_token, sl
       name: attendee.name,
       image: attendee.image,
       travel: attendee.travel,
-      ticketType: attendee.ticketType,
-    }),
+      ticketType: attendee.ticketType
+    })
   );
   if (ok) {
     await saveAttendeeAnnouncementRef(attendee, { channel, ts });
@@ -225,10 +184,7 @@ async function sendAttendeeAnnouncement({ slackID, year }, { slack_bot_token, sl
 async function onTeamJoin({ user }, { year }) {
   const { email } = user.profile;
   console.log({ event: "Team join", email });
-  const [registration, attendee] = await Promise.all([
-    getRegistration(email, year),
-    getAttendeeByEmail(email, year),
-  ]);
+  const [registration, attendee] = await Promise.all([getRegistration(email, year), getAttendeeByEmail(email, year)]);
   if (attendee) {
     console.log({ event: "Attendee already exists", email });
     await Promise.all([
@@ -251,8 +207,8 @@ Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda.
 Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni.
 Důležité novinky najdeš v kanále #general.
 
-Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
-      ),
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
+      )
     ]);
   } else if (registration && !registration.paid) {
     console.log({ event: "Registration not paid", email });
@@ -269,8 +225,8 @@ Nastav si, prosím, svou profilovou fotku, ať tě ostatní poznají.
 Nejspíše ses sem dostals dříve než bys měls. Na další kroky budeš muset počkat,
 až ti přijde faktura a ty ji zaplatíš. :) Zatím užívej naší komunitu!
 
-Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
-      ),
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
+      )
     ]);
   } else if (registration?.paid) {
     console.log({ event: "Registration paid", email });
@@ -294,9 +250,9 @@ Pokud chceš nebo nabízíš spolujízdu na camp, tak tady → #spolujizda.
 Pokud nabízíš volné místo ve stanu či chatce, tak tu → #spolubydleni.
 Důležité novinky najdeš v kanále #general.
 
-Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
+Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
       ),
-      sendAttendeeAnnouncement({ slackID: user.id, year }, process.env),
+      sendAttendeeAnnouncement({ slackID: user.id, year }, process.env)
     ]);
   }
 }
@@ -304,10 +260,7 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`,
 async function onUserProfileChanged({ user }, { year }) {
   const { id: slackID, profile: { email } } = user;
   console.log({ event: "Profile update", email, slackID });
-  const [contact, attendee] = await Promise.all([
-    getContact(email, slackID),
-    getAttendee(slackID, year),
-  ]);
+  const [contact, attendee] = await Promise.all([getContact(email, slackID), getAttendee(slackID, year)]);
   if (!contact) {
     return console.log({ event: "Contact not found", email, slackID });
   }
