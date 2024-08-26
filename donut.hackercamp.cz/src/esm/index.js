@@ -474,7 +474,7 @@ export async function main({ searchParams, rootElement, env }) {
   const apiURL = (endpoint) => new URL(endpoint, apiHost).href;
 
   if (searchParams.has("returnUrl") && searchParams.get("state") === "not-authenticated") {
-    setReturnUrl(searchParams.has("returnUrl"));
+    setReturnUrl(searchParams.get("returnUrl"));
     return signOut(apiURL);
   }
 
