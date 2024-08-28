@@ -20,6 +20,7 @@ export const Template = {
   VolunteerInvitation: 34068992,
   ColdHackerPush: 34068979,
   HackerPush: 34068980,
+  HackerFinalInfo: 34068965,
   Feedback: 34068945,
   Adhoc: 37072925
 };
