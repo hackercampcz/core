@@ -21,5 +21,19 @@
   ],
   "display": "standalone",
   "start_url": "/?utm_source=pwa",
-  "scope": "/"
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Ubytování",
+      "url": "/ubytovani"
+    },
+    {
+      "name": "Spolujízda",
+      "url": "/spolujizda"
+    },
+    {
+      "name": "Program",
+      "url": "/program"
+    }
+  ]
 }
