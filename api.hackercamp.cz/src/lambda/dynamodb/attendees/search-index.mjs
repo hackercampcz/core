@@ -18,6 +18,7 @@ const keysToIndex = new Set([
   "name",
   "paid",
   "invoiced",
+  "invoice_id",
   "ticketType",
   "travel",
   "housing"

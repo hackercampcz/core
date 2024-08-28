@@ -5,46 +5,19 @@ import "https://deno.land/x/xhr@0.1.0/mod.ts";
 import { getAttendeesProjection, getRegistrationProjection } from "../lib/search.mjs";
 
 const dynamo = createClient();
-const indexes = new Map([
-  [
-    "hc-registrations",
-    {
-      searchableAttributes: ["name", "email", "company"],
-      ranking: [
-        "desc(createdAt)",
-        "typo",
-        "words",
-        "filters",
-        "proximity",
-        "attribute",
-        "exact",
-        "custom",
-      ],
-    },
-  ],
-  [
-    "hc-attendees",
-    {
-      searchableAttributes: ["name", "email", "company"],
-      ranking: [
-        "desc(createdAt)",
-        "typo",
-        "words",
-        "filters",
-        "proximity",
-        "attribute",
-        "exact",
-        "custom",
-      ],
-    },
-  ],
-]);
+const indexes = new Map([["hc-registrations", {
+  searchableAttributes: ["name", "email", "company", "invoice_id"],
+  ranking: ["desc(createdAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+}], ["hc-attendees", {
+  searchableAttributes: ["name", "email", "company", "invoice_id"],
+  ranking: ["desc(createdAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+}]]);
 
 async function getOptOuts() {
   const resp = await dynamo.scan({
     TableName: "optouts",
     ProjectionExpression: "#yr, email",
-    ExpressionAttributeNames: { "#yr": "year" },
+    ExpressionAttributeNames: { "#yr": "year" }
   });
   return new Set(resp.Items.map(({ year, email }) => `${year}-${email}`));
 }
@@ -61,16 +34,14 @@ async function getRegistrations() {
       "lastName",
       "#timestamp",
       "invoiced",
+      "invoice_id",
       "paid",
       "firstTime",
       "referral",
       "ticketType",
-      "approved",
+      "approved"
     ].join(),
-    ExpressionAttributeNames: {
-      "#year": "year",
-      "#timestamp": "timestamp",
-    },
+    ExpressionAttributeNames: { "#year": "year", "#timestamp": "timestamp" }
   });
 
   if (resp.Items) {
@@ -95,14 +66,12 @@ async function getAttendees() {
       "#name",
       "paid",
       "invoiced",
+      "invoice_id",
       "ticketType",
       "travel",
-      "housing",
+      "housing"
     ].join(),
-    ExpressionAttributeNames: {
-      "#year": "year",
-      "#name": "name",
-    },
+    ExpressionAttributeNames: { "#year": "year", "#name": "name" }
   });
 
   if (resp.Items) {
@@ -145,12 +114,9 @@ async function main({ adminToken, slackBotToken }) {
 
 await main(
   Object.assign(
-    {
-      adminToken: Deno.env.get("ALGOLIA_ADMIN_API_KEY"),
-      slackBotToken: Deno.env.get("SLACK_TOKEN"),
-    },
-    parse(Deno.args),
-  ),
+    { adminToken: Deno.env.get("ALGOLIA_ADMIN_API_KEY"), slackBotToken: Deno.env.get("SLACK_TOKEN") },
+    parse(Deno.args)
+  )
 );
 
 // op run --env-file=../.env -- deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config algolia-import.js

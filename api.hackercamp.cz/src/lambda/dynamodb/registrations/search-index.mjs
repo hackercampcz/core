@@ -18,6 +18,7 @@ const keysToIndex = new Set([
   "lastName",
   "timestamp",
   "invoiced",
+  "invoice_id",
   "paid",
   "firstTime",
   "referral",
