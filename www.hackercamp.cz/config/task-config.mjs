@@ -1,10 +1,7 @@
-import pathConfig from "./path-config.json" with { type: "json" };
-
 /** @typedef {import("@types/nunjucks").Environment} Environment */
-
 export default {
   images: false,
-  cloudinary: { cloudinary: { extensions: ["jpg", "jpeg", "png", "gif", "avif", "webp", "svg"] } },
+  cloudinary: { extensions: ["jpg", "jpeg", "png", "gif", "avif", "webp", "svg"] },
   fonts: true,
   svgSprite: true,
   javascripts: false,

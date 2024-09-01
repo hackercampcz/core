@@ -757,5 +757,29 @@
     "existing": false,
     "original_filename": "lines",
     "api_key": "375716383121574"
+  },
+  "footer.avif": {
+    "asset_id": "96e5fbd6d781d8d2cb0b85695a2cdf40",
+    "public_id": "www.hackercamp.cz/footer",
+    "version": 1725213031,
+    "version_id": "ce7d70d2a0bfdebe62a1ff6179f4bfce",
+    "signature": "2dcdab15536fe9acaa607fd10c235ab94ce63685",
+    "width": 4192,
+    "height": 2358,
+    "format": "avif",
+    "resource_type": "image",
+    "created_at": "2024-09-01T17:50:31Z",
+    "tags": [],
+    "pages": 1,
+    "bytes": 1273963,
+    "type": "upload",
+    "etag": "3e30574b6134d1a8f0814164ce8046c0",
+    "placeholder": false,
+    "url": "http://res.cloudinary.com/hackercamp/image/upload/v1725213031/www.hackercamp.cz/footer.avif",
+    "secure_url": "https://res.cloudinary.com/hackercamp/image/upload/v1725213031/www.hackercamp.cz/footer.avif",
+    "folder": "www.hackercamp.cz",
+    "existing": false,
+    "original_filename": "footer",
+    "api_key": "375716383121574"
   }
 }
