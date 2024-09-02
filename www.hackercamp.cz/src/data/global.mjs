@@ -9,8 +9,9 @@ export default {
       const threeDaysBefore = this.startDate;
       threeDaysBefore.setDate(threeDaysBefore.getDate() - 3);
       threeDaysBefore.setHours(0, 0, 0, 0);
-      return today >= threeDaysBefore && today <= this.endDate;
+      return threeDaysBefore <= today && today <= this.endDate;
     },
+    isRegistrationOpen: false,
     location: "Sobeňák, Starý Rožmitál 148, Rožmitál pod Třemšínem",
     details: "Zažijte netradiční třídenní festival pro lidi z české tech scény."
   },

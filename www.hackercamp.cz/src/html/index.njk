@@ -332,9 +332,11 @@
             <a class="hc-link hc-navbar__link" href="https://goo.gl/maps/u7zHVpWCf8rvpASq9">Navigovat</a>
           {% endif %}
           <a class="hc-link hc-navbar__link" href="/faq/">FAQ</a>
+          {% if event.isRegistrationOpen %}
           <a
             class="hc-link hc-link--decorated"
             href="/registrace/">Chci se zapojit</a>
+          {% endif %}
         </div>
       </div>
     </nav>
@@ -354,11 +356,13 @@
                 {{ event.startDate | longDate }} &ndash; {{ event.endDate | longDate }}
                 {{ year }} na Sobeňáku
               </p>
+              {% if event.isRegistrationOpen %}
               <p>
                 <a
                   class="hc-cta"
                   href="/registrace/">Chci se zapojit</a>
               </p>
+              {% endif %}
             {% else %}
               <p>Vjezd do areálu je chráněn značkou zákaz vjezdu. Nelekni se. Ta napovídá správný směr. Pokračuj</p>
               <p>
@@ -1144,6 +1148,7 @@
       </div>
     </section>
 
+    {% if event.isRegistrationOpen %}
     <section class="mdc-layout-grid">
       <p style="text-align: center">
         <a
@@ -1151,6 +1156,7 @@
           class="hc-cta">Zažij s námi Hacker Camp</a>
       </p>
     </section>
+    {% endif %}
 
     <footer class="mdc-layout-grid">
       <p style="text-align: center">
