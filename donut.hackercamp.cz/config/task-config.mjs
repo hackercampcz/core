@@ -15,36 +15,30 @@ import pathConfig from "./path-config.json" with { type: "json" };
 const mode = gulpMode();
 
 function assetPath(destPath, key) {
-  const manifest = JSON.parse(fs.readFileSync(path.join(destPath, "rev-manifest.json")).toString());
-  return path.join(destPath, manifest[key]);
+  const revManifest = path.join(destPath, "rev-manifest.json");
+  if (fs.existsSync(revManifest)) {
+    const manifest = JSON.parse(fs.readFileSync(revManifest).toString());
+    return path.join(destPath, manifest[key]);
+  }
+  return path.join(destPath, key);
 }
 
 class HackersRegistry extends DefaultRegistry {
   constructor(config, pathConfig) {
     super();
     this.config = config;
-    this.dest = projectPath(
-      pathConfig.src,
-      pathConfig.data.src,
-      "hackers.json",
-    );
+    this.dest = projectPath(pathConfig.src, pathConfig.data.src, "hackers.json");
   }
   init({ task }) {
     async function getSlackProfiles(token) {
       logger.info("Loading Slack profiles…");
       const skip = new Set(["slackbot", "jakub"]);
-      const resp = await fetch("https://slack.com/api/users.list", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const resp = await fetch("https://slack.com/api/users.list", { headers: { Authorization: `Bearer ${token}` } });
       const data = await resp.json();
       if (!resp.ok) {
         logger.warn("Slack profiles:", data.error);
       }
-      return new Map(
-        data.members
-          ?.filter((x) => !(x.is_bot || skip.has(x.name)))
-          ?.map((x) => [x.id, x.profile]),
-      );
+      return new Map(data.members?.filter((x) => !(x.is_bot || skip.has(x.name)))?.map((x) => [x.id, x.profile]));
     }
 
     async function getAttendees(year) {
@@ -56,14 +50,10 @@ class HackersRegistry extends DefaultRegistry {
     task("prepare-data", async () => {
       const [profiles, items] = await Promise.all([
         getSlackProfiles(this.config.slackToken),
-        getAttendees(this.config.year),
+        getAttendees(this.config.year)
       ]);
       const attendees = items.map((x) => [x.slug, profiles.get(x.slackID), x]);
-      return fs.promises.writeFile(
-        this.dest,
-        JSON.stringify(attendees, null, 2),
-        { encoding: "utf-8" },
-      );
+      return fs.promises.writeFile(this.dest, JSON.stringify(attendees, null, 2), { encoding: "utf-8" });
     });
   }
 }
@@ -73,13 +63,8 @@ class HackersRegistry extends DefaultRegistry {
  * @returns {string|null}
  */
 const formatDateTime = (x) =>
-  x?.toLocaleString("cs", {
-    weekday: "short",
-    day: "numeric",
-    month: "long",
-    hour: "2-digit",
-    minute: "2-digit",
-  }) ?? null;
+  x?.toLocaleString("cs", { weekday: "short", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })
+    ?? null;
 
 export default {
   images: true,
@@ -87,26 +72,11 @@ export default {
   fonts: true,
   svgSprite: true,
   javascripts: false,
-  stylesheets: {
-    postcss: {
-      postcss: {
-        plugins: [
-          postcssGamutMapping(),
-          jitProps(OpenProps),
-        ],
-      },
-    },
-  },
+  stylesheets: { postcss: { postcss: { plugins: [postcssGamutMapping(), jitProps(OpenProps)] } } },
 
-  static: {
-    srcConfig: {
-      encoding: false,
-    },
-  },
+  static: { srcConfig: { encoding: false } },
 
-  esbuild: {
-    define: { __DEVELOPMENT__: mode.development() ? "true" : "undefined" },
-  },
+  esbuild: { define: { __DEVELOPMENT__: mode.development() ? "true" : "undefined" } },
 
   html: {
     dataFile: "global.mjs",
@@ -117,12 +87,10 @@ export default {
       "housing_index",
       "housing_types",
       "housing_variants",
-      "housing_reservations",
+      "housing_reservations"
     ],
     nunjucksRender: {
-      globals: {
-        currentYear: new Date().getFullYear(),
-      },
+      globals: { currentYear: new Date().getFullYear() },
       filters: {
         formatDateTime(s) {
           const date = new Date(s);
@@ -132,27 +100,18 @@ export default {
           return new Intl.NumberFormat("cs-CZ", {
             style: currency ? "currency" : undefined,
             currency,
-            maximumFractionDigits: 0,
+            maximumFractionDigits: 0
           }).format(x).replace(/\u00A0/, "\u202F");
-        },
-      },
-    },
+        }
+      }
+    }
   },
 
   generate: {
-    html: [
-      {
-        collection: "hackers",
-        template: "shared/hacker.njk",
-        route: (x) => `hackers/${x[0]}/index.html`,
-      },
-    ],
+    html: [{ collection: "hackers", template: "shared/hacker.njk", route: (x) => `hackers/${x[0]}/index.html` }]
   },
 
-  vite: {
-    browser: "google chrome canary",
-    browserArgs: "--ignore-certificate-errors --allow-insecure-localhost",
-  },
+  vite: { browser: "google chrome canary", browserArgs: "--ignore-certificate-errors --allow-insecure-localhost" },
 
   workboxBuild: {
     swSrc: () => assetPath(projectPath(pathConfig.dest), "assets/esm/sw.js"),
@@ -164,29 +123,13 @@ export default {
       "admin/**/*.html",
       "ubytovani/**/*.html",
       "program/**/*.html",
-      "registrace/**/*.html",
-    ],
+      "registrace/**/*.html"
+    ]
   },
 
-  production: {
-    rev: {
-      exclude: ["favicon.ico", "robots.txt", "humans.txt", "_redirects", "_headers"],
-    },
-  },
+  production: { rev: { exclude: ["favicon.ico", "robots.txt", "humans.txt", "_redirects", "_headers"] } },
 
-  registries: [
-    new HackersRegistry(
-      { slackToken: process.env["SLACK_TOKEN"], year: data.year },
-      pathConfig,
-    ),
-  ],
+  registries: [new HackersRegistry({ slackToken: process.env["SLACK_TOKEN"], year: data.year }, pathConfig)],
 
-  additionalTasks: {
-    development: {
-      prebuild: ["prepare-data"],
-    },
-    production: {
-      prebuild: ["prepare-data"],
-    },
-  },
+  additionalTasks: { development: { prebuild: ["prepare-data"] }, production: { prebuild: ["prepare-data"] } }
 };
