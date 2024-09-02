@@ -813,7 +813,7 @@
 
     formElement.addEventListener("submit", e => {
       e.preventDefault();
-      submitButtonElement.setAttribute("disabled", "disabled");
+      submitButtonElement.disabled = true;
 
       fetch(e.target.action, {
         method: "POST",
@@ -838,18 +838,15 @@
           alert("Se to někde zaseklo, zkuste to prosím znovu");
         })
         .finally(() => {
-          submitButtonElement.removeAttribute("disabled");
+          submitButtonElement.disabled = false;
         });
     });
 
     function disableForm() {
       formElement.setAttribute("disabled", "disabled");
-      formElement.querySelectorAll("input, textarea, select").forEach(field => {
-        field.setAttribute("disabled", "disabled");
-      });
-      formElement.querySelectorAll("button").forEach(button => {
-        button.setAttribute("disabled", "disabled");
-      });
+      for (const field of formElement.querySelectorAll("input, textarea, select, button")) {
+        field.disabled = true;
+      }
     }
 
     const volunteer = searchParams.has("volunteer");
