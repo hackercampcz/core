@@ -347,7 +347,7 @@ export async function selectionBar(selectedView, selection, data) {
           </md-icon-button>`)
   }
       ${
-    when(selectedView === View.volunteer || selectedView === View.staff, () =>
+    when(new Set([View.volunteer, View.staff]).has(selectedView), () =>
       html`<md-icon-button title="Schválit" @click="${approveSelected()}"
             ><md-icon>person_add</md-icon>
           </md-icon-button>`)
@@ -366,15 +366,15 @@ function selectRow(e) {
   }
 }
 
-const registrationStatus = (row) => {
-  if (["staff", "volunteer"].includes(row.ticketType)) return row.ticketType;
-  else if (["hacker", "hacker-plus", "hacker-patron", "nonprofit"].includes(row.ticketType)) {
+function registrationStatus(row) {
+  if (new Set(["staff", "volunteer"]).has(row.ticketType)) return row.ticketType;
+  else if (new Set(["hacker", "hacker-plus", "hacker-patron", "nonprofit"]).has(row.ticketType)) {
     if (row.paid) return "paid";
     if (row.invoiced) return "invoiced";
     if (row.approved) return "approved";
   }
   return "waiting list";
-};
+}
 
 export function registrationsTableTemplate(
   data,
