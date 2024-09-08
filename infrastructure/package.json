@@ -13,6 +13,6 @@
     "@topmonks/pulumi-aws": "3.1.4",
     "esbuild": "0.23.1",
     "front-matter": "4.0.2",
-    "marked": "14.1.1"
+    "marked": "14.1.2"
   }
 }
