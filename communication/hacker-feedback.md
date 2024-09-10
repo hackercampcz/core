@@ -3,6 +3,8 @@ Subject: Zapište si další ročník Hacker Campu do kalendářů a řekněte n
 LayoutTemplate: hc-basic
 ---
 
+Ahoj táborníci!
+
 Doufáme, že energie na campu nabitá vás ještě neopustila. Je nejvyšší čas, nezapomenout si do svých kalendářů zapsat
 Hacker Camp již popáté. Ano, **opět to bude 35. týden v roce, tedy 28. - 30. 8. (nebo spíš si vybookujte čas až do neděle 31. 8. dopoledne)**.
 Tak snad si své rodinné a pracovní kalendáře poskládáte tak, abychom se opět mohli vidět.

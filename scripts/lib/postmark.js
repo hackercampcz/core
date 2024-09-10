@@ -1,5 +1,6 @@
 function calendarEvent(startDate, endDate) {
-  return btoa(`BEGIN:VCALENDAR
+  return btoa(
+    encodeURIComponent(`BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//hckr.camp//Donut
 CALSCALE:GREGORIAN
@@ -31,8 +32,10 @@ DTEND;VALUE=DATE:${endDate}
 SUMMARY:Hacker Camp
 URL:https://www.hackercamp.cz/
 LOCATION:Sobeňák\\, Starý Rožmitál 148\\, 262 42 Rožmitál pod Třemšínem
+ORGANIZER;CN="Hacker Camp Crew":MAILTO:team@hackercamp.cz
 END:VEVENT
-END:VCALENDAR`);
+END:VCALENDAR`).replace(/%([0-9A-F]{2})/g, (match, p1) => String.fromCharCode(`0x${p1}`))
+  );
 }
 
 export const Attachments = {
