@@ -1,27 +1,22 @@
 ---
-Subject: Dejte nám zpětnou vazbu na Hacker Camp
+Subject: Zapište si další ročník Hacker Campu do kalendářů a řekněte nám, co si myslíte o tom letošním!
 LayoutTemplate: hc-basic
 ---
 
-Ahoj, táborníci!
+Doufáme, že energie na campu nabitá vás ještě neopustila. Je nejvyšší čas, nezapomenout si do svých kalendářů zapsat
+Hacker Camp již popáté. Ano, **opět to bude 35. týden v roce, tedy 28. - 30. 8. (nebo spíš si vybookujte čas až do neděle 31. 8. dopoledne)**.
+Tak snad si své rodinné a pracovní kalendáře poskládáte tak, abychom se opět mohli vidět.
+Registraci na další roční otevřeme zase na přelomu zimy a jara, jak si s @crew uděláme výkop k dalšímu ročníku.
 
-Doufáme, že už jste se po dalším za nás vydařeném campu pomalu vzpamatovali
-a vrátili se do svého obvyklého rytmu :) Než všechno, co se na campu dělo, 
-zapomenete, poprosíme vás o 3 minutky vašeho času. 
-[Dejte nám prosím zpětnou vazbu](https://forms.gle/q2cJzpoL4e4wphk38), ať víme, co za rok zkusit jinak. 
-Dotazník má 3 povinné otázky, je to fakt na tři minuty max :) 
-A nám vaše zpětka obrovsky pomůže. Výsledky budeme zase jako loni sdílet na slacku.
+**Moc vás prosíme o 5 minut vašeho času. [Dejte nám zpětnou vazbu k tomu letošnímu campu!](https://hckr.camp/feedback/2024)**
+Vaše milá slova, která jste s námi prohodili, než jste z tábořiště odjeli, nebo která jsme si mohli přečíst na slacku, nás moc těší.
+Ale chceme vám dát prostor se zamyslet nad tím, čeho máme dělat víc, co už nedělat, nebo co rozhodně nechat stejné.
+Najděte si prosím 5 minut a dejte nám vědět, ať je naše naškálovaná chata za rok ještě lepší, a nebo tak dobrá,
+abyste se zase chtěli do tábora vrátit!
 
-Nezapomeňte, že [fotky máme v jednom sdíleném folderu](https://drive.google.com/drive/folders/1VmaQvtC8vOpq9O0mYQRygXOMbd0MtFeU?usp=drive_link), 
-ale chováme se k nim tak, abychom ctili pravidlo: 
-**Co se stane na Hacker Campu, zůstane na Hacker Campu**. 
-[Více o tom psal rarouš na Slacku](https://hackercampworkspace.slack.com/archives/C01V4Q0AZ0U/p1693753462820249).
-
-Díky moc za vaši spolupráci. My jdeme sbírat síly na přípravu dalšího ročníku.
+Těšíme se nejpozději zase za rok!
 
 Vaše @crew: Kačka, Pája, Kuba, Kosi, Jirka, Aleš a Ir.
 
-PS. Další ročník už má termín! Je to tradičně od čtvrtka do neděle 35. týdnu. 
-Tak si ho dejte do kalendáře! :) Těšíme se na vás už teď
-
-
+PS. Děkujeme i jménem všech dobrovolníku, bez kterých by tábor nestál, nebo byste bez nich nedostali svoje drinky,
+neupekli si buřty na ohni, neudělali své origoš #hackercamp tričko, nebo netrefili parking/cestu na vlak.
