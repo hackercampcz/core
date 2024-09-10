@@ -23,7 +23,7 @@
     "workbox-window": "7.1.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20240903.0",
+    "@cloudflare/workers-types": "4.20240909.0",
     "@csstools/postcss-gamut-mapping": "2.0.2",
     "@types/w3c-web-nfc": "^1.0.4",
     "material-icons": "1.13.12",
