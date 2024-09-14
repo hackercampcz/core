@@ -3783,7 +3783,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/lib@workspace:lib"
   dependencies:
-    jose: "npm:5.8.0"
+    jose: "npm:5.9.2"
   languageName: unknown
   linkType: soft
 
@@ -11149,10 +11149,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:5.8.0":
-  version: 5.8.0
-  resolution: "jose@npm:5.8.0"
-  checksum: 10c0/f4dba1bbc41c46ae549840c3f99db07e72c1a191dffeef46bbd81c5fdc01827bb4be4d9f3e77d37887ffb56c57bd276e5fde314e6e790db19809008e47004c48
+"jose@npm:5.9.2":
+  version: 5.9.2
+  resolution: "jose@npm:5.9.2"
+  checksum: 10c0/0727bc21777e54f9b1e690ad9461c12f5d642b40ffd4e4e3adc7169277e31d9d979c1bc667ba30627a13795dca6cfa61bc5d169bb3f91a6da1f67350d094c3e6
   languageName: node
   linkType: hard
 
