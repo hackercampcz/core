@@ -17,7 +17,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "4.20240909.0",
     "@types/node": "22.5.5",
-    "wrangler": "3.77.0"
+    "wrangler": "3.78.2"
   },
   "packageManager": "yarn@4.4.1"
 }
