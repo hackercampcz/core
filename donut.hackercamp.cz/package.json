@@ -30,6 +30,6 @@
     "open-props": "1.7.6",
     "postcss-jit-props": "1.0.14",
     "web-types-lit": "0.1.0",
-    "wrangler": "3.78.7"
+    "wrangler": "3.78.8"
   }
 }
