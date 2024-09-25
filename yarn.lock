@@ -3659,7 +3659,7 @@ __metadata:
     immutable: "npm:4.3.7"
     jsonwebtoken: "npm:9.0.2"
     rollbar: "npm:2.26.4"
-    wrangler: "npm:3.78.8"
+    wrangler: "npm:3.78.9"
   languageName: unknown
   linkType: soft
 
@@ -3706,7 +3706,7 @@ __metadata:
     workbox-precaching: "npm:7.1.0"
     workbox-recipes: "npm:7.1.0"
     workbox-window: "npm:7.1.0"
-    wrangler: "npm:3.78.8"
+    wrangler: "npm:3.78.9"
   languageName: unknown
   linkType: soft
 
@@ -3740,7 +3740,7 @@ __metadata:
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
   dependencies:
     "@material/layout-grid": "npm:14.0.0"
-    wrangler: "npm:3.78.8"
+    wrangler: "npm:3.78.9"
   languageName: unknown
   linkType: soft
 
@@ -8123,13 +8123,6 @@ __metadata:
   version: 4.1.0
   resolution: "date-fns@npm:4.1.0"
   checksum: 10c0/b79ff32830e6b7faa009590af6ae0fb8c3fd9ffad46d930548fbb5acf473773b4712ae887e156ba91a7b3dc30591ce0f517d69fd83bd9c38650fdc03b4e0bac8
-  languageName: node
-  linkType: hard
-
-"date-fns@npm:^3.6.0":
-  version: 3.6.0
-  resolution: "date-fns@npm:3.6.0"
-  checksum: 10c0/0b5fb981590ef2f8e5a3ba6cd6d77faece0ea7f7158948f2eaae7bbb7c80a8f63ae30b01236c2923cf89bb3719c33aeb150c715ea4fe4e86e37dcf06bed42fb6
   languageName: node
   linkType: hard
 
@@ -16355,9 +16348,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:3.78.8":
-  version: 3.78.8
-  resolution: "wrangler@npm:3.78.8"
+"wrangler@npm:3.78.9":
+  version: 3.78.9
+  resolution: "wrangler@npm:3.78.9"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.3.4"
     "@cloudflare/workers-shared": "npm:0.5.4"
@@ -16365,7 +16358,6 @@ __metadata:
     "@esbuild-plugins/node-modules-polyfill": "npm:^0.2.2"
     blake3-wasm: "npm:^2.1.5"
     chokidar: "npm:^3.5.3"
-    date-fns: "npm:^3.6.0"
     esbuild: "npm:0.17.19"
     fsevents: "npm:~2.3.2"
     miniflare: "npm:3.20240909.5"
@@ -16389,7 +16381,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/f0fe583fad1dece2425bc3b71d684d840382bbf2525deb28f8349031240a35c2680e8ed4d53341673e78c17b3499d5fa49116765a48a6a50ba69ee4de2466280
+  checksum: 10c0/d03f624250f3ed86d32918583fe6f2a98c253a192ad4ca3e7b817b365eb3ce75c9a6e90b3151ccc14f163c815ad8842788e9b33235881d209754297ec876a71c
   languageName: node
   linkType: hard
 
