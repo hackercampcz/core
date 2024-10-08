@@ -3698,7 +3698,7 @@ __metadata:
     "@ungap/structured-clone": "npm:1.2.0"
     date-fns: "npm:4.1.0"
     lit: "npm:3.2.1"
-    lit-html: "npm:3.2.0"
+    lit-html: "npm:3.2.1"
     marked: "npm:14.1.2"
     material-icons: "npm:1.13.12"
     open-props: "npm:1.7.6"
@@ -11535,12 +11535,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:3.2.0, lit-html@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "lit-html@npm:3.2.0"
+"lit-html@npm:3.2.1":
+  version: 3.2.1
+  resolution: "lit-html@npm:3.2.1"
   dependencies:
     "@types/trusted-types": "npm:^2.0.2"
-  checksum: 10c0/cc0d58fc581d0d838361b3e46a34113ec458822c6600e6eb8dac9a671e4d983c0d34af07a1b3b60cc257e91b7e87760044779328f14d46742915d2c46fe68688
+  checksum: 10c0/31c02df2148bf9a73545570cbe57aae01c4de1d9b44060b6ff13641837d38e39e6b1abcf92e13882cc84f5fee37605ed79602b91ad479728549014462808118e
   languageName: node
   linkType: hard
 
@@ -11550,6 +11550,15 @@ __metadata:
   dependencies:
     "@types/trusted-types": "npm:^2.0.2"
   checksum: 10c0/90057dee050803823ac884c1355b0213ab8c05fbe2ec63943c694b61aade5d36272068f3925f45a312835e504f9c9784738ef797009f0a756a750351eafb52d5
+  languageName: node
+  linkType: hard
+
+"lit-html@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "lit-html@npm:3.2.0"
+  dependencies:
+    "@types/trusted-types": "npm:^2.0.2"
+  checksum: 10c0/cc0d58fc581d0d838361b3e46a34113ec458822c6600e6eb8dac9a671e4d983c0d34af07a1b3b60cc257e91b7e87760044779328f14d46742915d2c46fe68688
   languageName: node
   linkType: hard
 
