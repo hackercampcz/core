@@ -39,8 +39,9 @@ Co ve zpětné vazbě slyšíme?
 
 👀 Tohle je jen zlomek toho, kde nám vaše zpětná vazba dala podněty, nad čím se pro další rok už teď zamýšlíme.
 Chcete vidět, co vše se ve zpětné vazbě objevilo? Myslíme si, že je to fér. Alespoň i vy uvidíte,
-jak ostatní táborníci camp vidí. Takže tady je pár obrázků a jeden sheet se slovními odpověďmi,
-pro ty z vás, koho zajímají podrobnosti.
+jak ostatní táborníci camp vidí. Takže tady je [pár obrázků](https://docs.google.com/presentation/d/1JNTsVSBd4qF-9u8Nn6fcpALNzECbCcPWzKUqUPZqWXo/edit?usp=sharing)
+a [jeden sheet](https://docs.google.com/spreadsheets/d/1TEyqC82pm0Z5Y_jVGjwzCEoLXTxBMD_gx9EyZjABeV8/edit?usp=sharing)
+se slovními odpověďmi, pro ty z vás, koho zajímají podrobnosti.
 
 🗓️ Už jsme to říkali: **Další rok Campu bude**. Pokud chcete přijet znovu, **[zapište si do kalendářů 28.8.2025 \- 31.8. 2025!](https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=Y2NyajJwOWg2NHNtNGI5bTY0czM0YjlrY2tvamliYjJjb3AzYWI5cGNsaDM4ZTMxNzVnamVkOWw2OCBpckBpemF0bG91ay5jeg&tmsrc=ir%40izatlouk.cz)**
 My se na vás už teď těšíme. **Registraci otevřeme někdy na jaře. Zase vám dáme vědět mailem i na slacku**.
