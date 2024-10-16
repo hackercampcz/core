@@ -21,4 +21,4 @@ async function main({ token }) {
 
 await main(parse(Deno.args));
 
-// deno run --allow-env --allow-net=api.postmarkapp.com email-generic.js --token=$(op read "op://HackerCamp/Postmark/credential")
+// deno run --allow-import --allow-env --allow-net=api.postmarkapp.com email-generic.js --token=$(op read "op://HackerCamp/Postmark/credential")
