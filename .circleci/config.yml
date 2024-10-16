@@ -103,7 +103,7 @@ jobs:
       - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v3-provision
+          cache-version: v4-provision
           override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/api @hackercamp/lib
       - run:
           working_directory: infrastructure
@@ -133,7 +133,7 @@ jobs:
       - node/install-yarn
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v3-provision
+          cache-version: v4-provision
           override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/api @hackercamp/lib
       - run:
           working_directory: infrastructure
