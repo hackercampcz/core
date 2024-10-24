@@ -2643,13 +2643,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-calc@npm:^2.0.2":
-  version: 2.0.2
-  resolution: "@csstools/css-calc@npm:2.0.2"
+"@csstools/css-calc@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "@csstools/css-calc@npm:2.0.3"
   peerDependencies:
-    "@csstools/css-parser-algorithms": ^3.0.2
+    "@csstools/css-parser-algorithms": ^3.0.3
     "@csstools/css-tokenizer": ^3.0.2
-  checksum: 10c0/b36e655b4abc8ea39b300725e33cd43b1875d759dd60bee8155bf7841065615a7f24cf53199382e30aa10bb137f64021043e4af7e11b7199b674a6e6cf3ccd01
+  checksum: 10c0/a3dacda66bde67edab0f2384e85462dcd46b5bb62bc2a6396f0577a006d9ad59eae270353cbd6fe1a5f7081d0546fe4b1fd9b2df242758da54ec8b7022296570
   languageName: node
   linkType: hard
 
@@ -2666,16 +2666,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-color-parser@npm:^3.0.3":
-  version: 3.0.3
-  resolution: "@csstools/css-color-parser@npm:3.0.3"
+"@csstools/css-color-parser@npm:^3.0.4":
+  version: 3.0.4
+  resolution: "@csstools/css-color-parser@npm:3.0.4"
   dependencies:
     "@csstools/color-helpers": "npm:^5.0.1"
-    "@csstools/css-calc": "npm:^2.0.2"
+    "@csstools/css-calc": "npm:^2.0.3"
   peerDependencies:
-    "@csstools/css-parser-algorithms": ^3.0.2
+    "@csstools/css-parser-algorithms": ^3.0.3
     "@csstools/css-tokenizer": ^3.0.2
-  checksum: 10c0/02367ffc222254132c47f9cbc856f65fe0b81ee4a5e7381251b95c4064138b5ed99a5e5a79c0c8689f9e75e3d900f94773258a161a97f467c3f0420838c10e04
+  checksum: 10c0/8f05264254d3768e45e46ce10e9355fe8ca0f6e4d2f648a22572f46c6d05b2378c37c2e5d970ed3b7bdfa0b152ea2af0c56a0556249bd85973aee9db7b091aa7
   languageName: node
   linkType: hard
 
@@ -2688,12 +2688,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/css-parser-algorithms@npm:^3.0.2":
-  version: 3.0.2
-  resolution: "@csstools/css-parser-algorithms@npm:3.0.2"
+"@csstools/css-parser-algorithms@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "@csstools/css-parser-algorithms@npm:3.0.3"
   peerDependencies:
     "@csstools/css-tokenizer": ^3.0.2
-  checksum: 10c0/246afbf518ee9eaa24ed7f083360eb66884f1172fd4f8c663bff8c6099de2a8abd1e2a31d5b6fe42e010277d238469d780cff62bc7fdc6a52e7a90626b8924dc
+  checksum: 10c0/c1e634384affb10c3726a36f090867247005a2a470cb223de88debeab07921b78c0e7875e7847d90949c2b0ba88a290c71565f1839f7739c21a5bf1c870e137d
   languageName: node
   linkType: hard
 
@@ -2802,16 +2802,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@csstools/postcss-gamut-mapping@npm:2.0.3":
-  version: 2.0.3
-  resolution: "@csstools/postcss-gamut-mapping@npm:2.0.3"
+"@csstools/postcss-gamut-mapping@npm:2.0.4":
+  version: 2.0.4
+  resolution: "@csstools/postcss-gamut-mapping@npm:2.0.4"
   dependencies:
-    "@csstools/css-color-parser": "npm:^3.0.3"
-    "@csstools/css-parser-algorithms": "npm:^3.0.2"
+    "@csstools/css-color-parser": "npm:^3.0.4"
+    "@csstools/css-parser-algorithms": "npm:^3.0.3"
     "@csstools/css-tokenizer": "npm:^3.0.2"
   peerDependencies:
     postcss: ^8.4
-  checksum: 10c0/21f5708f63e9c3b7603f8b72b5f288e0a021e9710a6abf4aaa713ff4d04bae057d1861e1f28d7670ea39ba463ac04f1507876d4a11178934e7cc7a1c6a780084
+  checksum: 10c0/60c6ff13cc71a0cda7ce184fa8b42924975f2bd05e3bc096059de853ae01d48e36f27d02d7e6286d9e8c4eb4dfd526f7c302ff51be19c5f7949dd6079915a3a9
   languageName: node
   linkType: hard
 
@@ -3792,7 +3792,7 @@ __metadata:
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
     "@cloudflare/workers-types": "npm:4.20241022.0"
-    "@csstools/postcss-gamut-mapping": "npm:2.0.3"
+    "@csstools/postcss-gamut-mapping": "npm:2.0.4"
     "@hackercamp/infrastructure": "workspace:infrastructure"
     "@hackercamp/lib": "workspace:lib"
     "@material/chips": "npm:14.0.0"
