@@ -295,7 +295,7 @@ function plusOneCard(referralLink) {
         class="responsive"
         width="560"
         height="315"
-        src="https://www.youtube-nocookie.com/embed/igM6UFAqaOQ?hl=cs&modestbranding=1"
+        src="https://www.youtube-nocookie.com/embed/igM6UFAqaOQ?hl=cs&amp;modestbranding=1"
         title="Hackercamp sestřih po 2021"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -305,8 +305,18 @@ function plusOneCard(referralLink) {
         class="responsive"
         width="560"
         height="315"
-        src="https://www.youtube-nocookie.com/embed/xm0Bse4SVRQ?hl=cs&modestbranding=1"
+        src="https://www.youtube-nocookie.com/embed/xm0Bse4SVRQ?hl=cs&amp;modestbranding=1"
         title="Hackercamp sestřih po 2023"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
+      <iframe
+        class="responsive"
+        width="560"
+        height="315"
+        src="https://www.youtube-nocookie.com/embed/FCvKBikoXOs?hl=cs&amp;modestbranding=1"
+        title="Hackercamp sestřih po 2024"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
