@@ -8,11 +8,11 @@ export default {
   },
   event: {
     name: "Hacker Camp",
-    startDate: new Date("2024-08-29T17:00:00+02:00"),
-    endDate: new Date("2024-09-01T12:00:00+02:00"),
+    startDate: new Date("2025-08-28T17:00:00+02:00"),
+    endDate: new Date("2025-08-31T12:00:00+02:00"),
     get willStartSoon() {
       const today = new Date();
-      const threeDaysBefore = this.startDate;
+      const threeDaysBefore = new Date(this.startDate);
       threeDaysBefore.setDate(threeDaysBefore.getDate() - 3);
       threeDaysBefore.setHours(0, 0, 0, 0);
       return threeDaysBefore <= today && today <= this.endDate;

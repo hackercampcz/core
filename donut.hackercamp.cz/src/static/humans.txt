@@ -1,5 +1,5 @@
 /* TEAM */
 Copy writing: Irena Zatloukalová <ir@izatlouk.cz>
-Graphic design: Pavel Trnka <pavel.trnka@topmonks.com>
-Development: Aleš Roubíček <ales.roubicek@topmonks.com>
-Development: Daniel Hromada <daniel.hromada@topmonks.com>
+Graphic design: Pavel Trnka <pavel.trnka@hckr.studio>
+Development: Aleš Roubíček <ales.roubicek@hckr.studio>
+Development: Daniel Hromada <daniel.hromada@hckr.studio>

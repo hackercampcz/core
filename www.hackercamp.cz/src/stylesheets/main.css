@@ -353,6 +353,10 @@ img.responsive {
     justify-content: center;
     min-height: 8em;
   }
+
+  .hc-card p {
+    margin: 0
+  }
 }
 
 #faq {

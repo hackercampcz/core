@@ -167,7 +167,8 @@
       transition: width 0.4s ease;
     }
 
-    .hc-card.hc-card--decorated:active::before, .hc-card.hc-card--decorated:hover::before {
+    .hc-card.hc-card--decorated:active::before,
+    .hc-card.hc-card--decorated:hover::before {
       width: 100%;
     }
 
@@ -302,8 +303,6 @@
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="manifest" href="/sitemanifest.json">
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#e052a4">
-  <meta name="msapplication-TileColor" content="#f5f5f5">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#222222" media="(prefers-color-scheme: dark)">
@@ -351,7 +350,7 @@
           </p>
           <p>
             {{ event.startDate | longDate }} &ndash; {{ event.endDate | longDate }}
-            {{ year }} na Sobeňáku
+            {{ event.startDate | year }} na Sobeňáku
           </p>
           {% if event.isRegistrationOpen %}
             <p>
@@ -602,7 +601,7 @@
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
       </div>
       <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
-        {% set publicId = collections.images["IMG_5274.jpg"]["public_id"] %}
+        {% set publicId = collections.images["NM6A4967.jpg"]["public_id"] %}
         <img
           class="responsive"
           loading="lazy"
@@ -615,7 +614,7 @@
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
       </div>
       <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
-        {% set publicId = collections.images["IMG_20210903_143853.jpg"]["public_id"] %}
+        {% set publicId = collections.images["NM6A4775.jpg"]["public_id"] %}
         <img
           class="responsive"
           loading="lazy"
@@ -996,21 +995,21 @@
     <div class="mdc-layout-grid__inner">
       <div
         class="hc-card hc-card--decorated hc-card--centered mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
-        Akce je jen pro pozvané
+        <p>Akce je jen pro pozvané</p>
       </div>
 
       <div
         class="hc-card hc-card--decorated hc-card--centered mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
-        Tykáme si
+        <p>Tykáme si</p>
       </div>
 
       <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-        Vstupenku si kupuješ na celou akci a budeme rádi, když s&nbsp;námi zůstaneš všechny tři dny
+        <p>Vstupenku si kupuješ na celou akci a budeme rádi, když s&nbsp;námi zůstaneš všechny tři dny</p>
       </div>
 
       <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-        Chováme se k&nbsp;sobě slušně a ohleduplně&nbsp;&ndash; dodržujeme hygienická i&nbsp;etická pravidla
-        (i&nbsp;pokud jde o&nbsp;focení se, noční klid a podobně)
+        <p>Chováme se k&nbsp;sobě slušně a ohleduplně&nbsp;&ndash; dodržujeme hygienická i&nbsp;etická pravidla
+          (i&nbsp;pokud jde o&nbsp;focení se, noční klid a podobně)</p>
       </div>
 
       <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
@@ -1028,12 +1027,12 @@
       </div>
 
       <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-        Jsme v&nbsp;přírodě a chováme se i&nbsp;k&nbsp;ní ohleduplně (třídíme odpad a ideálně odjíždíme
-        beze&nbsp;stop)
+        <p>Jsme v&nbsp;přírodě a chováme se i&nbsp;k&nbsp;ní ohleduplně (třídíme odpad a ideálně odjíždíme
+          beze&nbsp;stop)</p>
       </div>
 
       <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
-        {% set publicId = collections.images["IMG_5867.jpg"]["public_id"] %}
+        {% set publicId = collections.images["9895_0041.jpg"]["public_id"] %}
         <img
           class="responsive"
           loading="lazy"
@@ -1048,11 +1047,11 @@
 
       <div
         class="hc-card hc-card--decorated hc-card--centered mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
-        Nemáme žádné VIP zóny
+        <p>Nemáme žádné VIP zóny</p>
       </div>
 
       <div class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
-        Každý účastník je zároveň tvůrce akce.
+        <p>Každý účastník je zároveň tvůrce akce.</p>
       </div>
 
       <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
@@ -1084,8 +1083,8 @@
       </div>
 
       <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-        Přivést můžeš i&nbsp;jakýkoliv doprovodný program&nbsp;&ndash; uvítáme vše od pípy, baristy a přípravy kávy
-        až po&nbsp;DJs.
+        <p>Přivést můžeš i&nbsp;jakýkoliv doprovodný program&nbsp;&ndash; uvítáme vše od pípy, baristy a přípravy kávy
+          až po&nbsp;DJs.</p>
       </div>
 
       <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
@@ -1103,8 +1102,10 @@
       </div>
 
       <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-        Hacker Camp je z&nbsp;principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš propagovat a nabízet
-        jen pokud to obohatí samotnou&nbsp;akci <code>#NoDirectSales</code> <code>#NoDirectHiring</code>
+        <p>Hacker Camp je z&nbsp;principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš propagovat a nabízet
+          jen pokud to obohatí samotnou&nbsp;akci
+          <code>#NoDirectSales</code>&#x0020;
+          <code>#NoDirectHiring</code></p>
       </div>
     </div>
   </section>
@@ -1161,19 +1162,10 @@
     Photos ©
     <a href="https://cz.linkedin.com/in/petrmihle">Petr Mihle</a>
     &amp;
-    <a href="https://instagram.com/fromen">Pavel Trnka</a>
+    <a href="https://trnka.digital">Pavel Trnka</a>
   </p>
 </footer>
 
-<script type="module">
-  function el(tagName, attrs) {
-    return Object.assign(document.createElement(tagName), attrs);
-  }
-
-  document.head.appendChild(el("link", {
-    rel: "stylesheet",
-    href: "/assets/css/main.css",
-  }));
-</script>
+<link rel="stylesheet" href="{{ "main.css" | assetUrl("stylesheets") }}">
 </body>
 </html>

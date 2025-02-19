@@ -23,6 +23,9 @@ export default {
         shortDate(x) {
           return new Intl.DateTimeFormat("cs-CZ", { day: "numeric", month: "numeric" }).format(new Date(x));
         },
+        year(x) {
+          return new Intl.DateTimeFormat("cs-CZ", {year: "numeric"}).format(new Date(x))
+        },
         price(x, currency) {
           return new Intl.NumberFormat("cs-CZ", {
             style: currency ? "currency" : undefined,
@@ -52,8 +55,7 @@ export default {
 
   vite: {
     server: { port: 3001 },
-    browser: "google chrome canary",
-    browserArgs: "--ignore-certificate-errors --allow-insecure-localhost"
+    browser: "firefox developer edition"
   },
 
   production: { rev: true }
