@@ -1,6 +1,6 @@
-import xml from "fast-xml-parser";
+import { XMLParser } from "fast-xml-parser";
 
-const parser = new xml.XMLParser();
+const parser = new XMLParser();
 const parseXML = (input) => parser.parse(input);
 
 function getJSONData(ico, data) {
