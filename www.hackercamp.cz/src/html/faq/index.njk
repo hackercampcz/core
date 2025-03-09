@@ -113,7 +113,7 @@
       margin-right: auto;
     }
 
-    header, footer, section {
+    header, footer, main {
       margin: 0 auto;
       max-width: var(--hc-layout-width);
     }
@@ -159,6 +159,8 @@
 
     .hc-hero {
       font-weight: bold;
+      margin-block: 1lh;
+      margin-inline: 2ch;
     }
 
     .hc-card {
@@ -264,11 +266,17 @@
 
     .hc-navbar {
       position: fixed;
-      width: 100%;
-      height: 78px;
+      top:0;
+      left: 0;
+      right: 0;
+      gap: 2ch;
       background: var(--hc-background-color);
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
       z-index: 1000;
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      padding-block: 1lh;
+      padding-inline: 2ch;
     }
 
     .hc-navbar__link {
@@ -276,18 +284,15 @@
       margin-right: 2em;
     }
 
-    #top {
-      padding-top: 78px;
-    }
-
     .hc-navbar__right {
       display: none;
     }
 
+    #top {
+      padding-top: 78px;
+    }
+
     @media screen and (min-width: 600px) {
-      .hc-navbar {
-        height: 100px;
-      }
 
       .hc-navbar__right {
         display: flex;
@@ -302,6 +307,11 @@
     h1 {
       text-align: center;
       margin-top: 2em;
+    }
+
+    [typeof="Question"] {
+      margin-block: 1lh;
+      margin-inline: 2ch;
     }
 
     [typeof="Question"]:target {
@@ -359,288 +369,273 @@
     style="display: none; visibility: hidden"></iframe>
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
-<nav class="hc-navbar mdc-layout-grid" style="line-height: 1;">
-  <div class="mdc-layout-grid__inner">
-    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-      {% include "shared/logo.html" %}
-    </div>
-    <div class="hc-navbar__right mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-      <a class="hc-link hc-navbar__link" href="https://g.page/sobenak?share">Mapa</a>
-      <!--a class="hc-link hc-navbar__link" href="/program/">Program</a-->
-      <a
-        class="hc-link hc-link--decorated"
-        href="/registrace/">Chci se zapojit</a>
-    </div>
+<nav class="hc-navbar" style="line-height: 1;">
+  <div class="hc-navbar__logo">
+    {% include "shared/logo.html" %}
+  </div>
+  <div class="hc-navbar__right">
+    <a class="hc-link hc-navbar__link" href="https://g.page/sobenak?share">Mapa</a>
+    <!--a class="hc-link hc-navbar__link" href="/program/">Program</a-->
+    <a
+      class="hc-link hc-link--decorated"
+      href="/registrace/">Chci se zapojit</a>
   </div>
 </nav>
 
 <div class="hc-code-bg">
-  <header id="top" class="hc-hero mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-      <div class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <iframe
-          width="720"
-          height="405"
-          src="https://www.youtube-nocookie.com/embed/7iQTP3IY0-E?hl=cs&modestbranding=1"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-          style="aspect-ratio: 16/9; width: 100%; height: auto; max-width: 1280px; margin: 0 auto;"></iframe>
-        <h1 style="margin-top: 1em">FAQs</h1>
-      </div>
+  <header id="top" class="hc-hero">
+    <div class="hc-hero__inner">
+      <iframe
+        width="720"
+        height="405"
+        src="https://www.youtube-nocookie.com/embed/7iQTP3IY0-E?hl=cs&modestbranding=1"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="aspect-ratio: 16/9; width: 100%; height: auto; max-width: 1280px; margin: 0 auto;"></iframe>
+      <h1 style="margin-top: 1em">FAQs</h1>
     </div>
   </header>
 </div>
 
-<main id="faq" class="mdc-layout-grid">
-  <div class="mdc-layout-grid__inner">
-    <div id="faq-1" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-1"><h2 property="name">Na co se můžu těšit?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/1-na-co-se-muzu-tesit.md" %}
-        </div>
+<main id="faq">
+  <div id="faq-1" class="hc-card" typeof="Question">
+    <a href="#faq-1"><h2 property="name">Na co se můžu těšit?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/1-na-co-se-muzu-tesit.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-2" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-2"><h2 property="name">Můžu přijet jen na část programu?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/2-muzu-prijet-jen-na-cast-programu.md" %}
-        </div>
+  <div id="faq-2" class="hc-card" typeof="Question">
+    <a href="#faq-2"><h2 property="name">Můžu přijet jen na část programu?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/2-muzu-prijet-jen-na-cast-programu.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-3" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-3"><h2 property="name">Kdo tam bude?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/3-kdo-tam-bude.md" %}
-        </div>
+  <div id="faq-3" class="hc-card" typeof="Question">
+    <a href="#faq-3"><h2 property="name">Kdo tam bude?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/3-kdo-tam-bude.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-4" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-4"><h2 property="name">Co když bude pršet?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/4-destiva-varianta.md" %}
-        </div>
+  <div id="faq-4" class="hc-card" typeof="Question">
+    <a href="#faq-4"><h2 property="name">Co když bude pršet?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/4-destiva-varianta.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-5" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-5"><h2 property="name">Co budeme dělat večer?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/5-vecerni-aktivity.md" %}
-        </div>
+  <div id="faq-5" class="hc-card" typeof="Question">
+    <a href="#faq-5"><h2 property="name">Co budeme dělat večer?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/5-vecerni-aktivity.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-6" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-6"><h2 property="name">
-          Budu se tam moct i&nbsp;hýbat, ať využiju pohyb na čerstvém vzduchu?
-        </h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/6-pohyb.md" %}
-        </div>
+  <div id="faq-6" class="hc-card" typeof="Question">
+    <a href="#faq-6"><h2 property="name">
+        Budu se tam moct i&nbsp;hýbat, ať využiju pohyb na čerstvém vzduchu?
+      </h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/6-pohyb.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-7" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-7"><h2 property="name">Co tam budu jíst a pít?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/7-jidlo-a-piti.md" %}
-        </div>
+  <div id="faq-7" class="hc-card" typeof="Question">
+    <a href="#faq-7"><h2 property="name">Co tam budu jíst a pít?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/7-jidlo-a-piti.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-8" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-8"><h2 property="name">
-          Jak se vlastně bude na campu spát? Jak vypadá ubytko a co mám&nbsp;čekat?
-        </h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/8-ubytko.md" %}
-          <style>
+  <div id="faq-8" class="hc-card" typeof="Question">
+    <a href="#faq-8"><h2 property="name">
+        Jak se vlastně bude na campu spát? Jak vypadá ubytko a co mám&nbsp;čekat?
+      </h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/8-ubytko.md" %}
+        <style>
+          .accommodation__image {
+            height: auto;
+          }
+
+          @media screen and (min-width: 480px) and (max-width: 839px) {
             .accommodation__image {
-              height: auto;
+              width: 300px;
             }
 
-            @media screen and (min-width: 480px) and (max-width: 839px) {
-              .accommodation__image {
-                width: 300px;
-              }
+            .accommodation__image--portrait {
+              width: 150px;
+            }
+          }
 
-              .accommodation__image--portrait {
-                width: 150px;
-              }
+          @media screen and (min-width: 840px) {
+            .accommodation__image {
+              width: 340px;
             }
 
-            @media screen and (min-width: 840px) {
-              .accommodation__image {
-                width: 340px;
-              }
-
-              .accommodation__image--portrait {
-                width: 170px;
-              }
+            .accommodation__image--portrait {
+              width: 170px;
             }
-          </style>
-          <div style="display: flex; flex-wrap: wrap; justify-content: space-between">
-            {{ image("faq-ubytko-1.jpg", collections.images,
-              phoneWidth=200,
-              phoneHeight=132,
-              tabletWidth=300,
-              width=340,
-              alt="šestilůžkový pokoj",
-              title="pokoj pro šest",
-              class="accommodation__image") }}
-            {{ image("faq-ubytko-2.jpg", collections.images,
-              phoneWidth=200,
-              phoneHeight=132,
-              tabletWidth=300,
-              width=340,
-              alt="čtyřlůžková chatka",
-              title="chatka pro čtyři",
-              class="accommodation__image") }}
-            {{ image("faq-ubytko-3.jpg", collections.images,
-              phoneWidth=100,
-              phoneHeight=132,
-              tabletWidth=150,
-              width=170,
-              alt="dvojlůžková chatka",
-              title="chatka pro dva",
-              class="accommodation__image accommodation__image--portrait") }}
-          </div>
+          }
+        </style>
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between">
+          {{ image("faq-ubytko-1.jpg", collections.images,
+            phoneWidth=200,
+            phoneHeight=132,
+            tabletWidth=300,
+            width=340,
+            alt="šestilůžkový pokoj",
+            title="pokoj pro šest",
+            class="accommodation__image") }}
+          {{ image("faq-ubytko-2.jpg", collections.images,
+            phoneWidth=200,
+            phoneHeight=132,
+            tabletWidth=300,
+            width=340,
+            alt="čtyřlůžková chatka",
+            title="chatka pro čtyři",
+            class="accommodation__image") }}
+          {{ image("faq-ubytko-3.jpg", collections.images,
+            phoneWidth=100,
+            phoneHeight=132,
+            tabletWidth=150,
+            width=170,
+            alt="dvojlůžková chatka",
+            title="chatka pro dva",
+            class="accommodation__image accommodation__image--portrait") }}
         </div>
       </div>
     </div>
+  </div>
 
-    <div id="faq-9" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-9"><h2 property="name">Jak s dopravou a parkováním?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/9-doprava-parkovani.md" %}
-        </div>
+  <div id="faq-9" class="hc-card" typeof="Question">
+    <a href="#faq-9"><h2 property="name">Jak s dopravou a parkováním?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/9-doprava-parkovani.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-10" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-10"><h2 property="name">
-          Jak řešíte bezpečnost areálu? Budu si mít kde zamknout&nbsp;věci?
-        </h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/10-bezpecnost.md" %}
-        </div>
+  <div id="faq-10" class="hc-card" typeof="Question">
+    <a href="#faq-10"><h2 property="name">
+        Jak řešíte bezpečnost areálu? Budu si mít kde zamknout&nbsp;věci?
+      </h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/10-bezpecnost.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-11" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-11"><h2 property="name">Jak bude probíhat komunikace?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/11-komunikace.md" %}
-        </div>
+  <div id="faq-11" class="hc-card" typeof="Question">
+    <a href="#faq-11"><h2 property="name">Jak bude probíhat komunikace?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/11-komunikace.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-12" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-12"><h2 property="name">Je to tábor, znamená to, že můžu vzít děti?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/12-deti.md" %}
-        </div>
+  <div id="faq-12" class="hc-card" typeof="Question">
+    <a href="#faq-12"><h2 property="name">Je to tábor, znamená to, že můžu vzít děti?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/12-deti.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-13" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-13"><h2 property="name">A&nbsp;když jedu do lesa, můžu si vzít svého psa?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/13-psi.md" %}
-        </div>
+  <div id="faq-13" class="hc-card" typeof="Question">
+    <a href="#faq-13"><h2 property="name">A&nbsp;když jedu do lesa, můžu si vzít svého psa?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/13-psi.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-15" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-15"><h2 property="name">Za co platím? Na co prachy půjdou?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/15-za-co-platim.md" %}
-        </div>
+  <div id="faq-15" class="hc-card" typeof="Question">
+    <a href="#faq-15"><h2 property="name">Za co platím? Na co prachy půjdou?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/15-za-co-platim.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-16" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-16"><h2 property="name">Jak je to s&nbsp;internetem a elektřinou?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/16-internet-elektrina.md" %}
-        </div>
+  <div id="faq-16" class="hc-card" typeof="Question">
+    <a href="#faq-16"><h2 property="name">Jak je to s&nbsp;internetem a elektřinou?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/16-internet-elektrina.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-17" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-17"><h2 property="name">Storno podmínky vstupenek?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/17-storno.md" %}
-        </div>
+  <div id="faq-17" class="hc-card" typeof="Question">
+    <a href="#faq-17"><h2 property="name">Storno podmínky vstupenek?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/17-storno.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-18" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-18"><h2 property="name">Co s sebou?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/18-co-se-sebou.md" %}
-        </div>
+  <div id="faq-18" class="hc-card" typeof="Question">
+    <a href="#faq-18"><h2 property="name">Co s sebou?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/18-co-se-sebou.md" %}
       </div>
     </div>
+  </div>
 
-    <div id="faq-19" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-19"><h2 property="name">Co když něco zapomenu?</h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/19-co-kdyz-neco-zapomenu.md" %}
-        </div>
+  <div id="faq-19" class="hc-card" typeof="Question">
+    <a href="#faq-19"><h2 property="name">Co když něco zapomenu?</h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/19-co-kdyz-neco-zapomenu.md" %}
       </div>
     </div>
-    <div id="faq-20" class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-12" typeof="Question">
-      <a href="#faq-20"><h2 property="name">
-          Je konference jen v češtině? Můžu mít přednášku anglicky, vzít česky nemluvícího kolegu?
-        </h2></a>
-      <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
-        <div property="text">
-          {% markdown "faq/20-cestina.md" %}
-        </div>
+  </div>
+  <div id="faq-20" class="hc-card" typeof="Question">
+    <a href="#faq-20"><h2 property="name">
+        Je konference jen v češtině? Můžu mít přednášku anglicky, vzít česky nemluvícího kolegu?
+      </h2></a>
+    <div property="suggestedAnswer acceptedAnswer" typeof="Answer">
+      <div property="text">
+        {% markdown "faq/20-cestina.md" %}
       </div>
     </div>
   </div>
 </main>
 
-<footer class="mdc-layout-grid">
+<footer>
   <p style="text-align: center">
     © 2021-{{ currentYear }} Hacker camp crew z.s., IČ <a
       href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a>
   </p>
 </footer>
-<script type="module">
-  function el(tagName, attrs) {
-    return Object.assign(document.createElement(tagName), attrs);
-  }
-
-  document.head.appendChild(el("link", {
-    rel: "stylesheet",
-    href: "/assets/css/main.css",
-  }));
-</script>
+<link rel="stylesheet" href="{{ "main.css" | assetUrl("stylesheets") }}">
 </body>
 </html>
