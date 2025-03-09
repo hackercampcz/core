@@ -1,10 +1,6 @@
 version: 2.1
 
 orbs:
-  aws-cli: circleci/aws-cli@5.2.0
-  aws-cloudfront: topmonks/aws-cloudfront@1.0.0
-  aws-s3: circleci/aws-s3@4.1.1
-  codecov: codecov/codecov@5.2.1
   node: circleci/node@7.1.0
   pulumi: pulumi/pulumi@2.1.0
   rollbar: rollbar/deploy@1.0.1
@@ -90,8 +86,8 @@ jobs:
       stack_name:
         type: string
         default: prod
-    docker:
-      - image: cimg/node:current
+    executor:
+      name: node/default
     resource_class: arm.medium
     environment:
       AWS_STS_REGIONAL_ENDPOINTS: regional
@@ -99,11 +95,11 @@ jobs:
     steps:
       - checkout
       - pulumi/login
-      - node/install
-      - node/install-yarn
+      - node/install:
+          install-yarn: true
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v4-provision
+          with-cache: false
           override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/api @hackercamp/lib
       - run:
           working_directory: infrastructure
@@ -123,17 +119,17 @@ jobs:
       stack_name:
         type: string
         default: prod
-    docker:
-      - image: cimg/node:current
+    executor:
+      name: node/default
     resource_class: arm.medium
     steps:
       - checkout
       - pulumi/login
-      - node/install
-      - node/install-yarn
+      - node/install:
+          install-yarn: true
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v4-provision
+          with-cache: false
           override-ci-command: yarn workspaces focus @hackercamp/infrastructure @hackercamp/api @hackercamp/lib
       - run:
           working_directory: infrastructure
@@ -156,19 +152,19 @@ jobs:
       rollbar_access_token:
         type: string
         default: ""
-    docker:
-      - image: cimg/node:22.14.0
+    executor:
+      name: node/default
     resource_class: arm.large
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
     steps:
       - checkout
-      - node/install
-      - node/install-yarn
+      - node/install:
+          install-yarn: true
       # TODO: split install conditionally to razor thin focuses by sitename
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v2-build
+          with-cache: false
           override-ci-command: yarn workspaces focus @hackercamp/core @hackercamp/donut @hackercamp/web @hackercamp/api @hackercamp/lib
       - read_build_envs
       - run:
@@ -234,8 +230,8 @@ jobs:
       rollbar_access_token:
         type: string
         default: ""
-    docker:
-      - image: cimg/node:current
+    executor:
+      name: node/default
     resource_class: arm.medium
     environment:
       ROLLBAR_ACCESS_TOKEN: << parameters.rollbar_access_token >>
@@ -243,12 +239,12 @@ jobs:
       - checkout
       - attach_workspace:
           at: ~/project
-      - node/install
-      - node/install-yarn
+      - node/install:
+          install-yarn: true
       # TODO: split install conditionally to razor thin focuses by sitename
       - node/install-packages:
           pkg-manager: yarn-berry
-          cache-version: v2-deploy
+          with-cache: false
           override-ci-command: yarn workspaces focus @hackercamp/web @hackercamp/donut @hackercamp/api @hackercamp/lib
       - deploy_website:
           project_name: << parameters.project_name >>
