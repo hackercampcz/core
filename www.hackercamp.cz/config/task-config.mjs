@@ -24,7 +24,7 @@ export default {
           return new Intl.DateTimeFormat("cs-CZ", { day: "numeric", month: "numeric" }).format(new Date(x));
         },
         year(x) {
-          return new Intl.DateTimeFormat("cs-CZ", {year: "numeric"}).format(new Date(x))
+          return new Intl.DateTimeFormat("cs-CZ", { year: "numeric" }).format(new Date(x))
         },
         price(x, currency) {
           return new Intl.NumberFormat("cs-CZ", {
@@ -58,5 +58,9 @@ export default {
     browser: "firefox developer edition"
   },
 
-  production: { rev: true }
+  production: {
+    rev: {
+      exclude: ["_headers", "_redirects"],
+    },
+  }
 };
