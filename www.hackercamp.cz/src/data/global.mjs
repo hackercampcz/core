@@ -1,8 +1,11 @@
 export default {
   meta: {
-    lang: "cs"
+    title: "Hacker Camp",
+    url: "https://www.hackercamp.cz/",
+    lang: "cs",
+    generator: "@hckr_/blendid - static site generator and assets pipeline"
   },
-  year: 2024,
+  year: 2025,
   get currentYear() {
     return new Date().getFullYear();
   },
@@ -19,7 +22,7 @@ export default {
     },
     isRegistrationOpen: false,
     location: "Sobeňák, Starý Rožmitál 148, Rožmitál pod Třemšínem",
-    details: "Zažijte netradiční třídenní festival pro lidi z české tech scény."
+    details: "Zažijte kemp pro lidi, kterým není jedno naše budoucnost."
   },
   ticket: {
     nonprofit: { name: "Táborník z neziskovky", price: 3000 },

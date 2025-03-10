@@ -1,16 +1,25 @@
 <!doctype html>
-<html lang="cs">
+<html lang="{{ meta.lang }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>{% block title %}{{ title }}{% endblock %}</title>
+  {% block head_pragma %}{% endblock %}
+  <title>{% block title %}{{ meta.title }} {{ title }}{% endblock %}</title>
+  {% block head_preconnect %}{% endblock %}
+  {% block head_async_scripts %}{% endblock %}
+  {% block head_import_stylesheets %}{% endblock %}
+  {% block head_scripts %}{% endblock %}
   {% include "shared/fonts.html" %}
   {% include "shared/styles.html" %}
   {% block head_stylesheets %}{% endblock %}
+  {% block head_preload %}{% endblock %}
+  {% block head_defer_scripts %}{% endblock %}
+  {% block head_prefetch %}{% endblock %}
+  <meta name="description" content="{{ description or meta.description }}">
   {% block head_meta %}{% endblock %}
   <meta name="robots" content="noindex">
-  <meta name="generator" content="{{ generator or '@hckr_/blendid - static site generator and assets pipeline' }}">
   <meta name="author" content="https://hckr.studio/">
+  <meta name="generator" content="{{ generator or meta.generator }}">
   <link rel="author" href="/humans.txt" type="text/plain">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
@@ -42,8 +51,7 @@
     <a href="/zpracovani-osobnich-udaju/">Zpracování osobních údajů</a></p>
 </footer>
 
-{% block javascript %}{% endblock %}
-
+{% block scripts %}{% endblock %}
 <link rel="stylesheet" href="{{ "main.css" | assetUrl("stylesheets") }}">
 </body>
 </html>

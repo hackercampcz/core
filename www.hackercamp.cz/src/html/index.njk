@@ -5,8 +5,34 @@
 
 {% block head_stylesheets %}
   <style>
-    #top video {
+    .hc-hero {
+      display: grid;
+      gap: var(--hc-gutter);
+      @media screen and (min-width: 640px) {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .hc-hero video {
       max-width: calc(100vw - var(--hc-gutter, 16px) * 2);
+      @media screen and (min-width: 640px) {
+        max-width: 100%;
+      }
+    }
+
+    .hc-card-grid {
+      --_cols: 1;
+      display: grid;
+      margin-inline: var(--hc-gutter);
+      gap: var(--hc-gutter);
+      grid-template-columns: repeat(var(--_cols), 1fr);
+
+      @media screen and (min-width: 480px) {
+        --_cols: 2;
+      }
+      @media screen and (min-width: 840px) {
+        --_cols: 3;
+      }
     }
   </style>
 {% endblock %}
@@ -25,13 +51,11 @@
 
 {% block navigation %}
   {% if event.willStartSoon %}
-    <a class="hc-link hc-navbar__link" href="https://goo.gl/maps/u7zHVpWCf8rvpASq9">Navigovat</a>
+    <a class="hc-link hc-navbar__link" href="/mapa">Navigovat</a>
   {% endif %}
   <a class="hc-link hc-navbar__link" href="/faq/">FAQ</a>
   {% if event.isRegistrationOpen %}
-    <a
-      class="hc-link hc-link--decorated"
-      href="/registrace/">Chci se zapojit</a>
+    <a class="hc-link hc-link--decorated" href="/registrace/">Chci se zapojit</a>
   {% endif %}
 {% endblock %}
 
@@ -41,162 +65,157 @@
     itemprop="eventAttendanceMode"
     href="https://schema.org/MixedEventAttendanceMode">
   <div class="hc-code-bg">
-    <header id="top" class="hc-hero mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
-        <div class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-          <hgroup>
-            <h1 itemprop="name">{{ event.name }}</h1>
-            <h2><small>Hack to the Future</small></h2>
-          </hgroup>
-          {% if not event.willStartSoon %}
-            <p itemprop="description">
-              {{ event.details }}
-            </p>
-            <p>
-              {{ event.startDate | longDate }} &ndash; {{ event.endDate | longDate }}
-              {{ event.startDate | year }} na Sobeňáku
-            </p>
-            {% if event.isRegistrationOpen %}
-              <p>
-                <a
-                  class="hc-cta"
-                  href="/registrace/">Chci se zapojit</a>
-              </p>
-            {% endif %}
-          {% else %}
-            <p>Vjezd do areálu je chráněn značkou zákaz vjezdu. Nelekni se. Ta napovídá správný směr. Pokračuj</p>
+    <header id="top" class="hc-hero">
+      <div class="hc-hero__inner">
+        <hgroup>
+          <h1 itemprop="name">{{ event.name }}</h1>
+          <h2><small>Hack to the Future</small></h2>
+        </hgroup>
+        {% if not event.willStartSoon %}
+          <p itemprop="description">
+            {{ event.details }}
+          </p>
+          <p>
+            {{ event.startDate | longDate }} &ndash; {{ event.endDate | longDate }}
+            {{ event.startDate | year }} na Sobeňáku
+          </p>
+          {% if event.isRegistrationOpen %}
             <p>
               <a
-                href="https://goo.gl/maps/u7zHVpWCf8rvpASq9"
-                class="hc-cta">Navigovat</a>
+                class="hc-cta"
+                href="/registrace/">Chci se zapojit</a>
             </p>
           {% endif %}
-        </div>
-        <div class="hc-camp-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-          {% set publicId = collections.images["header-camp.png"]["public_id"] %}
-          <video
-            aria-hidden="true"
-            class="responsive"
-            muted
-            autoplay
-            loop
-            playsinline
-            width="622"
-            height="622"
-            poster='{{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr="auto") }}'>
+        {% else %}
+          <p>Vjezd do areálu je chráněn značkou zákaz vjezdu. Nelekni se. Ta napovídá správný směr. Pokračuj</p>
+          <p>
+            <a
+              href="/mapa"
+              class="hc-cta">Navigovat</a>
+          </p>
+        {% endif %}
+      </div>
+      <div class="hc-camp-detail">
+        {% set publicId = collections.images["header-camp.png"]["public_id"] %}
+        <video
+          aria-hidden="true"
+          class="responsive"
+          muted
+          autoplay
+          loop
+          playsinline
+          width="622"
+          height="622"
+          poster='{{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr="auto") }}'>
+          <source
+            media="screen and (max-width: 599px)"
+            type="video/mp4; codecs=av01.0.08M.08.0.110.01.01.01.1"
+            src="https://res.cloudinary.com/hackercamp/video/upload/h_480,w_480/f_auto:video,vc_v1,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
+          <source
+            media="screen and (max-width: 599px)"
+            src="https://res.cloudinary.com/hackercamp/video/upload/h_480,w_480/f_auto:video,vc_auto,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
+          <source
+            media="screen and (min-width: 600px) and (max-width: 839px)"
+            type="video/mp4; codecs=av01.0.08M.08.0.110.01.01.01.1"
+            src="https://res.cloudinary.com/hackercamp/video/upload/h_360,w_360/f_auto:video,vc_av1,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
+          <source
+            media="screen and (min-width: 600px) and (max-width: 839px)"
+            src="https://res.cloudinary.com/hackercamp/video/upload/h_360,w_360/f_auto:video,vc_auto,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
+          <source
+            media="screen and (min-width: 840px)"
+            type="video/mp4; codecs=av01.0.08M.08.0.110.01.01.01.1"
+            src="https://res.cloudinary.com/hackercamp/video/upload/h_622,w_622/f_auto:video,vc_av1,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
+          <source
+            media="screen and (min-width: 840px)"
+            src="https://res.cloudinary.com/hackercamp/video/upload/h_622,w_622/f_auto:video,vc_auto,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
+          <picture>
             <source
               media="screen and (max-width: 599px)"
-              type="video/mp4; codecs=av01.0.08M.08.0.110.01.01.01.1"
-              src="https://res.cloudinary.com/hackercamp/video/upload/h_480,w_480/f_auto:video,vc_v1,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
-            <source
-              media="screen and (max-width: 599px)"
-              src="https://res.cloudinary.com/hackercamp/video/upload/h_480,w_480/f_auto:video,vc_auto,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
-            <source
-              media="screen and (min-width: 600px) and (max-width: 839px)"
-              type="video/mp4; codecs=av01.0.08M.08.0.110.01.01.01.1"
-              src="https://res.cloudinary.com/hackercamp/video/upload/h_360,w_360/f_auto:video,vc_av1,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
-            <source
-              media="screen and (min-width: 600px) and (max-width: 839px)"
-              src="https://res.cloudinary.com/hackercamp/video/upload/h_360,w_360/f_auto:video,vc_auto,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
-            <source
-              media="screen and (min-width: 840px)"
-              type="video/mp4; codecs=av01.0.08M.08.0.110.01.01.01.1"
-              src="https://res.cloudinary.com/hackercamp/video/upload/h_622,w_622/f_auto:video,vc_av1,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
-            <source
-              media="screen and (min-width: 840px)"
-              src="https://res.cloudinary.com/hackercamp/video/upload/h_622,w_622/f_auto:video,vc_auto,q_auto:eco/v1720011238/www.hackercamp.cz/hackercamp_video_na_web_lxihcf">
-            <picture>
-              <source
-                media="screen and (max-width: 599px)"
-                srcset="{{ publicId | cloudinaryUrl(width=480,height=480,dpr=1) }} 1x,
+              srcset="{{ publicId | cloudinaryUrl(width=480,height=480,dpr=1) }} 1x,
                       {{ publicId | cloudinaryUrl(width=480,height=480,dpr=1.5) }} 1.5x,
                       {{ publicId | cloudinaryUrl(width=480,height=480,dpr=2) }} 2x">
-              <source
-                media="screen and (min-width: 600px) and (max-width: 839px)"
-                srcset="{{ publicId | cloudinaryUrl(width=360,height=360,dpr=1) }} 1x,
+            <source
+              media="screen and (min-width: 600px) and (max-width: 839px)"
+              srcset="{{ publicId | cloudinaryUrl(width=360,height=360,dpr=1) }} 1x,
                       {{ publicId | cloudinaryUrl(width=360,height=360,dpr=1.5) }} 1.5x,
                       {{ publicId | cloudinaryUrl(width=360,height=360,dpr=2) }} 2x">
-              <source
-                media="screen and (min-width: 840px)"
-                srcset='{{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr=1) }} 1x,
+            <source
+              media="screen and (min-width: 840px)"
+              srcset='{{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr=1) }} 1x,
                       {{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr=1.5) }} 1.5x,
                       {{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr=2) }} 2x'>
-              <img
-                alt=""
-                loading="lazy"
-                class="responsive"
-                width="622"
-                height="622"
-                src='{{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr="auto") }}'>
-            </picture>
-          </video>
-        </div>
+            <img
+              alt=""
+              loading="lazy"
+              class="responsive"
+              width="622"
+              height="622"
+              src='{{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr="auto") }}'>
+          </picture>
+        </video>
       </div>
     </header>
   </div>
 {% endblock %}
 
 {% block content %}
-  <section class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-      <div class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet">
-        <p>Neformální atmosféra campu nebo festivalu v&nbsp;přírodě&nbsp;&ndash; potkáme se fyzicky</p>
-      </div>
-      <div class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet">
-        <p>Maximálně&nbsp;
-          <data itemprop="maximumAttendeeCapacity" value="300">tři stovky
-          </data>&nbsp;lidí z&nbsp;české tech scény s&nbsp;kusem hackera v&nbsp;srdci
-        </p>
-      </div>
-      <div class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet">
-        <p>Každý z&nbsp;účastníků je zároveň aktivním tvůrcem programu</p>
-      </div>
+  <section class="hc-card-grid">
+    <div class="hc-card hc-card--decorated">
+      <p>Festival, nekonference, kemp. Setkání v&nbsp;přírodě s&nbsp;lidmi, kteří si
+        mají co předat.</p>
+    </div>
+    <div class="hc-card hc-card--decorated">
+      <p>Nekomerční, neformální, no-bullshit, no-sales akce.</p>
+    </div>
+    <div class="hc-card hc-card--decorated">
+      <p>250&nbsp;účastníků hlavně z&nbsp;tech scény, kde je každý aktivním tvůrcem
+        programu.</p>
     </div>
   </section>
 
-  <section id="co-cekat" class="mdc-layout-grid">
+  <section id="co-cekat">
     <h2 id="toc-co-cekat">Co čekat?</h2>
-    <div class="mdc-layout-grid__inner">
-      <div
-        class="hc-card hc-card--centered hc-card--superdecorated mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <p class="hc-text--gay"><strong><em>Technologie, workshopy, panelovky, sport
-              i&nbsp;relax a večerní koncerty &amp; DJs</em></strong>
-        </p>
-        <p>V&nbsp;duchu nekonference či barcampu se od sebe vzájemně učíme, bavíme se a poznáváme. Večer si
-          užijeme&nbsp;festivalový program&nbsp;&ndash; s&nbsp;kapelami, dobrým pivem a vším, co k&nbsp;festivalům
-          patří. Jaké si to uděláme, takové to&nbsp;bude.</p>
+    <div class="hc-card hc-card--centered hc-card--superdecorated">
+      <p class="hc-text--gay"><strong><em>Přes den diskuze, workshopy, exkluzivní program,
+            sport i&nbsp;relax. Večer koncerty, party a&nbsp;DJs.</em></strong></p>
 
-        <p><strong>Potkejte se s&nbsp;lidmi, kteří jsou podobně naladěni, a dejte vzniknout
-            novým&nbsp;věcem.</strong></p>
-      </div>
+      <p>V&nbsp;duchu nekonference či barcampu se od sebe vzájemně učíme, společně
+        se bavíme a poznáváme, dohromady kemp tvoříme. Každý je aktivním
+        tvůrcem kempu, nerozdělujeme speakery a účastníky. Chceme, ať jsme na
+        kempu co nejvíc v&nbsp;přítomnosti, přitom tvořit lepší budoucnost. Jaké si
+        to uděláme, takové to bude, a to platí jak pro kemp tak budoucnost. Večer
+        patří kapelám, DJs a&nbsp;party.</p>
+
+      <p><strong>Poznejte lidi, které chcete znát, pojďte společně hacknout
+          budoucnost.</strong></p>
     </div>
   </section>
-  <section id="koho" class="mdc-layout-grid">
+
+  <section id="koho">
     <h2 id="toc-koho-potkas">Koho potkáš?</h2>
-
-    <div class="mdc-layout-grid__inner">
-      <div class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-        <p>Lidi z&nbsp;české tech scény a spřátelených neziskovek. Maximálně
-          nás letos budou tři stovky. Hacker Camp je jen pro zvané.</p>
-        <p>Jakoukoliv akci tvoří totiž hlavně lidi, a tuhle akci chceme strávit
-          s&nbsp;kamarády a těmi, které za kamarády chceme.</p>
-      </div>
-      <div class="hc-card hc-card--flat mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-        <p>Každý účastník je zároveň tvůrcem programu. Proto zveme hlavně ty,
-          kdo se chtějí do programu společných tří dní zapojit.</p>
-        <p>Blízko máme k&nbsp;těm, kteří mají v&nbsp;srdci kus hackera. Chtějí
-          zažít a sami postavit něco nového.</p>
-      </div>
+    <div class="hc-card">
+      <p>Fajn lidi, hlavně z&nbsp;české tech scény a spřátelených neziskovek.
+        Hacker Camp je jen pro zvané a každý za své pozvané ručí. Kapacita je
+        tři stovky, ale areál je obrovský a kemp je skvělý pro introverty.</p>
+      <p>Hacker Camp je o&nbsp;lidech, chceme jej strávit s&nbsp;kamarády a těmi, které za
+        kamarády chceme. Roli nehraje status, ale osobnost - <strong>nechceme kretény</strong>.</p>
+    </div>
+    <div class="hc-card hc-card--flat">
+      <p>Každý účastník kempu je zároveň jeho tvůrcem, po každém požadujeme
+        zapojení, ať již v&nbsp;programu nebo v&nbsp;pomoci s&nbsp;akcí samotnou.</p>
+      <p>Akce není jen pro vývojáře, nejde o&nbsp;hackathon. Hacker je pro nás
+        někdo, kdo hledá nové způsoby, chce stavět nebo zažít něco nového.</p>
     </div>
   </section>
+
   <section id="pro-koho">
     <h2 id="toc-pro-koho">Pro koho?</h2>
   </section>
   <div class="hc-people-bg hc-people-section">
     <div class="hc-card">
-      <p>Kdo jsou hackeři, se kterými se potkáš? Majitelé firem, investoři, programátoři
-        a dataři, NGOs, NPOs a další social justice warriors, bio&nbsp;hacking nadšenci
-        a otužilci&nbsp;&ndash; prostě lidi jako&nbsp;ty.</p>
+      <p>Kdo jsou hackeři, se kterými se potkáš? Majitelé firem, investoři,
+        programátoři a dataři, NGOs, NPOs a další social justice warriors, bio
+        hacking nadšenci a otužilci&nbsp;&ndash; prostě lidi jako&nbsp;ty.</p>
       <p>
         Předchozí ročníky si užili holky a kluci například z&nbsp;<span
           itemprop="organizer"
@@ -204,12 +223,14 @@
         <span itemprop="organizer" typeof="Organization"><a
             itemprop="sameAs"
             href="https://hckr.studio/">hckr.studio</a></span>,
-        <span itemprop="organizer" typeof="Organization"><a itemprop="sameAs" href="https://www.fenekpr.cz/">Fenek</a
+        <span itemprop="organizer" typeof="Organization"><a
+            itemprop="sameAs" href="https://www.fenekpr.cz/">Fenek</a
           ></span>,
         <span itemprop="organizer" typeof="Organization"><a
             itemprop="sameAs"
             href="https://www.czechitas.cz/">Czechitas</a></span>,
-        <span itemprop="attendee" typeof="Organization"><a itemprop="sameAs" href="https://www.hlidacstatu.cz/">Hlídač
+        <span itemprop="attendee" typeof="Organization"><a
+            itemprop="sameAs" href="https://www.hlidacstatu.cz/">Hlídač
               Státu</a></span>,
         <span itemprop="attendee" typeof="Organization"><a
             itemprop="sameAs"
@@ -223,15 +244,18 @@
         <span itemprop="attendee" typeof="Organization"><a
             itemprop="sameAs"
             href="https://www.bizmachine.com/">BizMachine</a></span>,
-        <span itemprop="attendee" typeof="Organization"><a itemprop="sameAs"
-                                                           href="https://www.csas.cz/">Česká spořitelna</a
+        <span itemprop="attendee" typeof="Organization"><a
+            itemprop="sameAs"
+            href="https://www.csas.cz/">Česká spořitelna</a
           ></span>,
-        <span itemprop="attendee" typeof="Organization"><a itemprop="sameAs" href="https://www.heureka.cz/">Heureka</a
+        <span itemprop="attendee" typeof="Organization"><a
+            itemprop="sameAs" href="https://www.heureka.cz/">Heureka</a
           ></span>,
         <span itemprop="attendee" typeof="Organization"><a
             itemprop="sameAs"
             href="https://applifting.io/">Applifting</a></span>,
-        <span itemprop="attendee" typeof="Organization"><a itemprop="sameAs" href="https://keboola.com/">Keboola</a
+        <span itemprop="attendee" typeof="Organization"><a
+            itemprop="sameAs" href="https://keboola.com/">Keboola</a
           ></span>,
         <span itemprop="attendee" typeof="Organization"><a
             itemprop="sameAs"
@@ -240,16 +264,16 @@
     </div>
   </div>
   <div class="hc-grey-bg">
-    <section id="obsah-campu" class="mdc-layout-grid">
+    <section id="obsah-campu">
       <h2 id="toc-kazdy-z-nas-tvori-obsah-campu">
         Každý z nás tvoří obsah campu
       </h2>
-      <div class="mdc-layout-grid__inner">
-        <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
+      <div class="hc-card-grid">
+        <div class="hc-card hc-card--decorated">
           <p>Každý účastník je zároveň tvůrce akce. Od každého čekáme aktivní
             zapojení podle vlastních možností.</p>
         </div>
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
+        <div class="hc-card hc-card--picture hc-card--centered">
           {% set publicId = collections.images["A7R04297.jpg"]["public_id"] %}
           <img
             class="responsive"
@@ -262,7 +286,7 @@
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
         </div>
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
+        <div class="hc-card hc-card--picture hc-card--centered">
           {% set publicId = collections.images["IMG_5182.jpg"]["public_id"] %}
           <img
             class="responsive"
@@ -275,7 +299,7 @@
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
         </div>
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
+        <div class="hc-card hc-card--picture hc-card--centered">
           {% set publicId = collections.images["IMG_6026.jpg"]["public_id"] %}
           <img
             class="responsive"
@@ -288,13 +312,13 @@
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
         </div>
-        <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
+        <div class="hc-card hc-card--decorated">
           <p>
             Můžeš přispět přednáškou, workshopem, naštípat dřevo, přivést legacy hrací konzoli, deskovku, zorganizovat
             ranní výběh nebo turnaj v&nbsp;jakémkoliv sportu.
           </p>
         </div>
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
+        <div class="hc-card hc-card--picture hc-card--centered">
           {% set publicId = collections.images["IMG_6916_1.jpg"]["public_id"] %}
           <img
             class="responsive"
@@ -307,7 +331,7 @@
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
         </div>
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
+        <div class="hc-card hc-card--picture hc-card--centered">
           {% set publicId = collections.images["NM6A4967.jpg"]["public_id"] %}
           <img
             class="responsive"
@@ -320,7 +344,7 @@
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
         </div>
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
+        <div class="hc-card hc-card--picture hc-card--centered">
           {% set publicId = collections.images["NM6A4775.jpg"]["public_id"] %}
           <img
             class="responsive"
@@ -333,10 +357,10 @@
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
                   {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
         </div>
-        <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-          <p>
-            Pokud zapadne, přivez svůj produkt jako třeba Rekola, Hookamonk, meteoradar a podobně.
-          </p>
+        <div class="hc-card hc-card--decorated">
+          <p>Účastníci většinou trpí FOMO, protože je toho v&nbsp;nabídce strašně moc.
+            Zvaž svou participaci na programu s&nbsp;více lidma na něčem, co tu ještě
+            nebylo. Pojďme společně zvednout laťku kvality někam pod&nbsp;bradu.</p>
         </div>
       </div>
     </section>
@@ -438,13 +462,13 @@
         <div
           style="text-shadow: #222 1px 1px 2px"
           itemprop="location"
-          typeof="Campground"
+          itemscope itemtype="https://schema.org/Campground"
           class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
           <h3>
             <a itemprop="url" href="https://www.sobenak.cz/"><span itemprop="name">Sobeňák</span>
               <em>krásný areál v srdci Brd</em></a>
           </h3>
-          <p itemprop="address" typeof="PostalAddress">
+          <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
             <span itemprop="streetAddress">Starý Rožmitál 148</span>
             <br>
             <span itemprop="postalCode">262 42</span>
@@ -458,8 +482,8 @@
     <section id="kolik" class="mdc-layout-grid hc-price-list">
       <h2 id="toc-co-to-bude-stat">Co to bude stát?</h2>
       <div class="hc-price-list__text">
-        <p>Na akci neplánujeme vydělávat, zároveň ji chceme tvořit bez velkých
-          komerčních sponzorů.</p>
+        <p>Na akci nevyděláváme, tvoří ji dobrovolníci, a cíleně nemáme
+          sponzory. Platí ji kompletně účastníci.</p>
         <p>Do konce dubna {{ year }} si lístky můžou koupit jen hackeři, co s&nbsp;námi
           byli na předchozích ročnících. Když v&nbsp;téhle lhůtě zvládnou i&nbsp;za
           vstup zaplatit, mají od nás garantované místo i&nbsp;pro jednoho svého hosta.
@@ -468,7 +492,7 @@
       <div class="mdc-layout-grid__inner">
         <article
           itemprop="offers"
-          typeof="Offer"
+          itemscope itemtype="https://schema.org/Offer"
           class="hc-card hc-card--decorated hc-price-list__item mdc-layout-grid__cell mdc-layout-grid__cell--span-3-desktop">
           <div class="hc-price-list__header">
             <svg
@@ -515,7 +539,7 @@
 
         <article
           itemprop="offers"
-          typeof="Offer"
+          itemscope itemtype="https://schema.org/Offer"
           class="hc-card hc-card--decorated hc-price-list__item mdc-layout-grid__cell mdc-layout-grid__cell--span-3-desktop">
           <div class="hc-price-list__header">
             <svg
@@ -587,7 +611,7 @@
 
         <article
           itemprop="offers"
-          typeof="Offer"
+          itemscope itemtype="https://schema.org/Offer"
           class="hc-card hc-card--decorated hc-price-list__item mdc-layout-grid__cell mdc-layout-grid__cell--span-3-desktop">
           <div class="hc-price-list__header">
             <svg
@@ -636,7 +660,7 @@
 
         <article
           itemprop="offers"
-          typeof="Offer"
+          itemscope itemtype="https://schema.org/Offer"
           class="hc-card hc-card--decorated hc-price-list__item mdc-layout-grid__cell mdc-layout-grid__cell--span-3-desktop">
           <div class="hc-price-list__header">
             <svg
@@ -686,9 +710,9 @@
       <div class="hc-price-list__text">
         <p>
           Cena vstupenky obsahuje: vstup na camp (program), ubytování - chatky nebo stany, koncerty, další doprovodný
-          program, snídaně každé ráno po dobu trvání campu. Vstupenky jsou jednotné (platí po celou dobu trvání campu
-          {{ event.startDate | shortDate }}-{{ event.endDate | shortDate }}
-          {{ year }}). Ceny jsou bez DPH.
+          program, snídaně každé ráno po dobu trvání campu. Vstupenky jsou jednotné (platí po celou dobu trvání
+          campu {{ event.startDate | shortDate }}-{{ event.endDate | shortDate }}
+          {{ year }}).<br> Ceny jsou bez DPH.
         </p>
       </div>
     </section>
@@ -855,7 +879,7 @@
   </section>
 
   {% if event.isRegistrationOpen %}
-    <section class="mdc-layout-grid">
+    <section>
       <p style="text-align: center">
         <a
           href="/registrace/"

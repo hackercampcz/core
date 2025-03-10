@@ -108,12 +108,14 @@ img.responsive {
 }
 
 .hc-grey-bg {
-  background-color: #f7f7f7;
+  --_bg-color: #f7f7f7;
+  background-color: var(--_bg-color);
+  border-top: 1px solid var(--_bg-color);
 }
 
 @media screen and (prefers-color-scheme: dark) {
   .hc-grey-bg {
-    background-color: #423839;
+    --_bg-color: #423839;
   }
 }
 
@@ -242,16 +244,18 @@ img.responsive {
 }
 
 #koho {
-  .mdc-layout-grid__inner {
-    gap: 0;
-  }
+  display: grid;
+  margin-inline: var(--hc-gutter);
 
   @media screen and (min-width: 600px) {
-    .mdc-layout-grid__inner {
-      margin-bottom: 6em;
+    margin-bottom: 10em;
+    grid-template-columns: 1fr 1fr;
+
+    > h2 {
+      grid-column: 1 / span 2;
     }
 
-    .hc-card:first-child {
+    .hc-card:first-of-type {
       position: relative;
 
       &::before {
@@ -266,7 +270,7 @@ img.responsive {
       }
     }
 
-    .mdc-layout-grid__cell + .mdc-layout-grid__cell {
+    .hc-card + .hc-card {
       transform: translateY(6em);
     }
   }
