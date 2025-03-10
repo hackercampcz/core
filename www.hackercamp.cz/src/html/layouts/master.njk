@@ -2,46 +2,48 @@
 <html lang="cs">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}{{ title }}{% endblock %}</title>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="robots" content="noindex">
+  <title>{% block title %}{{ title }}{% endblock %}</title>
   {% include "shared/fonts.html" %}
   {% include "shared/styles.html" %}
+  {% block head_stylesheets %}{% endblock %}
+  {% block head_meta %}{% endblock %}
+  <meta name="robots" content="noindex">
   <meta name="generator" content="{{ generator or '@hckr_/blendid - static site generator and assets pipeline' }}">
   <meta name="author" content="https://hckr.studio/">
+  <link rel="author" href="/humans.txt" type="text/plain">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#222222" media="(prefers-color-scheme: dark)">
   {% include "shared/app-icons.html" %}
   {% include "shared/rollbar.njk" %}
   {% block head %}{% endblock %}
 </head>
-<body>
+<body itemscope itemtype="https://schema.org/{{ pageSchema or "WebPage" }}">
 
-<nav class="hc-navbar mdc-layout-grid" style="line-height: 1;">
-  <div class="mdc-layout-grid__inner">
-    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-      {% include "shared/logo.html" %}
-    </div>
-    <div class="hc-navbar__right mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-
-    </div>
+<nav class="hc-navbar" aria-label="Hlavní navigace">
+  <div class="hc-navbar__logo">
+    {% include "shared/logo.html" %}
+  </div>
+  <div class="hc-navbar__right">
+    {% block navigation %}{% endblock %}
   </div>
 </nav>
+
+{% block hero %}{% endblock %}
+
 <main id="top">
   {% block content %}{% endblock %}
 </main>
 
-<footer class="mdc-layout-grid">
+<footer>
   <p style="text-align: center">© 2021-{{ currentYear }} Hacker camp crew z.s.,
-    IČ <a href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a></p>
+    IČ <a href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a>;
+    <a href="/zpracovani-osobnich-udaju/">Zpracování osobních údajů</a></p>
 </footer>
 
 {% block javascript %}{% endblock %}
 
-<script type="module">
-  const el = (tagName, attrs) => Object.assign(document.createElement(tagName), attrs);
-  document.head.appendChild(el("link", {
-    rel: "stylesheet",
-    href: "/assets/css/main.css"
-  }));
-</script>
+<link rel="stylesheet" href="{{ "main.css" | assetUrl("stylesheets") }}">
 </body>
 </html>

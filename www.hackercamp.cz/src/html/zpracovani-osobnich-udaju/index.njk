@@ -2,21 +2,18 @@
 
 {% block title %}Zpracování osobních údajů na webu hackercamp.cz{% endblock %}
 
-{% block head %}
-<style>
-  .hc-wrapper {
-    max-width: 60em;
-    margin: 0 auto;
-  }
-</style>
+{% block head_stylesheets %}
+  <style>
+    .hc-wrapper {
+      max-width: 60em;
+      margin: 0 auto;
+      padding-inline: 2ch;
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
-  <div class="mdc-layout-grid hc-wrapper">
-    <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        {% markdown "zpracovani-osobnich-udaju/text.md" %}
-      </div>
-    </div>
+  <div class="hc-wrapper">
+    {% markdown "zpracovani-osobnich-udaju/text.md" %}
   </div>
 {% endblock %}
