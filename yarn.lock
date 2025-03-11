@@ -3543,7 +3543,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
   dependencies:
-    "@material/layout-grid": "npm:14.0.0"
     wrangler: "npm:3.114.0"
   languageName: unknown
   linkType: soft

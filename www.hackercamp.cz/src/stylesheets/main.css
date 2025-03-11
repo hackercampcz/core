@@ -1,5 +1,3 @@
-@import "@material/layout-grid/dist/mdc.layout-grid.css";
-
 img.responsive {
   width: 100%;
   height: auto;
@@ -218,6 +216,15 @@ img.responsive {
   .hc-price-list__text:last-of-type {
     margin: 4em auto 0;
   }
+
+  .hc-card-grid {
+    @media screen and (min-width: 840px) {
+      --_cols: 2;
+    }
+    @media screen and (min-width: 1000px) {
+      --_cols: 4;
+    }
+  }
 }
 
 .hc-people-section {
@@ -227,19 +234,12 @@ img.responsive {
 }
 
 .hc-people-section .hc-card {
-  margin: var(--mdc-layout-grid-margin-phone);
-}
-
-@media screen and (min-width: 600px) and (max-width: 839px) {
-  .hc-people-section .hc-card {
-    margin: var(--mdc-layout-grid-margin-tablet);
-  }
+  margin: var(--hc-gutter);
 }
 
 @media screen and (min-width: 840px) {
   .hc-people-section .hc-card {
     max-width: 800px;
-    margin: var(--mdc-layout-grid-margin-desktop);
   }
 }
 
@@ -251,7 +251,7 @@ img.responsive {
     margin-bottom: 10em;
     grid-template-columns: 1fr 1fr;
 
-    > h2 {
+    h2 {
       grid-column: 1 / span 2;
     }
 
@@ -277,10 +277,16 @@ img.responsive {
 }
 
 #kde {
+  display: grid;
   width: 100%;
+  margin-inline: var(--hc-gutter);
   max-width: var(--hc-layout-width);
 
-  a:link, a:visited {
+  @media screen and (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  a:any-link {
     color: #fff;
     text-decoration: none;
   }
@@ -295,17 +301,9 @@ img.responsive {
     font-weight: normal;
   }
 
-  .mdc-layout-grid__cell {
-    padding: 2em 0;
-  }
-
   @media screen and (min-width: 600px) {
     h2 {
       margin: 1em auto 1.5em;
-    }
-
-    .mdc-layout-grid__cell {
-      padding: 4em 0;
     }
   }
 
@@ -317,10 +315,18 @@ img.responsive {
 }
 
 #kdy {
+  display: grid;
+  margin-inline: var(--hc-gutter);
+
+  @media screen and (min-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
   h2 {
     margin-top: 2em;
     -webkit-text-fill-color: initial;
     background-image: none;
+    grid-column: 1 / span 2;
   }
 
   .hc-card--flat {
@@ -329,17 +335,13 @@ img.responsive {
     justify-content: center;
   }
 
-  .mdc-layout-grid__inner {
-    gap: 0;
-  }
-
   @media screen and (min-width: 600px) {
-    .mdc-layout-grid__inner {
+    .hc-card {
       margin-top: 6em;
       margin-bottom: 12em;
     }
 
-    .mdc-layout-grid__cell + .mdc-layout-grid__cell {
+    .hc-card + .hc-card {
       transform: translateY(6em);
     }
   }
@@ -365,4 +367,10 @@ img.responsive {
 
 #faq {
   max-width: 60em;
+}
+
+#o-nas {
+  .hc-card--centered {
+    grid-area: 2 / span 3;
+  }
 }

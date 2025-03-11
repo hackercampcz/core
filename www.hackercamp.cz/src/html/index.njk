@@ -33,6 +33,19 @@
       @media screen and (min-width: 840px) {
         --_cols: 3;
       }
+
+      &:has(.hc-card--half) {
+        --_cols: 2;
+        @media screen and (min-width: 480px) {
+          --_cols: 4;
+        }
+        @media screen and (min-width: 840px) {
+          --_cols: 6;
+        }
+        .hc-card:not(.hc-card--half) {
+          grid-column: span 2;
+        }
+      }
     }
   </style>
 {% endblock %}
@@ -61,9 +74,7 @@
 
 {% block hero %}
   <link itemprop="eventStatus" href="https://schema.org/EventScheduled">
-  <link
-    itemprop="eventAttendanceMode"
-    href="https://schema.org/MixedEventAttendanceMode">
+  <link itemprop="eventAttendanceMode" href="https://schema.org/MixedEventAttendanceMode">
   <div class="hc-code-bg">
     <header id="top" class="hc-hero">
       <div class="hc-hero__inner">
@@ -72,27 +83,15 @@
           <h2><small>Hack to the Future</small></h2>
         </hgroup>
         {% if not event.willStartSoon %}
-          <p itemprop="description">
-            {{ event.details }}
-          </p>
+          <p itemprop="description">{{ event.details | processTypography("cs") }}</p>
           <p>
             {{ event.startDate | longDate }} &ndash; {{ event.endDate | longDate }}
             {{ event.startDate | year }} na Sobeňáku
           </p>
-          {% if event.isRegistrationOpen %}
-            <p>
-              <a
-                class="hc-cta"
-                href="/registrace/">Chci se zapojit</a>
-            </p>
-          {% endif %}
+          {% if event.isRegistrationOpen %}<p><a class="hc-cta" href="/registrace/">Chci se zapojit</a></p>{% endif %}
         {% else %}
           <p>Vjezd do areálu je chráněn značkou zákaz vjezdu. Nelekni se. Ta napovídá správný směr. Pokračuj</p>
-          <p>
-            <a
-              href="/mapa"
-              class="hc-cta">Navigovat</a>
-          </p>
+          <p><a href="/mapa" class="hc-cta">Navigovat</a></p>
         {% endif %}
       </div>
       <div class="hc-camp-detail">
@@ -184,7 +183,7 @@
         tvůrcem kempu, nerozdělujeme speakery a účastníky. Chceme, ať jsme na
         kempu co nejvíc v&nbsp;přítomnosti, přitom tvořit lepší budoucnost. Jaké si
         to uděláme, takové to bude, a to platí jak pro kemp tak budoucnost. Večer
-        patří kapelám, DJs a&nbsp;party.</p>
+        patří kapelám, DJs a&nbsp;párty.</p>
 
       <p><strong>Poznejte lidi, které chcete znát, pojďte společně hacknout
           budoucnost.</strong></p>
@@ -364,122 +363,117 @@
         </div>
       </div>
     </section>
-    <section id="kdy" class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
-        <div class="hc-card hc-card--flat mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-          <h2 id="toc-kdy-prijet">
+    <section id="kdy">
+      <div class="hc-card hc-card--flat">
+        <h2 id="toc-kdy-prijet">
+          <svg
+            aria-hidden="true"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 95 95"
+            width="56"
+            height="56"
+            style="display: block; margin: 0 auto">
+            <path
+              d="M67.9 25.8h-7.7v-2.2c0-1-.8-1.8-1.8-1.8s-1.8.8-1.8 1.8v2.2H38.5v-2.2c0-1-.8-1.8-1.8-1.8s-1.8.8-1.8 1.8v2.2h-7.7c-3.3 0-5.9 2.7-5.9 5.9v33c0 3.3 2.7 5.9 5.9 5.9H68c3.3 0 5.9-2.7 5.9-5.9v-33c-.1-3.2-2.7-5.9-6-5.9zm2.3 39c0 1.2-1 2.2-2.2 2.2H27.1c-1.2 0-2.2-1-2.2-2.2V41.3h45.3v23.5zm0-27.2H24.8v-5.8c0-1.2 1-2.2 2.2-2.2h7.7v2.2c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8v-2.3h18v2.2c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8v-2.2h7.7c1.2 0 2.2 1 2.2 2.2v5.9h.4z"
+              fill="#fff"
+            />
+            <path
+              d="M34.1 52.4h3c.9 0 1.6-.7 1.6-1.6V49c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM46 52.4h3c.9 0 1.6-.7 1.6-1.6V49c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM57.9 52.4h3c.9 0 1.6-.7 1.6-1.6V49c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM34.1 61h3c.9 0 1.6-.7 1.6-1.6v-1.8c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM46 61h3c.9 0 1.6-.7 1.6-1.6v-1.8c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM57.9 61h3c.9 0 1.6-.7 1.6-1.6v-1.8c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6z"
+              fill="#fff"
+            />
+          </svg>
+
+          Kdy přijet?
+        </h2>
+      </div>
+      <article class="hc-card">
+        <h3 class="hc-text--gay">Přelom srpna a&nbsp;září</h3>
+        <p>
+          Začínáme ve čtvrtek
+          <time itemprop="startDate"
+                datetime="{{ event.startDate | isoDate }}">{{ event.startDate | longDate }}</time>
+          a končíme v&nbsp;neděli
+          <time itemprop="endDate" datetime="{{ event.endDate | isoDate }}">{{ event.endDate | longDate }}</time>
+          v&nbsp;poledne, hned jak se proberete po good-bye&nbsp;party.
+        </p>
+        <p style="margin: 2em 0 0">
+          <a
+            class="hc-icon-link"
+            href="{{ event | calendarURL }}">
             <svg
               aria-hidden="true"
-              fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 95 95"
-              width="56"
-              height="56"
-              style="display: block; margin: 0 auto">
+              viewBox="0 0 24 24"
+              width="16"
+              height="16">
+              <path d="M0 0h24v24H0z" fill="none"/>
               <path
-                d="M67.9 25.8h-7.7v-2.2c0-1-.8-1.8-1.8-1.8s-1.8.8-1.8 1.8v2.2H38.5v-2.2c0-1-.8-1.8-1.8-1.8s-1.8.8-1.8 1.8v2.2h-7.7c-3.3 0-5.9 2.7-5.9 5.9v33c0 3.3 2.7 5.9 5.9 5.9H68c3.3 0 5.9-2.7 5.9-5.9v-33c-.1-3.2-2.7-5.9-6-5.9zm2.3 39c0 1.2-1 2.2-2.2 2.2H27.1c-1.2 0-2.2-1-2.2-2.2V41.3h45.3v23.5zm0-27.2H24.8v-5.8c0-1.2 1-2.2 2.2-2.2h7.7v2.2c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8v-2.3h18v2.2c0 1 .8 1.8 1.8 1.8s1.8-.8 1.8-1.8v-2.2h7.7c1.2 0 2.2 1 2.2 2.2v5.9h.4z"
-                fill="#fff"
-              />
-              <path
-                d="M34.1 52.4h3c.9 0 1.6-.7 1.6-1.6V49c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM46 52.4h3c.9 0 1.6-.7 1.6-1.6V49c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM57.9 52.4h3c.9 0 1.6-.7 1.6-1.6V49c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM34.1 61h3c.9 0 1.6-.7 1.6-1.6v-1.8c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM46 61h3c.9 0 1.6-.7 1.6-1.6v-1.8c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6zM57.9 61h3c.9 0 1.6-.7 1.6-1.6v-1.8c0-.9-.7-1.6-1.6-1.6h-3c-.9 0-1.6.7-1.6 1.6v1.8c0 .9.7 1.6 1.6 1.6z"
-                fill="#fff"
+                d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19a2 2 0 002 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                fill="var(--icon-color)"
               />
             </svg>
-
-            Kdy přijet?
-          </h2>
-        </div>
-        <article class="hc-card mdc-layout-grid__cell mdc-layout-grid__cell--span-6-desktop">
-          <h3 class="hc-text--gay">Přelom srpna a&nbsp;září</h3>
-          <p>
-            Začínáme ve čtvrtek
-            <time itemprop="startDate"
-                  datetime="{{ event.startDate | isoDate }}">{{ event.startDate | longDate }}</time>
-            a končíme v&nbsp;neděli
-            <time itemprop="endDate" datetime="{{ event.endDate | isoDate }}">{{ event.endDate | longDate }}</time>
-            v&nbsp;poledne, hned jak se proberete po good-bye&nbsp;party.
-          </p>
-          <p style="margin: 2em 0 0">
-            <a
-              class="hc-icon-link"
-              href="{{ event | calendarURL }}">
-              <svg
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                width="16"
-                height="16">
-                <path d="M0 0h24v24H0z" fill="none"/>
-                <path
-                  d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19a2 2 0 002 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
-                  fill="var(--icon-color)"
-                />
-              </svg>
-              Přidat do kalendáře</a>
-          </p>
-        </article>
-      </div>
+            Přidat do kalendáře</a>
+        </p>
+      </article>
     </section>
   </div>
   <div class="hc-camp-bg">
-    <section id="kde" class="mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
-        <div
-          class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
-          <h2 id="toc-kde-budeme">
-            <svg
-              aria-hidden="true"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 107 107"
-              width="68"
-              height="68"
-              style="display: block; margin: 0 auto">
-              <path
-                d="M53.5 8.917c-17.254 0-31.208 13.954-31.208 31.208 0 23.406 31.208 57.958 31.208 57.958s31.208-34.552 31.208-57.958c0-17.254-13.954-31.208-31.208-31.208zm0 42.354c-6.153 0-11.146-4.993-11.146-11.146 0-6.152 4.993-11.146 11.146-11.146 6.153 0 11.146 4.994 11.146 11.146 0 6.153-4.993 11.146-11.146 11.146z"
-                fill="url(#paint0_linear)"
-              />
-              <defs>
-                <linearGradient
-                  id="paint0_linear"
-                  x1="22.286"
-                  y1="53.508"
-                  x2="84.721"
-                  y2="53.508"
-                  gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#EE771B"/>
-                  <stop offset=".256" stop-color="#E9444E"/>
-                  <stop offset=".427" stop-color="#E62271"/>
-                  <stop offset=".789" stop-color="#684997"/>
-                  <stop offset="1" stop-color="#3E7ABC"/>
-                </linearGradient>
-              </defs>
-            </svg>
+    <section id="kde">
+      <div class="hc-card hc-card--decorated">
+        <h2 id="toc-kde-budeme">
+          <svg
+            aria-hidden="true"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 107 107"
+            width="68"
+            height="68"
+            style="display: block; margin: 0 auto">
+            <path
+              d="M53.5 8.917c-17.254 0-31.208 13.954-31.208 31.208 0 23.406 31.208 57.958 31.208 57.958s31.208-34.552 31.208-57.958c0-17.254-13.954-31.208-31.208-31.208zm0 42.354c-6.153 0-11.146-4.993-11.146-11.146 0-6.152 4.993-11.146 11.146-11.146 6.153 0 11.146 4.994 11.146 11.146 0 6.153-4.993 11.146-11.146 11.146z"
+              fill="url(#paint0_linear)"
+            />
+            <defs>
+              <linearGradient
+                id="paint0_linear"
+                x1="22.286"
+                y1="53.508"
+                x2="84.721"
+                y2="53.508"
+                gradientUnits="userSpaceOnUse">
+                <stop stop-color="#EE771B"/>
+                <stop offset=".256" stop-color="#E9444E"/>
+                <stop offset=".427" stop-color="#E62271"/>
+                <stop offset=".789" stop-color="#684997"/>
+                <stop offset="1" stop-color="#3E7ABC"/>
+              </linearGradient>
+            </defs>
+          </svg>
 
-            Kde budeme?
-          </h2>
-        </div>
-        <div
-          style="text-shadow: #222 1px 1px 2px"
-          itemprop="location"
-          itemscope itemtype="https://schema.org/Campground"
-          class="mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet mdc-layout-grid__cell--span-6-desktop">
-          <h3>
-            <a itemprop="url" href="https://www.sobenak.cz/"><span itemprop="name">Sobeňák</span>
-              <em>krásný areál v srdci Brd</em></a>
-          </h3>
-          <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
-            <span itemprop="streetAddress">Starý Rožmitál 148</span>
-            <br>
-            <span itemprop="postalCode">262 42</span>
-            <span itemprop="addressLocality">Rožmitál pod Třemšínem</span>
-          </p>
-        </div>
+          Kde budeme?
+        </h2>
+      </div>
+      <div
+        style="text-shadow: #222 1px 1px 2px"
+        itemprop="location"
+        itemscope itemtype="https://schema.org/Campground"
+        class="">
+        <h3>
+          <a itemprop="url" href="https://www.sobenak.cz/"><span itemprop="name">Sobeňák</span>
+            <em>krásný areál v srdci Brd</em></a>
+        </h3>
+        <p itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+          <span itemprop="streetAddress">Starý Rožmitál 148</span>
+          <br>
+          <span itemprop="postalCode">262 42</span>
+          <span itemprop="addressLocality">Rožmitál pod Třemšínem</span>
+        </p>
       </div>
     </section>
   </div>
   <div class="hc-code-bg">
-    <section id="kolik" class="mdc-layout-grid hc-price-list">
+    <section id="kolik" class="hc-price-list">
       <h2 id="toc-co-to-bude-stat">Co to bude stát?</h2>
       <div class="hc-price-list__text">
         <p>Na akci nevyděláváme, tvoří ji dobrovolníci, a cíleně nemáme
@@ -489,11 +483,11 @@
           vstup zaplatit, mají od nás garantované místo i&nbsp;pro jednoho svého hosta.
           Od května začneme se zvaním dalších hackerů.</p>
       </div>
-      <div class="mdc-layout-grid__inner">
+      <div class="hc-card-grid">
         <article
           itemprop="offers"
           itemscope itemtype="https://schema.org/Offer"
-          class="hc-card hc-card--decorated hc-price-list__item mdc-layout-grid__cell mdc-layout-grid__cell--span-3-desktop">
+          class="hc-card hc-card--decorated hc-price-list__item">
           <div class="hc-price-list__header">
             <svg
               class="hc-price-list__badge"
@@ -540,7 +534,7 @@
         <article
           itemprop="offers"
           itemscope itemtype="https://schema.org/Offer"
-          class="hc-card hc-card--decorated hc-price-list__item mdc-layout-grid__cell mdc-layout-grid__cell--span-3-desktop">
+          class="hc-card hc-card--decorated hc-price-list__item">
           <div class="hc-price-list__header">
             <svg
               class="hc-price-list__badge"
@@ -612,7 +606,7 @@
         <article
           itemprop="offers"
           itemscope itemtype="https://schema.org/Offer"
-          class="hc-card hc-card--decorated hc-price-list__item mdc-layout-grid__cell mdc-layout-grid__cell--span-3-desktop">
+          class="hc-card hc-card--decorated hc-price-list__item">
           <div class="hc-price-list__header">
             <svg
               class="hc-price-list__badge"
@@ -661,7 +655,7 @@
         <article
           itemprop="offers"
           itemscope itemtype="https://schema.org/Offer"
-          class="hc-card hc-card--decorated hc-price-list__item mdc-layout-grid__cell mdc-layout-grid__cell--span-3-desktop">
+          class="hc-card hc-card--decorated hc-price-list__item">
           <div class="hc-price-list__header">
             <svg
               class="hc-price-list__badge"
@@ -717,152 +711,148 @@
       </div>
     </section>
 
-    <section id="co-vse-cekat" class="mdc-layout-grid">
-      <h2 id="toc-co-od-hacker-campu-cekat">Co od Hacker Campu čekat?</h2>
-
-      <p>
-        Děláme nekomerční a z&nbsp;principu neformální akci, kde nám má všem být dobře. Tohle jsou základní geny
-        Hacker campu.
-        <strong>Jediná část, kde nestrpíme kompromisy</strong>:
-      </p>
-
-      <div class="mdc-layout-grid__inner">
-        <div
-          class="hc-card hc-card--decorated hc-card--centered mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
-          <p>Akce je jen pro pozvané</p>
-        </div>
-
-        <div
-          class="hc-card hc-card--decorated hc-card--centered mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
-          <p>Tykáme si</p>
-        </div>
-
-        <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-          <p>Vstupenku si kupuješ na celou akci a budeme rádi, když s&nbsp;námi zůstaneš všechny tři dny</p>
-        </div>
-
-        <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-          <p>Chováme se k&nbsp;sobě slušně a ohleduplně&nbsp;&ndash; dodržujeme hygienická i&nbsp;etická pravidla
-            (i&nbsp;pokud jde o&nbsp;focení se, noční klid a podobně)</p>
-        </div>
-
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
-          {% set publicId = collections.images["A7R04296.jpg"]["public_id"] %}
-          <img
-            class="responsive"
-            loading="lazy"
-            alt=""
-            width="500"
-            height="281"
-            src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-            srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
-        </div>
-
-        <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-          <p>Jsme v&nbsp;přírodě a chováme se i&nbsp;k&nbsp;ní ohleduplně (třídíme odpad a ideálně odjíždíme
-            beze&nbsp;stop)</p>
-        </div>
-
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
-          {% set publicId = collections.images["9895_0041.jpg"]["public_id"] %}
-          <img
-            class="responsive"
-            loading="lazy"
-            alt=""
-            width="500"
-            height="281"
-            src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-            srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
-        </div>
-
-        <div
-          class="hc-card hc-card--decorated hc-card--centered mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
-          <p>Nemáme žádné VIP zóny</p>
-        </div>
-
-        <div class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-2-desktop">
-          <p>Každý účastník je zároveň tvůrce akce.</p>
-        </div>
-
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
-          {% set publicId = collections.images["IMG_5068.jpg"]["public_id"] %}
-          <img
-            class="responsive"
-            loading="lazy"
-            alt=""
-            width="500"
-            height="281"
-            src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-            srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
-        </div>
-
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
-          {% set publicId = collections.images["IMG_5822.jpg"]["public_id"] %}
-          <img
-            class="responsive"
-            loading="lazy"
-            alt=""
-            width="500"
-            height="281"
-            src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-            srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
-        </div>
-
-        <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-          <p>Přivést můžeš i&nbsp;jakýkoliv doprovodný program&nbsp;&ndash; uvítáme vše od pípy, baristy a přípravy kávy
-            až po&nbsp;DJs.</p>
-        </div>
-
-        <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell">
-          {% set publicId = collections.images["IMG_5046.jpg"]["public_id"] %}
-          <img
-            class="responsive"
-            loading="lazy"
-            alt=""
-            width="500"
-            height="281"
-            src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-            srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
-        </div>
-
-        <div class="hc-card hc-card--decorated mdc-layout-grid__cell">
-          <p>Hacker Camp je z&nbsp;principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš propagovat a
-            nabízet
-            jen pokud to obohatí samotnou&nbsp;akci
-            <code>#NoDirectSales</code>&#x0020;
-            <code>#NoDirectHiring</code></p>
-        </div>
-      </div>
-    </section>
   </div>
-  <section id="o-nas" class="mdc-layout-grid">
+  <section id="co-vse-cekat">
+    <h2 id="toc-co-od-hacker-campu-cekat">Co od Hacker Campu čekat?</h2>
+
+    <p>
+      Děláme nekomerční a z&nbsp;principu neformální akci, kde nám má všem být dobře. Tohle jsou základní geny
+      Hacker campu.
+      <strong>Jediná část, kde nestrpíme kompromisy</strong>:
+    </p>
+
+    <div class="hc-card-grid">
+      <div class="hc-card hc-card--decorated hc-card--centered hc-card--half">
+        <p>Akce je jen pro pozvané</p>
+      </div>
+
+      <div class="hc-card hc-card--decorated hc-card--centered hc-card--half">
+        <p>Tykáme si</p>
+      </div>
+
+      <div class="hc-card hc-card--decorated">
+        <p>Vstupenku si kupuješ na celou akci a budeme rádi, když s&nbsp;námi zůstaneš všechny tři dny</p>
+      </div>
+
+      <div class="hc-card hc-card--decorated">
+        <p>Chováme se k&nbsp;sobě slušně a ohleduplně&nbsp;&ndash; dodržujeme hygienická i&nbsp;etická pravidla
+          (i&nbsp;pokud jde o&nbsp;focení se, noční klid a podobně)</p>
+      </div>
+
+      <div class="hc-card hc-card--picture hc-card--centered">
+        {% set publicId = collections.images["A7R04296.jpg"]["public_id"] %}
+        <img
+          class="responsive"
+          loading="lazy"
+          alt=""
+          width="500"
+          height="281"
+          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
+          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+      </div>
+
+      <div class="hc-card hc-card--decorated">
+        <p>Jsme v&nbsp;přírodě a chováme se i&nbsp;k&nbsp;ní ohleduplně (třídíme odpad a ideálně odjíždíme
+          beze&nbsp;stop)</p>
+      </div>
+
+      <div class="hc-card hc-card--picture hc-card--centered">
+        {% set publicId = collections.images["9895_0041.jpg"]["public_id"] %}
+        <img
+          class="responsive"
+          loading="lazy"
+          alt=""
+          width="500"
+          height="281"
+          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
+          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+      </div>
+
+      <div class="hc-card hc-card--decorated hc-card--centered hc-card--half">
+        <p>Nemáme žádné VIP zóny</p>
+      </div>
+
+      <div class="hc-card hc-card--decorated hc-card--half">
+        <p>Každý účastník je zároveň tvůrce akce.</p>
+      </div>
+
+      <div class="hc-card hc-card--picture hc-card--centered">
+        {% set publicId = collections.images["IMG_5068.jpg"]["public_id"] %}
+        <img
+          class="responsive"
+          loading="lazy"
+          alt=""
+          width="500"
+          height="281"
+          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
+          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+      </div>
+
+      <div class="hc-card hc-card--picture hc-card--centered">
+        {% set publicId = collections.images["IMG_5822.jpg"]["public_id"] %}
+        <img
+          class="responsive"
+          loading="lazy"
+          alt=""
+          width="500"
+          height="281"
+          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
+          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+      </div>
+
+      <div class="hc-card hc-card--decorated">
+        <p>Přivést můžeš i&nbsp;jakýkoliv doprovodný program&nbsp;&ndash; uvítáme vše od pípy, baristy a přípravy kávy
+          až po&nbsp;DJs.</p>
+      </div>
+
+      <div class="hc-card hc-card--picture hc-card--centered">
+        {% set publicId = collections.images["IMG_5046.jpg"]["public_id"] %}
+        <img
+          class="responsive"
+          loading="lazy"
+          alt=""
+          width="500"
+          height="281"
+          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
+          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
+                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+      </div>
+
+      <div class="hc-card hc-card--decorated">
+        <p>Hacker Camp je z&nbsp;principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš propagovat a
+          nabízet jen pokud to obohatí samotnou&nbsp;akci
+          <code>#NoDirectSales</code>&#x0020;
+          <code>#NoDirectHiring</code></p>
+      </div>
+    </div>
+  </section>
+  <section id="o-nas">
     <h2 id="toc-kdo-jsme">Kdo jsme</h2>
-    <div class="mdc-layout-grid__inner">
-      <div class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet">
+    <div class="hc-card-grid">
+      <div class="hc-card hc-card--decorated">
         <p>Nápad na Hacker Camp vznikl v&nbsp;hlavě Kuby Balady. Náš core organizační
           tým je složený z&nbsp;Páji, Irči, Jirky, Aleše, Kuby a Kosiho.</p>
       </div>
-      <div class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet">
+      <div class="hc-card hc-card--decorated">
         <p>Všichni jsme součástí české tech scény. Znáte nás ze startupů,
           neziskovek i&nbsp;akcí, kde jsme se už určitě potkali.</p>
       </div>
-      <div class="hc-card hc-card--decorated mdc-layout-grid__cell mdc-layout-grid__cell--span-8-tablet">
+      <div class="hc-card hc-card--decorated">
         <p>Z&nbsp;předchozích ročníků máme vyzkoušeno, že tenhle typ akce nám
           v&nbsp;Česku chyběl. Víme, že v&nbsp;netradičních set-upech a prostředích
           vznikají ty nejlepší nečekané nápady. Pojeďte si s&nbsp;námi užít
           Hacker&nbsp;Camp!</p>
       </div>
-      <div class="hc-card hc-card--picture hc-card--centered mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+      <div class="hc-card hc-card--picture hc-card--centered">
         {% set publicId = collections.images["footer.avif"]["public_id"] %}
         <img
           class="responsive"
