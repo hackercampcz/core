@@ -245,7 +245,7 @@ img.responsive {
 
 #koho {
   display: grid;
-  margin-inline: var(--hc-gutter);
+  padding-inline: var(--hc-gutter);
 
   @media screen and (min-width: 600px) {
     margin-bottom: 10em;
@@ -316,7 +316,7 @@ img.responsive {
 
 #kdy {
   display: grid;
-  margin-inline: var(--hc-gutter);
+  padding-inline: var(--hc-gutter);
 
   @media screen and (min-width: 600px) {
     grid-template-columns: 1fr 1fr;
