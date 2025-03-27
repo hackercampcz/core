@@ -3315,7 +3315,7 @@ __metadata:
     "@material/layout-grid": "npm:14.0.0"
     "@material/mwc-drawer": "npm:0.27.0"
     "@material/mwc-snackbar": "npm:0.27.0"
-    "@material/web": "npm:2.2.0"
+    "@material/web": "npm:2.3.0"
     "@thi.ng/atom": "npm:5.3.27"
     "@thi.ng/transducers": "npm:9.2.24"
     "@types/w3c-web-nfc": "npm:1.0.4"
@@ -4230,13 +4230,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@material/web@npm:2.2.0":
-  version: 2.2.0
-  resolution: "@material/web@npm:2.2.0"
+"@material/web@npm:2.3.0":
+  version: 2.3.0
+  resolution: "@material/web@npm:2.3.0"
   dependencies:
-    lit: "npm:^2.7.4 || ^3.0.0"
+    lit: "npm:^2.8.0 || ^3.0.0"
     tslib: "npm:^2.4.0"
-  checksum: 10c0/8a47cb73b40e6d09bf82e5555ae02104fcaf9b0141eb76152167992da767fc42fa3a8ed8aab551c0aa3987d91058206168aedaad20aafd37198172649175e23e
+  checksum: 10c0/79e6d67b469fdab13ab4c4a47f97063dba7d6cda72abbfaf187565e4633cd52b2aa9b86111ee36c989730fe237954d92fbdfb2a0572951f949120c1789b471d4
   languageName: node
   linkType: hard
 
@@ -10653,7 +10653,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit@npm:3.2.1, lit@npm:^2.7.4 || ^3.0.0":
+"lit@npm:3.2.1, lit@npm:^2.8.0 || ^3.0.0":
   version: 3.2.1
   resolution: "lit@npm:3.2.1"
   dependencies:
