@@ -5,7 +5,7 @@
   "author": "Aleš Roubíček <ales@roubicek.name>",
   "license": "EUPL-1.2",
   "private": true,
-  "packageManager": "yarn@4.7.0",
+  "packageManager": "yarn@4.8.0",
   "devDependencies": {
     "@hckr_/blendid": "9.3.3",
     "@types/nunjucks": "3.2.6",
