@@ -3458,7 +3458,7 @@ __metadata:
     "@thi.ng/transducers": "npm:9.2.25"
     "@types/node": "npm:22.14.0"
     algoliasearch: "npm:5.23.2"
-    fast-xml-parser: "npm:5.1.0"
+    fast-xml-parser: "npm:5.2.0"
     immutable: "npm:5.1.1"
     jsonwebtoken: "npm:9.0.2"
     rollbar: "npm:2.26.4"
@@ -8923,14 +8923,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:5.1.0":
-  version: 5.1.0
-  resolution: "fast-xml-parser@npm:5.1.0"
+"fast-xml-parser@npm:5.2.0":
+  version: 5.2.0
+  resolution: "fast-xml-parser@npm:5.2.0"
   dependencies:
     strnum: "npm:^2.0.5"
   bin:
     fxparser: src/cli/cli.js
-  checksum: 10c0/58aa2e9ffd735fa81b15e7ce6ca01c8b74366d2ab001ed15a3fa565adc5f15bbe2e98fd7243bdf0a0ea26a6b012e4ef503078ff188702f9c4209a8de89de44bd
+  checksum: 10c0/9d65ea8edeff114200313a7df7b9b1c62ff848099529ab82ed2de75ef789ebf1d7105442a12a1a51899f4dae3961f776adc6ddd85dd461272bc3f1e62211fc37
   languageName: node
   linkType: hard
 
