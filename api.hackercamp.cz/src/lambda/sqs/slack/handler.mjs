@@ -259,10 +259,15 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
 
 async function onUserProfileChanged({ user }, { year }) {
   const { id: slackID, profile: { email } } = user;
+  if (!email) {
+    console.warn({ event: "User without e-mail", slackID: user.id })
+    return;
+  }
   console.log({ event: "Profile update", email, slackID });
   const [contact, attendee] = await Promise.all([getContact(email, slackID), getAttendee(slackID, year)]);
   if (!contact) {
-    return console.log({ event: "Contact not found", email, slackID });
+    console.log({ event: "Contact not found", email, slackID })
+    return;
   }
   await updateContact(contact, user);
   if (attendee) await updateAttendee(attendee, user);
