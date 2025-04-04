@@ -12,17 +12,17 @@ export default {
   year: 2024,
   event: {
     name: "Hacker Camp",
-    startDate: new Date("2024-08-29T17:00:00+02:00"),
-    endDate: new Date("2024-09-01T12:00:00+02:00"),
+    startDate: new Date("2025-08-28T17:00:00+02:00"),
+    endDate: new Date("2025-08-31T12:00:00+02:00"),
     get willStartSoon() {
       const today = new Date();
       const threeDaysBefore = new Date(this.startDate);
       threeDaysBefore.setDate(threeDaysBefore.getDate() - 3);
       threeDaysBefore.setHours(0, 0, 0, 0);
-      return today >= threeDaysBefore;
+      return threeDaysBefore <= today && today <= this.endDate;
     },
     location: "Sobeňák, Starý Rožmitál 148, Rožmitál pod Třemšínem",
-    details: "Zažijte netradiční třídenní festival pro lidi z české tech scény.",
+    details: "Zažijte kemp pro ty, kteří chtějí lepší budoucnost.",
   },
   ticket: {
     nonprofit: { name: "Táborník z neziskovky", price: 3000 },

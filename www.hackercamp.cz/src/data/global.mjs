@@ -22,7 +22,7 @@ export default {
     },
     isRegistrationOpen: false,
     location: "Sobeňák, Starý Rožmitál 148, Rožmitál pod Třemšínem",
-    details: "Zažijte netradiční třídenní festival pro lidi z české tech scény. Kemp pro ty, kteří chtějí lepší budoucnost."
+    details: "Zažijte kemp pro ty, kteří chtějí lepší budoucnost."
   },
   ticket: {
     nonprofit: { name: "Táborník z neziskovky", price: 3000 },
