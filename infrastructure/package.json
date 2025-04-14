@@ -2,7 +2,7 @@
   "name": "@hackercamp/infrastructure",
   "main": "index.ts",
   "version": "1.0.0",
-  "packageManager": "yarn@4.9.0",
+  "packageManager": "yarn@4.9.1",
   "dependencies": {
     "@hackercamp/api": "workspace:*",
     "@hackercamp/donut": "workspace:*",
