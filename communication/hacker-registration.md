@@ -7,8 +7,9 @@ Ahoj, táborníku!
 
 Jsme rádi, že s námi chceš vyrazit na další Hacker Camp!
 Máš za sebou první krok: Registraci. Pro potvrzení svého místa ještě musíš svůj vstup zaplatit.
-Faktura ti přijde během týdne, jak se to podaří Kačce odbavit.
-Mezi tím se ujisti, že máš vyplněné fakturační údaje (alespoň adresu, bez té Ti fakturu nevystavíme).
+Faktura ti přijde během týdne, jak se nám to podaří odbavit.
+
+Mezi tím se ujisti, že máš [vyplněné fakturační údaje](https://donut.hckr.camp/registrace) (alespoň adresu, bez té Ti fakturu nevystavíme).
 Se zaplacením faktury Ti přijde potvrzení na Slack a otevře se ti možnost vybrat si
 postel nebo zadat se do programu v adminu Tvého profilu.
 
@@ -75,7 +76,7 @@ Uff. Dlouhý mail a dlouhé čtení. Ale nezapomeň, všechno
 **podstatné je, že camp bude jen takový, jaký si ho uděláme!**
 Takže úsměv a klid a bude to super :)
 
-Vidíme se ve čtvrtek 29. srpna v pozdním odpolku na Sobeňáku
+Vidíme se ve čtvrtek 28. srpna v pozdním odpolku na Sobeňáku
 (začínat budeme podobně jako loni cca okolo 5. a rozloučíme se ideálně v neděli po snídani :)
 Teda pokud nezůstaneš až do odpoledne (střízlivět, u čehož nám můžeš pomoci s bouráním tábora:))
 

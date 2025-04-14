@@ -9,7 +9,7 @@ Ahoj, táborníku!
 tak je kromě těšení se dobré si říct pár praktikálií, aby se nám camp vydařil :)
 
 Právě jsi udělal/a první krok: Registraci. Pro potvrzení svého místa ještě musíš
-svůj vstup zaplatit. Faktura ti přijde během týdne, jak se to podaří Kačce odbavit.
+svůj vstup zaplatit. Faktura ti přijde během týdne, jak se nám to podaří odbavit.
 Pokud nemáš platbu faktur pod palcem, zkus na ni zatlačit.
 Protože až se zaplacením Faktury Ti přijde pozvánka na Slack. Pokud ji pod palcem máš
 a nevyplnil/a jsi fakturační údaje (alespoň adresu), tak je prosím doplň.

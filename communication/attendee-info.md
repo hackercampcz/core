@@ -1,11 +1,11 @@
 ---
-Subject: Hacker Camp startuje už 29. 8.
+Subject: Hacker Camp startuje už 28. 8.
 LayoutTemplate: hc-basic
 ---
 
 Ahoj, táborníku!
 
-Hacker Camp začíná už za tři týdny. **29. 8. se sejdeme všichni na [Sobeňáku](https://www.sobenak.cz/) - nejpozději v 16:30.**
+Hacker Camp začíná už za tři týdny. **28. 8. se sejdeme všichni na [Sobeňáku](https://www.sobenak.cz/) - nejpozději v 16:30.**
 To abys už s přiděleným noclehem / povlečením na klid zvládal první program od 17:00.
 
 Pojďme se kouknout na pár letošních praktikálií, aby se nám camp vydařil :)
@@ -89,7 +89,7 @@ a hudební tvorbou :) A nejen u ohně. Prostě fantazii se meze nekladou.
 **Shrnutí:**
 
 - **Kdy to celé ofiko začíná?**\
-  Ve čtvrtek 29. 8. 2024 v 17:00
+  Ve čtvrtek 28. 8. 2025 v 17:00
 - **A kdy končíme?**\
   V neděli ráno, jak se vzbudíš po sobotní party :)
 - **Kdy přijet? A můžu jen na jeden den?**\
@@ -123,14 +123,14 @@ a hudební tvorbou :) A nejen u ohně. Prostě fantazii se meze nekladou.
 Uff. Dlouhý mail a dlouhé čtení. Ale nezapomeň, všechno **podstatné je, že Camp bude jen takový, jaký si ho uděláme!**
 Takže úsměv a klid a bude to super :)
 
-Vidíme se ve čtvrtek 29. 8. v pozdním odpolku na Sobeňáku (začínat budeme podobně jako loni cca okolo 5. a rozloučíme
+Vidíme se ve čtvrtek 28. 8. v pozdním odpolku na Sobeňáku (začínat budeme podobně jako loni cca okolo 5. a rozloučíme
 se ideálně v neděli po snídani :) Teda pokud nezůstaneš až do odpoledne (střízlivět, u čehož nám můžeš pomoci s bouráním tábora:))
 
-**Všechny další věci, na které tenhle mail neodpovídá najdeš[na webu v FAQs](https://www.hackercamp.cz/faq/).\
+**Všechny další věci, na které tenhle mail neodpovídá najdeš [na webu v FAQs](https://www.hackercamp.cz/faq/).\
 Pokud by ti tohle info ještě nestačilo, tak nám určitě napiš. Na slack, na mail. Nebo volej.**
 
 Těšíme se na viděnou, táborníku!
 
-Už 29. 8. na Sobeňáku!
+Už 28. 8. na Sobeňáku!
 
 Tvoje Hacker Camp #crew: Pája, Kuba, Kosi, Jirka, Aleš & Ir

@@ -9,7 +9,7 @@ Tvůj zájem o Hacker Camp nás moc těší. Asi ses na webu dočetl či dočet
 kteří už byli na předešlých ročnících campu. Tvůj zájem a mail registrujeme.
 Pokud bude kapacita, začátkem května se Ti ozveme s potvrzením a dalšími pokyny.
 
-Věříme, že to klapne. Takže Ti začátkem května přijde i faktura a organizační mail,
+Věříme, že to klapne. Takže Ti začátkem června přijde i faktura a organizační mail,
 aby Ti nic neuniklo. Mezitím si můžeš [vytunit svůj profil]({{ editUrl }}),
 rozmyslet si, čím přispěješ do programu, nebo dát vědět, jak chceš přijet.
 A to nejdůležitější - nezapomeň vyplnit fakturační údaje (alespoň celou adresu).
