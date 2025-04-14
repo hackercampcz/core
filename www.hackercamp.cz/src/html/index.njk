@@ -3,25 +3,6 @@
 
 {% block title %} Hacker Camp{% endblock %}
 
-{% block head_stylesheets %}
-  <style>
-    .hc-hero {
-      display: grid;
-      gap: var(--hc-gutter);
-      @media screen and (min-width: 640px) {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .hc-hero video {
-      max-width: calc(100vw - var(--hc-gutter, 16px) * 2);
-      @media screen and (min-width: 640px) {
-        max-width: 100%;
-      }
-    }
-  </style>
-{% endblock %}
-
 {% block head %}
   <meta
     name="description"
