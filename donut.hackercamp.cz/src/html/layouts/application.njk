@@ -2,13 +2,29 @@
 <html lang="cs">
 <head>
   <meta charset="utf-8">
-  <title>{% block title %}{{ title }}{% endblock %}</title>
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  {% block head_pragma %}{% endblock %}
+  <title>{% block title %}{{ meta.title }} {{ title }}{% endblock %}</title>
+  {% block head_preconnect %}{% endblock %}
+  {% block head_async_scripts %}{% endblock %}
+  {% block head_import_stylesheets %}{% endblock %}
+  {% block head_scripts %}{% endblock %}
   {% include "shared/fonts.html" %}
   {% include "shared/styles.html" %}
   <link rel="stylesheet" href="/assets/css/index.css">
-  <meta name="generator" content="{{ generator or '@hckr_/blendid - static site generator and assets pipeline' }}">
+  {% block head_stylesheets %}{% endblock %}
+  {% block head_preload %}{% endblock %}
+  {% block head_defer_scripts %}{% endblock %}
+  {% block head_prefetch %}{% endblock %}
+  <meta name="description" content="{{ description or meta.description }}">
+  {% block head_meta %}{% endblock %}
+  <meta name="robots" content="noindex">
   <meta name="author" content="https://hckr.studio/">
+  <meta name="generator" content="{{ generator or meta.generator }}">
+  <link rel="author" href="/humans.txt" type="text/plain">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#222222" media="(prefers-color-scheme: dark)">
   {% include "shared/app-icons.html" %}
   {% block head %}{% endblock %}
 </head>
