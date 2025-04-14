@@ -3,6 +3,14 @@ img.responsive {
   height: auto;
 }
 
+code {
+  font-family: inherit;
+  font-size: 0.9em;
+  background-color: var(--hc-row-highlight);
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
 .hc-hero {
   display: grid;
   gap: var(--hc-gutter);
