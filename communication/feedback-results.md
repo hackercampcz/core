@@ -11,7 +11,7 @@ Dokonce jsme nad tím, co si z vašich postřehů bereme, už strávili dvouhodi
 i na plánovací víkend před dalším ročníkem campu!
 
 Proč vám to všechno říkáme? Abyste věděli, že nekecáme. **Že nám na vašem názoru záleží. Hacker Camp si děláme pro sebe**
-\- letos se nám krásně potvrdilo, že už jsme hezká komunita. Inspirování Burnigmanem a hafem tech-eventů,
+\- letos se nám krásně potvrdilo, že už jsme hezká komunita. Inspirování Burningmanem a hafem tech-eventů,
 na které chodíme, **chceme camp udržet jiný, ale pořád takový, aby pro vás měl hodnotu a bylo to místo, kam se můžete těšit.**
 
 Co ve zpětné vazbě slyšíme?
@@ -48,7 +48,7 @@ My se na vás už teď těšíme. **Registraci otevřeme někdy na jaře. Zase v
 Pokud můžete slack si nevypínejte. Chceme mít možnost o vás vědět i během roku.
 `#random` je ready na pozvánky, nabídky a věci, co chcete s táborníky sdílet. Budeme za každou aktivitu rádi!
 
-📢 💃 🕺 Jo a big news: **Chcete se potkat? 20.11.** pořádá Jirka v **[Praze DataDay](https://www.dataday.cz/)**.
+📢 💃 🕺 Jo a big news: **Chcete se potkat? 20. 11.** pořádá Jirka v **[Praze DataDay](https://www.dataday.cz/)**.
 A po něm bude afterparty, která v pohodě pojme na 150 hackerů. Takže pokud **dorazíte mezi 8 a 10 večerní do [Divadla X](https://www.divadlox10.cz/cs/kontakt#:~:text=Divadlo%20X10%0ACharv%C3%A1tova%2010/39%2C%20Praha%201%2C%20110%2000**)**
 s HC náramkem nebo vás najdeme na HC slacku, nebo mezi účastníky campů, **aftroška DataDaye je vám otevřená :) Vidíme se?!** 💃 🕺
 
