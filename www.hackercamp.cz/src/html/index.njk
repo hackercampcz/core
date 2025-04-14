@@ -19,34 +19,6 @@
         max-width: 100%;
       }
     }
-
-    .hc-card-grid {
-      --_cols: 1;
-      display: grid;
-      padding-inline: var(--hc-gutter);
-      gap: var(--hc-gutter);
-      grid-template-columns: repeat(var(--_cols), 1fr);
-
-      @media screen and (min-width: 480px) {
-        --_cols: 2;
-      }
-      @media screen and (min-width: 840px) {
-        --_cols: 3;
-      }
-
-      &:has(.hc-card--half) {
-        --_cols: 2;
-        @media screen and (min-width: 480px) {
-          --_cols: 4;
-        }
-        @media screen and (min-width: 840px) {
-          --_cols: 6;
-        }
-        .hc-card:not(.hc-card--half) {
-          grid-column: span 2;
-        }
-      }
-    }
   </style>
 {% endblock %}
 
