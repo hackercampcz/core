@@ -4,9 +4,17 @@
 
 {% block head_stylesheets %}
   <style>
+    p {
+      max-width: 50em;
+      text-wrap: pretty;
+    }
+    ul, ol {
+      max-width: 45em;
+      text-wrap: pretty;
+    }
     main {
       margin: 0 auto;
-      max-width: var(--hc-layout-width);
+      max-width: 56em;
     }
   </style>
 {% endblock %}
