@@ -64,7 +64,7 @@ export function attendeesChips(
   { attendees, crewAttendees, staffAttendees, volunteerAttendees, hackerAttendees },
   params
 ) {
-  return html`<search style="display: flex; gap: 8px">
+  return html`<search style="display: flex; gap: 8px; align-items: center;">
       ${
     when(view === View.searchAttendees, () =>
       html`
@@ -100,13 +100,13 @@ export function attendeesChips(
             </md-icon-button>
           </div>
           <div
-            class="mdc-evolution-chip-set"
+            class="mdc-chip-set"
             role="grid"
             id="filters"
             aria-orientation="horizontal"
             aria-multiselectable="false"
           >
-            <span class="mdc-evolution-chip-set__chips" role="presentation">
+            <span class="mdc-chip-set__chips" role="presentation">
               ${
         chip({ text: "Všichni", count: attendees, selected: view === View.attendees, view: View.attendees, year })
       }

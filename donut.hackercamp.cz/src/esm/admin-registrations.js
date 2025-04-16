@@ -229,7 +229,7 @@ export function registrationsChips(
   params
 ) {
   return html`
-    <search style="display: flex; gap: 8px">
+    <search style="display: flex; gap: 8px; align-items: center;">
       ${
     when(view === View.search, () =>
       html`<form style="flex-grow: 1">
@@ -263,13 +263,13 @@ export function registrationsChips(
             </md-icon-button>
           </div>
           <div
-            class="mdc-evolution-chip-set"
+            class="mdc-chip-set"
             role="grid"
             id="filters"
             aria-orientation="horizontal"
             aria-multiselectable="false"
           >
-            <span class="mdc-evolution-chip-set__chips" role="presentation">
+            <span class="mdc-chip-set__chips" role="presentation">
               ${chip({ text: "Zaplacení", count: paid, selected: view === View.paid, view: View.paid, year })}
               ${
         chip({ text: "Vyfakturovaní", count: invoiced, selected: view === View.invoiced, view: View.invoiced, year })

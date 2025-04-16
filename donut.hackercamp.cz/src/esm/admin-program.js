@@ -22,13 +22,13 @@ function deleteEvent(email) {
 export function programChips(view, year, { program, programApproval }) {
   return html`
     <div
-      class="mdc-evolution-chip-set"
+      class="mdc-chip-set"
       role="grid"
       id="filters"
       aria-orientation="horizontal"
       aria-multiselectable="false"
     >
-      <span class="mdc-evolution-chip-set__chips" role="presentation">
+      <span class="mdc-chip-set__chips" role="presentation">
         ${chip({ text: "Schváleno", count: program, selected: view === View.program, view: View.program, year })}
         ${
     chip({
