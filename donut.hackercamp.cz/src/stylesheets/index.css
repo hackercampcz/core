@@ -23,58 +23,64 @@ code {
   }
 }
 
-.mdc-evolution-chip {
+.mdc-chip {
+  .mdc-chip__ripple {
+    border-radius: 4px;
+  }
+
+  .mdc-chip__graphic {
+    display: none;
+    width: 0;
+    transition: width 0.1s linear;
+  }
+
+  .mdc-chip__checkmark,
+  .mdc-chip__icon--primary,
+  .mdc-chip__icon--trailing,
+  .mdc-chip__text-label {
+    color: #2f5b7e;
+  }
+}
+
+.mdc-chip--filter.mdc-chip--selected,
+.mdc-chip--filter.hc-chip--selected {
+  color: #fff;
+  -webkit-background-clip: inherit;
+  -webkit-text-fill-color: initial;
+  --mdc-chip-graphic-selected-width: 20px;
+
+  .mdc-chip__text-label {
+    color: #fff;
+  }
+  .mdc-chip__graphic {
+    width: var(--mdc-chip-graphic-selected-width, 20px);
+    padding-right: 8px;
+  }
+  .mdc-chip__checkmark {
+    opacity: 1;
+  }
+  .mdc-chip__action--primary {
+    padding-left: 8px;
+  }
+}
+
+.hc-chip {
+  --mdc-chip-graphic-selected-width: 0;
+  --mdc-typography-body2-font-family: var(--hc-font-family);
+  --mdc-ripple-color: #b9e6f1;
+
   border: 1px solid;
   border-image: var(--hc-gradient) 1;
   background-color: var(--hc-background-color);
   background-image: var(--hc-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  border-radius: 4px;
   height: 28px;
-  --mdc-ripple-color: #b9e6f1;
-
-  .mdc-evolution-chip__ripple {
-    border-radius: 4px;
-  }
-
-  .mdc-evolution-chip__graphic {
-    width: 0;
-    transition: width 0.1s linear;
-  }
-
-  .mdc-evolution-chip__checkmark,
-  .mdc-evolution-chip__icon--primary,
-  .mdc-evolution-chip__icon--trailing,
-  .mdc-evolution-chip__text-label {
-    color: #2f5b7e;
-  }
+  border-radius: 4px;
 }
-
-.mdc-evolution-chip--filter.mdc-evolution-chip--selected,
-.mdc-evolution-chip--filter.hc-chip--selected {
-  color: #fff;
-  -webkit-background-clip: inherit;
-  -webkit-text-fill-color: initial;
-  --mdc-chip-graphic-selected-width: 20px;
-
-  .mdc-evolution-chip__text-label {
-    color: #fff;
-  }
-  .mdc-evolution-chip__graphic {
-    width: var(--mdc-chip-graphic-selected-width, 20px);
-    padding-right: 8px;
-  }
-  .mdc-evolution-chip__checkmark {
-    opacity: 1;
-  }
-  .mdc-evolution-chip__action--primary {
-    padding-left: 8px;
-  }
-}
-
-.hc-chip {
-  --mdc-typography-body2-font-family: var(--hc-font-family);
+.hc-chip a {
+  text-decoration: none;
+  border-radius: 4px;
 }
 
 .hc-chip data {
