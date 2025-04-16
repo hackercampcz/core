@@ -186,6 +186,7 @@ const apiPages = new cloudflare.PagesProject("api", {
         ROLLBAR_TOKEN: config.require("rollbar-access-token"),
       },
       secrets: {
+        HC_JWT_SECRET: config.require("private-key"),
         FAKTUROID_CLIENT_SECRET: config.require("fakturoid-client-secret"),
       }
     },

@@ -6,6 +6,7 @@ export interface Env {
 
   HC_API_HOSTNAME: string;
   HC_DONUT_HOSTNAME: string;
+  HC_JWT_SECRET: string;
   HC_WEB_HOSTNAME: string;
 
   ROLLBAR_TOKEN: string;
