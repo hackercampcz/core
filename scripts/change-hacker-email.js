@@ -141,4 +141,4 @@ async function main({ slackID, email, slackToken }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config change-hacker-email.js --slackToken=$(op read "op://HackerCamp/Slack Admin/credential") --slackID=hc-test --email=new@example.com
+// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config change-hacker-email.js --slackToken=$(op read "op://HackerCamp/Slack Admin/credential") --slackID=hc-test --email=new@example.com
