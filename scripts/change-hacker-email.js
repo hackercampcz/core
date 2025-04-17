@@ -26,13 +26,13 @@ async function getContact(slackID) {
  * @returns {Promise<void>}
  */
 async function updateContact(contact, email) {
-  await dynamo.deleteItem({
-    TableName: "contacts",
-    Key: { slackID: contact.slackID, email: contact.email },
-  });
   await dynamo.putItem({
     TableName: "contacts",
     Item: Object.assign({}, contact, { email }),
+  });
+  await dynamo.deleteItem({
+    TableName: "contacts",
+    Key: { slackID: contact.slackID, email: contact.email },
   });
 }
 
@@ -98,13 +98,13 @@ async function getRegistrations(email) {
 }
 
 async function updateRegistration(registration, email) {
-  await dynamo.deleteItem({
-    TableName: "registrations",
-    Key: { year: registration.year, email: registration.email },
-  });
   await dynamo.putItem({
     TableName: "registrations",
     Item: Object.assign({}, registration, { email }),
+  });
+  await dynamo.deleteItem({
+    TableName: "registrations",
+    Key: { year: registration.year, email: registration.email },
   });
 }
 

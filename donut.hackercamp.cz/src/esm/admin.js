@@ -454,7 +454,6 @@ export async function main({ appRoot, searchParams, env, viewTitle, yearSelector
   const page = parseInt(searchParams.get("page") ?? 0);
   const selectedView = searchParams.get("view") ?? View.confirmed;
   const query = searchParams.get("query") ?? "";
-  console.log(searchParams.toString());
   const apiHost = env["api-host"];
   const contact = getContact();
   const isNFCSupported = typeof NDEFReader !== "undefined";

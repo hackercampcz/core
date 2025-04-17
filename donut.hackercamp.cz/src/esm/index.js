@@ -17,7 +17,6 @@ import {
 import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
-import { schedule } from "./lib/schedule.js";
 import * as slack from "./lib/slack.js";
 import { setSlackProfile } from "./lib/slack.js";
 
@@ -41,8 +40,6 @@ const state = defAtom({
   registration: null,
   view: renderIndex,
   forcedView: null,
-  campStartAt: new Date(),
-  campEndAt: new Date(),
   get selectedView() {
     if (this.forcedView) return this.forcedView;
     if (!(this.profile || this.registration || this.attendee)) {
@@ -491,7 +488,7 @@ export async function main({ searchParams, rootElement, env }) {
   initRenderLoop(state, rootElement);
 
   if (isSignedIn()) {
-    transact((x) => Object.assign(x, { apiHost, year }, schedule.get(year)));
+    transact((x) => Object.assign(x, { apiHost, year }));
     try {
       const profile = getSlackProfile();
       await loadData(profile, year, apiURL);
