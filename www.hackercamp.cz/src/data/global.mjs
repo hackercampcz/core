@@ -20,7 +20,7 @@ export default {
       threeDaysBefore.setHours(0, 0, 0, 0);
       return threeDaysBefore <= today && today <= this.endDate;
     },
-    isRegistrationOpen: false,
+    isRegistrationOpen: true,
     location: "Sobeňák, Starý Rožmitál 148, Rožmitál pod Třemšínem",
     details: "Zažijte kemp pro ty, kteří chtějí lepší budoucnost."
   },

@@ -9,7 +9,7 @@ export default {
   get currentYear() {
     return new Date().getFullYear();
   },
-  year: 2024,
+  year: 2025,
   event: {
     name: "Hacker Camp",
     startDate: new Date("2025-08-28T17:00:00+02:00"),
@@ -21,6 +21,7 @@ export default {
       threeDaysBefore.setHours(0, 0, 0, 0);
       return threeDaysBefore <= today && today <= this.endDate;
     },
+    isRegistrationOpen: true,
     location: "Sobeňák, Starý Rožmitál 148, Rožmitál pod Třemšínem",
     details: "Zažijte kemp pro ty, kteří chtějí lepší budoucnost.",
   },
