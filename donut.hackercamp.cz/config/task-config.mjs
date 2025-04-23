@@ -1,5 +1,5 @@
-import { texyTypography } from "@hckr_/blendid/lib/texy.mjs";
 import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
+import { texyTypography } from "@hckr_/blendid/lib/texy.mjs";
 import gulpMode from "gulp-mode";
 import fs from "node:fs";
 import path from "node:path";
@@ -40,7 +40,9 @@ export default {
   static: true,
   esbuild: true,
 
-  stylesheets: { postcss: { plugins: [jitProps(OpenProps)] } },
+  stylesheets: {
+    postcss: { plugins: [jitProps(OpenProps)] }
+  },
 
   html: {
     data: {
@@ -57,9 +59,11 @@ export default {
     markedExtensions: [texyTypography("cs")],
     nunjucksRender: {
       filters: {
+        longDate(x, locale = "cs-CZ") {
+          return new Intl.DateTimeFormat(locale, { day: "numeric", month: "long" }).format(new Date(x));
+        },
         formatDateTime(s, locale = "cs-CZ") {
-          const date = new Date(s);
-          return formatDateTime(date, locale);
+          return formatDateTime(new Date(s), locale);
         },
         price(x, currency, locale = "cs-CZ") {
           return new Intl.NumberFormat(locale, {
@@ -76,7 +80,10 @@ export default {
     html: [{ collection: "hackers", template: "shared/hacker.njk", route: (x) => `hackers/${x[0]}/index.html` }]
   },
 
-  vite: { browser: "google chrome canary", browserArgs: "--ignore-certificate-errors --allow-insecure-localhost" },
+  vite: {
+    browser: "google chrome canary",
+    browserArgs: "--ignore-certificate-errors --allow-insecure-localhost"
+  },
 
   production: { rev: true },
 
