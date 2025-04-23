@@ -40,6 +40,7 @@ const state = defAtom({
   registration: null,
   view: renderIndex,
   forcedView: null,
+  hasRegisteredHackers: false,
   get selectedView() {
     if (this.forcedView) return this.forcedView;
     if (!(this.profile || this.registration || this.attendee)) {
@@ -203,7 +204,7 @@ function travelText(travel) {
   }
 }
 
-function housedCardTemplate({ housing, housingPlacement, travel }) {
+function housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers }) {
   return html`
     <div class="hc-card hc-card--decorated">
       <p>
@@ -217,10 +218,12 @@ function housedCardTemplate({ housing, housingPlacement, travel }) {
         <a class="hc-link" href="/ubytovani/">změnit ubytování</a>.
       </p>
       ${travelText(travel)}
-      <p>
-        Chceš se podívat, kdo už se na tebe těší? Tak tady je
-        <a href="/hackers/">seznam účastníků</a>.
-      </p>
+      ${when(hasRegisteredHackers, () => html`
+        <p>
+          Chceš se podívat, kdo už se na tebe těší? Tak tady je
+          <a href="/hackers/">seznam účastníků</a>.
+        </p>`
+      )}
     </div>
   `;
 }
@@ -232,46 +235,31 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
   return html`
     <div class="hc-card hc-card--decorated">
       <h2>Útrata</h2>
-      ${
-    when(total > 0, () =>
-      html`
-              <p>
-                Celkem:
-                <strong>
-                  <data value="${total}">${formatMoney(total)}</data>
-                </strong>
-              </p>`)
-  }
+      ${when(total > 0, () => html`
+        <p>
+          Celkem:
+          <strong>
+            <data value="${total}">${formatMoney(total)}</data>
+          </strong>
+        </p>
+      `)}
       <ul>
-        ${
-    map(chips, (x) =>
-      html`
-                <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
-                  SN chipu:
-                  <code title="SN najdete na zadní straně čipu - pod páskem"
-                  >${x.sn.toUpperCase()}</code
-                  >
-                  -
-                  ${
-        when(checkOutPaid || x.paid, () => html`<strong style="color: forestgreen">Zaplaceno</strong>`, () =>
-          html`<strong style="color: darkred"
-                        >Nezaplaceno
-                          <data value="${x.spent ?? x.totalSpent}"
-                          >${formatMoney(x.spent ?? x.totalSpent)}
-                          </data
-                          >
-                        </strong
-                        >`)
-      }
-
-                  <a
-                    href="https://pass.nfctron.com/receipt/${x.chipID}"
-                    target="nfcTron"
-                  >Účet</a
-                  >
-                </li>
-              `)
-  }
+        ${map(chips, (x) => html`
+          <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
+            SN chipu:
+            <code title="SN najdete na zadní straně čipu - pod páskem">${x.sn.toUpperCase()}</code>
+            -
+            ${when(checkOutPaid || x.paid,
+              () => html`<strong style="color: forestgreen">Zaplaceno</strong>`,
+              () => html`
+                <strong style="color: darkred">Nezaplaceno
+                  <data value="${x.spent ?? x.totalSpent}">${formatMoney(x.spent ?? x.totalSpent)}</data>
+                </strong>
+              `
+            )}
+            <a href="https://pass.nfctron.com/receipt/${x.chipID}" target="nfcTron">Účet</a>
+          </li>
+        `)}
       </ul>
     </div>
   `;
@@ -329,7 +317,8 @@ function plusOneCard(referralLink) {
 
 function renderDashboardScreen(
   { housing, housingPlacement, travel, events = [], nfcTronData, checkOutPaid },
-  referralLink
+  referralLink,
+  hasRegisteredHackers
 ) {
   return html`
     <div class="mdc-layout-grid__inner">
@@ -363,7 +352,7 @@ function renderDashboardScreen(
       <div
         class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-8-tablet"
       >
-        ${housedCardTemplate({ housing, housingPlacement, travel })}
+        ${housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers })}
       </div>
       <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         ${plusOneCard(referralLink)}
@@ -386,13 +375,13 @@ function canSelectHousing(registration, attendee) {
   return registration.paid || freeTickets.has(attendee?.ticketType);
 }
 
-function renderIndex({ profile, attendee, selectedView }) {
+function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers }) {
   const referralLink = `https://hckr.camp/r/${profile?.sub}`;
   switch (selectedView) {
     case View.loading:
       return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
     case View.dashboard:
-      return renderDashboardScreen(attendee, referralLink);
+      return renderDashboardScreen(attendee, referralLink, hasRegisteredHackers);
     case View.selectHousing:
       return renderPaidScreen(referralLink);
     case View.paymentPending:
@@ -405,25 +394,31 @@ function renderIndex({ profile, attendee, selectedView }) {
                 Tak s&nbsp;tím moc neváhej, abys spal / spala podle svých
                 představ&nbsp;:)
               </p>
-              <p>
-                Chceš se podívat, kdo už se na tebe těší? Tak tady je
-                <a href="/hackers/">seznam účastníků</a>.
-              </p>
-              <p>
-                Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
-                e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
-                <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
-                ><code>@rarous</code></a
-                >
-                nebo e-mail na
-                <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a on to
-                dá do pořádku.
-              </p>
+              ${when(hasRegisteredHackers, () => html`
+                <p>
+                  Chceš se podívat, kdo už se na tebe těší? Tak tady je
+                  <a href="/hackers/">seznam účastníků</a>.
+                </p>
+              `)}
             </div>
           </div>
           <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
             ${plusOneCard(referralLink)}
+            <p>
+              Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
+              e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
+              <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
+              ><code>@rarous</code></a
+              >
+              nebo e-mail na
+              <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a on to
+              dá do pořádku.
+            </p>
           </div>
+        </div>
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          ${plusOneCard(referralLink)}
+        </div>
         </div>
       `;
     default:
@@ -434,13 +429,13 @@ function renderIndex({ profile, attendee, selectedView }) {
               Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to
               i díky tobě.
             </p>
-            <a class="hc-link--decorated" href="/registrace/"
-            >Zaregistrovat se</a
-            >
-            <p>
-              Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
-              <a href="/hackers/">seznam účastníků</a>.
-            </p>
+            <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>
+            ${when(hasRegisteredHackers, () => html`
+              <p>
+                Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
+                <a href="/hackers/">seznam účastníků</a>.
+              </p>
+            `)}
           </div>
           <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
             ${plusOneCard(referralLink)}
@@ -488,7 +483,7 @@ export async function main({ searchParams, rootElement, env }) {
   initRenderLoop(state, rootElement);
 
   if (isSignedIn()) {
-    transact((x) => Object.assign(x, { apiHost, year }));
+    transact((x) => Object.assign(x, { apiHost, year, hasRegisteredHackers: env.hasRegisteredHackers }));
     try {
       const profile = getSlackProfile();
       await loadData(profile, year, apiURL);
