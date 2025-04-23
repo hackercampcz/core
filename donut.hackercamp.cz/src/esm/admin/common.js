@@ -125,6 +125,7 @@ export const ticketName = new Map([
   ["crew", "Crew"],
   ["staff", "Ostatní"]
 ]);
+
 export const ticketPrice = new Map([
   [2022, new Map([
     ["nonprofit", 2500],
@@ -165,20 +166,21 @@ export const ticketPrice = new Map([
 ]);
 
 export function chip({ text, count, selected, view, year }) {
+  const chipClasses = classMap({
+    "mdc-chip": true,
+    "mdc-chip--selectable": true,
+    "mdc-chip--filter": true,
+    "hc-chip": true,
+    "hc-chip--selected": selected
+  });
   return html`
-    <span
-      class="${
-    <span class="${classMap({
-      "mdc-chip": true,
-      "mdc-chip--selectable": true,
-      "mdc-chip--filter": true,
-      "hc-chip": true,
-      "hc-chip--selected": selected
-        href="?${new URLSearchParams({ view, year })}"
-      >
-        <span
-          class="mdc-chip__ripple mdc-chip__ripple--primary"
-        ></span>
+    <span class="${chipClasses}" role="presentation">
+      <a class="mdc-chip__action mdc-chip__action--primary"
+         role="option"
+         aria-selected="${selected.toString()}"
+         tabindex="0"
+         href="?${new URLSearchParams({ view, year })}">
+        <span class="mdc-chip__ripple mdc-chip__ripple--primary"></span>
         <span class="mdc-chip__graphic">
           <span class="mdc-chip__checkmark">
             <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
