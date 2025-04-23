@@ -8,7 +8,7 @@ Prosím, vyplň nám následující formulář. Díky němu Ti i na následují
 Campu budeme držet místo a budeme vědět, že se Ti máme ozvat nebo připomenout,
 než budeme zvát i ty, kdo loni na Campu nebyli :)
 
-Tvoje Hacker Camp Crew
+Tvoje Hacker Camp `@crew`
 
 * * *
 

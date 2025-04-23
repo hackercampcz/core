@@ -1,11 +1,11 @@
 Ahoj!
 
 Moc nás těší Tvůj zájem o účast na Hacker Campu!  
-(29. srpna až 1. září 2024)
+({{ event.startDate | longDate }} až {{ event.endDate | longDate }} {{ year }})
 
 Prosím, zkontroluj nebo doplň o sobě základní info.
 
-Kdyby cokoliv, kontaktuj nás na Slacku. Tvoje Hacker Camp Crew
+Kdyby cokoliv, kontaktuj nás na Slacku. Tvoje Hacker Camp `@crew`
 
 * * *
 
