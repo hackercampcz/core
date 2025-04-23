@@ -54,4 +54,4 @@ s HC náramkem nebo vás najdeme na HC slacku, nebo mezi účastníky campů, **
 
 Těšíme se na viděnou!
 
-Vaše `#HackerCamp` `@crew`: Kuba, Kosi, Jirka, Pája, Aleš & Ir
+Tvoje Hacker Camp `@crew`: Kuba, Kosi, Jirka, Pája, Aleš & Ir

@@ -36,8 +36,17 @@ p {
   max-width: 50em;
   text-wrap: pretty;
 }
+
 ul, ol {
   font-family: PT Mono, monospace;
   max-width: 45em;
   text-wrap: pretty;
+}
+
+code {
+  font-family: inherit;
+  font-size: 0.9em;
+  background-color: #e3f1fb;
+  border-radius: 4px;
+  padding: 2px 4px;
 }

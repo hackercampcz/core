@@ -29,7 +29,7 @@ Pojďme se kouknout na pár letošních praktikálií, aby se nám camp vydařil
 A teď postupně: **Bez zaplacení není slack**. A bez slacku na campu nemáš konkrétní nocleh (rozuměj, nevybereš si svoji postel),
 ani nemáš aktuální info, protože se nedostaneš do hackers sekce na [donut.hckr.camp](https://donut.hckr.camp/).
 Pokud zatím pořád nejsi na [HackerCamp slacku](http://hackercampworkspace.slack.com), je čas si ho znovu aktivovat,
-připnout si Hacker camp nahoru a začít sledovat dění!
+připnout si Hacker Camp nahoru a začít sledovat dění!
 (Něco Ti nefunguje? Zkus nejdřív [návod](https://donut.hckr.camp/help/#slack-prihlaseni) a pokud ani ten nefunguje,
 tak pingni [rarous@hckr.camp](mailto:rarous@hckr.camp).
 
@@ -133,4 +133,4 @@ Těšíme se na viděnou, táborníku!
 
 Už 28. 8. na Sobeňáku!
 
-Tvoje Hacker Camp #crew: Pája, Kuba, Kosi, Jirka, Aleš & Ir
+Tvoje Hacker Camp `@crew`: Pája, Kuba, Kosi, Jirka, Aleš & Ir

@@ -23,4 +23,4 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz
 
 Těšíme se na viděnou na Sobeňáku!
 
-Tvoje Hacker Camp @Crew
+Tvoje Hacker Camp `@crew`

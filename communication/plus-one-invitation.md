@@ -22,7 +22,7 @@ Jakmile naplníme kapacitu 300 hackerů, registraci zavřeme.
 Víc jak 300 se nás na Sobeňák nevejde. Takže kdo dřív zaplatí, ten má své místo jisté :)
 
 Pokud máš otázky, [koukni do FAQs](https://hckr.camp/faq/) na web, nebo nám napiš.
-A až budeš ve Slacku, stačí kontaktovat někoho z @crew :)
+A až budeš ve Slacku, stačí kontaktovat někoho z `@crew` :)
 
 Těšíme se na viděnou :)
 

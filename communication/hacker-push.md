@@ -28,4 +28,4 @@ Tak neváhej s přihlášením, ať máš ubytko dle představ i zajištěné m�
 
 Těšíme se na Tebe!
 
-Tvoje Hacker camp @crew: Kuba, Kosi, Pavla, Jirka, Aleš a Ir
+Tvoje Hacker Camp `@crew`: Kuba, Kosi, Pavla, Jirka, Aleš a Ir

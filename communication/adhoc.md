@@ -14,4 +14,4 @@ polštářek a deku, která se vždycky hodí :)
 
 Díky a těšíme se na Sobeňáku!
 
-Tvoje Hacker Camp Crew
+Tvoje Hacker Camp `@crew`

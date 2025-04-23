@@ -93,8 +93,8 @@ Co tedy potřebuješ vědět?
    - A hlavně si vezměte dobrou náladu, protože s tou pak jde všechno :)
 
 Pokud se Ti ještě něco honí hlavou, nenajdeš odpovědi ani v [FAQ](https://hckr.camp/faq/), ani v tomhle mailu,
-prostě nám napiš na slacku. Nevíš komu psát? Tagni na slacku @crew, odpovíme.
+prostě nám napiš na slacku. Nevíš komu psát? Tagni na slacku `@crew`, odpovíme.
 
 Těšíme se na viděnou už zítra odpoledne :)
 
-Tvoje #HackerCamp @Crew: Kuba, Kosi, Pája, Jirka, Aleš a Ir
+Tvoje Hacker Camp `@crew`: Kuba, Kosi, Pája, Jirka, Aleš a Ir

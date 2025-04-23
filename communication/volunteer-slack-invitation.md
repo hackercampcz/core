@@ -12,4 +12,4 @@ My tě pak přidáme do kanálu `#dobrovolnici`, kde se dozvíš vše potřebné
 
 Díky a těšíme se
 
-Hacker camp @crew
+Tvoje Hacker Camp `@crew`
