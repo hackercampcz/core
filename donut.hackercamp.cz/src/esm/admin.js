@@ -47,7 +47,7 @@ const transact = (fn, atom = state) => atom.swap(fn);
 const swapIn = (path, fn, atom = state) => atom.swapInUnsafe(path, fn);
 const transaction = (fn, atom = state) => updateAsTransaction(atom, fn);
 
-if (globalThis.__DEVELOPMENT__) {
+if (__DEVELOPMENT__) {
   // export for dev experience
   globalThis.transact = transact;
   globalThis.swapIn = swapIn;

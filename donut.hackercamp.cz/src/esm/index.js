@@ -70,7 +70,7 @@ const transact = (fn, atom = state) => atom.swap(fn);
  */
 const swapIn = (path, fn, atom = state) => atom.swapInUnsafe(path, fn);
 
-if (globalThis.__DEVELOPMENT__) {
+if (__DEVELOPMENT__) {
   // Global exports for DX
   globalThis.transact = transact;
   globalThis.swapIn = swapIn;
