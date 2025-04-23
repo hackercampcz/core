@@ -17,7 +17,7 @@ config:
   hackercamp:slack-bot-token:
     secure: AAABAPVKNBH+3caqm5hEgc2T0CgPxs5CJc4gkWRDYtcLBlPPny2aJc2bDVdtNk2zbxWUTks8m5n4CN+XcmTkd+y/wlrJtIS25/aqZTMLo4uvc1uFCFFtEd4=
   hackercamp:web-domain: www.hackercamp.cz
-  hackercamp:year: "2024"
+  hackercamp:year: "2025"
 environment:
   - hackercamp-algolia
   - hackercamp-aws
