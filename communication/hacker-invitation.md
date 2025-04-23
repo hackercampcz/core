@@ -19,16 +19,14 @@ může otevřít oči, posunout nás, nebo z čeho se můžeme něco nového nau
 společnou budoucnost?!
 
 My už se teda těšíme moc, a to hlavně na vás! Táborníky! Takže i na TEBE! Teď je ta ideální doba **se na Hacker Camp
-registrovat!** Jako hacker, co už má camp v malíku, prosím **[přihlašuj přes donut](https://donut.hckr.camp/registrace/)
-**,
-aka přes náš registrovaný prostor.
+[registrovat](https://donut.hckr.camp/registrace/)!** Jako hacker, co už má camp v malíku, se prosím
+**[přihlašuj přes donut](https://donut.hckr.camp/registrace/)**, aka přes náš registrovaný prostor.
 
 - Ostříleným táborníkům držíme místa přednostně. Do půlky května odbavujeme jen hackery, co už na campu byli!
 - Nováčky, a to včetně těch, které můžeš pozvat i ty, (pokud se zaručíš, že atmošku campu ještě víc obohatí), budeme do
   té doby dávat na waiting list a odbavovat je až od poloviny května.
 
-Připomínáme, že o nováčcích se dozvíme přes [registraci na webu](https://hckr.camp/registrace/), nebo když jim
-pošleš **svůj zvací link, který najdeš, v [donutu](https://donut.hckr.camp/)**.
+Svůj zvací link pro nováčky **najdeš, v [donutu](https://donut.hckr.camp/)**.
 
 Kapacita campu je opět omezená. Příjemnou atmosféru prostě dělá jen omezený počet super lidí a taky víme,
 že areál prostě není nafukovací :)
@@ -67,7 +65,7 @@ Takže na Sobeňáku na konci srpna?! :)
 
 Hacker Camp `@crew`: Kuba, Pája, Kosi, Jirka, Aleš a Ir :)
 
-P.S. Do campu už zbývá jen 19 týdnů!!!
+P.S. Do campu už zbývá jen 18 týdnů!!!
 
 P.P.S. A stejně jako loni platí, že pokud víš, že letos nejedeš a nechceš od nás
 dostávat žádné maily, stačí se odhlásit z odběru mailů.
