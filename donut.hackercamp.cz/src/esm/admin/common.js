@@ -72,7 +72,10 @@ export async function executeCommand(apiHost, endpoint, command, params) {
   const resp = await withAuthHandler(
     fetch(resource, {
       method: "POST",
-      headers: [["Accept", "application/json"], ["Content-Type", "application/json"]],
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ command: command, params: params }),
       credentials: "include",
       referrerPolicy: "no-referrer"
@@ -91,26 +94,26 @@ export async function executeCommand(apiHost, endpoint, command, params) {
 }
 
 export function unauthorized() {
-  return html`<p style="padding: 16px">
+  return html`
+    <p style="padding: 16px">
       Nemáte oprávnění pro tuto sekci. Pokud si myslíte, že je mít máte,
       klikněte na následující tlačítko a potvrďte požadovaná oprávnění:
     </p>
     <div style="padding: 16px">
-      <a href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F"
-      >
+      <a
+        href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F">
         <img
           alt="Add to Slack"
           height="40"
           width="139"
           src="https://platform.slack-edge.com/img/add_to_slack.png"
           @click="${() => {
-    setReturnUrl(location.href);
-  }}"
-          srcset="
-            https://platform.slack-edge.com/img/add_to_slack.png    1x,
-            https://platform.slack-edge.com/img/add_to_slack@2x.png 2x
-          "></a>
-    </div>`;
+            setReturnUrl(location.href);
+          }}"
+          srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
+                https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
+    </div>
+  `;
 }
 
 export const ticketName = new Map([
@@ -122,45 +125,55 @@ export const ticketName = new Map([
   ["crew", "Crew"],
   ["staff", "Ostatní"]
 ]);
-export const ticketPrice = new Map([[
-  2022,
-  new Map([["nonprofit", 2500], ["hacker", 5000], ["hacker-plus", 7500], ["hacker-patron", 7500], ["volunteer", 0], [
-    "crew",
-    0
-  ], ["staff", 0]])
-], [
-  2023,
-  new Map([["nonprofit", 3000], ["hacker", 6000], ["hacker-plus", 9000], ["hacker-patron", 9000], ["volunteer", 0], [
-    "crew",
-    0
-  ], ["staff", 0]])
-], [
-  2024,
-  new Map([["nonprofit", 3000], ["hacker", 7000], ["hacker-plus", 12000], ["hacker-patron", 12000], ["volunteer", 0], [
-    "crew",
-    0
-  ], ["staff", 0]])
-]]);
+export const ticketPrice = new Map([
+  [2022, new Map([
+    ["nonprofit", 2500],
+    ["hacker", 5000],
+    ["hacker-plus", 7500],
+    ["hacker-patron", 7500],
+    ["volunteer", 0],
+    ["crew", 0],
+    ["staff", 0]
+  ])],
+  [2023, new Map([
+    ["nonprofit", 3000],
+    ["hacker", 6000],
+    ["hacker-plus", 9000],
+    ["hacker-patron", 9000],
+    ["volunteer", 0],
+    ["crew", 0],
+    ["staff", 0]
+  ])],
+  [2024, new Map([
+    ["nonprofit", 3000],
+    ["hacker", 7000],
+    ["hacker-plus", 12000],
+    ["hacker-patron", 12000],
+    ["volunteer", 0],
+    ["crew", 0],
+    ["staff", 0]
+  ])],
+  [2025, new Map([
+    ["nonprofit", 3000],
+    ["hacker", 7000],
+    ["hacker-plus", 12000],
+    ["hacker-patron", 12000],
+    ["volunteer", 0],
+    ["crew", 0],
+    ["staff", 0]
+  ])]
+]);
 
 export function chip({ text, count, selected, view, year }) {
   return html`
     <span
       class="${
-    classMap({
+    <span class="${classMap({
       "mdc-chip": true,
       "mdc-chip--selectable": true,
       "mdc-chip--filter": true,
       "hc-chip": true,
       "hc-chip--selected": selected
-    })
-  }"
-      role="presentation"
-    >
-      <a
-        class="mdc-chip__action mdc-chip__action--primary"
-        role="option"
-        aria-selected="${selected ? "true" : "false"}"
-        tabindex="0"
         href="?${new URLSearchParams({ view, year })}"
       >
         <span
@@ -168,10 +181,7 @@ export function chip({ text, count, selected, view, year }) {
         ></span>
         <span class="mdc-chip__graphic">
           <span class="mdc-chip__checkmark">
-            <svg
-              class="mdc-chip__checkmark-svg"
-              viewBox="-2 -3 30 30"
-            >
+            <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
               <path
                 class="mdc-chip__checkmark-path"
                 fill="none"
@@ -181,9 +191,8 @@ export function chip({ text, count, selected, view, year }) {
             </svg>
           </span>
         </span>
-        <span class="mdc-chip__text-label"
-          >${text}${until(count?.then((x) => html`<data value="${x}">${x}</data>`, ""))}</span
-        >
+        <span class="mdc-chip__text-label">${text}${until(count?.then((x) => html`
+          <data value="${x}">${x}</data>`, ""))}</span>
       </a>
     </span>
   `;
@@ -197,8 +206,7 @@ export function getTicketPrice({ patronAllowance, year, ticketType, ticketPrice:
 export function ticketDetail({ year, ticketType, ticketPrice, patronAllowance }) {
   const price = getTicketPrice({ patronAllowance, year, ticketType, ticketPrice });
   return html`
-    <p>
-      Lístek: <strong>${ticketName.get(ticketType)}</strong>
+    <p>Lístek: <strong>${ticketName.get(ticketType)}</strong>
       <data value="${price} CZK"><code>${formatMoney(price)} Kč</code></data>
     </p>
   `;
@@ -235,35 +243,21 @@ export function paginationNavigation({ page, pages, count, total, params }) {
 
   return html`
     <div class="hc-pagination">
-      <data class="hc-pagination__total" value="${total}"
-        >${first}-${last} ze ${total}</data
-      >
-      <md-icon-button
-        title="První strana"
-        href="${page <= 0 ? "" : search({ page: 0 })}"
-        ?disabled="${page <= 0}"
-      >
+      <data class="hc-pagination__total" value="${total}">${first}-${last} ze ${total}</data>
+      <md-icon-button title="První strana" href="${page <= 0 ? "" : search({ page: 0 })}" ?disabled="${page <= 0}">
         <md-icon>first_page</md-icon>
       </md-icon-button>
-      <md-icon-button
-        title="Předchozí strana"
-        href="${page <= 0 ? "" : search({ page: Math.max(page - 1, 0) })}"
-        ?disabled="${page <= 0}"
-      >
+      <md-icon-button title="Předchozí strana" href="${page <= 0 ? "" : search({ page: Math.max(page - 1, 0) })}"
+                      ?disabled="${page <= 0}">
         <md-icon>chevron_left</md-icon>
       </md-icon-button>
-      <md-icon-button
-        title="Další strana"
-        href="${page >= pages - 1 ? "" : search({ page: Math.min(page + 1, pages - 1) })}"
-        ?disabled="${page >= pages - 1}"
-      >
+      <md-icon-button title="Další strana"
+                      href="${page >= pages - 1 ? "" : search({ page: Math.min(page + 1, pages - 1) })}"
+                      ?disabled="${page >= pages - 1}">
         <md-icon>chevron_right</md-icon>
       </md-icon-button>
-      <md-icon-button
-        title="Poslední strana"
-        href="${page >= pages - 1 ? "" : search({ page: pages - 1 })}"
-        ?disabled="${page >= pages - 1}"
-      >
+      <md-icon-button title="Poslední strana" href="${page >= pages - 1 ? "" : search({ page: pages - 1 })}"
+                      ?disabled="${page >= pages - 1}">
         <md-icon>last_page</md-icon>
       </md-icon-button>
     </div>
