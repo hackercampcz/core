@@ -2,6 +2,6 @@
   "name": "@hackercamp/web",
   "packageManager": "yarn@4.9.1",
   "devDependencies": {
-    "wrangler": "4.13.0"
+    "wrangler": "4.13.1"
   }
 }
