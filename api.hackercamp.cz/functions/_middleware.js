@@ -10,7 +10,7 @@ export async function rollbar(context) {
 
 export async function cors(context) {
   const response = await context.next();
-  response.headers.set("Access-Control-Allow-Origin", "*");
+  response.headers.set("Access-Control-Allow-Origin", context.request.headers.get("origin") ?? "*");
   response.headers.set("Access-Control-Max-Age", "86400");
   return response;
 
