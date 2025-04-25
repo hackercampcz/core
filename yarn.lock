@@ -3497,7 +3497,7 @@ __metadata:
     date-fns: "npm:4.1.0"
     lit: "npm:3.3.0"
     lit-html: "npm:3.3.0"
-    marked: "npm:15.0.10"
+    marked: "npm:15.0.11"
     material-icons: "npm:1.13.14"
     open-props: "npm:1.7.15"
     postcss-jit-props: "npm:1.0.16"
@@ -3525,7 +3525,7 @@ __metadata:
     "@topmonks/pulumi-aws": "npm:3.1.4"
     esbuild: "npm:0.25.3"
     front-matter: "npm:4.0.2"
-    marked: "npm:15.0.10"
+    marked: "npm:15.0.11"
   languageName: unknown
   linkType: soft
 
@@ -11270,12 +11270,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:15.0.10":
-  version: 15.0.10
-  resolution: "marked@npm:15.0.10"
+"marked@npm:15.0.11":
+  version: 15.0.11
+  resolution: "marked@npm:15.0.11"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/129a6459cd5c95403f8e8f7fb95ac2c11816dd652b8af308f7412fa03ad1994a3598f607f2ee02a4c59cb2c2fbcbce7af693b04ae9c69a1598b474ee2dd411cb
+  checksum: 10c0/d532db4955c1f2ac6efc65a644725e9e12e7944cb6af40c7148baecfd3b3c2f3564229b3daf12d2125635466448fb9b367ce52357be3aea0273e3d152efdbdcf
   languageName: node
   linkType: hard
 
