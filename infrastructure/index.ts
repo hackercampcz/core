@@ -270,7 +270,7 @@ new cloudflare.Ruleset("hckr.camp", {
   rules: [
     {
       description: "Redirect hckr.camp to www.hackercamp.cz",
-      expression: `http.request.uri.host eq "hckr.camp"`,
+      expression: `http.host eq "hckr.camp"`,
       action: "route",
       actionParameters: {
         hostHeader: "www.hackercamp.cz"
@@ -278,7 +278,7 @@ new cloudflare.Ruleset("hckr.camp", {
     },
     {
       description: "Redirect donut.hckr.camp to donut.hackercamp.cz",
-      expression: `http.request.uri.host eq "donut.hckr.camp"`,
+      expression: `http.host eq "donut.hckr.camp"`,
       action: "route",
       actionParameters: {
         hostHeader: "donut.hackercamp.cz"
