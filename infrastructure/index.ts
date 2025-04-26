@@ -48,32 +48,6 @@ const hckrCampZone = new cloudflare.Zone(
   { protect: true },
 );
 
-new cloudflare.Ruleset("hckr.camp", {
-  accountId: account.id,
-  zoneId: hckrCampZone.id,
-  name: "Redirect to hackercamp.cz",
-  kind: "zone",
-  phase: "httpRequestOrigin",
-  rules: [
-    {
-      description: "Redirect hckr.camp to www.hackercamp.cz",
-      expression: `http.request.uri.host eq "hckr.camp"`,
-      action: "route",
-      actionParameters: {
-        hostHeader: "www.hackercamp.cz"
-      }
-    },
-    {
-      description: "Redirect donut.hckr.camp to donut.hackercamp.cz",
-      expression: `http.request.uri.host eq "donut.hckr.camp"`,
-      action: "route",
-      actionParameters: {
-        hostHeader: "donut.hackercamp.cz"
-      }
-    },
-  ]
-});
-
 const postmarkLayout = new postmark.Template("postmark-layout", {
   Name: "Hackercamp styling",
   Alias: `hc-basic`,
@@ -133,7 +107,7 @@ new cloudflare.Record(`${webDomain}/apex-dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "@",
   type: "A",
-  value: "192.0.2.1",
+  content: "192.0.2.1",
   ttl: 1,
   proxied: true,
 });
@@ -142,7 +116,7 @@ new cloudflare.Record(`${webDomain}/apex-ipv6-dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "@",
   type: "AAAA",
-  value: "100::",
+  content: "100::",
   ttl: 1,
   proxied: true,
 });
@@ -151,7 +125,7 @@ const wwwRecord = new cloudflare.Record(`${webDomain}/dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "www",
   type: "CNAME",
-  value: webPages.domains[0],
+  content: webPages.domains[0],
   ttl: 1,
   proxied: true,
 });
@@ -185,7 +159,7 @@ const donutRecord = new cloudflare.Record(`${donutDomain}/dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "donut",
   type: "CNAME",
-  value: donutPages.domains[0],
+  content: donutPages.domains[0],
   ttl: 1,
   proxied: true,
 });
@@ -223,7 +197,7 @@ const apiRecord = new cloudflare.Record(`${apiDomain}/dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "api",
   type: "CNAME",
-  value: apiPages.domains[0],
+  content: apiPages.domains[0],
   ttl: 1,
   proxied: true,
 });
@@ -238,7 +212,7 @@ new cloudflare.Record(`hckr.camp/apex-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "@",
   type: "A",
-  value: "192.0.2.1",
+  content: "192.0.2.1",
   ttl: 1,
   proxied: true,
 });
@@ -247,7 +221,7 @@ new cloudflare.Record(`hckr.camp/apex-ipv6-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "@",
   type: "AAAA",
-  value: "100::",
+  content: "100::",
   ttl: 1,
   proxied: true,
 });
@@ -256,7 +230,7 @@ new cloudflare.Record(`hckr.camp/www-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "www",
   type: "A",
-  value: "192.0.2.1",
+  content: "192.0.2.1",
   ttl: 1,
   proxied: true,
 });
@@ -265,7 +239,7 @@ new cloudflare.Record(`hckr.camp/www-ipv6-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "www",
   type: "AAAA",
-  value: "100::",
+  content: "100::",
   ttl: 1,
   proxied: true,
 });
@@ -274,7 +248,7 @@ new cloudflare.Record(`hckr.camp/donut-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "donut",
   type: "A",
-  value: "192.0.2.1",
+  content: "192.0.2.1",
   ttl: 1,
   proxied: true,
 });
@@ -283,7 +257,32 @@ new cloudflare.Record(`hckr.camp/donut-ipv6-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "donut",
   type: "AAAA",
-  value: "100::",
+  content: "100::",
   ttl: 1,
   proxied: true,
+});
+
+new cloudflare.Ruleset("hckr.camp", {
+  zoneId: hckrCampZone.id,
+  name: "Redirect to hackercamp.cz",
+  kind: "zone",
+  phase: "httpRequestOrigin",
+  rules: [
+    {
+      description: "Redirect hckr.camp to www.hackercamp.cz",
+      expression: `http.request.uri.host eq "hckr.camp"`,
+      action: "route",
+      actionParameters: {
+        hostHeader: "www.hackercamp.cz"
+      }
+    },
+    {
+      description: "Redirect donut.hckr.camp to donut.hackercamp.cz",
+      expression: `http.request.uri.host eq "donut.hckr.camp"`,
+      action: "route",
+      actionParameters: {
+        hostHeader: "donut.hackercamp.cz"
+      }
+    },
+  ]
 });
