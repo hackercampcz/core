@@ -48,6 +48,32 @@ const hckrCampZone = new cloudflare.Zone(
   { protect: true },
 );
 
+new cloudflare.Ruleset("hckr.camp", {
+  accountId: account.id,
+  zoneId: hckrCampZone.id,
+  name: "Redirect to hackercamp.cz",
+  kind: "zone",
+  phase: "httpRequestOrigin",
+  rules: [
+    {
+      description: "Redirect hckr.camp to www.hackercamp.cz",
+      expression: `http.request.uri.host eq "hckr.camp"`,
+      action: "route",
+      actionParameters: {
+        hostHeader: "www.hackercamp.cz"
+      }
+    },
+    {
+      description: "Redirect donut.hckr.camp to donut.hackercamp.cz",
+      expression: `http.request.uri.host eq "donut.hckr.camp"`,
+      action: "route",
+      actionParameters: {
+        hostHeader: "donut.hackercamp.cz"
+      }
+    },
+  ]
+});
+
 const postmarkLayout = new postmark.Template("postmark-layout", {
   Name: "Hackercamp styling",
   Alias: `hc-basic`,
