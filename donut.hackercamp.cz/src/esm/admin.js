@@ -14,7 +14,6 @@ import { getContact, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop, renderScheduler } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
-import { schedule } from "./lib/schedule.js";
 import { showModalDialog } from "./modal-dialog.js";
 
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
@@ -28,8 +27,6 @@ const state = defAtom({
   view: renderView,
   apiHost: "",
   params: new URLSearchParams(location.search),
-  campStartAt: new Date(),
-  campEndAt: new Date(),
   selection: new Set(),
   nfcTronData: new Set()
 });
@@ -466,7 +463,7 @@ export async function main({ appRoot, searchParams, env, viewTitle, yearSelector
   addEventListener("message", handleMessage);
 
   transact((x) =>
-    Object.assign(x, { apiHost, year, page, query, contact, params: searchParams, isNFCSupported }, schedule.get(year))
+    Object.assign(x, { apiHost, year, page, query, contact, params: searchParams, isNFCSupported })
   );
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, selectedView);
