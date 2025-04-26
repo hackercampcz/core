@@ -266,22 +266,34 @@ new cloudflare.Ruleset("hckr.camp", {
   zoneId: hckrCampZone.id,
   name: "Redirect to hackercamp.cz",
   kind: "zone",
-  phase: "http_request_origin",
+  phase: "http_request_redirect",
   rules: [
     {
       description: "Redirect hckr.camp to www.hackercamp.cz",
-      expression: `http.host eq "hckr.camp"`,
-      action: "route",
+      expression: `(http.host eq "hckr.camp")`,
+      action: "redirect",
       actionParameters: {
-        hostHeader: "www.hackercamp.cz"
+        fromValue: {
+          statusCode: 301,
+          preserveQueryString: true,
+          targetUrl: {
+            expression: `concat("https://www.hackercamp.cz", http.request.uri.path)`,
+          }
+        }
       }
     },
     {
       description: "Redirect donut.hckr.camp to donut.hackercamp.cz",
-      expression: `http.host eq "donut.hckr.camp"`,
-      action: "route",
+      expression: `(http.host eq "donut.hckr.camp")`,
+      action: "redirect",
       actionParameters: {
-        hostHeader: "donut.hackercamp.cz"
+        fromValue: {
+          statusCode: 301,
+          preserveQueryString: true,
+          targetUrl: {
+            expression: `concat("https://donut.hackercamp.cz", http.request.uri.path)`,
+          }
+        }
       }
     },
   ]
