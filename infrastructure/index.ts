@@ -266,7 +266,7 @@ new cloudflare.Ruleset("hckr.camp", {
   zoneId: hckrCampZone.id,
   name: "Redirect to hackercamp.cz",
   kind: "zone",
-  phase: "http_request_redirect",
+  phase: "http_request_dynamic_redirect",
   rules: [
     {
       description: "Redirect hckr.camp to www.hackercamp.cz",
