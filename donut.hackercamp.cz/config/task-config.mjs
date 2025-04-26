@@ -85,7 +85,11 @@ export default {
     browserArgs: "--ignore-certificate-errors --allow-insecure-localhost"
   },
 
-  production: { rev: true },
+  production: {
+    rev: {
+      exclude: ["_headers", "_redirects"],
+    }
+  },
 
   registries: [
     new HackersRegistry({ slackToken: process.env["SLACK_TOKEN"], year: data.year }, pathConfig),
