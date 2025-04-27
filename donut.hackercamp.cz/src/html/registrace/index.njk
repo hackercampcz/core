@@ -171,6 +171,10 @@
   </style>
 {% endblock %}
 
+{% block head %}
+  {% include "shared/rollbar.njk" %}
+{% endblock %}
+
 {% block content %}
   <div class="hc-code-bg">
     <header id="top" class="hc-hero mdc-layout-grid">
