@@ -462,7 +462,7 @@ async function loadData(profile, year, apiURL) {
       profile.sub,
       getSlackAccessToken(),
       contact.slug,
-      registration.company ?? attendee.company
+      registration?.company ?? attendee?.company
     );
   } catch (err) {
     rollbar.error(err);
