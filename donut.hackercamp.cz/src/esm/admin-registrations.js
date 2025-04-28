@@ -49,10 +49,11 @@ function trashRegistration(email) {
   };
 }
 
-function invoiced(email) {
+function invoice(year, email) {
+  return renderModalDialog("invoice", {});
   return (e) => {
     e.preventDefault();
-    dispatchAction(Action.invoiced, { email });
+    dispatchAction(Action.invoice, { year, email });
   };
 }
 
@@ -113,18 +114,18 @@ function invoiceSummary(selection) {
       <h4>Položky na faktuře</h4>
       <ul style="list-style-type: none; padding: 0">
         ${
-      map(selection, (email) => {
-        const reg = registrations.get(email);
-        return html`
-            <li
-              style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between"
-            >
-              <span>${reg.name} - ${ticketName.get(reg.ticketType)}</span>
-              <data value="${reg.price}">${formatMoney(reg.price)} Kč</data>
-            </li>
-          `;
-      })
-    }
+          map(selection, (email) => {
+            const reg = registrations.get(email);
+            return html`
+              <li
+                style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between"
+              >
+                <span>${reg.name} - ${ticketName.get(reg.ticketType)}</span>
+                <data value="${reg.price}">${formatMoney(reg.price)} Kč</data>
+              </li>
+            `;
+          })
+        }
         <li
           style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between; border-top: 3px double; margin-top: 5px;"
         >
@@ -151,17 +152,17 @@ function approveVolunteersSummary(selection) {
       <h4>Výběr kanditátů na dobrovolníky ke schválení</h4>
       <ul style="list-style-type: none; padding: 0">
         ${
-      map(selection, (email) => {
-        const reg = registrations.get(email);
-        return html`
-            <li
-              style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between"
-            >
-              <span>${reg.name}</span>
-            </li>
-          `;
-      })
-    }
+          map(selection, (email) => {
+            const reg = registrations.get(email);
+            return html`
+              <li
+                style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between"
+              >
+                <span>${reg.name}</span>
+              </li>
+            `;
+          })
+        }
       </ul>
     `;
   };
@@ -183,7 +184,7 @@ function groupInvoiceModal({ data, selection }) {
             required
             pattern="[0-9]*"
             inputmode="numeric"
-         >
+          >
         </div>
         <button class="hc-button" type="submit">Potvrdit</button>
       </fieldset>
@@ -231,87 +232,108 @@ export function registrationsChips(
   return html`
     <search style="display: flex; gap: 8px; align-items: center;">
       ${
-    when(view === View.search, () =>
-      html`<form style="flex-grow: 1">
-            <input type="hidden" name="view" value="${View.search}">
-            <input type="hidden" name="year" value="${year}">
-            <md-outlined-text-field
-              name="query"
-              style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px; width: 100%; max-width: 480px"
-              placeholder="Hledat jméno, e-mail, firmu&hellip;"
-              value="${params.get("query")}"
-              @change="${(e) => e.target.form.submit()}"
-            >
-              <md-icon-button slot="leadingicon" type="submit" title="Hledat">
+        when(view === View.search, () =>
+          html`
+            <form style="flex-grow: 1">
+              <input type="hidden" name="view" value="${View.search}">
+              <input type="hidden" name="year" value="${year}">
+              <md-outlined-text-field
+                name="query"
+                style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px; width: 100%; max-width: 480px"
+                placeholder="Hledat jméno, e-mail, firmu&hellip;"
+                value="${params.get("query")}"
+                @change="${(e) => e.target.form.submit()}"
+              >
+                <md-icon-button slot="leadingicon" type="submit" title="Hledat">
+                  <md-icon>search</md-icon>
+                </md-icon-button>
+                <md-icon-button
+                  slot="trailingicon"
+                  href="/admin/"
+                  title="Zavřít hledání"
+                >
+                  <md-icon>close</md-icon>
+                </md-icon-button>
+              </md-outlined-text-field>
+            </form>`, () =>
+          html`
+            <div>
+              <md-icon-button
+                href="/admin/?${new URLSearchParams({ view: View.search, year })}"
+              >
                 <md-icon>search</md-icon>
               </md-icon-button>
-              <md-icon-button
-                slot="trailingicon"
-                href="/admin/"
-                title="Zavřít hledání"
-              >
-                <md-icon>close</md-icon>
-              </md-icon-button>
-            </md-outlined-text-field>
-          </form>`, () =>
-      html`
-          <div>
-            <md-icon-button
-              href="/admin/?${new URLSearchParams({ view: View.search, year })}"
+            </div>
+            <div
+              class="mdc-chip-set"
+              role="grid"
+              id="filters"
+              aria-orientation="horizontal"
+              aria-multiselectable="false"
             >
-              <md-icon>search</md-icon>
-            </md-icon-button>
-          </div>
-          <div
-            class="mdc-chip-set"
-            role="grid"
-            id="filters"
-            aria-orientation="horizontal"
-            aria-multiselectable="false"
-          >
             <span class="mdc-chip-set__chips" role="presentation">
               ${chip({ text: "Zaplacení", count: paid, selected: view === View.paid, view: View.paid, year })}
               ${
-        chip({ text: "Vyfakturovaní", count: invoiced, selected: view === View.invoiced, view: View.invoiced, year })
-      }
+                chip({
+                  text: "Vyfakturovaní",
+                  count: invoiced,
+                  selected: view === View.invoiced,
+                  view: View.invoiced,
+                  year
+                })
+              }
               ${
-        chip({ text: "Potvrzení", count: confirmed, selected: view === View.confirmed, view: View.confirmed, year })
-      }
+                chip({
+                  text: "Potvrzení",
+                  count: confirmed,
+                  selected: view === View.confirmed,
+                  view: View.confirmed,
+                  year
+                })
+              }
               ${
-        chip({
-          text: "Waiting list",
-          count: waitingList,
-          selected: view === View.waitingList,
-          view: View.waitingList,
-          year
-        })
-      }
+                chip({
+                  text: "Waiting list",
+                  count: waitingList,
+                  selected: view === View.waitingList,
+                  view: View.waitingList,
+                  year
+                })
+              }
               ${
-        chip({ text: "Dobrovolníci", count: volunteer, selected: view === View.volunteer, view: View.volunteer, year })
-      }
+                chip({
+                  text: "Dobrovolníci",
+                  count: volunteer,
+                  selected: view === View.volunteer,
+                  view: View.volunteer,
+                  year
+                })
+              }
               ${chip({ text: "Ostatní", count: staff, selected: view === View.staff, view: View.staff, year })}
               ${chip({ text: "Opt-outs", count: optouts, selected: view === View.optouts, view: View.optouts, year })}
             </span>
-          </div>
-          <div>
-            <md-icon-button
-              title="Zkopírovat statistiky"
-              @click="${copyToClipboard([paid, invoiced, confirmed, waitingList, volunteer, staff])}"
-            >
-              <md-icon>content_copy</md-icon></md-icon-button
-            ><md-icon-button
-              href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
-        // TODO: add support for search queries
-        { year, type: view, format: "csv", pageSize: 500 }
-      )}"
-              title="Stáhnout CSV"
-              aria-label="Stáhnout CSV"
-            >
-              <md-icon>download</md-icon>
-            </md-icon-button>
-          </div>
-        `)
-  }
+            </div>
+            <div>
+              <md-icon-button
+                title="Zkopírovat statistiky"
+                @click="${copyToClipboard([paid, invoiced, confirmed, waitingList, volunteer, staff])}"
+              >
+                <md-icon>content_copy</md-icon>
+              </md-icon-button
+              >
+              <md-icon-button
+                href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
+                  // TODO: add support for search queries
+                  { year, type: view, format: "csv", pageSize: 500 }
+                )}"
+                title="Stáhnout CSV"
+                aria-label="Stáhnout CSV"
+              >
+                <md-icon>download</md-icon>
+              </md-icon-button>
+            </div>
+          `)
+      }
     </search>
   `;
 }
@@ -339,19 +361,23 @@ export async function selectionBar(selectedView, selection, data) {
         touch-target="wrapper"
       ></md-checkbox>
       ${
-    when(selectedView === View.confirmed, () =>
-      html`<md-icon-button
-            title="Vyfakturovat"
-            @click="${invoiceSelected()}"
-            ><md-icon>request_quote</md-icon>
-          </md-icon-button>`)
-  }
+        when(selectedView === View.confirmed, () =>
+          html`
+            <md-icon-button
+              title="Vyfakturovat"
+              @click="${invoiceSelected()}"
+            >
+              <md-icon>request_quote</md-icon>
+            </md-icon-button>`)
+      }
       ${
-    when(new Set([View.volunteer, View.staff]).has(selectedView), () =>
-      html`<md-icon-button title="Schválit" @click="${approveSelected()}"
-            ><md-icon>person_add</md-icon>
-          </md-icon-button>`)
-  }
+        when(new Set([View.volunteer, View.staff]).has(selectedView), () =>
+          html`
+            <md-icon-button title="Schválit" @click="${approveSelected()}"
+            >
+              <md-icon>person_add</md-icon>
+            </md-icon-button>`)
+      }
     </div>
   `;
 }
@@ -390,7 +416,8 @@ export function registrationsTableTemplate(
         <th>Jméno</th>
         <th>Společnost</th>
         <th>${timeHeader}</th>
-        ${when(selectedView === View.search, () => html`<th>Stav</th>`)}
+        ${when(selectedView === View.search, () => html`
+          <th>Stav</th>`)}
         <th>Akce</th>
       </tr>
       </thead>
@@ -403,33 +430,34 @@ export function registrationsTableTemplate(
       </tfoot>
       <tbody>
       ${
-    data.map((row) =>
-      html`
-              <tr @click="${renderDetail(row)}">
-                <td>
-                  <md-checkbox
-                    aria-label="vybrat"
-                    value="${row.email}"
-                    @click="${selectRow}"
-                    touch-target="wrapper"
-                    ?checked="${selection.has(row.email)}"
-                  ></md-checkbox>
-                </td>
-                <td>${row.name}</td>
-                <td>${row.company}</td>
-                <td>
-                  ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
-                </td>
-                ${when(selectedView === View.search, () => html`<td>${registrationStatus(row)}</td>`)}
-                <td>
-                  <hc-mail-button email="${row.email}"></hc-mail-button
-                  >
-                  <hc-phone-button phone="${row.phone}"></hc-phone-button>
-                </td>
-              </tr>
-            `
-    )
-  }
+        data.map((row) =>
+          html`
+            <tr @click="${renderDetail(row)}">
+              <td>
+                <md-checkbox
+                  aria-label="vybrat"
+                  value="${row.email}"
+                  @click="${selectRow}"
+                  touch-target="wrapper"
+                  ?checked="${selection.has(row.email)}"
+                ></md-checkbox>
+              </td>
+              <td>${row.name}</td>
+              <td>${row.company}</td>
+              <td>
+                ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
+              </td>
+              ${when(selectedView === View.search, () => html`
+                <td>${registrationStatus(row)}</td>`)}
+              <td>
+                <hc-mail-button email="${row.email}"></hc-mail-button
+                >
+                <hc-phone-button phone="${row.phone}"></hc-phone-button>
+              </td>
+            </tr>
+          `
+        )
+      }
       </tbody>
     </table>
   `;
@@ -459,24 +487,27 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         ></hc-phone-button
         >
         ${
-    when(selectedView === View.waitingList, () =>
-      html`<md-icon-button title="Opt in" @click="${optin(detail.email)}">
-          <md-icon>person_add</md-icon>
-        </md-icon-button>`)
-  }${
-    when(selectedView !== View.paid, () =>
-      html`<md-icon-button title="Opt out" @click="${optout(detail.email)}">
-          <md-icon>person_remove</md-icon>
-        </md-icon-button>`)
-  }${
-    when(selectedView === View.confirmed, () =>
-      html`<md-icon-button
-          title="Vyfakturovat"
-          @click="${invoiced(detail.email)}"
-        >
-          <md-icon>request_quote</md-icon>
-        </md-icon-button>`)
-  }
+          when(selectedView === View.waitingList, () =>
+            html`
+              <md-icon-button title="Opt in" @click="${optin(detail.email)}">
+                <md-icon>person_add</md-icon>
+              </md-icon-button>`)
+        }${
+          when(selectedView !== View.paid, () =>
+            html`
+              <md-icon-button title="Opt out" @click="${optout(detail.email)}">
+                <md-icon>person_remove</md-icon>
+              </md-icon-button>`)
+        }${
+          when(selectedView === View.confirmed, () =>
+            html`
+              <md-icon-button
+                title="Vyfakturovat"
+                @click="${invoice(detail.year, detail.email)}"
+              >
+                <md-icon>request_quote</md-icon>
+              </md-icon-button>`)
+        }
         <md-icon-button
           title="Upravit registraci"
           @click="${renderModalDialog("registration-modal")}"
@@ -496,52 +527,53 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       <p>Ubytování: <strong>${housing.get(detail.housing) ?? "Ještě si nevybral"}</strong></p>
       <p>Doprava: <strong>${travel.get(detail.travel) ?? "Ještě si nevybral"}</strong></p>
       ${
-    when(detail.activity, () =>
-      html`
-        <h3>Aktivita</h3>
-        ${unsafeHTML(marked.parse(detail.activity))}
-        ${when(detail.activityCrew, () => html`<p>Parťáci: ${detail.activityCrew}</p>`)}
-        ${when(detail.activityPlace, () => html`<p>Zázemí: ${detail.activityPlace}</p>`)}
-      `)
-  }
+        when(detail.activity, () =>
+          html`
+            <h3>Aktivita</h3>
+            ${unsafeHTML(marked.parse(detail.activity))}
+            ${when(detail.activityCrew, () => html`<p>Parťáci: ${detail.activityCrew}</p>`)}
+            ${when(detail.activityPlace, () => html`<p>Zázemí: ${detail.activityPlace}</p>`)}
+          `)
+      }
       ${
-    when(detail.invRecipient === "1", () =>
-      html`
-        <p>
-          Fakturovat za něj bude
-          <a href="mailto:${detail.invRecipientEmail}"
-            >${detail.invRecipientFirstname} ${detail.invRecipientLastname}</a
-          >
-          <a href="tel:${detail.invRecipientPhone}"
-            >${detail.invRecipientPhone}</a
-          >
-        </p>
-      `)
-  }
+        when(detail.invRecipient === "1", () =>
+          html`
+            <p>
+              Fakturovat za něj bude
+              <a href="mailto:${detail.invRecipientEmail}"
+              >${detail.invRecipientFirstname} ${detail.invRecipientLastname}</a
+              >
+              <a href="tel:${detail.invRecipientPhone}"
+              >${detail.invRecipientPhone}</a
+              >
+            </p>
+          `)
+      }
       ${when(detail.invAddress, () => invoiceDetails(detail))}
       ${
-    when(detail.invoiced, () =>
-      html`
-        <p>
-          Vyfakturováno
-          <strong>${formatDateTime(new Date(detail.invoiced))}</strong>;
-          ID faktury
-          <a href="https://app.fakturoid.cz/hackercampcrew/invoices/${detail.invoice_id}"><code>${detail.invoice_id}</code></a>
-          </p>
-      `)
-  }
+        when(detail.invoiced, () =>
+          html`
+            <p>
+              Vyfakturováno
+              <strong>${formatDateTime(new Date(detail.invoiced))}</strong>;
+              ID faktury
+              <a
+                href="https://app.fakturoid.cz/hackercampcrew/invoices/${detail.invoice_id}"><code>${detail.invoice_id}</code></a>
+            </p>
+          `)
+      }
       ${when(detail.paid, () => html`<p>Zaplaceno: ${formatDateTime(new Date(detail.paid))}</p>`)}
       ${
-    when(detail.edited, () =>
-      html`
-        <p>
-          Naposledy editováno
-          <strong>${formatDateTime(new Date(detail.edited))}</strong>
-          administrátorem
-          <strong>${detail.editedBy}</strong>
-        </p>
-      `)
-  }
+        when(detail.edited, () =>
+          html`
+            <p>
+              Naposledy editováno
+              <strong>${formatDateTime(new Date(detail.edited))}</strong>
+              administrátorem
+              <strong>${detail.editedBy}</strong>
+            </p>
+          `)
+      }
     </div>
   `;
 }
@@ -553,14 +585,14 @@ function invoiceDetails(detail) {
       <p>${detail.invName}</p>
       <p>${detail.invAddress}</p>
       ${
-    when(detail.invEmail || detail["invoice-contact"], () =>
-      html`
-          <p>
-            E-mail:
-            <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
-          </p>
-        `)
-  }
+        when(detail.invEmail || detail["invoice-contact"], () =>
+          html`
+            <p>
+              E-mail:
+              <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
+            </p>
+          `)
+      }
       <p>
         ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
         ${when(detail.invVatNo, () => html`DIČ: ${detail.invVatNo}`)}
@@ -580,55 +612,56 @@ export function registrationsTemplate(state) {
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${
-    when(selection.size, () =>
-      until(selectionBar(selectedView, selection, data)), () =>
-      registrationsChips(selectedView, year, {
-        [View.paid]: data?.then((data) => data.counts.paid),
-        [View.invoiced]: data?.then((data) =>
-          data.counts.invoiced
-        ),
-        [View.confirmed]: data?.then((data) => data.counts.confirmed),
-        [View.waitingList]: data?.then((data) => data.counts.waitingList),
-        [View.volunteer]: data?.then((data) => data.counts.volunteer),
-        [View.staff]: data?.then((data) => data.counts.staff)
-      }, params))
-  }
+        when(selection.size, () =>
+          until(selectionBar(selectedView, selection, data)), () =>
+          registrationsChips(selectedView, year, {
+            [View.paid]: data?.then((data) => data.counts.paid),
+            [View.invoiced]: data?.then((data) =>
+              data.counts.invoiced
+            ),
+            [View.confirmed]: data?.then((data) => data.counts.confirmed),
+            [View.waitingList]: data?.then((data) => data.counts.waitingList),
+            [View.volunteer]: data?.then((data) => data.counts.volunteer),
+            [View.staff]: data?.then((data) => data.counts.staff)
+          }, params))
+      }
     </div>
     <div
       class="hc-master-detail mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
     >
       <div class="hc-card hc-master-detail__list">
         ${
-    until(
-      data?.then((data) => {
-        const timeColumnSettings = timeColumn.get(selectedView)
-          ?? { timeHeader: "Čas registrace", timeAttr: "timestamp" };
-        if (selectedView === View.optouts) {
-          return html`
+          until(
+            data?.then((data) => {
+              const timeColumnSettings = timeColumn.get(selectedView)
+                ?? { timeHeader: "Čas registrace", timeAttr: "timestamp" };
+              if (selectedView === View.optouts) {
+                return html`
                   <ul>
-                    ${data.map((x) => html` <li>${x}</li>`)}
+                    ${data.map((x) => html`
+                      <li>${x}</li>`)}
                   </ul>
                 `;
+              }
+              return registrationsTableTemplate(
+                sortBy(
+                  timeColumnSettings.timeAttr,
+                  data.items.map((x) => Object.assign({}, x, { name: x.name ?? `${x.firstName} ${x.lastName}` }))
+                ),
+                timeColumnSettings,
+                { page, pages: data.pages, total: data.total, params, selection },
+                selectedView
+              );
+            })?.catch((data) => {
+              if (data.unauthorized) return unauthorized();
+            }),
+            html`
+              <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+                <p style="padding: 16px">Načítám data&hellip;</p>
+              </div>
+            `
+          )
         }
-        return registrationsTableTemplate(
-          sortBy(
-            timeColumnSettings.timeAttr,
-            data.items.map((x) => Object.assign({}, x, { name: x.name ?? `${x.firstName} ${x.lastName}` }))
-          ),
-          timeColumnSettings,
-          { page, pages: data.pages, total: data.total, params, selection },
-          selectedView
-        );
-      })?.catch((data) => {
-        if (data.unauthorized) return unauthorized();
-      }),
-      html`
-            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-              <p style="padding: 16px">Načítám data&hellip;</p>
-            </div>
-          `
-    )
-  }
       </div>
       ${when(detail, () => registrationDetailTemplate({ detail, selectedView }))}
     </div>
@@ -667,7 +700,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="firstName"
             value="${detail.firstName}"
             required
-         >
+          >
         </div>
         <div class="field">
           <label for="lastName">Příjmení</label>
@@ -676,7 +709,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="lastName"
             value="${detail.lastName}"
             required
-         >
+          >
         </div>
       </div>
       <div class="group">
@@ -688,7 +721,7 @@ function registrationModalDialog({ detail, apiHost }) {
             value="${detail.email}"
             type="email"
             required
-         >
+          >
         </div>
         <div class="field">
           <label for="phone">Tel</label>
@@ -699,18 +732,15 @@ function registrationModalDialog({ detail, apiHost }) {
             type="tel"
             autocomplete="tel"
             required
-         >
+          >
         </div>
       </div>
-      ${
-    when(detail.paid, () =>
-      html`
-          <div class="field">
-            <label for="paid">Čas zaplacení</label>
-            <input id="paid" name="paid" value="${detail.paid}" required>
-          </div>
-        `)
-  }
+      ${when(detail.paid, () => html`
+        <div class="field">
+          <label for="paid">Čas zaplacení</label>
+          <input id="paid" name="paid" value="${detail.paid}" required>
+        </div>
+      `)}
       <div class="field">
         <label for="company">Společnost</label>
         <input id="company" name="company" value="${detail.company}">
@@ -731,7 +761,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="invName"
             type="text"
             value="${detail.invName}"
-         >
+          >
         </div>
         <div class="field">
           <label for="invoice-address"> Adresa (Ulice č.p., PSČ, Město) </label>
@@ -740,7 +770,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="invAddress"
             type="text"
             value="${detail.invAddress}"
-         >
+          >
         </div>
         <div class="group">
           <div class="field">
@@ -750,7 +780,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRegNo"
               type="text"
               value="${detail.invRegNo}"
-           >
+            >
           </div>
           <div class="field">
             <label for="invoice-vatno"> DIČ </label>
@@ -759,7 +789,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invVatNo"
               type="text"
               value="${detail.invVatNo}"
-           >
+            >
           </div>
         </div>
         <div class="field">
@@ -769,7 +799,7 @@ function registrationModalDialog({ detail, apiHost }) {
             name="invText"
             type="text"
             value="${detail.invText}"
-         >
+          >
         </div>
         <div class="field">
           <label for="invoice-email"> Kontakt pro fakturaci </label>
@@ -779,7 +809,7 @@ function registrationModalDialog({ detail, apiHost }) {
             value="${detail.invEmail}"
             type="email"
             autocomplete="email"
-         >
+          >
         </div>
       </fieldset>
 
@@ -793,7 +823,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRecipientFirstname"
               value="${detail.invRecipientFirstname}"
               type="text"
-           >
+            >
           </div>
           <div class="field">
             <label for="invoice-recipient-lastname"> Příjmení </label>
@@ -802,7 +832,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRecipientLastname"
               value="${detail.invRecipientLastname}"
               type="text"
-           >
+            >
           </div>
         </div>
         <div class="group">
@@ -813,7 +843,7 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRecipientEmail"
               value="${detail.invRecipientEmail}"
               type="email"
-           >
+            >
           </div>
           <div class="field">
             <label for="invoice-recipient-phone"> Telefon </label>
@@ -822,12 +852,25 @@ function registrationModalDialog({ detail, apiHost }) {
               name="invRecipientPhone"
               value="${detail.invRecipientPhone}"
               type="tel"
-           >
+            >
           </div>
         </div>
       </fieldset>
 
       <button type="submit" class="hc-button">Odeslat to</button>
     </form>
+  `;
+}
+
+registerDialog("invoice", invoiceModalDialog);
+
+function invoiceModalDialog({ detail }) {
+  window.addEventListener("message", e => {
+    if (e.data.event === "invoiced") {
+       location.reload();
+    }
+  });
+  return html`
+    <iframe src="/admin/invoice.html?year=${detail.year}&amp;email=${detail.email}&amp;modal=1}"></iframe>
   `;
 }

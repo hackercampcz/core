@@ -43,7 +43,8 @@ async function getSubject(q) {
 export async function main({ env, searchParams }) {
   rollbar.init(env);
 
-  if (searchParams.has("modal")) {
+  const isModal = searchParams.has("modal");
+  if (isModal) {
     document.body.classList.add("modal-view");
   }
 
@@ -56,6 +57,7 @@ export async function main({ env, searchParams }) {
 
   invoiceForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    e.target.disabled = true;
     const formData = new FormData(e.target);
     const resp = await fetch(e.target.action, {
       method: "POST",
@@ -65,21 +67,32 @@ export async function main({ env, searchParams }) {
     });
     const data = await resp.json();
 
-    await fetch("https://api.hackercamp.cz/v1/admin/registrations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        command: "invoiced",
-        params: {
-          registrations: [{ year, email }],
-          invoiceId: data.id,
-        }
-      }),
-      credentials: "include",
-      mode: "cors"
-    })
+    try {
+      await fetch("https://api.hackercamp.cz/v1/admin/registrations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          command: "invoiced",
+          params: {
+            registrations: [{ year, email }],
+            invoiceId: data.id,
+          }
+        }),
+        credentials: "include",
+        mode: "cors"
+      });
+    }
+    catch (error) {
+      rollbar.error(error);
+    }
+    if (isModal) {
+      window.parent.postMessage({ event: "invoiced", invoiceId: data.id })
+    }
+    else {
+      location.assign(`/admin/?view=registrations&year=${year}`);
+    }
   });
 
   invoiceForm.year.value = year;
