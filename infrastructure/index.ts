@@ -296,5 +296,19 @@ new cloudflare.Ruleset("hckr.camp", {
         }
       }
     },
+    {
+      description: "Redirect hckr.camp to www.hackercamp.cz",
+      expression: `(starts_with(http.request.uri.path, "/r/") and http.host eq "www.hackercamp.cz")`,
+      action: "redirect",
+      actionParameters: {
+        fromValue: {
+          statusCode: 301,
+          preserveQueryString: true,
+          targetUrl: {
+            expression: `concat("https://www.hackercamp.cz/registrace/?referral=", regex_replace(http.request.uri.path, "^/r/", ""))`,
+          }
+        }
+      }
+    },
   ]
 });
