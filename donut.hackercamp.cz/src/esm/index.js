@@ -280,8 +280,8 @@ function plusOneCard(referralLink) {
         class="responsive"
         width="560"
         height="315"
-        src="https://www.youtube-nocookie.com/embed/igM6UFAqaOQ?hl=cs&amp;modestbranding=1"
-        title="Hackercamp sestřih po 2021"
+        src="https://www.youtube-nocookie.com/embed/FCvKBikoXOs?hl=cs&amp;modestbranding=1"
+        title="Hackercamp sestřih po 2024"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
@@ -300,8 +300,8 @@ function plusOneCard(referralLink) {
         class="responsive"
         width="560"
         height="315"
-        src="https://www.youtube-nocookie.com/embed/FCvKBikoXOs?hl=cs&amp;modestbranding=1"
-        title="Hackercamp sestřih po 2024"
+        src="https://www.youtube-nocookie.com/embed/igM6UFAqaOQ?hl=cs&amp;modestbranding=1"
+        title="Hackercamp sestřih po 2021"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen
@@ -347,7 +347,7 @@ function renderDashboardScreen(
       ${when(showSlackButton, () => html`
         <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
           <div class="hc-card hc-card--decorated">
-            <p>Pro lepší integraci mezi tvým Slackovým a Donut profilem, potřebujeme od tebe potvrdit rozšířená práva.
+            <p>Pro lepší integraci mezi tvým Slackovým a Donut profilem potřebujeme od tebe potvrdit rozšířená práva.
               To provedeš kliknutím na následující tlačítko:</p>
             <div style="padding: 16px">
               <a
