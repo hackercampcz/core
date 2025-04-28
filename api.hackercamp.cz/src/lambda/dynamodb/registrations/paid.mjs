@@ -13,7 +13,7 @@ const queue = new SQSClient({});
 
 const rollbar = Rollbar.init({ lambdaName: "dynamodb-paid-registrations" });
 
-export async function getContact(dynamodb, email) {
+export async function getContact(dynamo, email) {
   console.log({ event: "Get contact", email });
   const res = await dynamo.send(
     new ScanCommand({
@@ -72,10 +72,14 @@ function enqueueSlackWelcomeMessage(user) {
  */
 async function paidRegistrations(event) {
   rollbar.configure({ payload: { event } });
-  const newlyPaidRegistrations = event.Records.filter((x) => x.eventName === "MODIFY").map((x) => ({
+  const newlyPaidRegistrations = event.Records
+  .filter((x) => x.eventName === "MODIFY")
+  .map((x) => ({
     newImage: unmarshall(x.dynamodb.NewImage),
     oldImage: unmarshall(x.dynamodb.OldImage)
-  })).filter((x) => x.newImage.paid && !x.oldImage.paid).map((x) => x.newImage);
+  }))
+  .filter((x) => x.newImage.paid && !x.oldImage.paid)
+  .map((x) => x.newImage);
   for (const record of newlyPaidRegistrations) {
     const { email, year } = record;
     const contact = await getContact(dynamo, email);

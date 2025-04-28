@@ -259,9 +259,11 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`
 
 async function onUserProfileChanged({ user }, { year }) {
   const { id: slackID, profile: { email }, team_id } = user;
-  if (team_id !== "T01V4Q0ACQ4") {
-    return;
-  }
+  // Ignore profiles updates of Slack Connect users
+  if (team_id !== "T01V4Q0ACQ4") return;
+
+  // TODO: handle e-mail changes
+
   if (!email) {
     console.warn({ event: "User without e-mail", slackID: user.id })
     return;
