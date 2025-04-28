@@ -57,7 +57,7 @@ export async function main({ env, searchParams }) {
 
   invoiceForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    e.target.disabled = true;
+    e.target.querySelector("button").disabled = true;
     const formData = new FormData(e.target);
     const resp = await fetch(e.target.action, {
       method: "POST",
