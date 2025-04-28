@@ -1,18 +1,4 @@
-/**
- * @param {EventContext<Env>} context
- * @returns {Promise<Response>}
- */
-export async function rollbar(context) {
-  return rollbarPlugin({ token: context.env.ROLLBAR_TOKEN })(context);
-}
-
-export async function cors(context) {
-  const response = await context.next();
-  response.headers.set("Access-Control-Allow-Origin", context.request.headers.get("origin") ?? "*");
-  response.headers.set("Access-Control-Max-Age", "86400");
-  return response;
-
-}
+import { cors } from "../lib/middleware.js";
 
 export async function onRequestOptions() {
   return new Response(null, {
