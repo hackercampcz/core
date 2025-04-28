@@ -1,0 +1,118 @@
+{% extends "layouts/application.njk" %}
+
+{% block title %}Fakturace Hacker Campu{% endblock %}
+
+{% block head_stylesheets %}
+  <style>
+    body.modal-view>nav,
+    body.modal-view>footer,
+    body.modal-view #view-title {
+      display: none;
+    }
+    body.modal-view #top {
+      padding: 1rem;
+    }
+
+    label+label {
+      margin-block: 0.5lh;
+    }
+
+    label:has(input[type=radio]),
+    label:has(input[name=text]) {
+      display: flex;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    label:has(input[type=radio]) {
+      justify-content: flex-start;
+      align-items: baseline;
+      line-height: 2;
+    }
+    input[name=count] {
+      width: 4ch;
+    }
+    input[name=text] {
+      min-width: 20ch;
+      width: 100%;
+    }
+    input[name=price] {
+      width: 8ch;
+    }
+  </style>
+{% endblock %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{ "admin.css" | assetUrl("stylesheets") }}">
+{% endblock %}
+
+{% block content %}
+  <div id="app-root">
+    <h2 id="view-title">
+      <span>Fakturace</span>
+    </h2>
+    <form name="invoice" action="https://api.hackercamp.cz/v2/fakturoid/invoice" method="post">
+      <input type="hidden" name="year">
+      <input type="hidden" name="email">
+      <address style="border: 1px solid #ddd; padding: 16px; font-size: 14px;">
+        <h3>Fakturační údaje</h3>
+        <p id="name"></p>
+        <p id="address"></p>
+        <p>
+          E-mail: <code id="email"></code>
+        </p>
+        <p>
+          <span id="regNo"></span>
+          <span id="vatId"></span>
+        </p>
+      </address>
+
+      <fieldset id="lines">
+        <legend>Položky na faktuře</legend>
+        <label>Text před položkama <input type="text" name="note"></label>
+        <label>
+          Položka
+          <input type="number" id="count" name="count" min="1">✕
+          <input type="text" id="text" name="text">
+          <input type="number" id="price" name="price"> Kč
+        </label>
+      </fieldset>
+
+      <fieldset id="subject">
+        <legend>Kontakt ve Fakturoidu</legend>
+        <template>
+          <label><input type="radio" name="subjectId" value=""></label>
+        </template>
+        <div>
+          <p>Hledám kontakt ve Fakturoidu…</p>
+        </div>
+      </fieldset>
+      <fieldset>
+        <button class="hc-button" type="submit">Potvrdit</button>
+      </fieldset>
+    </form>
+  </div>
+  <dialog id="modal" class="hc-dialog">
+    <div id="modal-root"></div>
+    <md-icon-button data-action="close">
+      <md-icon>close</md-icon>
+    </md-icon-button>
+  </dialog>
+{% endblock %}
+
+{% block javascript %}
+<script type="module">
+  import { main } from "{{ "invoice.js" | assetUrl("esm") }}";
+  const build = {{ collections.build | dump(8) | safe }};
+  const event = {{ event | dump(8) | safe }};
+  const tickets = {{ ticket | dump(8) | safe }};
+  const year = {{ year | safe }};
+  const env = Object.assign({ year, event, tickets }, build);
+  main({
+    searchParams: new URLSearchParams(location.search),
+    appRoot: document.getElementById("app-root"),
+    viewTitle: document.getElementById("view-title").querySelector("span"),
+    env,
+  });
+</script>
+{% endblock %}
