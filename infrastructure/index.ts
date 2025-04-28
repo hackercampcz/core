@@ -305,7 +305,7 @@ new cloudflare.Ruleset("hckr.camp", {
           statusCode: 301,
           preserveQueryString: true,
           targetUrl: {
-            expression: `concat("https://www.hackercamp.cz/registrace/?referral=", regex_replace(http.request.uri.path, "^/r/", ""))`,
+            expression: `concat("https://www.hackercamp.cz/registrace/?referral=", substring(http.request.uri.path, 3))`,
           }
         }
       }
