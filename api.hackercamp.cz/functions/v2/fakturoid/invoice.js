@@ -11,7 +11,8 @@ export async function onRequestPost({ request, env }) {
     subjectId: formData.get("subjectId"),
     text: formData.get("text"),
     count: parseInt(formData.get("count")),
-    price: parseInt(formData.get("price"))
+    price: parseInt(formData.get("price")),
+    note: parseInt(formData.get("note")),
   });
   return Response.json({
     id: invoice.id,
