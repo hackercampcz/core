@@ -52,7 +52,7 @@ const state = defAtom({
     if (canSelectHousing(this.registration, this.attendee)) {
       return View.selectHousing;
     }
-    if (this.registration.year && !this.registration.paid) {
+    if (this.registration?.year && !this.registration?.paid) {
       return View.paymentPending;
     }
     return View.notRegistered;
@@ -372,7 +372,7 @@ function renderDashboardScreen(
 const freeTickets = new Set(["crew", "staff"]);
 
 function canSelectHousing(registration, attendee) {
-  return registration.paid || freeTickets.has(attendee?.ticketType);
+  return registration?.paid || freeTickets.has(attendee?.ticketType);
 }
 
 function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers }) {
