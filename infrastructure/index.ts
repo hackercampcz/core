@@ -296,19 +296,27 @@ new cloudflare.Ruleset("hckr.camp", {
         }
       }
     },
+  ]
+});
+
+new cloudflare.Ruleset("hackercamp.cz", {
+  zoneId: hackercampCzZone.id,
+  name: "Redirects on hackercamp.cz",
+  kind: "zone",
+  phase: "http_request_dynamic_redirect",
+  rules: [
     {
-      description: "Redirect hckr.camp to www.hackercamp.cz",
-      expression: `(starts_with(http.request.uri.path, "/r/") and http.host eq "www.hackercamp.cz")`,
+      description: "Redirect referral links",
+      expression: `(starts_with(http.request.uri.path, "/r/"))`,
       action: "redirect",
       actionParameters: {
         fromValue: {
           statusCode: 301,
-          preserveQueryString: true,
           targetUrl: {
-            expression: `concat("https://www.hackercamp.cz/registrace/?referral=", substring(http.request.uri.path, 3))`,
+            expression: `concat("/registrace/?referral=", substring(http.request.uri.path, 3))`,
           }
         }
       }
-    },
+    }
   ]
 });
