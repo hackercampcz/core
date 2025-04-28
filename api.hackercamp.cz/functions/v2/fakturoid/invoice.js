@@ -15,6 +15,9 @@ export async function onRequestPost({ request, env }) {
     note: formData.get("note"),
   });
   const resp = await sendInvoiceEmail(authHeader, invoice.id);
+  if (!resp.ok) {
+    await sendInvoiceEmail(authHeader, invoice.id, formData.get("email"));
+  }
   return Response.json({
     id: invoice.id,
     url: invoice.public_html_url,
