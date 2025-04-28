@@ -394,6 +394,11 @@ function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers }) 
                 Tak s&nbsp;tím moc neváhej, abys spal / spala podle svých
                 představ&nbsp;:)
               </p>
+              ${when(attendee?.invoiceUrl, () => html`
+                <p>
+                  Platbu můžeše rychle odbavit přes <a href="${attendee.invoiceUrl}">webovou fakturu</a>.
+                </p>
+              `)}
               ${when(hasRegisteredHackers, () => html`
                 <p>
                   Chceš se podívat, kdo už se na tebe těší? Tak tady je
