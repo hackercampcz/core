@@ -83,14 +83,12 @@ export async function main({ env, searchParams }) {
         credentials: "include",
         mode: "cors"
       });
-    }
-    catch (error) {
+    } catch (error) {
       rollbar.error(error);
     }
     if (isModal) {
       window.parent.postMessage({ event: "invoiced", invoiceId: data.id })
-    }
-    else {
+    } else {
       location.assign(`/admin/?view=registrations&year=${year}`);
     }
   });
@@ -124,7 +122,8 @@ export async function main({ env, searchParams }) {
     const items = document.createDocumentFragment();
     for (const [id, subject] of subsById) {
       const itemEl = subjectTemplate.cloneNode(true);
-      itemEl.querySelector("label").insertAdjacentText("beforeend", `${subject.name} ${subject.registration_no ? `(IČO: ${subject.registration_no})` : ""}`);
+      const identity = `${subject.name} ${subject.registration_no ? `(IČO: ${subject.registration_no}${subject.vat_no ? `; DIČ: ${subject.vat_no}` : ""})` : ""}`;
+      itemEl.querySelector("label").insertAdjacentText("beforeend", identity);
       itemEl.querySelector("input").value = id;
       items.appendChild(itemEl);
     }
