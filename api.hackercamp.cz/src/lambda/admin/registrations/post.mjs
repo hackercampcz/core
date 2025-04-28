@@ -140,16 +140,15 @@ async function approveVolunteer(db, { registrations, referral }) {
 async function invoiced(db, { registrations, invoiceId }) {
   const { fakturoid_client_id, fakturoid_client_secret } = process.env;
   const authHeader = await getAuthHeader(fakturoid_client_id, fakturoid_client_secret);
-  // TODO: Fakturoid create invoice (get/create subject; create invoice for subject)
-  const { created_at: invoiced, id } = await fetchInvoice(authHeader, invoiceId);
+  const { created_at: invoiced, id, public_html_url } = await fetchInvoice(authHeader, invoiceId);
   for (const key of registrations) {
     console.log({ event: "Marking registration as invoiced", invoiceId, ...key });
     await db.send(
       new UpdateItemCommand({
         TableName: process.env.db_table_registrations,
         Key: marshall(key, { removeUndefinedValues: true, convertEmptyValues: true }),
-        UpdateExpression: "SET invoice_id = :invoice_id, invoiced = :invoiced",
-        ExpressionAttributeValues: marshall({ ":invoice_id": id, ":invoiced": invoiced }, {
+        UpdateExpression: "SET invoice_id = :invoice_id, invoiced = :invoiced, invoiceUrl = :invoiceUrl",
+        ExpressionAttributeValues: marshall({ ":invoice_id": id, ":invoiced": invoiced, ":invoiceUrl": public_html_url }, {
           removeUndefinedValues: true,
           convertEmptyValues: true
         })
