@@ -318,7 +318,8 @@ function plusOneCard(referralLink) {
 function renderDashboardScreen(
   { housing, housingPlacement, travel, events = [], nfcTronData, checkOutPaid },
   referralLink,
-  hasRegisteredHackers
+  hasRegisteredHackers,
+  showSlackButton
 ) {
   return html`
     <div class="mdc-layout-grid__inner">
@@ -343,6 +344,28 @@ function renderDashboardScreen(
           </p>
         </div>
       </div-->
+      ${when(showSlackButton, () => html`
+        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+          <div class="hc-card hc-card--decorated">
+            <p>Pro lepší integraci mezi tvým Slackovým a Donut profilem, potřebujeme od tebe potvrdit rozšířená práva.
+              To provedeš kliknutím na následující tlačítko:</p>
+            <div style="padding: 16px">
+              <a
+                href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F">
+                <img
+                  alt="Add to Slack"
+                  height="40"
+                  width="139"
+                  src="https://platform.slack-edge.com/img/add_to_slack.png"
+                  @click="${() => {
+                    setReturnUrl(location.href);
+                  }}"
+                  srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
+                          https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
+            </div>
+          </div>
+        </div>
+      `)}
       <div
         style="${!nfcTronData ? "display: none" : ""}"
         class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
@@ -375,13 +398,13 @@ function canSelectHousing(registration, attendee) {
   return registration?.paid || freeTickets.has(attendee?.ticketType);
 }
 
-function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers }) {
+function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers, showSlackButton }) {
   const referralLink = `https://hckr.camp/r/${profile?.sub}`;
   switch (selectedView) {
     case View.loading:
       return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
     case View.dashboard:
-      return renderDashboardScreen(attendee, referralLink, hasRegisteredHackers);
+      return renderDashboardScreen(attendee, referralLink, hasRegisteredHackers, showSlackButton);
     case View.selectHousing:
       return renderPaidScreen(referralLink);
     case View.paymentPending:
@@ -470,6 +493,7 @@ async function loadData(profile, year, apiURL) {
       registration?.company ?? attendee?.company
     );
   } catch (err) {
+    transact(x => Object.assign(x, { showSlackButton: true }));
     rollbar.error(err);
   }
 }
