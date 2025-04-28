@@ -390,22 +390,9 @@
         </fieldset>
       </div>
       <script type="module">
-        // TODO: add logic for early birds for next year (inject date from env)
-        const { slackID, hasAllstarDiscount } = JSON.parse(localStorage.getItem("hc:contact"));
+        const { slackID } = JSON.parse(localStorage.getItem("hc:contact"));
         document.forms.reg.slackID.value = slackID;
-        if (hasAllstarDiscount) {
-          const discountedTicket = document.getElementById("discounted-hacker-ticket");
-          discountedTicket.classList.add("has-allstar-discount");
-          discountedTicket.ariaHidden = "false";
-          const normalTicket = document.getElementById("normal-hacker-ticket");
-          normalTicket.ariaHidden = "true";
-        }
       </script>
-      <style>
-        #reg .has-allstar-discount .allstars-hidden {
-          display: none;
-        }
-      </style>
     </section>
     <section id="invoice">
       <h2>Fakturace</h2>
