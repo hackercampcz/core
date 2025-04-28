@@ -1,4 +1,4 @@
-import { getAuthHeader, createInvoice } from "@hackercamp/lib/fakturoid.js";
+import { getAuthHeader, createInvoice, sendInvoiceEmail } from "@hackercamp/lib/fakturoid.js";
 
 /**
  * @param {EventContext<Env>} context
@@ -14,8 +14,10 @@ export async function onRequestPost({ request, env }) {
     price: parseInt(formData.get("price")),
     note: formData.get("note"),
   });
+  const resp = await sendInvoiceEmail(authHeader, invoice.id);
   return Response.json({
     id: invoice.id,
-    url: invoice.public_html_url
+    url: invoice.public_html_url,
+    mail: resp.ok ? "ok" : resp.errors
   });
 }
