@@ -16,7 +16,7 @@
     "rollbar": "2.26.4"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20250428.0",
+    "@cloudflare/workers-types": "4.20250429.0",
     "@types/node": "22.15.3",
     "wrangler": "4.13.2"
   },
