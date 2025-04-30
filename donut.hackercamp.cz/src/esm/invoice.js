@@ -22,7 +22,7 @@ async function getRegistration(year, email) {
 
 async function getSubject(q) {
   const params = new URLSearchParams({ q });
-  const resp = await withAuthHandler(fetch(`https://api.hackercamp.cz/v2/fakturoid/search?${params}`, {
+  const resp = await withAuthHandler(fetch(`https://api.hackercamp.cz/v2/fakturoid/subject?${params}`, {
     credentials: "include",
     mode: "cors"
   }), {
