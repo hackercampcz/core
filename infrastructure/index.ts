@@ -307,7 +307,7 @@ new cloudflare.Ruleset("hackercamp.cz", {
   rules: [
     {
       description: "Redirect referral links",
-      expression: `(http.request.uri.path eq "/r/dobrovolnik"))`,
+      expression: `(http.request.uri.path eq "/r/dobrovolnik")`,
       action: "redirect",
       actionParameters: {
         fromValue: {
