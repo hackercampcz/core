@@ -243,7 +243,7 @@ const attendeeViews = new Set([
 const programViews = new Set(["program", "programApproval"]);
 
 async function renderView(state) {
-  // HACK: This is here to force gulp-rev change hash for each build even if there are no changes in this file.
+  // HACK: This is here to force gulp-rev to change hash for each build even if there are no changes in this file.
   // The reason is we are importing modules that can be changed, but the revision will be staled here.
   // The `__BUILD_ID__` symbol is defined in esbuild config (@see task-config.mjs).
   const buildNr = __BUILD_ID__;

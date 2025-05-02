@@ -1,6 +1,6 @@
 import { getTicketPrice, ticketName } from "./admin/common.js";
 import { setReturnUrl, signOut } from "./lib/profile.js";
-import { withAuthHandler } from "./lib/remoting.js";
+import { submitDecorator, withAuthHandler, withErrorReporting } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
 
 async function getRegistration(year, email) {
@@ -55,43 +55,37 @@ export async function main({ env, searchParams }) {
 
   const invoiceForm = document.forms.invoice;
 
-  invoiceForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    e.target.querySelector("button").disabled = true;
+  invoiceForm.addEventListener("submit", submitDecorator(async (e) => {
     const formData = new FormData(e.target);
-    const resp = await fetch(e.target.action, {
+    const resp = await withErrorReporting(fetch(e.target.action, {
       method: "POST",
       body: new URLSearchParams(formData),
       credentials: "include",
       mode: "cors"
-    });
+    }), { rollbar });
     const data = await resp.json();
 
-    try {
-      await fetch("https://api.hackercamp.cz/v1/admin/registrations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          command: "invoiced",
-          params: {
-            registrations: [{ year, email }],
-            invoiceId: data.id,
-          }
-        }),
-        credentials: "include",
-        mode: "cors"
-      });
-    } catch (error) {
-      rollbar.error(error);
-    }
+    await withErrorReporting(fetch("https://api.hackercamp.cz/v1/admin/registrations", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        command: "invoiced",
+        params: {
+          registrations: [{ year, email }],
+          invoiceId: data.id,
+        }
+      }),
+      credentials: "include",
+      mode: "cors"
+    }), { rollbar });
     if (isModal) {
       window.parent.postMessage({ event: "invoiced", invoiceId: data.id })
     } else {
       location.assign(`/admin/?view=registrations&year=${year}`);
     }
-  });
+  }));
 
   invoiceForm.year.value = year;
   invoiceForm.email.value = email;
