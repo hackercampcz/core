@@ -131,6 +131,7 @@ export async function main({ env, searchParams }) {
       editLink.textContent = "upravit";
       editLink.href = `https://app.fakturoid.cz/hackercampcrew/subjects/${id}/edit`;
       editLink.target = "fakturoid";
+      editLink.rel = "noopener";
       label.insertAdjacentElement("beforeend", editLink);
       items.appendChild(itemEl);
     }

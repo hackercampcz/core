@@ -49,12 +49,8 @@ function trashRegistration(email) {
   };
 }
 
-function invoice(year, email) {
-  return renderModalDialog("invoice", {});
-  return (e) => {
-    e.preventDefault();
-    dispatchAction(Action.invoice, { year, email });
-  };
+function invoice() {
+  return renderModalDialog("invoice");
 }
 
 function invoiceSelected() {
@@ -557,7 +553,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
               Vyfakturováno
               <strong>${formatDateTime(new Date(detail.invoiced))}</strong>;
               ID faktury
-              <a
+              <a rel="noopener" target="fakturoid"
                 href="https://app.fakturoid.cz/hackercampcrew/invoices/${detail.invoice_id}"><code>${detail.invoice_id}</code></a>
             </p>
           `)
