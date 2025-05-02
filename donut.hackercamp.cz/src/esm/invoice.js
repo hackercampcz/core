@@ -122,9 +122,16 @@ export async function main({ env, searchParams }) {
     const items = document.createDocumentFragment();
     for (const [id, subject] of subsById) {
       const itemEl = subjectTemplate.cloneNode(true);
-      const identity = `${subject.name} ${subject.registration_no ? `(IČO: ${subject.registration_no}${subject.vat_no ? `; DIČ: ${subject.vat_no}` : ""})` : ""}`;
-      itemEl.querySelector("label").insertAdjacentText("beforeend", identity);
       itemEl.querySelector("input").value = id;
+      const label = itemEl.querySelector("label");
+      label.dataset.subjectId = id;
+      const identity = `${subject.name} ${subject.registration_no ? `(IČO: ${subject.registration_no}${subject.vat_no ? `; DIČ: ${subject.vat_no}` : ""})` : ""} `;
+      label.insertAdjacentText("beforeend", identity);
+      const editLink = document.createElement("a");
+      editLink.textContent = "upravit";
+      editLink.href = `https://app.fakturoid.cz/hackercampcrew/subjects/${id}/edit`;
+      editLink.target = "fakturoid";
+      label.insertAdjacentElement("beforeend", editLink);
       items.appendChild(itemEl);
     }
     subjectSet.querySelector("div").replaceChildren(items);
