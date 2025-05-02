@@ -210,7 +210,8 @@ async function renderModalDialog(name) {
     const { view } = curr;
     if (typeof view !== "function") return;
     modalScheduler({
-      preFirstRender() {},
+      preFirstRender() {
+      },
       async render() {
         console.log("Modal re-render");
         render(template(state.deref()), root);
@@ -242,22 +243,22 @@ const attendeeViews = new Set([
 const programViews = new Set(["program", "programApproval"]);
 
 async function renderView(state) {
-  const { selectedView } = state;
+  const { selectedView, build } = state;
   if (registrationViews.has(selectedView)) {
-    const { registrationsTemplate } = await import("./admin-registrations.js?v20250502");
+    const { registrationsTemplate } = await import((`./admin-registrations.js?v${build}`));
     return registrationsTemplate(state);
   }
   if (attendeeViews.has(selectedView)) {
-    const { attendeesTemplate } = await import("./admin-attendees.js");
+    const { attendeesTemplate } = await import((`./admin-attendees.js?v${build}`));
     return attendeesTemplate(state);
   }
   if (programViews.has(selectedView)) {
-    const { programTemplate } = await import("./admin-program.js");
+    const { programTemplate } = await import((`./admin-program.js?v${build}`));
     return programTemplate(state);
   }
   switch (selectedView) {
     case View.housing:
-      const { housingTemplate } = await import("./admin-housing.js");
+      const { housingTemplate } = await import((`./admin-housing.js?v${build}`));
       return housingTemplate(state);
     default:
       return html`Pohled do neznáma`;
@@ -452,6 +453,7 @@ export async function main({ appRoot, searchParams, env, viewTitle, yearSelector
   const selectedView = searchParams.get("view") ?? View.confirmed;
   const query = searchParams.get("query") ?? "";
   const apiHost = env["api-host"];
+  const build = env.build;
   const contact = getContact();
   const isNFCSupported = typeof NDEFReader !== "undefined";
 
@@ -463,7 +465,7 @@ export async function main({ appRoot, searchParams, env, viewTitle, yearSelector
   addEventListener("message", handleMessage);
 
   transact((x) =>
-    Object.assign(x, { apiHost, year, page, query, contact, params: searchParams, isNFCSupported })
+    Object.assign(x, { apiHost, build, year, page, query, contact, params: searchParams, isNFCSupported })
   );
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, selectedView);
