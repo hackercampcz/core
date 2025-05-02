@@ -40,7 +40,7 @@ export default {
   static: true,
   esbuild: {
     options: {
-      define: { __BUILD_ID__: `"${process.env.CIRCLE_BUILD_NUM}"` ?? '""' },
+      define: { __BUILD_ID__: `"${process.env.CIRCLE_BUILD_NUM ?? "HEAD"}"` },
     }
   },
 

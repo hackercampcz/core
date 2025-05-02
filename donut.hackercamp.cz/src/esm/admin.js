@@ -20,8 +20,6 @@ import { showModalDialog } from "./modal-dialog.js";
 /** @typedef {import("@thi.ng/atom").Path} Path */
 /** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
 
-const buildNr = __BUILD_ID__;
-
 const state = defAtom({
   year: 2023,
   selectedView: View.confirmed,
@@ -245,6 +243,11 @@ const attendeeViews = new Set([
 const programViews = new Set(["program", "programApproval"]);
 
 async function renderView(state) {
+  // HACK: This is here to force gulp-rev change hash for each build even if there are no changes in this file.
+  // The reason is we are importing modules that can be changed, but the revision will be staled here.
+  // The `__BUILD_ID__` symbol is defined in esbuild config (@see task-config.mjs).
+  const buildNr = __BUILD_ID__;
+
   const { selectedView } = state;
   if (registrationViews.has(selectedView)) {
     const { registrationsTemplate } = await import("./admin-registrations.js");
