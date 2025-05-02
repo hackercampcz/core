@@ -243,22 +243,22 @@ const attendeeViews = new Set([
 const programViews = new Set(["program", "programApproval"]);
 
 async function renderView(state) {
-  const { selectedView, build } = state;
+  const { selectedView } = state;
   if (registrationViews.has(selectedView)) {
-    const { registrationsTemplate } = await import((`./admin-registrations.js?v${build}`));
+    const { registrationsTemplate } = await import("./admin-registrations.js");
     return registrationsTemplate(state);
   }
   if (attendeeViews.has(selectedView)) {
-    const { attendeesTemplate } = await import((`./admin-attendees.js?v${build}`));
+    const { attendeesTemplate } = await import("./admin-attendees.js");
     return attendeesTemplate(state);
   }
   if (programViews.has(selectedView)) {
-    const { programTemplate } = await import((`./admin-program.js?v${build}`));
+    const { programTemplate } = await import("./admin-program.js");
     return programTemplate(state);
   }
   switch (selectedView) {
     case View.housing:
-      const { housingTemplate } = await import((`./admin-housing.js?v${build}`));
+      const { housingTemplate } = await import("./admin-housing.js");
       return housingTemplate(state);
     default:
       return html`Pohled do neznáma`;
@@ -465,7 +465,7 @@ export async function main({ appRoot, searchParams, env, viewTitle, yearSelector
   addEventListener("message", handleMessage);
 
   transact((x) =>
-    Object.assign(x, { apiHost, build, year, page, query, contact, params: searchParams, isNFCSupported })
+    Object.assign(x, { apiHost, year, page, query, contact, params: searchParams, isNFCSupported })
   );
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, selectedView);
