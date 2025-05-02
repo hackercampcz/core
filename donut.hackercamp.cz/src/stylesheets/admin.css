@@ -31,7 +31,6 @@
 }
 
 .hc-dialog {
-  position: relative;
   padding-top: 2rem;
 }
 .hc-dialog [data-action="close"] {
@@ -43,4 +42,7 @@
   width: 100%;
   height: 80vh;
   border: none;
+}
+.hc-dialog > div {
+  position: relative;
 }
