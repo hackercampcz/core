@@ -20,6 +20,8 @@ import { showModalDialog } from "./modal-dialog.js";
 /** @typedef {import("@thi.ng/atom").Path} Path */
 /** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */
 
+const buildNr = BUILD_ID;
+
 const state = defAtom({
   year: 2023,
   selectedView: View.confirmed,

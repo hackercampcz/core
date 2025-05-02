@@ -38,7 +38,11 @@ export default {
   fonts: true,
   svgSprite: true,
   static: true,
-  esbuild: true,
+  esbuild: {
+    options: {
+      define: { __BUILD_ID__: `"${process.env.CIRCLE_BUILD_NUM}"` ?? '""' },
+    }
+  },
 
   stylesheets: {
     postcss: { plugins: [jitProps(OpenProps)] }
