@@ -5,3 +5,7 @@
 
 /assets/*
   Cache-Control: public, max-age=31536000, immutable
+  ! Delegate-CH
+
+/assets/esm/sw.js
+  Cache-Control: no-cache, proxy-revalidate
