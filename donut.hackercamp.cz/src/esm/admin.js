@@ -244,7 +244,7 @@ const programViews = new Set(["program", "programApproval"]);
 async function renderView(state) {
   const { selectedView } = state;
   if (registrationViews.has(selectedView)) {
-    const { registrationsTemplate } = await import("./admin-registrations.js");
+    const { registrationsTemplate } = await import("./admin-registrations.js?v20250502");
     return registrationsTemplate(state);
   }
   if (attendeeViews.has(selectedView)) {
