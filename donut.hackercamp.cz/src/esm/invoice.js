@@ -56,9 +56,8 @@ async function createSubject(data) {
     method: "POST",
     headers: {
       "Accept": "application/json",
-      "Content-Type": "application/json",
     },
-    body: JSON.stringify(data),
+    body: new URLSearchParams(data),
     credentials: "include",
     mode: "cors"
   }), authHandler), { rollbar });
