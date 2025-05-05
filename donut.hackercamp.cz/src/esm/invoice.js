@@ -163,7 +163,6 @@ export async function main({ env, searchParams }) {
       "street": invAddress,
       "registration_no": invRegNo,
       "vat_no": invVatNo,
-      "setting_update_from_ares": true,
     }).filter(([_, v]) => Boolean(v)));
     await createSubject(subject);
     document.location.reload();
