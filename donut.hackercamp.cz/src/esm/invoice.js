@@ -157,13 +157,13 @@ export async function main({ env, searchParams }) {
   const subsById = await searchSubjects(invRegNo, invEmail, contact, invName);
   const subjectSet = document.getElementById("subject");
   renderSubjects(subjectSet, subsById, async e => {
-    const subject = {
+    const subject = Object.fromEntries(Object.entries({
       "name": invName,
-      "email": invEmail ?? contact,
+      "email": invEmail ?? contact ?? email,
       "street": invAddress,
       "registration_no": invRegNo,
       "vat_no": invVatNo,
-    }
+    }).filter(([_, v]) => Boolean(v)));
     await createSubject(subject);
     document.location.reload();
   });
