@@ -27,6 +27,7 @@ export async function withErrorReporting(response, { rollbar, onError }) {
   catch (err) {
     if (rollbar) { rollbar.error(err); }
     if (onError) { onError(err); }
+    return response;
   }
 }
 

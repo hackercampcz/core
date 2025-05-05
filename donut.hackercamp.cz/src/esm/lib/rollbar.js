@@ -14,10 +14,18 @@ export function init(env) {
   });
 }
 
+/**
+ * @param {Rollbar.Configuration} options
+ * @returns {Rollbar}
+ */
+export function configure(options) {
+  return Rollbar.configure(options);
+}
+
 export function info(...args) {
-  Rollbar.info(...args);
+  return Rollbar.info(...args);
 }
 
 export function error(...args) {
-  Rollbar.error(...args);
+  return Rollbar.error(...args);
 }
