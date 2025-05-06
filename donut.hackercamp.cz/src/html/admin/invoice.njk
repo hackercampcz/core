@@ -4,16 +4,20 @@
 
 {% block head_stylesheets %}
   <style>
-    body.modal-view>nav,
-    body.modal-view>footer,
-    body.modal-view #view-title {
+    body.modal-view > nav,
+    body.modal-view > footer {
       display: none;
     }
+
     body.modal-view #top {
       padding-top: 0.5lh;
     }
 
-    label+label {
+    body.modal-view #view-title {
+      margin-inline: auto;
+    }
+
+    label + label {
       margin-block: 0.5lh;
     }
 
@@ -24,18 +28,22 @@
       justify-content: space-between;
       align-items: baseline;
     }
+
     label:has(input[type=radio]) {
       justify-content: flex-start;
       align-items: baseline;
       line-height: 2;
     }
+
     input[name=count] {
       width: 4ch;
     }
+
     input[name=text] {
       min-width: 20ch;
       width: 100%;
     }
+
     input[name=price] {
       width: 8ch;
     }
@@ -52,30 +60,33 @@
       <span>Fakturace</span>
     </h2>
     <form name="invoice" action="https://api.hackercamp.cz/v2/fakturoid/invoice" method="post">
-      <input type="hidden" name="year">
       <input type="hidden" name="email">
-      <address style="border: 1px solid #ddd; padding: 16px; font-size: 14px;">
-        <h3>Fakturační údaje</h3>
-        <p id="name"></p>
-        <p id="address"></p>
-        <p>
-          E-mail: <code id="email"></code>
-        </p>
-        <p>
-          <span id="regNo"></span>
-          <span id="vatId"></span>
-        </p>
-      </address>
+      <template id="contact">
+        <address style="border: 1px solid #ddd; padding: 16px; font-size: 14px;">
+          <h3>Fakturační údaje</h3>
+          <p class="name"></p>
+          <p class="address"></p>
+          <p>
+            E-mail: <code class="email"></code>
+          </p>
+          <p>
+            <span class="regNo"></span>
+            <span class="vatId"></span>
+          </p>
+        </address>
+      </template>
 
       <fieldset id="lines">
         <legend>Položky na faktuře</legend>
         <label>Text před položkama <input type="text" name="note"></label>
-        <label>
-          Položka
-          <input type="number" id="count" name="count" min="1">✕
-          <input type="text" id="text" name="text">
-          <input type="number" id="price" name="price"> Kč
-        </label>
+        <template>
+          <label>
+            Položka
+            <input type="number" class="count" name="count" min="1">✕
+            <input type="text" class="text" name="text">
+            <input type="number" class="price" name="price"> Kč
+          </label>
+        </template>
       </fieldset>
 
       <fieldset id="subject">
