@@ -518,6 +518,9 @@ export async function main({ searchParams, rootElement, env }) {
     try {
       const profile = getSlackProfile();
       rollbar.configure({
+        transform(payload) {
+          payload.state = state.deref();
+        },
         payload: {
           person: {
             name: profile.real_name,

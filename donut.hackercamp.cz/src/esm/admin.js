@@ -10,7 +10,7 @@ import "@material/web/textfield/filled-text-field.js";
 import { defAtom, updateAsTransaction } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import { Action, dispatchAction, Endpoint, executeCommand, getDialog, View } from "./admin/common.js";
-import { getContact, setReturnUrl, signOut } from "./lib/profile.js";
+import { getContact, getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop, renderScheduler } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
@@ -458,7 +458,19 @@ export async function main({ appRoot, searchParams, env, viewTitle, yearSelector
   const selectedView = searchParams.get("view") ?? View.confirmed;
   const query = searchParams.get("query") ?? "";
   const apiHost = env["api-host"];
-  const build = env.build;
+  const profile = getSlackProfile();
+  rollbar.configure({
+    transform(payload) {
+      payload.state = state.deref();
+    },
+    payload: {
+      person: {
+        name: profile.real_name,
+        email: profile.email,
+        id: profile.id,
+      }
+    }
+  });
   const contact = getContact();
   const isNFCSupported = typeof NDEFReader !== "undefined";
 
@@ -470,7 +482,7 @@ export async function main({ appRoot, searchParams, env, viewTitle, yearSelector
   addEventListener("message", handleMessage);
 
   transact((x) =>
-    Object.assign(x, { apiHost, year, page, query, contact, params: searchParams, isNFCSupported })
+    Object.assign(x, { apiHost, year, page, query, profile, contact, params: searchParams, isNFCSupported })
   );
   initRenderLoop(state, appRoot, { keepContent: true });
   changeTitle(viewTitle, selectedView);

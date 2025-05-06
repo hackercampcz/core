@@ -323,6 +323,15 @@ export async function main({ formElement, env, housing: { reservations, variants
   rollbar.init(env);
   try {
     const profile = getSlackProfile();
+    rollbar.configure({
+      payload: {
+        person: {
+          name: profile.real_name,
+          email: profile.email,
+          id: profile.id,
+        }
+      }
+    });
     const contact = getContact();
     rollbar.info("Housing profile", { profile, contact });
     initHousingVariants(formElement, { variants, profile });

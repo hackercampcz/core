@@ -1,5 +1,5 @@
 import { getTicketPrice, ticketName } from "./admin/common.js";
-import { setReturnUrl, signOut } from "./lib/profile.js";
+import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { submitDecorator, withAuthHandler, withErrorReporting } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
 
@@ -107,6 +107,17 @@ async function searchSubjects(invRegNo, invEmail, contact, invName) {
 
 export async function main({ env, searchParams }) {
   rollbar.init(env);
+
+  const profile = getSlackProfile();
+  rollbar.configure({
+    payload: {
+      person: {
+        name: profile.real_name,
+        email: profile.email,
+        id: profile.id,
+      }
+    }
+  });
 
   const isModal = searchParams.has("modal");
   if (isModal) {

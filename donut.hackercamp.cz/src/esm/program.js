@@ -882,11 +882,21 @@ export async function main({ rootElement, env }) {
   const shadow = rootElement.attachShadow({ mode: "closed" });
   initRenderLoop(state, shadow);
 
+  const profile = getSlackProfile();
+  rollbar.configure({
+    payload: {
+      person: {
+        name: profile.real_name,
+        email: profile.email,
+        id: profile.id,
+      }
+    }
+  });
   transact((x) =>
     Object.assign(x, {
       year: env.year,
       apiHost: env["api-host"],
-      profile: getSlackProfile(),
+      profile,
       featureToggles: { fullProgram: env["feature-toggle/full-program"] }
     }, schedule.get(env.year))
   );

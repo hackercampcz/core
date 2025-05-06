@@ -1,5 +1,6 @@
 import { html, render } from "lit-html";
 import { ticketBadge } from "./lib/attendee.js";
+import { getSlackProfile } from "./lib/profile.js";
 import * as rollbar from "./lib/rollbar.js";
 
 const supporters = new Set(["hacker-plus", "hacker-patron"]);
@@ -21,9 +22,21 @@ function extendedProfile({ year, ticketType, patronAllowance }) {
 
 export async function main({ attendee, env }) {
   rollbar.init(env);
+
+  const profile = getSlackProfile();
+  rollbar.configure({
+    payload: {
+      person: {
+        name: profile.real_name,
+        email: profile.email,
+        id: profile.id,
+      }
+    }
+  });
+
   const name = document.querySelector("h1");
   render(ticketBadge.get(attendee.ticketType), name);
 
-  const profile = document.querySelector(".hc-profile");
-  render(extendedProfile(attendee), profile);
+  const profileEl = document.querySelector(".hc-profile");
+  render(extendedProfile(attendee), profileEl);
 }
