@@ -7,12 +7,15 @@ import { getAuthHeader, createInvoice, sendInvoiceEmail } from "@hackercamp/lib/
 export async function onRequestPost({ request, env }) {
   const formData = await request.formData();
   const authHeader = await getAuthHeader(env.FAKTUROID_CLIENT_ID, env.FAKTUROID_CLIENT_SECRET);
+
+  const texts = formData.getAll("text");
+  const counts = formData.getAll("count").map(x => parseInt(x, 10));
+  const prices = formData.getAll("price").map(x => parseInt(x, 10));
+
   const invoice = await createInvoice(authHeader, {
     subjectId: formData.get("subjectId"),
-    text: formData.get("text"),
-    count: parseInt(formData.get("count")),
-    price: parseInt(formData.get("price")),
     note: formData.get("note"),
+    lines: texts.map((text, i) => ({ text, count: counts[i], price: prices[i] })),
   });
   const resp = await sendInvoiceEmail(authHeader, invoice.id);
   if (!resp.ok) {

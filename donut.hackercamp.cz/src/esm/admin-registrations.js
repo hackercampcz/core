@@ -54,24 +54,13 @@ function invoice() {
 }
 
 function invoiceSelected() {
-  return (e) => {
-    e.preventDefault();
-    dispatchAction(Action.showModalDialog, { name: "group-invoice" });
-  };
+  return renderModalDialog("invoice");
 }
 
 function approveSelected() {
   return (e) => {
     e.preventDefault();
     dispatchAction(Action.showModalDialog, { name: "group-approve" });
-  };
-}
-
-function submitInvoiceSelected() {
-  return (e) => {
-    e.preventDefault();
-    const invoiceId = e.target.invoiceId.value;
-    dispatchAction(Action.invoiceSelected, { invoiceId });
   };
 }
 
@@ -82,56 +71,8 @@ function submitApproveSelectedVolunteers() {
   };
 }
 
-registerDialog("group-invoice", groupInvoiceModal);
 registerDialog("group-approve", groupApproveVolunteerSelectionModal);
 
-function invoiceSummary(selection) {
-  return ({ items }) => {
-    const registrations = new Map(items.map((x) => [
-      x.email,
-      Object.assign({
-        get name() {
-          return `${this.firstName} ${this.lastName}`;
-        },
-        get price() {
-          return getTicketPrice(this);
-        }
-      }, x)
-    ]));
-    const regs = Array.from(selection).map((email) => registrations.get(email));
-    const total = regs.map((x) => x.price).reduce((a, b) => a + b, 0);
-    const invContacts = new Set(regs.map((x) => x.invRecipientEmail));
-    return html`
-      ${map(regs.filter((x) => x.invAddress), invoiceDetails)}
-      <p>
-        Fakturu zaslat na:
-        ${map(invContacts, (x) => html`<a href="mailto:${x}">${x}</a>`)}
-      </p>
-      <h4>Položky na faktuře</h4>
-      <ul style="list-style-type: none; padding: 0">
-        ${
-          map(selection, (email) => {
-            const reg = registrations.get(email);
-            return html`
-              <li
-                style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between"
-              >
-                <span>${reg.name} - ${ticketName.get(reg.ticketType)}</span>
-                <data value="${reg.price}">${formatMoney(reg.price)} Kč</data>
-              </li>
-            `;
-          })
-        }
-        <li
-          style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between; border-top: 3px double; margin-top: 5px;"
-        >
-          <span>Celkem</span>
-          <data value="${total}">${formatMoney(total)} Kč</data>
-        </li>
-      </ul>
-    `;
-  };
-}
 
 function approveVolunteersSummary(selection) {
   return ({ items }) => {
@@ -162,30 +103,6 @@ function approveVolunteersSummary(selection) {
       </ul>
     `;
   };
-}
-
-function groupInvoiceModal({ data, selection }) {
-  return html`
-    <form @submit="${submitInvoiceSelected()}">
-      <h2>Podklady k hromadné fakturaci</h2>
-      ${until(data.then(invoiceSummary(selection)))}
-      <fieldset>
-        <legend>Hromadná fakturace</legend>
-        <div class="field">
-          <label for="invoiceId">ID faktury z fakturoidu (v URL)</label>
-          <input
-            type="text"
-            id="invoiceId"
-            name="invoiceId"
-            required
-            pattern="[0-9]*"
-            inputmode="numeric"
-          >
-        </div>
-        <button class="hc-button" type="submit">Potvrdit</button>
-      </fieldset>
-    </form>
-  `;
 }
 
 function groupApproveVolunteerSelectionModal({ data, selection }) {
@@ -356,24 +273,16 @@ export async function selectionBar(selectedView, selection, data) {
         @click="${multiRowSelection(indeterminate, checked, items)}"
         touch-target="wrapper"
       ></md-checkbox>
-      ${
-        when(selectedView === View.confirmed, () =>
-          html`
-            <md-icon-button
-              title="Vyfakturovat"
-              @click="${invoiceSelected()}"
-            >
-              <md-icon>request_quote</md-icon>
-            </md-icon-button>`)
-      }
-      ${
-        when(new Set([View.volunteer, View.staff]).has(selectedView), () =>
-          html`
-            <md-icon-button title="Schválit" @click="${approveSelected()}"
-            >
-              <md-icon>person_add</md-icon>
-            </md-icon-button>`)
-      }
+      ${when(selectedView === View.confirmed, () => html`
+        <md-icon-button title="Vyfakturovat" @click="${invoice()}">
+          <md-icon>request_quote</md-icon>
+        </md-icon-button>
+      `)}
+      ${when(new Set([View.volunteer, View.staff]).has(selectedView), () => html`
+        <md-icon-button title="Schválit" @click="${approveSelected()}">
+          <md-icon>person_add</md-icon>
+        </md-icon-button>
+      `)}
     </div>
   `;
 }
@@ -554,7 +463,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
               <strong>${formatDateTime(new Date(detail.invoiced))}</strong>;
               ID faktury
               <a rel="noopener" target="fakturoid"
-                href="https://app.fakturoid.cz/hackercampcrew/invoices/${detail.invoice_id}"><code>${detail.invoice_id}</code></a>
+                 href="https://app.fakturoid.cz/hackercampcrew/invoices/${detail.invoice_id}"><code>${detail.invoice_id}</code></a>
             </p>
           `)
       }
@@ -860,13 +769,17 @@ function registrationModalDialog({ detail, apiHost }) {
 
 registerDialog("invoice", invoiceModalDialog);
 
-function invoiceModalDialog({ detail }) {
+function invoiceModalDialog({ detail, selection, year }) {
   window.addEventListener("message", e => {
     if (e.data.event === "invoiced") {
-       location.reload();
+      location.reload();
     }
   });
-  return html`
-    <iframe src="/admin/invoice.html?year=${detail.year}&amp;email=${detail.email}&amp;modal=1}"></iframe>
-  `;
+  console.log({detail, selection, year})
+  const params = new URLSearchParams([
+    ["year", year],
+    ["modal", 1],
+    ...(selection.size ? Array.from(selection).map(email => ["email", email]) : [["email", detail.email]]),
+  ]);
+  return html`<iframe src="invoice.html?${params}"></iframe>`;
 }

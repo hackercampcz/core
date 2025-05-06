@@ -22,7 +22,7 @@ async function getRegistration(year, email) {
   return resp.json();
 }
 
-async function markRegistrationAsInvoiced(year, email, data) {
+async function markRegistrationAsInvoiced(year, emails, data) {
   const resp = await withErrorReporting(withAuthHandler(fetch("https://api.hackercamp.cz/v1/admin/registrations", {
     method: "POST",
     headers: {
@@ -32,7 +32,7 @@ async function markRegistrationAsInvoiced(year, email, data) {
     body: JSON.stringify({
       command: "invoiced",
       params: {
-        registrations: [{ year, email }],
+        registrations: emails.map(email => ({ year, email })),
         invoiceId: data.id,
       }
     }),
@@ -101,7 +101,7 @@ async function searchSubjects(invRegNo, invEmail, contact, invName) {
     getSubject(invEmail ?? contact),
     getSubject(invName),
   ].filter(Boolean));
-  return new Map(sub.flat().map(x => [x.id, x]));
+  return sub.flat().map(x => [x.id, x]);
 }
 
 
@@ -125,9 +125,9 @@ export async function main({ env, searchParams }) {
   }
 
   const year = parseInt(searchParams.get("year") ?? env.year);
-  const email = searchParams.get("email");
+  const emails = searchParams.getAll("email");
 
-  if (!email) console.error("No email provided");
+  if (!emails.length) console.error("No email provided");
 
   const invoiceForm = document.forms.invoice;
 
@@ -140,7 +140,7 @@ export async function main({ env, searchParams }) {
       mode: "cors"
     }), { rollbar });
     const data = await resp.json();
-    await markRegistrationAsInvoiced(year, email, data);
+    await markRegistrationAsInvoiced(year, emails, data);
     if (isModal) {
       window.parent.postMessage({ event: "invoiced", invoiceId: data.id })
     } else {
@@ -148,32 +148,79 @@ export async function main({ env, searchParams }) {
     }
   }));
 
-  invoiceForm.year.value = year;
-  invoiceForm.email.value = email;
-
-  const reg = await getRegistration(year, email);
-
-  document.getElementById("name").textContent = reg.invName;
-  document.getElementById("address").textContent = reg.invAddress;
-  document.getElementById("email").textContent = reg.invEmail ?? reg["invoice-contact"];
-  document.getElementById("regNo").textContent = reg.invRegNo ? `IČO: ${reg.invRegNo}` : "";
-  document.getElementById("vatId").textContent = reg.invVatNo ? `DIČ: ${reg.invVatNo}` : "";
-
+  invoiceForm.email.value = emails[0];
   invoiceForm.note.value = `Hacker Camp ${year}`;
-  invoiceForm.count.value = 1;
-  invoiceForm.text.value = reg.invText ?? ticketName.get(reg.ticketType);
-  invoiceForm.price.value = getTicketPrice(reg);
 
-  const { invRegNo, invVatNo, invAddress, invEmail, invName, ["invoice-contact"]: contact } = reg;
-  const subsById = await searchSubjects(invRegNo, invEmail, contact, invName);
+  const contact = document.getElementById("contact");
+  const contactFragment = document.createDocumentFragment();
+  const contacts = [];
+
+  function addContact(reg) {
+    contacts.push(reg);
+    const contactEl = contact.content.cloneNode(true);
+    contactEl.querySelector(".name").textContent = reg.invName;
+    contactEl.querySelector(".address").textContent = reg.invAddress;
+    contactEl.querySelector(".email").textContent = reg.invEmail ?? reg["invoice-contact"];
+    contactEl.querySelector(".regNo").textContent = reg.invRegNo ? `IČO: ${reg.invRegNo}` : "";
+    contactEl.querySelector(".vatId").textContent = reg.invVatNo ? `DIČ: ${reg.invVatNo}` : "";
+    contactFragment.appendChild(contactEl);
+  }
+
+  const lines = document.getElementById("lines");
+  const linesFragment = document.createDocumentFragment();
+  const lineTmpl = lines.querySelector("template");
+
+  function addLine(ticket) {
+    const lineEl = lineTmpl.content.cloneNode(true);
+    lineEl.querySelector(".count").value = ticket.count;
+    lineEl.querySelector(".text").value = ticket.text;
+    lineEl.querySelector(".price").value = ticket.price;
+    linesFragment.appendChild(lineEl);
+  }
+
+  const tickets = new Map();
+
+  function addTicket(reg) {
+    const ticket = tickets.get(reg.ticketType);
+    if (ticket) {
+      ticket.count++;
+    } else {
+      tickets.set(reg.ticketType, {
+        count: 1,
+        text: reg.invText ?? ticketName.get(reg.ticketType),
+        price: getTicketPrice(reg),
+      });
+    }
+  }
+
+  const subsById = new Map();
+  const registrations = await Promise.all(emails.map(email => getRegistration(year, email)));
+  for (const reg of registrations) {
+    if (reg.invAddress) {
+      addContact(reg);
+    }
+    addTicket(reg);
+    const { invRegNo, invVatNo, invAddress, invEmail, invName, ["invoice-contact"]: c } = reg;
+    const subjects = await searchSubjects(invRegNo, invEmail, c, invName);
+    for (const [id, subject] of subjects) {
+      subsById.set(id, subject);
+    }
+  }
+  contact.replaceWith(contactFragment);
+  for (const ticket of tickets.values()) {
+    addLine(ticket);
+  }
+  lines.appendChild(linesFragment);
+
   const subjectSet = document.getElementById("subject");
   renderSubjects(subjectSet, subsById, async e => {
+    const reg = contacts[0]; // TODO: handle contact selection
     const subject = Object.fromEntries(Object.entries({
-      "name": invName,
-      "email": invEmail ?? contact ?? email,
-      "street": invAddress,
-      "registration_no": invRegNo,
-      "vat_no": invVatNo,
+      "name": reg.invName,
+      "email": reg.invEmail ?? reg["invoice-contact"] ?? reg.email,
+      "street": reg.invAddress,
+      "registration_no": reg.invRegNo,
+      "vat_no": reg.invVatNo,
     }).filter(([_, v]) => Boolean(v)));
     await createSubject(subject);
     document.location.reload();
