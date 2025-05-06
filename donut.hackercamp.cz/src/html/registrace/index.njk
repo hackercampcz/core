@@ -196,26 +196,19 @@
           }
           try {
             const { email } = JSON.parse(localStorage.getItem("slack:profile"));
-            await fetch(
-              "https://api.hackercamp.cz/v1/optout",
-              {
-                method: "POST",
-                body: new URLSearchParams({
-                  email,
-                  year: "{{ currentYear }}",
-                }),
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/x-www-form-urlencoded",
-                },
+            await fetch("https://api.hackercamp.cz/v1/optout", {
+              method: "POST",
+              body: new URLSearchParams({ email, year: "{{ currentYear }}"}),
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
               },
-            );
+            });
             if (confirm("Ohlášeno. Díky za ochotu.")) {
               location.assign("https://donut.hackercamp.cz/");
             }
           } catch (E_r) {
-            // TODO: log with rollbar
-            console.error(E_r);
+            rollbar.error(E_r);
             alert("Se nepovedlo, zkusim prosím jiny.");
           }
         }
@@ -808,8 +801,7 @@
         }
       }
     } catch (o_O) {
-      // TODO: log with rollbar
-      console.error(o_O);
+      rollbar.error(o_O);
       alert("Něco se kouslo, zkuste to jindy.");
     }
 
@@ -835,8 +827,7 @@
         location.href = "/registrace/potvrzeno/";
       })
       .catch((o_O) => {
-        // TODO: log with rollbar
-        console.error(o_O);
+        rollbar.error(o_O);
         alert("Se to někde zaseklo, zkuste to prosím znovu");
       })
       .finally(() => {
