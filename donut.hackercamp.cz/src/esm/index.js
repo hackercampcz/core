@@ -358,6 +358,7 @@ function renderDashboardScreen(
                   width="139"
                   src="https://platform.slack-edge.com/img/add_to_slack.png"
                   @click="${() => {
+                    rollbar.info(`User clicked on Slack button.`);
                     setReturnUrl(location.href);
                   }}"
                   srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
@@ -492,6 +493,7 @@ async function loadData(profile, year, apiURL) {
       contact.slug,
       registration?.company ?? attendee?.company
     );
+    rollbar.info("Slack profile set");
   } catch (err) {
     transact(x => Object.assign(x, { showSlackButton: true }));
     rollbar.error(err);
@@ -515,6 +517,15 @@ export async function main({ searchParams, rootElement, env }) {
     transact((x) => Object.assign(x, { apiHost, year, hasRegisteredHackers: env.hasRegisteredHackers }));
     try {
       const profile = getSlackProfile();
+      rollbar.configure({
+        payload: {
+          person: {
+            name: profile.real_name,
+            email: profile.email,
+            id: profile.id,
+          }
+        }
+      });
       await loadData(profile, year, apiURL);
     } catch (err) {
       rollbar.error(err);
