@@ -3287,7 +3287,7 @@ __metadata:
     immutable: "npm:5.1.2"
     jsonwebtoken: "npm:9.0.2"
     rollbar: "npm:2.26.4"
-    wrangler: "npm:4.14.3"
+    wrangler: "npm:4.14.4"
   languageName: unknown
   linkType: soft
 
@@ -3333,7 +3333,7 @@ __metadata:
     workbox-precaching: "npm:7.3.0"
     workbox-recipes: "npm:7.3.0"
     workbox-window: "npm:7.3.0"
-    wrangler: "npm:4.14.3"
+    wrangler: "npm:4.14.4"
   languageName: unknown
   linkType: soft
 
@@ -3367,7 +3367,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
   dependencies:
-    wrangler: "npm:4.14.3"
+    wrangler: "npm:4.14.4"
   languageName: unknown
   linkType: soft
 
@@ -15494,9 +15494,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:4.14.3":
-  version: 4.14.3
-  resolution: "wrangler@npm:4.14.3"
+"wrangler@npm:4.14.4":
+  version: 4.14.4
+  resolution: "wrangler@npm:4.14.4"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.4.0"
     "@cloudflare/unenv-preset": "npm:2.3.1"
@@ -15521,7 +15521,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/80b958285a1d92cf8851f80e837d9ec1ebdbd3b7c05c11158636585e3c691390c98b95c45bfa6c789bcec8182103ba6608c756bdc7903f34741ee28b297c45df
+  checksum: 10c0/ab1a3beccc115a5c7e7fabec08038bcd13ee1aab375aa12681e0aab0ab0785714d57979de65ac8139ce696f2208c0dfdbe572a7c5b1f6c5b4c5e772c38fb19f2
   languageName: node
   linkType: hard
 
