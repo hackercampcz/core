@@ -33,4 +33,4 @@ async function main({ token }) {
 
 await main(parse(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-hacker-invitation.js --token=$(op read "op://HackerCamp/Postmark/credential")
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-import --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-hacker-invitation.js --token=$(op read "op://HackerCamp/Postmark/credential")
