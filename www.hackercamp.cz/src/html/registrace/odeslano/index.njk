@@ -32,6 +32,10 @@
         <h1>Odesláno!</h1>
       </div>
       <div class="form-story">
+        <div id="text-for-volunteer" hidden>
+          {% markdown "registrace/odeslano/volunteer.md" %}
+        </div>
+
         <div id="text-for-stranger">
           {% markdown "registrace/odeslano/stranger.md" %}
         </div>
@@ -50,12 +54,16 @@
       const { searchParams } = new URL(location.href);
 
       if (searchParams.has("editUrl")) {
-        const editInstruciton = document.querySelector("#edit-reg");
-        editInstruciton.querySelector("a").href = decodeURIComponent(searchParams.get("editUrl"));
-        editInstruciton.hidden = false;
+        const editInstruction = document.querySelector("#edit-reg");
+        editInstruction.querySelector("a").href = decodeURIComponent(searchParams.get("editUrl"));
+        editInstruction.hidden = false;
       }
 
-      if (searchParams.has("referral")) {
+      if (searchParams.has("volunteer")) {
+        document.querySelector("#text-for-stranger").hidden = true;
+        document.querySelector("#text-for-volunteer").hidden = false;
+      }
+      else if (searchParams.has("referral")) {
         document.querySelector("#text-for-stranger").hidden = true;
         document.querySelector("#text-for-plus-one").hidden = false;
       }

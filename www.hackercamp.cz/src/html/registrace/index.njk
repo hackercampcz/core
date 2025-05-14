@@ -854,10 +854,10 @@
           }
           if (searchParams.has("referral")) {
             location.assign(
-              `/registrace/odeslano/?${new URLSearchParams({ editUrl, referral: searchParams.get("referral") })}`
+              `/registrace/odeslano/?${new URLSearchParams({ editUrl, volunteer, referral: searchParams.get("referral") })}`
             );
           } else {
-            location.assign(`/registrace/odeslano/?${new URLSearchParams({ editUrl })}`);
+            location.assign(`/registrace/odeslano/?${new URLSearchParams({ editUrl, volunteer })}`);
           }
         }).catch((o_O) => {
           rollbar.error(o_O);

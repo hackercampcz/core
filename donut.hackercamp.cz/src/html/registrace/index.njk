@@ -824,7 +824,7 @@
         return response.json();
       })
       .then(data => {
-        location.href = "/registrace/potvrzeno/";
+        location.href = `/registrace/potvrzeno/?${searchParams}`;
       })
       .catch((o_O) => {
         rollbar.error(o_O);

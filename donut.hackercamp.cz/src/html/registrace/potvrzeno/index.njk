@@ -11,17 +11,23 @@
 <div class="hc-code-bg">
   <header id="top" class="hc-hero mdc-layout-grid">
     <div class="mdc-layout-grid__inner">
-      <div
-        class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
-      >
+      <div class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
         <h1>Odesláno!</h1>
       </div>
     </div>
     <div class="form-story">
       <p>Díky, fakturu odešleme na uvedený kontakt.</p>
-      <p>V tuto chvílí již není možné registrační údaje měnit. Po zaplacení získáš přístup ke svému profilu.</p>
     </div>
   </header>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module">
+  const url = new URL(location.href);
+  if (url.searchParams.has("volunteer")) {
+    document.querySelector(".form-story p").textContent = "Díky a budiž ti věčná sláva za tvou pomoc!";
+  }
+</script>
 {% endblock %}
 
