@@ -45,6 +45,13 @@ export async function handler(event) {
   rest = Object.fromEntries(Object.entries(rest).map(([k, v]) => [k, v?.trim()]).filter(([, v]) => Boolean(v)));
   const isVolunteer = rest.ticketType === "volunteer";
   const isHacker = rest.ticketType === "hacker";
+  const isPatron = rest.ticketType === "hacker-patron";
+
+  if (isPatron && rest.volunteerArrivalDay === "th") {
+    // API abuse
+    return { statusCode: 451, body: "fuck off" };
+  }
+
   const id = crypto.randomBytes(20).toString("hex");
   console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
   const editUrl = getEditUrl(isNewbee, id);
