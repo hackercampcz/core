@@ -95,10 +95,10 @@ function renderSubjects(subjectSet, subsById, listener) {
   return subjectSet;
 }
 
-async function searchSubjects(invRegNo, invEmail, contact, invName) {
+async function searchSubjects(invRegNo, invEmail, invName) {
   const sub = await Promise.all([
     invRegNo ? getSubject(invRegNo) : null,
-    getSubject(invEmail ?? contact),
+    getSubject(invEmail),
     getSubject(invName),
   ].filter(Boolean));
   return sub.flat().map(x => [x.id, x]);
@@ -200,8 +200,18 @@ export async function main({ env, searchParams }) {
       addContact(reg);
     }
     addTicket(reg);
-    const { invRegNo, invVatNo, invAddress, invEmail, invName, ["invoice-contact"]: c } = reg;
-    const subjects = await searchSubjects(invRegNo, invEmail, c, invName);
+    const {
+      invRegNo,
+      invEmail,
+      invRecipientEmail,
+      invName,
+      invRecipientFirstname,
+      invRecipientLastname,
+      ["invoice-contact"]: c
+    } = reg;
+    const email = invEmail ?? invRecipientEmail ?? c;
+    const name = invName ?? `${invRecipientFirstname} ${invRecipientLastname}`;
+    const subjects = await searchSubjects(invRegNo, email, name);
     for (const [id, subject] of subjects) {
       subsById.set(id, subject);
     }
