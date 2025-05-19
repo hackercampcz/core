@@ -1,6 +1,7 @@
 {% extends "layouts/application.njk" %}
 
 {% block title %}Registrace pro Hackery{% endblock %}
+
 {% block head_stylesheets %}
   <style>
     #reg {
@@ -79,10 +80,6 @@
       border: none;
       padding: 0;
       margin: 0;
-    }
-
-    [aria-hidden="true"] {
-      display: none !important;
     }
 
     #reg .field label {
@@ -171,10 +168,6 @@
   </style>
 {% endblock %}
 
-{% block head %}
-  {% include "shared/rollbar.njk" %}
-{% endblock %}
-
 {% block content %}
   <div class="hc-code-bg">
     <header id="top" class="hc-hero mdc-layout-grid">
@@ -183,36 +176,12 @@
           <h1>Chci na Hacker Camp</h1>
         </div>
       </div>
-      <div id="hacker-greeting" class="form-story">
+      <div id="hacker-greeting" class="form-story hacker">
         {% markdown "registrace/hacker-greeting.md" %}
       </div>
-      <div id="volunteer-greeting" class="form-story" aria-hidden="true">
+      <div id="volunteer-greeting" class="form-story volunteer" hidden>
         {% markdown "registrace/volunteer-greeting.md" %}
       </div>
-      <script>
-        async function optout() {
-          if (!confirm("Opravdu se letos nezúčastníš? Tohle nejde vzít zpět.")) {
-            return;
-          }
-          try {
-            const { email } = JSON.parse(localStorage.getItem("slack:profile"));
-            await fetch("https://api.hackercamp.cz/v1/optout", {
-              method: "POST",
-              body: new URLSearchParams({ email, year: "{{ currentYear }}"}),
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/x-www-form-urlencoded",
-              },
-            });
-            if (confirm("Ohlášeno. Díky za ochotu.")) {
-              location.assign("https://donut.hackercamp.cz/");
-            }
-          } catch (E_r) {
-            rollbar.error(E_r);
-            alert("Se nepovedlo, zkusim prosím jiny.");
-          }
-        }
-      </script>
     </header>
   </div>
   <form action='{{ collections.build["api-host"] }}registration' method="post" class="mdc-layout-grid" id="reg">
@@ -256,7 +225,7 @@
           </div>
         </fieldset>
       </div>
-      <fieldset id="volunteer" disabled aria-hidden="true">
+      <fieldset id="volunteer" class="volunteer" disabled hidden>
         <div class="hc-card">
           <input type="hidden" name="ticketType" value="volunteer">
           <h3>Jak se zapojím</h3>
@@ -292,7 +261,7 @@
         </div>
       </fieldset>
     </section>
-    <section id="plus-one-section" aria-hidden="true">
+    <section id="plus-one-section" hidden>
       <h2>Tvé +1</h2>
       <p>Víme od tebe, že bys rád pozval svou +1.&nbsp;Zkontroluj, že jsi nám vypnil
         všechny údaje, abychom nového hackera mohli k&nbsp;registraci <strong>a taky
@@ -340,7 +309,7 @@
         </div>
       </div>
     </section>
-    <section id="ticket">
+    <section id="ticket" class="hacker">
       <h2>Lístek</h2>
       <div class="hc-card">
         <fieldset>
@@ -352,7 +321,6 @@
             </label>
           </div>
           <div class="choose">
-            <input type="hidden" name="slackID">
             <input type="radio" name="ticketType" value="hacker" checked id="ticket-hacker">
             <label for="ticket-hacker" id="normal-hacker-ticket">
               <strong>{{ ticket["hacker"].name }}</strong> - {{ ticket["hacker"].price | price("CZK") }}<br>
@@ -382,12 +350,8 @@
           </div>
         </fieldset>
       </div>
-      <script type="module">
-        const { slackID } = JSON.parse(localStorage.getItem("hc:contact"));
-        document.forms.reg.slackID.value = slackID;
-      </script>
     </section>
-    <section id="invoice">
+    <section id="invoice" class="hacker">
       <h2>Fakturace</h2>
       <p class="disclaimer">Tahle sekce je důležitá, abychom vám mohli vystavit fakturu za vstupenky.</p>
       <div class="hc-card">
@@ -449,7 +413,7 @@
             <input id="invoice-email" name="invEmail" type="email" autocomplete="email" placeholder="invoices@hrad.cz">
           </div>
         </fieldset>
-        <fieldset id="someone-else-will-pay" aria-hidden="true" disabled>
+        <fieldset id="someone-else-will-pay" hidden disabled>
           <div class="group">
             <div class="field">
               <label for="invoice-recipient-firstname">
@@ -481,45 +445,6 @@
         </fieldset>
       </div>
     </section>
-    <script>
-      function showSection(id) {
-        const section = document.getElementById(id);
-        section.removeAttribute("aria-hidden");
-        if (section.tagName === "FIELDSET") {
-          section.removeAttribute("disabled");
-        }
-        for (const fieldset of section.querySelectorAll("fieldset")) {
-          fieldset.removeAttribute("aria-hidden");
-          fieldset.removeAttribute("disabled");
-        }
-      }
-
-      function hideSection(id) {
-        const section = document.getElementById(id);
-        section.setAttribute("aria-hidden", "true");
-        if (section.tagName === "FIELDSET") {
-          section.setAttribute("disabled", "true");
-        }
-        for (const fieldset of section.querySelectorAll("fieldset")) {
-          fieldset.setAttribute("aria-hidden", "true");
-          fieldset.setAttribute("disabled", "true");
-        }
-      }
-
-      hideSection("someone-else-will-pay");
-      document.getElementById("email").addEventListener("blur", e => {
-        document.getElementById("invoice-email").setAttribute("placeholder", e.target.value);
-      });
-      document.getElementById("invoice-recipient").addEventListener("change", e => {
-        if (e.target.value == 0) {
-          showSection("I-will-pay");
-          hideSection("someone-else-will-pay");
-        } else if (e.target.value == 1) {
-          hideSection("I-will-pay");
-          showSection("someone-else-will-pay");
-        }
-      });
-    </script>
     <p class="disclaimer">
       Následující informace bude možné doplnit později. Pokud ale už znáš odpovědi, můžeš si je tu připravit -
       změnit je bude možné :)
@@ -527,7 +452,7 @@
     <section>
       <h2>Ubytování</h2>
       <div class="hc-card">
-        <fieldset id="stay-time-section">
+        <fieldset id="stay-time-section" class="hacker">
           <div class="field">
             <label for="stay-time">
               Na jak dlouho dorazíš?
@@ -538,14 +463,14 @@
               <option value="2">Jiné?</option>
             </select>
           </div>
-          <div class="field" aria-hidden="true">
+          <div class="field" hidden>
             <label for="custom-stay-time">
               Napiš nám, jak to plánuješ
             </label>
             <input id="custom-stay-time" name="stayTimeCustom" type="text">
           </div>
         </fieldset>
-        <fieldset aria-hidden="true" disabled id="stay-time-volunteer-section">
+        <fieldset hidden disabled id="stay-time-volunteer-section" class="volunteer">
           <div class="field">
             <label for="stay-time-volunteer">
               Kdy přijedeš?
@@ -607,16 +532,7 @@
         </fieldset>
       </div>
     </section>
-    <script type="module">
-      document.getElementById("stay-time").addEventListener("change", e => {
-        if (e.target.value == 2) {
-          document.getElementById("custom-stay-time").parentElement.removeAttribute("aria-hidden");
-        } else {
-          document.getElementById("custom-stay-time").parentElement.setAttribute("aria-hidden", "true");
-        }
-      });
-    </script>
-    <section id="program">
+    <section id="program" class="hacker">
       <h2>Zapojení</h2>
       <div class="hc-card">
         <p>Každý z&nbsp;účastníků je zároveň aktivní tvůrce programu.
@@ -636,7 +552,6 @@
         <p>Navrhnout můžeš cokoliv. Letos ale budeme na základě <a href="/feedback/2024">loňské zpětné vazby</a>
           návrhy ještě ověřovat. Prosím kontroluj už od srpna Slack. Ir se ti
           tam ozve, abyste program doladili.</p>
-
 
         <fieldset>
           <div class="field field--block">
@@ -672,7 +587,7 @@
           parkoviště. Pokud jedeš autem, prosím nalož ho alespoň 3&nbsp;lidmi. My
           i&nbsp;příroda ti děkujeme!</p>
 
-        <div class="choose" id="travel-full-car">
+        <div class="choose hacker" id="travel-full-car">
           <input type="radio" name="travel" value="full-car" id="full-car">
           <label for="full-car">
             Přijedu autem a jsme full - jedeme ve 4
@@ -693,7 +608,7 @@
             <span>počkám, kdo nabídne spolujízdu</span>
           </label>
         </div>
-        <div class="choose" id="travel-bus">
+        <div class="choose hacker" id="travel-bus">
           <input type="radio" name="travel" value="bus" id="bus">
           <label for="bus">
             Chci jet Hacker busem z Brna a okolí!
@@ -707,7 +622,7 @@
             <span><strong>parking nepotřebuju</strong></span>
           </label>
         </div>
-        <div class="choose" id="travel-no-car-but-info">
+        <div class="choose hacker" id="travel-no-car-but-info">
           <input type="radio" name="travel" value="no-car-but-info" id="no-car-but-info">
           <label for="no-car-but-info">
             Nejedu autem, ale zajímá mě, jestli mě umíte nějakým shuttlem
@@ -736,13 +651,6 @@
           </select>
         </div>
       </div>
-      <script type="module">
-        const shirt = document.getElementById("shirt");
-        const shirtSize = document.getElementById("shirt-size");
-        shirt.addEventListener("change", (e) => {
-          shirtSize.disabled = !e.target.checked;
-        });
-      </script>
     </section>
     <section>
       <button type="submit" class="hc-button">
@@ -750,113 +658,20 @@
       </button>
     </section>
     <input type="hidden" name="year" value="{{ year }}">
-    <input type="hidden" name="referral">
+    <input type="hidden" name="slackID">
+    <input type="hidden" name="image">
   </form>
   <script type="module">
+    import { main, optout } from "{{ "registration.js" | assetUrl("esm") }}";
+
     const build = {{ collections.build | dump(8) | safe }};
     const env = Object.assign({ year: {{ year }} }, build);
     const formElement = document.forms.reg;
     const submitButtonElement = formElement.querySelector("button[type=submit]");
-
     const { searchParams } = new URL(location.href);
-    const year = formElement.year.value;
 
-    try {
-      const { email, sub: slackID } = JSON.parse(localStorage.getItem("slack:profile"));
-      const response = await fetch(
-        `${env["api-host"]}registration?${new URLSearchParams({ email, year, slackID })}`,
-        { headers: { Accept: "application/json" } },
-      );
-      const data = await response.json();
+    await main({ env, formElement, submitButtonElement, searchParams });
 
-      if (data.invoiced || data.paid) disableForm();
-
-      if (data.plusFirstName || data.plusLastName) {
-        document.getElementById("plus-one-section").removeAttribute("aria-hidden");
-      }
-
-      for (const key in data) {
-        const field = formElement[key];
-        let value = data[key];
-        if (!(field && value)) continue;
-        const isRadio = field.length && field[0].type === "radio";
-        const isCheckbox = field.type === "checkbox";
-        if (isCheckbox) {
-          field.checked = value;
-        } else if (isRadio) {
-          formElement.querySelector(`[value="${value}"]`).checked = true;
-        } else if (field.type === "select-one") {
-          if (value === true) value = "1";
-          field.querySelector(`[value="${value}"]`).selected = true;
-          field.dispatchEvent(new Event("change"));
-        } else if (field.length) {
-          const option = Array.from(field).find(option => option.value === value);
-          if (option) {
-            option.selected = true;
-          } else {
-            field.value = value;
-          }
-        } else {
-          field.value = value;
-        }
-      }
-    } catch (o_O) {
-      rollbar.error(o_O);
-      alert("Něco se kouslo, zkuste to jindy.");
-    }
-
-    formElement.addEventListener("submit", e => {
-      e.preventDefault();
-      submitButtonElement.disabled = true;
-
-      fetch(e.target.action, {
-        method: "POST",
-        body: new URLSearchParams(new FormData(e.target)),
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw response;
-        }
-        return response.json();
-      })
-      .then(data => {
-        location.href = `/registrace/potvrzeno/?${searchParams}`;
-      })
-      .catch((o_O) => {
-        rollbar.error(o_O);
-        alert("Se to někde zaseklo, zkuste to prosím znovu");
-      })
-      .finally(() => {
-        submitButtonElement.disabled = false;
-      });
-    });
-
-    function disableForm() {
-      formElement.setAttribute("disabled", "disabled");
-      for (const field of formElement.querySelectorAll("input, textarea, select, button")) {
-        field.disabled = true;
-      }
-    }
-
-    const volunteer = searchParams.has("volunteer");
-
-    if (volunteer) {
-      hideSection("hacker-greeting");
-      showSection("volunteer-greeting");
-      showSection("volunteer");
-      hideSection("stay-time-section");
-      showSection("stay-time-volunteer-section");
-      hideSection("travel-full-car");
-      hideSection("travel-bus");
-      hideSection("travel-no-car-but-info");
-      hideSection("ticket");
-      hideSection("invoice");
-      hideSection("program");
-      document.querySelector("#contact h2").innerText = "Dobrovolník";
-    }
+    window.optout = optout;
   </script>
 {% endblock %}

@@ -1,6 +1,16 @@
 @import "@material/layout-grid/dist/mdc.layout-grid.css";
 @import "@material/chips/dist/mdc.chips.css";
 
+sup, sub {
+  font-size: inherit;
+  vertical-align: baseline;
+  font-variant-position: super;
+}
+
+sub {
+  font-variant-position: sub;
+}
+
 code {
   font-family: inherit;
   font-size: 0.9em;
