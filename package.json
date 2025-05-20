@@ -10,7 +10,7 @@
     "@hckr_/blendid": "9.3.6",
     "@types/nunjucks": "3.2.6",
     "dprint": "0.50.0",
-    "npm-run-all2": "8.0.2",
+    "npm-run-all2": "8.0.3",
     "undertaker-registry": "2.0.0"
   },
   "scripts": {
