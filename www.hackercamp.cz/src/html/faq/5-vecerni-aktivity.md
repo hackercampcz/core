@@ -3,7 +3,7 @@ kapel našich hackerů na open-air stage. Tradičně nám vystoupí **[Ventolín
 který přes den přednáší na UK a na Hacker campu zahraje svoje [Disco Science](https://www.youtube.com/watch?v=jjTOYerHRVo)
 pro všechny mládenc, pro všechny holkys. Ventolín bude!
 
-A _Z predele slidy_ budou taky. Máte další tipy? **Do Slacku s nimi!** Díky.
+A *Z predele slidy* budou taky. Máte další tipy? **Do Slacku s nimi!** Díky.
 
 Pokud si budeš chtít odpočinout, můžeš zavítat třeba do Hookamonk lounge
 a vyzkoušet [elektronickou vodní dýmku](https://www.hookamonk.com/).

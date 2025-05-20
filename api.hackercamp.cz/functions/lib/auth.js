@@ -26,7 +26,7 @@ async function verify(secret, token) {
   const key = new TextEncoder().encode(secret);
   const { payload } = await jwtVerify(token, key, {
     issuer: options.issuer,
-    audience: options.audience,
+    audience: options.audience
   });
   return payload;
 }
@@ -85,7 +85,6 @@ export function roleAuthorization(role) {
    * @param {EventContext<Env>} context
    */
   return async function authorization({ request, next, env }) {
-
     const token = getToken(request.headers);
     const privateKey = env.HC_JWT_SECRET;
     const isAuthorized = await authorize(role, token, privateKey);
@@ -94,6 +93,5 @@ export function roleAuthorization(role) {
 
     const query = new URLSearchParams({ returnUrl: request.url });
     return Response.redirect(`https://${env.HC_DONUT_HOSTNAME}/?${query}`, 307);
-  }
+  };
 }
-

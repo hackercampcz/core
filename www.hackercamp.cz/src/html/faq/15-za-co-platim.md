@@ -9,4 +9,3 @@ Akce je nezisková, organizují ji dobrovolníci a případný zisk půjde do da
 nebo jej věnujeme vybraným neziskovým organizacím.
 
 Část zisku z nultého ročníku jsme poslali [na pomoc uprchlíkům z válkou sužované Ukrajiny](https://hackercampworkspace.slack.com/archives/C01V4Q0AZ0U/p1645987603664159)
-          

@@ -10,10 +10,10 @@ Máme za sebou pracovní víkend s core crew, máme spoustu nových nápadů a u
 
 Připravujeme společné setkání, jednu informaci Vám ale nasdílím hned. Stejně jako loni, uděláme 2 typy dobrovolníků:
 
-* **Dobrovolník Stavím a bourám** \- jedu s vámi od středy 27. 8. ráno, pomáhám stavět areál, připravovat zázemí a v
+- **Dobrovolník Stavím a bourám** \- jedu s vámi od středy 27. 8. ráno, pomáhám stavět areál, připravovat zázemí a v
   neděli pomáhám sklízet areál. V průběhu HC (čtvrtek odpo-sobota) vypomáhám jen na ad hoc věci, případně když se mi
   bude chtít, zapojím se víc
-* **Dobrovolník Makám během campu** \- vypomáhám od čtvrtečního dopoledne do sobotní noci. Počítám s tím, že budu
+- **Dobrovolník Makám během campu** \- vypomáhám od čtvrtečního dopoledne do sobotní noci. Počítám s tím, že budu
   fungovat v rámci směn (8-10 hod hod denně)
 
 Můžeš si sám/sama zvolit, zda je pro tebe lepší strávit na HC více dní a mít možnost si víc užít program, nebo tě baví

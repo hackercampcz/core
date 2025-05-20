@@ -30,7 +30,7 @@ a navíc ji budeš moct kdykoliv online upravit – třeba změnit místo, nebo 
 Už žádné přepisování na papírové nástěnce (teda doufám, možná se k papíru vrátíme,
 kdo ví… `#TrochaPunkuJeštěNikohoNezabila`).
 
-Kdyby jsi měl/a s přihlášením do Slacku problém, [projdi si nejprve nápovědu](https://donut.hckr.camp/help/#slack-prihlaseni) 
+Kdyby jsi měl/a s přihlášením do Slacku problém, [projdi si nejprve nápovědu](https://donut.hckr.camp/help/#slack-prihlaseni)
 a kdyby to nestačilo napiš rarous@hckr.camp a on ti pomůže.
 
 **Jak je to s ubytkem? Kde budu spát?**

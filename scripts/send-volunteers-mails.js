@@ -12,7 +12,7 @@ async function main({ token }) {
       from: "Hacker Camp Crew <team@hackercamp.cz>",
       replyTo: "Pavla Verflová <paja@hackercamp.cz>",
       to: email,
-      data: {},
+      data: {}
     });
     console.log(email, "sent");
   }

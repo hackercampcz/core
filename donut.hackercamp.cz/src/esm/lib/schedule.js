@@ -18,5 +18,5 @@ export const schedule = new Map([
     campStartAt: new Date("2023-08-28T14:00:00"),
     visibleDate: new Date("2023-08-01T14:00:00"),
     campEndAt: new Date("2023-08-31T14:00:00")
-  }],
+  }]
 ]);

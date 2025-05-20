@@ -45,12 +45,12 @@ async function getRegistrations() {
   });
 
   if (resp.Items) {
-    return resp.Items.filter((x) => !optOuts.has(`${x.year}-${x.email}`));
+    return resp.Items.filter(x => !optOuts.has(`${x.year}-${x.email}`));
   }
 
   const result = [];
   for await (const { Items } of resp) {
-    result.push(...Items.filter((x) => !optOuts.has(`${x.year}-${x.email}`)));
+    result.push(...Items.filter(x => !optOuts.has(`${x.year}-${x.email}`)));
   }
   return result;
 }

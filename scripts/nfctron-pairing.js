@@ -16,7 +16,7 @@ function parseDate(s) {
 /** @type {CommonCSVReaderOptions} */
 const options = {
   columnSeparator: ";",
-  lineSeparator: "\r\n",
+  lineSeparator: "\r\n"
 };
 
 async function readTranslationTable() {
@@ -40,14 +40,11 @@ async function readCustomers() {
       result.set(nfcTronID(x.serial_number), {
         vip: x.vip === "TRUE",
         paid: x["zůstatek"] === "0 Kč",
-        spent: parseInt(
-          x["útrata"].replace("Kč", "").replace(/\s/, "").trim(),
-          10,
-        ),
+        spent: parseInt(x["útrata"].replace("Kč", "").replace(/\s/, "").trim(), 10),
         firstTransaction: parseDate(x.first_transaction).toISOString(),
         lastTransaction: parseDate(x.last_transaction).toISOString(),
         sn: x.serial_number,
-        chipID: x.chip_id,
+        chipID: x.chip_id
       });
     }
     return result;
@@ -62,8 +59,8 @@ async function getAttendees() {
     ProjectionExpression: "slackID, #y, #n, company, nfcTronID, nfcTronData",
     ExpressionAttributeNames: {
       "#n": "name",
-      "#y": "year",
-    },
+      "#y": "year"
+    }
   });
   return result.Items;
 }
@@ -74,7 +71,7 @@ function updateAttendee({ year, slackID }, nfcTronData) {
     TableName: "attendees",
     Key: { year, slackID },
     UpdateExpression: "SET nfcTronData = :nfcTronData",
-    ExpressionAttributeValues: { ":nfcTronData": [nfcTronData] },
+    ExpressionAttributeValues: { ":nfcTronData": [nfcTronData] }
   });
 }
 
@@ -82,10 +79,10 @@ const customersData = await readCustomers();
 const attendees = await getAttendees();
 const namesByChipID = new Map(
   attendees
-    .flatMap((x) => x.nfcTronData?.map((y) => [y.chipID, x.name]))
-    .filter(Boolean),
+    .flatMap(x => x.nfcTronData?.map(y => [y.chipID, x.name]))
+    .filter(Boolean)
 );
-const items = Array.from(customersData.values()).map((x) =>
+const items = Array.from(customersData.values()).map(x =>
   Object.assign({ name: namesByChipID.get(x.chipID) ?? "-" }, x)
 );
 
@@ -93,7 +90,7 @@ const header = Object.keys(items[0]);
 const f = await Deno.open("./data/nfc-tron.csv", {
   write: true,
   create: true,
-  truncate: true,
+  truncate: true
 });
 try {
   await writeCSVObjects(f, items, { header });

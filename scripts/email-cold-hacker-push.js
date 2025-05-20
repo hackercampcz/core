@@ -7,11 +7,8 @@ const dynamo = createClient();
 
 async function getAllContactsEmails() {
   console.log("Loading contacts…");
-  const result = await dynamo.scan({
-    TableName: "contacts",
-    ProjectionExpression: "email",
-  });
-  const contacts = new Set(result.Items.map((x) => x.email));
+  const result = await dynamo.scan({ TableName: "contacts", ProjectionExpression: "email" });
+  const contacts = new Set(result.Items.map(x => x.email));
   console.log(`Loaded ${contacts.size} contacts`);
   return contacts;
 }
@@ -23,9 +20,9 @@ async function getRegistrations(year) {
     FilterExpression: "#year = :year",
     ProjectionExpression: "email",
     ExpressionAttributeNames: { "#year": "year" },
-    ExpressionAttributeValues: { ":year": year },
+    ExpressionAttributeValues: { ":year": year }
   });
-  const registrations = new Set(resp.Items.map((x) => x.email));
+  const registrations = new Set(resp.Items.map(x => x.email));
   console.log(`Loaded ${registrations.size} registrations`);
   return registrations;
 }
@@ -37,9 +34,9 @@ async function getOptOuts(year) {
     FilterExpression: "#year = :year",
     ProjectionExpression: "email",
     ExpressionAttributeNames: { "#year": "year" },
-    ExpressionAttributeValues: { ":year": year },
+    ExpressionAttributeValues: { ":year": year }
   });
-  const outOuts = new Set(resp.Items.map((x) => x.email));
+  const outOuts = new Set(resp.Items.map(x => x.email));
   console.log(`Loaded ${outOuts.size} optouts`);
   return outOuts;
 }
@@ -55,7 +52,7 @@ async function main({ token, year }) {
       token,
       emails: batch,
       templateId: Template.ColdHackerPush,
-      tag: "cold-hacker-push",
+      tag: "cold-hacker-push"
     });
     for (const item of resp) {
       if (item.ErrorCode) console.error(item);

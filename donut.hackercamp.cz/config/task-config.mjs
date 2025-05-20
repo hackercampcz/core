@@ -29,7 +29,7 @@ function assetPath(destPath, key) {
  */
 const formatDateTime = (x, locale) =>
   x?.toLocaleString(locale, { weekday: "short", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })
-  ?? null;
+    ?? null;
 
 export default {
   images: true,
@@ -40,7 +40,7 @@ export default {
   static: true,
   esbuild: {
     options: {
-      define: { __BUILD_ID__: `"${process.env.CIRCLE_BUILD_NUM ?? "HEAD"}"` },
+      define: { __BUILD_ID__: `"${process.env.CIRCLE_BUILD_NUM ?? "HEAD"}"` }
     }
   },
 
@@ -58,7 +58,7 @@ export default {
         "housing_types",
         "housing_variants",
         "housing_reservations"
-      ],
+      ]
     },
     markedExtensions: [texyTypography("cs")],
     nunjucksRender: {
@@ -81,7 +81,7 @@ export default {
   },
 
   generate: {
-    html: [{ collection: "hackers", template: "shared/hacker.njk", route: (x) => `hackers/${x[0]}/index.html` }]
+    html: [{ collection: "hackers", template: "shared/hacker.njk", route: x => `hackers/${x[0]}/index.html` }]
   },
 
   vite: {
@@ -91,7 +91,7 @@ export default {
 
   production: {
     rev: {
-      exclude: ["_headers", "_redirects"],
+      exclude: ["_headers", "_redirects"]
     }
   },
 

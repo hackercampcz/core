@@ -12,8 +12,8 @@ export async function optout() {
       body: new URLSearchParams({ email, year: document.forms.reg.year.value }),
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
     });
     if (confirm("Ohlášeno. Díky za ochotu.")) {
       location.assign("https://donut.hackercamp.cz/");
@@ -41,7 +41,7 @@ function hideSection(selectors) {
   for (const section of document.querySelectorAll(selectors)) {
     section.hidden = true;
     if (section.tagName === "FIELDSET") {
-      section.disabled =  true;
+      section.disabled = true;
     }
     for (const fieldset of section.querySelectorAll("fieldset")) {
       fieldset.hidden = true;
@@ -67,7 +67,7 @@ export async function main({ env, formElement, submitButtonElement, searchParams
 
     const response = await fetch(
       `${env["api-host"]}registration?${new URLSearchParams({ email, year, slackID })}`,
-      { headers: { Accept: "application/json" } },
+      { headers: { Accept: "application/json" } }
     );
     const data = await response.json();
 
@@ -116,25 +116,25 @@ export async function main({ env, formElement, submitButtonElement, searchParams
       body: new URLSearchParams(new FormData(e.target)),
       headers: {
         Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw response;
+        "Content-Type": "application/x-www-form-urlencoded"
       }
-      return response.json();
     })
-    .then(data => {
-      location.href = `/registrace/potvrzeno/?${searchParams}`;
-    })
-    .catch((err) => {
-      rollbar.error(err);
-      alert("Se to někde zaseklo, zkuste to prosím znovu");
-    })
-    .finally(() => {
-      submitButtonElement.disabled = false;
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw response;
+        }
+        return response.json();
+      })
+      .then(data => {
+        location.href = `/registrace/potvrzeno/?${searchParams}`;
+      })
+      .catch(err => {
+        rollbar.error(err);
+        alert("Se to někde zaseklo, zkuste to prosím znovu");
+      })
+      .finally(() => {
+        submitButtonElement.disabled = false;
+      });
   });
 
   hideSection("#someone-else-will-pay");

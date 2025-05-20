@@ -24,7 +24,7 @@ async function getOptOuts(year) {
       ExpressionAttributeValues: marshall({ ":yr": year })
     })
   );
-  return res.Items.map((x) => x.email.S);
+  return res.Items.map(x => x.email.S);
 }
 
 /**
@@ -37,7 +37,7 @@ async function getItemsFromDB(db, hits) {
   const tableName = process.env.db_table_registrations;
   const result = [];
   const deduplicatedHits = hits.filter((value, index, self) =>
-    index === self.findIndex((t) => t.email === value.email && t.year === value.year)
+    index === self.findIndex(t => t.email === value.email && t.year === value.year)
   );
 
   for (const batch of partition(100, true, deduplicatedHits)) {
@@ -46,9 +46,7 @@ async function getItemsFromDB(db, hits) {
 
     const items = await db.send(new BatchGetItemCommand({ RequestItems: { [tableName]: { Keys: keys } } }));
     result.push(
-      ...items.Responses[tableName].map((x) => unmarshall(x)).sort((a, b) =>
-        -1 * a.timestamp?.localeCompare(b.timestamp)
-      )
+      ...items.Responses[tableName].map(x => unmarshall(x)).sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp))
     );
   }
   return result;
@@ -93,7 +91,7 @@ async function getRegistrations(query, tag, year, page, pageSize, { allYears }) 
   });
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
-  const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map((x) => x.nbHits);
+  const [paid, invoiced, confirmed, waitingList, volunteer, staff] = counts.map(x => x.nbHits);
 
   const duplicates = findDuplicates(hits);
   console.log(hits, duplicates);

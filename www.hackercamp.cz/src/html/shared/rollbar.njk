@@ -1,17 +1,14 @@
 <script>
   var _rollbarConfig = {
-    accessToken: '{{ collections.build['rollbar/access-token'] }}',
+    accessToken: "{{ collections.build['rollbar/access-token'] }}",
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
-      environment: '{{ collections.build.environment }}',
-      //context: 'home/index',
-      //trace_id: 'abc123',
+      environment: "{{ collections.build.environment }}",
+      context: "{{ page.url }}",
       client: {
         javascript: {
-          code_version: '{{ collections.build.version }}',
-          //source_map_enabled: true,
-          //guess_uncaught_frames: true
+          code_version: "{{ collections.build.version }}"
         }
       }
     }

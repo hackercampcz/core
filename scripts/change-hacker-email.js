@@ -13,7 +13,7 @@ async function getContact(slackID) {
     TableName: "contacts",
     FilterExpression: "slackID = :slackID",
     ExpressionAttributeValues: { ":slackID": slackID },
-    Select: "ALL_ATTRIBUTES",
+    Select: "ALL_ATTRIBUTES"
   });
   return result.Items[0];
 }
@@ -28,11 +28,11 @@ async function getContact(slackID) {
 async function updateContact(contact, email) {
   await dynamo.putItem({
     TableName: "contacts",
-    Item: Object.assign({}, contact, { email }),
+    Item: Object.assign({}, contact, { email })
   });
   await dynamo.deleteItem({
     TableName: "contacts",
-    Key: { slackID: contact.slackID, email: contact.email },
+    Key: { slackID: contact.slackID, email: contact.email }
   });
 }
 
@@ -61,7 +61,7 @@ async function getAttendees(slackID) {
     FilterExpression: "slackID = :slackID",
     ExpressionAttributeValues: { ":slackID": slackID },
     ExpressionAttributeNames: { "#year": "year" },
-    ProjectionExpression: "slackID, #year",
+    ProjectionExpression: "slackID, #year"
   });
   return collect(result);
 }
@@ -77,7 +77,7 @@ async function updateAttendee(attendee, email) {
     TableName: "attendees",
     Key: { slackID: attendee.slackID, year: attendee.year },
     UpdateExpression: "SET email = :email",
-    ExpressionAttributeValues: { ":email": email },
+    ExpressionAttributeValues: { ":email": email }
   });
 }
 
@@ -92,7 +92,7 @@ async function getRegistrations(email) {
     FilterExpression: "#email = :email",
     ExpressionAttributeValues: { ":email": email },
     ExpressionAttributeNames: { "#email": "email" },
-    Select: "ALL_ATTRIBUTES",
+    Select: "ALL_ATTRIBUTES"
   });
   return collect(result);
 }
@@ -100,11 +100,11 @@ async function getRegistrations(email) {
 async function updateRegistration(registration, email) {
   await dynamo.putItem({
     TableName: "registrations",
-    Item: Object.assign({}, registration, { email }),
+    Item: Object.assign({}, registration, { email })
   });
   await dynamo.deleteItem({
     TableName: "registrations",
-    Key: { year: registration.year, email: registration.email },
+    Key: { year: registration.year, email: registration.email }
   });
 }
 
@@ -112,7 +112,7 @@ async function updateEmailOfSlackUser(slackToken, slackID, email) {
   const resp = await fetch("https://slack.com/api/users.profile.set", {
     method: "POST",
     headers: { Authorization: `Bearer ${slackToken}` },
-    body: new URLSearchParams({ user: slackID, name: "email", value: email }),
+    body: new URLSearchParams({ user: slackID, name: "email", value: email })
   });
   return resp.json();
 }

@@ -162,7 +162,7 @@ function eventTemplate(
           </p>
           <div class="people-list">
             ${
-        event.people?.map((speaker) =>
+        event.people?.map(speaker =>
           html`
                 <figure class="speaker speaker--photo">
                   <img
@@ -198,7 +198,7 @@ function eventTemplate(
       html`
           <div class="people-list">
             ${
-        event.people?.map((speaker) =>
+        event.people?.map(speaker =>
           html` <figure class="speaker speaker--full">
                   <img
                     alt="${speaker.name}"
@@ -226,7 +226,7 @@ function eventTemplate(
               ${people.map(({ name, image }) => html`<img width="32" height="32" alt=${name} src=${image} />`)}
               <a
                 href="#"
-                @click=${(e) => {
+                @click=${e => {
         e.preventDefault();
 
         showModalDialog(`event-detail-${id || _id}`);
@@ -244,7 +244,7 @@ function eventTemplate(
           <a
             class="hc-link hc-link--decorated"
             style="margin: calc(var(--spacing) / 2) 0; padding: calc(var(--spacing) / 4);"
-            @click=${(e) => {
+            @click=${e => {
         e.preventDefault();
         renderAndShowAddEventForm(lineup.id, { selectedTopic: event.id || event._id });
       }}
@@ -260,7 +260,7 @@ function eventTemplate(
 }
 
 function lineUpEvents(lineup, events) {
-  return events.filter((event) => event.lineup === lineup.id);
+  return events.filter(event => event.lineup === lineup.id);
 }
 
 function topicEvents({ id }, events) {
@@ -272,8 +272,8 @@ function topicEvents({ id }, events) {
  * @param {any} state
  */
 function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, onLineupsScroll, apiHost, profile }) {
-  const eventStartAtSlot = (event) => getSlotNumber(campStartAt, event.startAt);
-  const eventDurationInSlots = (event) =>
+  const eventStartAtSlot = event => getSlotNumber(campStartAt, event.startAt);
+  const eventDurationInSlots = event =>
     getSlotNumber(campStartAt, event.endAt) - getSlotNumber(campStartAt, event.startAt);
 
   const renderAndShowAddEventForm = (lineupId, { preferredTime, selectedTopic = null } = {}) => {
@@ -689,7 +689,7 @@ function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, o
         <a
           class="hc-link hc-link--decorated"
           style="font-size: 120%;"
-          @click=${(e) => {
+          @click=${e => {
     e.preventDefault();
     renderAndShowAddEventForm();
   }}
@@ -700,7 +700,7 @@ function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, o
       <div class="program__dayline">
         <div class="dayline">
           ${
-    makeDayline(campStartAt, campEndAt).map((day) =>
+    makeDayline(campStartAt, campEndAt).map(day =>
       html`
               <a
                 class=${
@@ -723,7 +723,7 @@ function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, o
       </div>
       <div class="program__lineups" id="lineups" @scroll=${onLineupsScroll}>
         ${
-    lineups.map((lineup) =>
+    lineups.map(lineup =>
       html`
             <div class="lineup">
               <div
@@ -738,7 +738,7 @@ function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, o
               </div>
               <a
                 class="lineup__sticky"
-                @click=${(e) => {
+                @click=${e => {
         e.preventDefault();
         showModalDialog(`lineup-detail-${lineup.id}`);
       }}
@@ -753,7 +753,7 @@ function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, o
           html`<a
                       class="hc-link hc-link--decorated"
                       style="padding: calc(var(--spacing) / 4);"
-                      @click=${(e) => {
+                      @click=${e => {
             e.preventDefault();
             renderAndShowAddEventForm(lineup.id);
           }}
@@ -766,7 +766,7 @@ function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, o
               </dialog>
               <div class="lineup__eventsline">
                 ${
-        lineUpEvents(lineup, events).map((event) =>
+        lineUpEvents(lineup, events).map(event =>
           eventTemplate({
             lineup,
             event,
@@ -780,14 +780,14 @@ function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, o
               </div>
               <div class="lineup__timeline">
                 ${
-        makeTimeline(campStartAt, campEndAt, 15).map((time) =>
+        makeTimeline(campStartAt, campEndAt, 15).map(time =>
           html`
                     <a
                       class="lineup__slot"
                       ${/*href="#${lineup.id}-${time.toISOString()}"*/ ""}
                       data-tick=${makeTick(time)}
                       data-day=${formatShortDayName(time)}
-                      @click=${(e) => {
+                      @click=${e => {
             e.preventDefault();
             // timezone hotfix
             time.setHours(time.getHours() + 2);
@@ -816,7 +816,7 @@ function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, o
         <a
           class="hc-link hc-link--decorated"
           style="padding: calc(var(--spacing) / 4)"
-          @click=${(e) => {
+          @click=${e => {
     e.preventDefault();
     renderAndShowAddEventForm("liother");
   }}
@@ -853,7 +853,7 @@ async function fetchEvents(apiHost) {
       onUnauthenticated() {
         setReturnUrl(location.href);
         return new Promise((resolve, reject) => {
-          signOut((path) => new URL(path, apiHost).href);
+          signOut(path => new URL(path, apiHost).href);
           reject({ unauthenticated: true });
         });
       }
@@ -888,11 +888,11 @@ export async function main({ rootElement, env }) {
       person: {
         name: profile.real_name,
         email: profile.email,
-        id: profile.id,
+        id: profile.id
       }
     }
   });
-  transact((x) =>
+  transact(x =>
     Object.assign(x, {
       year: env.year,
       apiHost: env["api-host"],

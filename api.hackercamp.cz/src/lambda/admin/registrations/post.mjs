@@ -7,10 +7,10 @@ import {
   UpdateItemCommand
 } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
+import { fetchInvoice, getAuthHeader } from "@hackercamp/lib/fakturoid.js";
 import { getContact } from "../../dynamodb/registrations/paid.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
 import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
-import { getAuthHeader, fetchInvoice } from "@hackercamp/lib/fakturoid.js";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -148,7 +148,11 @@ async function invoiced(db, { registrations, invoiceId }) {
         TableName: process.env.db_table_registrations,
         Key: marshall(key, { removeUndefinedValues: true, convertEmptyValues: true }),
         UpdateExpression: "SET invoice_id = :invoice_id, invoiced = :invoiced, invoiceUrl = :invoiceUrl",
-        ExpressionAttributeValues: marshall({ ":invoice_id": id, ":invoiced": invoiced, ":invoiceUrl": public_html_url }, {
+        ExpressionAttributeValues: marshall({
+          ":invoice_id": id,
+          ":invoiced": invoiced,
+          ":invoiceUrl": public_html_url
+        }, {
           removeUndefinedValues: true,
           convertEmptyValues: true
         })

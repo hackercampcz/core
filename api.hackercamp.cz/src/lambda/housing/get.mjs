@@ -31,7 +31,7 @@ async function getAttendees(dynamo, year) {
     ProjectionExpression: "slackID, #name, company, housing, housingPlacement",
     ExpressionAttributeNames: { "#name": "name" }
   });
-  return items.map((x) => Object.assign({ isEditable: true }, x));
+  return items.map(x => Object.assign({ isEditable: true }, x));
 }
 
 /**

@@ -15,7 +15,7 @@ export function showModalDialog(id) {
     opened = false;
   }
 
-  element.addEventListener("click", (event) => {
+  element.addEventListener("click", event => {
     if (event.target.dataset.action === "close") {
       close();
     }

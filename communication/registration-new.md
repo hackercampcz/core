@@ -2,6 +2,7 @@
 Subject: Registrace na HackerCamp
 LayoutTemplate: hc-basic
 ---
+
 Ahoj hackere!
 
 Tvůj zájem o Hacker Camp nás moc těší. Asi ses na webu dočetl či dočetla,

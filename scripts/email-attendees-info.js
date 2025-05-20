@@ -27,11 +27,11 @@ async function getAttendees(year) {
     ExpressionAttributeNames: { "#year": "year" },
     ExpressionAttributeValues: {
       ":year": year,
-      ":volunteer": "volunteer",
-    },
+      ":volunteer": "volunteer"
+    }
   });
   const items = await collect(result);
-  return new Set(items.map((x) => x.email));
+  return new Set(items.map(x => x.email));
 }
 
 async function getRegistrations(year) {
@@ -42,11 +42,11 @@ async function getRegistrations(year) {
     ExpressionAttributeNames: { "#year": "year" },
     ExpressionAttributeValues: {
       ":year": year,
-      ":volunteer": "volunteer",
-    },
+      ":volunteer": "volunteer"
+    }
   });
   const items = await collect(result);
-  return new Set(items.map((x) => x.email));
+  return new Set(items.map(x => x.email));
 }
 
 async function main({ token }) {
@@ -60,7 +60,7 @@ async function main({ token }) {
       token,
       emails: batch,
       templateId: Template.AttendeesInfoMail,
-      tag: "attendees-info",
+      tag: "attendees-info"
     });
     for (const item of resp) {
       if (item.ErrorCode) console.error(item);

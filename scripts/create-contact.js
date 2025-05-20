@@ -5,24 +5,17 @@ const dynamo = createClient();
 
 async function main({ email, token }) {
   const skip = new Set(["slackbot", "jakub"]);
-  const resp = await fetch("https://slack.com/api/users.list", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const resp = await fetch("https://slack.com/api/users.list", { headers: { Authorization: `Bearer ${token}` } });
   const data = await resp.json();
-  const users = data.members.filter(
-    (x) => !(x.is_bot || x.deleted || skip.has(x.name)),
-  );
+  const users = data.members.filter(x => !(x.is_bot || x.deleted || skip.has(x.name)));
   const items = new Map(
-    users.map((x) => [
-      x.profile.email,
-      {
-        email: x.profile.email,
-        slackID: x.id,
-        slug: x.name,
-        name: x.profile.real_name,
-        image: x.profile.image_512,
-      },
-    ]),
+    users.map(x => [x.profile.email, {
+      email: x.profile.email,
+      slackID: x.id,
+      slug: x.name,
+      name: x.profile.real_name,
+      image: x.profile.image_512
+    }])
   );
 
   const item = items.get(email);

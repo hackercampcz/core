@@ -12,9 +12,9 @@ async function getAttendees() {
     ExpressionAttributeValues: {
       ":year": 2023,
       ":volunteer": "volunteer",
-      ":crew": "crew",
+      ":crew": "crew"
     },
-    ExpressionAttributeNames: { "#year": "year" },
+    ExpressionAttributeNames: { "#year": "year" }
   });
   return result.Items;
 }
@@ -62,13 +62,13 @@ const transactionsToRefund = new Set([
   "77e9d6a0-6551-457b-bd19-2d59cc09ad87",
   "45b7d13e-9c8f-42c5-ad9d-5ecb7a0f91f5",
   "0f2671a7-04d7-4816-93eb-03e1f303c84d",
-  "b4217df3-9733-4181-a6c9-0f45e5ad1acc",
+  "b4217df3-9733-4181-a6c9-0f45e5ad1acc"
 ]);
 
 async function main({}) {
   const result = [];
   const attendees = await getAttendees();
-  const data = attendees.flatMap((a) => a.nfcTronData.filter((x) => x.sn).map((x) => [a.email, x.chipID]));
+  const data = attendees.flatMap(a => a.nfcTronData.filter(x => x.sn).map(x => [a.email, x.chipID]));
   for (const [email, chipID] of data) {
     const transactions = await getTransactions(chipID);
     for (const { transactionId, total } of transactions) {
@@ -81,9 +81,7 @@ async function main({}) {
     if (!individuals.has(email)) individuals.set(email, 0);
     individuals.set(email, individuals.get(email) + totalSpent);
   }
-  console.log(
-    JSON.stringify(Object.fromEntries(Array.from(individuals)), null, 2),
-  );
+  console.log(JSON.stringify(Object.fromEntries(Array.from(individuals)), null, 2));
   console.log({ total: result.reduce((a, [, total]) => a + total, 0) });
 }
 

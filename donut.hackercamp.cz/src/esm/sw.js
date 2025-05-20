@@ -8,7 +8,7 @@ function setup(manifest) {
   imageCache();
 }
 
-addEventListener("message", (event) => {
+addEventListener("message", event => {
   if (event.data && event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
   }

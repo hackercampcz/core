@@ -1,7 +1,7 @@
 import { XMLParser } from "fast-xml-parser";
 
 const parser = new XMLParser();
-const parseXML = (input) => parser.parse(input);
+const parseXML = input => parser.parse(input);
 
 function getJSONData(ico, data) {
   const entry = data["are:Ares_odpovedi"]["are:Odpoved"]["D:Vypis_OR"];

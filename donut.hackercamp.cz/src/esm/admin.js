@@ -108,7 +108,7 @@ function trashRegistration(email) {
  */
 export function markAsInvoiced(emails, year, invoiceId, apiHost) {
   return executeCommand(apiHost, Endpoint.registrations, "invoiced", {
-    registrations: emails.map((email) => ({ email, year })),
+    registrations: emails.map(email => ({ email, year })),
     invoiceId
   }).then(() => location.reload());
 }
@@ -133,7 +133,7 @@ function approveSelectedVolunteers() {
 
   const emails = Array.from(selection);
   return executeCommand(apiHost, Endpoint.registrations, "approveVolunteer", {
-    registrations: emails.map((email) => ({ email, year })),
+    registrations: emails.map(email => ({ email, year })),
     referral: contact.slackID
   }).then(() => location.reload());
 }
@@ -188,8 +188,8 @@ function editEvent(event_id, updates) {
 }
 
 function renderDetail(detail) {
-  const items = detail.nfcTronData?.length ? detail.nfcTronData.map((x) => x.sn) : [""];
-  transaction((t) => {
+  const items = detail.nfcTronData?.length ? detail.nfcTronData.map(x => x.sn) : [""];
+  transaction(t => {
     swapIn("detail", () => detail, t);
     swapIn("nfcTronData", () => new Set(items), t);
     return true;
@@ -299,7 +299,7 @@ async function fetchData({ selectedView, year, page, query }, apiHost) {
     onUnauthenticated() {
       setReturnUrl(location.href);
       return new Promise((resolve, reject) => {
-        signOut((path) => new URL(path, apiHost).href);
+        signOut(path => new URL(path, apiHost).href);
         reject({ unauthenticated: true });
       });
     },
@@ -311,7 +311,7 @@ async function fetchData({ selectedView, year, page, query }, apiHost) {
 }
 
 async function getNfcTronData(attendee, apiUrl) {
-  for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
+  for (const chip of attendee.nfcTronData?.filter(x => x.sn) ?? []) {
     const params = new URLSearchParams({ chipID: chip.chipID });
     const resp = await fetch(apiUrl(`nfctron?${params}`), { headers: { Accept: "application/json" } });
     const data = await resp.json();
@@ -328,7 +328,7 @@ async function getNfcTronData(attendee, apiUrl) {
  * @param {string} apiHost
  */
 function loadData(selectedView, year, page, query, apiHost) {
-  transaction((t) => {
+  transaction(t => {
     swapIn("selectedView", () => selectedView, t);
     swapIn("data", () => fetchData({ selectedView, year, page, query }, apiHost), t);
     return true;
@@ -372,7 +372,7 @@ async function handleMessage(e) {
       // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
       // Load them async, because NFCTron API is slow as hell.
       const { apiHost } = state.deref();
-      const apiUrl = (x) => new URL(x, apiHost).href;
+      const apiUrl = x => new URL(x, apiHost).href;
       const attendee = await getNfcTronData(payload.detail, apiUrl);
       renderDetail(attendee);
       break;
@@ -398,7 +398,7 @@ async function handleMessage(e) {
       break;
     }
     case Action.select: {
-      swapIn("selection", (x) => {
+      swapIn("selection", x => {
         for (const key of payload.keys) {
           x.add(key);
         }
@@ -407,7 +407,7 @@ async function handleMessage(e) {
       break;
     }
     case Action.unselect: {
-      swapIn("selection", (x) => {
+      swapIn("selection", x => {
         if (payload.all) {
           x.clear();
         } else {
@@ -423,11 +423,11 @@ async function handleMessage(e) {
         await ndef.scan();
         console.log("NCF Reader started");
 
-        ndef.addEventListener("readingerror", (e) => {
+        ndef.addEventListener("readingerror", e => {
           console.error(e);
         });
 
-        ndef.addEventListener("reading", (e) => {
+        ndef.addEventListener("reading", e => {
           console.log(e);
           const sn = e.serialNumber.replaceAll(":", "");
           dispatchAction(Action.addChip, { sn });
@@ -439,12 +439,12 @@ async function handleMessage(e) {
     }
     case Action.addChip: {
       console.log({ event: "add chip", payload });
-      swapIn("nfcTronData", (x) => x.add(payload.sn));
+      swapIn("nfcTronData", x => x.add(payload.sn));
       break;
     }
     case Action.removeChip: {
       console.log({ event: "remove chip", payload });
-      swapIn("nfcTronData", (x) => x.delete(payload.sn));
+      swapIn("nfcTronData", x => x.delete(payload.sn));
       break;
     }
   }
@@ -463,25 +463,19 @@ export async function main({ appRoot, searchParams, env, viewTitle, yearSelector
     transform(payload) {
       payload.state = state.deref();
     },
-    payload: {
-      person: {
-        name: profile.real_name,
-        email: profile.email,
-        id: profile.id,
-      }
-    }
+    payload: { person: { name: profile.real_name, email: profile.email, id: profile.id } }
   });
   const contact = getContact();
   const isNFCSupported = typeof NDEFReader !== "undefined";
 
   yearSelector.value = year;
-  yearSelector.addEventListener("change", (e) => {
+  yearSelector.addEventListener("change", e => {
     location.assign(`?${new URLSearchParams({ year: e.target.value, view: selectedView })}`);
   });
 
   addEventListener("message", handleMessage);
 
-  transact((x) =>
+  transact(x =>
     Object.assign(x, { apiHost, year, page, query, profile, contact, params: searchParams, isNFCSupported })
   );
   initRenderLoop(state, appRoot, { keepContent: true });

@@ -1,4 +1,4 @@
-Hacker Camp je na nás všech. Ale není to chaos. _Inspiraci si bereme z Barcampů a Burning mana._
+Hacker Camp je na nás všech. Ale není to chaos. *Inspiraci si bereme z Barcampů a Burning mana.*
 Takže program bude průběžně přibývat spolu s účastníky. :) Už teď se ale můžeš těšit na hudební produkci – kapely
 i DJs, sportovní zábavu i přednášky a workshopy.
 

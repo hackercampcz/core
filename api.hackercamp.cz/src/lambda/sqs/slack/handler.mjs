@@ -265,13 +265,13 @@ async function onUserProfileChanged({ user }, { year }) {
   // TODO: handle e-mail changes
 
   if (!email) {
-    console.warn({ event: "User without e-mail", slackID: user.id })
+    console.warn({ event: "User without e-mail", slackID: user.id });
     return;
   }
   console.log({ event: "Profile update", email, slackID });
   const [contact, attendee] = await Promise.all([getContact(email, slackID), getAttendee(slackID, year)]);
   if (!contact) {
-    console.log({ event: "Contact not found", email, slackID })
+    console.log({ event: "Contact not found", email, slackID });
     return;
   }
   await updateContact(contact, user);

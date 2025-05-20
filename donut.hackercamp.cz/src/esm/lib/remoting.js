@@ -23,16 +23,15 @@ export async function withAuthHandler(
 export async function withErrorReporting(response, { rollbar, onError }) {
   try {
     return await response;
-  }
-  catch (err) {
-    if (rollbar) { rollbar.error(err); }
-    if (onError) { onError(err); }
+  } catch (err) {
+    if (rollbar) rollbar.error(err);
+    if (onError) onError(err);
     return response;
   }
 }
 
 export function submitDecorator(handler) {
-  return async function (e) {
+  return async function(e) {
     e.preventDefault();
     const body = e.target.ownerDocument.body;
     const button = e.target.querySelector("button[type=submit]");
@@ -44,5 +43,5 @@ export function submitDecorator(handler) {
 
     button.disabled = false;
     body.classList.remove("wurk-too-hard");
-  }
+  };
 }

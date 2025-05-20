@@ -25,7 +25,7 @@ function saveAttendee(dynamo, data) {
   );
 }
 
-const placement = (p) => (p === "custom" ? "" : ` ${p}`);
+const placement = p => (p === "custom" ? "" : ` ${p}`);
 
 function sendSlackMessage(submittedBy, item) {
   console.log({ event: "Sending Slack message", submittedBy, item });

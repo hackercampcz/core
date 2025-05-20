@@ -22,7 +22,7 @@ function housingTable(data) {
       </thead>
       <tbody>
         ${
-    data.map((row) =>
+    data.map(row =>
       html`
             <tr>
               <td>${row.name}</td>
@@ -51,9 +51,9 @@ export function housingTemplate(state) {
       <div class="hc-card">
         ${
     until(
-      data?.then((data) => {
+      data?.then(data => {
         return housingTable(sortBy("housing", data));
-      })?.catch((data) => {
+      })?.catch(data => {
         if (data.unauthorized) return unauthorized();
       }),
       html`

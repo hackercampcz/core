@@ -29,10 +29,10 @@ async function imageChanged(event) {
   rollbar.configure({ payload: { event } });
   const { year, slack_bot_token: token } = process.env;
   console.dir({ event: "updated contact", records: event.Records.map(x => x.dynamodb) }, { depth: 8 });
-  const changedImages = event.Records.filter((x) => x.eventName === "MODIFY").map((x) => ({
+  const changedImages = event.Records.filter(x => x.eventName === "MODIFY").map(x => ({
     newImage: unmarshall(x.dynamodb.NewImage),
     oldImage: unmarshall(x.dynamodb.OldImage)
-  })).filter((x) => x.newImage.image !== x.oldImage.image).map((x) => x.newImage);
+  })).filter(x => x.newImage.image !== x.oldImage.image).map(x => x.newImage);
   console.log({ event: "changed images", count: changedImages.length });
   for (const record of changedImages) {
     const { slackID, image } = record;

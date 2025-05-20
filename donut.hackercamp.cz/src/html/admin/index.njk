@@ -128,7 +128,7 @@
     }
   </style>
 
-  <link rel="stylesheet" href="{{ "admin.css" | assetUrl("stylesheets") }}">
+  <link rel="stylesheet" href="{{ 'admin.css' | assetUrl('stylesheets') }}">
 {% endblock %}
 
 {% block content %}
@@ -175,12 +175,14 @@
 
 {% block javascript %}
 <script type="module">
-  import { main } from "{{ "admin.js" | assetUrl("esm") }}";
+  import { main } from "{{ 'admin.js' | assetUrl('esm') }}";
+
   const build = {{ collections.build | dump(8) | safe }};
   const event = {{ event | dump(8) | safe }};
   const tickets = {{ ticket | dump(8) | safe }};
   const year = {{ year | safe }};
   const env = Object.assign({ year, event, tickets }, build);
+
   main({
     searchParams: new URLSearchParams(location.search),
     appRoot: document.getElementById("app-root"),

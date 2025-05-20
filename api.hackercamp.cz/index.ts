@@ -13,14 +13,14 @@ const postmarkConfig = new pulumi.Config("postmark");
 const algoliaEnv = {
   algolia_app_id: config.require("algolia-app-id"),
   algolia_admin_key: config.require("algolia-admin-key"),
-  algolia_search_key: config.require("algolia-search-key"),
+  algolia_search_key: config.require("algolia-search-key")
 };
 const rollbar_access_token = config.require("rollbar-access-token");
 
 export function createRoutes({
   queues,
   db,
-  postmarkTemplates,
+  postmarkTemplates
 }: Record<string, any>) {
   return new Map<string, Record<string, RouteArgs>>([
     [
@@ -37,9 +37,9 @@ export function createRoutes({
               postmark_token: postmarkConfig.require("server-api-token"),
               algolia_index_name: config.require("algolia-attendees-index-name"),
               ...algoliaEnv,
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         auth: {
           httpMethod: "POST",
@@ -53,9 +53,9 @@ export function createRoutes({
               slack_client_id: config.require("slack-client-id"),
               slack_client_secret: config.require("slack-client-secret"),
               postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         authSignOut: {
           httpMethod: "GET",
@@ -66,9 +66,9 @@ export function createRoutes({
               rollbar_access_token,
               hostname: config.require("donut-domain"),
               postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         contacts: {
           httpMethod: "GET",
@@ -82,9 +82,9 @@ export function createRoutes({
               donut: config.require("donut-domain"),
               private_key: config.require("private-key"),
               postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         registration: {
           httpMethod: "ANY",
@@ -98,9 +98,9 @@ export function createRoutes({
               donut: config.require("donut-domain"),
               private_key: config.require("private-key"),
               postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         housing: {
           httpMethod: "ANY",
@@ -114,9 +114,9 @@ export function createRoutes({
               private_key: config.require("private-key"),
               slack_bot_token: config.require("slack-bot-token"),
               algolia_index_name: config.require("algolia-attendees-index-name"),
-              ...algoliaEnv,
-            },
-          },
+              ...algoliaEnv
+            }
+          }
         },
         program: {
           httpMethod: "ANY",
@@ -126,9 +126,9 @@ export function createRoutes({
             variables: {
               rollbar_access_token,
               db_table_registrations: db.registrationsDataTable,
-              private_key: config.require("private-key"),
-            },
-          },
+              private_key: config.require("private-key")
+            }
+          }
         },
         optout: {
           httpMethod: "POST",
@@ -136,9 +136,9 @@ export function createRoutes({
           fileName: "optout/index.mjs",
           environment: {
             variables: {
-              rollbar_access_token,
-            },
-          },
+              rollbar_access_token
+            }
+          }
         },
         adminRegistrations: {
           httpMethod: "ANY",
@@ -156,9 +156,9 @@ export function createRoutes({
               postmark_token: postmarkConfig.require("server-api-token"),
               algolia_index_name: config.require("algolia-registrations-index-name"),
               ...algoliaEnv,
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         adminAttendees: {
           httpMethod: "ANY",
@@ -173,9 +173,9 @@ export function createRoutes({
               postmark_token: postmarkConfig.require("server-api-token"),
               algolia_index_name: config.require("algolia-attendees-index-name"),
               ...algoliaEnv,
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         adminHousing: {
           httpMethod: "ANY",
@@ -188,9 +188,9 @@ export function createRoutes({
               db_table_attendees: db.attendeesDataTable,
               private_key: config.require("private-key"),
               algolia_index_name: config.require("algolia-attendees-index-name"),
-              ...algoliaEnv,
-            },
-          },
+              ...algoliaEnv
+            }
+          }
         },
         adminProgram: {
           httpMethod: "ANY",
@@ -204,9 +204,9 @@ export function createRoutes({
               db_table_program: db.programDataTable,
               private_key: config.require("private-key"),
               postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         ares: {
           httpMethod: "GET",
@@ -217,9 +217,9 @@ export function createRoutes({
           memorySize: 512,
           environment: {
             variables: {
-              rollbar_access_token,
-            },
-          },
+              rollbar_access_token
+            }
+          }
         },
         fakturoidWebhook: {
           httpMethod: "POST",
@@ -231,9 +231,9 @@ export function createRoutes({
               db_table_registrations: db.registrationsDataTable,
               TOKEN: config.require("fakturoid-webhook-token"),
               postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         postmarkWebhook: {
           httpMethod: "POST",
@@ -243,9 +243,9 @@ export function createRoutes({
             variables: {
               db_table_postmark: db.postmarkDataTable,
               token: config.require("postmark-webhook-token"),
-              rollbar_access_token,
-            },
-          },
+              rollbar_access_token
+            }
+          }
         },
         slackWebhook: {
           httpMethod: "POST",
@@ -258,9 +258,9 @@ export function createRoutes({
               slack_queue_url: queues.slackQueueUrl,
               slack_bot_token: config.require("slack-bot-token"),
               postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates,
-            },
-          },
+              ...postmarkTemplates
+            }
+          }
         },
         nfctron: {
           httpMethod: "GET",
@@ -268,16 +268,16 @@ export function createRoutes({
           fileName: "nfctron/index.mjs",
           environment: {
             variables: {
-              rollbar_access_token,
-            },
-          },
-        },
-      },
-    ],
+              rollbar_access_token
+            }
+          }
+        }
+      }
+    ]
   ]);
 }
 
-function hcName(t: string, options?: { stage?: string }) {
+function hcName(t: string, options?: { stage?: string; }) {
   const suffix = options?.stage ? `-${options.stage}` : "";
   return `hc-${t}${suffix}`;
 }
@@ -291,16 +291,16 @@ const buildAssets = (fileName: string) =>
       external: [
         "@aws-sdk/client-dynamodb",
         "@aws-sdk/util-dynamodb",
-        "@aws-sdk/client-sqs",
-      ],
-    },
+        "@aws-sdk/client-sqs"
+      ]
+    }
   );
 
 const getHandler = (
   name: string,
   fileName: string,
   role: aws.iam.Role,
-  { environment, timeout = 15, memorySize = 128 }: HandlerArgs,
+  { environment, timeout = 15, memorySize = 128 }: HandlerArgs
 ): aws.lambda.Function =>
   new aws.lambda.Function(name, {
     publish: true,
@@ -311,40 +311,40 @@ const getHandler = (
     code: buildAssets(fileName),
     memorySize,
     timeout, // reasonable timeout for initial request without 500
-    environment,
+    environment
   });
 
 const getRouteHandler = (
   name: string,
   fileName: string,
   role: aws.iam.Role,
-  { stage, ...args }: RouteHandlerArgs,
+  { stage, ...args }: RouteHandlerArgs
 ): aws.lambda.Function => getHandler(hcName(`api-${name}-lambda`, { stage }), fileName, role, args);
 
 const getTableEventHandler = (
   name: string,
   fileName: string,
   role: aws.iam.Role,
-  args: HandlerArgs,
+  args: HandlerArgs
 ): aws.lambda.Function =>
   getHandler(
     hcName(`dynamodb-${name}-lambda`),
     path.join("dynamodb", fileName),
     role,
-    args,
+    args
   );
 
 const getSQSHandler = (
   name: string,
   fileName: string,
   role: aws.iam.Role,
-  args: HandlerArgs,
+  args: HandlerArgs
 ): aws.lambda.Function =>
   getHandler(
     hcName(`sqs-${name}-lambda`),
     path.join("sqs", fileName),
     role,
-    args,
+    args
   );
 
 export function createDB({ queues, postmarkTemplates }) {
@@ -356,9 +356,9 @@ export function createDB({ queues, postmarkTemplates }) {
     rangeKey: "year",
     attributes: [
       { name: "email", type: "S" },
-      { name: "year", type: "N" },
+      { name: "year", type: "N" }
     ],
-    billingMode: "PAY_PER_REQUEST",
+    billingMode: "PAY_PER_REQUEST"
   });
 
   const registrations = new aws.dynamodb.Table("registrations", {
@@ -369,15 +369,15 @@ export function createDB({ queues, postmarkTemplates }) {
       { name: "email", type: "S" },
       { name: "year", type: "N" },
       { name: "id", type: "S" },
-      { name: "invoice_id", type: "N" },
+      { name: "invoice_id", type: "N" }
     ],
     billingMode: "PAY_PER_REQUEST",
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
     globalSecondaryIndexes: [
       { name: "registrations-by-id", hashKey: "id", projectionType: "KEYS_ONLY" },
-      { name: "registrations-by-invoice-id", hashKey: "invoice_id", rangeKey: "email", projectionType: "KEYS_ONLY" },
-    ],
+      { name: "registrations-by-invoice-id", hashKey: "invoice_id", rangeKey: "email", projectionType: "KEYS_ONLY" }
+    ]
   });
   registrations.onEvent(
     "paidRegistration",
@@ -387,11 +387,11 @@ export function createDB({ queues, postmarkTemplates }) {
           rollbar_access_token,
           slack_queue_url: queues.slackQueueUrl,
           postmark_token: postmarkConfig.get("server-api-token"),
-          ...postmarkTemplates,
-        },
-      },
+          ...postmarkTemplates
+        }
+      }
     }),
-    { startingPosition: "LATEST" },
+    { startingPosition: "LATEST" }
   );
   registrations.onEvent(
     "search-indexing-registrations",
@@ -401,11 +401,11 @@ export function createDB({ queues, postmarkTemplates }) {
           rollbar_access_token,
           slack_bot_token: config.get("slack-bot-token"),
           algolia_index_name: config.get("algolia-registrations-index-name"),
-          ...algoliaEnv,
-        },
-      },
+          ...algoliaEnv
+        }
+      }
     }),
-    { startingPosition: "LATEST" },
+    { startingPosition: "LATEST" }
   );
 
   const attendees = new aws.dynamodb.Table("attendees", {
@@ -415,7 +415,7 @@ export function createDB({ queues, postmarkTemplates }) {
     attributes: [
       { name: "slackID", type: "S" },
       { name: "year", type: "N" },
-      { name: "email", type: "S" },
+      { name: "email", type: "S" }
     ],
     billingMode: "PAY_PER_REQUEST",
     streamEnabled: true,
@@ -424,8 +424,8 @@ export function createDB({ queues, postmarkTemplates }) {
       name: "attendees-by-email",
       hashKey: "email",
       rangeKey: "year",
-      projectionType: "KEYS_ONLY",
-    }],
+      projectionType: "KEYS_ONLY"
+    }]
   });
   attendees.onEvent(
     "search-indexing-attendees",
@@ -435,11 +435,11 @@ export function createDB({ queues, postmarkTemplates }) {
           rollbar_access_token,
           slack_bot_token: config.get("slack-bot-token"),
           algolia_index_name: config.get("algolia-attendees-index-name"),
-          ...algoliaEnv,
-        },
-      },
+          ...algoliaEnv
+        }
+      }
     }),
-    { startingPosition: "LATEST" },
+    { startingPosition: "LATEST" }
   );
 
   const contacts = new aws.dynamodb.Table("contacts", {
@@ -448,11 +448,11 @@ export function createDB({ queues, postmarkTemplates }) {
     rangeKey: "slackID",
     attributes: [
       { name: "email", type: "S" },
-      { name: "slackID", type: "S" },
+      { name: "slackID", type: "S" }
     ],
     billingMode: "PAY_PER_REQUEST",
     streamEnabled: true,
-    streamViewType: "NEW_AND_OLD_IMAGES",
+    streamViewType: "NEW_AND_OLD_IMAGES"
   });
   contacts.onEvent(
     "contact-image-changed",
@@ -462,11 +462,11 @@ export function createDB({ queues, postmarkTemplates }) {
           year: config.require("year"),
           rollbar_access_token,
           slack_bot_token: config.require("slack-bot-token"),
-          db_table_attendees: attendees.name,
-        },
-      },
+          db_table_attendees: attendees.name
+        }
+      }
     }),
-    { startingPosition: "LATEST" },
+    { startingPosition: "LATEST" }
   );
 
   const program = new aws.dynamodb.Table("program", {
@@ -475,9 +475,9 @@ export function createDB({ queues, postmarkTemplates }) {
     rangeKey: "year",
     attributes: [
       { name: "_id", type: "S" },
-      { name: "year", type: "N" },
+      { name: "year", type: "N" }
     ],
-    billingMode: "PAY_PER_REQUEST",
+    billingMode: "PAY_PER_REQUEST"
   });
 
   const postmark = new aws.dynamodb.Table("postmark", {
@@ -486,11 +486,11 @@ export function createDB({ queues, postmarkTemplates }) {
     rangeKey: "RecordType",
     attributes: [
       { name: "MessageID", type: "S" },
-      { name: "RecordType", type: "S" },
+      { name: "RecordType", type: "S" }
     ],
     billingMode: "PAY_PER_REQUEST",
     streamEnabled: true,
-    streamViewType: "NEW_IMAGE",
+    streamViewType: "NEW_IMAGE"
   });
   postmark.onEvent(
     "postmark-subscription-change",
@@ -498,11 +498,11 @@ export function createDB({ queues, postmarkTemplates }) {
       environment: {
         variables: {
           db_table_optouts: optOuts.name,
-          year: config.require("year"),
-        },
-      },
+          year: config.require("year")
+        }
+      }
     }),
-    { startingPosition: "LATEST" },
+    { startingPosition: "LATEST" }
   );
 
   const trash = new aws.dynamodb.Table("trash", {
@@ -511,9 +511,9 @@ export function createDB({ queues, postmarkTemplates }) {
     rangeKey: "year",
     attributes: [
       { name: "email", type: "S" },
-      { name: "year", type: "N" },
+      { name: "year", type: "N" }
     ],
-    billingMode: "PAY_PER_REQUEST",
+    billingMode: "PAY_PER_REQUEST"
   });
 
   return pulumi.Output.create({
@@ -523,7 +523,7 @@ export function createDB({ queues, postmarkTemplates }) {
     attendeesDataTable: attendees.name,
     programDataTable: program.name,
     postmarkDataTable: postmark.name,
-    trashDataTable: trash.name,
+    trashDataTable: trash.name
   });
 }
 
@@ -532,38 +532,38 @@ export function createDefaultLambdaRole(stage) {
     hcName("default-lambda-role", { stage }),
     {
       assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal(
-        aws.iam.Principals.LambdaPrincipal,
-      ),
-    },
+        aws.iam.Principals.LambdaPrincipal
+      )
+    }
   );
 
   new aws.iam.RolePolicyAttachment(
     hcName("lambda-basic-execution-attachment", { stage }),
     {
       policyArn: aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
-      role: defaultLambdaRole,
-    },
+      role: defaultLambdaRole
+    }
   );
 
   new aws.iam.RolePolicyAttachment(
     hcName("lambda-dynamo-read-write-attachment", { stage }),
     {
       policyArn: aws.iam.ManagedPolicy.AmazonDynamoDBFullAccess,
-      role: defaultLambdaRole,
-    },
+      role: defaultLambdaRole
+    }
   );
 
   new aws.iam.RolePolicyAttachment(
     hcName("lambda-s3-read-attachment", { stage }),
     {
       policyArn: aws.iam.ManagedPolicy.AmazonS3ReadOnlyAccess,
-      role: defaultLambdaRole,
-    },
+      role: defaultLambdaRole
+    }
   );
 
   new aws.iam.RolePolicyAttachment(hcName("lambda-sqs-attachment", { stage }), {
     policyArn: aws.iam.ManagedPolicy.AmazonSQSFullAccess,
-    role: defaultLambdaRole,
+    role: defaultLambdaRole
   });
   return defaultLambdaRole;
 }
@@ -584,10 +584,10 @@ export function createQueues({ postmarkTemplates }) {
           slack_announcement_channel: config.require("slack-announcement-channel"),
           slack_bot_token: config.require("slack-bot-token"),
           postmark_token: postmarkConfig.require("server-api-token"),
-          ...postmarkTemplates,
-        },
-      },
-    }),
+          ...postmarkTemplates
+        }
+      }
+    })
   );
   return { slackQueueUrl: slackQueue.url };
 }
@@ -596,7 +596,7 @@ export function createApi(
   name: string,
   stage: string,
   domain: string,
-  routes: Record<string, RouteArgs> | undefined,
+  routes: Record<string, RouteArgs> | undefined
 ) {
   if (!routes) throw new Error("No routes provided");
   const defaultLambdaRole = createDefaultLambdaRole(stage);
@@ -612,21 +612,21 @@ export function createApi(
       timeout,
       memorySize,
       authorizers,
-      environment,
-    }: RouteArgs,
+      environment
+    }: RouteArgs
   ): ApiRoute => ({
     type: "handler",
     handler: getRouteHandler(name, fileName, role ?? defaultLambdaRole, {
       timeout: timeout ?? 15,
       memorySize,
       environment,
-      stage,
+      stage
     }),
     authorizers,
     requiredParameters,
     httpMethod,
     path,
-    cache,
+    cache
   });
 
   const api = new Api(name, {
@@ -634,7 +634,7 @@ export function createApi(
     description: "HackerCamp API",
     cacheEnabled: false,
     cacheSize: "0.5", // GB
-    routes: Object.entries(routes).map(([name, route]) => createHandlerRoute(name, route)),
+    routes: Object.entries(routes).map(([name, route]) => createHandlerRoute(name, route))
   });
 
   return { url: api.gateway.url };

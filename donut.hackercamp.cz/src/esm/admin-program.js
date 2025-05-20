@@ -6,14 +6,14 @@ import { when } from "lit-html/directives/when.js";
 import { Action, chip, dispatchAction, lineup, renderModalDialog, unauthorized, View } from "./admin/common.js";
 
 function approveEvent(eventId) {
-  return (e) => {
+  return e => {
     e.preventDefault();
     dispatchAction(Action.approveEvent, { eventId });
   };
 }
 
 function deleteEvent(email) {
-  return (e) => {
+  return e => {
     e.preventDefault();
     dispatchAction(Action.invoiced, { email });
   };
@@ -72,7 +72,7 @@ function programTable(data) {
       </thead>
       <tbody>
         ${
-    data.map((row) =>
+    data.map(row =>
       html`
             <tr data-id="${row._id}">
               <td>${when(row.id, () => html`<code>${row.id}</code>`)}</td>
@@ -107,7 +107,7 @@ function programTable(data) {
                 </md-icon-button>
                 <md-icon-button
                   title="Smazat event"
-                  @click="${deleteEvent(row._id, row.people?.map((x) => x.slackID) ?? [])}"
+                  @click="${deleteEvent(row._id, row.people?.map(x => x.slackID) ?? [])}"
                 >
                   <md-icon>delete_forever</md-icon>
                 </md-icon-button>
@@ -129,15 +129,15 @@ export function programTemplate(state) {
   const { data, selectedView, year } = state;
   return html`
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-      ${programChips(selectedView, year, { [selectedView]: data?.then((data) => data.length) })}
+      ${programChips(selectedView, year, { [selectedView]: data?.then(data => data.length) })}
     </div>
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       <div class="hc-card">
         ${
     until(
-      data?.then((data) => {
+      data?.then(data => {
         return programTable(sortBy("startAt", filterEvents(data), { asc: true }));
-      })?.catch((data) => {
+      })?.catch(data => {
         if (data.unauthorized) return unauthorized();
       }),
       html`

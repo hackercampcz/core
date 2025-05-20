@@ -9,8 +9,8 @@ async function markAsPaid(registration, paidAt) {
     Key: registration,
     UpdateExpression: "SET paid = :paid",
     ExpressionAttributeValues: {
-      ":paid": new Date(paidAt).toISOString(),
-    },
+      ":paid": new Date(paidAt).toISOString()
+    }
   });
 }
 
@@ -21,8 +21,8 @@ async function getRegistrations(invoiceId) {
     ExpressionAttributeNames: { "#y": "year" },
     FilterExpression: "invoice_id = :invoice_id",
     ExpressionAttributeValues: {
-      ":invoice_id": invoiceId,
-    },
+      ":invoice_id": invoiceId
+    }
   });
   return result.Items;
 }

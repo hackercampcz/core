@@ -15,17 +15,17 @@ export async function getItemsFromDB(db, tableName, hits, queryOptions) {
   for (const batch of partition(100, true, hits)) {
     const keys = batch.map(({ year, slackID }) => ({
       year: { N: year.toString() },
-      slackID: { S: slackID },
+      slackID: { S: slackID }
     }));
     const items = await db.send(
       new BatchGetItemCommand({
-        RequestItems: { [tableName]: { Keys: keys, ...queryOptions } },
-      }),
+        RequestItems: { [tableName]: { Keys: keys, ...queryOptions } }
+      })
     );
     result.push(
       ...items.Responses[tableName]
-        .map((x) => unmarshall(x))
-        .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp)),
+        .map(x => unmarshall(x))
+        .sort((a, b) => -1 * a.timestamp?.localeCompare(b.timestamp))
     );
   }
   return result;

@@ -6,19 +6,15 @@ const dynamo = createClient();
 
 async function main({ token }) {
   const skip = new Set(["slackbot", "jakub"]);
-  const resp = await fetch("https://slack.com/api/users.list", {
-    headers: { Authorization: `Bearer ${token}` },
-  });
+  const resp = await fetch("https://slack.com/api/users.list", { headers: { Authorization: `Bearer ${token}` } });
   const data = await resp.json();
-  const users = data.members.filter(
-    (x) => !(x.is_bot || x.deleted || skip.has(x.name)),
-  );
-  const items = users.map((x) => ({
+  const users = data.members.filter(x => !(x.is_bot || x.deleted || skip.has(x.name)));
+  const items = users.map(x => ({
     email: x.profile.email,
     slackID: x.id,
     slug: x.name,
     name: x.profile.real_name,
-    image: x.profile.image_512,
+    image: x.profile.image_512
   }));
 
   for (const contact of items) {
@@ -27,11 +23,7 @@ async function main({ token }) {
 
   return;
   const header = Object.keys(items[0]);
-  const f = await Deno.open("./data/contacts.csv", {
-    write: true,
-    create: true,
-    truncate: true,
-  });
+  const f = await Deno.open("./data/contacts.csv", { write: true, create: true, truncate: true });
   try {
     await writeCSVObjects(f, items, { header });
   } finally {

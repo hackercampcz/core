@@ -9,14 +9,10 @@ async function getPaidRegistrations(year) {
     TableName: "registrations",
     ProjectionExpression: "email",
     FilterExpression: "attribute_exists(invoiced) AND attribute_not_exists(cancelled) AND #year = :year",
-    ExpressionAttributeNames: {
-      "#year": "year",
-    },
-    ExpressionAttributeValues: {
-      ":year": year,
-    },
+    ExpressionAttributeNames: { "#year": "year" },
+    ExpressionAttributeValues: { ":year": year }
   });
-  return result.Items.map((x) => x.email);
+  return result.Items.map(x => x.email);
 }
 
 async function getThisYearRegistrations(year) {
@@ -24,14 +20,10 @@ async function getThisYearRegistrations(year) {
     TableName: "registrations",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
-    ExpressionAttributeNames: {
-      "#year": "year",
-    },
-    ExpressionAttributeValues: {
-      ":year": year,
-    },
+    ExpressionAttributeNames: { "#year": "year" },
+    ExpressionAttributeValues: { ":year": year }
   });
-  return result.Items.map((x) => x.email);
+  return result.Items.map(x => x.email);
 }
 
 async function getAttendees(year) {
@@ -39,14 +31,10 @@ async function getAttendees(year) {
     TableName: "attendees",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
-    ExpressionAttributeNames: {
-      "#year": "year",
-    },
-    ExpressionAttributeValues: {
-      ":year": year,
-    },
+    ExpressionAttributeNames: { "#year": "year" },
+    ExpressionAttributeValues: { ":year": year }
   });
-  return result.Items.map((x) => x.email);
+  return result.Items.map(x => x.email);
 }
 
 async function getOptOuts(year) {
@@ -54,24 +42,17 @@ async function getOptOuts(year) {
     TableName: "optouts",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
-    ExpressionAttributeNames: {
-      "#year": "year",
-    },
-    ExpressionAttributeValues: {
-      ":year": year,
-    },
+    ExpressionAttributeNames: { "#year": "year" },
+    ExpressionAttributeValues: { ":year": year }
   });
-  return result.Items.map((x) => x.email);
+  return result.Items.map(x => x.email);
 }
 
 const ignoreList = new Set();
 
 async function getContacts() {
-  const result = await dynamo.scan({
-    TableName: "contacts",
-    ProjectionExpression: "email",
-  });
-  return result.Items.map((x) => x.email);
+  const result = await dynamo.scan({ TableName: "contacts", ProjectionExpression: "email" });
+  return result.Items.map(x => x.email);
 }
 
 async function main({ token }) {
@@ -83,7 +64,7 @@ async function main({ token }) {
   for (const email of thisYearRegistrations) ignoreList.add(email);
   // const attendees = await getAttendees(year);
   // const paidRegistrations = await getPaidRegistrations(year);
-  const coldHackers = new Set(contacts.filter((x) => !ignoreList.has(x)));
+  const coldHackers = new Set(contacts.filter(x => !ignoreList.has(x)));
 
   console.log(coldHackers.size);
   // return;
@@ -94,7 +75,7 @@ async function main({ token }) {
       templateId: Template.HackerPush,
       from: "Hacker Camp Crew <team@hackercamp.cz>",
       to: email,
-      data: {},
+      data: {}
     });
   }
 }

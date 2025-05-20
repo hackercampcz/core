@@ -31,15 +31,8 @@ export async function getTotalSpent(chipID) {
 }
 
 async function getAllChips(token) {
-  const resp = await fetch(
-    "https://api.nfctron.com/app/event/80fbdec6-2775-4edd-9dbc-c0e36b615ac2/customer/chip",
-    {
-      headers: {
-        accept: "application/json",
-        authorization: `Bearer ${token}`,
-        referer: "https://hub.nfctron.com/",
-      },
-    },
-  );
+  const resp = await fetch("https://api.nfctron.com/app/event/80fbdec6-2775-4edd-9dbc-c0e36b615ac2/customer/chip", {
+    headers: { accept: "application/json", authorization: `Bearer ${token}`, referer: "https://hub.nfctron.com/" }
+  });
   return resp.json();
 }

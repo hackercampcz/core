@@ -100,13 +100,13 @@ const lineupsFieldsTemplates = new Map([
           required
           style="font-weight: bold;"
           ?readonly=${Boolean(editingEvent?.topic)}
-          @change=${(e) => swapIn("selectedTopic", () => e.target.value)}
+          @change=${e => swapIn("selectedTopic", () => e.target.value)}
         >
           <option value="" disabled ?selected=${!selectedTopic}>
             Vyberte vaše téma
           </option>
           ${
-      lineupTopicEvents.map((topic) =>
+      lineupTopicEvents.map(topic =>
         html`<option
                 value=${topic.id}
                 ?selected=${selectedTopic && selectedTopic === topic.id}
@@ -386,13 +386,13 @@ const lineupsFieldsTemplates = new Map([
           required
           style="font-weight: bold;"
           ?readonly=${Boolean(editingEvent?.topic)}
-          @change=${(e) => swapIn("selectedTopic", () => e.target.value)}
+          @change=${e => swapIn("selectedTopic", () => e.target.value)}
         >
           <option value="" disabled ?selected=${!selectedTopic}>
             Vyberte vaše téma
           </option>
           ${
-      lineupTopicEvents.map((topic) =>
+      lineupTopicEvents.map(topic =>
         html`<option
                 value=${topic.id}
                 ?selected=${selectedTopic && selectedTopic === topic.id}
@@ -447,7 +447,7 @@ lineupsFieldsTemplates.set("libase", lineupsFieldsTemplates.get("limain"));
 lineupsFieldsTemplates.set("liorg", lineupsFieldsTemplates.get("liother"));
 
 function showLineupEventForm(lineupId) {
-  transaction((t) => {
+  transaction(t => {
     swapIn("view", () => eventFormTemplate, t);
     swapIn("lineupId", () => lineupId, t);
     return true;
@@ -466,7 +466,7 @@ export function signpostTemplate() {
           <a
             class="hc-link--decorated"
             href="#"
-            @click=${(e) => {
+            @click=${e => {
     e.preventDefault();
     showLineupEventForm("limain");
   }}
@@ -478,7 +478,7 @@ export function signpostTemplate() {
           <a
             class="hc-link--decorated"
             href="#"
-            @click=${(e) => {
+            @click=${e => {
     e.preventDefault();
     showLineupEventForm("libase");
   }}
@@ -491,7 +491,7 @@ export function signpostTemplate() {
         <a
           class="hc-link--decorated"
           href="#"
-          @click=${(e) => {
+          @click=${e => {
     e.preventDefault();
     showLineupEventForm("liback");
   }}
@@ -503,7 +503,7 @@ export function signpostTemplate() {
         <a
           class="hc-link--decorated"
           href="#"
-          @click=${(e) => {
+          @click=${e => {
     e.preventDefault();
     showLineupEventForm("lipeep");
   }}
@@ -515,7 +515,7 @@ export function signpostTemplate() {
         <a
           class="hc-link--decorated"
           href="#"
-          @click=${(e) => {
+          @click=${e => {
     e.preventDefault();
     showLineupEventForm("liwood");
   }}
@@ -527,7 +527,7 @@ export function signpostTemplate() {
         <a
           class="hc-link--decorated"
           href="#"
-          @click=${(e) => {
+          @click=${e => {
     e.preventDefault();
     showLineupEventForm("liother");
   }}
@@ -600,7 +600,7 @@ export async function renderEventForm(rootElement, {
   initRenderLoop(state, rootElement);
   const view = lineupId ? eventFormTemplate : signpostTemplate;
 
-  transact((x) =>
+  transact(x =>
     Object.assign(x, {
       header,
       view,
@@ -630,7 +630,7 @@ export async function renderEventForm(rootElement, {
           onUnauthenticated() {
             setReturnUrl(location.href);
             return new Promise((resolve, reject) => {
-              signOut((path) => new URL(path, apiHost).href);
+              signOut(path => new URL(path, apiHost).href);
               reject({ unauthenticated: true });
             });
           }

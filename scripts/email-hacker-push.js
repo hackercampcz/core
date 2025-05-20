@@ -8,9 +8,9 @@ const dynamo = createClient();
 async function getAllContactsEmails() {
   const result = await dynamo.scan({
     TableName: "contacts",
-    ProjectionExpression: "email",
+    ProjectionExpression: "email"
   });
-  return result.Items.map((x) => x.email);
+  return result.Items.map(x => x.email);
 }
 
 async function getOptOuts(year) {
@@ -19,9 +19,9 @@ async function getOptOuts(year) {
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
     ExpressionAttributeNames: { "#year": "year" },
-    ExpressionAttributeValues: { ":year": year },
+    ExpressionAttributeValues: { ":year": year }
   });
-  return new Set(result.Items.map((x) => x.email));
+  return new Set(result.Items.map(x => x.email));
 }
 
 async function getRegistrations(year) {
@@ -30,9 +30,9 @@ async function getRegistrations(year) {
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
     ExpressionAttributeNames: { "#year": "year" },
-    ExpressionAttributeValues: { ":year": year },
+    ExpressionAttributeValues: { ":year": year }
   });
-  return new Set(result.Items.map((x) => x.email));
+  return new Set(result.Items.map(x => x.email));
 }
 
 async function main({ token }) {
@@ -47,7 +47,7 @@ async function main({ token }) {
       token,
       emails: batch,
       templateId: Template.HackerPush,
-      tag: "hacker-push",
+      tag: "hacker-push"
     });
     for (const item of resp) {
       if (item.ErrorCode) console.error(item);

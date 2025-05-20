@@ -63,7 +63,7 @@ function header(profile, contact, isPopupVisible, togglePopup) {
 function renderProfile({ profile, contact, isPopupVisible }) {
   if (!profile) return;
   return header(profile, contact, isPopupVisible, () => {
-    state.swap((x) => Object.assign({}, x, { isPopupVisible: !isPopupVisible }));
+    state.swap(x => Object.assign({}, x, { isPopupVisible: !isPopupVisible }));
   });
 }
 
@@ -78,11 +78,11 @@ function loadProfile() {
   const contact = getContact();
   if (!profile && !contact) return;
 
-  return state.swap((x) => Object.assign(x, { profile, contact }));
+  return state.swap(x => Object.assign(x, { profile, contact }));
 }
 
 export async function init({ profile: root, env }) {
-  workbox.init((wb) => () => {
+  workbox.init(wb => () => {
     if (!globalThis.snackbar) return;
     const snackbar = globalThis.snackbar;
     snackbar.labelText = "Je k dispozici nová verze.";
@@ -94,7 +94,7 @@ export async function init({ profile: root, env }) {
     render(html`<md-text-button slot="action" @click="${update}">AKTUALIZOVAT</md-text-button>`, snackbar);
     snackbar.show();
   });
-  const apiURL = (endpoint) => new URL(endpoint, env["api-host"]).href;
+  const apiURL = endpoint => new URL(endpoint, env["api-host"]).href;
   state.resetIn(["apiURL"], apiURL);
   initRenderLoop(state, root);
   loadProfile();

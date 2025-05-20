@@ -84,7 +84,7 @@ export async function executeCommand(apiHost, endpoint, command, params) {
       onUnauthenticated() {
         setReturnUrl(location.href);
         return new Promise((resolve, reject) => {
-          signOut((path) => new URL(path, apiHost).href);
+          signOut(path => new URL(path, apiHost).href);
           reject({ unauthenticated: true });
         });
       }
@@ -108,8 +108,8 @@ export function unauthorized() {
           width="139"
           src="https://platform.slack-edge.com/img/add_to_slack.png"
           @click="${() => {
-            setReturnUrl(location.href);
-          }}"
+    setReturnUrl(location.href);
+  }}"
           srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
                 https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
     </div>
@@ -127,42 +127,54 @@ export const ticketName = new Map([
 ]);
 
 export const ticketPrice = new Map([
-  [2022, new Map([
-    ["nonprofit", 2500],
-    ["hacker", 5000],
-    ["hacker-plus", 7500],
-    ["hacker-patron", 7500],
-    ["volunteer", 0],
-    ["crew", 0],
-    ["staff", 0]
-  ])],
-  [2023, new Map([
-    ["nonprofit", 3000],
-    ["hacker", 6000],
-    ["hacker-plus", 9000],
-    ["hacker-patron", 9000],
-    ["volunteer", 0],
-    ["crew", 0],
-    ["staff", 0]
-  ])],
-  [2024, new Map([
-    ["nonprofit", 3000],
-    ["hacker", 7000],
-    ["hacker-plus", 12000],
-    ["hacker-patron", 12000],
-    ["volunteer", 0],
-    ["crew", 0],
-    ["staff", 0]
-  ])],
-  [2025, new Map([
-    ["nonprofit", 3000],
-    ["hacker", 7000],
-    ["hacker-plus", 12000],
-    ["hacker-patron", 12000],
-    ["volunteer", 0],
-    ["crew", 0],
-    ["staff", 0]
-  ])]
+  [
+    2022,
+    new Map([
+      ["nonprofit", 2500],
+      ["hacker", 5000],
+      ["hacker-plus", 7500],
+      ["hacker-patron", 7500],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0]
+    ])
+  ],
+  [
+    2023,
+    new Map([
+      ["nonprofit", 3000],
+      ["hacker", 6000],
+      ["hacker-plus", 9000],
+      ["hacker-patron", 9000],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0]
+    ])
+  ],
+  [
+    2024,
+    new Map([
+      ["nonprofit", 3000],
+      ["hacker", 7000],
+      ["hacker-plus", 12000],
+      ["hacker-patron", 12000],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0]
+    ])
+  ],
+  [
+    2025,
+    new Map([
+      ["nonprofit", 3000],
+      ["hacker", 7000],
+      ["hacker-plus", 12000],
+      ["hacker-patron", 12000],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0]
+    ])
+  ]
 ]);
 
 export function chip({ text, count, selected, view, year }) {
@@ -193,8 +205,13 @@ export function chip({ text, count, selected, view, year }) {
             </svg>
           </span>
         </span>
-        <span class="mdc-chip__text-label">${text}${until(count?.then((x) => html`
-          <data value="${x}">${x}</data>`, ""))}</span>
+        <span class="mdc-chip__text-label">${text}${
+    until(
+      count?.then(x =>
+        html`
+          <data value="${x}">${x}</data>`, "")
+    )
+  }</span>
       </a>
     </span>
   `;
@@ -267,21 +284,21 @@ export function paginationNavigation({ page, pages, count, total, params }) {
 }
 
 export function renderDetail(detail) {
-  return (e) => {
+  return e => {
     e.preventDefault();
     dispatchAction(Action.renderDetail, { detail });
   };
 }
 
 export function closeDetail() {
-  return (e) => {
+  return e => {
     e.preventDefault();
     dispatchAction(Action.closeDetail);
   };
 }
 
 export function renderModalDialog(name, { preDispatch } = {}) {
-  return (e) => {
+  return e => {
     e.preventDefault();
     if (preDispatch) preDispatch();
     dispatchAction(Action.showModalDialog, { name });

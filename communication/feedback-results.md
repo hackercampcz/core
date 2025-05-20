@@ -28,7 +28,7 @@ Co ve zpětné vazbě slyšíme?
   je `#kudos` Romče, ne nám v crew. My jen zařídili, aby vše na místě klaplo. Takže klidně **buďte jako Romča!**
 - **Vzájemná ohleduplnost** se pro nás objevuje jako nové téma. Budeme vymýšlet, jak to udělat tak,
   abyste si program mohli užít a radost a zábava jedné skupinky neovlivňovala prožitek z campu jiných.
-- S tím souvisí i to, že musíme víc připomínat pravidlo: _„what happens at camp, stays at camp“_ - aby se na sociálních
+- S tím souvisí i to, že musíme víc připomínat pravidlo: *„what happens at camp, stays at camp“* - aby se na sociálních
   sítích či jinde neobjevovaly fotky či mentions těch, s kterými jste se na tom na místě nedohodli.
   Nemusíte o campu vyloženě mlčet, ale sdílejte jen to, kde jste si jistí, že s tím ti další souhlasí.
   Za nás je **ideální forma sdílení Word Of Mouth**. Třeba když zvete další super lidi. U jakékoliv další formy

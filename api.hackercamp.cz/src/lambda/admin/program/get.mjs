@@ -19,7 +19,7 @@ async function getProgram(year) {
       ExpressionAttributeValues: marshall({ ":yr": year }, { removeUndefinedValues: true })
     })
   );
-  return res.Items.map((x) => unmarshall(x));
+  return res.Items.map(x => unmarshall(x));
 }
 
 async function getApprovalQueue(year) {
@@ -32,7 +32,7 @@ async function getApprovalQueue(year) {
       ExpressionAttributeValues: marshall({ ":yr": year }, { removeUndefinedValues: true })
     })
   );
-  return res.Items.map((x) => unmarshall(x));
+  return res.Items.map(x => unmarshall(x));
 }
 
 function getData(type, year) {

@@ -8,7 +8,7 @@ V předchozích ročnících nechyběli holky a kluci z [Apify](https://apify.c
 [Applifting](https://www.applifting.cz/), [Presto Ventures](https://www.prestoventures.com/) a další.
 
 Chybí mezi táborníky někdo, koho by camp bavil? Tak ho pozvi. Můžeš to udělat stejně jako my.
-Ale pamatuj: _Máš zodpovědnost za toho, koho zveš._ Takže vybírej, jestli to je někdo, s kým bys
+Ale pamatuj: *Máš zodpovědnost za toho, koho zveš.* Takže vybírej, jestli to je někdo, s kým bys
 sám chtěl strávit tři dny v jedné chatce či stanu. Jo a koukni na to, jak vypadá areál Sobeňáku.
 Je tam i jeden bezbariérový pokoj. Pokud budeš potřebovat ten, nebo máš nějaké další potřeby,
 [prostě nám napiš](mailto:team@hackercamp.cz).

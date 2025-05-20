@@ -32,7 +32,7 @@ const keysToIndex = new Set([
  * @param {String} indexName
  */
 async function deleteRemovedItems(event, searchClient, indexName) {
-  const objectIDs = event.Records.filter((x) => x.eventName === "REMOVE").map((x) =>
+  const objectIDs = event.Records.filter(x => x.eventName === "REMOVE").map(x =>
     `${x.dynamodb.OldImage.year.N}-${x.dynamodb.OldImage.email.S}`
   );
 
@@ -48,16 +48,14 @@ async function deleteRemovedItems(event, searchClient, indexName) {
  * @param {String} indexName
  */
 async function updateRegistrationsIndex(event, searchIndex, indexName) {
-  const updatedRegistrations = event.Records.filter((x) => x.eventName !== "REMOVE").map((
-    x
-  ) => [
+  const updatedRegistrations = event.Records.filter(x => x.eventName !== "REMOVE").map(x => [
     fromJS(selectKeys(unmarshall(x.dynamodb.NewImage), keysToIndex)),
     x.dynamodb.OldImage ? fromJS(selectKeys(unmarshall(x.dynamodb.OldImage), keysToIndex)) : null
   ]).filter(([n, o]) => !n.equals(o)).map(([n]) => n.toJS()).map(getRegistrationProjection());
   if (updatedRegistrations.length > 0) {
     console.log({
       event: "Updating registrations index",
-      updatedRegistrations: updatedRegistrations.map((x) => x.objectID)
+      updatedRegistrations: updatedRegistrations.map(x => x.objectID)
     });
     await searchIndex.saveObjects({ indexName, objects: updatedRegistrations });
   }

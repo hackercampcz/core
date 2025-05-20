@@ -2,9 +2,9 @@ Adresa konání: Rekreační středisko Sobeňák, Starý Rožmitál 148, Rožmi
 
 Na místo konání akce se můžeš dostat více způsoby:
 
-1.  🚌 - **Praha → Příbram** + **Příbram → Rožmitál pod Třemšínem**
-2.  🚌 (méně často) - **Praha Smíchov → Rožmitál pod Třemšínem**
-3.  🚂 - **Praha Smíchov → Březnice** + **Březnice → Rožmitál pod Třemšínem**
+1. 🚌 - **Praha → Příbram** + **Příbram → Rožmitál pod Třemšínem**
+2. 🚌 (méně často) - **Praha Smíchov → Rožmitál pod Třemšínem**
+3. 🚂 - **Praha Smíchov → Březnice** + **Březnice → Rožmitál pod Třemšínem**
 
 Budeš potřebovat odvoz z nádraží nebo na autobus? Dejte vědět! Podle zájmu či potřeby
 domluvíme odvoz – jedno větší auto, Liftago servis – prostě něco, aby nebylo třeba chodit

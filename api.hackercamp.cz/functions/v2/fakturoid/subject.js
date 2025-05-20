@@ -1,4 +1,4 @@
-import { getAuthHeader, searchSubject, createSubject } from "@hackercamp/lib/fakturoid.js";
+import { createSubject, getAuthHeader, searchSubject } from "@hackercamp/lib/fakturoid.js";
 
 /**
  * @param {EventContext<Env>} context

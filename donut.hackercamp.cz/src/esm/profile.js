@@ -29,7 +29,7 @@ export async function main({ attendee, env }) {
       person: {
         name: profile.real_name,
         email: profile.email,
-        id: profile.id,
+        id: profile.id
       }
     }
   });

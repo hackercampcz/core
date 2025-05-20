@@ -13,7 +13,7 @@ const hooks = {
   postprocess(html) {
     // Convert it back to Postmark interpolation string
     return html.replaceAll("/%7B%7BeditUrl%7D%7D/", "{{ editUrl }}");
-  },
+  }
 };
 marked.use({ hooks });
 const frontmatter = require("front-matter");
@@ -31,7 +31,7 @@ export function* readTemplates(relPath: string): Generator<TemplateInputs> {
       Name: name,
       Alias: `hc-${name}`,
       TextBody: body,
-      HtmlBody: html,
+      HtmlBody: html
     });
   }
 }

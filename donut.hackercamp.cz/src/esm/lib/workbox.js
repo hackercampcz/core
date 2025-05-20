@@ -11,6 +11,6 @@ export function init(showSkipWaitingPrompt) {
   if ("serviceWorker" in navigator && isProduction()) {
     const wb = new Workbox("/assets/esm/sw.js", { type: "module", scope: "/" });
     wb.addEventListener("waiting", showSkipWaitingPrompt(wb));
-    wb.register().catch((ex) => console.error(ex));
+    wb.register().catch(ex => console.error(ex));
   }
 }

@@ -106,7 +106,7 @@ async function deleteAttendeeEvents(db, { event_id, year, people }) {
     if (!attendee.events?.length) continue;
     attendee.slackID = slackID;
     attendee.year = year;
-    attendee.events = attendee.events?.filter((x) => x._id !== event_id);
+    attendee.events = attendee.events?.filter(x => x._id !== event_id);
     await saveAttendee(db, attendee);
   }
 }
@@ -137,7 +137,7 @@ async function processRequest(db, data, slackID) {
         sanitizedData.endAt = new Date(startTime + duration).toISOString();
       }
       const events = Array.from(
-        new Map(attendee.events?.map((e) => [e._id, e])).set(sanitizedData._id, sanitizedData).values()
+        new Map(attendee.events?.map(e => [e._id, e])).set(sanitizedData._id, sanitizedData).values()
       ).sort((a, b) => a.proposedTime?.localeCompare(b.proposedTime));
       await saveAttendee(db, { year, events, slackID: sanitizedData.slackID });
       sanitizedData.people = [selectKeys(attendee, new Set(["slackID", "image", "slug", "name"]))];

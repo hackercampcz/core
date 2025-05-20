@@ -10,7 +10,7 @@ async function* getAttendees(year) {
     ProjectionExpression: "slackID, nfcTronData",
     FilterExpression: "#year = :year AND attribute_exists(nfcTronData)",
     ExpressionAttributeValues: { ":year": year },
-    ExpressionAttributeNames: { "#year": "year" },
+    ExpressionAttributeNames: { "#year": "year" }
   });
   if (result.hasOwnProperty(Symbol.asyncIterator)) {
     for await (const page of result) {
@@ -26,7 +26,7 @@ async function updateAttendee(year, slackID, nfcTronData) {
     TableName: "attendees",
     Key: { year, slackID },
     UpdateExpression: "SET nfcTronData = :nfcTronData",
-    ExpressionAttributeValues: { ":nfcTronData": nfcTronData },
+    ExpressionAttributeValues: { ":nfcTronData": nfcTronData }
   });
 }
 
@@ -34,18 +34,14 @@ async function main({ year }) {
   const attendees = await getAttendees(year);
   for await (const page of attendees) {
     for (const attendee of page) {
-      for (const data of attendee.nfcTronData.filter((x) => x.sn)) {
+      for (const data of attendee.nfcTronData.filter(x => x.sn)) {
         if (attendee.nfcTronData.transactions) continue;
         const [transactions, totalSpent] = await getTransactions(data.chipID);
         if (!transactions?.length) continue;
         data.transactions = transactions;
         data.totalSpent = totalSpent;
       }
-      await updateAttendee(
-        year,
-        attendee.slackID,
-        attendee.nfcTronData.filter((x) => x.sn),
-      );
+      await updateAttendee(year, attendee.slackID, attendee.nfcTronData.filter(x => x.sn));
     }
   }
 }

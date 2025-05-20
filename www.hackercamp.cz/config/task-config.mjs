@@ -11,7 +11,7 @@ export default {
   stylesheets: true,
 
   html: {
-    data: { collections: ["build", "images"], },
+    data: { collections: ["build", "images"] },
     nunjucksRender: {
       filters: {
         isoDate(x) {
@@ -24,7 +24,7 @@ export default {
           return new Intl.DateTimeFormat("cs-CZ", { day: "numeric", month: "numeric" }).format(new Date(x));
         },
         year(x) {
-          return new Intl.DateTimeFormat("cs-CZ", { year: "numeric" }).format(new Date(x))
+          return new Intl.DateTimeFormat("cs-CZ", { year: "numeric" }).format(new Date(x));
         },
         price(x, currency) {
           return new Intl.NumberFormat("cs-CZ", {
@@ -35,7 +35,7 @@ export default {
         },
         calendarURL(event) {
           const format = ({ y, m, d }) => `${y}${m.toString().padStart(2, "0")}${d.toString().padStart(2, "0")}`;
-          const d = (d) => ({ y: d.getFullYear(), m: d.getMonth() + 1, d: d.getDate() });
+          const d = d => ({ y: d.getFullYear(), m: d.getMonth() + 1, d: d.getDate() });
           const incDay = ({ y, m, d }) => ({ y, m, d: d + 1 });
           return new URL(
             `?${new URLSearchParams({
@@ -60,7 +60,7 @@ export default {
 
   production: {
     rev: {
-      exclude: ["_headers", "_redirects"],
-    },
+      exclude: ["_headers", "_redirects"]
+    }
   }
 };

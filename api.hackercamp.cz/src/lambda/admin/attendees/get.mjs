@@ -40,7 +40,7 @@ async function getAttendees(query, tag, year, page, pageSize, { allYears }) {
   });
 
   const [{ hits, nbHits, nbPages }, ...counts] = results;
-  const [all, hacker, volunteer, staff, crew] = counts.map((x) => x.nbHits);
+  const [all, hacker, volunteer, staff, crew] = counts.map(x => x.nbHits);
 
   const tableName = process.env.db_table_attendees;
   const items = await getItemsFromDB(db, tableName, hits);

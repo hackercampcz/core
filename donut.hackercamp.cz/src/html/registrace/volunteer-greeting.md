@@ -21,6 +21,5 @@ které vyplněním potvrzuješ:
   - **Dobrovolník Makám během campu** - vypomáhám *od čtvrtečního dopoledne do sobotní noci*. Počítám s tím, že budu
     fungovat v rámci směn (8-10 hod hod denně)
 
-
 Pokud **nemáš zájem** zúčastnit se letošního ročníku, klikni na [Odhlásit odběr](javascript:optout())
 a my tě letos už nebudeme otravovat.

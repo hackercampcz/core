@@ -1,5 +1,5 @@
 function byVariant({ name, type }) {
-  return (x) => x.type === type && x.variant === name;
+  return x => x.type === type && x.variant === name;
 }
 
 export default {
@@ -23,13 +23,13 @@ export default {
     },
     isRegistrationOpen: true,
     location: "Sobeňák, Starý Rožmitál 148, Rožmitál pod Třemšínem",
-    details: "Zažijte kemp pro ty, kteří chtějí lepší budoucnost.",
+    details: "Zažijte kemp pro ty, kteří chtějí lepší budoucnost."
   },
   ticket: {
     nonprofit: { name: "Táborník z neziskovky", price: 3000 },
     hacker: { name: "Hacker", price: 7000 },
     "hacker-plus": { name: "Hacker filantrop", price: 12000 },
-    "hacker-patron": { name: "Patron Campu", price: 12000 },
+    "hacker-patron": { name: "Patron Campu", price: 12000 }
   },
-  byVariant,
+  byVariant
 };

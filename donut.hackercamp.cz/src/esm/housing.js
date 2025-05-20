@@ -14,7 +14,7 @@ async function loadHousingData(apiBase, year) {
         onUnauthenticated() {
           setReturnUrl(location.href);
           return new Promise((resolve, reject) => {
-            signOut((path) => new URL(path, apiBase).href);
+            signOut(path => new URL(path, apiBase).href);
             reject({ unauthenticated: true });
           });
         }
@@ -69,7 +69,7 @@ function initHousingVariants(formElement, { variants, profile }) {
       }
     }
   }
-  formElement.addEventListener("click", (e) => {
+  formElement.addEventListener("click", e => {
     if (e.target.classList.contains("unlock")) {
       handleUnlock(e);
     } else if (e.target.classList.contains("placement-selection")) {
@@ -90,7 +90,7 @@ function renderHackers(formElement, { hackers, hacker }) {
   selectElement.querySelector(`option[value="${hacker.housing}"]`)?.setAttribute("selected", "selected");
 
   const hackersListElement = formElement.querySelector("#hackers");
-  const hackersByName = hackers.filter((x) => x.name).sort((a, b) => a.name.localeCompare(b.name));
+  const hackersByName = hackers.filter(x => x.name).sort((a, b) => a.name.localeCompare(b.name));
 
   for (const otherHacker of hackersByName) {
     const { slackID, name, company, housing, housingPlacement } = otherHacker;
@@ -150,7 +150,7 @@ function renderHackers(formElement, { hackers, hacker }) {
       target.value = "";
       target.classList.remove("me");
       if (prevHackerValue) {
-        const prevHacker = hackers.find((h) => formatHackerName(h) === prevHackerValue);
+        const prevHacker = hackers.find(h => formatHackerName(h) === prevHackerValue);
         if (prevHacker) {
           const option = document.createElement("option");
           option.value = formatHackerName(prevHacker);
@@ -238,7 +238,7 @@ const HOUSING_INPUT_REGEX = /^(cottage|house|tent)\['(.+)'\]\[(\d+)\]$/;
  * @param {HTMLFormElement} formElement
  */
 function handlaFormaSubmita(formElement, { hackers, profile }) {
-  formElement.addEventListener("submit", async (e) => {
+  formElement.addEventListener("submit", async e => {
     e.preventDefault();
     for (const el of formElement.querySelectorAll("button[type='submit']")) {
       el.disabled = true;
@@ -249,7 +249,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
 
     for (const [key, value] of formData) {
       if (!HOUSING_INPUT_REGEX.test(key)) continue;
-      const inputedHacker = hackers.find((hacker) => formatHackerName(hacker) === value);
+      const inputedHacker = hackers.find(hacker => formatHackerName(hacker) === value);
       if (!inputedHacker) continue;
       const [, housing, housingPlacement] = key.match(HOUSING_INPUT_REGEX);
       jsonData.items.push({ slackID: inputedHacker.slackID, housing, housingPlacement });
@@ -263,7 +263,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
     }
     sendHousingData(formElement.action, jsonData).then(() => {
       globalThis.showSnackbar("Uloženo");
-    }).then(() => location.assign("/ubytovani/ulozeno/")).catch((err) => {
+    }).then(() => location.assign("/ubytovani/ulozeno/")).catch(err => {
       rollbar.error(err);
       alert("Něco se pokazilo:" + err);
       for (const el of formElement.querySelectorAll("button[type='submit']")) {
@@ -287,7 +287,7 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
         onUnauthenticated() {
           setReturnUrl(location.href);
           return new Promise((resolve, reject) => {
-            signOut((path) => new URL(path, url).href);
+            signOut(path => new URL(path, url).href);
             reject({ unauthenticated: true });
           });
         }
@@ -323,15 +323,7 @@ export async function main({ formElement, env, housing: { reservations, variants
   rollbar.init(env);
   try {
     const profile = getSlackProfile();
-    rollbar.configure({
-      payload: {
-        person: {
-          name: profile.real_name,
-          email: profile.email,
-          id: profile.id,
-        }
-      }
-    });
+    rollbar.configure({ payload: { person: { name: profile.real_name, email: profile.email, id: profile.id } } });
     const contact = getContact();
     rollbar.info("Housing profile", { profile, contact });
     initHousingVariants(formElement, { variants, profile });

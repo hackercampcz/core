@@ -91,7 +91,7 @@ export function internalError() {
  */
 export function withCORS(methods, origin = "*", { allowCredentials } = {}) {
   const allowMethods = Array.isArray(methods) ? methods.join() : methods;
-  return (x) =>
+  return x =>
     Object.assign({}, x, {
       headers: Object.assign({}, x.headers, {
         "Access-Control-Allow-Origin": origin,

@@ -11,7 +11,7 @@ const lineup = new Map([
   ["4_Peopleware (sport&realx)", "lipeep"],
   ["5_WoodStack (hudební stage)", "liwood"],
   ["6_Jungle Release", "lijungle"],
-  ["7_Doprovodný program", "liother"],
+  ["7_Doprovodný program", "liother"]
 ]);
 
 const topic = new Map([
@@ -32,7 +32,7 @@ const topic = new Map([
   ["LEGO stavebnice a Leadership", "workshop-4"],
   ["Příprava startupového pitch decku", "workshop-5"],
   ["Storytelling, schůzky, design, leadership...", "back-day-2-workshop-1"],
-  ["Workshop zvládání náročných rozhovorů", "workshop-3"],
+  ["Workshop zvládání náročných rozhovorů", "workshop-3"]
   // ["Před slam poetry", ""],
   // ["oheň a kytara", ""],
   // ["open decks", ""],
@@ -47,7 +47,7 @@ async function getAttendee(db, email) {
     ProjectionExpression: "slackID, events, image, slug, #n",
     FilterExpression: "email = :email",
     ExpressionAttributeNames: { "#n": "name" },
-    ExpressionAttributeValues: { ":email": email },
+    ExpressionAttributeValues: { ":email": email }
   });
   return result.Items?.[0];
 }
@@ -56,28 +56,22 @@ async function main({}) {
   const f = await Deno.open("./data/events-import.csv");
   for await (const e of readCSVObjects(f)) {
     const x1 = Object.fromEntries(
-      Object.entries(e)
-        .map(([k, v]) => [k.trim(), v.trim()])
-        .filter(([k, v]) => Boolean(v))
-        .filter(([k, v]) => v !== "null"),
+      Object.entries(e).map(([k, v]) => [k.trim(), v.trim()]).filter(([k, v]) => Boolean(v)).filter(([k, v]) =>
+        v !== "null"
+      )
     );
     const attendee = await getAttendee(dynamo, x1.email);
     if (!attendee) continue;
-    const x2 = Object.assign(
-      {},
-      {
-        _id: crypto.randomUUID(),
-        year: 2022,
-        title: x1.title,
-        description: x1.description,
-        duration: x1.duration?.split("M")?.[0]?.replace("1H", "60"),
-        lineup: lineup.get(x1.Stage),
-        topic: topic.get(x1.topic),
-      },
-    );
-    const x3 = Object.fromEntries(
-      Object.entries(x2).filter(([k, v]) => Boolean(v)),
-    );
+    const x2 = Object.assign({}, {
+      _id: crypto.randomUUID(),
+      year: 2022,
+      title: x1.title,
+      description: x1.description,
+      duration: x1.duration?.split("M")?.[0]?.replace("1H", "60"),
+      lineup: lineup.get(x1.Stage),
+      topic: topic.get(x1.topic)
+    });
+    const x3 = Object.fromEntries(Object.entries(x2).filter(([k, v]) => Boolean(v)));
     if (x3.lineup !== "liback") continue;
     if (!x3.topic) continue;
     const events = (attendee.events ?? []).concat([x3]);
@@ -86,20 +80,13 @@ async function main({}) {
       TableName: "attendees",
       Key: { slackID: attendee.slackID, year: 2022 },
       UpdateExpression: "SET events = :events",
-      ExpressionAttributeValues: { ":events": events },
+      ExpressionAttributeValues: { ":events": events }
     });
 
     const x4 = Object.assign({}, x3, {
-      people: [
-        {
-          slackID: attendee.slackID,
-          slug: attendee.slug,
-          image: attendee.image,
-          name: attendee.name,
-        },
-      ],
+      people: [{ slackID: attendee.slackID, slug: attendee.slug, image: attendee.image, name: attendee.name }],
       approved: new Date().toISOString(),
-      approvedBy: "U0202S9SB1T",
+      approvedBy: "U0202S9SB1T"
     });
     console.log(x4);
     await dynamo.putItem({ TableName: "program", Item: x4 });

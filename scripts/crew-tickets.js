@@ -1,7 +1,7 @@
 import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
-import { selectKeys } from "../lib/object.js";
 import { attributes, mapper } from "../lib/attendee.js";
+import { selectKeys } from "../lib/object.js";
 
 const dynamo = createClient();
 
@@ -15,7 +15,7 @@ const actions = [
   "Hmm, netušíš, co si můžete říct? Zkusíš to na campu prolomit? → :awkward_monkey_look:",
   "Přijde Ti povědomý/á? Nepleteš se? Tak to na campu rozseknete? → :cool-doge:",
   "Potřebuješ se seznámit? → :wave:",
-  "Nemůžeš si ho/ji nechat ujít? → 🥑",
+  "Nemůžeš si ho/ji nechat ujít? → 🥑"
 ];
 
 function randomIndex(prev) {
@@ -37,8 +37,8 @@ async function getCrewMembers(token) {
     method: "GET",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+      Authorization: `Bearer ${token}`
+    }
   });
   const { users } = await resp.json();
   console.log(`Found ${users.length} crew members`);
@@ -52,8 +52,8 @@ async function getUserProfile(token, user) {
     method: "GET",
     headers: {
       Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+      Authorization: `Bearer ${token}`
+    }
   });
   return resp.json();
 }
@@ -64,7 +64,7 @@ async function sendMessageToSlackV2(token, profile) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${token}`
     },
     body: JSON.stringify({
       channel: "C026KB0G8V8",
@@ -74,17 +74,17 @@ async function sendMessageToSlackV2(token, profile) {
           text: {
             type: "mrkdwn",
             text: [`Hey! <@${profile.slackID}> s námi letos jede na camp.`]
-            .concat(getActions())
-            .join("\n"),
+              .concat(getActions())
+              .join("\n")
           },
           accessory: {
             type: "image",
             image_url: profile.image,
-            alt_text: profile.name,
-          },
-        },
-      ],
-    }),
+            alt_text: profile.name
+          }
+        }
+      ]
+    })
   });
   return resp.json();
 }
@@ -93,7 +93,7 @@ async function getContact(email, slackID) {
   console.log({ event: "Get contact", email, slackID });
   const res = await dynamo.getItem({
     TableName: "contacts",
-    Key: { email, slackID },
+    Key: { email, slackID }
   });
   return res.Item;
 }
@@ -102,7 +102,7 @@ async function getAttendee(slackID, year) {
   console.log({ event: "Get attendee", year, slackID });
   const res = await dynamo.getItem({
     TableName: "attendees",
-    Key: { year, slackID },
+    Key: { year, slackID }
   });
   return res.Item;
 }
@@ -111,17 +111,16 @@ function createAttendee(contact, record) {
   console.log({ event: "Create attendee", contact, record });
   return dynamo.putItem({
     TableName: "attendees",
-    Item:
-      Object.assign(
-        {},
-        selectKeys(contact, new Set(["slackID", "name", "image", "slug"])),
-        selectKeys(record, attributes, mapper)
-      )
+    Item: Object.assign(
+      {},
+      selectKeys(contact, new Set(["slackID", "name", "image", "slug"])),
+      selectKeys(record, attributes, mapper)
+    )
   });
 }
 
 async function main({ year, token }) {
-  year = Number.parseInt(year)
+  year = Number.parseInt(year);
   console.log({ token });
   const users = await getCrewMembers(token);
   for (const slackID of users) {
@@ -133,14 +132,17 @@ async function main({ year, token }) {
       console.log({ event: "Failed to send message", slackID, ...rest });
       break;
     }
-    await createAttendee(contact, Object.assign({}, attendee, {
-      year,
-      ticketType: "crew",
-      announcement: { channel, ts },
-      edited: new Date().toISOString(),
-      editedBy: "ales@roubicek.name",
-      note: "",
-    }));
+    await createAttendee(
+      contact,
+      Object.assign({}, attendee, {
+        year,
+        ticketType: "crew",
+        announcement: { channel, ts },
+        edited: new Date().toISOString(),
+        editedBy: "ales@roubicek.name",
+        note: ""
+      })
+    );
   }
 }
 

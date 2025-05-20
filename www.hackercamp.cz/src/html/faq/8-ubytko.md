@@ -6,13 +6,13 @@ s palandami a společnými sprchami (jsou zvlášť pro holky i kluky – zas 
 Čím dřív zaplatíš fakturu, tím dřív si vybereš, jak budeš na campu bydlet.
 Po zaplacení faktury si ve svém profilu budeš moct vybrat z těchto možností:
 
-*   Přivezu si vlastní stan a budu v něm spát
-*   Přijedu autem a budu v něm spát
-*   Přivezu si vlastní obytňák a budu v něm spát
-*   Jsem punk a budu spát pod širákem nebo v hamace někde v areálu
-*   Chci postel v chatce nebo domečku pro 2 (4 nebo 6) osob – Kapacita je omezená,
+- Přivezu si vlastní stan a budu v něm spát
+- Přijedu autem a budu v něm spát
+- Přivezu si vlastní obytňák a budu v něm spát
+- Jsem punk a budu spát pod širákem nebo v hamace někde v areálu
+- Chci postel v chatce nebo domečku pro 2 (4 nebo 6) osob – Kapacita je omezená,
   proto neváhej se zaplacením vstupenek, ať můžeš tento formát ubytování rezervovat :)
-*   Využiji možnost ubytování v okolí (penzion, hotel) – toto si zajišťuje táborník sám, na svoje náklady.
+- Využiji možnost ubytování v okolí (penzion, hotel) – toto si zajišťuje táborník sám, na svoje náklady.
 
 Sprchu a hygienu vyřešíš v hezkých sprchách s hafem horké i ledové vody v areálu Sobeňáku.
 Chceš vědět, co Tě čeká? [Koukni na fotky ubytování](https://www.sobenak.cz/ubytovani/)!

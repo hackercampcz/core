@@ -18,7 +18,7 @@ export class HackersRegistry extends DefaultRegistry {
       if (!resp.ok) {
         logger.warn("Slack profiles:", data.error);
       }
-      return new Map(data.members?.filter((x) => !(x.is_bot || skip.has(x.name)))?.map((x) => [x.id, x.profile]));
+      return new Map(data.members?.filter(x => !(x.is_bot || skip.has(x.name)))?.map(x => [x.id, x.profile]));
     }
 
     async function getAttendees(year) {
@@ -32,7 +32,7 @@ export class HackersRegistry extends DefaultRegistry {
         getSlackProfiles(this.config.slackToken),
         getAttendees(this.config.year)
       ]);
-      const attendees = items.map((x) => [x.slug, profiles.get(x.slackID), x]);
+      const attendees = items.map(x => [x.slug, profiles.get(x.slackID), x]);
       return fs.promises.writeFile(this.dest, JSON.stringify(attendees, null, 2), { encoding: "utf-8" });
     });
   }

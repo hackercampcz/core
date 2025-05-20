@@ -2,16 +2,14 @@ import { parse } from "https://deno.land/std/flags/mod.ts";
 import { sendEmailWithTemplate, Template } from "./lib/postmark.js";
 
 async function main({ token }) {
-  const emails = [
-    "vojtech.matousek@carldatacompany.com",
-  ];
+  const emails = ["vojtech.matousek@carldatacompany.com"];
   for (const email of emails) {
     const resp = await sendEmailWithTemplate({
       token,
       to: email,
       tag: "registration",
       templateId: Template.NewRegistration,
-      data: {},
+      data: {}
     });
     if (resp.ErrorCode) console.error(resp);
     else console.log(`✅ ${resp.To}`);

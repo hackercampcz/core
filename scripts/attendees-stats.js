@@ -8,18 +8,13 @@ async function getAttendees() {
   const result = await dynamo.scan({
     TableName: "attendees",
     ProjectionExpression: "#year,email,slackID,paid,ticketType",
-    ExpressionAttributeNames: {
-      "#year": "year",
-    },
+    ExpressionAttributeNames: { "#year": "year" }
   });
   return result;
 }
 
 async function getContacts() {
-  const result = await dynamo.scan({
-    TableName: "contacts",
-    ProjectionExpression: "email,slackID",
-  });
+  const result = await dynamo.scan({ TableName: "contacts", ProjectionExpression: "email,slackID" });
   return result.Items;
 }
 
@@ -180,7 +175,7 @@ const attendees2021 = new Set([
   "petr.mihle@gmail.com",
   "martin.ondas@bizmachine.com",
   "xpokd06@gmail.com",
-  "jiri.pisa@topmonk.com",
+  "jiri.pisa@topmonk.com"
 ]);
 
 const ignoredTickets = new Set(["volunteer", "staff", "crew", "nonprofit"]);

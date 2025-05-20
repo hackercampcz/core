@@ -9,7 +9,7 @@ import * as postmark from "./postmark";
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),
-  "user:Stack": pulumi.getStack(),
+  "user:Stack": pulumi.getStack()
 });
 
 const config = new pulumi.Config();
@@ -23,9 +23,9 @@ const account = new cloudflare.Account(
   "rarous",
   {
     name: "rarous",
-    enforceTwofactor: true,
+    enforceTwofactor: true
   },
-  { protect: true },
+  { protect: true }
 );
 
 const hackercampCzZone = new cloudflare.Zone(
@@ -33,9 +33,9 @@ const hackercampCzZone = new cloudflare.Zone(
   {
     accountId: account.id,
     plan: "free",
-    zone: domain,
+    zone: domain
   },
-  { protect: true },
+  { protect: true }
 );
 
 const hckrCampZone = new cloudflare.Zone(
@@ -43,9 +43,9 @@ const hckrCampZone = new cloudflare.Zone(
   {
     accountId: account.id,
     plan: "free",
-    zone: "hckr.camp",
+    zone: "hckr.camp"
   },
-  { protect: true },
+  { protect: true }
 );
 
 const postmarkLayout = new postmark.Template("postmark-layout", {
@@ -55,7 +55,7 @@ const postmarkLayout = new postmark.Template("postmark-layout", {
   HtmlBody: fs.readFileSync("../communication/layout.html").toString(),
   TextBody: `{{{ @content }}}`,
   TemplateType: "Layout",
-  LayoutTemplate: "",
+  LayoutTemplate: ""
 });
 export const postmarkTemplates: Record<string, Output<string>> = {};
 
@@ -63,7 +63,7 @@ for (const args of readTemplates("../communication/")) {
   const template = new postmark.Template(
     `postmark-template-${args.Name}`,
     args,
-    { dependsOn: [postmarkLayout] },
+    { dependsOn: [postmarkLayout] }
   );
   const key = args.Alias.replace(/-/g, "_");
   postmarkTemplates[key] = template.id;
@@ -79,7 +79,7 @@ export const dataTables = {
   optOuts: db.optOutsDataTable,
   attendees: db.attendeesDataTable,
   program: db.programDataTable,
-  postmark: db.postmarkDataTable,
+  postmark: db.postmarkDataTable
 };
 
 const routes = createRoutes({ queues, db, postmarkTemplates });
@@ -96,10 +96,10 @@ const webPages = new cloudflare.PagesProject("web", {
       environmentVariables: {
         HC_API_HOSTNAME: config.require("api-domain"),
         HC_DONUT_HOSTNAME: config.require("donut-domain"),
-        HC_WEB_HOSTNAME: config.require("domain"),
-      },
-    },
-  },
+        HC_WEB_HOSTNAME: config.require("domain")
+      }
+    }
+  }
 });
 
 // APEX records for redirect to www (redirect is currently handled in hckr.studio/webs stack)
@@ -109,7 +109,7 @@ new cloudflare.Record(`${webDomain}/apex-dns-record`, {
   type: "A",
   content: "192.0.2.1",
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 new cloudflare.Record(`${webDomain}/apex-ipv6-dns-record`, {
@@ -118,7 +118,7 @@ new cloudflare.Record(`${webDomain}/apex-ipv6-dns-record`, {
   type: "AAAA",
   content: "100::",
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 const wwwRecord = new cloudflare.Record(`${webDomain}/dns-record`, {
@@ -127,13 +127,13 @@ const wwwRecord = new cloudflare.Record(`${webDomain}/dns-record`, {
   type: "CNAME",
   content: webPages.domains[0],
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 const webPagesDomain = new cloudflare.PagesDomain("web-domain", {
   accountId: account.id,
   domain: wwwRecord.hostname,
-  projectName: webPages.name,
+  projectName: webPages.name
 });
 
 const donutPages = new cloudflare.PagesProject("donut", {
@@ -146,13 +146,13 @@ const donutPages = new cloudflare.PagesProject("donut", {
       environmentVariables: {
         HC_API_HOSTNAME: config.require("api-domain"),
         HC_DONUT_HOSTNAME: config.require("donut-domain"),
-        HC_WEB_HOSTNAME: config.require("domain"),
+        HC_WEB_HOSTNAME: config.require("domain")
       },
       secrets: {
-        HC_JWT_SECRET: config.require("private-key"),
-      },
-    },
-  },
+        HC_JWT_SECRET: config.require("private-key")
+      }
+    }
+  }
 });
 
 const donutRecord = new cloudflare.Record(`${donutDomain}/dns-record`, {
@@ -161,13 +161,13 @@ const donutRecord = new cloudflare.Record(`${donutDomain}/dns-record`, {
   type: "CNAME",
   content: donutPages.domains[0],
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 const donutPagesDomain = new cloudflare.PagesDomain("donut-domain", {
   accountId: account.id,
   domain: donutRecord.hostname,
-  projectName: donutPages.name,
+  projectName: donutPages.name
 });
 
 const apiPages = new cloudflare.PagesProject("api", {
@@ -178,19 +178,19 @@ const apiPages = new cloudflare.PagesProject("api", {
     production: {
       compatibilityDate: "2024-11-11",
       environmentVariables: {
-        API_HOST: api.url.apply((x) => new URL("/v1/", x).href),
+        API_HOST: api.url.apply(x => new URL("/v1/", x).href),
         FAKTUROID_CLIENT_ID: config.require("fakturoid-client-id"),
         HC_API_HOSTNAME: config.require("api-domain"),
         HC_DONUT_HOSTNAME: config.require("donut-domain"),
         HC_WEB_HOSTNAME: config.require("domain"),
-        ROLLBAR_TOKEN: config.require("rollbar-access-token"),
+        ROLLBAR_TOKEN: config.require("rollbar-access-token")
       },
       secrets: {
         HC_JWT_SECRET: config.require("private-key"),
-        FAKTUROID_CLIENT_SECRET: config.require("fakturoid-client-secret"),
+        FAKTUROID_CLIENT_SECRET: config.require("fakturoid-client-secret")
       }
-    },
-  },
+    }
+  }
 });
 
 const apiRecord = new cloudflare.Record(`${apiDomain}/dns-record`, {
@@ -199,13 +199,13 @@ const apiRecord = new cloudflare.Record(`${apiDomain}/dns-record`, {
   type: "CNAME",
   content: apiPages.domains[0],
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 const apiPagesDomain = new cloudflare.PagesDomain("api-domain", {
   accountId: account.id,
   domain: apiRecord.hostname,
-  projectName: apiPages.name,
+  projectName: apiPages.name
 });
 
 new cloudflare.Record(`hckr.camp/apex-dns-record`, {
@@ -214,7 +214,7 @@ new cloudflare.Record(`hckr.camp/apex-dns-record`, {
   type: "A",
   content: "192.0.2.1",
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 new cloudflare.Record(`hckr.camp/apex-ipv6-dns-record`, {
@@ -223,7 +223,7 @@ new cloudflare.Record(`hckr.camp/apex-ipv6-dns-record`, {
   type: "AAAA",
   content: "100::",
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 new cloudflare.Record(`hckr.camp/www-dns-record`, {
@@ -232,7 +232,7 @@ new cloudflare.Record(`hckr.camp/www-dns-record`, {
   type: "A",
   content: "192.0.2.1",
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 new cloudflare.Record(`hckr.camp/www-ipv6-dns-record`, {
@@ -241,7 +241,7 @@ new cloudflare.Record(`hckr.camp/www-ipv6-dns-record`, {
   type: "AAAA",
   content: "100::",
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 new cloudflare.Record(`hckr.camp/donut-dns-record`, {
@@ -250,7 +250,7 @@ new cloudflare.Record(`hckr.camp/donut-dns-record`, {
   type: "A",
   content: "192.0.2.1",
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 new cloudflare.Record(`hckr.camp/donut-ipv6-dns-record`, {
@@ -259,7 +259,7 @@ new cloudflare.Record(`hckr.camp/donut-ipv6-dns-record`, {
   type: "AAAA",
   content: "100::",
   ttl: 1,
-  proxied: true,
+  proxied: true
 });
 
 new cloudflare.Ruleset("hckr.camp", {
@@ -277,7 +277,7 @@ new cloudflare.Ruleset("hckr.camp", {
           statusCode: 301,
           preserveQueryString: true,
           targetUrl: {
-            expression: `concat("https://www.hackercamp.cz", http.request.uri.path)`,
+            expression: `concat("https://www.hackercamp.cz", http.request.uri.path)`
           }
         }
       }
@@ -291,11 +291,11 @@ new cloudflare.Ruleset("hckr.camp", {
           statusCode: 301,
           preserveQueryString: true,
           targetUrl: {
-            expression: `concat("https://donut.hackercamp.cz", http.request.uri.path)`,
+            expression: `concat("https://donut.hackercamp.cz", http.request.uri.path)`
           }
         }
       }
-    },
+    }
   ]
 });
 
@@ -313,7 +313,7 @@ new cloudflare.Ruleset("hackercamp.cz", {
         fromValue: {
           statusCode: 301,
           targetUrl: {
-            value: "/registrace/?volunteer=1",
+            value: "/registrace/?volunteer=1"
           }
         }
       }
@@ -326,7 +326,7 @@ new cloudflare.Ruleset("hackercamp.cz", {
         fromValue: {
           statusCode: 301,
           targetUrl: {
-            expression: `concat("/registrace/?referral=", substring(http.request.uri.path, 3))`,
+            expression: `concat("/registrace/?referral=", substring(http.request.uri.path, 3))`
           }
         }
       }

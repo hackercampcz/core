@@ -8,9 +8,9 @@ async function getContacts() {
   console.log("Loading contacts…");
   const resp = await dynamo.scan({
     TableName: "contacts",
-    AttributesToGet: ["email"],
+    AttributesToGet: ["email"]
   });
-  const contacts = resp.Items.map((x) => x.email);
+  const contacts = resp.Items.map(x => x.email);
   console.log(`Loaded ${contacts.length} contacts`);
   return contacts;
 }
@@ -30,7 +30,7 @@ const hardBounce = new Set([
   "matous@nation1.vc",
   "jonas.petrovsky@kiwi.com",
   "andrej.hanes@kiwi.com",
-  "daniel@deepnote.com",
+  "daniel@deepnote.com"
 ]);
 
 async function getRegistrations() {
@@ -43,10 +43,10 @@ async function getRegistrations() {
     ExpressionAttributeValues: {
       ":year": 2023,
       ":volunteer": "volunteer",
-      ":staff": "staff",
-    },
+      ":staff": "staff"
+    }
   });
-  const registrations = resp.Items.map((x) => x.email);
+  const registrations = resp.Items.map(x => x.email);
   console.log(`Loaded ${registrations.size} registrations`);
   return registrations;
 }
@@ -57,9 +57,9 @@ async function getOptOuts() {
     FilterExpression: "#year = :year",
     ProjectionExpression: "email",
     ExpressionAttributeNames: { "#year": "year" },
-    ExpressionAttributeValues: { ":year": 2023 },
+    ExpressionAttributeValues: { ":year": 2023 }
   });
-  const outOuts = new Set(resp.Items.map((x) => x.email));
+  const outOuts = new Set(resp.Items.map(x => x.email));
   console.log(`Loaded ${outOuts.size} optouts`);
   return outOuts;
 }
@@ -68,8 +68,8 @@ async function main({ token }) {
   const registrations = await getRegistrations();
   const optOuts = await getOptOuts();
   const notRegistered = registrations
-    .filter((x) => !hardBounce.has(x))
-    .filter((x) => !optOuts.has(x));
+    .filter(x => !hardBounce.has(x))
+    .filter(x => !optOuts.has(x));
   console.log(`Sending ${notRegistered.length} emails`);
   for (const email of notRegistered) {
     console.log(`"${email}",`);
@@ -78,7 +78,7 @@ async function main({ token }) {
       templateId: 32930985,
       from: "Hacker Camp Crew <team@hackercamp.cz>",
       to: email,
-      data: {},
+      data: {}
     });
   }
 }

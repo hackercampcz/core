@@ -76,7 +76,7 @@ export function attendeesChips(
               style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px; width: 100%; max-width: 480px"
               placeholder="Hledat jméno, e-mail, firmu&hellip;"
               value="${params.get("query")}"
-              @change="${(e) => e.target.form.submit()}"
+              @change="${e => e.target.form.submit()}"
             >
               <md-icon-button slot="leadingicon" type="submit" title="Hledat">
                 <md-icon>search</md-icon>
@@ -220,7 +220,7 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
       </tfoot>
       <tbody>
         ${
-    data.map((row) =>
+    data.map(row =>
       html`
             <tr @click="${renderDetail(row)}">
               <td>
@@ -391,7 +391,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
       html`
         <h3>Program</h3>
           ${
-        detail.events?.map((event) =>
+        detail.events?.map(event =>
           html`
               <div style="border: 1px solid var(--hc-text-color); padding: 8px 16px">
                 <h4>${event.title}</h4>
@@ -405,9 +405,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
             )
           }
                 </p>
-                ${
-            when(event.description, () => html`<p>${event.description}</p>`)
-          }
+                ${when(event.description, () => html`<p>${event.description}</p>`)}
               </div>
             `
         )
@@ -421,7 +419,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
 registerDialog("edit-attendee-modal", editAttendeeModalDialog);
 
 function editAttendeeModalDialog({ detail, apiHost }) {
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     const form = new FormData(e.target);
     await edit(Object.fromEntries(form), apiHost);
   };
@@ -467,7 +465,7 @@ function editAttendeeModalDialog({ detail, apiHost }) {
 registerDialog("add-attendee-modal", addAttendeeModalDialog);
 
 function addAttendeeModalDialog({ year, apiHost }) {
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     const form = new FormData(e.target);
     await add(Object.fromEntries(form.entries()), apiHost);
   };
@@ -585,7 +583,7 @@ function startChipScan() {
 }
 
 function removeChip(sn) {
-  return (e) => {
+  return e => {
     e.preventDefault();
     dispatchAction(Action.removeChip, { sn });
     globalThis.showSnackbar("Chip odebrán");
@@ -595,14 +593,14 @@ function removeChip(sn) {
 registerDialog("check-in-modal", checkInModalDialog);
 
 function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFCSupported }) {
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     const formData = new FormData(e.target);
     const data = {
       admin: contact.email,
       year: formData.get("year"),
       slackID: formData.get("slackID"),
       note: formData.get("note"),
-      nfcTronData: Array.from(nfcTronData).filter(Boolean).map((sn) => ({ sn, chipID: getChipID(sn) }))
+      nfcTronData: Array.from(nfcTronData).filter(Boolean).map(sn => ({ sn, chipID: getChipID(sn) }))
     };
     try {
       const result = executeCommand(apiHost, Endpoint.attendees, "checkIn", data);
@@ -612,7 +610,7 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
       globalThis.showPersistentSnackbar("Check-in neuložen");
     }
   };
-  const onChange = (e) => {
+  const onChange = e => {
     const sn = e.target.value.trim().toLowerCase();
     if (sn.length > 0) dispatchAction(Action.addChip, { sn });
   };
@@ -687,7 +685,7 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
 registerDialog("check-out-modal", checkOutModalDialog);
 
 function checkOutModalDialog({ apiHost, year, detail, contact }) {
-  const onSubmit = async (e) => {
+  const onSubmit = async e => {
     const formData = new FormData(e.target);
     const data = {
       admin: contact.email,
@@ -729,7 +727,7 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
           <md-outlined-text-field
             id="total"
             name="checkOutTotal"
-            value="${detail.nfcTronData?.map((x) => x.spent ?? 0)?.reduce((a, b) => a + b, 0) ?? 0}"
+            value="${detail.nfcTronData?.map(x => x.spent ?? 0)?.reduce((a, b) => a + b, 0) ?? 0}"
           ></md-outlined-text-field>
         </div>
       </fieldset>
@@ -751,11 +749,11 @@ export function attendeesTemplate(state) {
     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
       ${
     attendeesChips(selectedView, year, {
-      [View.attendees]: data?.then((data) => data.counts.all),
-      [View.hackerAttendees]: data?.then((data) => data.counts.hacker),
-      [View.volunteerAttendees]: data?.then((data) => data.counts.volunteer),
-      [View.staffAttendees]: data?.then((data) => data.counts.staff),
-      [View.crewAttendees]: data?.then((data) => data.counts.crew)
+      [View.attendees]: data?.then(data => data.counts.all),
+      [View.hackerAttendees]: data?.then(data => data.counts.hacker),
+      [View.volunteerAttendees]: data?.then(data => data.counts.volunteer),
+      [View.staffAttendees]: data?.then(data => data.counts.staff),
+      [View.crewAttendees]: data?.then(data => data.counts.crew)
     }, params)
   }
     </div>
@@ -765,7 +763,7 @@ export function attendeesTemplate(state) {
       <div class="hc-card hc-master-detail__list">
         ${
     until(
-      data?.then((data) => {
+      data?.then(data => {
         return attendeesTableTemplate(sortBy("paid", data.items), {
           page,
           pages: data.pages,
@@ -773,7 +771,7 @@ export function attendeesTemplate(state) {
           params,
           selection
         });
-      })?.catch((data) => {
+      })?.catch(data => {
         if (data.unauthorized) return unauthorized();
       }),
       html`

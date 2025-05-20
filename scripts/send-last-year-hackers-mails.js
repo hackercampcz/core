@@ -9,30 +9,20 @@ async function getRegistrations() {
     TableName: "registrations",
     ProjectionExpression: "email",
     FilterExpression: "#ts > :ts",
-    ExpressionAttributeNames: {
-      "#ts": "timestamp",
-    },
-    ExpressionAttributeValues: {
-      ":ts": "2022-05-31T00:00:00.000+02:00",
-    },
+    ExpressionAttributeNames: { "#ts": "timestamp" },
+    ExpressionAttributeValues: { ":ts": "2022-05-31T00:00:00.000+02:00" }
   });
-  return new Set(result.Items.map((x) => x.email));
+  return new Set(result.Items.map(x => x.email));
 }
 
 async function getContacts() {
-  const result = await dynamo.scan({
-    TableName: "contacts",
-    ProjectionExpression: "email",
-  });
-  return result.Items.map((x) => x.email);
+  const result = await dynamo.scan({ TableName: "contacts", ProjectionExpression: "email" });
+  return result.Items.map(x => x.email);
 }
 
 async function getAttendees() {
-  const result = await dynamo.scan({
-    TableName: "attendees",
-    ProjectionExpression: "email",
-  });
-  return result.Items.map((x) => x.email);
+  const result = await dynamo.scan({ TableName: "attendees", ProjectionExpression: "email" });
+  return result.Items.map(x => x.email);
 }
 
 async function getOptOuts(year = 2022) {
@@ -40,14 +30,10 @@ async function getOptOuts(year = 2022) {
     TableName: "optouts",
     ProjectionExpression: "email",
     FilterExpression: "#y = :year",
-    ExpressionAttributeNames: {
-      "#y": "year",
-    },
-    ExpressionAttributeValues: {
-      ":year": year,
-    },
+    ExpressionAttributeNames: { "#y": "year" },
+    ExpressionAttributeValues: { ":year": year }
   });
-  return new Set(result.Items.map((x) => x.email));
+  return new Set(result.Items.map(x => x.email));
 }
 
 const ignoreList = new Set([
@@ -72,7 +58,7 @@ const ignoreList = new Set([
   "barsukov.kirill@seznam.cz",
 
   // neexistuje
-  "samuel.kozuch@keboola.com",
+  "samuel.kozuch@keboola.com"
 ]);
 
 async function main({ token }) {
@@ -83,7 +69,7 @@ async function main({ token }) {
   const attendees = await getAttendees();
   for (const email of attendees) ignoreList.add(email);
   const contacts = await getContacts();
-  const pushContacts = contacts.filter((x) => !ignoreList.has(x));
+  const pushContacts = contacts.filter(x => !ignoreList.has(x));
 
   // console.log(registrations);
   console.log(pushContacts.length);
@@ -93,7 +79,7 @@ async function main({ token }) {
       templateId: Template.LastYearHackersPush,
       from: "Hacker Camp Crew <team@hackercamp.cz>",
       to: email,
-      data: {},
+      data: {}
     });
     console.log(email, "sent");
   }

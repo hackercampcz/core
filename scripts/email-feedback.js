@@ -28,7 +28,7 @@ async function getAttendees(year) {
     ExpressionAttributeValues: { ":year": year }
   });
   const items = await collect(result);
-  return new Set(items.map((x) => x.email));
+  return new Set(items.map(x => x.email));
 }
 
 async function main({ token }) {

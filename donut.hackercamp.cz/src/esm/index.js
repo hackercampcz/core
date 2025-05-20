@@ -76,7 +76,7 @@ if (__DEVELOPMENT__) {
   globalThis.transact = transact;
   globalThis.swapIn = swapIn;
   globalThis.getState = () => state.deref();
-  globalThis.setView = (view) => swapIn("forcedView", () => view);
+  globalThis.setView = view => swapIn("forcedView", () => view);
   globalThis.View = View;
 }
 
@@ -137,7 +137,7 @@ async function getAttendee(slackID, year, apiUrl) {
 }
 
 async function getNfcTronData(attendee, apiUrl) {
-  for (const chip of attendee.nfcTronData?.filter((x) => x.sn) ?? []) {
+  for (const chip of attendee.nfcTronData?.filter(x => x.sn) ?? []) {
     const params = new URLSearchParams({ chipID: chip.chipID });
     const resp = await fetch(apiUrl(`nfctron?${params}`), { headers: { Accept: "application/json" } });
     const data = await resp.json();
@@ -167,7 +167,7 @@ function renderPaidScreen(referralLink) {
   `;
 }
 
-const placement = (p) => (p === "custom" ? "" : ` ${p}`);
+const placement = p => (p === "custom" ? "" : ` ${p}`);
 
 function housingText(housing, housingPlacement) {
   return html`<strong
@@ -230,7 +230,7 @@ function housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHa
 
 function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
   if (!nfcTronData) return null;
-  const chips = nfcTronData.filter((x) => x.sn);
+  const chips = nfcTronData.filter(x => x.sn);
   const total = chips.reduce((acc, x) => acc + (x.spent ?? x.totalSpent), 0);
   return html`
     <div class="hc-card hc-card--decorated">
@@ -482,10 +482,10 @@ async function loadData(profile, year, apiURL) {
   if (attendee && !attendee?.nfcTronData?.[0]?.totalSpent) {
     // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
     // Load them async, because NFCTron API is slow as hell
-    getNfcTronData(attendee, apiURL).then((attendee) => swapIn("attendee", () => attendee));
+    getNfcTronData(attendee, apiURL).then(attendee => swapIn("attendee", () => attendee));
   }
   const contact = getContact();
-  transact((x) => Object.assign(x, { profile, contact, registration, attendee }));
+  transact(x => Object.assign(x, { profile, contact, registration, attendee }));
   try {
     await setDonutProfileUrl(
       profile.sub,
@@ -504,7 +504,7 @@ export async function main({ searchParams, rootElement, env }) {
   rollbar.init(env);
   const year = searchParams.get("year") ?? env.year;
   const apiHost = env["api-host"];
-  const apiURL = (endpoint) => new URL(endpoint, apiHost).href;
+  const apiURL = endpoint => new URL(endpoint, apiHost).href;
 
   if (searchParams.has("returnUrl") && searchParams.get("state") === "not-authenticated") {
     setReturnUrl(searchParams.get("returnUrl"));
@@ -514,7 +514,7 @@ export async function main({ searchParams, rootElement, env }) {
   initRenderLoop(state, rootElement);
 
   if (isSignedIn()) {
-    transact((x) => Object.assign(x, { apiHost, year, hasRegisteredHackers: env.hasRegisteredHackers }));
+    transact(x => Object.assign(x, { apiHost, year, hasRegisteredHackers: env.hasRegisteredHackers }));
     try {
       const profile = getSlackProfile();
       rollbar.configure({
@@ -525,7 +525,7 @@ export async function main({ searchParams, rootElement, env }) {
           person: {
             name: profile.real_name,
             email: profile.email,
-            id: profile.id,
+            id: profile.id
           }
         }
       });
@@ -542,7 +542,7 @@ export async function main({ searchParams, rootElement, env }) {
 
   if (searchParams.has("code")) {
     try {
-      transact((x) => Object.assign({}, x));
+      transact(x => Object.assign({}, x));
       await authenticate({ searchParams, apiURL });
       handleReturnUrl();
     } catch (err) {

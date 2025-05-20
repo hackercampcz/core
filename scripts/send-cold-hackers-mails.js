@@ -6,11 +6,8 @@ const dynamo = createClient();
 
 async function getContacts() {
   console.log("Loading contacts…");
-  const resp = await dynamo.scan({
-    TableName: "contacts",
-    AttributesToGet: ["email"],
-  });
-  const contacts = resp.Items.map((x) => x.email);
+  const resp = await dynamo.scan({ TableName: "contacts", AttributesToGet: ["email"] });
+  const contacts = resp.Items.map(x => x.email);
   console.log(`Loaded ${contacts.length} contacts`);
   return contacts;
 }
@@ -30,7 +27,7 @@ const hardBounce = new Set([
   "matous@nation1.vc",
   "jonas.petrovsky@kiwi.com",
   "andrej.hanes@kiwi.com",
-  "daniel@deepnote.com",
+  "daniel@deepnote.com"
 ]);
 
 async function getRegistrations() {
@@ -40,9 +37,9 @@ async function getRegistrations() {
     FilterExpression: "#year = :year",
     ProjectionExpression: "email",
     ExpressionAttributeNames: { "#year": "year" },
-    ExpressionAttributeValues: { ":year": 2023 },
+    ExpressionAttributeValues: { ":year": 2023 }
   });
-  const registrations = new Set(resp.Items.map((x) => x.email));
+  const registrations = new Set(resp.Items.map(x => x.email));
   console.log(`Loaded ${registrations.size} registrations`);
   return registrations;
 }
@@ -53,9 +50,9 @@ async function getOptOuts() {
     FilterExpression: "#year = :year",
     ProjectionExpression: "email",
     ExpressionAttributeNames: { "#year": "year" },
-    ExpressionAttributeValues: { ":year": 2023 },
+    ExpressionAttributeValues: { ":year": 2023 }
   });
-  const outOuts = new Set(resp.Items.map((x) => x.email));
+  const outOuts = new Set(resp.Items.map(x => x.email));
   console.log(`Loaded ${outOuts.size} optouts`);
   return outOuts;
 }
@@ -64,10 +61,9 @@ async function main({ token }) {
   const contacts = await getContacts();
   const registrations = await getRegistrations();
   const optOuts = await getOptOuts();
-  const notRegistered = contacts
-    .filter((x) => !registrations.has(x))
-    .filter((x) => !hardBounce.has(x))
-    .filter((x) => !optOuts.has(x));
+  const notRegistered = contacts.filter(x => !registrations.has(x)).filter(x => !hardBounce.has(x)).filter(x =>
+    !optOuts.has(x)
+  );
   console.log(`Sending ${notRegistered.length} emails`);
   for (const email of notRegistered) {
     console.log(`"${email}",`);
@@ -76,7 +72,7 @@ async function main({ token }) {
       templateId: 32930984,
       from: "Hacker Camp Crew <team@hackercamp.cz>",
       to: email,
-      data: {},
+      data: {}
     });
   }
 }

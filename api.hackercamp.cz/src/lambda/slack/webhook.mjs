@@ -52,7 +52,7 @@ export async function slackWebhook(event) {
   try {
     const payload = readPayload(event);
     // TODO: validate webhook token
-    return await dispatchByType(payload.event ?? payload).then((x) => withCORS_(x));
+    return await dispatchByType(payload.event ?? payload).then(x => withCORS_(x));
   } catch (err) {
     rollbar.error(err);
     return withCORS_(errorResponse(err));

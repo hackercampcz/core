@@ -2,25 +2,29 @@
   "typescript": {
     "semiColons": "always",
     "trailingCommas": "never",
-    "preferSingleLine": true
+    "arrowFunction.useParentheses": "preferNone"
   },
   "json": {
   },
   "markdown": {
+    "emphasisKind": "asterisks"
   },
   "markup": {
     "printWidth": 120,
     "closingBracketSameLine": true,
-    "doctypeKeywordCase": "upper",
-    "html.scriptIndent": true,
-    "html.styleIndent": true,
+    "preferAttrsSingleLine": true,
+    "scriptIndent": true,
+    "styleIndent": true,
     "html.normal.selfClosing": false,
     "html.void.selfClosing": false
   },
-  "malva": false,
+  "malva": {
+  },
   "excludes": [
     "**/node_modules",
-    "**/*-lock.json"
+    "**/*-lock.json",
+    ".yarn/",
+    ".idea/"
   ],
   "plugins": [
     "https://plugins.dprint.dev/typescript-0.91.6.wasm",

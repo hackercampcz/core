@@ -6,7 +6,7 @@ const dynamo = createClient();
 async function getRegistration(email, year) {
   const resp = await dynamo.getItem({
     TableName: "registrations",
-    Key: { email, year },
+    Key: { email, year }
   });
   const reg = resp.Item;
   return reg;
@@ -15,18 +15,8 @@ async function getRegistration(email, year) {
 async function main({ year, email }) {
   const reg = await getRegistration(email, year);
   console.log(reg);
-  console.log(
-    await dynamo.putItem({
-      TableName: "trash",
-      Item: reg,
-    }),
-  );
-  console.log(
-    await dynamo.deleteItem({
-      TableName: "registrations",
-      Key: { email, year },
-    }),
-  );
+  console.log(await dynamo.putItem({ TableName: "trash", Item: reg }));
+  console.log(await dynamo.deleteItem({ TableName: "registrations", Key: { email, year } }));
 }
 
 await main(parse(Deno.args));

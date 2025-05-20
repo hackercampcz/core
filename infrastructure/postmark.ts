@@ -37,8 +37,8 @@ const postmarkTemplateProvider: pulumi.dynamic.ResourceProvider<
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "X-Postmark-Server-Token": token,
-      },
+        "X-Postmark-Server-Token": token
+      }
     });
     const outs = await resp.json();
     if (outs.ErrorCode) console.log({ outs, inputs });
@@ -51,8 +51,8 @@ const postmarkTemplateProvider: pulumi.dynamic.ResourceProvider<
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        "X-Postmark-Server-Token": token,
-      },
+        "X-Postmark-Server-Token": token
+      }
     });
     const outs = await resp.json();
     return { outs };
@@ -62,10 +62,10 @@ const postmarkTemplateProvider: pulumi.dynamic.ResourceProvider<
       method: "DELETE",
       headers: {
         Accept: "application/json",
-        "X-Postmark-Server-Token": token,
-      },
+        "X-Postmark-Server-Token": token
+      }
     });
-  },
+  }
 };
 
 interface TemplateResourceInputs {
@@ -82,7 +82,7 @@ export class Template extends pulumi.dynamic.Resource {
   constructor(
     name: string,
     args: TemplateResourceInputs,
-    opts?: pulumi.CustomResourceOptions,
+    opts?: pulumi.CustomResourceOptions
   ) {
     super(postmarkTemplateProvider, name, args, opts);
   }
