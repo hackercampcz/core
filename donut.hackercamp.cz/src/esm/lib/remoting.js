@@ -22,7 +22,13 @@ export async function withAuthHandler(
 
 export async function withErrorReporting(response, { rollbar, onError }) {
   try {
-    return await response;
+    const resp = await response;
+    if (!resp.ok) {
+      const error = await resp.json();
+      if (rollbar) rollbar.error(error);
+      if (onError) onError(error);
+    }
+    return resp;
   } catch (err) {
     if (rollbar) rollbar.error(err);
     if (onError) onError(err);

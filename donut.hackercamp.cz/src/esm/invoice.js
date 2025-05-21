@@ -18,7 +18,10 @@ const authHandler = {
 
 async function getRegistration(year, email) {
   const params = new URLSearchParams({ year, email, slackID: "Z" });
-  const resp = await withAuthHandler(fetch(`https://api.hackercamp.cz/v1/registration?${params}`), authHandler);
+  const resp = await withErrorReporting(
+    withAuthHandler(fetch(`https://api.hackercamp.cz/v1/registration?${params}`), authHandler),
+    { rollbar }
+  );
   return resp.json();
 }
 
@@ -44,9 +47,12 @@ async function markRegistrationAsInvoiced(year, emails, data) {
 
 async function getSubject(q) {
   const params = new URLSearchParams({ q });
-  const resp = await withAuthHandler(
-    fetch(`https://api.hackercamp.cz/v2/fakturoid/subject?${params}`, { credentials: "include", mode: "cors" }),
-    authHandler
+  const resp = await withErrorReporting(
+    withAuthHandler(
+      fetch(`https://api.hackercamp.cz/v2/fakturoid/subject?${params}`, { credentials: "include", mode: "cors" }),
+      authHandler
+    ),
+    { rollbar }
   );
   return resp.json();
 }
@@ -210,7 +216,7 @@ export async function main({ env, searchParams }) {
       invName,
       invRecipientFirstname,
       invRecipientLastname,
-      ["invoice-contact"]: c,
+      ["invoice-contact"]: c
     } = reg;
     const email = invEmail ?? invRecipientEmail ?? c ?? reg.email;
     const name = invName ?? `${invRecipientFirstname} ${invRecipientLastname}`;
@@ -230,14 +236,22 @@ export async function main({ env, searchParams }) {
     const reg = contacts[0]; // TODO: handle contact selection
     const subject = Object.fromEntries(
       Object.entries({
-        "name": reg.invName,
+        "name": reg.invName ?? reg.invRecipientFirstname
+          ? `${reg.invRecipientFirstname} ${reg.invRecipientLastname}`
+          : `${reg.firstName} ${reg.lastName}`,
         "email": reg.invEmail ?? reg["invoice-contact"] ?? reg.email,
         "street": reg.invAddress,
         "registration_no": reg.invRegNo,
         "vat_no": reg.invVatNo
       }).filter(([_, v]) => Boolean(v))
     );
-    await createSubject(subject);
-    document.location.reload();
+    const resp = await createSubject(subject);
+    if (resp.validationErrors) {
+      globalThis.showPersistentSnackbar("Chyba při vytváření kontaktu");
+      console.error("Validation errors:", resp.validationErrors);
+      // TODO: Format validation error
+    } else {
+      document.location.reload();
+    }
   });
 }
