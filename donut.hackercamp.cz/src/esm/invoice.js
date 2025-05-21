@@ -210,9 +210,9 @@ export async function main({ env, searchParams }) {
       invName,
       invRecipientFirstname,
       invRecipientLastname,
-      ["invoice-contact"]: c
+      ["invoice-contact"]: c,
     } = reg;
-    const email = invEmail ?? invRecipientEmail ?? c;
+    const email = invEmail ?? invRecipientEmail ?? c ?? reg.email;
     const name = invName ?? `${invRecipientFirstname} ${invRecipientLastname}`;
     const subjects = await searchSubjects(invRegNo, email, name);
     for (const [id, subject] of subjects) {

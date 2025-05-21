@@ -18,6 +18,10 @@ export async function onRequestGet({ request, env }) {
 export async function onRequestPost({ request, env }) {
   const formData = await request.formData();
   const authHeader = await getAuthHeader(env.FAKTUROID_CLIENT_ID, env.FAKTUROID_CLIENT_SECRET);
-  const subject = await createSubject(authHeader, Object.fromEntries(formData));
-  return Response.json(subject);
+  try {
+    const subject = await createSubject(authHeader, Object.fromEntries(formData));
+    return Response.json(subject);
+  } catch (err) {
+    return Response.json({ error: "Failed to create subject", ...err.details }, { status: 422 });
+  }
 }
