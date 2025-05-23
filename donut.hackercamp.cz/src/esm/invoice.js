@@ -236,9 +236,9 @@ export async function main({ env, searchParams }) {
     const reg = contacts[0]; // TODO: handle contact selection
     const subject = Object.fromEntries(
       Object.entries({
-        "name": reg.invName ?? reg.invRecipientFirstname
+        "name": reg.invName ?? (reg.invRecipientFirstname
           ? `${reg.invRecipientFirstname} ${reg.invRecipientLastname}`
-          : `${reg.firstName} ${reg.lastName}`,
+          : `${reg.firstName} ${reg.lastName}`),
         "email": reg.invEmail ?? reg["invoice-contact"] ?? reg.email,
         "street": reg.invAddress,
         "registration_no": reg.invRegNo,
