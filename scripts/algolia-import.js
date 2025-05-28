@@ -1,17 +1,26 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
-import createSearchClient from "https://esm.sh/algoliasearch@4.16.0";
-import "https://deno.land/x/xhr@0.1.0/mod.ts";
+import { algoliasearch } from "npm:algoliasearch";
+import { createFetchRequester } from "npm:@algolia/requester-fetch";
 import { getAttendeesProjection, getRegistrationProjection } from "../lib/search.js";
 
 const dynamo = createClient();
-const indexes = new Map([["hc-registrations", {
-  searchableAttributes: ["name", "email", "company", "invoice_id"],
-  ranking: ["desc(createdAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
-}], ["hc-attendees", {
-  searchableAttributes: ["name", "email", "company", "invoice_id"],
-  ranking: ["desc(createdAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
-}]]);
+const indexes = new Map([
+  ["hc-registrations", {
+    indexName: "hc-registrations",
+    indexSettings: {
+      searchableAttributes: ["name", "email", "company", "invoice_id"],
+      ranking: ["desc(createdAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+    }
+  }],
+  ["hc-attendees", {
+    indexName: "hc-attendees",
+    indexSettings: {
+      searchableAttributes: ["name", "email", "company", "invoice_id"],
+      ranking: ["desc(createdAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+    }
+  }]
+]);
 
 async function getOptOuts() {
   const resp = await dynamo.scan({
@@ -39,7 +48,8 @@ async function getRegistrations() {
       "firstTime",
       "referral",
       "ticketType",
-      "approved"
+      "approved",
+      "image"
     ].join(),
     ExpressionAttributeNames: { "#year": "year", "#timestamp": "timestamp" }
   });
@@ -69,7 +79,8 @@ async function getAttendees() {
       "invoice_id",
       "ticketType",
       "travel",
-      "housing"
+      "housing",
+      "image"
     ].join(),
     ExpressionAttributeNames: { "#year": "year", "#name": "name" }
   });
@@ -85,38 +96,44 @@ async function getAttendees() {
   return result;
 }
 
-async function indexRegistrations(client, slackBotToken) {
-  const index = client.initIndex("hc-registrations");
-  await index.setSettings(indexes.get("hc-registrations"));
+async function indexRegistrations(client) {
+  await client.setSettings(indexes.get("hc-registrations"));
 
   const registrations = await getRegistrations();
   const records = registrations.map(getRegistrationProjection());
   console.log(`Importing ${records.length} registrations to Algolia`);
-  return index.saveObjects(records);
+  return client.saveObjects({
+    indexName: "hc-registrations",
+    objects: records
+  });
 }
 
 async function indexAttendees(client) {
-  const index = client.initIndex("hc-attendees");
-  await index.setSettings(indexes.get("hc-attendees"));
+  await client.setSettings(indexes.get("hc-attendees"));
 
   const attendees = await getAttendees();
   const records = attendees.map(getAttendeesProjection());
   console.log(`Importing ${records.length} attendees to Algolia`);
-  return index.saveObjects(records);
+  return client.saveObjects({
+    indexName: "hc-attendees",
+    objects: records
+  });
 }
 
-async function main({ adminToken, slackBotToken }) {
-  const client = createSearchClient("J77BFM3PLE", adminToken);
+async function main({ adminToken }) {
+  const client = algoliasearch("J77BFM3PLE", adminToken, {
+    requester: createFetchRequester()
+  });
 
-  console.log(await indexRegistrations(client, slackBotToken));
+  console.log(await indexRegistrations(client));
   console.log(await indexAttendees(client));
 }
 
 await main(
   Object.assign(
-    { adminToken: Deno.env.get("ALGOLIA_ADMIN_API_KEY"), slackBotToken: Deno.env.get("SLACK_TOKEN") },
-    parse(Deno.args)
+    { adminToken: Deno.env.get("ALGOLIA_ADMIN_API_KEY") },
+    parseArgs(Deno.args)
   )
 );
 
-// op run --env-file=../.env -- deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config algolia-import.js
+// op run --env-file=../.env -- deno run --allow-env --allow-import --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config algolia-import.js
