@@ -1,7 +1,6 @@
 import { html, render } from "lit-html";
 
 export class MailButton extends HTMLElement {
-
   get email() {
     return this.getAttribute("email");
   }

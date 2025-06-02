@@ -25,6 +25,10 @@ code {
   padding: 2px 4px;
 }
 
+.icon-button:is(a, button) {
+  color: var(--hc-text-color);
+}
+
 .hc-action-button {
   -webkit-appearance: none;
   border: none;

@@ -29,10 +29,11 @@
       border-collapse: collapse;
     }
 
-    th+th {
+    th + th {
       padding: 8px;
     }
-    td+td {
+
+    td + td {
       padding: 0 8px;
     }
 
@@ -41,6 +42,7 @@
       border-bottom: 3px double #ddd;
       z-index: 10;
     }
+
     tbody {
       z-index: 1;
     }
@@ -73,18 +75,25 @@
     <div slot="appContent">
       <div id="app-root">
         <header>
-          <md-icon-button
-            slot="navigationIcon"
-            id="drawer-button"
+          <button class="icon-button" aria-label="Menu"
+                  slot="navigationIcon"
+                  id="drawer-button"
           >
-            <md-icon>menu</md-icon>
-          </md-icon-button>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="feather feather-menu">
+              <title>Menu</title>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
           <h2 id="view-title">
             <span>Administrace</span>,
             <label>ročník
               <select id="year-selector">
                 {% for yr in range(2022, year + 1) %}
-                <option>{{ yr }}</option>
+                  <option>{{ yr }}</option>
                 {% endfor %}
               </select>
             </label>

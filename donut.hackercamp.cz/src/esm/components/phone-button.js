@@ -9,7 +9,6 @@ function getInternationalPhoneFormat(phone) {
 }
 
 export class PhoneButton extends HTMLElement {
-
   get phone() {
     return this.getAttribute("phone");
   }

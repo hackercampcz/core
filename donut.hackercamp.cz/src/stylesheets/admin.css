@@ -33,7 +33,7 @@
     background-color: transparent;
     font: 600 24px var(--hc-font-family);
     padding-left: 0;
-    border: none
+    border: none;
   }
 }
 
@@ -65,7 +65,6 @@
     }
   }
 }
-
 
 .hc-master-detail__list table {
   width: 100%;

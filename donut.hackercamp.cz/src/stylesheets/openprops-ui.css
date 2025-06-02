@@ -46,7 +46,7 @@
       &:where(:not([disabled])) {
         &:where(:not(:active):hover) {
           --ripple: radial-gradient(circle, transparent 1%, var(--_bg-color) 1%)
-          center/15000%;
+            center/15000%;
 
           transition: background var(--button-ripple-duration);
         }
@@ -220,8 +220,7 @@
             circle,
             transparent 1%,
             var(--_ripple-color) 1%
-          )
-          center/15000%;
+          ) center/15000%;
 
           --_bg-color: light-dark(
             color-mix(in oklch, var(--gray-2) 93%, var(--color-8)),
@@ -287,7 +286,7 @@
     transform-style: preserve-3d;
 
     &:where([disabled]) {
-      color: light-dark(rgb(0, 0, 0/0.3), rgb(255, 255, 255/0.26));
+      color: light-dark(rgb(0, 0, 0 / 0.3), rgb(255, 255, 255 / 0.26));
       cursor: not-allowed;
       opacity: 0.64;
     }
@@ -424,7 +423,7 @@
     &:where(:not([disabled])) {
       &:where(:not(:active):hover) {
         --ripple: radial-gradient(circle, transparent 1%, var(--_bg-color) 1%)
-        center/15000%;
+          center/15000%;
 
         transition: background var(--button-ripple-duration);
       }
@@ -654,7 +653,7 @@ When you visibly want to hide an element but make it accessible for screen reade
         position: absolute;
         transform-origin: center center;
         transform: translateX(calc(var(--isRTL) * 50%)) translateY(-50%)
-        translateZ(-1px) scale(var(--thumb-scale));
+          translateZ(-1px) scale(var(--thumb-scale));
         will-change: transform;
 
         @media (prefers-reduced-motion: no-preference) {

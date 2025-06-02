@@ -1,5 +1,5 @@
 import { sortBy } from "@hackercamp/lib/array.js";
-import { formatDateTime, formatMoney } from "@hackercamp/lib/format.js";
+import { formatDateTime } from "@hackercamp/lib/format.js";
 import { html } from "lit-html";
 import { map } from "lit-html/directives/map.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
@@ -13,19 +13,26 @@ import {
   dispatchAction,
   Endpoint,
   executeCommand,
-  getTicketPrice,
   paginationNavigation,
   registerDialog,
   renderDetail,
   renderModalDialog,
   ticketDetail,
-  ticketName,
   unauthorized,
   View
 } from "./admin/common.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
+import {
+  iconBack,
+  iconCopy,
+  iconDownload, iconEdit,
+  iconFakturoid,
+  iconSearch, iconTrash,
+  iconUserMinus,
+  iconUserPlus
+} from "./lib/icons.js";
 import { getContact } from "./lib/profile.js";
 
 function optout(email) {
@@ -156,25 +163,23 @@ export function registrationsChips(
                 value="${params.get("query")}"
                 @change="${e => e.target.form.submit()}"
               >
-                <md-icon-button slot="leadingicon" type="submit" title="Hledat">
-                  <md-icon>search</md-icon>
-                </md-icon-button>
-                <md-icon-button
-                  slot="trailingicon"
-                  href="/admin/"
-                  title="Zavřít hledání"
-                >
-                  <md-icon>close</md-icon>
-                </md-icon-button>
+                <button class="icon-button" slot="leading-icon" type="submit" title="Hledat" aria-label="Hledat">
+                  ${iconSearch()}
+                </button>
+                <a class="icon-button"
+                   slot="trailing-icon"
+                   href="/admin/"
+                   title="Zavřít hledání">
+                  ${iconX()}
+                </a>
               </md-outlined-text-field>
             </form>`, () =>
           html`
             <div>
-              <md-icon-button
-                href="/admin/?${new URLSearchParams({ view: View.search, year })}"
-              >
-                <md-icon>search</md-icon>
-              </md-icon-button>
+              <a class="icon-button" href="/admin/?${new URLSearchParams({ view: View.search, year })}"
+                 title="Hledat" aria-label="Hledat">
+                ${iconSearch()}
+              </a>
             </div>
             <div
               class="mdc-chip-set"
@@ -226,23 +231,20 @@ export function registrationsChips(
             </span>
             </div>
             <div>
-              <md-icon-button
-                title="Zkopírovat statistiky"
-                @click="${copyToClipboard([paid, invoiced, confirmed, waitingList, volunteer, staff])}"
-              >
-                <md-icon>content_copy</md-icon>
-              </md-icon-button
-              >
-              <md-icon-button
-                href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
-                  // TODO: add support for search queries
-                  { year, type: view, format: "csv", pageSize: 500 }
-                )}"
-                title="Stáhnout CSV"
-                aria-label="Stáhnout CSV"
-              >
-                <md-icon>download</md-icon>
-              </md-icon-button>
+              <button class="icon-button"
+                      title="Zkopírovat statistiky"
+                      @click="${copyToClipboard([paid, invoiced, confirmed, waitingList, volunteer, staff])}">
+                ${iconCopy()}
+              </button>
+              <a class="icon-button"
+                 href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
+                   // TODO: add support for search queries
+                   { year, type: view, format: "csv", pageSize: 500 }
+                 )}"
+                 title="Stáhnout CSV"
+                 aria-label="Stáhnout CSV">
+                ${iconDownload()}
+              </a>
             </div>
           `)
       }
@@ -275,17 +277,17 @@ export async function selectionBar(selectedView, selection, data) {
       ${
         when(selectedView === View.confirmed, () =>
           html`
-            <md-icon-button title="Vyfakturovat" @click="${invoice()}">
-              <md-icon>request_quote</md-icon>
-            </md-icon-button>
+            <button class="icon-button" title="Vyfakturovat" @click="${invoice()}">
+              ${iconFakturoid()}
+            </button>
           `)
       }
       ${
         when(new Set([View.volunteer, View.staff]).has(selectedView), () =>
           html`
-            <md-icon-button title="Schválit" @click="${approveSelected()}">
-              <md-icon>person_add</md-icon>
-            </md-icon-button>
+            <button class="icon-button" title="Schválit" @click="${approveSelected()}" aria-label="Schválit účastníka">
+              ${iconUserPlus("Schválit")}
+            </button>
           `)
       }
     </div>
@@ -384,59 +386,37 @@ export function registrationDetailTemplate({ detail, selectedView }) {
   return html`
     <div class="hc-card hc-master-detail__detail">
       <div style="display: flex;align-items: center;gap: 12px;">
-        <md-icon-button
-          aria-label="Zavřít detail"
-          title="Zavřít detail"
-          @click="${closeDetail()}">
-          <md-icon>arrow_back</md-icon>
-        </md-icon-button>
+        <button class="icon-button"
+                aria-label="Zavřít detail"
+                title="Zavřít detail"
+                @click="${closeDetail()}">
+          ${iconBack()}
+        </button>
         <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
         ${ticketBadge.get(detail.ticketType)}
       </div>
       <p>${detail.company}</p>
       <div class="hc-detail__tools">
-        <hc-mail-button
-          email="${detail.email}"></hc-mail-button
-        >
-        <hc-phone-button
-          phone="${detail.phone}"
-        ></hc-phone-button
-        >
-        ${
-          when(selectedView === View.waitingList, () =>
-            html`
-              <md-icon-button title="Opt in" @click="${optin(detail.email)}">
-                <md-icon>person_add</md-icon>
-              </md-icon-button>`)
-        }${
-          when(selectedView !== View.paid, () =>
-            html`
-              <md-icon-button title="Opt out" @click="${optout(detail.email)}">
-                <md-icon>person_remove</md-icon>
-              </md-icon-button>`)
-        }${
-          when(selectedView === View.confirmed, () =>
-            html`
-              <md-icon-button
-                title="Vyfakturovat"
-                @click="${invoice(detail.year, detail.email)}"
-              >
-                <md-icon>request_quote</md-icon>
-              </md-icon-button>`)
-        }
-        <md-icon-button
-          title="Upravit registraci"
-          @click="${renderModalDialog("registration-modal")}"
-        >
-          <md-icon>edit</md-icon>
-        </md-icon-button
-        >
-        <md-icon-button
-          title="Odstranit registraci"
-          @click="${trashRegistration(detail.email)}"
-        >
-          <md-icon>delete</md-icon>
-        </md-icon-button>
+        <hc-mail-button email="${detail.email}"></hc-mail-button>
+        <hc-phone-button phone="${detail.phone}"></hc-phone-button>
+        ${when(selectedView === View.waitingList, () => html`
+          <button class="icon-button" title="Opt in" @click="${optin(detail.email)}" aria-label="Schválit účastníka">
+            ${iconUserPlus("Schválit")}
+          </button>`)}
+        ${when(selectedView === View.confirmed, () => html`
+          <button class="icon-button" title="Vyfakturovat" @click="${invoice(detail.year, detail.email)}">
+            ${iconFakturoid()}
+          </button>`)}
+        <button class="icon-button" title="Upravit registraci" @click="${renderModalDialog("registration-modal")}">
+          ${iconEdit()}
+        </button>
+        ${when(selectedView !== View.paid, () => html`
+          <button class="icon-button" title="Opt out" @click="${optout(detail.email)}" aria-label="Zamítnout účastníka">
+            ${iconUserMinus("Zamítnout")}
+          </button>`)}
+        <button class="icon-button" title="Odstranit registraci" @click="${trashRegistration(detail.email)}">
+          ${iconTrash()}
+        </button>
       </div>
       ${ticketDetail(detail)}
       ${when(detail.inviter, () => html`<p>Pozval ho <strong>${detail.inviter}</strong></p>`)}
@@ -456,12 +436,9 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           html`
             <p>
               Fakturovat za něj bude
-              <a href="mailto:${detail.invRecipientEmail}"
-              >${detail.invRecipientFirstname} ${detail.invRecipientLastname}</a
-              >
-              <a href="tel:${detail.invRecipientPhone}"
-              >${detail.invRecipientPhone}</a
-              >
+              <a href="mailto:${detail.invRecipientEmail}">${detail.invRecipientFirstname}
+                ${detail.invRecipientLastname}</a>
+              <a href="tel:${detail.invRecipientPhone}">${detail.invRecipientPhone}</a>
             </p>
           `)
       }
@@ -544,30 +521,36 @@ export function registrationsTemplate(state) {
     </div>
     <div class="hc-master-detail">
       <div class="hc-card hc-master-detail__list">
-        ${until(data?.then(data => {
-            const timeColumnSettings = timeColumn.get(selectedView)
-              ?? { timeHeader: "Čas registrace", timeAttr: "timestamp" };
-            if (selectedView === View.optouts) {
-              return html`
-                <ul>
-                  ${data.map(x => html`
-                    <li>${x}</li>`)}
-                </ul>`;
-            }
-            return registrationsTableTemplate(
-              sortBy(
-                timeColumnSettings.timeAttr,
-                data.items.map(x => Object.assign({}, x, { name: x.name ?? `${x.firstName} ${x.lastName}` }))
-              ),
-              timeColumnSettings,
-              { page, pages: data.pages, total: data.total, params, selection },
-              selectedView
-            );
-          })?.catch(data => {
-            if (data.unauthorized) return unauthorized();
-          }),
-          html`<p style="padding: 16px">Načítám data&hellip;</p>`
-        )
+        ${
+          until(
+            data?.then(data => {
+              const timeColumnSettings = timeColumn.get(selectedView)
+                ?? { timeHeader: "Čas registrace", timeAttr: "timestamp" };
+              if (selectedView === View.optouts) {
+                return html`
+                  <ul>
+                    ${
+                      data.map(x =>
+                        html`
+                          <li>${x}</li>`
+                      )
+                    }
+                  </ul>`;
+              }
+              return registrationsTableTemplate(
+                sortBy(
+                  timeColumnSettings.timeAttr,
+                  data.items.map(x => Object.assign({}, x, { name: x.name ?? `${x.firstName} ${x.lastName}` }))
+                ),
+                timeColumnSettings,
+                { page, pages: data.pages, total: data.total, params, selection },
+                selectedView
+              );
+            })?.catch(data => {
+              if (data.unauthorized) return unauthorized();
+            }),
+            html`<p style="padding: 16px">Načítám data&hellip;</p>`
+          )
         }
       </div>
       ${when(detail, () => registrationDetailTemplate({ detail, selectedView }))}
