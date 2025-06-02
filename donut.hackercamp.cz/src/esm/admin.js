@@ -1,7 +1,5 @@
 import "@material/mwc-drawer/mwc-drawer.js";
-import "@material/web/button/text-button.js";
 import "@material/web/textfield/outlined-text-field.js";
-import "@material/web/textfield/filled-text-field.js";
 import { defAtom, updateAsTransaction } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import { Action, dispatchAction, Endpoint, executeCommand, getDialog, View } from "./admin/common.js";
