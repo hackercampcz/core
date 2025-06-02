@@ -39,7 +39,8 @@
 
 .hc-master-detail {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 0fr;
+  transition: 250ms ease-out;
 
   > * {
     grid-area: 1 / 1;
@@ -52,7 +53,6 @@
   .hc-master-detail__list {
     overflow-y: scroll;
     max-height: calc(100vh - var(--hc-viewport-compensation));
-    transition: width 250ms ease-out;
   }
 
   @container (width > 840px) {
