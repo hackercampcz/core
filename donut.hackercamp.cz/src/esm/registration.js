@@ -59,6 +59,7 @@ function disableForm(form) {
 
 export async function main({ env, formElement, submitButtonElement, searchParams }) {
   rollbar.init(env);
+  const dbgContext = {};
   try {
     const { year } = env;
     const { email, sub: slackID, picture: image } = getSlackProfile();
@@ -80,9 +81,13 @@ export async function main({ env, formElement, submitButtonElement, searchParams
     for (const key in data) {
       const field = formElement[key];
       let value = data[key];
+      Object.assign(dbgContext, { key, value, field });
       if (!(field && value)) continue;
       const isRadio = field.length && field[0].type === "radio";
       const isCheckbox = field.type === "checkbox";
+      dbgContext.isRadio = isRadio;
+      dbgContext.isCheckbox = isCheckbox;
+      Object.assign({ isRadio, isCheckbox });
       if (isCheckbox) {
         field.checked = value;
       } else if (isRadio) {
@@ -103,6 +108,7 @@ export async function main({ env, formElement, submitButtonElement, searchParams
       }
     }
   } catch (err) {
+    rollbar.configure({ payload: { client: { dbgContext } } });
     rollbar.error(err);
     alert("Něco se kouslo, zkuste to jindy.");
   }
@@ -119,22 +125,22 @@ export async function main({ env, formElement, submitButtonElement, searchParams
         "Content-Type": "application/x-www-form-urlencoded"
       }
     })
-      .then(response => {
-        if (!response.ok) {
-          throw response;
-        }
-        return response.json();
-      })
-      .then(data => {
-        location.href = `/registrace/potvrzeno/?${searchParams}`;
-      })
-      .catch(err => {
-        rollbar.error(err);
-        alert("Se to někde zaseklo, zkuste to prosím znovu");
-      })
-      .finally(() => {
-        submitButtonElement.disabled = false;
-      });
+    .then(response => {
+      if (!response.ok) {
+        throw response;
+      }
+      return response.json();
+    })
+    .then(data => {
+      location.href = `/registrace/potvrzeno/?${searchParams}`;
+    })
+    .catch(err => {
+      rollbar.error(err);
+      alert("Se to někde zaseklo, zkuste to prosím znovu");
+    })
+    .finally(() => {
+      submitButtonElement.disabled = false;
+    });
   });
 
   hideSection("#someone-else-will-pay");
