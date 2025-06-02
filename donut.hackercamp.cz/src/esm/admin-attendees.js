@@ -216,7 +216,7 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
       </thead>
       <tfoot>
       <tr>
-        <td colspan="5">
+        <td colspan="7">
           ${paginationNavigation({ page, pages, total, count: data.length, params })}
         </td>
       </tr>

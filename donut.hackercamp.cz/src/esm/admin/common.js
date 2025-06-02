@@ -238,20 +238,20 @@ export function paginationNavigation({ page, pages, count, total, params }) {
   return html`
     <div class="hc-pagination">
       <data class="hc-pagination__total" value="${total}">${first}-${last} ze ${total}</data>
-      <a class="icon-button" title="První strana" href="${page <= 0 ? "" : search({ page: 0 })}"
+      <a class="icon-button small" title="První strana" href="${page <= 0 ? "" : search({ page: 0 })}"
          ?disabled="${page <= 0}">
         ${iconSkipBackward()}
       </a>
-      <a class="icon-button" title="Předchozí strana" href="${page <= 0 ? "" : search({ page: Math.max(page - 1, 0) })}"
+      <a class="icon-button small" title="Předchozí strana" href="${page <= 0 ? "" : search({ page: Math.max(page - 1, 0) })}"
          ?disabled="${page <= 0}">
         ${iconChevronLeft()}
       </a>
-      <a class="icon-button" title="Další strana"
+      <a class="icon-button small" title="Další strana"
          href="${page >= pages - 1 ? "" : search({ page: Math.min(page + 1, pages - 1) })}"
          ?disabled="${page >= pages - 1}">
         ${iconChevronRight()}
       </a>
-      <a class="icon-button" title="Poslední strana" href="${page >= pages - 1 ? "" : search({ page: pages - 1 })}"
+      <a class="icon-button small" title="Poslední strana" href="${page >= pages - 1 ? "" : search({ page: pages - 1 })}"
          ?disabled="${page >= pages - 1}">
         ${iconSkipForward()}
       </a>
