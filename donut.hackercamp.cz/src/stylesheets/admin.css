@@ -4,6 +4,7 @@
   --md-list-item-label-text-type: 400 1rem var(--hc-font-family);
   --md-ref-typeface-plain: var(--hc-font-family);
 }
+
 @media (prefers-color-scheme: dark) {
   :root {
     --md-list-item-label-text-color: var(--hc-text-color);
@@ -19,7 +20,8 @@
   margin-inline: 1em;
   container-type: inline-size;
 }
-#app-root header {
+
+#app-root > header {
   display: flex;
   align-items: center;
   gap: 1em;
@@ -34,10 +36,22 @@
   }
 }
 
-#app-root search {
+#app-root > search {
   display: grid;
   gap: 8px;
   grid-template-columns: fit-content(2ch) 1fr fit-content(11ch);
+
+  &:has(form) {
+    grid-template-columns: 1fr;
+    gap: 0;
+
+    [name=query] {
+      --md-outlined-field-bottom-space: 4px;
+      --md-outlined-field-top-space: 4px;
+      width: 100%;
+      max-width: 480px
+    }
+  }
 }
 
 .hc-master-detail {
@@ -104,16 +118,19 @@
 .hc-dialog {
   padding-top: 2rem;
 }
+
 .hc-dialog [data-action="close"] {
   position: absolute;
   right: 4px;
   top: 4px;
 }
+
 .hc-dialog iframe {
   width: 100%;
   height: 80vh;
   border: none;
 }
+
 .hc-dialog > div {
   position: relative;
 }

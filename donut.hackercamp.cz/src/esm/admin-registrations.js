@@ -31,7 +31,7 @@ import {
   iconFakturoid,
   iconSearch, iconTrash,
   iconUserMinus,
-  iconUserPlus
+  iconUserPlus, iconX
 } from "./lib/icons.js";
 import { getContact } from "./lib/profile.js";
 
@@ -153,20 +153,19 @@ export function registrationsChips(
       ${
         when(view === View.search, () =>
           html`
-            <form style="flex-grow: 1">
+            <form>
               <input type="hidden" name="view" value="${View.search}">
               <input type="hidden" name="year" value="${year}">
               <md-outlined-text-field
                 name="query"
-                style="--md-outlined-field-bottom-space: 4px; --md-outlined-field-top-space: 4px; width: 100%; max-width: 480px"
                 placeholder="Hledat jméno, e-mail, firmu&hellip;"
                 value="${params.get("query")}"
                 @change="${e => e.target.form.submit()}"
               >
-                <button class="icon-button" slot="leading-icon" type="submit" title="Hledat" aria-label="Hledat">
+                <button class="icon-button small" slot="leading-icon" type="submit" title="Hledat" aria-label="Hledat">
                   ${iconSearch()}
                 </button>
-                <a class="icon-button"
+                <a class="icon-button small"
                    slot="trailing-icon"
                    href="/admin/"
                    title="Zavřít hledání">
@@ -176,7 +175,7 @@ export function registrationsChips(
             </form>`, () =>
           html`
             <div>
-              <a class="icon-button" href="/admin/?${new URLSearchParams({ view: View.search, year })}"
+              <a class="icon-button small" href="/admin/?${new URLSearchParams({ view: View.search, year })}"
                  title="Hledat" aria-label="Hledat">
                 ${iconSearch()}
               </a>
