@@ -182,53 +182,18 @@ export function registrationsChips(
               </a>
             </div>
             <div
-              class="mdc-chip-set"
+              class="hc-chip-set"
               role="grid"
               id="filters"
               aria-orientation="horizontal"
-              aria-multiselectable="false"
-            >
-            <span class="mdc-chip-set__chips" role="presentation">
+              aria-multiselectable="false">
               ${chip({ text: "Zaplacení", count: paid, selected: view === View.paid, view: View.paid, year })}
-              ${
-                chip({
-                  text: "Vyfakturovaní",
-                  count: invoiced,
-                  selected: view === View.invoiced,
-                  view: View.invoiced,
-                  year
-                })
-              }
-              ${
-                chip({
-                  text: "Potvrzení",
-                  count: confirmed,
-                  selected: view === View.confirmed,
-                  view: View.confirmed,
-                  year
-                })
-              }
-              ${
-                chip({
-                  text: "Waiting list",
-                  count: waitingList,
-                  selected: view === View.waitingList,
-                  view: View.waitingList,
-                  year
-                })
-              }
-              ${
-                chip({
-                  text: "Dobrovolníci",
-                  count: volunteer,
-                  selected: view === View.volunteer,
-                  view: View.volunteer,
-                  year
-                })
-              }
+              ${chip({ text: "Vyfakturovaní", count: invoiced, selected: view === View.invoiced, view: View.invoiced, year })}
+              ${chip({ text: "Potvrzení", count: confirmed, selected: view === View.confirmed, view: View.confirmed, year })}
+              ${chip({ text: "Waiting list", count: waitingList, selected: view === View.waitingList, view: View.waitingList, year })}
+              ${chip({ text: "Dobrovolníci", count: volunteer, selected: view === View.volunteer, view: View.volunteer, year })}
               ${chip({ text: "Ostatní", count: staff, selected: view === View.staff, view: View.staff, year })}
               ${chip({ text: "Opt-outs", count: optouts, selected: view === View.optouts, view: View.optouts, year })}
-            </span>
             </div>
             <div>
               <button class="icon-button"

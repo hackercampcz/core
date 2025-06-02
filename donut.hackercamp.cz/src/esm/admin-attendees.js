@@ -111,59 +111,16 @@ export function attendeesChips(
               </a>
             </div>
             <div
-              class="mdc-chip-set"
+              class="hc-chip-set"
               role="grid"
               id="filters"
               aria-orientation="horizontal"
-              aria-multiselectable="false"
-            >
-            <span class="mdc-chip-set__chips" role="presentation">
-              ${
-        chip({
-          text: "Všichni",
-          count: attendees,
-          selected: view === View.attendees,
-          view: View.attendees,
-          year
-        })
-      }
-              ${
-        chip({
-          text: "Hackeři",
-          count: hackerAttendees,
-          selected: view === View.hackerAttendees,
-          view: View.hackerAttendees,
-          year
-        })
-      }
-              ${
-        chip({
-          text: "Dobrovolníci",
-          count: volunteerAttendees,
-          selected: view === View.volunteerAttendees,
-          view: View.volunteerAttendees,
-          year
-        })
-      }
-              ${
-        chip({
-          text: "Ostatní",
-          count: staffAttendees,
-          selected: view === View.staffAttendees,
-          view: View.staffAttendees,
-          year
-        })
-      }
-              ${
-        chip({
-          text: "Crew",
-          count: crewAttendees,
-          selected: view === View.crewAttendees,
-          view: View.crewAttendees,
-          year
-        })
-      }
-            </span>
+              aria-multiselectable="false">
+              ${chip({ text: "Všichni", count: attendees, selected: view === View.attendees, view: View.attendees, year })}
+              ${chip({ text: "Hackeři", count: hackerAttendees, selected: view === View.hackerAttendees, view: View.hackerAttendees, year })}
+              ${chip({ text: "Dobrovolníci", count: volunteerAttendees, selected: view === View.volunteerAttendees, view: View.volunteerAttendees, year })}
+              ${chip({ text: "Ostatní", count: staffAttendees, selected: view === View.staffAttendees, view: View.staffAttendees, year })}
+              ${chip({ text: "Crew", count: crewAttendees, selected: view === View.crewAttendees, view: View.crewAttendees, year })}
             </div>
             <div>
               <button class="icon-button" title="Zkopírovat statistiky"

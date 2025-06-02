@@ -23,24 +23,20 @@ function deleteEvent(email) {
 export function programChips(view, year, { program, programApproval }) {
   return html`
     <div
-      class="mdc-chip-set"
+      class="hc-chip-set"
       role="grid"
       id="filters"
       aria-orientation="horizontal"
       aria-multiselectable="false"
     >
-      <span class="mdc-chip-set__chips" role="presentation">
-        ${chip({ text: "Schváleno", count: program, selected: view === View.program, view: View.program, year })}
-        ${
-          chip({
-            text: "Ke schválení",
-            count: programApproval,
-            selected: view === View.programApproval,
-            view: View.programApproval,
-            year
-          })
-        }
-      </span>
+      ${chip({ text: "Schváleno", count: program, selected: view === View.program, view: View.program, year })}
+      ${chip({
+        text: "Ke schválení",
+        count: programApproval,
+        selected: view === View.programApproval,
+        view: View.programApproval,
+        year
+      })}
     </div>
   `;
 }

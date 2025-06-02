@@ -180,41 +180,19 @@ export const ticketPrice = new Map([
 
 export function chip({ text, count, selected, view, year }) {
   const chipClasses = classMap({
-    "mdc-chip": true,
-    "mdc-chip--selectable": true,
-    "mdc-chip--filter": true,
+    "chip": true,
+    "outlined": true,
     "hc-chip": true,
     "hc-chip--selected": selected
   });
   return html`
-    <span class="${chipClasses}" role="presentation">
-      <a class="mdc-chip__action mdc-chip__action--primary"
-         role="option"
-         aria-selected="${selected.toString()}"
-         tabindex="0"
-         href="?${new URLSearchParams({ view, year })}">
-        <span class="mdc-chip__ripple mdc-chip__ripple--primary"></span>
-        <span class="mdc-chip__graphic">
-          <span class="mdc-chip__checkmark">
-            <svg class="mdc-chip__checkmark-svg" viewBox="-2 -3 30 30">
-              <path
-                class="mdc-chip__checkmark-path"
-                fill="none"
-                stroke="black"
-                d="M1.73,12.91 8.1,19.28 22.79,4.59"
-              />
-            </svg>
-          </span>
-        </span>
-        <span class="mdc-chip__text-label">${text}${
-          until(
-            count?.then(x =>
-              html`
-                <data value="${x}">${x}</data>`, "")
-          )
-        }</span>
-      </a>
-    </span>
+    <a class="${chipClasses}"
+       role="option"
+       aria-selected="${selected.toString()}"
+       tabindex="0"
+       href="?${new URLSearchParams({ view, year })}">
+      <span class="text">${text}${until(count?.then(x => html`<data value="${x}">${x}</data>`, ""))}</span>
+    </a>
   `;
 }
 
