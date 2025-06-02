@@ -1,12 +1,9 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { partition } from "https://esm.sh/@thi.ng/transducers";
 import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 async function main({ token }) {
-  const emails = [
-    "buchnerova.jana@gmail.com",
-    "ondcej@gmail.com",
-  ];
+  const emails = ["karolina@apify.com"];
   console.log(`Found ${emails.length} contacts`);
   for (const batch of partition(500, true, emails)) {
     const resp = await sendEmailsWithTemplate({
@@ -14,6 +11,7 @@ async function main({ token }) {
       emails: batch,
       templateId: Template.VolunteerInvitation,
       tag: "volunteer-invitation",
+      replyTo: "pavla.verflova@hackercamp.cz"
     });
     for (const item of resp) {
       if (item.ErrorCode) console.error(item);
@@ -23,6 +21,6 @@ async function main({ token }) {
   console.log("DONE");
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args));
 
 // deno run --allow-env --allow-import --allow-net=api.postmarkapp.com email-volunteer-invitation.js --token=$(op read "op://HackerCamp/Postmark/credential")

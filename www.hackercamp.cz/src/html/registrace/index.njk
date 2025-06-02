@@ -325,26 +325,15 @@
         </fieldset>
       </section>
       <script type="module">
-        document.querySelector("select#first-time").addEventListener("change", (event) => {
+        document.getElementById("first-time").addEventListener("change", (event) => {
           if (parseInt(event.target.value)) {
-            document.querySelector("#inviter").parentElement.removeAttribute("aria-hidden");
-            // document.querySelector("#plus-one").parentElement.setAttribute("aria-hidden", "true");
-            // document.querySelector("#plus-one-section").setAttribute("aria-hidden", "true");
-            // document.querySelector("select#plus-one").value = "0";
-            document.querySelector("#go-to-login").setAttribute("aria-hidden", "true");
+            document.getElementById("inviter").parentElement.removeAttribute("aria-hidden");
+            document.getElementById("go-to-login").ariaHidden = "true";
           } else {
-            // document.querySelector("#plus-one").parentElement.removeAttribute("aria-hidden");
-            document.querySelector("#go-to-login").removeAttribute("aria-hidden");
-            document.querySelector("#inviter").parentElement.setAttribute("aria-hidden", "true");
+            document.getElementById("go-to-login").removeAttribute("aria-hidden");
+            document.getElementById("inviter").parentElement.ariaHidden = "true";
           }
         });
-        // document.querySelector("select#plus-one").addEventListener("change", (event) => {
-        //   if (parseInt(event.target.value)) {
-        //     document.querySelector("#plus-one-section").removeAttribute("aria-hidden");
-        //   } else {
-        //     document.querySelector("#plus-one-section").setAttribute("aria-hidden", "true");
-        //   }
-        // });
       </script>
       <section id="ticket">
         <h2>Lístek</h2>
@@ -499,23 +488,23 @@
           if (!section) return;
           section.removeAttribute("aria-hidden");
           if (section.tagName === "FIELDSET") {
-            section.removeAttribute("disabled");
+            section.disabled = false;
           }
           for (const fieldset of section.querySelectorAll("fieldset")) {
             fieldset.removeAttribute("aria-hidden");
-            fieldset.removeAttribute("disabled");
+            fieldset.disabled = false;
           }
         }
 
         function hideSection(id) {
           const section = document.getElementById(id);
-          section.setAttribute("aria-hidden", "true");
+          section.ariaHidden = "true";
           if (section.tagName === "FIELDSET") {
-            section.setAttribute("disabled", "true");
+            section.disabled = true;
           }
           for (const fieldset of section.querySelectorAll("fieldset")) {
-            fieldset.setAttribute("aria-hidden", "true");
-            fieldset.setAttribute("disabled", "true");
+            fieldset.ariaHidden = "true";
+            fieldset.disabled = true;
           }
         }
 
@@ -523,10 +512,10 @@
         window.hideSection = hideSection;
 
         hideSection("someone-else-will-pay");
-        document.querySelector("#email").addEventListener("blur", event => {
-          document.querySelector("#invoice-email").setAttribute("placeholder", event.target.value);
+        document.getElementById("email").addEventListener("blur", event => {
+          document.getElementById("invoice-email").placeholder = event.target.value;
         });
-        document.querySelector("#invoice-recipient").addEventListener("change", event => {
+        document.getElementById("invoice-recipient").addEventListener("change", event => {
           if (event.target.value == 0) {
             showSection("I-will-pay");
             hideSection("someone-else-will-pay");
@@ -624,11 +613,11 @@
         </div>
       </section>
       <script type="module">
-        document.querySelector("select#stay-time").addEventListener("change", event => {
+        document.getElementById("stay-time").addEventListener("change", event => {
           if (event.target.value == 2) {
-            document.querySelector("#custom-stay-time").parentElement.removeAttribute("aria-hidden");
+            document.getElementById("custom-stay-time").parentElement.removeAttribute("aria-hidden");
           } else {
-            document.querySelector("#custom-stay-time").parentElement.setAttribute("aria-hidden", "true");
+            document.getElementById("custom-stay-time").parentElement.ariaHidden = "true";
           }
         });
       </script>
@@ -761,13 +750,11 @@
       }
 
       if (searchParams.has("referral")) {
-        formElement.elements.referral.setAttribute("value", searchParams.get("referral"));
+        formElement.elements.referral.value = searchParams.get("referral");
       }
 
-      for (let key in localStorage) {
-        if (key.startsWith(storagePrefix) === false) {
-          continue;
-        }
+      for (const key in localStorage) {
+        if (!key.startsWith(storagePrefix)) continue;
         const value = localStorage.getItem(key);
         const field = formElement.elements[key.replace(storagePrefix, "")];
 
@@ -777,14 +764,14 @@
         if (isCheckbox) {
           field.checked = value;
         } else if (isRadio) {
-          formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
+          formElement.querySelector(`[value="${value}"]`).checked = true;
         } else if (field.type === "textarea") {
           field.innerText = value;
         } else if (field.type === "select-one") {
-          field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
+          field.querySelector(`[value="${value}"]`).selected = true;
           field.dispatchEvent(new Event("change"));
         } else {
-          field.setAttribute("value", value);
+          field.value = value;
         }
       }
 
@@ -797,45 +784,44 @@
 
         if (data.invoiced || data.paid) disableForm();
 
-        for (let key in data) {
+        for (const key in data) {
           const field = formElement.elements[key];
-          let value = data[key];
+          const value = data[key];
           if (!field || !value) continue;
           const isRadio = field.length && field[0].type === "radio";
           const isCheckbox = field.type === "checkbox";
           if (isCheckbox) {
             field.checked = value;
           } else if (isRadio) {
-            formElement.querySelector(`[value="${value}"]`).setAttribute("checked", "checked");
+            formElement.querySelector(`[value="${value}"]`).checked = true;
           } else if (field.type === "textarea") {
             field.innerText = value;
           } else if (field.type === "select-one") {
-            if (value === true) value = "1";
-            field.querySelector(`[value="${value}"]`).setAttribute("selected", "selected");
+            field.querySelector(`[value="${value === true ? "1" : value}"]`).selected = true;
             field.dispatchEvent(new Event("change"));
           } else {
-            field.setAttribute("value", value);
+            field.value = value;
           }
         }
         submitButtonElement.innerText = "Upravit";
       }
 
       formElement.addEventListener("change", event => {
-        const name = event.target.name;
-        if (event.target.type === "checkbox") {
-          if (event.target.checked) {
+        const { name, type, checked, value } = event.target;
+        if (type === "checkbox") {
+          if (checked) {
             localStorage.setItem(storagePrefix + name, "on");
           } else {
             localStorage.removeItem(storagePrefix + name);
           }
-          return;
+        } else {
+          localStorage.setItem(storagePrefix + name, value);
         }
-        localStorage.setItem(storagePrefix + name, event.target.value);
       });
 
       formElement.addEventListener("submit", event => {
         event.preventDefault();
-        submitButtonElement.setAttribute("disabled", "disabled");
+        submitButtonElement.disabled = true;
 
         fetch(event.target.action, {
           method: "POST",
@@ -854,7 +840,11 @@
           }
           if (searchParams.has("referral")) {
             location.assign(
-              `/registrace/odeslano/?${new URLSearchParams({ editUrl, volunteer, referral: searchParams.get("referral") })}`
+              `/registrace/odeslano/?${new URLSearchParams({
+                editUrl,
+                volunteer,
+                referral: searchParams.get("referral")
+              })}`
             );
           } else {
             location.assign(`/registrace/odeslano/?${new URLSearchParams({ editUrl, volunteer })}`);
@@ -863,18 +853,15 @@
           rollbar.error(o_O);
           alert("Se to někdě zaseklo, zkuste to prosím znovu");
         }).finally(() => {
-          submitButtonElement.removeAttribute("disabled");
+          submitButtonElement.disabled = false;
         });
       });
 
       function disableForm() {
-        formElement.setAttribute("disabled", "disabled");
-        formElement.querySelectorAll("input, textarea, select").forEach(field => {
-          field.setAttribute("disabled", "disabled");
-        });
-        formElement.querySelectorAll("button").forEach(button => {
-          button.setAttribute("disabled", "disabled");
-        });
+        formElement.disabled = true;
+        for (const el of formElement.querySelectorAll("input, textarea, select, button")) {
+          el.disabled = true;
+        }
       }
     </script>
   {% endif %}

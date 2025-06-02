@@ -1,6 +1,5 @@
 import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
 import { texyTypography } from "@hckr_/blendid/lib/texy.mjs";
-import gulpMode from "gulp-mode";
 import fs from "node:fs";
 import path from "node:path";
 import OpenProps from "open-props";
@@ -11,8 +10,6 @@ import pathConfig from "./path-config.mjs";
 import { WorkboxBuildRegistry } from "./workboxbuild.mjs";
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
-
-const mode = gulpMode();
 
 function assetPath(destPath, key) {
   const revManifest = path.join(destPath, "rev-manifest.json");
