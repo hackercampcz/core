@@ -82,9 +82,9 @@
         <template>
           <label>
             Položka
-            <input type="number" class="count" name="count" min="1">✕
+            <input type="text" inputmode="numeric" pattern="[0-9]*" class="count" name="count" min="1">✕
             <input type="text" class="text" name="text">
-            <input type="number" class="price" name="price"> Kč
+            <input type="text" inputmode="numeric" pattern="[0-9]*" class="price" name="price"> Kč
           </label>
         </template>
       </fieldset>

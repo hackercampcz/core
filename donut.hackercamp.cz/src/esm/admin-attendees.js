@@ -61,7 +61,7 @@ export function add(attendee, apiHost) {
 function selectRow(e) {
   e.stopPropagation();
   const key = e.target.value;
-  if (!e.target.checked) {
+  if (e.target.checked) {
     dispatchAction(Action.select, { keys: [key] });
   } else {
     dispatchAction(Action.unselect, { key });
@@ -227,13 +227,11 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
           html`
             <tr @click="${renderDetail(row)}">
               <td>
-                <md-checkbox
-                  aria-label="vybrat"
-                  value="${row.slackID}"
-                  @click="${selectRow}"
-                  touch-target="wrapper"
-                  ?checked="${selection.has(row.slackID)}"
-                ></md-checkbox>
+                <label class="checkbox">
+                  <input type="checkbox" value="${row.slackID}" @click="${selectRow}"
+                         ?checked="${selection.has(row.slackID)}">
+                  <span class="sr-only">Vybrat</span>
+                </label>
               </td>
               <td>${row.name}</td>
               <td>${row.company}</td>
@@ -731,20 +729,19 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
           V případě, že platba probhla, tak to odškrtněte a zadejte i částku.
         </p>
         <div class="field">
-          <label for="paid"><input
+          <label class="checkbox" for="paid"><input
             type="checkbox"
             id="paid"
             name="checkOutPaid"
             value="true">
-            Zaplaceno</label>
+            <span class="label">Zaplaceno</span></label>
         </div>
         <div class="field">
           <label for="total">Částka</label>
-          <md-outlined-text-field
+          <input type="text" inputmode="numeric" pattern="[0-9]*"
             id="total"
             name="checkOutTotal"
-            value="${detail.nfcTronData?.map(x => x.spent ?? 0)?.reduce((a, b) => a + b, 0) ?? 0}"
-          ></md-outlined-text-field>
+            value="${detail.nfcTronData?.map(x => x.spent ?? 0)?.reduce((a, b) => a + b, 0) ?? 0}">
         </div>
       </fieldset>
       <fieldset>

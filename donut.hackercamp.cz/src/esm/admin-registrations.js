@@ -257,12 +257,11 @@ export async function selectionBar(selectedView, selection, data) {
   const indeterminate = selection.size < items.length;
   return html`
     <div>
-      <md-checkbox
-        ?checked="${checked}"
-        ?indeterminate="${indeterminate}"
-        @click="${multiRowSelection(indeterminate, checked, items)}"
-        touch-target="wrapper"
-      ></md-checkbox>
+      <label class="checkbox">
+        <input type="checkbox" ?checked="${checked}" ?indeterminate="${indeterminate}"
+               @click="${multiRowSelection(indeterminate, checked, items)}">
+        <span class="sr-only">Vybrat vše</span>
+      </label>
       ${
         when(selectedView === View.confirmed, () =>
           html`
@@ -285,8 +284,8 @@ export async function selectionBar(selectedView, selection, data) {
 
 function selectRow(e) {
   e.stopPropagation();
-  const key = e.target.value;
-  if (!e.target.checked) {
+  const { value: key } = e.target;
+  if (e.target.checked) {
     dispatchAction(Action.select, { keys: [key] });
   } else {
     dispatchAction(Action.unselect, { key });
@@ -333,37 +332,32 @@ export function registrationsTableTemplate(
       </tr>
       </tfoot>
       <tbody>
-      ${
-        data.map(row =>
-          html`
-            <tr @click="${renderDetail(row)}">
-              <td>
-                <md-checkbox
-                  aria-label="vybrat"
-                  value="${row.email}"
-                  @click="${selectRow}"
-                  touch-target="wrapper"
-                  ?checked="${selection.has(row.email)}"
-                ></md-checkbox>
-              </td>
-              <td>${row.name}</td>
-              <td>${row.company}</td>
-              <td>
-                ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
-              </td>
-              ${
-                when(selectedView === View.search, () =>
-                  html`
-                    <td>${registrationStatus(row)}</td>`)
-              }
-              <td>
-                <hc-mail-button email="${row.email}"></hc-mail-button
-                >
-                <hc-phone-button phone="${row.phone}"></hc-phone-button>
-              </td>
-            </tr>
-          `
-        )
+      ${data.map(row => html`
+          <tr @click="${renderDetail(row)}">
+            <td>
+              <label class="checkbox">
+                <input type="checkbox" value="${row.email}" @click="${selectRow}" ?checked="${selection.has(row.email)}">
+                <span class="sr-only">Vybrat</span>
+              </label>
+            </td>
+            <td>${row.name}</td>
+            <td>${row.company}</td>
+            <td>
+              ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
+            </td>
+            ${
+              when(selectedView === View.search, () =>
+                html`
+                  <td>${registrationStatus(row)}</td>`)
+            }
+            <td>
+              <hc-mail-button email="${row.email}"></hc-mail-button
+              >
+              <hc-phone-button phone="${row.phone}"></hc-phone-button>
+            </td>
+          </tr>
+        `
+      )
       }
       </tbody>
     </table>

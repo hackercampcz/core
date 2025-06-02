@@ -1,6 +1,5 @@
 import "@material/mwc-drawer/mwc-drawer.js";
 import "@material/web/button/text-button.js";
-import "@material/web/checkbox/checkbox.js";
 import "@material/web/list/list.js";
 import "@material/web/list/list-item.js";
 import "@material/web/textfield/outlined-text-field.js";
