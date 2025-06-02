@@ -1,18 +1,23 @@
 :root {
   --md-sys-color-primary: var(--hc-link-color);
   --md-sys-color-surface: var(--hc-background-color);
-  --md-list-item-label-text-type: 400 1rem var(--hc-font-family);
   --md-ref-typeface-plain: var(--hc-font-family);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --md-list-item-label-text-color: var(--hc-text-color);
-    --md-list-item-hover-label-text-color: var(--hc-text-color);
-    --md-list-item-hover-state-layer-color: var(--hc-text-color);
     --mdc-theme-surface: var(--hc-background-color);
     --md-sys-color-on-surface-variant: var(--hc-text-color);
     --md-sys-color-on-surface: var(--hc-text-color);
+  }
+}
+
+#drawer {
+  .list {
+    --_bg-color: var(--hc-background-color);
+  }
+  .list a {
+    color: var(--hc-text-color);
   }
 }
 

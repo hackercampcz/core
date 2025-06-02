@@ -56,13 +56,20 @@
 
 {% block content %}
   <mwc-drawer id="drawer" type="dismissible" style="margin-top: 2em">
-    <md-list>
-      <md-list-item href="/admin/?view=confirmed">Registrace</md-list-item>
-      <md-list-item href="/admin/?view=attendees">Účastníci</md-list-item>
-      <md-list-item href="/admin/?view=program">Program</md-list-item>
-      <md-list-item href="/admin/?view=housing">Ubytování</md-list-item>
-      <md-list-item href="/admin/dashboard/">Dashboard</md-list-item>
-    </md-list>
+    <ul class="list">
+      <li>
+        <a href="/admin/?view=confirmed">Registrace</a>
+      </li>
+      <li>
+        <a href="/admin/?view=attendees">Účastníci</a>
+      </li>
+      <li>
+        <a href="/admin/?view=housing">Ubytování</a>
+      </li>
+      <li>
+        <a href="/admin/dashboard/">Dashboard</a>
+      </li>
+    </ul>
     <div slot="appContent">
       <div id="app-root">
         <header>
