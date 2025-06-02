@@ -272,6 +272,47 @@
 }
 
 @layer components.base {
+  :where(.icon-button) {
+    --_text-color: inherit;
+
+    align-items: center;
+    aspect-ratio: 1;
+    background-color: transparent;
+    border: 0;
+    border-radius: var(--radius-round);
+    display: inline-flex;
+    inline-size: var(--size-6);
+    justify-content: center;
+    padding: 0;
+    transform-style: preserve-3d;
+
+    &:where([disabled]) {
+      color: light-dark(rgb(0, 0, 0/0.3), rgb(255, 255, 255/0.26));
+      cursor: not-allowed;
+      opacity: 0.64;
+    }
+
+    svg {
+      max-inline-size: var(--size-5);
+      pointer-events: none;
+    }
+
+    /* Ripple effect, utils > index.css */
+    &::before {
+      --highlight-size: 130%;
+    }
+
+    /* Size */
+    &.small {
+      inline-size: var(--size-4);
+      svg {
+        max-inline-size: var(--size-4);
+      }
+    }
+  }
+}
+
+@layer components.base {
   :where(.chip) {
     --_bg-color: var(--surface-tonal);
     --_border-color: var(--border-color);
@@ -559,6 +600,67 @@
     }
     .content p {
       margin-block: 0;
+    }
+  }
+}
+
+@layer utils {
+  /*
+Screen-reader only
+When you visibly want to hide an element but make it accessible for screen readers.
+*/
+  .sr-only {
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  /* Hover and active effect for checkbox, radio and icon buttons */
+  :where(.checkbox input, .radio input, .icon-button) {
+    --isLTR: 1;
+    --isRTL: -1;
+
+    position: relative;
+    transform-style: preserve-3d;
+
+    &:dir(rtl) {
+      --isLTR: -1;
+      --isRTL: 1;
+    }
+
+    &:where(:not([disabled])) {
+      &:hover:before {
+        --thumb-scale: 1;
+      }
+
+      &:active:before {
+        --thumb-scale: 1.1;
+      }
+
+      &::before {
+        --thumb-scale: 0.01;
+        --highlight-size: 150%;
+
+        background-color: oklch(0.6 0 0 / 0.2);
+        block-size: var(--highlight-size);
+        clip-path: circle(50%);
+        content: "";
+        inline-size: var(--highlight-size);
+        inset-block-start: 50%;
+        inset-inline-start: 50%;
+        position: absolute;
+        transform-origin: center center;
+        transform: translateX(calc(var(--isRTL) * 50%)) translateY(-50%)
+        translateZ(-1px) scale(var(--thumb-scale));
+        will-change: transform;
+
+        @media (prefers-reduced-motion: no-preference) {
+          transition: transform 0.2s ease;
+        }
+      }
     }
   }
 }

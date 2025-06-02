@@ -221,18 +221,3 @@ code {
     --primary: var(--mdc-snackbar-action-color);
   }
 }
-
-@layer utils {
-  /*
-Screen-reader only
-When you visibly want to hide an element but make it accessible for screen readers.
-*/
-  .sr-only {
-    block-size: 1px;
-    clip-path: inset(50%);
-    inline-size: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-  }
-}
