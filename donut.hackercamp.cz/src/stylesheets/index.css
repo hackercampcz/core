@@ -218,7 +218,6 @@ code {
 
 #hc-snackbar {
   --primary: var(--mdc-snackbar-action-color);
-  width: max-content;
 }
 
 @layer utils {
