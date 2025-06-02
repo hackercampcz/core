@@ -1,4 +1,4 @@
-import { html, render } from "lit";
+import { html, render } from "lit-html";
 
 function getInternationalPhoneFormat(phone) {
   let number = phone.replace(/\s+/g, "");
