@@ -17,6 +17,75 @@
     --md-icon-button-disabled-icon-color: var(--hc-text-color);
   }
 }
+
+#app-root {
+  margin-inline: 1em;
+  container-type: inline-size;
+}
+#app-root header {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+
+  h2 select {
+    color: var(--hc-text-color);
+    -webkit-text-fill-color: initial;
+    background-color: transparent;
+    font: 600 24px var(--hc-font-family);
+    padding-left: 0;
+    border: none
+  }
+}
+
+.hc-master-detail {
+  display: grid;
+  grid-template-columns: 1fr;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+
+  .hc-master-detail__detail {
+    z-index: 10;
+  }
+
+  .hc-master-detail__list {
+    overflow-y: scroll;
+    max-height: calc(100vh - var(--hc-viewport-compensation));
+    transition: width 250ms ease-out;
+  }
+
+  @container (width > 840px) {
+    &:has(.hc-master-detail__detail) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    > * {
+      grid-area: initial;
+    }
+  }
+}
+
+
+.hc-master-detail__list table {
+  width: 100%;
+}
+
+.hc-master-detail__list thead {
+  position: sticky;
+  top: 0;
+  border-bottom: none;
+}
+
+.hc-master-detail__list thead th::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-bottom: 3px double #ddd;
+}
+
 .hc-pagination {
   box-sizing: content-box;
   height: 32px;

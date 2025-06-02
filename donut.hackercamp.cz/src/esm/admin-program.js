@@ -31,14 +31,14 @@ export function programChips(view, year, { program, programApproval }) {
       <span class="mdc-chip-set__chips" role="presentation">
         ${chip({ text: "Schváleno", count: program, selected: view === View.program, view: View.program, year })}
         ${
-    chip({
-      text: "Ke schválení",
-      count: programApproval,
-      selected: view === View.programApproval,
-      view: View.programApproval,
-      year
-    })
-  }
+          chip({
+            text: "Ke schválení",
+            count: programApproval,
+            selected: view === View.programApproval,
+            view: View.programApproval,
+            year
+          })
+        }
       </span>
     </div>
   `;
@@ -58,22 +58,22 @@ function programTable(data) {
   return html`
     <table style="width: 100%;">
       <thead>
-        <tr>
-          <th>ID</th>
-          <th>Název</th>
-          <th>Jméno</th>
-          <th>Téma</th>
-          <th>Typ</th>
-          <th>Stage</th>
-          <th>Začátek</th>
-          <th>Konec</th>
-          <th>Akce</th>
-        </tr>
+      <tr>
+        <th>ID</th>
+        <th>Název</th>
+        <th>Jméno</th>
+        <th>Téma</th>
+        <th>Typ</th>
+        <th>Stage</th>
+        <th>Začátek</th>
+        <th>Konec</th>
+        <th>Akce</th>
+      </tr>
       </thead>
       <tbody>
-        ${
-    data.map(row =>
-      html`
+      ${
+        data.map(row =>
+          html`
             <tr data-id="${row._id}">
               <td>${when(row.id, () => html`<code>${row.id}</code>`)}</td>
               <td
@@ -91,14 +91,15 @@ function programTable(data) {
               <td>${row.endAt ? formatDateTime(new Date(row.endAt)) : null}</td>
               <td style="white-space: nowrap;">
                 ${
-        when(!row.approved, () =>
-          html`<md-icon-button
-                      title="Schválit event"
-                      @click="${approveEvent(row._id)}"
-                    >
-                      <md-icon>done</md-icon>
-                    </md-icon-button>`)
-      }
+                  when(!row.approved, () =>
+                    html`
+                      <md-icon-button
+                        title="Schválit event"
+                        @click="${approveEvent(row._id)}"
+                      >
+                        <md-icon>done</md-icon>
+                      </md-icon-button>`)
+                }
                 <md-icon-button
                   title="Upravit event"
                   @click="${renderModalDialog("edit-event")}"
@@ -114,8 +115,8 @@ function programTable(data) {
               </td>
             </tr>
           `
-    )
-  }
+        )
+      }
       </tbody>
     </table>
   `;
@@ -128,25 +129,17 @@ function filterEvents(events) {
 export function programTemplate(state) {
   const { data, selectedView, year } = state;
   return html`
-    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+    <div class="">
       ${programChips(selectedView, year, { [selectedView]: data?.then(data => data.length) })}
     </div>
-    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+    <div class="">
       <div class="hc-card">
-        ${
-    until(
-      data?.then(data => {
-        return programTable(sortBy("startAt", filterEvents(data), { asc: true }));
-      })?.catch(data => {
-        if (data.unauthorized) return unauthorized();
-      }),
-      html`
-            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-              <p style="padding: 16px">Načítám data&hellip;</p>
-            </div>
-          `
-    )
-  }
+        ${until(data?.then(data => programTable(sortBy("startAt", filterEvents(data), { asc: true })))
+          ?.catch(data => {
+            if (data.unauthorized) return unauthorized();
+          }),
+          html`<p style="padding: 16px">Načítám data&hellip;</p>`
+        )}
       </div>
     </div>
   `;

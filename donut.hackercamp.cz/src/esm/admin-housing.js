@@ -10,20 +10,20 @@ function housingTable(data) {
   return html`
     <table style="width: 100%">
       <thead>
-        <tr>
-          <th>Jméno</th>
-          <th>Společnost</th>
-          <th>Typ lístku</th>
-          <th>Ubytování</th>
-          <th>Umístění</th>
-          <th>Délka pobytu</th>
-          <th>Akce</th>
-        </tr>
+      <tr>
+        <th>Jméno</th>
+        <th>Společnost</th>
+        <th>Typ lístku</th>
+        <th>Ubytování</th>
+        <th>Umístění</th>
+        <th>Délka pobytu</th>
+        <th>Akce</th>
+      </tr>
       </thead>
       <tbody>
-        ${
-    data.map(row =>
-      html`
+      ${
+        data.map(row =>
+          html`
             <tr>
               <td>${row.name}</td>
               <td>${row.company}</td>
@@ -33,12 +33,13 @@ function housingTable(data) {
               <td>${row.days}</td>
               <td>
                 <hc-mail-button email="${row.email}"></hc-mail-button
-                ><hc-phone-button phone="${row.phone}"></hc-phone-button>
+                >
+                <hc-phone-button phone="${row.phone}"></hc-phone-button>
               </td>
             </tr>
           `
-    )
-  }
+        )
+      }
       </tbody>
     </table>
   `;
@@ -47,22 +48,14 @@ function housingTable(data) {
 export function housingTemplate(state) {
   const { data } = state;
   return html`
-    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+    <div class="">
       <div class="hc-card">
-        ${
-    until(
-      data?.then(data => {
-        return housingTable(sortBy("housing", data));
-      })?.catch(data => {
-        if (data.unauthorized) return unauthorized();
-      }),
-      html`
-            <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-              <p style="padding: 16px">Načítám data&hellip;</p>
-            </div>
-          `
-    )
-  }
+        ${until(data?.then(data => housingTable(sortBy("housing", data)))
+          ?.catch(data => {
+            if (data.unauthorized) return unauthorized();
+          }),
+          html`<p style="padding: 16px">Načítám data&hellip;</p>`
+        )}
       </div>
     </div>
   `;

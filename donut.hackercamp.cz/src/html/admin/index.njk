@@ -18,6 +18,12 @@
       min-height: calc(100vh - 178px);
     }
 
+    @media screen and (max-width: 479px) {
+      #top {
+        padding-top: 48px;
+      }
+    }
+
     table {
       font-size: 14px;
       border-collapse: collapse;
@@ -50,82 +56,6 @@
     tbody td {
       border-bottom: 1px solid #ddd;
     }
-
-    h2 select {
-      color: var(--hc-text-color);
-      -webkit-text-fill-color: initial;
-      background-color: transparent;
-      font: 600 24px var(--hc-font-family);
-      padding-left: 0;
-      border: none
-    }
-
-    .hc-master-detail {
-      position: relative;
-    }
-
-    .hc-master-detail__list {
-      --hc-viewport-compensation: 242px;
-      padding: 0;
-      position: relative;
-      overflow-y: scroll;
-      flex-shrink: 0;
-      max-height: calc(100vh - var(--hc-viewport-compensation));
-    }
-
-    .hc-master-detail__list table {
-      width: 100%;
-    }
-
-    .hc-master-detail__list thead {
-      position: sticky;
-      top: 0;
-      border-bottom: none;
-    }
-
-    .hc-master-detail__list thead th::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      border-bottom: 3px double #ddd;
-    }
-
-    @media screen and (max-width: 479px) {
-      #top {
-        padding-top: 48px;
-      }
-    }
-
-    @media (max-width: 839px) {
-      .hc-master-detail__detail {
-        width: 100vw;
-        position: absolute;
-        z-index: 10;
-        top: 0;
-        left: 0;
-        bottom: 0;
-      }
-    }
-
-    @media (min-width: 840px) {
-      .hc-master-detail {
-        display: flex;
-      }
-
-      .hc-master-detail__list {
-        --hc-viewport-compensation: 212px;
-        min-width: 33%;
-        max-width: 50%;
-      }
-
-      .hc-master-detail__detail {
-        min-width: 33%;
-        transition: width .2s ease-out;
-        z-index: 10;
-      }
-    }
   </style>
 
   <link rel="stylesheet" href="{{ 'admin.css' | assetUrl('stylesheets') }}">
@@ -138,13 +68,11 @@
       <md-list-item href="/admin/?view=attendees">Účastníci</md-list-item>
       <md-list-item href="/admin/?view=program">Program</md-list-item>
       <md-list-item href="/admin/?view=housing">Ubytování</md-list-item>
+      <md-list-item href="/admin/dashboard/">Dashboard</md-list-item>
     </md-list>
-    <div class="mdc-layout-grid" slot="appContent">
-      <div id="app-root" class="mdc-layout-grid__inner">
-        <div
-          class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
-          style="display:flex; align-items: center; gap: 1em"
-        >
+    <div slot="appContent">
+      <div id="app-root">
+        <header>
           <md-icon-button
             slot="navigationIcon"
             id="drawer-button"
@@ -161,7 +89,7 @@
               </select>
             </label>
           </h2>
-        </div>
+        </header>
       </div>
       <dialog id="modal" class="hc-dialog">
         <div id="modal-root"></div>

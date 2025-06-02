@@ -216,8 +216,10 @@ code {
   }
 }
 
-#hc-snackbar {
-  --primary: var(--mdc-snackbar-action-color);
+@layer theme {
+  #hc-snackbar {
+    --primary: var(--mdc-snackbar-action-color);
+  }
 }
 
 @layer utils {
