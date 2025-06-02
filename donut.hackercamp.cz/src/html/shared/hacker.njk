@@ -23,50 +23,44 @@
 {% endmacro %}
 
 {% block content %}
-  <div class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-      <article class="hc-profile mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <div class="hc-profile__photo">
-          <img
-            alt="photo"
-            src="{{ profile.image_192 }}"
-            srcset="
+  <article class="hc-profile">
+    <div class="hc-profile__photo">
+      <img
+        alt="photo"
+        src="{{ profile.image_192 }}"
+        srcset="
               {{ profile.image_192 }} 1x,
               {{ profile.image_512 }} 2x"
-            width="162"
-            height="162">
-        </div>
-        <h1>{{ profile.real_name }}</h1>
-        {% if attendee.company %}<h2>{{ attendee.company }}</h2>{% endif %}
-        <p>Na Slacku jako&nbsp;<a
-            href="https://hackercampworkspace.slack.com/team/{{ attendee.slackID }}"><code>@{{ profile.display_name or profile.real_name }}</code></a>
-        </p>
-        {% if profile.title %}<p>{{ profile.title }}</p>{% endif %}
-        <div>{{ profile.status_text }}</div>
-      </article>
-      {% if attendee.events %}
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-          <h2>Kde bude</h2>
-        </div>
-        {% for event in attendee.events %}
-          <div class="mdc-layout-grid__cell">
-            <div class="hc-card">
-              <h3>{{ event.title }}</h3>
-              <p>
-                <code>{{ lineup(event.lineup) }}</code> -
-                <time datetime="{{ event.startAt }}">{{ event.startAt | formatDateTime }}</time>
-              </p>
-            </div>
-          </div>
-        {% endfor %}
-      {% endif %}
+        width="162"
+        height="162">
     </div>
-  </div>
+    <h1>{{ profile.real_name }}</h1>
+    {% if attendee.company %}<h2>{{ attendee.company }}</h2>{% endif %}
+    <p>Na Slacku jako&nbsp;<a
+        href="https://hackercampworkspace.slack.com/team/{{ attendee.slackID }}"><code>@{{ profile.display_name or profile.real_name }}</code></a>
+    </p>
+    {% if profile.title %}<p>{{ profile.title }}</p>{% endif %}
+    <div>{{ profile.status_text }}</div>
+  </article>
+  {% if attendee.events %}
+    <h2>Kde bude</h2>
+    <div class="hc-card-grid">
+      {% for event in attendee.events %}
+        <div class="hc-card">
+          <h3>{{ event.title }}</h3>
+          <p>
+            <code>{{ lineup(event.lineup) }}</code> -
+            <time datetime="{{ event.startAt }}">{{ event.startAt | formatDateTime }}</time>
+          </p>
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
 {% endblock %}
 
 {% block javascript %}
 <script type="module">
-  import { main } from "/assets/esm/profile.js";
+  import {main} from "/assets/esm/profile.js";
 
   const build = {{ collections.build | dump(8) | safe }};
   const env = Object.assign({ year: {{ year }} }, build);

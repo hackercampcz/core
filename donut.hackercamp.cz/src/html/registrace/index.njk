@@ -6,6 +6,7 @@
   <style>
     #reg {
       max-width: 40em;
+      margin-inline: auto;
     }
 
     #reg h2 {
@@ -170,11 +171,9 @@
 
 {% block content %}
   <div class="hc-code-bg">
-    <header id="top" class="hc-hero mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
-        <div class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-          <h1>Chci na Hacker Camp</h1>
-        </div>
+    <header id="top" class="hc-hero">
+      <div class="hc-hero__inner">
+        <h1>Chci na Hacker Camp</h1>
       </div>
       <div id="hacker-greeting" class="form-story hacker">
         {% markdown "registrace/hacker-greeting.md" %}
@@ -184,7 +183,7 @@
       </div>
     </header>
   </div>
-  <form action="{{ collections.build['api-host'] }}registration" method="post" class="mdc-layout-grid" id="reg">
+  <form action="{{ collections.build['api-host'] }}registration" method="post" id="reg">
     <section id="contact">
       <h2>Hacker</h2>
       <div class="hc-card">

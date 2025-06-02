@@ -63,7 +63,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="hc-dashboard mdc-layout-grid" id="dashboard">
+  <div class="hc-dashboard hc-card-grid" id="dashboard">
     <div class="hc-card hc-card--decorated" style="text-align: center;">
       <h2>Ahoj táborníku!</h2>
       <p>Vstupuješ do zóny,<br> která je pouze pro účastníky Hacker Campu.<br>
@@ -96,7 +96,7 @@
 
 {% block javascript %}
 <script type="module">
-  import { main } from "/assets/esm/index.js";
+  import { main } from "{{ 'index.js' | assetUrl('esm') }}";
 
   if (import.meta.hot) {
     import.meta.hot.accept((newModule) => {

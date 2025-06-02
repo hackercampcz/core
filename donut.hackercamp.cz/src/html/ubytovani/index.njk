@@ -1,336 +1,347 @@
 {% extends "layouts/application.njk" %}
+
 {% block title %}Ubytování na HC{% endblock %}
-{% block head %}
-<style>
-  html {
+
+{% block head_stylesheets %}
+  <style>
+    html {
       scroll-behavior: smooth;
-  }
-
-  h1 {
-    text-align: center;
-    margin-top: 2em;
-  }
-
-  hr {
-    border: 0 none;
-    height: 1px;
-    background-color: #F2F2FA;
-    margin: 24px 0;
-  }
-
-  .form-story {
-    text-align: center;
-    max-width: 40em;
-    margin: 24px auto 0 auto;
-    font-weight: 400;
-  }
-
-  form {
-    max-width: 42em;
-  }
-
-  form section {
-    margin: 0 auto;
-    max-width: var(--hc-layout-width);
-  }
-
-  form section .hc-card {
-    margin-bottom: 24px;
-  }
-  form section .hc-card p {
-    text-align: center;
-  }
-
-  section.housing-type select {
-    width: 100%;
-    height: 36px;
-    font-size: 18px;
-    color: var(--hc-color-text);
-  }
-
-  section.housing-type label {
-    display: block;
-    margin-bottom: 16px;
-  }
-
-  form .choose {
-    display: flex;
-  }
-  form .choose:not(:last-child) {
-    margin-bottom: 24px;
-  }
-
-  form .choose input {
-    width: 16px;
-    height: 16px;
-  }
-
-  form .choose > label,
-  form .choose > div {
-    padding-left: 8px;
-    display: block;
-    flex: 1;
-  }
-
-  .booking-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-column-gap: 16px;
-    grid-row-gap: 8px;
-    margin-bottom: 32px;
-  }
-
-
-  .booking-grid__cell {
-    position: relative;
-  }
-
-  .booking-grid__cell button {
-    position: absolute;
-    right: 8px;
-    top: 0;
-    margin-top: 6px;
-    height: 24px;
-  }
-
-  .booking-grid__cell input:not(:disabled) + button,
-  .booking-grid__cell input:focus + button {
-    display: none;
-  }
-
-  @media screen and (min-width: 600px) {
-    .booking-grid {
-      grid-template-columns: 1fr 1fr;
     }
-  }
-  .booking-grid__cell {
-  }
-  .booking-grid__cell input.me {
-    font-weight: bold;
-  }
 
-  form section input[list] {
-    width: 100%;
-    height: 36px;
-    font-size: 18px;
-    padding: 0 8px;
-    box-sizing: border-box;
-  }
+    h1 {
+      text-align: center;
+      margin-top: 2em;
+    }
 
-  form [aria-hidden="true"] {
-    display: none;
-  }
+    hr {
+      border: 0 none;
+      height: 1px;
+      background-color: #F2F2FA;
+      margin: 24px 0;
+    }
 
-  .show-placements {
-    text-align: center;
-    margin: 32px 8px 8px 8px;
-  }
-  .show-placements .hc-link {
-    padding: 8px 12px;
-  }
+    .form-story {
+      text-align: center;
+      max-width: 40em;
+      margin: 24px auto 0 auto;
+      font-weight: 400;
+    }
 
-  .housing-gallery {
-    margin-top: 24px;
-    position: relative;
-  }
-  .housing-gallery a {
-    display: block;
-    line-height: 0;
-  }
-  .housing-gallery[data-count]:after {
-    content: "+" attr(data-count);
-    display: table;
-    position: absolute;
-    width: 32px;
-    line-height: 32px;
-    bottom: 0;
-    right: 0;
-    background-color: var(--hc-background-color);
-    text-align: center;
-    font-size: small;
-    border-top: 2px solid;
-    border-left: 2px solid;
-    border-image-slice: 1;
-    border-image-source: var(--hc-gradient);
-  }
+    form {
+      max-width: 42em;
+    }
 
-  select, input:not([type="radio"]) {
-    -webkit-appearance: none;
-    padding: 2px 8px;
-    border: 1px solid #c4c4c4;
-    background-color: var(--hc-background-color);
-  }
-  input:not([type="radio"]):disabled {
-    background-color: var(--hc-background-color);
-  }
+    form section {
+      margin: 0 auto;
+      max-width: var(--hc-layout-width);
+    }
 
-  .placements h3 {
-    margin-bottom: 8px;
-  }
+    form section .hc-card {
+      margin-bottom: 24px;
+    }
 
-  .housing-type:last-child {
-    margin-bottom: 42px;
-  }
+    form section .hc-card p {
+      text-align: center;
+    }
 
-  .gou-up {
-    text-align: right;
-    max-width: 50em;
-  }
-  .gou-up a {
-    text-decoration: none;
-    transition: transform 0.2s ease-in-out;
-  }
-  .gou-up a:hover,
-  .gou-up a:active {
-    transform: translateY(-24px);
-  }
-</style>
-  {% include "shared/rollbar.njk" %}
+    section.housing-type select {
+      width: 100%;
+      height: 36px;
+      font-size: 18px;
+      color: var(--hc-color-text);
+    }
+
+    section.housing-type label {
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    form .choose {
+      display: flex;
+    }
+
+    form .choose:not(:last-child) {
+      margin-bottom: 24px;
+    }
+
+    form .choose input {
+      width: 16px;
+      height: 16px;
+    }
+
+    form .choose > label,
+    form .choose > div {
+      padding-left: 8px;
+      display: block;
+      flex: 1;
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-column-gap: 16px;
+      grid-row-gap: 8px;
+      margin-bottom: 32px;
+    }
+
+
+    .booking-grid__cell {
+      position: relative;
+    }
+
+    .booking-grid__cell button {
+      position: absolute;
+      right: 8px;
+      top: 0;
+      margin-top: 6px;
+      height: 24px;
+    }
+
+    .booking-grid__cell input:not(:disabled) + button,
+    .booking-grid__cell input:focus + button {
+      display: none;
+    }
+
+    @media screen and (min-width: 600px) {
+      .booking-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .booking-grid__cell {
+    }
+
+    .booking-grid__cell input.me {
+      font-weight: bold;
+    }
+
+    form section input[list] {
+      width: 100%;
+      height: 36px;
+      font-size: 18px;
+      padding: 0 8px;
+      box-sizing: border-box;
+    }
+
+    form [aria-hidden="true"] {
+      display: none;
+    }
+
+    .show-placements {
+      text-align: center;
+      margin: 32px 8px 8px 8px;
+    }
+
+    .show-placements .hc-link {
+      padding: 8px 12px;
+    }
+
+    .housing-gallery {
+      margin-top: 24px;
+      position: relative;
+    }
+
+    .housing-gallery a {
+      display: block;
+      line-height: 0;
+    }
+
+    .housing-gallery[data-count]:after {
+      content: "+" attr(data-count);
+      display: table;
+      position: absolute;
+      width: 32px;
+      line-height: 32px;
+      bottom: 0;
+      right: 0;
+      background-color: var(--hc-background-color);
+      text-align: center;
+      font-size: small;
+      border-top: 2px solid;
+      border-left: 2px solid;
+      border-image-slice: 1;
+      border-image-source: var(--hc-gradient);
+    }
+
+    select, input:not([type="radio"]) {
+      -webkit-appearance: none;
+      padding: 2px 8px;
+      border: 1px solid #c4c4c4;
+      background-color: var(--hc-background-color);
+    }
+
+    input:not([type="radio"]):disabled {
+      background-color: var(--hc-background-color);
+    }
+
+    .placements h3 {
+      margin-bottom: 8px;
+    }
+
+    .housing-type:last-child {
+      margin-bottom: 42px;
+    }
+
+    .gou-up {
+      text-align: right;
+      max-width: 50em;
+    }
+
+    .gou-up a {
+      text-decoration: none;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .gou-up a:hover,
+    .gou-up a:active {
+      transform: translateY(-24px);
+    }
+  </style>
 {% endblock %}
 
 {% block content %}
-<div class="hc-code-bg">
-  <header id="top" class="hc-hero mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-      <div class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
+  <div class="hc-code-bg">
+    <header id="top" class="hc-hero">
+      <div class="hc-hero__inner">
         <h1>Ubytování</h1>
       </div>
-    </div>
-    <div class="form-story">
-      <p>Tady si zvol <strong>jak</strong>, <strong>kde</strong> a <strong>s kým</strong><sup>⑴</sup>
-        chceš na Hacker Campu bydlet.</p>
-      <p><small><sup>⑴</sup> jo, můžeš klidně vyplnit i svého spolubydlu, pokud on tak ještě neudělal,
-        a my mu pošlem zprávu.</small></p>
-    </div>
-  </header>
-  <form id="housing" action="{{ collections.build["api-host"] }}housing" method="post" class="mdc-layout-grid">
-    <section class="housing-type">
-      <input type="hidden" name="year" value="{{ year }}">
-      <div class="hc-card hc-card--decorated">
-        <label for="housing-type">Nejprve si prosím vyber, jakou formu ubytování preferuješ:</label>
-        <select name="type" id="housing-type" required>
-          <option value="custom" selected>Na vlastní pěst</option>
-          {% for type in collections.housing_types %}
-          <option value="{{ type.name }}">{{ type.title }}</option>
-          {% endfor %}
-        </select>
-        <p>
-          A tady kdyžtak najdeš
-          <a download href="{{ collections.images["areal-map.png"].secure_url }}" target="map">mapu areálu</a>
-          ke stažení.
-        </p>
+      <div class="form-story">
+        <p>Tady si zvol <strong>jak</strong>, <strong>kde</strong> a <strong>s kým</strong><sup>⑴</sup>
+          chceš na Hacker Campu bydlet.</p>
+        <p><small><sup>⑴</sup> jo, můžeš klidně vyplnit i svého spolubydlu, pokud on tak ještě neudělal,
+            a my mu pošlem zprávu.</small></p>
       </div>
-    </section>
-    <section class="custom-housing" aria-hidden="true">
-      <h2>Na vlastní pěst</h2>
-      <div class="hc-card">
-        <div class="choose">
-          <input type="radio" name="custom" value="own-car" id="car-housing">
-          <label for="car-housing">
-            Přijedu autem a budu v něm i spát
-          </label>
+    </header>
+    <form id="housing" action="{{ collections.build["api-host"] }}housing" method="post">
+      <section class="housing-type">
+        <input type="hidden" name="year" value="{{ year }}">
+        <div class="hc-card hc-card--decorated">
+          <label for="housing-type">Nejprve si prosím vyber, jakou formu ubytování preferuješ:</label>
+          <select name="type" id="housing-type" required>
+            <option value="custom" selected>Na vlastní pěst</option>
+            {% for type in collections.housing_types %}
+              <option value="{{ type.name }}">{{ type.title }}</option>
+            {% endfor %}
+          </select>
+          <p>
+            A tady kdyžtak najdeš
+            <a download href="{{ collections.images["areal-map.png"].secure_url }}" target="map">mapu areálu</a>
+            ke stažení.
+          </p>
         </div>
-        <div class="choose">
-          <input type="radio" name="custom" value="own-caravan" id="caravan-housing">
-          <label for="caravan-housing">
-            Přivezu si <strong>vlastní karavan</strong>, ve kterém chci spát
-          </label>
-        </div>
-        <div class="choose">
-          <input type="radio" name="custom" value="open-air" id="openair-housing">
-          <label for="openair-housing">
-            Jsem pankáč a budu spát <strong>pod širákem</strong> nebo v&nbsp;hamace
-          </label>
-        </div>
-        <div class="choose">
-          <input type="radio" name="custom" value="own-tent" id="own-housing" checked="checked"/>
-          <label for="own-housing">
-            Přivezu si <strong>vlastní stan</strong> a v něm budu spát
-            <span>v areálu je k dispozici louka pro stanování</span>
-          </label>
-        </div>
-        <div class="choose">
-          <input type="radio" name="custom" value="nearby" id="nearby-housing">
-          <label for="nearby-housing">
-            Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
-            <span>
+      </section>
+      <section class="custom-housing" aria-hidden="true">
+        <h2>Na vlastní pěst</h2>
+        <div class="hc-card">
+          <div class="choose">
+            <input type="radio" name="custom" value="own-car" id="car-housing">
+            <label for="car-housing">
+              Přijedu autem a budu v něm i spát
+            </label>
+          </div>
+          <div class="choose">
+            <input type="radio" name="custom" value="own-caravan" id="caravan-housing">
+            <label for="caravan-housing">
+              Přivezu si <strong>vlastní karavan</strong>, ve kterém chci spát
+            </label>
+          </div>
+          <div class="choose">
+            <input type="radio" name="custom" value="open-air" id="openair-housing">
+            <label for="openair-housing">
+              Jsem pankáč a budu spát <strong>pod širákem</strong> nebo v&nbsp;hamace
+            </label>
+          </div>
+          <div class="choose">
+            <input type="radio" name="custom" value="own-tent" id="own-housing" checked="checked"/>
+            <label for="own-housing">
+              Přivezu si <strong>vlastní stan</strong> a v něm budu spát
+              <span>v areálu je k dispozici louka pro stanování</span>
+            </label>
+          </div>
+          <div class="choose">
+            <input type="radio" name="custom" value="nearby" id="nearby-housing">
+            <label for="nearby-housing">
+              Využiji možnost <strong>ubytování v okolí</strong> (penzion, hotel)
+              <span>
               V okolí je několik hezkých penzionů, zeptej se crew na případné tipy.
             </span>
-          </label>
-        </div>
-        <button type="submit" class="hc-button">
-          Uložit (se)
-        </button>
-      </div>
-    </section>
-    {%- for variant in collections.housing_variants %}
-      {%- set firstPhoto = variant.images.at(0) %}
-      {%- set photos = variant.images.slice(1) %}
-    <section class="{{ variant.type }}-housing" aria-hidden="true">
-      <h2>{{ variant.title }}</h2>
-      <div class="hc-card">
-        <p>{{ variant.description }}</p>
-        {%- if firstPhoto %}
-        <div
-          class="pswp-gallery pswp-gallery--single-column housing-gallery"
-          {% if photos.length > 0 %}data-count="{{ photos.length }}"{% endif %}>
-          <a
-            href="{{ firstPhoto.src }}"
-            target="_blank"
-            data-pswp-width="{{ firstPhoto.width }}"
-            data-pswp-height="{{ firstPhoto.height }}">
-            <img width="100%" src="{{ firstPhoto.src }}" alt="Obrázek ubytování">
-          </a>
-          {%- for photo in photos %}
-            <a href="{{ photo.src }}"
-               data-pswp-src="{{ photo.src }}"
-               data-pswp-width="{{ photo.width }}"
-               data-pswp-height="{{ photo.height }}"
-               aria-hidden="true"
-            >
-            </a>
-          {%- endfor %}
-        </div>
-        {%- endif %}
-        <div class="placements" aria-hidden="true">
-        {%- set housingOfVariant = collections.housing_index.filter(byVariant(variant)) %}
-          {%- for housing in housingOfVariant %}
-          <h3>{{ housing.placement }}</h3>
-          <div class="booking-grid">
-            {%- for i in range(housing.capacity) %}
-            <div class="booking-grid__cell">
-              <input
-                list="hackers"
-                name="{{ housing.type }}['{{ housing.placement }}'][{{ loop.index }}]"
-                placeholder="-- Volno --"
-                type="search"
-              >
-              <button class="unlock" type="button" title="odemknout" disabled>
-                <svg height="16px" viewBox="0 -960 960 960" width="16px" fill="var(--text-color)">
-                  <path d="M240-640h360v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85h-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640Zm0 480h480v-400H240v400Zm240-120q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM240-160v-400 400Z"/>
-                </svg>
-              </button>
-            </div>
-            {%- endfor %}
+            </label>
           </div>
-          {%- endfor %}
-          <button type="submit" class="hc-button save-placement">
+          <button type="submit" class="hc-button">
             Uložit (se)
           </button>
         </div>
-        <div class="show-placements">
-          <p><strong>Volných míst:&nbsp;<data class="free-capacity" value="0">0</data></strong></p>
-          <button type="button" class="hc-link hc-link--decorated placement-selection">chci sem</button>
-        </div>
+      </section>
+      {%- for variant in collections.housing_variants %}
+        {%- set firstPhoto = variant.images.at(0) %}
+        {%- set photos = variant.images.slice(1) %}
+        <section class="{{ variant.type }}-housing" aria-hidden="true">
+          <h2>{{ variant.title }}</h2>
+          <div class="hc-card">
+            <p>{{ variant.description }}</p>
+            {%- if firstPhoto %}
+              <div
+                class="pswp-gallery pswp-gallery--single-column housing-gallery"
+                {% if photos.length > 0 %}data-count="{{ photos.length }}"{% endif %}>
+                <a
+                  href="{{ firstPhoto.src }}"
+                  target="_blank"
+                  data-pswp-width="{{ firstPhoto.width }}"
+                  data-pswp-height="{{ firstPhoto.height }}">
+                  <img width="100%" src="{{ firstPhoto.src }}" alt="Obrázek ubytování">
+                </a>
+                {%- for photo in photos %}
+                  <a href="{{ photo.src }}"
+                     data-pswp-src="{{ photo.src }}"
+                     data-pswp-width="{{ photo.width }}"
+                     data-pswp-height="{{ photo.height }}"
+                     aria-hidden="true"
+                  >
+                  </a>
+                {%- endfor %}
+              </div>
+            {%- endif %}
+            <div class="placements" aria-hidden="true">
+              {%- set housingOfVariant = collections.housing_index.filter(byVariant(variant)) %}
+              {%- for housing in housingOfVariant %}
+                <h3>{{ housing.placement }}</h3>
+                <div class="booking-grid">
+                  {%- for i in range(housing.capacity) %}
+                    <div class="booking-grid__cell">
+                      <input
+                        list="hackers"
+                        name="{{ housing.type }}['{{ housing.placement }}'][{{ loop.index }}]"
+                        placeholder="-- Volno --"
+                        type="search"
+                      >
+                      <button class="unlock" type="button" title="odemknout" disabled>
+                        <svg height="16px" viewBox="0 -960 960 960" width="16px" fill="var(--text-color)">
+                          <path
+                            d="M240-640h360v-80q0-50-35-85t-85-35q-50 0-85 35t-35 85h-80q0-83 58.5-141.5T480-920q83 0 141.5 58.5T680-720v80h40q33 0 56.5 23.5T800-560v400q0 33-23.5 56.5T720-80H240q-33 0-56.5-23.5T160-160v-400q0-33 23.5-56.5T240-640Zm0 480h480v-400H240v400Zm240-120q33 0 56.5-23.5T560-360q0-33-23.5-56.5T480-440q-33 0-56.5 23.5T400-360q0 33 23.5 56.5T480-280ZM240-160v-400 400Z"/>
+                        </svg>
+                      </button>
+                    </div>
+                  {%- endfor %}
+                </div>
+              {%- endfor %}
+              <button type="submit" class="hc-button save-placement">
+                Uložit (se)
+              </button>
+            </div>
+            <div class="show-placements">
+              <p><strong>Volných míst:&nbsp;<data class="free-capacity" value="0">0</data>
+                </strong></p>
+              <button type="button" class="hc-link hc-link--decorated placement-selection">chci sem</button>
+            </div>
+          </div>
+        </section>
+      {%- endfor %}
+      <div class="gou-up">
+        <a href="javascript:window.scrollTo(0, 0);" title="nahoru">⤴</a>
       </div>
-    </section>
-    {%- endfor %}
-    <div class="gou-up">
-      <a href="javascript:window.scrollTo(0, 0);" title="nahoru">⤴</a>
-    </div>
-    <datalist id="hackers"></datalist>
-  </form>
-</div>
+      <datalist id="hackers"></datalist>
+    </form>
+  </div>
 {% endblock %}
 
 {% block javascript %}

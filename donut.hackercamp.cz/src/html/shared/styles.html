@@ -3,8 +3,7 @@
 <style>
   :root {
     --hc-dialog-width: 800px;
-
-    color-scheme: light dark;
+    --hc-gutter: clamp(1ch, 10px + 4vw, 2ch);
     --hc-layout-width: 1600px;
     --hc-font-family: PT Mono, monospace;
     --hc-background-color: #fff;
@@ -33,8 +32,6 @@
       #e9444e 88.39%,
       #ee771b 100.02%
     );
-    --mdc-snackbar-action-color: #64dc17;
-    --mdc-typography-font-family: var(--hc-font-family);
     --md-text-button-label-text-type: 500 0.85rem var(--hc-font-family);
   }
 
@@ -196,8 +193,6 @@
   }
   iframe.responsive {
     aspect-ratio: 16 / 9;
-    height: 100%;
-    width: 100%;
   }
 
   .wurk-too-hard {
@@ -208,123 +203,25 @@
     font-weight: bold;
   }
 
-  .hc-card {
-    background-color: var(--hc-background-color);
-    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.07);
-    padding: var(--mdc-layout-grid-gutter-phone);
-  }
-
-  .hc-card.hc-card--decorated {
-    position: relative;
-    z-index: 1;
-  }
-
-  .hc-card.hc-card--decorated::before {
-    content: "";
-    display: block;
-    width: 135px;
-    height: 4px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    background-image: var(--hc-gradient);
-    transition: width 0.4s ease;
-  }
-
-  .hc-card.hc-card--decorated:active::before, .hc-card.hc-card--decorated:hover::before {
-    width: 100%;
-  }
-
-  .hc-card.hc-card--flat {
-    background-image: var(--hc-gradient);
-    color: #fff;
-  }
-
-  .hc-card.hc-card--centered {
-    text-align: center;
-  }
-
-  .hc-card.hc-card--picture {
-    padding: 0;
-  }
-
-  .hc-card.hc-card--picture img.responsive {
-    height: 100%;
-    object-fit: cover;
-  }
-
-  @media screen and (min-width: 600px) and (max-width: 839px) {
-    .hc-card {
-      padding: var(--mdc-layout-grid-gutter-tablet);
-    }
-  }
-
-  @media screen and (min-width: 840px) {
-    .hc-card {
-      padding: var(--mdc-layout-grid-gutter-desktop);
-    }
-  }
-
-  .hc-cta, .hc-cta:link, .hc-cta:visited {
-    color: #fff;
-    background-image: var(--hc-gradient-btn);
-    background-size: 200% 100%;
-    font-weight: bold;
-    display: inline-block;
-    text-decoration: none;
-    padding: 0.75em 2.5em;
-    transition: background-position 0.4s ease-in-out;
-  }
-
-  .hc-cta:active, .hc-cta:hover {
-    background-position: 100% 0;
-  }
-
-  .hc-icon-link:link, .hc-icon-link:visited {
-    --icon-color: var(--hc-text-color);
-    color: var(--hc-text-color);
-    text-decoration: none;
-    font-weight: bold;
-    display: inline-flex;
-    align-items: center;
-  }
-
-  .hc-icon-link:hover {
-    --icon-color: var(--hc-link-color);
-    color: var(--hc-link-color);
-    text-decoration: underline;
-  }
-
-  .hc-icon-link svg {
-    padding-right: 1ex;
-  }
-
-  .hc-link--decorated {
-    text-decoration: none;
-    font-weight: bold;
-    display: inline-block;
-    padding: 18px 16px;
-    border: 2px solid;
-    border-image-slice: 1;
-    border-image-source: var(--hc-gradient);
-    background-image: var(--hc-gradient);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    cursor: pointer;
-  }
-
   .hc-navbar {
     position: fixed;
-    width: 100%;
-    height: 78px;
+    top: 0;
+    left: 0;
+    right: 0;
+    gap: var(--hc-gutter);
     background: var(--hc-background-color);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     z-index: 1000;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    padding-block: 1lh;
+    padding-inline: var(--hc-gutter);
+    line-height: 1;
   }
 
   .hc-navbar__right {
-    display: none;
+    display: flex;
+    justify-content: flex-end;
   }
 
   .hc-navbar__link {
@@ -337,16 +234,7 @@
     margin-bottom: 0;
   }
 
-  @media screen and (min-width: 600px) {
-    .hc-navbar {
-      height: 100px;
-    }
-
-    .hc-navbar__right {
-      display: flex;
-      justify-content: flex-end;
-    }
-
+  @container (width > 600px) {
     #top {
       padding-top: 100px;
     }

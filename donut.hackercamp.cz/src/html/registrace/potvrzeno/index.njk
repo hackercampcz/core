@@ -1,18 +1,27 @@
 {% extends "layouts/application.njk" %}
 
 {% block title %}Registrace odeslána{% endblock %}
-{% block head %}
+
+{% block head_stylesheets %}
   <style>
+    h1 {
+      text-align: center;
+      margin-top: 2em;
+    }
+    .form-story {
+      text-align: center;
+      max-width: 40em;
+      margin: 24px auto 0 auto;
+      font-weight: 400;
+    }
   </style>
 {% endblock %}
 
 {% block content %}
   <div class="hc-code-bg">
-    <header id="top" class="hc-hero mdc-layout-grid">
-      <div class="mdc-layout-grid__inner">
-        <div class="hc-hero__inner mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-          <h1>Odesláno!</h1>
-        </div>
+    <header id="top" class="hc-hero">
+      <div class="hc-hero__inner">
+        <h1>Odesláno!</h1>
       </div>
       <div class="form-story">
         <p>Díky, fakturu odešleme na uvedený kontakt.</p>
@@ -22,10 +31,10 @@
 {% endblock %}
 
 {% block javascript %}
-  <script type="module">
-    const url = new URL(location.href);
-    if (url.searchParams.has("volunteer")) {
-      document.querySelector(".form-story p").textContent = "Díky a budiž ti věčná sláva za tvou pomoc!";
-    }
-  </script>
+<script type="module">
+  const url = new URL(location.href);
+  if (url.searchParams.has("volunteer")) {
+    document.querySelector(".form-story p").textContent = "Díky a budiž ti věčná sláva za tvou pomoc!";
+  }
+</script>
 {% endblock %}

@@ -301,23 +301,11 @@ function renderProgram({ lineups, campStartAt, campEndAt, events, visibleDate, o
        * top level container
        */
       .program {
-        --spacing: var(--mdc-layout-grid-margin-phone, 16px);
+        --spacing: 16px;
         --info-width: calc(100vw * 2 / 3);
         --slot-width: calc(100vw / 2.5 / 4);
         --tick-color: #eee;
         --tick-highlight-color: #aaa;
-      }
-
-      @media screen and (min-width: 480px) and (max-width: 839px) {
-        .program {
-          --spacing: var(--mdc-layout-grid-margin-tablet, 16px);
-        }
-      }
-
-      @media screen and (min-width: 840px) {
-        .program {
-          --spacing: var(--mdc-layout-grid-margin-desktop, 24px);
-        }
       }
 
       @media (prefers-color-scheme: dark) {

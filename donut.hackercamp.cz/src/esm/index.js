@@ -148,22 +148,14 @@ async function getNfcTronData(attendee, apiUrl) {
 
 function renderPaidScreen(referralLink) {
   return html`
-    <div class="mdc-layout-grid__inner">
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <div class="hc-card hc-card--decorated">
-          <p>
-            Děkujeme za registraci a zaplacení faktury. Teď si můžeš vybrat
-            svoje ubytování.
-          </p>
-          <a class="hc-link--decorated" href="/ubytovani/"
-          >Vybrat si ubytování</a
-          >
-        </div>
-      </div>
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        ${plusOneCard(referralLink)}
-      </div>
+    <div class="hc-card hc-card--decorated">
+      <p>
+        Děkujeme za registraci a zaplacení faktury. Teď si můžeš vybrat
+        svoje ubytování.
+      </p>
+      <a class="hc-link--decorated" href="/ubytovani/">Vybrat si ubytování</a>
     </div>
+    ${plusOneCard(referralLink)}
   `;
 }
 
@@ -322,73 +314,30 @@ function renderDashboardScreen(
   showSlackButton
 ) {
   return html`
-    <div class="mdc-layout-grid__inner">
-      <!--div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <div class="hc-card hc-card--decorated">
-          <h2>Zpětná vazba</h2>
-          <p>
-            Doufáme, že už jste se po dalším za nás vydařeném campu pomalu
-            vzpamatovali a vrátili se do svého obvyklého rytmu :) Než všechno,
-            co se na campu dělo, zapomenete, poprosíme vás o 3 minutky vašeho
-            času.
-          </p>
-          <p>
-            <a href="https://hckr.camp/feedback"
-              >Dejte nám prosím zpětnou vazbu</a
-            >
-          </p>
-          <p>
-            Dotazník má 3 povinné otázky, je to fakt na tři minuty max :) A nám
-            vaše zpětka obrovsky pomůže. Výsledky budeme zase jako loni sdílet
-            na slacku.
-          </p>
-        </div>
-      </div-->
-      ${when(showSlackButton, () => html`
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-          <div class="hc-card hc-card--decorated">
-            <p>Pro lepší integraci mezi tvým Slackovým a Donut profilem potřebujeme od tebe potvrdit rozšířená práva.
-              To provedeš kliknutím na následující tlačítko:</p>
-            <div style="padding: 16px">
-              <a
-                href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F">
-                <img
-                  alt="Add to Slack"
-                  height="40"
-                  width="139"
-                  src="https://platform.slack-edge.com/img/add_to_slack.png"
-                  @click="${() => {
-                    rollbar.info(`User clicked on Slack button.`);
-                    setReturnUrl(location.href);
-                  }}"
-                  srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
+    ${when(showSlackButton, () => html`
+      <div class="hc-card hc-card--decorated">
+        <p>Pro lepší integraci mezi tvým Slackovým a Donut profilem potřebujeme od tebe potvrdit rozšířená práva.
+          To provedeš kliknutím na následující tlačítko:</p>
+        <div style="padding: 16px">
+          <a
+            href="https://slack.com/oauth/v2/authorize?client_id=1990816352820.3334586910531&scope=users:read,users:write,users.profile:read,users:read.email&user_scope=users.profile:read,users.profile:write,users:read&redirect_uri=https%3A%2F%2F${location.host}%2F">
+            <img
+              alt="Add to Slack"
+              height="40"
+              width="139"
+              src="https://platform.slack-edge.com/img/add_to_slack.png"
+              @click="${() => {
+                rollbar.info(`User clicked on Slack button.`);
+                setReturnUrl(location.href);
+              }}"
+              srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
                           https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
-            </div>
-          </div>
-        </div>
-      `)}
-      <div
-        style="${!nfcTronData ? "display: none" : ""}"
-        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
-      >
-        ${nfcTronTemplate({ nfcTronData, checkOutPaid })}
-      </div>
-      <div
-        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-6 mdc-layout-grid__cell--span-8-tablet"
-      >
-        ${housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers })}
-      </div>
-      <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        ${plusOneCard(referralLink)}
-      </div>
-      <div
-        style="display: none"
-        class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12"
-      >
-        <div class="hc-card hc-card--decorated">
-          <!-- TODO: previous year -->
         </div>
       </div>
+    `)}
+    ${when(nfcTronData, () => nfcTronTemplate({ nfcTronData, checkOutPaid }))}
+    ${housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers })}
+    ${plusOneCard(referralLink)}
     </div>
   `;
 }
@@ -410,66 +359,51 @@ function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers, sh
       return renderPaidScreen(referralLink);
     case View.paymentPending:
       return html`
-        <div class="mdc-layout-grid__inner">
-          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-            <div class="hc-card hc-card--decorated">
-              <p>
-                Svoje ubytování si budeš moct vybrat až po zaplacení faktury.
-                Tak s&nbsp;tím moc neváhej, abys spal / spala podle svých
-                představ&nbsp;:)
-              </p>
-              ${when(attendee?.invoiceUrl, () => html`
-                <p>
-                  Platbu můžeše rychle odbavit přes <a href="${attendee.invoiceUrl}">webovou fakturu</a>.
-                </p>
-              `)}
-              ${when(hasRegisteredHackers, () => html`
-                <p>
-                  Chceš se podívat, kdo už se na tebe těší? Tak tady je
-                  <a href="/hackers/">seznam účastníků</a>.
-                </p>
-              `)}
-            </div>
-          </div>
-          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-            ${plusOneCard(referralLink)}
+        <div class="hc-card hc-card--decorated">
+          <p>
+            Svoje ubytování si budeš moct vybrat až po zaplacení faktury.
+            Tak s&nbsp;tím moc neváhej, abys spal / spala podle svých
+            představ&nbsp;:)
+          </p>
+          ${when(attendee?.invoiceUrl, () => html`
             <p>
-              Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
-              e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
-              <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
-              ><code>@rarous</code></a
-              >
-              nebo e-mail na
-              <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a on to
-              dá do pořádku.
+              Platbu můžeše rychle odbavit přes <a href="${attendee.invoiceUrl}">webovou fakturu</a>.
             </p>
-          </div>
+          `)}
+          ${when(hasRegisteredHackers, () => html`
+            <p>
+              Chceš se podívat, kdo už se na tebe těší? Tak tady je
+              <a href="/hackers/">seznam účastníků</a>.
+            </p>
+          `)}
         </div>
-        <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-          ${plusOneCard(referralLink)}
-        </div>
-        </div>
+        ${plusOneCard(referralLink)}
+        <p>
+          Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
+          e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
+          <a href="https://hackercampworkspace.slack.com/team/U01UVGVJ5BP"
+          ><code>@rarous</code></a
+          >
+          nebo e-mail na
+          <a href="mailto:rarous@hckr.camp">rarous@hckr.camp</a> a on to
+          dá do pořádku.
+        </p>
+        ${plusOneCard(referralLink)}
       `;
     default:
       return html`
-        <div class="mdc-layout-grid__inner">
-          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-            <p>
-              Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to
-              i díky tobě.
-            </p>
-            <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>
-            ${when(hasRegisteredHackers, () => html`
-              <p>
-                Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
-                <a href="/hackers/">seznam účastníků</a>.
-              </p>
-            `)}
-          </div>
-          <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-            ${plusOneCard(referralLink)}
-          </div>
-        </div>
+        <p>
+          Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to
+          i díky tobě.
+        </p>
+        <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>
+        ${when(hasRegisteredHackers, () => html`
+          <p>
+            Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
+            <a href="/hackers/">seznam účastníků</a>.
+          </p>
+        `)}
+        ${plusOneCard(referralLink)}
       `;
   }
 }

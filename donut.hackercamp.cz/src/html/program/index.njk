@@ -1,10 +1,13 @@
 {% extends "layouts/application.njk" %}
+
 {% block title %}Program Campu{% endblock %}
-{% block head %}
+
+{% block head_stylesheets %}
 <style>
   main > div {
     max-width: 40em;
     margin: 0 auto;
+    padding-inline: 1em;
   }
 
   input,
@@ -81,9 +84,9 @@
     mohou hackeři jen nahlásit na začátku každého bloku před Mainframe.
     Zkrátka: Program se může a bude měnit za chodu :) Takže se těš a sleduj
     co se děje online i&nbsp;offline.</p>
-  {#
+
   <p><button class="hc-button" onclick="document.all['proposal-editor'].showModal()">Chci upravit svůj návrh programu</button></p>
-  #}
+
   <p><a href="https://donut.hckr.camp/program/{{ year }}">Program {{ year }}</a> naleznate na Google Drive.</p>
   <p>Program si můžete <a href="https://donut.hckr.camp/program/kalendar">přidat do Kalandáře</a>.</p>
 </div>

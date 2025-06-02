@@ -43,7 +43,7 @@
 
 #app-root > search {
   display: grid;
-  gap: 8px;
+  gap: 4px 8px;
   grid-template-columns: fit-content(2ch) 1fr fit-content(11ch);
 
   &:has(form) {

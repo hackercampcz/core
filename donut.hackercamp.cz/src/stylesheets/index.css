@@ -1,4 +1,3 @@
-@import "@material/layout-grid/dist/mdc.layout-grid.css";
 @import "./openprops-ui.css";
 
 :root {
@@ -42,12 +41,134 @@ code {
   }
 }
 
+.hc-card-grid {
+  --_cols: 1;
+  display: grid;
+  padding-inline: var(--hc-gutter);
+  gap: var(--hc-gutter);
+  grid-template-columns: repeat(var(--_cols), 1fr);
+
+  @container (width > 480px) {
+    --_cols: 2;
+  }
+  @container (width > 840px) {
+    --_cols: 3;
+  }
+
+  &:has(.hc-card--half) {
+    --_cols: 2;
+    @container (width > 480px) {
+      --_cols: 4;
+    }
+    @container (width > 840px) {
+      --_cols: 6;
+    }
+    .hc-card:not(.hc-card--half) {
+      grid-column: span 2;
+    }
+  }
+}
+
+.hc-card {
+  background-color: var(--hc-background-color);
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.07);
+  padding: 1em;
+}
+
+.hc-card.hc-card--decorated {
+  position: relative;
+  z-index: 1;
+}
+
+.hc-card.hc-card--decorated::before {
+  content: "";
+  display: block;
+  width: 135px;
+  height: 4px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  background-image: var(--hc-gradient);
+  transition: width 0.4s ease;
+}
+
+.hc-card.hc-card--decorated:active::before, .hc-card.hc-card--decorated:hover::before {
+  width: 100%;
+}
+
+.hc-card.hc-card--flat {
+  background-image: var(--hc-gradient);
+  color: #fff;
+}
+
+.hc-card.hc-card--centered {
+  text-align: center;
+}
+
+.hc-card.hc-card--picture {
+  padding: 0;
+}
+
+.hc-card.hc-card--picture img.responsive {
+  height: 100%;
+  object-fit: cover;
+}
+
+.hc-cta, .hc-cta:link, .hc-cta:visited {
+  color: #fff;
+  background-image: var(--hc-gradient-btn);
+  background-size: 200% 100%;
+  font-weight: bold;
+  display: inline-block;
+  text-decoration: none;
+  padding: 0.75em 2.5em;
+  transition: background-position 0.4s ease-in-out;
+}
+
+.hc-cta:active, .hc-cta:hover {
+  background-position: 100% 0;
+}
+
+.hc-icon-link:link, .hc-icon-link:visited {
+  --icon-color: var(--hc-text-color);
+  color: var(--hc-text-color);
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+}
+
+.hc-icon-link:hover {
+  --icon-color: var(--hc-link-color);
+  color: var(--hc-link-color);
+  text-decoration: underline;
+}
+
+.hc-icon-link svg {
+  padding-right: 1ex;
+}
+
+.hc-link--decorated {
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  padding: 18px 16px;
+  border: 2px solid;
+  border-image-slice: 1;
+  border-image-source: var(--hc-gradient);
+  background-image: var(--hc-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  cursor: pointer;
+}
+
 .hc-chip-set {
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   padding-inline: 4px;
-  gap: 1em;
+  gap: 0.25lh 1ch;
 }
 
 .hc-chip {
@@ -149,42 +270,6 @@ a.hc-chip {
   /* hotfix that brokes gay text color due to certain ios browsers
   with white color on white background. */
   -webkit-text-fill-color: unset;
-}
-
-.hc-navbar {
-  position: fixed;
-  width: 100%;
-  height: 78px;
-  background: var(--hc-background-color);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  z-index: 1000;
-}
-
-.hc-navbar__link {
-  line-height: 56px;
-  margin-right: 2em;
-}
-
-@media screen and (max-width: 600px) {
-  .hc-navbar__right {
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    display: flex;
-    left: 8px;
-    justify-content: right;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  .hc-navbar {
-    height: 100px;
-  }
-
-  .hc-navbar__right {
-    display: flex;
-    justify-content: flex-end;
-  }
 }
 
 @layer theme {

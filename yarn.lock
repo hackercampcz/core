@@ -3486,7 +3486,6 @@ __metadata:
     "@cloudflare/workers-types": "npm:4.20250601.0"
     "@hackercamp/infrastructure": "workspace:*"
     "@hackercamp/lib": "workspace:*"
-    "@material/layout-grid": "npm:14.0.0"
     "@material/mwc-drawer": "npm:0.27.0"
     "@material/web": "npm:2.3.0"
     "@thi.ng/atom": "npm:5.3.31"
@@ -3989,15 +3988,6 @@ __metadata:
   dependencies:
     tslib: "npm:^2.1.0"
   checksum: 10c0/cc473e415c000f54fb6bd2120e130ad4ece75780d57e1c2dbfcc14fe4631c6826a4c570a43a838faeffd821f3f15b4b505ca271f87aa171e0da0319d89741383
-  languageName: node
-  linkType: hard
-
-"@material/layout-grid@npm:14.0.0":
-  version: 14.0.0
-  resolution: "@material/layout-grid@npm:14.0.0"
-  dependencies:
-    tslib: "npm:^2.1.0"
-  checksum: 10c0/f0bc2f50b111d51f3be5871536f3354c060d2504388461a69faf1877b3e547f4edfe1c34b7c2cad13099169f5bc83a8488a7e83139ecb873e73e5d350627835c
   languageName: node
   linkType: hard
 

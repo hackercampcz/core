@@ -23,8 +23,8 @@
       list-style-type: none;
       display: grid;
       grid-template-columns: repeat(auto-fill, var(--card-width));
-      grid-gap: var(--mdc-layout-grid-gutter-tablet, 16px);
-      margin: 0;
+      grid-gap: 1em;
+      margin: 0 1em;
       padding: 0;
       max-width: 100%;
     }
@@ -56,57 +56,50 @@
       font-weight: bold;
     }
   </style>
-  <div class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-      <section id="crew" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <h2>Hacker Camp Crew</h2>
-        <ul class="hc-profile-list">
-          {% for hacker in collections.hackers %}
-            {% set slug = hacker[0] %}
-            {% set profile = hacker[1] %}
-            {% set attendee = hacker[2] %}
-            {% if attendee.ticketType == "crew" %}
-              <li class="hc-profile hc-profile--card">
-                <a href="/hackers/{{ slug }}">
-                  <div>
-                    <img alt="" src="{{ attendee.image }}" width="192" height="192"/>
-                    <span class="hc-profile__name">{{ attendee.name }}</span>
-                    <span class="hc-profile__company">{{ attendee.company if attendee.company }}</span>
-                  </div>
-                </a>
-              </li>
-            {% endif %}
-          {% endfor %}
-        </ul>
-      </section>
-    </div>
-  </div>
 
-  <div class="mdc-layout-grid">
-    <div class="mdc-layout-grid__inner">
-      <section id="ucastnici" class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12">
-        <h2>Účastníci {{ year }}</h2>
-        <ul class="hc-profile-list">
-          {% for hacker in collections.hackers %}
-            {% set slug = hacker[0] %}
-            {% set profile = hacker[1] %}
-            {% set attendee = hacker[2] %}
-            {% if attendee.slackID != "U07H6JWHEJU" %}
-            {% if attendee.ticketType != "crew" %}
-              <li class="hc-profile hc-profile--card">
-                <a href="/hackers/{{ slug }}">
-                  <div>
-                    <img alt="" src="{{ profile.image_192 }}" srcset="{{ profile.image_192 }} 1x, {{ profile.image_512 }} 2x" width="192" height="192" loading="lazy"/>
-                    <span class="hc-profile__name">{{ attendee.name }}</span>
-                    <span class="hc-profile__company">{{ attendee.company if attendee.company }}</span>
-                  </div>
-                </a>
-              </li>
-            {% endif %}
-            {% endif %}
-          {% endfor %}
-        </ul>
-      </section>
-    </div>
-  </div>
+  <section id="crew">
+    <h2>Hacker Camp Crew</h2>
+    <ul class="hc-profile-list">
+      {% for hacker in collections.hackers %}
+        {% set slug = hacker[0] %}
+        {% set profile = hacker[1] %}
+        {% set attendee = hacker[2] %}
+        {% if attendee.ticketType == "crew" %}
+          <li class="hc-profile hc-profile--card">
+            <a href="/hackers/{{ slug }}">
+              <div>
+                <img alt="" src="{{ attendee.image }}" width="192" height="192"/>
+                <span class="hc-profile__name">{{ attendee.name }}</span>
+                <span class="hc-profile__company">{{ attendee.company if attendee.company }}</span>
+              </div>
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+</section>
+
+  <section id="ucastnici">
+    <h2>Účastníci {{ year }}</h2>
+    <ul class="hc-profile-list">
+      {% for hacker in collections.hackers %}
+        {% set slug = hacker[0] %}
+        {% set profile = hacker[1] %}
+        {% set attendee = hacker[2] %}
+        {% if attendee.slackID != "U07H6JWHEJU" %}
+        {% if attendee.ticketType != "crew" %}
+          <li class="hc-profile hc-profile--card">
+            <a href="/hackers/{{ slug }}/">
+              <div>
+                <img alt="" src="{{ profile.image_192 }}" srcset="{{ profile.image_192 }} 1x, {{ profile.image_512 }} 2x" width="192" height="192" loading="lazy"/>
+                <span class="hc-profile__name">{{ attendee.name }}</span>
+                <span class="hc-profile__company">{{ attendee.company if attendee.company }}</span>
+              </div>
+            </a>
+          </li>
+        {% endif %}
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </section>
 {% endblock %}
