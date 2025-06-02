@@ -34,6 +34,12 @@
   }
 }
 
+#app-root search {
+  display: grid;
+  gap: 8px;
+  grid-template-columns: fit-content(2ch) 1fr fit-content(11ch);
+}
+
 .hc-master-detail {
   display: grid;
   grid-template-columns: 1fr 0fr;

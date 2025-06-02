@@ -149,7 +149,7 @@ export function registrationsChips(
   params
 ) {
   return html`
-    <search style="display: flex; gap: 8px; align-items: center;">
+    <search>
       ${
         when(view === View.search, () =>
           html`
@@ -188,10 +188,34 @@ export function registrationsChips(
               aria-orientation="horizontal"
               aria-multiselectable="false">
               ${chip({ text: "Zaplacení", count: paid, selected: view === View.paid, view: View.paid, year })}
-              ${chip({ text: "Vyfakturovaní", count: invoiced, selected: view === View.invoiced, view: View.invoiced, year })}
-              ${chip({ text: "Potvrzení", count: confirmed, selected: view === View.confirmed, view: View.confirmed, year })}
-              ${chip({ text: "Waiting list", count: waitingList, selected: view === View.waitingList, view: View.waitingList, year })}
-              ${chip({ text: "Dobrovolníci", count: volunteer, selected: view === View.volunteer, view: View.volunteer, year })}
+              ${chip({
+                text: "Vyfakturovaní",
+                count: invoiced,
+                selected: view === View.invoiced,
+                view: View.invoiced,
+                year
+              })}
+              ${chip({
+                text: "Potvrzení",
+                count: confirmed,
+                selected: view === View.confirmed,
+                view: View.confirmed,
+                year
+              })}
+              ${chip({
+                text: "Waiting list",
+                count: waitingList,
+                selected: view === View.waitingList,
+                view: View.waitingList,
+                year
+              })}
+              ${chip({
+                text: "Dobrovolníci",
+                count: volunteer,
+                selected: view === View.volunteer,
+                view: View.volunteer,
+                year
+              })}
               ${chip({ text: "Ostatní", count: staff, selected: view === View.staff, view: View.staff, year })}
               ${chip({ text: "Opt-outs", count: optouts, selected: view === View.optouts, view: View.optouts, year })}
             </div>
@@ -468,22 +492,18 @@ const timeColumn = new Map([[View.paid, { timeHeader: "Čas zaplacení", timeAtt
 export function registrationsTemplate(state) {
   const { data, selectedView, detail, year, page, params, selection } = state;
   return html`
-    <div class="">
-      ${
-        when(selection.size, () =>
-          until(selectionBar(selectedView, selection, data)), () =>
-          registrationsChips(selectedView, year, {
-            [View.paid]: data?.then(data =>
-              data.counts.paid
-            ),
-            [View.invoiced]: data?.then(data => data.counts.invoiced),
-            [View.confirmed]: data?.then(data => data.counts.confirmed),
-            [View.waitingList]: data?.then(data => data.counts.waitingList),
-            [View.volunteer]: data?.then(data => data.counts.volunteer),
-            [View.staff]: data?.then(data => data.counts.staff)
-          }, params))
-      }
-    </div>
+    ${when(selection.size, () =>
+      until(selectionBar(selectedView, selection, data)), () =>
+      registrationsChips(selectedView, year, {
+        [View.paid]: data?.then(data =>
+          data.counts.paid
+        ),
+        [View.invoiced]: data?.then(data => data.counts.invoiced),
+        [View.confirmed]: data?.then(data => data.counts.confirmed),
+        [View.waitingList]: data?.then(data => data.counts.waitingList),
+        [View.volunteer]: data?.then(data => data.counts.volunteer),
+        [View.staff]: data?.then(data => data.counts.staff)
+      }, params))}
     <div class="hc-master-detail">
       <div class="hc-card hc-master-detail__list">
         ${
