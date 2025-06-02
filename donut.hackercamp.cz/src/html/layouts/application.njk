@@ -47,13 +47,14 @@
 
 <footer class="mdc-layout-grid">
   <p style="text-align: center">© 2021-{{ currentYear }} Hacker camp crew z.s., IČ <a
-      href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a>, DIČ CZ17130476;
+      href="https://or.justice.cz/ias/ui/rejstrik-firma.vysledky?subjektId=1158268&typ=PLATNY">17130476</a>, DIČ
+    CZ17130476;
     <a href="https://www.hlidacshopu.cz/zpracovani-osobnich-udaju/">Zpracování osobních údajů</a></p>
 </footer>
 
 <script type="module">
-  import { init as initHeader } from "/assets/esm/header.js";
-  import { init as initLayout } from "/assets/esm/layout.js";
+  import { init as initHeader } from "{{ "header.js" | assetUrl("esm") }}";
+  import { init as initLayout } from "{{ "layout.js" | assetUrl("esm") }}";
 
   const build = {{ collections.build | dump(8) | safe }};
   const env = Object.assign({ year: {{ year }} }, build);
@@ -64,7 +65,24 @@
   initLayout({ snackbar: document.getElementById("hc-snackbar") });
 </script>
 
-<mwc-snackbar id="hc-snackbar"></mwc-snackbar>
+<article popover="manual" id="hc-snackbar" class="snackbar" role="status">
+  <div class="content">
+    <p aria-live="polite"></p>
+  </div>
+
+  <div class="actions">
+    <button class="button" popovertarget="hc-snackbar" popovertargetaction="hide" title="Zavřít">
+      <span class="sr-only">Zavřít</span>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           class="feather feather-x">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+</article>
+
 
 {% block javascript %}{% endblock %}
 

@@ -1,17 +1,17 @@
-import "@material/mwc-snackbar/mwc-snackbar.js";
-
 export async function init({ snackbar }) {
   globalThis.snackbar = snackbar;
   globalThis.showSnackbar = showSnackbar;
   globalThis.showPersistentSnackbar = showPersistentSnackbar;
 
-  function showSnackbar(message) {
-    snackbar.labelText = message;
-    snackbar.show();
+  function showSnackbar(message, timeoutMs = 5000) {
+    snackbar.querySelector(".content p").textContent = message;
+    snackbar.showPopover();
+    if (timeoutMs > 0) {
+      setTimeout(() => snackbar.hidePopover(), timeoutMs);
+    }
   }
 
   function showPersistentSnackbar(message) {
-    snackbar.timeoutMs = -1;
-    globalThis.showSnackbar(message);
+    globalThis.showSnackbar(message, -1);
   }
 }

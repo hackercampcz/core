@@ -85,14 +85,17 @@ export async function init({ profile: root, env }) {
   workbox.init(wb => () => {
     if (!globalThis.snackbar) return;
     const snackbar = globalThis.snackbar;
-    snackbar.labelText = "Je k dispozici nová verze.";
-    snackbar.timeoutMs = -1;
     const update = () => {
       wb.addEventListener("controlling", () => location.reload(), true);
       wb.messageSkipWaiting();
     };
-    render(html`<md-text-button slot="action" @click="${update}">AKTUALIZOVAT</md-text-button>`, snackbar);
-    snackbar.show();
+    render(
+      html`
+        <button class="button" @click="${update}">AKTUALIZOVAT</button>`,
+      snackbar.querySelector(".actions"),
+      { renderBefore: snackbar.querySelector(".actions button") }
+    );
+    globalThis.showPersistentSnackbar("Je k dispozici nová verze.");
   });
   const apiURL = endpoint => new URL(endpoint, env["api-host"]).href;
   state.resetIn(["apiURL"], apiURL);

@@ -641,8 +641,7 @@ export async function renderEventForm(rootElement, {
       swapIn("hackers", () => hackers);
     } catch (o_O) {
       rollbar.error(o_O);
-      snackbar.labelText = "Chyba při načítání hackerů";
-      snackbar.show();
+      globalThis.showSnackbar("Chyba při načítání hackerů");
     }
   }
 }

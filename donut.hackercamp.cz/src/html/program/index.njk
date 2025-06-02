@@ -166,8 +166,7 @@
       body : new URLSearchParams(new FormData(e.target)),
       referrerPolicy: "no-referrer",
     });
-    snackbar.labelText = resp.ok ? "Data uložena" : "Došlo k chybě";
-    snackbar.show()
+    globalThis.showSnackbar(resp.ok ? "Data uložena" : "Došlo k chybě");
     modal.close();
   });
 </script>

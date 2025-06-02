@@ -1,5 +1,11 @@
 @import "@material/layout-grid/dist/mdc.layout-grid.css";
 @import "@material/chips/dist/mdc.chips.css";
+@import "./openprops-ui.css";
+
+:root {
+  --gray-15: oklch(0.16 0.01 255);
+  --text-color-1-contrast: light-dark(var(--gray-2), var(--gray-15));
+}
 
 sup, sub {
   font-size: inherit;
@@ -62,13 +68,16 @@ code {
   .mdc-chip__text-label {
     color: #fff;
   }
+
   .mdc-chip__graphic {
     width: var(--mdc-chip-graphic-selected-width, 20px);
     padding-right: 8px;
   }
+
   .mdc-chip__checkmark {
     opacity: 1;
   }
+
   .mdc-chip__action--primary {
     padding-left: 8px;
   }
@@ -88,6 +97,7 @@ code {
   height: 28px;
   border-radius: 4px;
 }
+
 .hc-chip a {
   text-decoration: none;
   border-radius: 4px;
@@ -203,5 +213,20 @@ code {
   .hc-navbar__right {
     display: flex;
     justify-content: flex-end;
+  }
+}
+
+@layer utils {
+  /*
+Screen-reader only
+When you visibly want to hide an element but make it accessible for screen readers.
+*/
+  .sr-only {
+    block-size: 1px;
+    clip-path: inset(50%);
+    inline-size: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
   }
 }
