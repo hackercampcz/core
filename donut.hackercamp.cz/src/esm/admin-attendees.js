@@ -152,24 +152,20 @@ export function attendeesChips(
               })}
             </div>
             <div>
-              <button class="icon-button" title="Zkopírovat statistiky"
+              <button class="icon-button small" title="Zkopírovat statistiky" aria-label="Zkopírovat statistiky"
                       @click="${copyToClipboard([attendees, hackerAttendees, volunteerAttendees, staffAttendees, crewAttendees])}">
                 ${iconCopy("Zkopírovat")}
               </button>
-              <a class="icon-button"
+              <a class="icon-button small" title="Stáhnout CSV" aria-label="Stáhnout CSV"
                  href="https://api.hackercamp.cz/v1/admin/attendees?${new URLSearchParams({
                    year,
                    type: view,
                    format: "csv",
                    pageSize: 500
-                 })}"
-                 title="Stáhnout CSV"
-                 aria-label="Stáhnout CSV">
+                 })}">
                 ${iconDownload()}
               </a>
-              <button class="icon-button"
-                      title="Přidat účastníka"
-                      aria-label="Přidat účastníka"
+              <button class="icon-button small" title="Přidat účastníka" aria-label="Přidat účastníka"
                       @click="${renderModalDialog("add-attendee-modal")}">
                 ${iconUserPlus()}
               </button
@@ -277,13 +273,13 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
       <div class="hc-detail__tools">
         <hc-mail-button email="${detail.email}"></hc-mail-button
         >
-        <button class="icon-button"
+        <button class="icon-button small"
                 title="Upravit účastníka"
                 @click="${renderModalDialog("edit-attendee-modal")}"
         >
           ${iconEdit()}
         </button>
-        <button class="icon-button"
+        <button class="icon-button small"
                 title="Check In"
                 @click="${
                   renderModalDialog("check-in-modal", {
@@ -297,7 +293,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
                 }">
           ${iconCheckIn()}
         </button>
-        <button class="icon-button"
+        <button class="icon-button small"
                 title="Check Out"
                 @click="${renderModalDialog("check-out-modal")}">
           ${iconCheckOut()}
@@ -659,11 +655,7 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
                   ${
                     when(sn === "", () => html`<i slot="trailing-icon">${iconContactless()}</i>`, () =>
                       html`
-                        <button class="icon-button"
-                                slot="trailing-icon"
-                                type="button"
-                                title="Odebrat"
-                                @click="${removeChip(sn)}">
+                        <button class="icon-button small" slot="trailing-icon" type="button" title="Odebrat" @click="${removeChip(sn)}">
                           ${iconRemove()}
                         </button>
                       `)

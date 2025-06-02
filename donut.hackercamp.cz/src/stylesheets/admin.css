@@ -102,6 +102,15 @@
   border-bottom: 3px double #ddd;
 }
 
+.hc-detail__tools {
+  display: flex;
+  gap: 1em;
+}
+
+hc-phone-button, hc-mail-button {
+  display: inline flex;
+}
+
 .hc-pagination {
   box-sizing: content-box;
   height: 32px;

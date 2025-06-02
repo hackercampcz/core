@@ -219,12 +219,12 @@ export function registrationsChips(
               ${chip({ text: "Opt-outs", count: optouts, selected: view === View.optouts, view: View.optouts, year })}
             </div>
             <div>
-              <button class="icon-button"
+              <button class="icon-button small"
                       title="Zkopírovat statistiky"
                       @click="${copyToClipboard([paid, invoiced, confirmed, waitingList, volunteer, staff])}">
                 ${iconCopy()}
               </button>
-              <a class="icon-button"
+              <a class="icon-button small"
                  href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
                    // TODO: add support for search queries
                    { year, type: view, format: "csv", pageSize: 500 }
@@ -264,7 +264,7 @@ export async function selectionBar(selectedView, selection, data) {
       ${
         when(selectedView === View.confirmed, () =>
           html`
-            <button class="icon-button" title="Vyfakturovat" @click="${invoice()}">
+            <button class="icon-button small" title="Vyfakturovat" @click="${invoice()}">
               ${iconFakturoid()}
             </button>
           `)
@@ -272,7 +272,7 @@ export async function selectionBar(selectedView, selection, data) {
       ${
         when(new Set([View.volunteer, View.staff]).has(selectedView), () =>
           html`
-            <button class="icon-button" title="Schválit" @click="${approveSelected()}" aria-label="Schválit účastníka">
+            <button class="icon-button small" title="Schválit" @click="${approveSelected()}" aria-label="Schválit účastníka">
               ${iconUserPlus("Schválit")}
             </button>
           `)
@@ -382,21 +382,21 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         <hc-mail-button email="${detail.email}"></hc-mail-button>
         <hc-phone-button phone="${detail.phone}"></hc-phone-button>
         ${when(selectedView === View.waitingList, () => html`
-          <button class="icon-button" title="Opt in" @click="${optin(detail.email)}" aria-label="Schválit účastníka">
+          <button class="icon-button small" title="Opt in" @click="${optin(detail.email)}" aria-label="Schválit účastníka">
             ${iconUserPlus("Schválit")}
           </button>`)}
         ${when(selectedView === View.confirmed, () => html`
-          <button class="icon-button" title="Vyfakturovat" @click="${invoice(detail.year, detail.email)}">
+          <button class="icon-button small" title="Vyfakturovat" @click="${invoice(detail.year, detail.email)}">
             ${iconFakturoid()}
           </button>`)}
-        <button class="icon-button" title="Upravit registraci" @click="${renderModalDialog("registration-modal")}">
+        <button class="icon-button small" title="Upravit registraci" @click="${renderModalDialog("registration-modal")}">
           ${iconEdit()}
         </button>
         ${when(selectedView !== View.paid, () => html`
-          <button class="icon-button" title="Opt out" @click="${optout(detail.email)}" aria-label="Zamítnout účastníka">
+          <button class="icon-button small" title="Opt out" @click="${optout(detail.email)}" aria-label="Zamítnout účastníka">
             ${iconUserMinus("Zamítnout")}
           </button>`)}
-        <button class="icon-button" title="Odstranit registraci" @click="${trashRegistration(detail.email)}">
+        <button class="icon-button small" title="Odstranit registraci" @click="${trashRegistration(detail.email)}">
           ${iconTrash()}
         </button>
       </div>

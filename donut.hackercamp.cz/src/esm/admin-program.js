@@ -88,15 +88,15 @@ function programTable(data) {
               ${
                 when(!row.approved, () =>
                   html`
-                    <button class="icon-button" title="Schválit event" @click="${approveEvent(row._id)}">
+                    <button class="icon-button small" title="Schválit event" @click="${approveEvent(row._id)}">
                       ${iconCheckSquare()}
                     </button>
                   `)
               }
-              <button class="icon-button" title="Upravit event" @click="${renderModalDialog("edit-event")}">
+              <button class="icon-button small" title="Upravit event" @click="${renderModalDialog("edit-event")}">
                 ${iconEdit()}
               </button>
-              <button class="icon-button" title="Smazat event" @click="${deleteEvent(row._id, row.people?.map(x => x.slackID) ?? [])}">
+              <button class="icon-button small" title="Smazat event" @click="${deleteEvent(row._id, row.people?.map(x => x.slackID) ?? [])}">
                 ${iconTrash()}
               </button>
             </td>
