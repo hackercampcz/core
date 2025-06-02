@@ -12,18 +12,6 @@ export function iconBack(title = "Zpět") {
   `;
 }
 
-export function iconCopy(title = "Kopírovat") {
-  return svg`
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-         class="feather feather-copy">
-      <title>${title}</title>
-      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-    </svg>
-  `;
-}
-
 export function iconCheckIn(title = "Check In") {
   return svg`
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -47,6 +35,59 @@ export function iconCheckOut(title = "Check Out") {
       <circle cx="8.5" cy="7" r="4"/>
       <line x1="18" y1="8" x2="23" y2="13"/>
       <line x1="23" y1="8" x2="18" y2="13"/>
+    </svg>
+  `;
+}
+
+export function iconCheckSquare(title = "Hotovo") {
+  return svg`
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-square">
+      <title>${title}</title>
+      <polyline points="9 11 12 14 22 4"/>
+      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+    </svg>
+  `;
+}
+
+export function iconChevronLeft(title = "Předchozí") {
+  return svg`
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left">
+      <title>${title}</title>
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  `;
+}
+
+export function iconChevronRight(title = "Další") {
+  return svg `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right">
+      <title>${title}</title>
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+  `;
+}
+
+export function iconContactless() {
+  return svg`
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor">
+      <title>Contactless</title>
+      <path
+        d="M332.92-387.08q7.46-21.31 11.81-44.73 4.35-23.42 4.35-48.19 0-24.77-4.35-48.19-4.35-23.42-11.81-44.73l-55.53 23.07q4.84 16.47 8.26 34.12 3.43 17.65 3.43 35.73t-3.43 35.73q-3.42 17.65-8.26 34.12l55.53 23.07Zm128.77 54q14.55-34.89 20.97-71.61 6.42-36.73 6.42-75.29 0-38.56-6.42-75.3-6.42-36.74-20.97-71.64l-55.53 22.31q12.07 28.84 17.49 60.19 5.43 31.34 5.43 64.42t-5.43 64.42q-5.42 31.35-17.49 60.19l55.53 22.31Zm130 54q18.69-47.06 28.04-97.41 9.35-50.36 9.35-103.51 0-53.15-9.35-103.51-9.35-50.35-28.04-97.41l-55.53 24.31q16.46 40.73 24.69 85.35 8.23 44.61 8.23 91.17 0 46.55-8.23 91.23-8.23 44.68-24.69 85.47l55.53 24.31ZM480.07-100q-78.84 0-148.21-29.92t-120.68-81.21q-51.31-51.29-81.25-120.63Q100-401.1 100-479.93q0-78.84 29.92-148.21t81.21-120.68q51.29-51.31 120.63-81.25Q401.1-860 479.93-860q78.84 0 148.21 29.92t120.68 81.21q51.31 51.29 81.25 120.63Q860-558.9 860-480.07q0 78.84-29.92 148.21t-81.21 120.68q-51.29 51.31-120.63 81.25Q558.9-100 480.07-100Zm-.07-60q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+    </svg>
+  `;
+}
+
+export function iconCopy(title = "Kopírovat") {
+  return svg`
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+         class="feather feather-copy">
+      <title>${title}</title>
+      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
     </svg>
   `;
 }
@@ -114,6 +155,28 @@ export function iconSearch(title = "Hledat") {
       <title>${title}</title>
       <circle cx="11" cy="11" r="8"/>
       <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+  `;
+}
+
+export function iconSkipBackward(title = "První") {
+  return svg`
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-skip-back">
+      <title>${title}</title>
+      <polygon points="19 20 9 12 19 4 19 20"/>
+      <line x1="5" y1="19" x2="5" y2="5"/>
+    </svg>
+  `;
+}
+
+export function iconSkipForward(title = "Poslední") {
+  return svg`
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-skip-forward">
+      <title>${title}</title>
+      <polygon points="5 4 15 12 5 20 5 4"/>
+      <line x1="19" y1="5" x2="19" y2="19"/>
     </svg>
   `;
 }

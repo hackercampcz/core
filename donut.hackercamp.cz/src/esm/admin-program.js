@@ -4,6 +4,7 @@ import { html } from "lit-html";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
 import { Action, chip, dispatchAction, lineup, renderModalDialog, unauthorized, View } from "./admin/common.js";
+import { iconCheckSquare, iconEdit, iconTrash } from "./lib/icons.js";
 
 function approveEvent(eventId) {
   return e => {
@@ -56,7 +57,7 @@ export function programModalDialog() {
 
 function programTable(data) {
   return html`
-    <table style="width: 100%;">
+    <table>
       <thead>
       <tr>
         <th>ID</th>
@@ -71,51 +72,41 @@ function programTable(data) {
       </tr>
       </thead>
       <tbody>
-      ${
-        data.map(row =>
-          html`
-            <tr data-id="${row._id}">
-              <td>${when(row.id, () => html`<code>${row.id}</code>`)}</td>
-              <td
-                style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis"
-              >
-                ${row.title}
-              </td>
-              <td>${row.people?.[0]?.name}</td>
-              <td>${when(row.topic, () => html`<code>${row.topic}</code>`)}</td>
-              <td>${row.type}</td>
-              <td>${lineup(row.lineup)}</td>
-              <td>
-                ${row.startAt ? formatDateTime(new Date(row.startAt)) : null}
-              </td>
-              <td>${row.endAt ? formatDateTime(new Date(row.endAt)) : null}</td>
-              <td style="white-space: nowrap;">
-                ${
-                  when(!row.approved, () =>
-                    html`
-                      <md-icon-button
-                        title="Schválit event"
-                        @click="${approveEvent(row._id)}"
-                      >
-                        <md-icon>done</md-icon>
-                      </md-icon-button>`)
-                }
-                <md-icon-button
-                  title="Upravit event"
-                  @click="${renderModalDialog("edit-event")}"
-                >
-                  <md-icon>edit</md-icon>
-                </md-icon-button>
-                <md-icon-button
-                  title="Smazat event"
-                  @click="${deleteEvent(row._id, row.people?.map(x => x.slackID) ?? [])}"
-                >
-                  <md-icon>delete_forever</md-icon>
-                </md-icon-button>
-              </td>
-            </tr>
-          `
-        )
+      ${data.map(row => html`
+          <tr data-id="${row._id}">
+            <td>${when(row.id, () => html`<code>${row.id}</code>`)}</td>
+            <td
+              style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis"
+            >
+              ${row.title}
+            </td>
+            <td>${row.people?.[0]?.name}</td>
+            <td>${when(row.topic, () => html`<code>${row.topic}</code>`)}</td>
+            <td>${row.type}</td>
+            <td>${lineup(row.lineup)}</td>
+            <td>
+              ${row.startAt ? formatDateTime(new Date(row.startAt)) : null}
+            </td>
+            <td>${row.endAt ? formatDateTime(new Date(row.endAt)) : null}</td>
+            <td style="white-space: nowrap;">
+              ${
+                when(!row.approved, () =>
+                  html`
+                    <button class="icon-button" title="Schválit event" @click="${approveEvent(row._id)}">
+                      ${iconCheckSquare()}
+                    </button>
+                  `)
+              }
+              <button class="icon-button" title="Upravit event" @click="${renderModalDialog("edit-event")}">
+                ${iconEdit()}
+              </button>
+              <button class="icon-button" title="Smazat event" @click="${deleteEvent(row._id, row.people?.map(x => x.slackID) ?? [])}">
+                ${iconTrash()}
+              </button>
+            </td>
+          </tr>
+        `
+      )
       }
       </tbody>
     </table>

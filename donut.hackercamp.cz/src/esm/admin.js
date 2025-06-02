@@ -1,8 +1,6 @@
 import "@material/mwc-drawer/mwc-drawer.js";
-import "@material/web/iconbutton/icon-button.js";
 import "@material/web/button/text-button.js";
 import "@material/web/checkbox/checkbox.js";
-import "@material/web/icon/icon.js";
 import "@material/web/list/list.js";
 import "@material/web/list/list-item.js";
 import "@material/web/textfield/outlined-text-field.js";
@@ -335,10 +333,12 @@ function loadData(selectedView, year, page, query, apiHost) {
   });
 }
 
-const endpointName = new Map([[Endpoint.registrations, "Registrace"], [Endpoint.attendees, "Účastníci"], [
-  Endpoint.housing,
-  "Ubytování"
-], [Endpoint.program, "Program"]]);
+const endpointName = new Map([
+  [Endpoint.registrations, "Registrace"],
+  [Endpoint.attendees, "Účastníci"],
+  [Endpoint.housing, "Ubytování"],
+  [Endpoint.program, "Program"]
+]);
 
 function changeTitle(viewTitle, view) {
   const endpoint = endpointForView.get(view);

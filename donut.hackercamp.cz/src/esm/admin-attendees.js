@@ -25,7 +25,7 @@ import "./components/phone-button.js";
 import "./components/mail-button.js";
 import { map } from "lit-html/directives/map.js";
 import {
-  iconBack, iconCheckIn, iconCheckOut,
+  iconBack, iconCheckIn, iconCheckOut, iconContactless,
   iconCopy,
   iconDownload,
   iconEdit,
@@ -673,7 +673,7 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
                   @change="${onChange}"
                 >
                   ${
-        when(sn === "", () => html`<md-icon slot="trailing-icon">nfc</md-icon>`, () =>
+        when(sn === "", () => html`<i slot="trailing-icon">${iconContactless()}</i>`, () =>
           html`
             <button class="icon-button"
                     slot="trailing-icon"
