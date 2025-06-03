@@ -466,57 +466,6 @@
       --_color: var(--text-color-1);
     }
 
-    /* TODO: should this be out of the box? */
-    /* Colors */
-    /* &:hover {
-      --_bg-color: var(--color-11);
-      --_border-color: var(--color-11);
-      --_color: var(--text-color-1);
-    } */
-    /* &.red,
-    &.blue,
-    &.green,
-    &.orange,
-    &.primary {
-      --_bg-color: var(--color-5);
-      --_border-color: var(--color-7);
-      --_color: var(--text-color-1-contrast);
-
-      &:hover {
-        --_bg-color: var(--color-7);
-        --_border-color: var(--color-7);
-        --_color: var(--text-color-1-contrast);
-
-        &:active {
-          --_bg-color: var(--color-8);
-          --_border-color: var(--color-8);
-        }
-      }
-
-      &.outlined {
-        --_bg-color: var(--surface-tonal);
-        --_color: var(--text-color-1);
-        --_border-color: var(--color-9);
-
-        &:hover {
-          --_bg-color: var(--color-9);
-          --_border-color: var(--color-9);
-          --_color: var(--text-color-1);
-
-          &:active {
-            --_bg-color: var(--color-11);
-            --_border-color: var(--color-11);
-          }
-        }
-      }
-    } */
-
-    &:where(button, a):where(:not([disabled])) {
-      &:where(:not(:active)):hover {
-        --_bg-color: light-dark(oklch(from var(--surface-tonal) calc(l * 0.98) c h), oklch(from var(--surface-tonal) calc(l * 1.1) c h));
-      }
-    }
-
     /* Icon */
     &:has(svg:first-child) {
       padding-inline: var(--size-1) var(--size-2);
