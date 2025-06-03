@@ -1,26 +1,7 @@
 import { withAuthHandler } from "./remoting.js";
+import { SafeStorage } from "./storage.js";
 
-class MemoryStorage {
-  #data;
-
-  constructor() {
-    this.#data = new Map();
-  }
-
-  getItem(key) {
-    return this.#data.get(key);
-  }
-
-  setItem(key, value) {
-    this.#data.set(key, value);
-  }
-
-  removeItem(key) {
-    this.#data.delete(key);
-  }
-}
-
-const storage = localStorage ?? new MemoryStorage();
+const storage = new SafeStorage(localStorage);
 
 export async function signIn({ idToken, slackProfile, slackToken, slackAccessToken }, apiURL) {
   const contact = await getContactFromDb(slackProfile.id ?? slackProfile.sub, slackProfile.email, apiURL);
