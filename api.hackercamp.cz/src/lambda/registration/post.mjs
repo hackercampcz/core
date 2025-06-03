@@ -38,7 +38,7 @@ function getEditUrl(isNewbee, id) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event) {
-  let { email, year, firstTime, slackID, ...rest } = readPayload(event);
+  let { email, year, firstTime, ...rest } = readPayload(event);
   const isNewbee = firstTime === "1";
   email = email.trim().toLowerCase();
   year = parseInt(year, 10);
@@ -49,7 +49,7 @@ export async function handler(event) {
 
   if (isPatron && rest.volunteerArrivalDay === "th") {
     // API abuse
-    return { statusCode: 451, body: "fuck off" };
+    return { statusCode: 451, body: "fok off" };
   }
 
   const id = crypto.randomBytes(20).toString("hex");
