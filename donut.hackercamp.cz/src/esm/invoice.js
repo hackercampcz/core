@@ -168,7 +168,7 @@ export async function main({ env, searchParams }) {
     contacts.push(reg);
     const contactEl = contact.content.cloneNode(true);
     contactEl.querySelector(".name").textContent = reg.invName;
-    contactEl.querySelector(".address").textContent = reg.invAddress;
+    contactEl.querySelector(".address").textContent = [reg.invAddress, reg.invAddressZip, reg.invAddressCity].filter(Boolean).join(", ");
     contactEl.querySelector(".email").textContent = reg.invEmail ?? reg["invoice-contact"];
     contactEl.querySelector(".regNo").textContent = reg.invRegNo ? `IČO: ${reg.invRegNo}` : "";
     contactEl.querySelector(".vatId").textContent = reg.invVatNo ? `DIČ: ${reg.invVatNo}` : "";
@@ -236,13 +236,15 @@ export async function main({ env, searchParams }) {
     const reg = contacts[0]; // TODO: handle contact selection
     const subject = Object.fromEntries(
       Object.entries({
-        "name": reg.invName ?? (reg.invRecipientFirstname
+        name: reg.invName ?? (reg.invRecipientFirstname
           ? `${reg.invRecipientFirstname} ${reg.invRecipientLastname}`
           : `${reg.firstName} ${reg.lastName}`),
-        "email": reg.invEmail ?? reg["invoice-contact"] ?? reg.email,
-        "street": reg.invAddress,
-        "registration_no": reg.invRegNo,
-        "vat_no": reg.invVatNo
+        email: reg.invEmail ?? reg["invoice-contact"] ?? reg.email,
+        street: reg.invAddress,
+        city: reg.invAddressCity,
+        zip: reg.invAddressZip,
+        registration_no: reg.invRegNo,
+        vat_no: reg.invVatNo
       }).filter(([_, v]) => Boolean(v))
     );
     const resp = await createSubject(subject);
