@@ -78,7 +78,7 @@ commands:
       - run:
           name: Deploy website
           working_directory: << parameters.site_name >>
-          command: yarn wrangler pages deploy ../<< parameters.distribution_folder >>/<< parameters.site_name >> --project-name << parameters.project_name >>
+          command: yarn wrangler pages deploy ../<< parameters.distribution_folder >>/<< parameters.site_name >> --project-name << parameters.project_name >> --upload-source-map
 
 jobs:
   provision:
