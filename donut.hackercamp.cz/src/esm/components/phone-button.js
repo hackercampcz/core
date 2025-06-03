@@ -21,7 +21,8 @@ export class PhoneButton extends HTMLElement {
     if (!this.phone) return null;
     return html`
       <a class="icon-button small" href="tel:${getInternationalPhoneFormat(this.phone)}"
-              title="Zavolat ${this.phone}" aria-label="Telefon">
+         title="Zavolat ${this.phone}" aria-label="Telefon"
+         @click="${e => e.stopPropagation()}">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
              class="feather feather-phone">

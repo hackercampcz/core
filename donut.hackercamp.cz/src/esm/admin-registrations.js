@@ -350,9 +350,10 @@ export function registrationsTableTemplate(
                   <td>${registrationStatus(row)}</td>`)
             }
             <td>
-              <hc-mail-button email="${row.email}"></hc-mail-button
-              >
-              <hc-phone-button phone="${row.phone}"></hc-phone-button>
+              <span class="hc-detail__tools">
+                <hc-mail-button email="${row.email}"></hc-mail-button>
+                <hc-phone-button phone="${row.phone}"></hc-phone-button>
+              </span>
             </td>
           </tr>
         `
