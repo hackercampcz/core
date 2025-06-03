@@ -122,7 +122,7 @@ export function iconFakturoid() {
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 192 192">
       <title>Vyfakturovat</title>
       <g fill="none" fill-rule="evenodd">
-        <path fill="#FFF" d="M38 35h121v120H38z"/>
+        <path fill="light-dark(#fff, #000)" d="M38 35h121v120H38z"/>
         <path fill="currentColor"
               d="M112 122.074c0 6.222 4.938 9.926 13.506 9.926 8.426 0 12.494-4.148 12.494-12.298V112h-6.971c-14.82 0-19.029 3.552-19.029 10.074"/>
         <path fill="currentColor"
