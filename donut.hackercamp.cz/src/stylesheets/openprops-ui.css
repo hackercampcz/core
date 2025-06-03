@@ -513,10 +513,7 @@
 
     &:where(button, a):where(:not([disabled])) {
       &:where(:not(:active)):hover {
-        --_bg-color: light-dark(
-          oklch(from var(--surface-tonal) calc(l * 0.98) c h),
-          oklch(from var(--surface-tonal) calc(l * 1.1) c h)
-        );
+        --_bg-color: light-dark(oklch(from var(--surface-tonal) calc(l * 0.98) c h), oklch(from var(--surface-tonal) calc(l * 1.1) c h));
       }
     }
 
@@ -563,11 +560,7 @@
     /* Disabled */
     &:where([disabled]) {
       opacity: 0.64;
-      --_text-color: color-mix(
-        in oklch,
-        var(--text-color-2) 50%,
-        var(--surface-default)
-      );
+      --_text-color: color-mix(in oklch, var(--text-color-2) 50%, var(--surface-default));
       cursor: not-allowed;
     }
   }
@@ -673,17 +666,11 @@
         /* Inverse hover and active backgrounds */
         &:where(:not([disabled])) {
           &:where(:not(:active):hover) {
-            --_bg-color: light-dark(
-              color-mix(in oklch, white 40%, black),
-              color-mix(in oklch, white 85%, black)
-            );
+            --_bg-color: light-dark(color-mix(in oklch, white 40%, black), color-mix(in oklch, white 85%, black));
           }
 
           &:where(:hover:active) {
-            --_bg-color: light-dark(
-              color-mix(in oklch, white 45%, black),
-              color-mix(in oklch, white 80%, black)
-            );
+            --_bg-color: light-dark(color-mix(in oklch, white 45%, black), color-mix(in oklch, white 80%, black));
           }
         }
       }
