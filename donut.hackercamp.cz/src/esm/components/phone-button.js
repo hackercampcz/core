@@ -9,8 +9,15 @@ function getInternationalPhoneFormat(phone) {
 }
 
 export class PhoneButton extends HTMLElement {
+  static get observedAttributes() {
+    return ["phone"];
+  }
+
   get phone() {
     return this.getAttribute("phone");
+  }
+  set phone(value) {
+    this.setAttribute("phone", value);
   }
 
   connectedCallback() {

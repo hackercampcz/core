@@ -1,11 +1,22 @@
 import { html, render } from "lit-html";
 
 export class MailButton extends HTMLElement {
+  static get observedAttributes() {
+    return ["email"];
+  }
+
   get email() {
     return this.getAttribute("email");
   }
+  set email(value) {
+    return this.setAttribute("email", value);
+  }
 
   connectedCallback() {
+    render(this.render(), this);
+  }
+
+  attributeChangedCallback(name, oldValue, newValue) {
     render(this.render(), this);
   }
 
