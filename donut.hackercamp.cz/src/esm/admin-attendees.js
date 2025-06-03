@@ -33,6 +33,7 @@ import {
   iconEdit,
   iconRemove,
   iconSearch,
+  iconSlack,
   iconUserPlus,
   iconX
 } from "./lib/icons.js";
@@ -219,8 +220,7 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
       </tr>
       </tfoot>
       <tbody>
-      ${
-        data.map(row =>
+      ${data.map(row =>
           html`
             <tr @click="${renderDetail(row)}">
               <td>
@@ -235,10 +235,7 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
               <td>${ticketName.get(row.ticketType)}</td>
               <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
               <td>
-                ${
-                  row.nfcTronData?.map(({ chipID }) => chipID).filter(Boolean).join(", ") || html`
-                    <em><small>nene</small></em>`
-                }
+                ${row.nfcTronData?.map(({ chipID }) => chipID).filter(Boolean).join(", ") || html`<em><small>nene</small></em>`}
               </td>
               <td>
                 <span class="hc-detail__tools">
@@ -274,12 +271,14 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
       </div>
       <p>${detail.company}</p>
       <div class="hc-detail__tools">
-        <hc-mail-button email="${detail.email}"></hc-mail-button
-        >
+        <hc-mail-button email="${detail.email}"></hc-mail-button>
+        ${when(detail.phone, () => html`<hc-phone-button email="${detail.phone}"></hc-phone-button>`)}
+        <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}" target="slack">
+          ${iconSlack()}
+        </a>
         <button class="icon-button small"
                 title="Upravit účastníka"
-                @click="${renderModalDialog("edit-attendee-modal")}"
-        >
+                @click="${renderModalDialog("edit-attendee-modal")}">
           ${iconEdit()}
         </button>
         <button class="icon-button small"

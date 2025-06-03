@@ -24,8 +24,8 @@ async function getHousing(year) {
     }]
   });
   return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
-    ProjectionExpression: "slackID, #name, company, housing, housingPlacement, ticketType",
-    ExpressionAttributeNames: { "#name": "name" }
+    ProjectionExpression: "slackID, #name, company, housing, housingPlacement, ticketType, #email, #phone",
+    ExpressionAttributeNames: { "#name": "name", "#email": "email", "#phone": "phone" }
   });
 }
 

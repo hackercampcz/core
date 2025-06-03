@@ -5,6 +5,7 @@ import { ticketName, unauthorized } from "./admin/common.js";
 import { housing } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
+import { iconSlack } from "./lib/icons.js";
 
 function housingTable(data) {
   return html`
@@ -35,6 +36,9 @@ function housingTable(data) {
                 <span class="hc-detail__tools">
                   <hc-mail-button email="${row.email}"></hc-mail-button>
                   <hc-phone-button phone="${row.phone}"></hc-phone-button>
+                  <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${row.slackID}">
+                    ${iconSlack()}
+                  </a>
                 </span>
               </td>
             </tr>

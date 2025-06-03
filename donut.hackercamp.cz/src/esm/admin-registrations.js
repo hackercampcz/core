@@ -29,7 +29,7 @@ import {
   iconCopy,
   iconDownload, iconEdit,
   iconFakturoid,
-  iconSearch, iconTrash,
+  iconSearch, iconSlack, iconTrash,
   iconUserMinus,
   iconUserPlus, iconX
 } from "./lib/icons.js";
@@ -272,7 +272,8 @@ export async function selectionBar(selectedView, selection, data) {
       ${
         when(new Set([View.volunteer, View.staff]).has(selectedView), () =>
           html`
-            <button class="icon-button small" title="Schválit" @click="${approveSelected()}" aria-label="Schválit účastníka">
+            <button class="icon-button small" title="Schválit" @click="${approveSelected()}"
+                    aria-label="Schválit účastníka">
               ${iconUserPlus("Schválit")}
             </button>
           `)
@@ -369,10 +370,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
   return html`
     <div class="hc-card hc-master-detail__detail">
       <div style="display: flex;align-items: center;gap: 12px;">
-        <button class="icon-button"
-                aria-label="Zavřít detail"
-                title="Zavřít detail"
-                @click="${closeDetail()}">
+        <button class="icon-button" aria-label="Zavřít detail" title="Zavřít detail" @click="${closeDetail()}">
           ${iconBack()}
         </button>
         <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
@@ -382,19 +380,27 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       <div class="hc-detail__tools">
         <hc-mail-button email="${detail.email}"></hc-mail-button>
         <hc-phone-button phone="${detail.phone}"></hc-phone-button>
+        ${when(detail.slackID, () => html`
+          <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}" target="slack">
+            ${iconSlack()}
+          </a>`
+        )}
         ${when(selectedView === View.waitingList, () => html`
-          <button class="icon-button small" title="Opt in" @click="${optin(detail.email)}" aria-label="Schválit účastníka">
+          <button class="icon-button small" title="Opt in" @click="${optin(detail.email)}"
+                  aria-label="Schválit účastníka">
             ${iconUserPlus("Schválit")}
           </button>`)}
         ${when(selectedView === View.confirmed, () => html`
           <button class="icon-button small" title="Vyfakturovat" @click="${invoice(detail.year, detail.email)}">
             ${iconFakturoid()}
           </button>`)}
-        <button class="icon-button small" title="Upravit registraci" @click="${renderModalDialog("registration-modal")}">
+        <button class="icon-button small" title="Upravit registraci"
+                @click="${renderModalDialog("registration-modal")}">
           ${iconEdit()}
         </button>
         ${when(selectedView !== View.paid, () => html`
-          <button class="icon-button small" title="Opt out" @click="${optout(detail.email)}" aria-label="Zamítnout účastníka">
+          <button class="icon-button small" title="Opt out" @click="${optout(detail.email)}"
+                  aria-label="Zamítnout účastníka">
             ${iconUserMinus("Zamítnout")}
           </button>`)}
         <button class="icon-button small" title="Odstranit registraci" @click="${trashRegistration(detail.email)}">
