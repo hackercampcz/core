@@ -192,22 +192,6 @@ export function createRoutes({
             }
           }
         },
-        adminProgram: {
-          httpMethod: "ANY",
-          path: "/admin/program",
-          fileName: "admin/program/index.mjs",
-          environment: {
-            variables: {
-              year: config.require("year"),
-              rollbar_access_token,
-              db_table_attendees: db.attendeesDataTable,
-              db_table_program: db.programDataTable,
-              private_key: config.require("private-key"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates
-            }
-          }
-        },
         ares: {
           httpMethod: "GET",
           path: "/ares",

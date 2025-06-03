@@ -10,7 +10,6 @@ import {
   dispatchAction,
   Endpoint,
   executeCommand,
-  lineup,
   paginationNavigation,
   registerDialog,
   renderDetail,
@@ -25,7 +24,10 @@ import "./components/phone-button.js";
 import "./components/mail-button.js";
 import { map } from "lit-html/directives/map.js";
 import {
-  iconBack, iconCheckIn, iconCheckOut, iconContactless,
+  iconBack,
+  iconCheckIn,
+  iconCheckOut,
+  iconContactless,
   iconCopy,
   iconDownload,
   iconEdit,
@@ -35,7 +37,7 @@ import {
   iconX
 } from "./lib/icons.js";
 import { getChipID } from "./lib/nfctron.js";
-import { getContact } from "./lib/profile";
+import { getContact } from "./lib/profile.js";
 
 /**
  * @param {Object} attendee
@@ -390,34 +392,6 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
               administrátorem
               <strong>${detail.editedBy}</strong>
             </p>
-          `)
-      }
-      ${
-        when(detail.events?.length, () =>
-          html`
-            <h3>Program</h3>
-            ${
-              detail.events?.map(event =>
-                html`
-                  <div style="border: 1px solid var(--hc-text-color); padding: 8px 16px">
-                    <h4>${event.title}</h4>
-                    <p>
-                      <code>${lineup(event.lineup)}</code>
-                      ${when(event.topic, () => html`<code>${event.topic}</code>`)}
-                      ${
-                        when(
-                          event.startAt,
-                          () =>
-                            html`-
-                            <time datetime="${event.startAt}">${formatDateTime(new Date(event.startAt))}</time>`
-                        )
-                      }
-                    </p>
-                    ${when(event.description, () => html`<p>${event.description}</p>`)}
-                  </div>
-                `
-              )
-            }
           `)
       }
     </div>
