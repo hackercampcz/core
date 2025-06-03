@@ -131,55 +131,6 @@ function approveSelectedVolunteers() {
   }).then(() => location.reload());
 }
 
-/**
- * @param {string} event_id
- * @param {number} year
- * @param people
- * @param {string} apiHost
- * @returns {Promise<void>}
- */
-export function markEventAsRemoved(event_id, year, people, apiHost) {
-  return executeCommand(apiHost, Endpoint.program, "delete", { event_id, people, year }).then(() => location.reload());
-}
-
-/**
- * @param {string} event_id
- * @param {number} year
- * @param {Object} updates
- * @param {string} apiHost
- * @returns {Promise<void>}
- */
-export function saveEditedEvent(event_id, year, updates, apiHost) {
-  return executeCommand(apiHost, Endpoint.program, "edit", { event_id, year, ...updates }).then(() =>
-    location.reload()
-  );
-}
-
-function deleteEvent(event_id, people) {
-  const { apiHost, year } = state.deref();
-  return (confirm("Opravdu chceš event smazat?") && markEventAsRemoved(event_id, year, people, apiHost));
-}
-
-/**
- * @param {string} event_id
- * @param {number} year
- * @param {string} apiHost
- * @returns {Promise<void>}
- */
-export function markEventAsApproved(event_id, year, apiHost) {
-  return executeCommand(apiHost, Endpoint.program, "approve", { event_id, year }).then(() => location.reload());
-}
-
-function approveEvent(event_id) {
-  const { apiHost, year } = state.deref();
-  return (confirm("Opravdu chceš event schválit?") && markEventAsApproved(event_id, year, apiHost));
-}
-
-function editEvent(event_id, updates) {
-  const { apiHost, year } = state.deref();
-  return saveEditedEvent(event_id, year, updates, apiHost);
-}
-
 function renderDetail(detail) {
   const items = detail.nfcTronData?.length ? detail.nfcTronData.map(x => x.sn) : [""];
   transaction(t => {
@@ -233,8 +184,6 @@ const attendeeViews = new Set([
   View.searchAttendees
 ]);
 
-const programViews = new Set(["program", "programApproval"]);
-
 async function renderView(state) {
   // HACK: This is here to force gulp-rev to change hash for each build even if there are no changes in this file.
   // The reason is we are importing modules that can be changed, but the revision will be staled here.
@@ -249,10 +198,6 @@ async function renderView(state) {
   if (attendeeViews.has(selectedView)) {
     const { attendeesTemplate } = await import("./admin-attendees.js");
     return attendeesTemplate(state);
-  }
-  if (programViews.has(selectedView)) {
-    const { programTemplate } = await import("./admin-program.js");
-    return programTemplate(state);
   }
   switch (selectedView) {
     case View.housing:
@@ -279,8 +224,6 @@ const endpointForView = new Map([
   [View.hackerAttendees, Endpoint.attendees],
   [View.volunteerAttendees, Endpoint.attendees],
   [View.staffAttendees, Endpoint.attendees],
-  [View.program, Endpoint.program],
-  [View.programApproval, Endpoint.program],
   [View.housing, Endpoint.housing]
 ]);
 
@@ -332,7 +275,6 @@ const endpointName = new Map([
   [Endpoint.registrations, "Registrace"],
   [Endpoint.attendees, "Účastníci"],
   [Endpoint.housing, "Ubytování"],
-  [Endpoint.program, "Program"]
 ]);
 
 function changeTitle(viewTitle, view) {

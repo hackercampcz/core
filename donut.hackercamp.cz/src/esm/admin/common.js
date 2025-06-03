@@ -12,9 +12,6 @@ export const Action = {
   invoiced: "invoiced",
   closeDetail: "closeDetail",
   renderDetail: "renderDetail",
-  editEvent: "editEvent",
-  deleteEvent: "deleteEvent",
-  approveEvent: "approveEvent",
   showModalDialog: "showModalDialog",
   select: "select",
   unselect: "unselect",
@@ -57,15 +54,12 @@ export const View = {
   volunteer: "volunteer",
   volunteerAttendees: "volunteerAttendees",
   housing: "housing",
-  program: "program",
-  programApproval: "programApproval"
 };
 
 export const Endpoint = {
   registrations: "registrations",
   attendees: "attendees",
-  housing: "housing",
-  program: "program"
+  housing: "housing"
 };
 
 export async function executeCommand(apiHost, endpoint, command, params) {
@@ -208,21 +202,6 @@ export function ticketDetail({ year, ticketType, ticketPrice, patronAllowance })
       <data value="${price} CZK"><code>${formatMoney(price)} Kč</code></data>
     </p>
   `;
-}
-
-export const lineupText = new Map([
-  ["liorg", "Organizační"],
-  ["limain", "Mainframe"],
-  ["libase", "Basecamp"],
-  ["liback", "Backend"],
-  ["lipeep", "Peopleware"],
-  ["liwood", "WoodStack"],
-  ["lijungle", "Jungle Release"],
-  ["liother", "Doprovodné aktivity"]
-]);
-
-export function lineup(x) {
-  return html`<code>${lineupText.get(x)}</code>`;
 }
 
 export function paginationNavigation({ page, pages, count, total, params }) {
