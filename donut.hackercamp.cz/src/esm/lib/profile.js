@@ -1,22 +1,44 @@
 import { withAuthHandler } from "./remoting.js";
 
+class MemoryStorage {
+  #data;
+
+  constructor() {
+    this.#data = new Map();
+  }
+
+  getItem(key) {
+    return this.#data.get(key);
+  }
+
+  setItem(key, value) {
+    this.#data.set(key, value);
+  }
+
+  removeItem(key) {
+    this.#data.delete(key);
+  }
+}
+
+const storage = localStorage ?? new MemoryStorage();
+
 export async function signIn({ idToken, slackProfile, slackToken, slackAccessToken }, apiURL) {
   const contact = await getContactFromDb(slackProfile.id ?? slackProfile.sub, slackProfile.email, apiURL);
   setContact(contact);
-  localStorage.setItem("hc:id_token", idToken);
-  localStorage.setItem("slack:id_token", slackToken);
-  localStorage.setItem("slack:access_token", slackAccessToken);
-  localStorage.setItem("slack:profile", JSON.stringify(slackProfile));
+  storage.setItem("hc:id_token", idToken);
+  storage.setItem("slack:id_token", slackToken);
+  storage.setItem("slack:access_token", slackAccessToken);
+  storage.setItem("slack:profile", JSON.stringify(slackProfile));
   window.dispatchEvent(new Event("hc:profile"));
   return slackProfile;
 }
 
 export function signOut(apiURL) {
-  localStorage.removeItem("hc:id_token");
-  localStorage.removeItem("hc:contact");
-  localStorage.removeItem("slack:id_token");
-  localStorage.removeItem("slack:access_token");
-  localStorage.removeItem("slack:profile");
+  storage.removeItem("hc:id_token");
+  storage.removeItem("hc:contact");
+  storage.removeItem("slack:id_token");
+  storage.removeItem("slack:access_token");
+  storage.removeItem("slack:profile");
   location.assign(apiURL("/v2/auth/sign-out"));
 }
 
@@ -35,35 +57,39 @@ async function getContactFromDb(slackID, email, apiUrl) {
 }
 
 export function getContact() {
-  return JSON.parse(localStorage.getItem("hc:contact"));
+  const item = storage.getItem("hc:contact");
+  if (!item) return null;
+  return JSON.parse(item);
 }
 
 export function setContact(contact) {
-  localStorage.setItem("hc:contact", JSON.stringify(contact));
+  storage.setItem("hc:contact", JSON.stringify(contact));
   window.dispatchEvent(new Event("hc:profile"));
 }
 
 export function getSlackProfile() {
-  return JSON.parse(localStorage.getItem("slack:profile"));
+  const item = storage.getItem("slack:profile");
+  if (!item) return null;
+  return JSON.parse(item);
 }
 
 export function setReturnUrl(href) {
-  localStorage.setItem("hc:returnUrl", href);
+  storage.setItem("hc:returnUrl", href);
 }
 
 export function handleReturnUrl() {
-  const returnUrl = localStorage.getItem("hc:returnUrl");
+  const returnUrl = storage.getItem("hc:returnUrl");
   if (returnUrl) {
-    localStorage.removeItem("hc:returnUrl");
+    storage.removeItem("hc:returnUrl");
   }
   location.assign(returnUrl ?? "/");
 }
 
 export function isSignedIn() {
   // TODO: validate token expiration
-  return Boolean(localStorage.getItem("hc:id_token"));
+  return Boolean(storage.getItem("hc:id_token"));
 }
 
 export function getSlackAccessToken() {
-  return localStorage.getItem("slack:access_token");
+  return storage.getItem("slack:access_token");
 }

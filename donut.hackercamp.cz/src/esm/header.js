@@ -2,7 +2,7 @@ import "@material/web/button/text-button.js";
 import { defAtom } from "@thi.ng/atom";
 import { html, render } from "lit-html";
 import { when } from "lit-html/directives/when.js";
-import { getContact, signOut } from "./lib/profile.js";
+import { getContact, getSlackProfile, signOut } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as workbox from "./lib/workbox.js";
 
@@ -67,14 +67,8 @@ function renderProfile({ profile, contact, isPopupVisible }) {
   });
 }
 
-function getProfile() {
-  const item = localStorage.getItem("slack:profile");
-  if (!item) return null;
-  return JSON.parse(item);
-}
-
 function loadProfile() {
-  const profile = getProfile();
+  const profile = getSlackProfile();
   const contact = getContact();
   if (!profile && !contact) return;
 
