@@ -249,20 +249,20 @@
                 <label for="email">
                   E-mail (osobní)
                 </label>
-                <input id="email" name="email" type="email" autocomplete="email" required>
+                <input id="email" name="email" type="email" autocomplete="home email" required>
               </div>
               <div class="field">
                 <label for="phonenum">
                   Telefon
                 </label>
-                <input id="phonenum" name="phone" type="tel" autocomplete="tel" required>
+                <input id="phonenum" name="phone" type="tel" autocomplete="mobile tel" required>
               </div>
             </div>
             <div class="field">
               <label for="company">
                 Jméno firmy (jednotlivec nemusí)
               </label>
-              <input id="company" name="company" type="text" autocomplete="on">
+              <input id="company" name="company" type="text" autocomplete="organization">
             </div>
             <div class="group">
               <div class="field">
@@ -398,30 +398,40 @@
               <label for="invoice-name">
                 Jméno / název společnosti
               </label>
-              <input
-                id="invoice-name"
-                name="invName"
-                type="text"
-                required
-                placeholder="Kancelář prezidenta republiky">
+              <input id="invoice-name" name="invName" type="text"
+                autocomplete="billing organization name"
+                required placeholder="Kancelář prezidenta republiky">
             </div>
             <div class="field">
               <label for="invoice-address">
-                Adresa (Ulice č.p., PSČ, Město)
+                Adresa (Ulice č.p.)
               </label>
-              <input
-                id="invoice-address"
-                name="invAddress"
-                type="text"
+              <input id="invoice-address" name="invAddress" type="text"
                 required
-                placeholder="Hrad I. nádvoří 1, Hradčany, 119 08 Prague 1">
+                autocomplete="billing street-address"
+                placeholder="Hrad I. nádvoří 1">
+            </div>
+            <div class="group">
+              <div class="field">
+                <label for="invoice-address-zip">PSČ</label>
+                <input type="text" id="invoice-address-zip"
+                       autocomplete="billing postal-code"
+                       name="invAddressZip" pattern="\d{3}\s\d{2}"
+                       placeholder="119 08">
+              </div>
+              <div class="field">
+                <label for="invoice-address-city">Město</label>
+                <input type="text" id="invoice-address-city" name="invAddressCity"
+                       autocomplete="billing address-level2"
+                       placeholder="Praha 1 - Hradčany">
+              </div>
             </div>
             <div class="group">
               <div class="field">
                 <label for="invoice-regno">
                   IČO
                 </label>
-                <input id="invoice-regno" name="invRegNo" type="text" placeholder="48136000">
+                <input id="invoice-regno" name="invRegNo" type="text" inputmode="numeric" placeholder="48136000">
               </div>
               <div class="field">
                 <label for="invoice-vatno">
@@ -441,12 +451,8 @@
                 Komu pošleme fakturu?
                 <span>Uveď e-mail, pokud to nejsi ty</span>
               </label>
-              <input
-                id="invoice-email"
-                name="invEmail"
-                type="email"
-                autocomplete="email"
-                placeholder="invoices@hrad.cz">
+              <input id="invoice-email" name="invEmail" type="email"
+                autocomplete="billing email" placeholder="invoices@hrad.cz">
             </div>
           </fieldset>
           <fieldset id="someone-else-will-pay" disabled aria-hidden="true">
