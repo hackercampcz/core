@@ -1,0 +1,127 @@
+{% extends "layouts/application.njk" %}
+
+{% block title %}Administrace Hacker Campu{% endblock %}
+
+{% block head %}
+  <style>
+    #top {
+      padding-top: 62px;
+      min-height: calc(100vh - 178px);
+    }
+
+    @media screen and (max-width: 479px) {
+      #top {
+        padding-top: 48px;
+      }
+    }
+
+    table {
+      font-size: 14px;
+      border-collapse: collapse;
+    }
+
+    th + th {
+      padding: 8px;
+    }
+
+    td + td {
+      padding: 0 8px;
+    }
+
+    thead {
+      background-color: var(--hc-background-color);
+      border-bottom: 3px double #ddd;
+      z-index: 10;
+    }
+
+    tbody {
+      z-index: 1;
+    }
+
+    thead th {
+      text-align: left;
+    }
+
+    tbody tr:hover {
+      background-color: var(--hc-row-highlight);
+    }
+
+    tbody td {
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+
+  <link rel="stylesheet" href="{{ 'admin.css' | assetUrl('stylesheets') }}">
+{% endblock %}
+
+{% block content %}
+  <mwc-drawer id="drawer" type="dismissible" style="margin-top: 2em">
+    <ul class="list">
+      <li><a href="/admin/?view=confirmed">Registrace</a></li>
+      <li><a href="/admin/?view=attendees">Účastníci</a></li>
+      <li><a href="/admin/?view=housing">Ubytování</a></li>
+      <li><a href="/admin/dashboard/">Dashboard</a></li>
+    </ul>
+    <div slot="appContent">
+      <div id="app-root">
+        <header>
+          <button class="icon-button" slot="navigationIcon" id="drawer-button" aria-label="Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                 class="feather feather-menu">
+              <title>Menu</title>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+          <h2 id="view-title">
+            <span>Dashboard</span>,
+            <label>ročník
+              <select id="year-selector">
+                {% for yr in range(2022, year + 1) %}
+                  <option>{{ yr }}</option>
+                {% endfor %}
+              </select>
+            </label>
+          </h2>
+        </header>
+      </div>
+      <dialog id="modal" class="hc-dialog">
+        <div id="modal-root"></div>
+        <button class="icon-button" data-action="close" title="Zavřít" aria-label="Zavřít dialogové okno">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="feather feather-x">
+            <title>Zavřít</title>
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </dialog>
+    </div>
+  </mwc-drawer>
+{% endblock %}
+
+{% block javascript %}
+<script type="module">
+  import { main } from "{{ 'admin-dashboard.js' | assetUrl('esm') }}";
+
+  const build = {{ collections.build | dump(8) | safe }};
+  const event = {{ event | dump(8) | safe }};
+  const tickets = {{ ticket | dump(8) | safe }};
+  const year = {{ year | safe }};
+  const env = Object.assign({ year, event, tickets }, build);
+
+  main({
+    searchParams: new URLSearchParams(location.search),
+    appRoot: document.getElementById("app-root"),
+    viewTitle: document.getElementById("view-title").querySelector("span"),
+    yearSelector: document.getElementById("year-selector"),
+    env,
+  });
+  const drawer = document.getElementById("drawer");
+  const drawerBtn = document.getElementById("drawer-button");
+  drawerBtn.addEventListener("click", () => { drawer.open = !drawer.open; });
+</script>
+{% endblock %}
