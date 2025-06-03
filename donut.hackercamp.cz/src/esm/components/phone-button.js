@@ -1,7 +1,7 @@
 import { html, render } from "lit-html";
 
 function getInternationalPhoneFormat(phone) {
-  let number = phone.replace(/\s+/g, "");
+  const number = phone.replace(/\s+/g, "");
   if (number.startsWith("+")) {
     return number;
   }
