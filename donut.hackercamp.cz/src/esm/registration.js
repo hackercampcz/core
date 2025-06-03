@@ -62,7 +62,10 @@ export async function main({ env, formElement, submitButtonElement, searchParams
   const dbgContext = {};
   try {
     const { year } = env;
-    const { email, sub: slackID, picture: image } = getSlackProfile();
+    const { email, sub: slackID, picture: image, real_name  } = getSlackProfile();
+    rollbar.configure({
+      payload: { person: { name: real_name, email, id: slackID } }
+    });
     formElement.image.value = image;
     formElement.slackID.value = slackID;
 
@@ -81,7 +84,7 @@ export async function main({ env, formElement, submitButtonElement, searchParams
     for (const key in data) {
       const field = formElement[key];
       let value = data[key];
-      Object.assign(dbgContext, { key, value, field });
+      Object.assign(dbgContext, { key, value });
       if (!(field && value)) continue;
       const isRadio = field.length && field[0].type === "radio";
       const isCheckbox = field.type === "checkbox";
