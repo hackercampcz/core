@@ -71,10 +71,13 @@ async function getRegistrations(query, tag, year, page, pageSize, { allYears }) 
 
   console.log({ event: "Loading registrations", tag, year, page, pageSize, query, allYears });
 
+  const indexPostfix = tag === "invoiced" ? "_invoicedAt_desc" : tag === "paid" ? "_paidAt_desc" : "";
+  const indexName = algolia_index_name + indexPostfix;
+
   const { results } = await client.search({
     requests: [
       {
-        indexName: algolia_index_name,
+        indexName,
         query,
         attributesToRetrieve: ["year", "email"],
         tagFilters: [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(Boolean),

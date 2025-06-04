@@ -1,17 +1,40 @@
-import { parseArgs } from "jsr:@std/cli/parse-args";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
-import { algoliasearch } from "npm:algoliasearch";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { createFetchRequester } from "npm:@algolia/requester-fetch";
+import { algoliasearch } from "npm:algoliasearch";
 import { getAttendeesProjection, getRegistrationProjection } from "../lib/search.js";
 
+/** @typedef { import("algoliasearch").SearchClient} SearchClient */
+/** @typedef { import("algoliasearch").SetSettingsProps} SetSettingsProps */
+
 const dynamo = createClient();
+
+/** @type {Map<string, SetSettingsProps>} */
 const indexes = new Map([
   ["hc-registrations", {
     indexName: "hc-registrations",
     indexSettings: {
       searchableAttributes: ["name", "email", "company", "invoice_id"],
-      ranking: ["desc(createdAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
-    }
+      ranking: ["desc(createdAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"],
+      replicas: [
+        "hc-registrations_invoicedAt_desc",
+        "hc-registrations_paidAt_desc"
+      ],
+    },
+  }],
+  ["hc-registrations_invoicedAt_desc", {
+    indexName: "hc-registrations",
+    indexSettings: {
+      searchableAttributes: ["name", "email", "company", "invoice_id"],
+      ranking: ["desc(invoicedAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"],
+    },
+  }],
+  ["hc-registrations_paidAt_desc", {
+    indexName: "hc-registrations",
+    indexSettings: {
+      searchableAttributes: ["name", "email", "company", "invoice_id"],
+      ranking: ["desc(paidAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"],
+    },
   }],
   ["hc-attendees", {
     indexName: "hc-attendees",
@@ -96,8 +119,11 @@ async function getAttendees() {
   return result;
 }
 
+/** @param {SearchClient} client */
 async function indexRegistrations(client) {
   await client.setSettings(indexes.get("hc-registrations"));
+  await client.setSettings(indexes.get("hc-registrations_invoicedAt_desc"));
+  await client.setSettings(indexes.get("hc-registrations_paidAt_desc"));
 
   const registrations = await getRegistrations();
   const records = registrations.map(getRegistrationProjection());
@@ -108,6 +134,7 @@ async function indexRegistrations(client) {
   });
 }
 
+/** @param {SearchClient} client */
 async function indexAttendees(client) {
   await client.setSettings(indexes.get("hc-attendees"));
 
