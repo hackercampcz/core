@@ -162,13 +162,11 @@ export function registrationsChips(
                 value="${params.get("query")}"
                 autofocus
                 @keyup="${e => {
-                  if (e.key === "Escape") {
-                    document.getElementById("hc-search__close").click();
-                  }
+                  if (e.key === "Escape") document.getElementById("hc-search__close").click()
                 }}"
                 @change="${e => e.target.form.submit()}">
-                <button class="icon-button small" slot="leading-icon" type="submit" title="Hledat"
-                        aria-label="Hledat">
+                <button class="icon-button small" slot="leading-icon" type="submit"
+                        title="Hledat" aria-label="Hledat">
                   ${iconSearch()}
                 </button>
                 <a class="icon-button small"
