@@ -211,7 +211,7 @@ export function paginationNavigation({ page, pages, count, total, params }) {
   const last = offset + count;
 
   function search(p) {
-    return `?${(new URLSearchParams(Object.assign({}, params, p)))}`;
+    return `?${(new URLSearchParams(Object.assign(Object.fromEntries(params), p)))}`;
   }
 
   return html`
