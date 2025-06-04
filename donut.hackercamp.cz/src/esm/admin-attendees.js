@@ -82,7 +82,7 @@ export function attendeesChips(
       ${
         when(view === View.searchAttendees, () =>
           html`
-            <form>
+            <form name="search">
               <input type="hidden" name="view" value="${View.searchAttendees}">
               <input type="hidden" name="year" value="${year}">
               <md-outlined-text-field
@@ -90,15 +90,22 @@ export function attendeesChips(
                 name="query"
                 placeholder="Hledat jméno, e-mail, firmu&hellip;"
                 value="${params.get("query") ?? ""}"
+                autofocus
+                @keyup="${e => {
+                  if (e.key === "Escape") {
+                    document.getElementById("hc-search__close").click();
+                  }
+                }}"
                 @change="${e => e.target.form.submit()}">
-                <button class="icon-button small" slot="leading-icon" type="submit" title="Hledat" aria-label="Hledat">
+                <button class="icon-button small" slot="leading-icon" type="submit" title="Hledat"
+                        aria-label="Hledat">
                   ${iconSearch()}
                 </button>
                 <a class="icon-button small"
+                   id="hc-search__close"
                    slot="trailing-icon"
                    href="/admin/?${new URLSearchParams({ view: View.attendees, year })}"
-                   title="Zavřít hledání"
-                >
+                   title="Zavřít hledání">
                   ${iconX()}
                 </a>
               </md-outlined-text-field>
