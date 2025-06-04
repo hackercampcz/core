@@ -53,7 +53,7 @@ function housingTable(data) {
 export function housingTemplate(state) {
   const { data } = state;
   return html`
-    <div class="">
+    <section class="">
       <div class="hc-card">
         ${until(data?.then(data => housingTable(sortBy("housing", data)))
           ?.catch(data => {
@@ -62,6 +62,6 @@ export function housingTemplate(state) {
           html`<p style="padding: 16px">Načítám data&hellip;</p>`
         )}
       </div>
-    </div>
+    </section>
   `;
 }

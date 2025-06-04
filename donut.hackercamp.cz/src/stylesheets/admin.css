@@ -23,6 +23,7 @@
 
 #app-root {
   margin-inline: 1em;
+  padding-block-end: 2lh;
   container-type: inline-size;
 }
 
@@ -45,6 +46,7 @@
   display: grid;
   gap: 4px 8px;
   grid-template-columns: fit-content(2ch) 1fr fit-content(11ch);
+  margin-block-end: 1lh;
 
   &:has(form) {
     grid-template-columns: 1fr;

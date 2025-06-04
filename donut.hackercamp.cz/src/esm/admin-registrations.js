@@ -504,7 +504,7 @@ export function registrationsTemplate(state) {
         [View.volunteer]: data?.then(data => data.counts.volunteer),
         [View.staff]: data?.then(data => data.counts.staff)
       }, params))}
-    <div class="hc-master-detail">
+    <section class="hc-master-detail">
       <div class="hc-card hc-master-detail__list">
         ${
           until(
@@ -539,7 +539,7 @@ export function registrationsTemplate(state) {
         }
       </div>
       ${when(detail, () => registrationDetailTemplate({ detail, selectedView }))}
-    </div>
+    </section>
   `;
 }
 

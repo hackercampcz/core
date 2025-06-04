@@ -114,9 +114,11 @@
   p, li, label {
     text-wrap: pretty;
   }
+
   h1, h2, h3, h4, h5, h6 {
     text-wrap: balance;
   }
+
   input, select, button, table {
     font-family: inherit;
   }
@@ -143,7 +145,8 @@
     margin-right: auto;
   }
 
-  header, footer, section {
+  body > footer,
+  #app-root > :is(header, footer, section, search) {
     margin: 0 auto;
     max-width: var(--hc-layout-width);
   }
@@ -191,6 +194,7 @@
     width: 100%;
     height: auto;
   }
+
   iframe.responsive {
     aspect-ratio: 16 / 9;
   }

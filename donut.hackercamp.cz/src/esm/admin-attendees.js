@@ -731,7 +731,7 @@ export function attendeesTemplate(state) {
       [View.staffAttendees]: data?.then(data => data.counts.staff),
       [View.crewAttendees]: data?.then(data => data.counts.crew)
     }, params)}
-    <div class="hc-master-detail">
+    <section class="hc-master-detail">
       <div class="hc-card hc-master-detail__list">
         ${
           until(
@@ -751,6 +751,6 @@ export function attendeesTemplate(state) {
         }
       </div>
       ${when(detail, () => attendeeDetailTemplate({ detail, isNFCSupported }))}
-    </div>
+    </section>
   `;
 }
