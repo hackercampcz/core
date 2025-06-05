@@ -470,7 +470,7 @@ function invoiceDetails(detail) {
     <address style="border: 1px solid #ddd; padding: 16px; font-size: 14px;">
       <h3>Fakturační údaje</h3>
       <p>${detail.invName}</p>
-      <p>${detail.invAddress}</p>
+      <p>${[detail.invAddress, detail.invAddressZip, detail.invAddressCity].filter(Boolean).join(", ")}</p>
       ${
         when(detail.invEmail || detail["invoice-contact"], () =>
           html`
