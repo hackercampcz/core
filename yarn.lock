@@ -3523,6 +3523,7 @@ __metadata:
     "@ungap/structured-clone": "npm:1.3.0"
     date-fns: "npm:4.1.0"
     lit-html: "npm:3.3.0"
+    lite-youtube-embed: "npm:0.3.3"
     marked: "npm:15.0.12"
     open-props: "npm:1.7.15"
     postcss-jit-props: "npm:1.0.16"
@@ -10686,6 +10687,13 @@ __metadata:
     lit-element: "npm:^4.1.0"
     lit-html: "npm:^3.2.0"
   checksum: 10c0/064a31459fe54ad052c0685d058dd5aef089ddc97a247888ef91a0356dfef60c8cc531e48077bbd2cb4e9f48cb86f0ff0951bb535f1d9f144d2351f253291f66
+  languageName: node
+  linkType: hard
+
+"lite-youtube-embed@npm:0.3.3":
+  version: 0.3.3
+  resolution: "lite-youtube-embed@npm:0.3.3"
+  checksum: 10c0/de44c657d429bb73d417eb84e7dc5149239a067e218112ba91c901293562985d8c63589b65ce80b1c49a3fa51fb46f379d6ee0f1f9acd81eeba83c59d3e287ee
   languageName: node
   linkType: hard
 

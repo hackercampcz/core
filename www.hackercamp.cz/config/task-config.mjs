@@ -7,7 +7,7 @@ export default {
   fonts: true,
   svgSprite: true,
   static: true,
-
+  esbuild: true,
   stylesheets: true,
 
   html: {

@@ -1,4 +1,5 @@
 @import "./openprops-ui.css";
+@import "lite-youtube-embed";
 
 :root {
   --gray-15: oklch(0.16 0.01 255);

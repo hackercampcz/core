@@ -1,3 +1,4 @@
+import "lite-youtube-embed";
 import { formatMoney } from "@hackercamp/lib/format.js";
 import { housingToText } from "@hackercamp/lib/housing.js";
 import { defAtom } from "@thi.ng/atom";
@@ -268,36 +269,12 @@ function plusOneCard(referralLink) {
         </a>
       </p>
       <p>Pokud chceš ukázat atmosféru kempu, můžeš použít tato videa:</p>
-      <iframe
-        class="responsive"
-        width="560"
-        height="315"
-        src="https://www.youtube-nocookie.com/embed/FCvKBikoXOs?hl=cs&amp;modestbranding=1"
-        title="Hackercamp sestřih po 2024"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
-      <iframe
-        class="responsive"
-        width="560"
-        height="315"
-        src="https://www.youtube-nocookie.com/embed/xm0Bse4SVRQ?hl=cs&amp;modestbranding=1"
-        title="Hackercamp sestřih po 2023"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
-      <iframe
-        class="responsive"
-        width="560"
-        height="315"
-        src="https://www.youtube-nocookie.com/embed/igM6UFAqaOQ?hl=cs&amp;modestbranding=1"
-        title="Hackercamp sestřih po 2021"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen
-      ></iframe>
+      <lite-youtube videoid="FCvKBikoXOs" params="hl=cs&amp;modestbranding=1"
+                    title="HackerCamp 2024" class="responsive"></lite-youtube>
+      <lite-youtube videoid="xm0Bse4SVRQ" params="hl=cs&amp;modestbranding=1"
+                    title="HackerCamp 2023" class="responsive"></lite-youtube>
+      <lite-youtube videoid="igM6UFAqaOQ" params="hl=cs&amp;modestbranding=1"
+                    title="HackerCamp 2021" class="responsive"></lite-youtube>
       <p>
         Prosíme, cti zásadu, že
         <em>"co se stalo na campu, zůstane na campu"</em> a nevystavujte ho
