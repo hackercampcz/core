@@ -10,7 +10,7 @@
     "@hckr_/cloudflare-pages-plugin-rollbar": "1.1.4",
     "@thi.ng/transducers": "9.3.1",
     "algoliasearch": "5.27.0",
-    "fast-xml-parser": "5.2.3",
+    "fast-xml-parser": "5.2.4",
     "immutable": "5.1.2",
     "jsonwebtoken": "9.0.2",
     "rollbar": "2.26.4"
