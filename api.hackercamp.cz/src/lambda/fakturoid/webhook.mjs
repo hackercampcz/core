@@ -37,7 +37,7 @@ async function markAsPaid(registrations, paid_at, invoice_id) {
       templateId: Template.RegistrationPaid,
       data: {},
       to: registration.email.S,
-      attachments: [Attachments.Event2024],
+      attachments: [Attachments.Event2025],
       tag: "registration-paid"
     });
     console.log({ event: "Invoice marked as paid", invoice_id, ...registration });
