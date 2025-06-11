@@ -145,7 +145,7 @@ function renderHackers(formElement, { hackers, hacker }) {
   function handleInputBlur({ target }) {
     const filledHacker = hackersListElement.querySelector(`[value="${target.value}"]`);
 
-    // Allow only explicit values that matches any <option> of <datalist>
+    // Allow only explicit values that match any <option> of <datalist>
     if (!filledHacker) {
       target.value = "";
       target.classList.remove("me");
@@ -158,8 +158,9 @@ function renderHackers(formElement, { hackers, hacker }) {
           hackersListElement.prepend(option);
         }
       }
-    } // Highlight input with my name and remove it
-    //  from <datalist> to not be autocompleted anymore
+    }
+      // Highlight input with my name and remove it
+    // from <datalist> to not be autocompleted anymore
     else {
       if (filledHacker.dataset.id === hacker.slackID) {
         target.classList.add("me");
@@ -171,7 +172,7 @@ function renderHackers(formElement, { hackers, hacker }) {
   selectElement.addEventListener("change", handleSelectChange);
 
   // Append back my inlined name to <datalist> when housing type
-  //  changed from custom AND there is no search input with my name yet
+  // changed from custom AND there is no search input with my name yet
   function handleSelectChange({ target }) {
     if (target.value === "custom") return;
     const myInlinedHackerName = formatHackerName(hacker);
@@ -232,12 +233,13 @@ function autoShowHousingOfMine(formElement) {
   selectElement.dispatchEvent(new Event("change"));
 }
 
-const HOUSING_INPUT_REGEX = /^(cottage|house|tent)\['(.+)'\]\[(\d+)\]$/;
+const HOUSING_INPUT_REGEX = /^(cottage|house|tent)\['(.+)']\[(\d+)]$/;
 
 /**
  * @param {HTMLFormElement} formElement
+ * @param {{hackers: {slackID: string, name: string}[], profile: {sub: string}}}
  */
-function handlaFormaSubmita(formElement, { hackers, profile }) {
+function handleFormSubmit(formElement, { hackers, profile }) {
   formElement.addEventListener("submit", async e => {
     e.preventDefault();
     for (const el of formElement.querySelectorAll("button[type='submit']")) {
@@ -261,15 +263,18 @@ function handlaFormaSubmita(formElement, { hackers, profile }) {
       jsonData.items = jsonData.items.filter(({ slackID }) => slackID !== profile.sub);
       jsonData.items.push({ slackID: profile.sub, housing: formData.get("custom"), housingPlacement: "custom" });
     }
-    sendHousingData(formElement.action, jsonData).then(() => {
+
+    try {
+      await sendHousingData(formElement.action, jsonData);
       globalThis.showSnackbar("Uloženo");
-    }).then(() => location.assign("/ubytovani/ulozeno/")).catch(err => {
+      location.assign("/ubytovani/ulozeno/");
+    } catch (err) {
       rollbar.error(err);
       alert("Něco se pokazilo:" + err);
       for (const el of formElement.querySelectorAll("button[type='submit']")) {
         el.disabled = false;
       }
-    });
+    }
   });
 
   async function sendHousingData(url, data) {
@@ -337,7 +342,7 @@ export async function main({ formElement, env, housing: { reservations, variants
     renderReservations(formElement, { reservations });
     renderFreeCapacity(formElement);
     autoShowHousingOfMine(formElement);
-    handlaFormaSubmita(formElement, { hackers, profile });
+    handleFormSubmit(formElement, { hackers, profile });
     await initializeHousingGalleries();
   } catch (err) {
     rollbar.error(err);

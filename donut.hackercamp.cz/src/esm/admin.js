@@ -346,19 +346,21 @@ async function handleMessage(e) {
       try {
         const ndef = new NDEFReader();
         await ndef.scan();
-        console.log("NCF Reader started");
+        globalThis.showPersistentSnackbar("Přilož čip k telefonu…");
 
         ndef.addEventListener("readingerror", e => {
-          console.error(e);
+          globalThis.showSnackbar("Nepodařilo se načíst čip. Zkus jiný.");
         });
 
         ndef.addEventListener("reading", e => {
           console.log(e);
+          globalThis.showSnackbar("Čip načten");
           const sn = e.serialNumber.replaceAll(":", "");
           dispatchAction(Action.addChip, { sn });
         });
       } catch (err) {
-        console.error(err);
+        rollbar.error(err);
+        globalThis.showSnackbar("NFC tady není podporovaný");
       }
       break;
     }

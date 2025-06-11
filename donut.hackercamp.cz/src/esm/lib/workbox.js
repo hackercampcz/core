@@ -1,4 +1,5 @@
 import { Workbox } from "workbox-window";
+import * as rollbar from "./rollbar.js";
 
 /** @typedef {import("workbox-window").WorkboxLifecycleWaitingEvent} WorkboxLifecycleWaitingEvent */
 
@@ -11,6 +12,6 @@ export function init(showSkipWaitingPrompt) {
   if ("serviceWorker" in navigator && isProduction()) {
     const wb = new Workbox("/assets/esm/sw.js", { type: "module", scope: "/" });
     wb.addEventListener("waiting", showSkipWaitingPrompt(wb));
-    wb.register().catch(ex => console.error(ex));
+    wb.register().catch(ex => rollbar.error(ex));
   }
 }
