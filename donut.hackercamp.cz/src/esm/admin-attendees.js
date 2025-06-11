@@ -473,7 +473,16 @@ function addAttendeeModalDialog({ year, apiHost }) {
       </div>
       <div class="field">
         <label for="ticketType">Lístek</label>
-        <input id="ticketType" name="ticketType" required value="staff">
+        <input id="ticketType" name="ticketType" required value="staff" list="ticketTypes">
+        <datalist id="ticketTypes">
+          <option>nonprofit</option>
+          <option>hacker</option>
+          <option>hacker-plus</option>
+          <option>hacker-patron</option>
+          <option>volunteer</option>
+          <option>crew</option>
+          <option>staff</option>
+        </datalist>
       </div>
       <div class="field">
         <label for="company">Společnost</label>

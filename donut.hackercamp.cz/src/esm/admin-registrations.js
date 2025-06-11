@@ -631,7 +631,14 @@ function registrationModalDialog({ detail, apiHost }) {
 
       <div class="field">
         <label for="ticketType">Lístek</label>
-        <input id="ticketType" name="ticketType" value="${detail.ticketType}">
+        <input id="ticketType" name="ticketType" value="${detail.ticketType}" list="ticketTypes">
+        <datalist id="ticketTypes">
+          <option>nonprofit</option>
+          <option>hacker</option>
+          <option>hacker-plus</option>
+          <option>hacker-patron</option>
+          <option>volunteer</option>
+        </datalist>
       </div>
 
       <h3>Fakturace</h3>
