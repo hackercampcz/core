@@ -338,7 +338,9 @@ export async function main({ formElement, env, housing: { reservations, variants
     if (!hacker) {
       alert("Nenašlo jsem tě v seznamu hackerů 😭");
     }
-    renderHackers(formElement, { hackers, hacker });
+    else {
+      renderHackers(formElement, { hackers, hacker });
+    }
     renderReservations(formElement, { reservations });
     renderFreeCapacity(formElement);
     autoShowHousingOfMine(formElement);
