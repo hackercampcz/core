@@ -654,13 +654,24 @@ function registrationModalDialog({ detail, apiHost }) {
           >
         </div>
         <div class="field">
-          <label for="invoice-address"> Adresa (Ulice č.p., PSČ, Město) </label>
-          <input
-            id="invoice-address"
-            name="invAddress"
-            type="text"
-            value="${detail.invAddress}"
-          >
+          <label for="invoice-address"> Adresa (Ulice č.p.) </label>
+          <input id="invoice-address"
+            name="invAddress" type="text"
+            value="${detail.invAddress}">
+        </div>
+        <div class="group">
+          <div class="field">
+            <label for="invoice-address-zip">PSČ</label>
+            <input type="text" id="invoice-address-zip"
+                   name="invAddressZip" pattern="\\d{3}\\s\\d{2}"
+                   value="${detail.invAddressZip}">
+          </div>
+          <div class="field">
+            <label for="invoice-address-city">Město</label>
+            <input type="text" id="invoice-address-city"
+                   name="invAddressCity"
+                   value="${detail.invAddressCity}">
+          </div>
         </div>
         <div class="group">
           <div class="field">
