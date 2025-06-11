@@ -171,7 +171,7 @@ async function editRegistration(db, { key, data }) {
         UpdateExpression:
           "SET firstName = :firstName, lastName = :lastName, phone = :phone, company = :company, edited = :now, editedBy = :editedBy, ticketType = :ticketType, paid = :paid,"
           + "invRecipient = :invRecipient, invRecipientEmail = :invRecipientEmail, invRecipientPhone = :invRecipientPhone, invRecipientFirstname = :invRecipientFirstname, invRecipientLastname = :invRecipientLastname,"
-          + "invName = :invName, invAddress = :invAddress, invRegNo = :invRegNo, invVatNo = :invVatNo, invText = :invText, invEmail = :invEmail",
+          + "invName = :invName, invAddress = :invAddress, invAddressZip = :invAddressZip, invAddressCity = :invAddressCity, invRegNo = :invRegNo, invVatNo = :invVatNo, invText = :invText, invEmail = :invEmail",
         ExpressionAttributeValues: marshall({
           ":firstName": data.firstName,
           ":lastName": data.lastName,
@@ -188,6 +188,8 @@ async function editRegistration(db, { key, data }) {
           ":invRecipientLastname": data.invRecipientLastname,
           ":invName": data.invName,
           ":invAddress": data.invAddress,
+          ":invAddressZip": data.invAddressZip,
+          ":invAddressCity": data.invAddressCity,
           ":invRegNo": data.invRegNo,
           ":invVatNo": data.invVatNo,
           ":invText": data.invText,
