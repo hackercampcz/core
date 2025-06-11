@@ -3517,6 +3517,7 @@ __metadata:
     "@hackercamp/lib": "workspace:*"
     "@material/mwc-drawer": "npm:0.27.0"
     "@material/web": "npm:2.3.0"
+    "@oddbird/popover-polyfill": "npm:^0.6.0"
     "@thi.ng/atom": "npm:5.3.32"
     "@thi.ng/transducers": "npm:9.4.0"
     "@types/w3c-web-nfc": "npm:1.0.4"
@@ -4369,6 +4370,13 @@ __metadata:
     proc-log: "npm:^4.0.0"
     which: "npm:^4.0.0"
   checksum: 10c0/f9f40ecff0406a9ce1b77c9f714fc7c71b561289361efc6e2e0e48ca2d630aa98d277cbbf269750f9467a40eaaac79e78766d67c458046aa9507c8c354650fee
+  languageName: node
+  linkType: hard
+
+"@oddbird/popover-polyfill@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@oddbird/popover-polyfill@npm:0.6.0"
+  checksum: 10c0/474ecaf636aaadf995df0b004f283b87e6f660e348d219baca97f3d4c973db56519a7162e98b5cca89f08dc470866496ff4dd0040e440ed0e167e46115c71c42
   languageName: node
   linkType: hard
 

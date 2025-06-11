@@ -1,3 +1,5 @@
+import "@oddbird/popover-polyfill";
+
 export async function init({ snackbar }) {
   globalThis.snackbar = snackbar;
   globalThis.showSnackbar = showSnackbar;
