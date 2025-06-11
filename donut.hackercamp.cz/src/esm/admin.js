@@ -318,18 +318,6 @@ async function handleMessage(e) {
       closeDetail();
       break;
     }
-    case Action.editEvent: {
-      await editEvent(payload.eventId, payload.updates);
-      break;
-    }
-    case Action.deleteEvent: {
-      deleteEvent(payload.eventId, payload.people);
-      break;
-    }
-    case Action.approveEvent: {
-      approveEvent(payload.eventId);
-      break;
-    }
     case Action.showModalDialog: {
       await renderModalDialog(payload.name);
       break;
