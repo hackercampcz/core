@@ -1,5 +1,6 @@
 import { html, render } from "lit-html";
 import { when } from "lit-html/directives/when.js";
+import { ticketName } from "../admin/common.js";
 import { ticketBadge } from "../lib/attendee.js";
 
 export class SlackAvatar extends HTMLElement {
@@ -46,6 +47,7 @@ export class SlackAvatar extends HTMLElement {
   render() {
     if (!this.src) return null;
     const image = this.src.replace("_512", `_${this.size}`);
+    this.setAttribute("title", `${this.name} - ${ticketName.get(this.badge)}`);
     return html`
       <div class="avatar">
         <img src="${image}" alt="${this.name}">
