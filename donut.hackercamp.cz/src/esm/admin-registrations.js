@@ -379,6 +379,11 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           ${iconBack()}
         </button>
         <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
+        ${when(detail.image, () => html`
+          <div class="avatar">
+            <img src="${detail.image}" alt="${detail.firstName + " " + detail.lastName}">
+          </div>
+        `)}
         ${ticketBadge.get(detail.ticketType)}
       </div>
       <p>${detail.company}</p>

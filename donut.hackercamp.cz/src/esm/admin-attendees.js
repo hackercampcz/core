@@ -262,8 +262,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
   return html`
     <div
       class="hc-card hc-master-detail__detail"
-      data-slack-id="${detail.slackID}"
-    >
+      data-slack-id="${detail.slackID}">
       <div style="display: flex; align-items: center; gap: 12px;">
         <button class="icon-button"
                 aria-label="Zavřít detail"
@@ -272,6 +271,11 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
           ${iconBack()}
         </button>
         <h2 style="margin: 0">${detail.name}</h2>
+        ${when(detail.image, () => html`
+          <div class="avatar">
+            <img src="${detail.image}" alt="${detail.name}">
+          </div>
+        `)}
         ${ticketBadge.get(detail.ticketType)}
       </div>
       <p>${detail.company}</p>
