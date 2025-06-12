@@ -118,6 +118,19 @@ hc-phone-button, hc-mail-button {
   display: inline flex;
 }
 
+hc-slack-avatar {
+  display: inline grid;
+  place-content: center;
+  > * {
+    grid-area: 1 / 1;
+  }
+  .hc-badge {
+    z-index: 1;
+    translate: 50% 50%;
+    scale: 0.75;
+  }
+}
+
 .hc-pagination {
   box-sizing: content-box;
   height: 32px;

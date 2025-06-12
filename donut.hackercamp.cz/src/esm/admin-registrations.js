@@ -24,6 +24,7 @@ import {
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
+import "./components/slack-avatar.js";
 import {
   iconBack,
   iconCopy,
@@ -379,19 +380,21 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           ${iconBack()}
         </button>
         <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
-        ${when(detail.image, () => html`
-          <div class="avatar">
-            <img src="${detail.image}" alt="${detail.firstName + " " + detail.lastName}">
-          </div>
-        `)}
-        ${ticketBadge.get(detail.ticketType)}
+        ${when(detail.image,
+          () => html`
+            <hc-slack-avatar
+              src="${detail.image}"
+              name="${detail.firstName + " " + detail.lastName}"
+              badge="${detail.ticketType}"></hc-slack-avatar>`,
+          () => html`${ticketBadge.get(detail.ticketType)}`)}
       </div>
       <p>${detail.company}</p>
       <div class="hc-detail__tools">
         <hc-mail-button email="${detail.email}"></hc-mail-button>
         <hc-phone-button phone="${detail.phone}"></hc-phone-button>
         ${when(detail.slackID, () => html`
-          <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}" target="slack">
+          <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}"
+             target="slack">
             ${iconSlack()}
           </a>`
         )}
@@ -661,8 +664,8 @@ function registrationModalDialog({ detail, apiHost }) {
         <div class="field">
           <label for="invoice-address"> Adresa (Ulice č.p.) </label>
           <input id="invoice-address"
-            name="invAddress" type="text"
-            value="${detail.invAddress}">
+                 name="invAddress" type="text"
+                 value="${detail.invAddress}">
         </div>
         <div class="group">
           <div class="field">

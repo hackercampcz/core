@@ -22,6 +22,7 @@ import {
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
+import "./components/slack-avatar.js";
 import { map } from "lit-html/directives/map.js";
 import {
   iconBack,
@@ -226,31 +227,31 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
       </tfoot>
       <tbody>
       ${data.map(row =>
-          html`
-            <tr @click="${renderDetail(row)}">
-              <td>
-                <label class="checkbox">
-                  <input type="checkbox" value="${row.slackID}" @click="${selectRow}"
-                         ?checked="${selection.has(row.slackID)}">
-                  <span class="sr-only">Vybrat</span>
-                </label>
-              </td>
-              <td>${row.name}</td>
-              <td>${row.company}</td>
-              <td>${ticketName.get(row.ticketType)}</td>
-              <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
-              <td>
-                ${row.nfcTronData?.map(({ chipID }) => chipID).filter(Boolean).join(", ") || html`<em><small>nene</small></em>`}
-              </td>
-              <td>
+        html`
+          <tr @click="${renderDetail(row)}">
+            <td>
+              <label class="checkbox">
+                <input type="checkbox" value="${row.slackID}" @click="${selectRow}"
+                       ?checked="${selection.has(row.slackID)}">
+                <span class="sr-only">Vybrat</span>
+              </label>
+            </td>
+            <td>${row.name}</td>
+            <td>${row.company}</td>
+            <td>${ticketName.get(row.ticketType)}</td>
+            <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
+            <td>
+              ${row.nfcTronData?.map(({ chipID }) => chipID).filter(Boolean).join(", ") || html`<em><small>nene</small></em>`}
+            </td>
+            <td>
                 <span class="hc-detail__tools">
                   <hc-mail-button email="${row.email}"></hc-mail-button>
                   <hc-phone-button phone="${row.phone}"></hc-phone-button>
                 </span>
-              </td>
-            </tr>
-          `
-        )
+            </td>
+          </tr>
+        `
+      )
       }
       </tbody>
     </table>
@@ -271,19 +272,20 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
           ${iconBack()}
         </button>
         <h2 style="margin: 0">${detail.name}</h2>
-        ${when(detail.image, () => html`
-          <div class="avatar">
-            <img src="${detail.image}" alt="${detail.name}">
-          </div>
-        `)}
-        ${ticketBadge.get(detail.ticketType)}
+        ${when(detail.image,
+          () => html`
+            <hc-slack-avatar
+              src="${detail.image}" name="${detail.name}"
+              badge="${detail.ticketType}"></hc-slack-avatar>`,
+          () => html`${ticketBadge.get(detail.ticketType)}`)}
       </div>
       <p>${detail.company}</p>
       <div class="hc-detail__tools">
         <hc-mail-button email="${detail.email}"></hc-mail-button>
-        ${when(detail.phone, () => html`<hc-phone-button phone="${detail.phone}"></hc-phone-button>`)}
+        ${when(detail.phone, () => html`
+          <hc-phone-button phone="${detail.phone}"></hc-phone-button>`)}
         <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}" target="slack"
-            title="Otevřít profil na Slacku">
+           title="Otevřít profil na Slacku">
           ${iconSlack()}
         </a>
         <button class="icon-button small"
@@ -509,20 +511,21 @@ function addAttendeeModalDialog({ year, apiHost }) {
         <div class="field">
           <label for="invoice-address"> Adresa (Ulice č.p.) </label>
           <input id="invoice-address" name="invAddress" type="text">
-        </div><div class="group">
-        <div class="field">
-          <label for="invoice-address-zip">PSČ</label>
-          <input type="text" id="invoice-address-zip"
-                 name="invAddressZip" pattern="\\d{3}\\s\\d{2}"
-                 value="${detail.invAddressZip}">
         </div>
-        <div class="field">
-          <label for="invoice-address-city">Město</label>
-          <input type="text" id="invoice-address-city"
-                 name="invAddressCity"
-                 value="${detail.invAddressCity}">
+        <div class="group">
+          <div class="field">
+            <label for="invoice-address-zip">PSČ</label>
+            <input type="text" id="invoice-address-zip"
+                   name="invAddressZip" pattern="\\d{3}\\s\\d{2}"
+                   value="${detail.invAddressZip}">
+          </div>
+          <div class="field">
+            <label for="invoice-address-city">Město</label>
+            <input type="text" id="invoice-address-city"
+                   name="invAddressCity"
+                   value="${detail.invAddressCity}">
+          </div>
         </div>
-      </div>
         <div class="group">
           <div class="field">
             <label for="invoice-regno"> IČO </label>
@@ -662,7 +665,8 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
                   ${
                     when(sn === "", () => html`<i slot="trailing-icon">${iconContactless()}</i>`, () =>
                       html`
-                        <button class="icon-button small" slot="trailing-icon" type="button" title="Odebrat" @click="${removeChip(sn)}">
+                        <button class="icon-button small" slot="trailing-icon" type="button" title="Odebrat"
+                                @click="${removeChip(sn)}">
                           ${iconRemove()}
                         </button>
                       `)
@@ -737,9 +741,9 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
         <div class="field">
           <label for="total">Částka</label>
           <input type="text" inputmode="numeric" pattern="[0-9]*"
-            id="total"
-            name="checkOutTotal"
-            value="${detail.nfcTronData?.map(x => x.spent ?? 0)?.reduce((a, b) => a + b, 0) ?? 0}">
+                 id="total"
+                 name="checkOutTotal"
+                 value="${detail.nfcTronData?.map(x => x.spent ?? 0)?.reduce((a, b) => a + b, 0) ?? 0}">
         </div>
       </fieldset>
       <fieldset>
