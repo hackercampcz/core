@@ -25,8 +25,6 @@ import "./components/mail-button.js";
 import { map } from "lit-html/directives/map.js";
 import {
   iconBack,
-  iconCheckIn,
-  iconCheckOut,
   iconContactless,
   iconCopy,
   iconDownload,
@@ -35,7 +33,9 @@ import {
   iconSearch,
   iconSlack,
   iconUserPlus,
-  iconX
+  iconX,
+  iconLogIn,
+  iconLogOut
 } from "./lib/icons.js";
 import { getChipID } from "./lib/nfctron.js";
 import { getContact } from "./lib/profile.js";
@@ -277,8 +277,9 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
       <p>${detail.company}</p>
       <div class="hc-detail__tools">
         <hc-mail-button email="${detail.email}"></hc-mail-button>
-        ${when(detail.phone, () => html`<hc-phone-button email="${detail.phone}"></hc-phone-button>`)}
-        <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}" target="slack">
+        ${when(detail.phone, () => html`<hc-phone-button phone="${detail.phone}"></hc-phone-button>`)}
+        <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}" target="slack"
+            title="Otevřít profil na Slacku">
           ${iconSlack()}
         </a>
         <button class="icon-button small"
@@ -286,25 +287,26 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
                 @click="${renderModalDialog("edit-attendee-modal")}">
           ${iconEdit()}
         </button>
-        <button class="icon-button small"
-                title="Check In"
-                @click="${
-                  renderModalDialog("check-in-modal", {
-                    preDispatch() {
-                      console.log("Check In", { isNFCSupported });
-                      if (isNFCSupported) {
-                        startChipScan();
+        ${when(!detail.checkIn, () => html`
+          <button class="icon-button small"
+                  title="Check In"
+                  @click="${
+                    renderModalDialog("check-in-modal", {
+                      preDispatch() {
+                        console.log("Check In", { isNFCSupported });
+                        if (isNFCSupported) startChipScan();
                       }
-                    }
-                  })
-                }">
-          ${iconCheckIn()}
-        </button>
-        <button class="icon-button small"
-                title="Check Out"
-                @click="${renderModalDialog("check-out-modal")}">
-          ${iconCheckOut()}
-        </button>
+                    })
+                  }">
+            ${iconLogIn("Check In")}
+          </button>
+        `, () => html`
+          <button class="icon-button small"
+                  title="Check Out"
+                  @click="${renderModalDialog("check-out-modal")}">
+            ${iconLogOut("Check Out")}
+          </button>
+        `)}
       </div>
       ${ticketDetail(detail)}
       <p>

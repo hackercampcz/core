@@ -12,7 +12,7 @@ export function iconBack(title = "Zpět") {
   `;
 }
 
-export function iconCheckIn(title = "Check In") {
+export function iconUserCheck(title = "Check In") {
   return svg`
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -25,7 +25,7 @@ export function iconCheckIn(title = "Check In") {
   `;
 }
 
-export function iconCheckOut(title = "Check Out") {
+export function iconUserX(title = "Check Out") {
   return svg`
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -128,6 +128,30 @@ export function iconFakturoid() {
         <path fill="currentColor"
               d="M96.005 14C49.061 14 11 44.178 11 81.406v30.183C11 148.817 49.061 179 96.005 179 142.948 179 181 148.817 181 111.59V81.405C181 44.178 142.948 14 96.005 14zm-27.593 99.863h-8.417v32.659h-7.832c-6.243 0-11.757-4.776-11.757-11.58V83.356c0-15.923 7.403-35.862 29.64-40.8 22.51-4.998 28.805 6.002 28.805 6.002s-14.084-.192-25.119 8.413C67.45 61.87 60.215 72.67 59.995 84.952v15.171c13.895 2.66 25.018-1.954 28.3-3.412l.562-.07s-.996 17.222-20.445 17.222zm86.929 6.03c0 16.499-12.186 27.93-29.6 27.93h-3.919c-18.573 0-31.344-10.418-31.344-24.746 0-13.892 10.158-24.456 38.891-24.456h6.818v-1.016c0-10.998-5.223-18.814-16.834-18.814-14.074 0-21.907 5.354-24.812 8.973h-.724v-6.222c0-8.684 7.837-19.101 28.44-19.101 17.414 0 33.084 12.59 33.084 39.505v17.946z"/>
       </g>
+    </svg>
+  `;
+}
+
+export function iconLogIn(title = "Přihlásit se") {
+  return svg`
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-in">
+      <title>${title}</title>
+      <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+      <polyline points="10 17 15 12 10 7"/>
+      <line x1="15" y1="12" x2="3" y2="12"/>
+    </svg>
+  `;
+}
+
+export function iconLogOut(title = "Odhlásit se") {
+  return svg`
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+         stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out">
+      <title>${title}</title>
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+      <polyline points="16 17 21 12 16 7"/>
+      <line x1="21" y1="12" x2="9" y2="12"/>
     </svg>
   `;
 }
