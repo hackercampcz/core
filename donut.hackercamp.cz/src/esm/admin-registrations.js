@@ -29,7 +29,7 @@ import {
   iconBack,
   iconCopy,
   iconDownload, iconEdit,
-  iconFakturoid,
+  iconFakturoid, iconRefreshCcw,
   iconSearch, iconSlack, iconTrash,
   iconUserMinus,
   iconUserPlus, iconX
@@ -55,14 +55,6 @@ function trashRegistration(email) {
     e.preventDefault();
     dispatchAction(Action.trashRegistration, { email });
   };
-}
-
-function invoice() {
-  return renderModalDialog("invoice");
-}
-
-function invoiceSelected() {
-  return renderModalDialog("invoice");
 }
 
 function approveSelected() {
@@ -100,8 +92,7 @@ function approveVolunteersSummary(selection) {
             const reg = registrations.get(email);
             return html`
               <li
-                style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between"
-              >
+                style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between">
                 <span>${reg.name}</span>
               </li>
             `;
@@ -270,7 +261,7 @@ export async function selectionBar(selectedView, selection, data) {
       ${
         when(selectedView === View.confirmed, () =>
           html`
-            <button class="icon-button small" title="Vyfakturovat" @click="${invoice()}">
+            <button class="icon-button small" title="Vyfakturovat" @click="${renderModalDialog("invoice")()}">
               ${iconFakturoid()}
             </button>
           `)
@@ -404,12 +395,16 @@ export function registrationDetailTemplate({ detail, selectedView }) {
             ${iconUserPlus("Schválit")}
           </button>`)}
         ${when(selectedView === View.confirmed, () => html`
-          <button class="icon-button small" title="Vyfakturovat" @click="${invoice(detail.year, detail.email)}">
+          <button class="icon-button small" title="Vyfakturovat" @click="${renderModalDialog("invoice")}">
             ${iconFakturoid()}
           </button>`)}
         <button class="icon-button small" title="Upravit registraci"
                 @click="${renderModalDialog("registration-modal")}">
           ${iconEdit()}
+        </button>
+        <button class="icon-button small" title="Převést registraci z předchozích let"
+                @click="${renderModalDialog("transfer")}">
+          ${iconRefreshCcw()}
         </button>
         ${when(selectedView !== View.paid, () => html`
           <button class="icon-button small" title="Opt out" @click="${optout(detail.email)}"
@@ -787,4 +782,22 @@ function invoiceModalDialog({ detail, selection, year }) {
   ]);
   return html`
     <iframe src="invoice.html?${params}"></iframe>`;
+}
+
+registerDialog("transfer", transferModalDialog);
+
+function transferModalDialog({ detail, year }) {
+  window.addEventListener("message", e => {
+    if (e.data.event === "invoiced") {
+      location.reload();
+    }
+  });
+  console.log({ detail, year });
+  const params = new URLSearchParams([
+    ["year", year],
+    ["modal", 1],
+    ["email", detail.email]
+  ]);
+  return html`
+    <iframe src="transfer.html?${params}"></iframe>`;
 }

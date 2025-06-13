@@ -54,7 +54,7 @@ export function createOptOut(email, year, apiHost) {
   return executeCommand(apiHost, Endpoint.registrations, "optout", { email, year }).then(() => location.reload());
 }
 
-function optout(email) {
+async function optout(email) {
   const { apiHost, year } = state.deref();
   return (confirm("Opravdu chceš táborníka vyřadit?") && createOptOut(email, year, apiHost));
 }
@@ -84,12 +84,20 @@ function moveToTrash(email, year, slackID, apiHost) {
   return executeCommand(apiHost, Endpoint.registrations, "move-to-trash", { email, year, slackID });
 }
 
-function trashRegistration(email) {
+async function trashRegistration(email) {
   const { apiHost, year, contact } = state.deref();
   if (!contact) {
     return alert("Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.");
   }
   return (confirm("Opravdu chceš táborníka smáznout?") && moveToTrash(email, year, contact.slackID, apiHost));
+}
+
+async function transferRegistration(payload) {
+  const { apiHost, contact } = state.deref();
+  if (!contact) {
+    return alert("Vypadá to, že ti vypršelo přihlášení. Zkus se znovu přihlásit a akci opakuj.");
+  }
+  return executeCommand(apiHost, Endpoint.registrations, "transfer", payload).then(() => location.reload());
 }
 
 /**
@@ -274,7 +282,7 @@ function loadData(selectedView, year, page, query, apiHost) {
 const endpointName = new Map([
   [Endpoint.registrations, "Registrace"],
   [Endpoint.attendees, "Účastníci"],
-  [Endpoint.housing, "Ubytování"],
+  [Endpoint.housing, "Ubytování"]
 ]);
 
 function changeTitle(viewTitle, view) {
@@ -285,24 +293,34 @@ function changeTitle(viewTitle, view) {
 async function handleMessage(e) {
   const { type, payload } = e.data;
   switch (type) {
-    case Action.optin:
+    case Action.optin: {
       optin(payload.email);
       break;
-    case Action.optout:
-      optout(payload.email);
+    }
+    case Action.optout: {
+      await optout(payload.email);
       break;
-    case Action.trashRegistration:
-      trashRegistration(payload.email);
+    }
+    case Action.trashRegistration: {
+      await trashRegistration(payload.email);
       break;
-    case Action.invoiced:
+    }
+    case Action.transferRegistration: {
+      await transferRegistration(payload);
+      break;
+    }
+    case Action.invoiced: {
       await invoiced(payload.email);
       break;
-    case Action.invoiceSelected:
+    }
+    case Action.invoiceSelected: {
       await invoiceSelected(payload.invoiceId);
       break;
-    case Action.approveSelectedVolunteers:
+    }
+    case Action.approveSelectedVolunteers: {
       await approveSelectedVolunteers();
       break;
+    }
     case Action.renderDetail: {
       renderDetail(payload.detail);
       if (payload.detail?.nfcTronData?.[0]?.totalSpent) break;
@@ -390,7 +408,7 @@ export async function main({ appRoot, searchParams, env, viewTitle, yearSelector
     transform(payload) {
       payload.state = state.deref();
     },
-    payload: { person: { name: profile.real_name, email: profile.email, id: profile.id } }
+    payload: { person: { name: profile?.real_name, email: profile?.email, id: profile?.id } }
   });
   const contact = getContact();
   const isNFCSupported = typeof NDEFReader !== "undefined";

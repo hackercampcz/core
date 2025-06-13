@@ -17,6 +17,7 @@ export const Action = {
   unselect: "unselect",
   invoiceSelected: "invoiceSelected",
   approveSelectedVolunteers: "approveSelectedVolunteers",
+  transferRegistration: "transfer",
   trashRegistration: "trashRegistration",
   startNfcScan: "startNfcScan",
   addChip: "addChip",
@@ -53,7 +54,7 @@ export const View = {
   crewAttendees: "crewAttendees",
   volunteer: "volunteer",
   volunteerAttendees: "volunteerAttendees",
-  housing: "housing",
+  housing: "housing"
 };
 
 export const Endpoint = {
@@ -103,8 +104,8 @@ export function unauthorized() {
           width="139"
           src="https://platform.slack-edge.com/img/add_to_slack.png"
           @click="${() => {
-            setReturnUrl(location.href);
-          }}"
+    setReturnUrl(location.href);
+  }}"
           srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
                 https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
     </div>
@@ -221,7 +222,9 @@ export function paginationNavigation({ page, pages, count, total, params }) {
          ?disabled="${page <= 0}">
         ${iconSkipBackward()}
       </a>
-      <a class="icon-button small" title="Předchozí strana" href="${page <= 0 ? "" : search({ page: Math.max(page - 1, 0) })}"
+      <a class="icon-button small" title="Předchozí strana" href="${
+    page <= 0 ? "" : search({ page: Math.max(page - 1, 0) })
+  }"
          ?disabled="${page <= 0}">
         ${iconChevronLeft()}
       </a>
@@ -230,7 +233,9 @@ export function paginationNavigation({ page, pages, count, total, params }) {
          ?disabled="${page >= pages - 1}">
         ${iconChevronRight()}
       </a>
-      <a class="icon-button small" title="Poslední strana" href="${page >= pages - 1 ? "" : search({ page: pages - 1 })}"
+      <a class="icon-button small" title="Poslední strana" href="${
+    page >= pages - 1 ? "" : search({ page: pages - 1 })
+  }"
          ?disabled="${page >= pages - 1}">
         ${iconSkipForward()}
       </a>
