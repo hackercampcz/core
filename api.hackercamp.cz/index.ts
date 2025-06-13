@@ -150,6 +150,7 @@ export function createRoutes({
               rollbar_access_token,
               db_table_optouts: db.optOutsDataTable,
               db_table_registrations: db.registrationsDataTable,
+              db_table_attendees: db.attendeesDataTable,
               private_key: config.require("private-key"),
               fakturoid_client_id: config.require("fakturoid-client-id"),
               fakturoid_client_secret: config.require("fakturoid-client-secret"),
