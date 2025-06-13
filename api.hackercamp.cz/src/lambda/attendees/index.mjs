@@ -68,6 +68,7 @@ async function getAttendeeByEmail(db, { email, year }) {
       }
     })
   );
+  console.log(result.Item);
   return result.Item ? unmarshall(result.Item) : null;
 }
 
