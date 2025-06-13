@@ -1,5 +1,5 @@
 import { BatchGetItemCommand, DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
-import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { partition } from "@thi.ng/transducers";
 import { liteClient } from "algoliasearch/lite";
 import { resultsCount } from "../../algolia.mjs";
@@ -13,7 +13,11 @@ import { formatResponse } from "../csv.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
-async function getOptOuts(year) {
+/**
+ * @param {DynamoDBClient} db
+ * @param {number} year
+ */
+async function getOptOuts(db, year) {
   console.log("Loading opt-outs");
   const res = await db.send(
     new ScanCommand({
@@ -21,7 +25,7 @@ async function getOptOuts(year) {
       ProjectionExpression: "email",
       FilterExpression: "#yr = :yr",
       ExpressionAttributeNames: { "#yr": "year" },
-      ExpressionAttributeValues: marshall({ ":yr": year })
+      ExpressionAttributeValues: { ":yr": { N: year.toString() } }
     })
   );
   return res.Items.map(x => x.email.S);
@@ -124,7 +128,7 @@ export async function handler(event) {
   }, event.queryStringParameters);
 
   if (type === "optouts") {
-    const optouts = await getOptOuts(parseInt(year));
+    const optouts = await getOptOuts(db, parseInt(year));
     return formatResponse(optouts, { year, resource: "registrations", type, format });
   }
 
