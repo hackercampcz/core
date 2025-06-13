@@ -22,7 +22,7 @@ být ve víru akce a výpomoc v rámci konání HC je pro tebe to pravý :)
 O co bychom vás teď poprosili?
 
 Pojedeš s námi jako dobrovolník na letošní Hacker Camp? (28. 8.- 31\. 8\. 2025).
-Prosím [vyplň nám tento formulář](https://hckr.camp/r/dobrovolnik). 
+Prosím [vyplň nám tento formulář](https://hckr.camp/r/dobrovolnik).
 Pokud máš ke svojí účasti dotazy, určitě se na mě obrať.
 
 Budeme se těšit!
