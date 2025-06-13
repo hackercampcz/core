@@ -64,7 +64,7 @@ async function getAttendeeByEmail(db, { email }) {
     new QueryCommand({
       TableName: tableName,
       IndexName: `${tableName}-by-email`,
-      KeyConditionExpression: "#email = :email",
+      KeyConditionExpression: "email = :email",
       ExpressionAttributeValues: { ":email": { S: email } }
     })
   );
