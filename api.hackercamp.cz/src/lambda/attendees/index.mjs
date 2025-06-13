@@ -1,5 +1,5 @@
 import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
-import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { liteClient } from "algoliasearch/lite";
 import { getItemsFromDB } from "../attendees.js";
 import { errorResponse, getHeader, response, withCORS } from "../http.mjs";
@@ -12,7 +12,11 @@ import Rollbar from "../rollbar.mjs";
 const dynamo = new DynamoDBClient({});
 const rollbar = Rollbar.init({ lambdaName: "attendees" });
 
-async function getAttendees(dynamo, year) {
+/**
+ * @param {DynamoDBClient} db
+ * @param {number} year
+ */
+async function getAttendees(db, year) {
   const { algolia_app_id, algolia_search_key, algolia_index_name } = process.env;
   const client = liteClient(algolia_app_id, algolia_search_key);
   const { results: [{ hits }] } = await client.search({
@@ -25,15 +29,44 @@ async function getAttendees(dynamo, year) {
     }]
   });
 
-  return getItemsFromDB(dynamo, process.env.db_table_attendees, hits, {
+  return getItemsFromDB(db, process.env.db_table_attendees, hits, {
     ProjectionExpression: "slackID, #name, company, events, image, travel, ticketType, slug",
     ExpressionAttributeNames: { "#name": "name" }
   });
 }
 
-async function getAttendee(dynamo, slackID, year) {
-  const result = await dynamo.send(
-    new GetItemCommand({ TableName: process.env.db_table_attendees, Key: marshall({ slackID, year }) })
+/**
+ * @param {DynamoDBClient} db
+ * @param {{slackID: string, year: number}} params
+ * @returns {Promise<Record<string, any>|null>}
+ */
+async function getAttendee(db, { slackID, year }) {
+  const result = await db.send(
+    new GetItemCommand({
+      TableName: process.env.db_table_attendees,
+      Key: {
+        slackID: { S: slackID },
+        year: { N: year.toString() }
+      }
+    })
+  );
+  return result.Item ? unmarshall(result.Item) : null;
+}
+
+/**
+ * @param {DynamoDBClient} db
+ * @param {{email: string, year: number}} params
+ * @returns {Promise<Record<string, any>|null>}
+ */
+async function getAttendeeByEmail(db, { email, year }) {
+  const result = await db.send(
+    new GetItemCommand({
+      TableName: `${process.env.db_table_attendees}-by-email`,
+      Key: {
+        email: { S: email },
+        year: { N: year.toString() }
+      }
+    })
   );
   return result.Item ? unmarshall(result.Item) : null;
 }
@@ -53,7 +86,11 @@ export async function attendees(event) {
     console.log({ method: "GET", params });
     const year = parseInt(params.year, 10);
     if (params.slackID) {
-      const attendee = await getAttendee(dynamo, params.slackID, year);
+      const attendee = await getAttendee(dynamo, { slackID: params.slackID, year });
+      return withCORS_(response(attendee));
+    }
+    if (params.email) {
+      const attendee = await getAttendeeByEmail(dynamo, { email: params.email, year });
       return withCORS_(response(attendee));
     }
     const attendees = await getAttendees(dynamo, year);
