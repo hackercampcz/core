@@ -55,21 +55,20 @@ async function getAttendee(db, { slackID, year }) {
 
 /**
  * @param {DynamoDBClient} db
- * @param {{email: string, year: number}} params
+ * @param {{email: string}} params
  * @returns {Promise<Record<string, any>|null>}
  */
-async function getAttendeeByEmail(db, { email, year }) {
+async function getAttendeeByEmail(db, { email }) {
+  const tableName = process.env.db_table_attendees;
   const result = await db.send(
-    new GetItemCommand({
-      TableName: `${process.env.db_table_attendees}-by-email`,
-      Key: {
-        email: { S: email },
-        year: { N: year.toString() }
-      }
+    new QueryCommand({
+      TableName: tableName,
+      IndexName: `${tableName}-by-email`,
+      KeyConditionExpression: "#email = :email",
+      ExpressionAttributeValues: { ":email": { S: email } }
     })
   );
-  console.log(result.Item);
-  return result.Item ? unmarshall(result.Item) : null;
+  return result.Items ? unmarshall(result.Items) : null;
 }
 
 /**
