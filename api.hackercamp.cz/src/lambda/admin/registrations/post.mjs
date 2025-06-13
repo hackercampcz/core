@@ -10,7 +10,7 @@ import { marshall } from "@aws-sdk/util-dynamodb";
 import { fetchInvoice, getAuthHeader } from "@hackercamp/lib/fakturoid.js";
 import { getContact } from "../../dynamodb/registrations/paid.mjs";
 import { accepted, getHeader, readPayload, seeOther } from "../../http.mjs";
-import { sendEmailWithTemplate, Template } from "../../postmark.mjs";
+import { Attachments, sendEmailWithTemplate, Template } from "../../postmark.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -32,6 +32,25 @@ async function optout(db, { email, year }) {
   );
 }
 
+/**
+ * @param {DynamoDBClient} db
+ * @param {{slackID: string, year: number}} data
+ */
+async function getAttendee(db, { slackID, year }) {
+  console.log("Get attendee", { slackID, year });
+  const result = await db.send(
+    new GetItemCommand({
+      TableName: process.env.db_table_attendees,
+      Key: { slackID: { S: slackID }, year: { N: year.toString() } }
+    })
+  );
+  return result.Item;
+}
+
+/**
+ * @param {DynamoDBClient} db
+ * @param {{email: string, year: number}} data
+ */
 async function getRegistration(db, { email, year }) {
   console.log("Get registration", { email, year });
   const resp = await db.send(
@@ -45,7 +64,7 @@ async function getRegistration(db, { email, year }) {
 
 /**
  * @param {DynamoDBClient} db
- * @param {{email: string, year: number}} data
+ * @param {{email: string, year: number, slackID: string}} data
  */
 async function moveToTrash(db, { email, year, slackID }) {
   console.log({ event: "Moving registration to trash", email, year });
@@ -83,6 +102,10 @@ function addRegistration(db, data) {
   );
 }
 
+/**
+ * @param {DynamoDBClient} db
+ * @param {{email: string, year: number, referral: string}} data
+ */
 async function approve(db, { email, year, referral }) {
   console.log({ event: "Approving registration", email, year, referral });
   await db.send(
@@ -113,6 +136,10 @@ async function sendVolunteerSlackInvitation(email, postmarkToken) {
   console.log({ event: "Volunteer slack invitation sent", email });
 }
 
+/**
+ * @param {DynamoDBClient} db
+ * @param {{registrations: Array<Record<string, any>>, referral: string}} data
+ */
 async function approveVolunteer(db, { registrations, referral }) {
   for (const registration of registrations) {
     console.log({ event: "Marking volunteer registration as paid", ...registration });
@@ -137,6 +164,10 @@ async function approveVolunteer(db, { registrations, referral }) {
   }
 }
 
+/**
+ * @param {DynamoDBClient} db
+ * @param {{registrations: Array<Record<string, any>>, invoiceId: number}} data
+ */
 async function invoiced(db, { registrations, invoiceId }) {
   const { fakturoid_client_id, fakturoid_client_secret } = process.env;
   const authHeader = await getAuthHeader(fakturoid_client_id, fakturoid_client_secret);
@@ -161,6 +192,10 @@ async function invoiced(db, { registrations, invoiceId }) {
   }
 }
 
+/**
+ * @param {DynamoDBClient} db
+ * @param {{key: { email: string, year: number }, data: Record<string, any>}} params
+ */
 async function editRegistration(db, { key, data }) {
   console.log({ event: "Update registration", key, data });
   if (key.email === data.email) {
@@ -215,7 +250,10 @@ async function editRegistration(db, { key, data }) {
   return db.send(
     new TransactWriteItemsCommand({
       TransactItems: [{
-        Put: { TableName: process.env.db_table_registrations, Item: Object.assign({}, originalData, formData) }
+        Put: {
+          TableName: process.env.db_table_registrations,
+          Item: Object.assign({}, originalData, formData)
+        }
       }, {
         Delete: {
           TableName: process.env.db_table_registrations,
@@ -228,7 +266,48 @@ async function editRegistration(db, { key, data }) {
 
 /**
  * @param {DynamoDBClient} db
- * @param {*} data
+ * @param {{registration: {email: string, year: number}, attendee: {slackID: string, year: number}, admin: string}} params
+ */
+async function transferRegistration(db, params) {
+  console.log({ event: "Transfer registration", ...params });
+  const registration = await getRegistration(db, params.registration);
+  const attendee = await getAttendee(db, params.attendee);
+  await db.send(
+    new TransactWriteItemsCommand({
+      TransactItems: [{
+        Put: {
+          TableName: process.env.db_table_registrations,
+          Item: Object.assign({}, registration, {
+            invoice_id: attendee.invoice_id,
+            invoiced: attendee.invoiced,
+            paid: attendee.paid,
+          })
+        }
+      }, {
+        Put: {
+          TableName: process.env.db_table_attendees,
+          Item: Object.assign({}, attendee, {
+            transferred: { S: new Date().toISOString() },
+            transferredBy: { S: params.admin }
+          })
+        }
+      }]
+    })
+  );
+  await sendEmailWithTemplate({
+    token: process.env["postmark_token"],
+    templateId: Template.RegistrationTransferred,
+    data: {},
+    to: registration.email.S,
+    attachments: [Attachments.Event2025],
+    tag: "registration-transferred"
+  });
+  console.log({ event: "Registration transferred", invoiceId: attendee.invoice_id.N, ...params.registration });
+}
+
+/**
+ * @param {DynamoDBClient} db
+ * @param {{command: string, params: *}} data
  */
 async function processRequest(db, data) {
   switch (data.command) {
@@ -252,6 +331,9 @@ async function processRequest(db, data) {
       break;
     case "add":
       await addRegistration(db, data.params);
+      break;
+    case "transfer":
+      await transferRegistration(db, data.params);
       break;
   }
 }

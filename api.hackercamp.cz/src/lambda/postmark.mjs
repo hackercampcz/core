@@ -1,11 +1,4 @@
 export const Attachments = {
-  Event2024: {
-    Name: "invite.ics",
-    Content:
-      "QkVHSU46VkNBTEVOREFSDQpWRVJTSU9OOjIuMA0KUFJPRElEOi0vL2ljYWwubWFydWRvdC5jb20vL2lDYWwgRXZlbnQgTWFrZXINCkNBTFNDQUxFOkdSRUdPUklBTg0KQkVHSU46VlRJTUVaT05FDQpUWklEOkV1cm9wZS9QcmFndWUNCkxBU1QtTU9ESUZJRUQ6MjAyMzEyMjJUMjMzMzU4Wg0KVFpVUkw6aHR0cHM6Ly93d3cudHp1cmwub3JnL3pvbmVpbmZvLW91dGxvb2svRXVyb3BlL1ByYWd1ZQ0KWC1MSUMtTE9DQVRJT046RXVyb3BlL1ByYWd1ZQ0KQkVHSU46REFZTElHSFQNClRaTkFNRTpDRVNUDQpUWk9GRlNFVEZST006KzAxMDANClRaT0ZGU0VUVE86KzAyMDANCkRUU1RBUlQ6MTk3MDAzMjlUMDIwMDAwDQpSUlVMRTpGUkVRPVlFQVJMWTtCWU1PTlRIPTM7QllEQVk9LTFTVQ0KRU5EOkRBWUxJR0hUDQpCRUdJTjpTVEFOREFSRA0KVFpOQU1FOkNFVA0KVFpPRkZTRVRGUk9NOiswMjAwDQpUWk9GRlNFVFRPOiswMTAwDQpEVFNUQVJUOjE5NzAxMDI1VDAzMDAwMA0KUlJVTEU6RlJFUT1ZRUFSTFk7QllNT05USD0xMDtCWURBWT0tMVNVDQpFTkQ6U1RBTkRBUkQNCkVORDpWVElNRVpPTkUNCkJFR0lOOlZFVkVOVA0KRFRTVEFNUDoyMDI0MDQxNVQxMjUyNTJaDQpVSUQ6MTcxMzE4NTQ5ODkxMC03MjA4MkBpY2FsLm1hcnVkb3QuY29tDQpEVFNUQVJUO1ZBTFVFPURBVEU6MjAyNDA4MjkNCkRURU5EO1ZBTFVFPURBVEU6MjAyNDA5MDINClNVTU1BUlk6SGFja2VyIENhbXANClVSTDpodHRwczovL3d3dy5oYWNrZXJjYW1wLmN6Lw0KTE9DQVRJT046U29iZcWIw6FrXCwgU3RhcsO9IFJvxb5taXTDoWwgMTQ4XCwgMjYyIDQyIFJvxb5taXTDoWwgcG9kIFTFmWVtxaHDrW5lbVwsIEN6ZWNoaWENCkVORDpWRVZFTlQNCkVORDpWQ0FMRU5EQVI=",
-    ContentType: "text/calendar; charset=utf-8; method=REQUEST",
-    Disposition: "inline"
-  },
   Event2025: {
     Name: "invite.ics",
     // TODO: make this dynamic based on ENV with dates of beginning and end of the event
@@ -21,6 +14,7 @@ export const Template = {
   NewRegistration: parseInt(process.env["hc_registration_new"], 10),
   RegistrationApproved: parseInt(process.env["hc_registration_approved"], 10),
   RegistrationPaid: parseInt(process.env["hc_registration_paid"], 10),
+  RegistrationTransferred: parseInt(process.env["hc_registration_transferred"], 10),
   PlusOneInvitation: parseInt(process.env["hc_plus_one_invitation"], 10),
   PlusOneRegistration: parseInt(process.env["hc_plus_one_registration"], 10),
   SlackInvite: parseInt(process.env["hc_slack_invitation"], 10),
