@@ -28,89 +28,92 @@ const formatDateTime = (x, locale) =>
   x?.toLocaleString(locale, { weekday: "short", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })
     ?? null;
 
-export default {
-  images: true,
-  cloudflare: true,
-  cloudinary: true,
-  fonts: true,
-  svgSprite: true,
-  static: true,
-  esbuild: {
-    options: {
-      define: { __BUILD_ID__: `"${process.env.CIRCLE_BUILD_NUM ?? "HEAD"}"` }
-    }
-  },
-
-  stylesheets: {
-    postcss: { plugins: [jitProps(OpenProps)] }
-  },
-
-  html: {
-    data: {
-      collections: [
-        "build",
-        "images",
-        "hackers",
-        "housing_index",
-        "housing_types",
-        "housing_variants",
-        "housing_reservations"
-      ]
+export default function(mode) {
+  return {
+    images: true,
+    cloudflare: true,
+    cloudinary: true,
+    fonts: true,
+    svgSprite: true,
+    static: true,
+    esbuild: {
+      options: {
+        define: { __BUILD_ID__: `"${process.env.CIRCLE_BUILD_NUM ?? "HEAD"}"` },
+        conditions: [mode.development() ? "development" : undefined].filter(Boolean)
+      }
     },
-    markedExtensions: [texyTypography("cs")],
-    nunjucksRender: {
-      filters: {
-        longDate(x, locale = "cs-CZ") {
-          return new Intl.DateTimeFormat(locale, { day: "numeric", month: "long" }).format(new Date(x));
-        },
-        formatDateTime(s, locale = "cs-CZ") {
-          return formatDateTime(new Date(s), locale);
-        },
-        price(x, currency, locale = "cs-CZ") {
-          return new Intl.NumberFormat(locale, {
-            style: currency ? "currency" : undefined,
-            currency,
-            maximumFractionDigits: 0
-          }).format(x).replace(/\u00A0/, "\u202F");
+
+    stylesheets: {
+      postcss: { plugins: [jitProps(OpenProps)] }
+    },
+
+    html: {
+      data: {
+        collections: [
+          "build",
+          "images",
+          "hackers",
+          "housing_index",
+          "housing_types",
+          "housing_variants",
+          "housing_reservations"
+        ]
+      },
+      markedExtensions: [texyTypography("cs")],
+      nunjucksRender: {
+        filters: {
+          longDate(x, locale = "cs-CZ") {
+            return new Intl.DateTimeFormat(locale, { day: "numeric", month: "long" }).format(new Date(x));
+          },
+          formatDateTime(s, locale = "cs-CZ") {
+            return formatDateTime(new Date(s), locale);
+          },
+          price(x, currency, locale = "cs-CZ") {
+            return new Intl.NumberFormat(locale, {
+              style: currency ? "currency" : undefined,
+              currency,
+              maximumFractionDigits: 0
+            }).format(x).replace(/\u00A0/, "\u202F");
+          }
         }
       }
+    },
+
+    generate: {
+      html: [{ collection: "hackers", template: "shared/hacker.njk", route: x => `hackers/${x[0]}/index.html` }]
+    },
+
+    vite: {
+      browser: "google chrome canary",
+      browserArgs: "--ignore-certificate-errors --allow-insecure-localhost"
+    },
+
+    production: {
+      rev: {
+        exclude: ["_headers", "_redirects"]
+      }
+    },
+
+    registries: [
+      new HackersRegistry({ slackToken: process.env["SLACK_TOKEN"], year: data.year }, pathConfig),
+      new WorkboxBuildRegistry({
+        swSrc: () => assetPath(projectPath(pathConfig.dest), "assets/esm/sw.js"),
+        swDest: projectPath(pathConfig.dest, "assets/esm/sw.js"),
+        globDirectory: pathConfig.dest,
+        globPatterns: ["**/*.html", "assets/**/*.{js,mjs,css}"],
+        globIgnores: [
+          "hackers/**/*.html",
+          "admin/**/*.html",
+          "ubytovani/**/*.html",
+          "program/**/*.html",
+          "registrace/**/*.html"
+        ]
+      }, pathConfig)
+    ],
+
+    additionalTasks: {
+      development: { prebuild: ["prepare-data"], postbuild: ["workboxBuild"] },
+      production: { prebuild: ["prepare-data"], postbuild: ["workboxBuild"] }
     }
-  },
-
-  generate: {
-    html: [{ collection: "hackers", template: "shared/hacker.njk", route: x => `hackers/${x[0]}/index.html` }]
-  },
-
-  vite: {
-    browser: "google chrome canary",
-    browserArgs: "--ignore-certificate-errors --allow-insecure-localhost"
-  },
-
-  production: {
-    rev: {
-      exclude: ["_headers", "_redirects"]
-    }
-  },
-
-  registries: [
-    new HackersRegistry({ slackToken: process.env["SLACK_TOKEN"], year: data.year }, pathConfig),
-    new WorkboxBuildRegistry({
-      swSrc: () => assetPath(projectPath(pathConfig.dest), "assets/esm/sw.js"),
-      swDest: projectPath(pathConfig.dest, "assets/esm/sw.js"),
-      globDirectory: pathConfig.dest,
-      globPatterns: ["**/*.html", "assets/**/*.{js,mjs,css}"],
-      globIgnores: [
-        "hackers/**/*.html",
-        "admin/**/*.html",
-        "ubytovani/**/*.html",
-        "program/**/*.html",
-        "registrace/**/*.html"
-      ]
-    }, pathConfig)
-  ],
-
-  additionalTasks: {
-    development: { prebuild: ["prepare-data"], postbuild: ["workboxBuild"] },
-    production: { prebuild: ["prepare-data"], postbuild: ["workboxBuild"] }
-  }
-};
+  };
+}
