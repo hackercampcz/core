@@ -7,7 +7,7 @@
   "private": true,
   "packageManager": "yarn@4.9.2",
   "devDependencies": {
-    "@hckr_/blendid": "9.3.8",
+    "@hckr_/blendid": "9.4.0",
     "@types/nunjucks": "3.2.6",
     "dprint": "0.50.0",
     "npm-run-all2": "8.0.4",
