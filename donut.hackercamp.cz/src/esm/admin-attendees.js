@@ -674,9 +674,11 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
                   ${
         when(sn === "", () => html`<i slot="trailing-icon">${iconContactless()}</i>`, () =>
           html`
-                        <button class="icon-button small" slot="trailing-icon" type="button" title="Odebrat"
+                        <button class="icon-button small"
+                                slot="trailing-icon" type="button"
+                                title="Odebrat" aria-label="Odebrat"
                                 @click="${removeChip(sn)}">
-                          <feather-icon name="trash-2" title="Smazat"></feather-icon>
+                          <feather-icon name="minus-circle" title="Odebrat"></feather-icon>
                         </button>
                       `)
       }
