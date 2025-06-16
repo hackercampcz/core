@@ -2,9 +2,9 @@ import { formatMoney } from "@hackercamp/lib/format.js";
 import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
 import { until } from "lit-html/directives/until.js";
-import { iconChevronLeft, iconChevronRight, iconSkipBackward, iconSkipForward } from "../lib/icons.js";
 import { setReturnUrl, signOut } from "../lib/profile.js";
 import { withAuthHandler } from "../lib/remoting.js";
+import "../components/feather-icon.js";
 
 export const Action = {
   optout: "optout",
@@ -218,26 +218,33 @@ export function paginationNavigation({ page, pages, count, total, params }) {
   return html`
     <div class="hc-pagination">
       <data class="hc-pagination__total" value="${total}">${first}-${last} ze ${total}</data>
-      <a class="icon-button small" title="První strana" href="${page <= 0 ? "" : search({ page: 0 })}"
-         ?disabled="${page <= 0}">
-        ${iconSkipBackward()}
+      <a class="icon-button small"
+         title="První strana"
+         href="${search({ page: 0 })}"
+         ?disabled="${page <= 0}"
+      >
+        <feather-icon name="skip-back" title="První"></feather-icon>
       </a>
-      <a class="icon-button small" title="Předchozí strana" href="${
-    page <= 0 ? "" : search({ page: Math.max(page - 1, 0) })
-  }"
-         ?disabled="${page <= 0}">
-        ${iconChevronLeft()}
+      <a class="icon-button small"
+         title="Předchozí strana"
+         href="${search({ page: Math.max(page - 1, 0) })}"
+         ?disabled="${page <= 0}"
+      >
+        <feather-icon name="chevron-left" title="Předchozí"></feather-icon>
       </a>
-      <a class="icon-button small" title="Další strana"
-         href="${page >= pages - 1 ? "" : search({ page: Math.min(page + 1, pages - 1) })}"
-         ?disabled="${page >= pages - 1}">
-        ${iconChevronRight()}
+      <a class="icon-button small"
+         title="Další strana"
+         href="${search({ page: Math.min(page + 1, pages - 1) })}"
+         ?disabled="${page >= (pages - 1)}"
+      >
+        <feather-icon name="chevron-right" title="Další"></feather-icon>
       </a>
-      <a class="icon-button small" title="Poslední strana" href="${
-    page >= pages - 1 ? "" : search({ page: pages - 1 })
-  }"
-         ?disabled="${page >= pages - 1}">
-        ${iconSkipForward()}
+      <a class="icon-button small"
+         title="Poslední strana"
+         href="${search({ page: pages - 1 })}"
+         ?disabled="${page >= (pages - 1)}"
+      >
+        <feather-icon name="skip-forward" title="Poslední"></feather-icon>
       </a>
     </div>
   `;

@@ -5,7 +5,7 @@ import { ticketName, unauthorized } from "./admin/common.js";
 import { housing } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
-import { iconSlack } from "./lib/icons.js";
+import "./components/feather-icon.js";
 
 function housingTable(data) {
   return html`
@@ -23,8 +23,8 @@ function housingTable(data) {
       </thead>
       <tbody>
       ${
-        data.map(row =>
-          html`
+    data.map(row =>
+      html`
             <tr>
               <td>${row.name}</td>
               <td>${row.company}</td>
@@ -37,14 +37,14 @@ function housingTable(data) {
                   <hc-mail-button email="${row.email}"></hc-mail-button>
                   <hc-phone-button phone="${row.phone}"></hc-phone-button>
                   <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${row.slackID}">
-                    ${iconSlack()}
+                    <feather-icon name="slack" title="Slack"></feather-icon>
                   </a>
                 </span>
               </td>
             </tr>
           `
-        )
-      }
+    )
+  }
       </tbody>
     </table>
   `;
@@ -55,12 +55,15 @@ export function housingTemplate(state) {
   return html`
     <section class="">
       <div class="hc-card">
-        ${until(data?.then(data => housingTable(sortBy("housing", data)))
-          ?.catch(data => {
-            if (data.unauthorized) return unauthorized();
-          }),
-          html`<p style="padding: 16px">Načítám data&hellip;</p>`
-        )}
+        ${
+    until(
+      data?.then(data => housingTable(sortBy("housing", data)))
+        ?.catch(data => {
+          if (data.unauthorized) return unauthorized();
+        }),
+      html`<p style="padding: 16px">Načítám data&hellip;</p>`
+    )
+  }
       </div>
     </section>
   `;

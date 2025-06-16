@@ -23,21 +23,9 @@ import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
 import "./components/slack-avatar.js";
+import "./components/feather-icon.js";
 import { map } from "lit-html/directives/map.js";
-import {
-  iconBack,
-  iconContactless,
-  iconCopy,
-  iconDownload,
-  iconEdit,
-  iconRemove,
-  iconSearch,
-  iconSlack,
-  iconUserPlus,
-  iconX,
-  iconLogIn,
-  iconLogOut
-} from "./lib/icons.js";
+import { iconContactless } from "./lib/icons.js";
 import { getChipID } from "./lib/nfctron.js";
 import { getContact } from "./lib/profile.js";
 
@@ -81,8 +69,8 @@ export function attendeesChips(
   return html`
     <search>
       ${
-        when(view === View.searchAttendees, () =>
-          html`
+    when(view === View.searchAttendees, () =>
+      html`
             <form name="search">
               <input type="hidden" name="view" value="${View.searchAttendees}">
               <input type="hidden" name="year" value="${year}">
@@ -93,29 +81,29 @@ export function attendeesChips(
                 value="${params.get("query") ?? ""}"
                 autofocus
                 @keyup="${e => {
-                  if (e.key === "Escape") document.getElementById("hc-search__close").click()
-                }}"
+        if (e.key === "Escape") document.getElementById("hc-search__close").click();
+      }}"
                 @change="${e => e.target.form.submit()}">
                 <button class="icon-button small" slot="leading-icon" type="submit"
                         title="Hledat" aria-label="Hledat">
-                  ${iconSearch()}
+                  <feather-icon name="search" title="Hledat"></feather-icon>
                 </button>
                 <a class="icon-button small"
                    id="hc-search__close"
                    slot="trailing-icon"
                    href="/admin/?${new URLSearchParams({ view: View.attendees, year })}"
                    title="Zavřít hledání">
-                  ${iconX()}
+                  <feather-icon name="x" title="Zavřít"></feather-icon>
                 </a>
               </md-outlined-text-field>
             </form>
           `, () =>
-          html`
+      html`
             <div>
               <a class="icon-button small"
                  href="/admin/?${new URLSearchParams({ view: View.searchAttendees, year })}"
                  aria-label="Hledat" title="Hledat">
-                ${iconSearch()}
+                <feather-icon name="search" title="Hledat"></feather-icon>
               </a>
             </div>
             <div
@@ -124,64 +112,76 @@ export function attendeesChips(
               id="filters"
               aria-orientation="horizontal"
               aria-multiselectable="false">
-              ${chip({
-                text: "Všichni",
-                count: attendees,
-                selected: view === View.attendees,
-                view: View.attendees,
-                year
-              })}
-              ${chip({
-                text: "Hackeři",
-                count: hackerAttendees,
-                selected: view === View.hackerAttendees,
-                view: View.hackerAttendees,
-                year
-              })}
-              ${chip({
-                text: "Dobrovolníci",
-                count: volunteerAttendees,
-                selected: view === View.volunteerAttendees,
-                view: View.volunteerAttendees,
-                year
-              })}
-              ${chip({
-                text: "Ostatní",
-                count: staffAttendees,
-                selected: view === View.staffAttendees,
-                view: View.staffAttendees,
-                year
-              })}
-              ${chip({
-                text: "Crew",
-                count: crewAttendees,
-                selected: view === View.crewAttendees,
-                view: View.crewAttendees,
-                year
-              })}
+              ${
+        chip({
+          text: "Všichni",
+          count: attendees,
+          selected: view === View.attendees,
+          view: View.attendees,
+          year
+        })
+      }
+              ${
+        chip({
+          text: "Hackeři",
+          count: hackerAttendees,
+          selected: view === View.hackerAttendees,
+          view: View.hackerAttendees,
+          year
+        })
+      }
+              ${
+        chip({
+          text: "Dobrovolníci",
+          count: volunteerAttendees,
+          selected: view === View.volunteerAttendees,
+          view: View.volunteerAttendees,
+          year
+        })
+      }
+              ${
+        chip({
+          text: "Ostatní",
+          count: staffAttendees,
+          selected: view === View.staffAttendees,
+          view: View.staffAttendees,
+          year
+        })
+      }
+              ${
+        chip({
+          text: "Crew",
+          count: crewAttendees,
+          selected: view === View.crewAttendees,
+          view: View.crewAttendees,
+          year
+        })
+      }
             </div>
             <div>
               <button class="icon-button small" title="Zkopírovat statistiky" aria-label="Zkopírovat statistiky"
-                      @click="${copyToClipboard([attendees, hackerAttendees, volunteerAttendees, staffAttendees, crewAttendees])}">
-                ${iconCopy("Zkopírovat")}
+                      @click="${
+        copyToClipboard([attendees, hackerAttendees, volunteerAttendees, staffAttendees, crewAttendees])
+      }">
+                <feather-icon name="copy" title="Kopírovat"></feather-icon>
               </button>
               <a class="icon-button small" title="Stáhnout CSV" aria-label="Stáhnout CSV"
                  href="https://api.hackercamp.cz/v1/admin/attendees?${new URLSearchParams({
-                   year,
-                   type: view,
-                   format: "csv",
-                   pageSize: 500
-                 })}">
-                ${iconDownload()}
+        year,
+        type: view,
+        format: "csv",
+        pageSize: 500
+      })}">
+                <feather-icon name="download" title="Stáhnout"></feather-icon>
               </a>
               <button class="icon-button small" title="Přidat účastníka" aria-label="Přidat účastníka"
                       @click="${renderModalDialog("add-attendee-modal")}">
-                ${iconUserPlus()}
+                <feather-icon name="user-plus" title="Přidat"></feather-icon>
               </button
               >
             </div>
           `)
-      }
+  }
     </search>
   `;
 }
@@ -226,8 +226,9 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
       </tr>
       </tfoot>
       <tbody>
-      ${data.map(row =>
-        html`
+      ${
+    data.map(row =>
+      html`
           <tr @click="${renderDetail(row)}">
             <td>
               <label class="checkbox">
@@ -241,7 +242,9 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
             <td>${ticketName.get(row.ticketType)}</td>
             <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
             <td>
-              ${row.nfcTronData?.map(({ chipID }) => chipID).filter(Boolean).join(", ") || html`<em><small>nene</small></em>`}
+              ${
+        row.nfcTronData?.map(({ chipID }) => chipID).filter(Boolean).join(", ") || html`<em><small>nene</small></em>`
+      }
             </td>
             <td>
                 <span class="hc-detail__tools">
@@ -251,8 +254,8 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
             </td>
           </tr>
         `
-      )
-      }
+    )
+  }
       </tbody>
     </table>
   `;
@@ -261,58 +264,64 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
 export function attendeeDetailTemplate({ detail, isNFCSupported }) {
   if (!detail) return null;
   return html`
-    <div
-      class="hc-card hc-master-detail__detail"
-      data-slack-id="${detail.slackID}">
+    <div class="hc-card hc-master-detail__detail" data-slack-id="${detail.slackID}">
       <div style="display: flex; align-items: center; gap: 12px;">
         <button class="icon-button"
                 aria-label="Zavřít detail"
                 title="Zavřít detail"
                 @click="${closeDetail()}">
-          ${iconBack()}
+          <feather-icon name="arrow-left" title="Zpět"></feather-icon>
         </button>
         <h2 style="margin: 0">${detail.name}</h2>
-        ${when(detail.image,
-          () => html`
+        ${
+    when(detail.image, () =>
+      html`
             <hc-slack-avatar
               src="${detail.image}" name="${detail.name}"
-              badge="${detail.ticketType}"></hc-slack-avatar>`,
-          () => html`${ticketBadge.get(detail.ticketType)}`)}
+              badge="${detail.ticketType}"></hc-slack-avatar>`, () => html`${ticketBadge.get(detail.ticketType)}`)
+  }
       </div>
       <p>${detail.company}</p>
       <div class="hc-detail__tools">
         <hc-mail-button email="${detail.email}"></hc-mail-button>
-        ${when(detail.phone, () => html`
-          <hc-phone-button phone="${detail.phone}"></hc-phone-button>`)}
+        ${
+    when(detail.phone, () =>
+      html`
+          <hc-phone-button phone="${detail.phone}"></hc-phone-button>`)
+  }
         <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}" target="slack"
            title="Otevřít profil na Slacku">
-          ${iconSlack()}
+          <feather-icon name="slack" title="Slack"></feather-icon>
         </a>
         <button class="icon-button small"
                 title="Upravit účastníka"
                 @click="${renderModalDialog("edit-attendee-modal")}">
-          ${iconEdit()}
+          <feather-icon name="edit" title="Upravit"></feather-icon>
         </button>
-        ${when(!detail.checkIn, () => html`
+        ${
+    when(!detail.checkIn, () =>
+      html`
           <button class="icon-button small"
                   title="Check In"
                   @click="${
-                    renderModalDialog("check-in-modal", {
-                      preDispatch() {
-                        console.log("Check In", { isNFCSupported });
-                        if (isNFCSupported) startChipScan();
-                      }
-                    })
-                  }">
-            ${iconLogIn("Check In")}
+        renderModalDialog("check-in-modal", {
+          preDispatch() {
+            console.log("Check In", { isNFCSupported });
+            if (isNFCSupported) startChipScan();
+          }
+        })
+      }">
+            <feather-icon name="log-in" title="Check In"></feather-icon>
           </button>
-        `, () => html`
+        `, () =>
+      html`
           <button class="icon-button small"
                   title="Check Out"
                   @click="${renderModalDialog("check-out-modal")}">
-            ${iconLogOut("Check Out")}
+            <feather-icon name="log-out" title="Check Out"></feather-icon>
           </button>
-        `)}
+        `)
+  }
       </div>
       ${ticketDetail(detail)}
       <p>
@@ -330,12 +339,12 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
         ${when(!detail.nfcTronData?.length, () => html`<em>nemá</em>`)}
       </p>
       ${
-        when(detail.nfcTronData?.length, () =>
-          html`
+    when(detail.nfcTronData?.length, () =>
+      html`
             <ul>
               ${
-                map(detail.nfcTronData.filter(({ chipID }) => chipID), ({ chipID, spent, totalSpent, sn }) =>
-                  html`
+        map(detail.nfcTronData.filter(({ chipID }) => chipID), ({ chipID, spent, totalSpent, sn }) =>
+          html`
                     <li data-chip-sn="${sn}" data-chip-id="${chipID}">
                       <a
                         title="Online účet"
@@ -351,14 +360,14 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
                       ${when(detail.checkOutPaid, () => html` <strong>zaplaceno</strong>`)}
                     </li>
                   `)
-              }
+      }
             </ul>
           `)
-      }
+  }
       ${when(detail.note, () => html`<p>${detail.note}</p>`)}
       ${
-        when(detail.checkIn, () =>
-          html`
+    when(detail.checkIn, () =>
+      html`
             <p>
               Check in:
               <time datetime="${detail.checkIn}"
@@ -367,11 +376,11 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
               >
               provedl/a <strong>${detail.checkInBy}</strong>
             </p>`)
-      }
+  }
       ${when(detail.checkInNote, () => html`<p>${detail.checkInNote}</p>`)}
       ${
-        when(detail.checkout, () =>
-          html`
+    when(detail.checkout, () =>
+      html`
             <p>
               Check out:
               <time datetime="${detail.checkout}"
@@ -380,10 +389,10 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
               >
               provedl/a <strong>${detail.checkOutBy}</strong>
             </p>`)
-      }
+  }
       ${
-        when(detail.checkOutTotal, () =>
-          html`
+    when(detail.checkOutTotal, () =>
+      html`
             <p>
               Zaplaceno při odchodu:
               <data value="${detail.checkOutTotal}"
@@ -391,11 +400,11 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
               </data
               >
             </p>`)
-      }
+  }
       ${when(detail.checkOutNote, () => html`<p>${detail.checkOutNote}</p>`)}
       ${
-        when(detail.edited, () =>
-          html`
+    when(detail.edited, () =>
+      html`
             <p>
               Naposledy editováno
               <time datetime="${detail.edited}"
@@ -406,7 +415,7 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
               <strong>${detail.editedBy}</strong>
             </p>
           `)
-      }
+  }
     </div>
   `;
 }
@@ -640,20 +649,20 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
       <fieldset>
         <legend>NCF Tron</legend>
         ${
-          when(!isNFCSupported, () =>
-            html`<p>
+    when(!isNFCSupported, () =>
+      html`<p>
               Pro scanování chipů použij Chrome na mobilním telefonu se systémem
               Android.
             </p>`, () =>
-            html`<p>
+      html`<p>
               Přilož čip pro načtení. Případně opiš druhý řádek na rubu čipu
               ručně.
             </p>`)
-        }
+  }
         ${
-          map(nfcTronData, (sn, i) => {
-            const chipID = getChipID(sn);
-            return html`
+    map(nfcTronData, (sn, i) => {
+      const chipID = getChipID(sn);
+      return html`
               <div class="field">
                 <label for="nfc-tron-sn-${i}">S/N #${i + 1}</label>
                 <md-outlined-text-field
@@ -663,28 +672,28 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
                   @change="${onChange}"
                 >
                   ${
-                    when(sn === "", () => html`<i slot="trailing-icon">${iconContactless()}</i>`, () =>
-                      html`
+        when(sn === "", () => html`<i slot="trailing-icon">${iconContactless()}</i>`, () =>
+          html`
                         <button class="icon-button small" slot="trailing-icon" type="button" title="Odebrat"
                                 @click="${removeChip(sn)}">
-                          ${iconRemove()}
+                          <feather-icon name="trash-2" title="Smazat"></feather-icon>
                         </button>
                       `)
-                  }
+      }
                 </md-outlined-text-field>
                 <div>
                   <strong>ID čipu:</strong>
                   ${
-                    when(chipID, () =>
-                      html`<code>
+        when(chipID, () =>
+          html`<code>
                         <data value="${chipID}">${chipID}</data>
                       </code>`, () => html`<code>neznámý čip</code>`)
-                  }
+      }
                 </div>
               </div>
             `;
-          })
-        }
+    })
+  }
       </fieldset>
       <fieldset>
         <legend>Další</legend>
@@ -761,31 +770,33 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
 export function attendeesTemplate(state) {
   const { data, selectedView, detail, year, page, params, selection, isNFCSupported } = state;
   return html`
-    ${attendeesChips(selectedView, year, {
+    ${
+    attendeesChips(selectedView, year, {
       [View.attendees]: data?.then(data => data.counts.all),
       [View.hackerAttendees]: data?.then(data => data.counts.hacker),
       [View.volunteerAttendees]: data?.then(data => data.counts.volunteer),
       [View.staffAttendees]: data?.then(data => data.counts.staff),
       [View.crewAttendees]: data?.then(data => data.counts.crew)
-    }, params)}
+    }, params)
+  }
     <section class="hc-master-detail">
       <div class="hc-card hc-master-detail__list">
         ${
-          until(
-            data?.then(data =>
-              attendeesTableTemplate(sortBy("paid", data.items), {
-                page,
-                pages: data.pages,
-                total: data.total,
-                params,
-                selection
-              })
-            )?.catch(data => {
-              if (data.unauthorized) return unauthorized();
-            }),
-            html`<p style="padding: 16px">Načítám data&hellip;</p>`
-          )
-        }
+    until(
+      data?.then(data =>
+        attendeesTableTemplate(sortBy("paid", data.items), {
+          page,
+          pages: data.pages,
+          total: data.total,
+          params,
+          selection
+        })
+      )?.catch(data => {
+        if (data.unauthorized) return unauthorized();
+      }),
+      html`<p style="padding: 16px">Načítám data&hellip;</p>`
+    )
+  }
       </div>
       ${when(detail, () => attendeeDetailTemplate({ detail, isNFCSupported }))}
     </section>

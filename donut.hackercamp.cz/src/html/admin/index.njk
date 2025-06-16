@@ -1,18 +1,14 @@
 {% extends "layouts/application.njk" %}
+{% from "macros/helpers.njk" import spriteTarget, sprite %}
 
 {% block title %}Administrace Hacker Campu{% endblock %}
 
 {% block head %}
   <style>
-    #top {
-      padding-top: 62px;
-      min-height: calc(100vh - 178px);
-    }
-
-    @media screen and (max-width: 479px) {
-      #top {
-        padding-top: 48px;
-      }
+    body {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 100vh;
     }
 
     table {
@@ -49,13 +45,23 @@
     tbody td {
       border-bottom: 1px solid #ddd;
     }
+
+    .feather {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2px;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
   </style>
 
   <link rel="stylesheet" href="{{ 'admin.css' | assetUrl('stylesheets') }}">
 {% endblock %}
 
 {% block content %}
-  <mwc-drawer id="drawer" type="dismissible" style="margin-top: 2em">
+  <mwc-drawer id="drawer" type="dismissible">
     <ul class="list">
       <li>
         <a href="/admin/?view=confirmed">Registrace</a>
@@ -75,16 +81,8 @@
         <header>
           <button class="icon-button" aria-label="Menu"
                   slot="navigationIcon"
-                  id="drawer-button"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                 class="feather feather-menu">
-              <title>Menu</title>
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
+                  id="drawer-button">
+            {{ sprite("menu", "Menu", "0 0 24 24", "feather feather-menu") }}
           </button>
           <h2 id="view-title">
             <span>Administrace</span>,
@@ -112,6 +110,8 @@
       </dialog>
     </div>
   </mwc-drawer>
+
+  {{ spriteTarget() }}
 {% endblock %}
 
 {% block javascript %}
