@@ -371,6 +371,7 @@ async function handleMessage(e) {
         });
 
         ndef.addEventListener("reading", e => {
+          navigator?.vibrate(50);
           console.log(e);
           globalThis.showSnackbar("Čip načten");
           const sn = e.serialNumber.replaceAll(":", "");
