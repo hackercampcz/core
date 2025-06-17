@@ -13,7 +13,6 @@ import {
   dispatchAction,
   Endpoint,
   executeCommand,
-  paginationNavigation,
   registerDialog,
   renderDetail,
   renderModalDialog,
