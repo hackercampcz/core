@@ -4,7 +4,6 @@ import { classMap } from "lit-html/directives/class-map.js";
 import { until } from "lit-html/directives/until.js";
 import { setReturnUrl, signOut } from "../lib/profile.js";
 import { withAuthHandler } from "../lib/remoting.js";
-import "../components/feather-icon.js";
 
 export const Action = {
   optout: "optout",

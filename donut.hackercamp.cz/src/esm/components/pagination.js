@@ -1,4 +1,5 @@
 import { html, render } from "lit-html";
+import "./feather-icon.js";
 
 export class Pagination extends HTMLElement {
   connectedCallback() {
