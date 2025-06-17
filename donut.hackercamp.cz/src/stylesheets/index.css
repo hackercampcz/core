@@ -94,7 +94,8 @@ code {
   transition: width 0.4s ease;
 }
 
-.hc-card.hc-card--decorated:active::before, .hc-card.hc-card--decorated:hover::before {
+.hc-card.hc-card--decorated:active::before,
+.hc-card.hc-card--decorated:hover::before {
   width: 100%;
 }
 
@@ -271,6 +272,12 @@ a.hc-chip {
   /* hotfix that brokes gay text color due to certain ios browsers
   with white color on white background. */
   -webkit-text-fill-color: unset;
+}
+
+@media screen and (prefers-color-scheme: light) {
+  .hc-code-bg {
+    background: cloudinary-url("www.hackercamp.cz/bg-light-1x.png") repeat-x;
+  }
 }
 
 @layer theme {

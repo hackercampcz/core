@@ -1,13 +1,8 @@
 {% extends "layouts/application.njk" %}
 
-{% block title %}Registrace odeslána{% endblock %}
+{% block title %}Ubytování uloženo{% endblock %}
 {% block head %}
   <style>
-    h1 {
-      text-align: center;
-      margin-top: 2em;
-    }
-
     hr {
       border: 0 none;
       height: 1px;
@@ -18,15 +13,19 @@
     .form-story {
       text-align: center;
       max-width: 40em;
-      margin: 24px auto 0 auto;
+      margin: 2lh auto;
       font-weight: 400;
+    }
+
+    .hc-hero h1 {
+      margin-block-start: 0;
     }
   </style>
 {% endblock %}
 
 {% block content %}
   <div class="hc-code-bg">
-    <header id="top" class="hc-hero">
+    <header class="hc-hero">
       <div class="hc-hero__inner">
         <h1>Uloženo!</h1>
       </div>
