@@ -9,11 +9,6 @@
       margin-inline: auto;
     }
 
-    #reg h2 {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
     #reg p.disclaimer {
       font-size: 14px;
       text-align: center;
@@ -53,28 +48,8 @@
 
     #reg input,
     #reg select {
-      font-family: var(--hc-font-family);
-      font-size: 16px;
-      letter-spacing: 0;
-      line-height: 1.5;
-      font-kerning: normal;
-      font-variant-numeric: lining-nums slashed-zero;
-      font-variant-ligatures: common-ligatures contextual;
-      -webkit-font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
-      font-feature-settings: "kern", "liga", "clig", "calt", "lnum", "zero";
-      -webkit-text-size-adjust: 100%;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      text-rendering: geometricPrecision;
       width: 100%;
       box-sizing: border-box;
-    }
-
-    #reg .field {
-      display: flex;
-      flex-direction: column;
-      padding-bottom: 4px;
-      flex: 1;
     }
 
     #reg fieldset {
@@ -83,18 +58,9 @@
       margin: 0;
     }
 
-    #reg .field label {
-      flex: 1;
-      padding-top: 4px;
-      padding-bottom: 2px;
-    }
-
     #reg .field input,
     #reg .field textarea,
     #reg .field select {
-      flex: 2;
-      font-size: 16px;
-      padding: 4px;
       width: 100%;
       box-sizing: border-box;
     }
@@ -105,28 +71,6 @@
 
     #reg .field--block {
       margin-bottom: 16px;
-    }
-
-    #reg .group {
-      display: flex;
-      flex-direction: column;
-    }
-
-    @media (min-width: 490px) {
-      #reg .group {
-        gap: 8px;
-        flex-direction: row;
-      }
-    }
-
-    #reg .question {
-      text-align: center;
-      padding-top: 12px;
-    }
-
-    #reg .question input {
-      width: 16px;
-      height: 16px;
     }
 
     #reg .choose {
@@ -166,12 +110,17 @@
       display: block;
       margin-top: 8px;
     }
+
+    .hc-hero h1 {
+      margin-block-start: 0;
+      text-align: center;
+    }
   </style>
 {% endblock %}
 
 {% block content %}
   <div class="hc-code-bg">
-    <header id="top" class="hc-hero">
+    <header class="hc-hero">
       <div class="hc-hero__inner">
         <h1>Chci na Hacker Camp</h1>
       </div>

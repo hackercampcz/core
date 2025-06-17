@@ -12,6 +12,7 @@
     --hc-link-color: #2161b1;
     --hc-link-visited-color: #bb006e;
     --hc-row-highlight: #e3f1fb;
+    --hc-border-color: #c4c4c4;
     --hc-gradient: linear-gradient(
       90deg,
       #ee771b -0.01%,
@@ -300,7 +301,7 @@
     font-size: 14px;
   }
 
-  search input, form input, form select {
+  search input, form input, form select, textarea {
     font-family: var(--hc-font-family);
     font-size: 16px;
     letter-spacing: 0;
@@ -314,6 +315,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: geometricPrecision;
+    border: 1px solid var(--hc-border-color);
   }
 
   search .field, form .field {
