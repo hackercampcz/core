@@ -52,11 +52,11 @@
     grid-template-columns: 1fr;
     gap: 0;
 
-    [name=query] {
+    [name="query"] {
       --md-outlined-field-bottom-space: 4px;
       --md-outlined-field-top-space: 4px;
       width: 100%;
-      max-width: 480px
+      max-width: 480px;
     }
   }
 }
@@ -111,10 +111,11 @@
 
 .hc-detail__tools {
   display: flex;
+  align-items: baseline;
   gap: 1em;
 }
 
-hc-phone-button, hc-mail-button {
+hc-phone-button, hc-mail-button, feather-icon {
   display: inline flex;
 }
 
