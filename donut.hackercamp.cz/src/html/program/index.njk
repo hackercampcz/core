@@ -132,7 +132,7 @@
 </dialog>
 {% endblock %}
 
-{% block javascript %}
+{% block scripts %}
 <script type="module">
   const build = {{ collections.build | dump(8) | safe }};
   const env = Object.assign({ year: {{ year }} }, build);

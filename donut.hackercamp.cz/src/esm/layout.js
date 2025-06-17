@@ -1,4 +1,5 @@
 import "@oddbird/popover-polyfill";
+import "./components/feather-icon.js";
 
 export async function init({ snackbar }) {
   globalThis.snackbar = snackbar;
