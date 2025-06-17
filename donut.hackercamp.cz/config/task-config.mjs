@@ -6,7 +6,6 @@ import OpenProps from "open-props";
 import jitProps from "postcss-jit-props";
 import data from "../src/data/global.mjs";
 import { HackersRegistry } from "./hackers-registry.mjs";
-import pathConfig from "./path-config.mjs";
 import { WorkboxBuildRegistry } from "./workboxbuild.mjs";
 
 /** @typedef {import("@types/nunjucks").Environment} Environment */
@@ -28,7 +27,12 @@ const formatDateTime = (x, locale) =>
   x?.toLocaleString(locale, { weekday: "short", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })
     ?? null;
 
-export default function(mode) {
+/**
+ * @param {Record<string, *>} pathConfig
+ * @param {{development: function(): boolean, production: function(): boolean}} mode
+ * @param {Boolean} verbose
+ */
+export default function(pathConfig, mode, verbose) {
   return {
     images: true,
     cloudflare: true,
