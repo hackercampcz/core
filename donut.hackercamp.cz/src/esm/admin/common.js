@@ -205,51 +205,6 @@ export function ticketDetail({ year, ticketType, ticketPrice, patronAllowance })
   `;
 }
 
-export function paginationNavigation({ page, pages, count, total, params }) {
-  const pageSize = 20;
-  const offset = page * pageSize;
-  const first = offset + 1;
-  const last = offset + count;
-
-  function search(p) {
-    return `?${(new URLSearchParams(Object.assign(Object.fromEntries(params), p)))}`;
-  }
-
-  return html`
-    <div class="hc-pagination">
-      <data class="hc-pagination__total" value="${total}">${first}-${last} ze ${total}</data>
-      <a class="icon-button small"
-         title="První strana"
-         href="${search({ page: 0 })}"
-         ?disabled="${page <= 0}"
-      >
-        <feather-icon name="skip-back" title="První"></feather-icon>
-      </a>
-      <a class="icon-button small"
-         title="Předchozí strana"
-         href="${search({ page: Math.max(page - 1, 0) })}"
-         ?disabled="${page <= 0}"
-      >
-        <feather-icon name="chevron-left" title="Předchozí"></feather-icon>
-      </a>
-      <a class="icon-button small"
-         title="Další strana"
-         href="${search({ page: Math.min(page + 1, pages - 1) })}"
-         ?disabled="${page >= (pages - 1)}"
-      >
-        <feather-icon name="chevron-right" title="Další"></feather-icon>
-      </a>
-      <a class="icon-button small"
-         title="Poslední strana"
-         href="${search({ page: pages - 1 })}"
-         ?disabled="${page >= (pages - 1)}"
-      >
-        <feather-icon name="skip-forward" title="Poslední"></feather-icon>
-      </a>
-    </div>
-  `;
-}
-
 export function renderDetail(detail) {
   return e => {
     e.preventDefault();

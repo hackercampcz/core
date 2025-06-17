@@ -10,7 +10,6 @@ import {
   dispatchAction,
   Endpoint,
   executeCommand,
-  paginationNavigation,
   registerDialog,
   renderDetail,
   renderModalDialog,
@@ -24,6 +23,7 @@ import "./components/phone-button.js";
 import "./components/mail-button.js";
 import "./components/slack-avatar.js";
 import "./components/feather-icon.js";
+import "./components/pagination.js";
 import { map } from "lit-html/directives/map.js";
 import { iconContactless } from "./lib/icons.js";
 import { getChipID } from "./lib/nfctron.js";
@@ -221,7 +221,7 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
       <tfoot>
       <tr>
         <td colspan="7">
-          ${paginationNavigation({ page, pages, total, count: data.length, params })}
+          <hc-pagination page="${page}" pages="${pages}" total="${total}" count="${data.length}" params="${params}"></hc-pagination>
         </td>
       </tr>
       </tfoot>

@@ -25,9 +25,10 @@ import { housing, ticketBadge, travel } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
 import "./components/slack-avatar.js";
+import "./components/feather-icon.js";
+import "./components/pagination.js";
 import { iconFakturoid } from "./lib/icons.js";
 import { getContact } from "./lib/profile.js";
-import "./components/feather-icon.js";
 
 function optout(email) {
   return e => {
@@ -138,31 +139,31 @@ export function registrationsChips(
       ${
     when(view === View.search, () =>
       html`
-            <form name="search">
-              <input type="hidden" name="view" value="${View.search}">
-              <input type="hidden" name="year" value="${year}">
-              <md-outlined-text-field
-                name="query"
-                placeholder="Hledat jméno, e-mail, firmu&hellip;"
-                value="${params.get("query")}"
-                autofocus
-                @keyup="${e => {
+        <form name="search">
+          <input type="hidden" name="view" value="${View.search}">
+          <input type="hidden" name="year" value="${year}">
+          <md-outlined-text-field
+            name="query"
+            placeholder="Hledat jméno, e-mail, firmu&hellip;"
+            value="${params.get("query")}"
+            autofocus
+            @keyup="${e => {
         if (e.key === "Escape") document.getElementById("hc-search__close").click();
       }}"
-                @change="${e => e.target.form.submit()}">
-                <button class="icon-button small" slot="leading-icon" type="submit"
-                        title="Hledat" aria-label="Hledat">
-                  <feather-icon name="search" title="Hledat"></feather-icon>
-                </button>
-                <a class="icon-button small"
-                   id="hc-search__close"
-                   slot="trailing-icon"
-                   href="/admin/"
-                   title="Zavřít hledání">
-                  <feather-icon name="x" title="Zavřít"></feather-icon>
-                </a>
-              </md-outlined-text-field>
-            </form>`, () =>
+            @change="${e => e.target.form.submit()}">
+            <button class="icon-button small" slot="leading-icon" type="submit"
+                    title="Hledat" aria-label="Hledat">
+              <feather-icon name="search" title="Hledat"></feather-icon>
+            </button>
+            <a class="icon-button small"
+               id="hc-search__close"
+               slot="trailing-icon"
+               href="/admin/"
+               title="Zavřít hledání">
+              <feather-icon name="x" title="Zavřít"></feather-icon>
+            </a>
+          </md-outlined-text-field>
+        </form>`, () =>
       html`
         <div>
           <a class="icon-button small" href="/admin/?${new URLSearchParams({ view: View.search, year })}"
@@ -224,8 +225,7 @@ export function registrationsChips(
           </button>
           <a class="icon-button small"
              href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
-        // TODO: add support for search queries
-        { year, type: view, format: "csv", pageSize: 500 }
+        Object.assign(Object.fromEntries(params), { year, type: view, format: "csv", pageSize: 500 })
       )}"
              title="Stáhnout CSV"
              aria-label="Stáhnout CSV">
@@ -324,8 +324,8 @@ export function registrationsTableTemplate(
       </thead>
       <tfoot>
       <tr>
-        <td colspan="5">
-          ${paginationNavigation({ page, pages, total, count: data.length, params })}
+        <td colspan="6">
+          <hc-pagination page="${page}" pages="${pages}" total="${total}" count="${data.length}" params="${params}"></hc-pagination>
         </td>
       </tr>
       </tfoot>
