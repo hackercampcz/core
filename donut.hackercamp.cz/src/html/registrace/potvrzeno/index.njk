@@ -19,7 +19,7 @@
 
 {% block content %}
   <div class="hc-code-bg">
-    <header id="top" class="hc-hero">
+    <header class="hc-hero">
       <div class="hc-hero__inner">
         <h1>Odesláno!</h1>
       </div>
@@ -31,10 +31,10 @@
 {% endblock %}
 
 {% block javascript %}
-<script type="module">
-  const url = new URL(location.href);
-  if (url.searchParams.has("volunteer")) {
-    document.querySelector(".form-story p").textContent = "Díky a budiž ti věčná sláva za tvou pomoc!";
-  }
-</script>
+  <script type="module">
+    const url = new URL(location.href);
+    if (url.searchParams.has("volunteer")) {
+      document.querySelector(".form-story p").textContent = "Díky a budiž ti věčná sláva za tvou pomoc!";
+    }
+  </script>
 {% endblock %}
