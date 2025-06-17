@@ -1,5 +1,5 @@
 {% extends "layouts/application.njk" %}
-{% from "macros/helpers.njk" import spriteTarget, sprite %}
+{% from "macros/helpers.njk" import sprite %}
 
 {% block title %}Administrace Hacker Campu{% endblock %}
 
@@ -72,7 +72,7 @@
           <button class="icon-button" aria-label="Menu"
                   slot="navigationIcon"
                   id="drawer-button">
-            {{ sprite("menu", "Menu", "0 0 24 24", "feather feather-menu") }}
+            <feather-icon name="menu" title="Menu"></feather-icon>
           </button>
           <h2 id="view-title">
             <span>Administrace</span>,
@@ -100,8 +100,6 @@
       </dialog>
     </div>
   </mwc-drawer>
-
-  {{ spriteTarget() }}
 {% endblock %}
 
 {% block javascript %}

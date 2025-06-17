@@ -8,6 +8,7 @@ import { withAuthHandler } from "./lib/remoting.js";
 import { initRenderLoop, renderScheduler } from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 import { showModalDialog } from "./modal-dialog.js";
+import "./components/feather-icon.js";
 
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
 /** @typedef {import("@thi.ng/atom").Path} Path */

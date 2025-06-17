@@ -1,6 +1,7 @@
 import { getContact, getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { withAuthHandler } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
+import "./components/feather-icon.js";
 
 async function loadHousingData(apiBase, year) {
   try {
@@ -158,8 +159,7 @@ function renderHackers(formElement, { hackers, hacker }) {
           hackersListElement.prepend(option);
         }
       }
-    }
-      // Highlight input with my name and remove it
+    } // Highlight input with my name and remove it
     // from <datalist> to not be autocompleted anymore
     else {
       if (filledHacker.dataset.id === hacker.slackID) {
@@ -337,8 +337,7 @@ export async function main({ formElement, env, housing: { reservations, variants
     const hacker = hackers.find(({ slackID }) => slackID === profile.sub);
     if (!hacker) {
       alert("Nenašlo jsem tě v seznamu hackerů 😭");
-    }
-    else {
+    } else {
       renderHackers(formElement, { hackers, hacker });
     }
     renderReservations(formElement, { reservations });

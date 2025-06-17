@@ -1,5 +1,4 @@
 {% extends "layouts/application.njk" %}
-{% from "macros/helpers.njk" import spriteTarget, sprite %}
 
 {% block title %}Ubytování na HC{% endblock %}
 
@@ -316,7 +315,7 @@
                         type="search"
                       >
                       <button class="icon-button small unlock" type="button" title="odemknout" disabled>
-                        {{ sprite("unlock", "Odemknout", "0 0 24 24", "feather feather-unlock") }}
+                        <feather-icon name="unlock" title="Odemknout"></feather-icon>
                       </button>
                     </div>
                   {%- endfor %}
@@ -340,8 +339,6 @@
       <datalist id="hackers"></datalist>
     </form>
   </div>
-
-  {{ spriteTarget() }}
 {% endblock %}
 
 {% block javascript %}
