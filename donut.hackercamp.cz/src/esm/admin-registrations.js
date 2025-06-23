@@ -409,15 +409,16 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       html`
           <button class="icon-button small" title="Vyfakturovat" @click="${renderModalDialog("invoice")}">
             ${iconFakturoid()}
-          </button>`)
+          </button>
+          <button class="icon-button small" title="Převést registraci z předchozích let"
+                  @click="${renderModalDialog("transfer")}">
+            <feather-icon name="refresh-ccw" title="Obnovit"></feather-icon>
+          </button>
+      `)
   }
         <button class="icon-button small" title="Upravit registraci"
                 @click="${renderModalDialog("registration-modal")}">
           <feather-icon name="edit" title="Upravit"></feather-icon>
-        </button>
-        <button class="icon-button small" title="Převést registraci z předchozích let"
-                @click="${renderModalDialog("transfer")}">
-          <feather-icon name="refresh-ccw" title="Obnovit"></feather-icon>
         </button>
         ${
     when(selectedView !== View.paid, () =>
