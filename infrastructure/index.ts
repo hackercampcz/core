@@ -13,6 +13,7 @@ registerAutoTags({
 });
 
 const config = new pulumi.Config();
+const awsConfig = new pulumi.Config("aws");
 
 const domain = config.require("domain");
 const donutDomain = config.require("donut-domain");
@@ -179,6 +180,7 @@ const apiPages = new cloudflare.PagesProject("api", {
       compatibilityDate: "2024-11-11",
       environmentVariables: {
         API_HOST: api.url.apply(x => new URL("/v1/", x).href),
+        AWS_REGION: awsConfig.require("region"),
         FAKTUROID_CLIENT_ID: config.require("fakturoid-client-id"),
         HC_API_HOSTNAME: config.require("api-domain"),
         HC_DONUT_HOSTNAME: config.require("donut-domain"),
