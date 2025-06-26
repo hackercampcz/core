@@ -5,9 +5,9 @@ async function* getRegistrations(client, year) {
     new ScanCommand({
       TableName: "registrations",
       ProjectionExpression: "email, #y, invoice_id, paid, invoiced, #ts",
-      FilterExpression: "#y = :y",
+      FilterExpression: "#y = :y AND ticketType <> :volunteer",
       ExpressionAttributeNames: { "#y": "year", "#ts": "timestamp" },
-      ExpressionAttributeValues: { ":y": { N: year.toString() } }
+      ExpressionAttributeValues: { ":y": { N: year.toString() }, ":volunteer": { S: "volunteer" } }
     })
   );
   if (result.hasOwnProperty(Symbol.asyncIterator)) {
