@@ -26,7 +26,12 @@ async function getAllRegistrations(client) {
       result.push(...page);
     }
   }
-  return result;
+  return result.map(x => ({
+    year: x.year?.N,
+    registered: x.timestamp?.S.substring(0, 10),
+    invoiced: x.invoiced?.S.substring(0, 10),
+    paid: x.paid?.S.substring(0, 10)
+  }));
 }
 
 /**
@@ -43,15 +48,7 @@ export async function onRequestGet({ env }) {
   });
 
   const regs = await getAllRegistrations(client);
-  const regsByYear = Map.groupBy(
-    regs.map(x => ({
-      year: x.year,
-      registered: x.timestamp?.substring(0, 10),
-      invoiced: x.invoiced?.substring(0, 10),
-      paid: x.paid?.substring(0, 10)
-    })),
-    x => x.year
-  );
+  const regsByYear = Map.groupBy(regs, x => x.year);
   for (const [year, registrations] of regsByYear) {
     regsByYear.set(year, {
       registered: Map.groupBy(registrations, x => x.registered),
