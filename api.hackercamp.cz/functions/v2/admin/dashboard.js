@@ -53,25 +53,28 @@ export async function onRequestGet({ env }) {
   const regs = await getAllRegistrations(client);
   const regsByYear = Map.groupBy(regs, x => x.year);
   for (const [year, registrations] of regsByYear) {
-    regsByYear.set(year, {
-      registered: Map.groupBy(registrations, x => x.registered),
-      invoiced: Map.groupBy(registrations, x => x.invoiced),
-      paid: Map.groupBy(registrations, x => x.paid)
-    });
+    regsByYear.set(
+      year,
+      Object.entries({
+        r: Map.groupBy(registrations, x => x.registered),
+        i: Map.groupBy(registrations, x => x.invoiced),
+        p: Map.groupBy(registrations, x => x.paid)
+      })
+    );
   }
 
   const result = [];
   for (const [year, groups] of regsByYear) {
-    const temp = new Map();
-    for (const [key, group] of Object.entries(groups)) {
+    const days = new Map();
+    for (const [key, group] of groups) {
       for (const [date, items] of group) {
         if (!date) continue;
-        const stats = temp.get(date) ?? { registered: 0, invoiced: 0, paid: 0 };
+        const stats = days.get(date) ?? { r: 0, i: 0, p: 0 };
         stats[key] += items.length;
-        temp.set(date, stats);
+        days.set(date, stats);
       }
     }
-    result.push([year, Array.from(temp.entries()).sort((a, b) => a[0].localeCompare(b[0]))]);
+    result.push([year, Array.from(days.entries()).sort((a, b) => a[0].localeCompare(b[0]))]);
   }
   return Response.json(result);
 }
