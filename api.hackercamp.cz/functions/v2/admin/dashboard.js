@@ -74,7 +74,12 @@ export async function onRequestGet({ env }) {
         days.set(date, stats);
       }
     }
-    result.push([year, Array.from(days.entries()).sort((a, b) => a[0].localeCompare(b[0]))]);
+    result.push([
+      year,
+      Array.from(days.entries())
+        .map(([k, { r, i, p }]) => [k, [r, i, p]])
+        .sort((a, b) => a[0].localeCompare(b[0]))
+    ]);
   }
   return Response.json(result);
 }
