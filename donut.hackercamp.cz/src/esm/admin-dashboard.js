@@ -40,7 +40,7 @@ function drawChart(year, data) {
   const yearData = data[year];
   const yearMap = new Map(yearData);
   const start = new Date(`${year}-01-01`);
-  const end = new Date(`${year}-09-30`);
+  const end = new Date(`${year}-09-07`);
   const days = eachDayOfInterval({ start, end });
   const fuckingHell = [];
   for (const day of days) {
