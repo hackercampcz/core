@@ -39,12 +39,15 @@ async function getAllRegistrations(client) {
  * @returns {Promise<Response>}
  */
 export async function onRequestGet({ env }) {
-  const client = new DynamoDBClient({
-    region: env.AWS_REGION,
-    credentialDefaultProvider: {
+  function credentialProvider() {
+    return {
       accessKeyId: env.AWS_ACCESS_KEY_ID,
       secretAccessKey: env.AWS_SECRET_ACCESS_KEY
-    }
+    };
+  }
+  const client = new DynamoDBClient({
+    region: env.AWS_REGION,
+    credentialDefaultProvider: credentialProvider
   });
 
   const regs = await getAllRegistrations(client);
