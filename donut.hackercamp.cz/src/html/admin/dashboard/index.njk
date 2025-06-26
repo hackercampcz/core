@@ -49,6 +49,10 @@
     tbody td {
       border-bottom: 1px solid #ddd;
     }
+
+    canvas {
+      max-height: 480px;
+    }
   </style>
 
   <link rel="stylesheet" href="{{ 'admin.css' | assetUrl('stylesheets') }}">
@@ -79,6 +83,23 @@
             </label>
           </h2>
         </header>
+
+        <article id="registrations-2025">
+          <h3>Registrace 2025</h3>
+          <canvas></canvas>
+        </article>
+        <article id="registrations-2024">
+          <h3>Registrace 2024</h3>
+          <canvas></canvas>
+        </article>
+        <article id="registrations-2023">
+          <h3>Registrace 2023</h3>
+          <canvas></canvas>
+        </article>
+        <article id="registrations-2022">
+          <h3>Registrace 2022</h3>
+          <canvas></canvas>
+        </article>
       </div>
       <dialog id="modal" class="hc-dialog">
         <div id="modal-root"></div>
