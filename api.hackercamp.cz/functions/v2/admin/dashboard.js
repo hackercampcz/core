@@ -61,13 +61,17 @@ export async function onRequestGet({ env }) {
   }
 
   const result = [];
-  for (const [year, regGroups] of regsByYear) {
-    const temp = [];
-    for (const [date, { registered, invoiced, paid }] of regGroups) {
-      if (!date) continue;
-      temp.push([date, { registered: registered?.length, invoiced: invoiced?.length, paid: paid?.length }]);
+  for (const [year, groups] of regsByYear) {
+    const temp = new Map();
+    for (const [key, group] of Object.entries(groups)) {
+      for (const [date, items] of group) {
+        if (!date) continue;
+        const stats = temp.get(date) ?? { registered: 0, invoiced: 0, paid: 0 };
+        stats[key] += items.length;
+        temp.set(date, stats);
+      }
     }
-    result.push([year, temp.sort((a, b) => a[0].localeCompare(b[0]))]);
+    result.push([year, Array.from(temp.entries()).sort((a, b) => a[0].localeCompare(b[0]))]);
   }
   return Response.json(result);
 }
