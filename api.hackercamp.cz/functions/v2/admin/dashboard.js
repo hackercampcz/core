@@ -28,9 +28,9 @@ async function getAllRegistrations(client) {
   }
   return result.map(x => ({
     year: x.year?.N,
-    registered: x.timestamp?.S.substring(0, 10),
-    invoiced: x.invoiced?.S.substring(0, 10),
-    paid: x.paid?.S.substring(0, 10)
+    registered: x.timestamp?.S?.substring(0, 10),
+    invoiced: x.invoiced?.S?.substring(0, 10),
+    paid: x.paid?.S?.substring(0, 10)
   }));
 }
 
@@ -64,7 +64,8 @@ export async function onRequestGet({ env }) {
   for (const [year, regGroups] of regsByYear) {
     const temp = [];
     for (const [date, { registered, invoiced, paid }] of regGroups) {
-      temp.push([date, { registered: registered.length, invoiced: invoiced.length, paid: paid.length }]);
+      if (!date) continue;
+      temp.push([date, { registered: registered?.length, invoiced: invoiced?.length, paid: paid?.length }]);
     }
     result.push([year, temp.sort((a, b) => a[0].localeCompare(b[0]))]);
   }
