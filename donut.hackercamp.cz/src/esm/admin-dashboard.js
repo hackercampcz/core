@@ -37,23 +37,19 @@ function cumulative(arr) {
 
 function drawChart(year, data) {
   const el = document.querySelector(`#registrations-${year} canvas`);
-  const yearData = data[year];
-  const yearMap = new Map(yearData);
+  const diary = new Map(data[year]);
   const start = new Date(`${year}-01-01`);
   const end = new Date(`${year}-09-07`);
   const days = eachDayOfInterval({ start, end });
-  const fuckingHell = [];
-  for (const day of days) {
-    const shit = yearMap.get(formatISO(day, { representation: "date" })) ?? [0, 0, 0];
-    fuckingHell.push(shit);
-  }
+  const entries = days.map(day => diary.get(formatISO(day, { representation: "date" })) ?? [0, 0, 0]);
+  // TODO: get entries before first date and put the aggregate as first entry
   new Chart(el.getContext("2d"), {
     data: {
       labels: days,
       datasets: [
-        { type: "line", label: "Registrovaní", data: cumulative(fuckingHell.map(x => x[0])), pointRadius: 0 },
-        { type: "line", label: "Vyfakturovaní", data: cumulative(fuckingHell.map(x => x[1])), pointRadius: 0 },
-        { type: "line", label: "Zaplacení", data: cumulative(fuckingHell.map(x => x[2])), pointRadius: 0 }
+        { type: "line", label: "Registrovaní", data: cumulative(entries.map(x => x[0])), pointRadius: 0 },
+        { type: "line", label: "Vyfakturovaní", data: cumulative(entries.map(x => x[1])), pointRadius: 0 },
+        { type: "line", label: "Zaplacení", data: cumulative(entries.map(x => x[2])), pointRadius: 0 }
       ]
     },
     options: {
@@ -98,8 +94,7 @@ export async function main({ env, yearSelector, searchParams }) {
 
   const data = await fetchData({ endpoint: "dashboard" }, new URL("/v2/", apiHost).href);
   const years = Object.fromEntries(data);
-  drawChart("2025", years);
-  drawChart("2024", years);
-  drawChart("2023", years);
-  drawChart("2022", years);
+  for (const year of Object.keys(years)) {
+    drawChart(year, years);
+  }
 }
