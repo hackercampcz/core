@@ -42,7 +42,11 @@ function drawChart(year, data) {
   const end = new Date(`${year}-09-07`);
   const days = eachDayOfInterval({ start, end });
   const entries = days.map(day => diary.get(formatISO(day, { representation: "date" })) ?? [0, 0, 0]);
-  // TODO: get entries before first date and put the aggregate as first entry
+
+  entries[0] = data[year].filter(x => x[0] < `${year}-01-01`).reduce(
+    (acc, [, [r, i, p]]) => [acc[0] + r, acc[1] + i, acc[2] + p],
+    entries[0]
+  );
   new Chart(el.getContext("2d"), {
     data: {
       labels: days,
@@ -89,7 +93,7 @@ export async function main({ env, yearSelector, searchParams }) {
 
   yearSelector.value = year;
   yearSelector.addEventListener("change", e => {
-    location.assign(`?${new URLSearchParams({ year: e.target.value, view: selectedView })}`);
+    location.assign(`?${new URLSearchParams({ year: e.target.value })}`);
   });
 
   const data = await fetchData({ endpoint: "dashboard" }, new URL("/v2/", apiHost).href);
