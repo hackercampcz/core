@@ -22,7 +22,7 @@
     "workbox-window": "7.3.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20250620.0",
+    "@cloudflare/workers-types": "4.20250627.0",
     "@types/w3c-web-nfc": "1.0.4",
     "open-props": "1.7.15",
     "postcss-jit-props": "1.0.16",
