@@ -3492,7 +3492,7 @@ __metadata:
     immutable: "npm:5.1.3"
     jsonwebtoken: "npm:9.0.2"
     rollbar: "npm:2.26.4"
-    wrangler: "npm:4.21.2"
+    wrangler: "npm:4.22.0"
   languageName: unknown
   linkType: soft
 
@@ -3536,7 +3536,7 @@ __metadata:
     workbox-precaching: "npm:7.3.0"
     workbox-recipes: "npm:7.3.0"
     workbox-window: "npm:7.3.0"
-    wrangler: "npm:4.21.2"
+    wrangler: "npm:4.22.0"
   languageName: unknown
   linkType: soft
 
@@ -3571,7 +3571,7 @@ __metadata:
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
   dependencies:
     lite-youtube-embed: "npm:0.3.3"
-    wrangler: "npm:4.21.2"
+    wrangler: "npm:4.22.0"
   languageName: unknown
   linkType: soft
 
@@ -15547,9 +15547,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:4.21.2":
-  version: 4.21.2
-  resolution: "wrangler@npm:4.21.2"
+"wrangler@npm:4.22.0":
+  version: 4.22.0
+  resolution: "wrangler@npm:4.22.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.4.0"
     "@cloudflare/unenv-preset": "npm:2.3.3"
@@ -15571,7 +15571,7 @@ __metadata:
   bin:
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10c0/2d087fe8e7aadb9d8226653b6e22d6a1ddd92cee8dcd262fe113442bd8201f030ba41a340f1960a6aaa54f9eeab1d65978c4f6b4c30adc2e4969bd9c8a7f4434
+  checksum: 10c0/a1d5deab6f600d1e3807c94ca5f0fbe1884a34d76ec0d2880c1fb2f9125a3b4e8607502bf8c06cc6ef960ea85d93a587f00a36b5e4e479b8daffd3f5237e053c
   languageName: node
   linkType: hard
 
