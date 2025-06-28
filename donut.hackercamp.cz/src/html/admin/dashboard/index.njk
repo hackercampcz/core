@@ -51,7 +51,12 @@
     }
 
     canvas {
-      max-height: 480px;
+      aspect-ratio: 16/9;
+      width: 100%;
+      height: auto;
+      max-width: 1024px;
+      max-height: min(480px, 45vh);
+      margin-inline: auto;
     }
   </style>
 
