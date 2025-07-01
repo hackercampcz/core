@@ -52,11 +52,10 @@
     grid-template-columns: 1fr;
     gap: 0;
 
-    [name="query"] {
-      --md-outlined-field-bottom-space: 4px;
-      --md-outlined-field-top-space: 4px;
+    slotted-input {
       width: 100%;
       max-width: 480px;
+      line-height: 1;
     }
   }
 }
@@ -163,4 +162,31 @@ hc-slack-avatar {
 
 .hc-dialog > div {
   position: relative;
+}
+
+slotted-input {
+  display: inline flex;
+  justify-content: space-between;
+  color: FieldText;
+  background-color: Field;
+  border: 1px solid var(--hc-border-color);
+  gap: 1ch;
+  padding-inline: 1ch;
+  overflow: clip;
+
+  &:focus-within {
+    outline: 2px solid var(--hc-link-color);
+    border-radius: 4px;
+  }
+
+  .icon-button {
+    width: 32px;
+  }
+  input {
+    appearance: none;
+    flex-grow: 2;
+    border: none;
+    background-color: transparent;
+    outline: none;
+  }
 }

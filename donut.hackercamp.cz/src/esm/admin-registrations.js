@@ -141,27 +141,27 @@ export function registrationsChips(
         <form name="search">
           <input type="hidden" name="view" value="${View.search}">
           <input type="hidden" name="year" value="${year}">
-          <md-outlined-text-field
-            name="query"
-            placeholder="Hledat jméno, e-mail, firmu&hellip;"
-            value="${params.get("query")}"
-            autofocus
-            @keyup="${e => {
-        if (e.key === "Escape") document.getElementById("hc-search__close").click();
-      }}"
-            @change="${e => e.target.form.submit()}">
-            <button class="icon-button small" slot="leading-icon" type="submit"
+          <slotted-input>
+            <button class="icon-button small" type="submit"
                     title="Hledat" aria-label="Hledat">
               <feather-icon name="search" title="Hledat"></feather-icon>
             </button>
+            <input
+              name="query"
+              placeholder="Hledat jméno, e-mail, firmu&hellip;"
+              value="${params.get("query")}"
+              autofocus
+              @keyup="${e => {
+        if (e.key === "Escape") document.getElementById("hc-search__close").click();
+      }}"
+              @change="${e => e.target.form.submit()}">
             <a class="icon-button small"
                id="hc-search__close"
-               slot="trailing-icon"
                href="/admin/"
                title="Zavřít hledání">
               <feather-icon name="x" title="Zavřít"></feather-icon>
             </a>
-          </md-outlined-text-field>
+          </slotted-input>
         </form>`, () =>
       html`
         <div>

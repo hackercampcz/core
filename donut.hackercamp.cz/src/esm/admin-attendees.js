@@ -74,28 +74,27 @@ export function attendeesChips(
             <form name="search">
               <input type="hidden" name="view" value="${View.searchAttendees}">
               <input type="hidden" name="year" value="${year}">
-              <md-outlined-text-field
-                aria-label="Hledaný výraz"
-                name="query"
-                placeholder="Hledat jméno, e-mail, firmu&hellip;"
-                value="${params.get("query") ?? ""}"
-                autofocus
-                @keyup="${e => {
-        if (e.key === "Escape") document.getElementById("hc-search__close").click();
-      }}"
-                @change="${e => e.target.form.submit()}">
-                <button class="icon-button small" slot="leading-icon" type="submit"
-                        title="Hledat" aria-label="Hledat">
+              <slotted-input>
+                <button class="icon-button small" type="submit" title="Hledat" aria-label="Hledat">
                   <feather-icon name="search" title="Hledat"></feather-icon>
                 </button>
+                <input type="text"
+                       aria-label="Hledaný výraz"
+                       name="query"
+                       placeholder="Hledat jméno, e-mail, firmu&hellip;"
+                       value="${params.get("query") ?? ""}"
+                       autofocus
+                       @keyup="${e => {
+        if (e.key === "Escape") document.getElementById("hc-search__close").click();
+      }}"
+                       @change="${e => e.target.form.submit()}">
                 <a class="icon-button small"
                    id="hc-search__close"
-                   slot="trailing-icon"
                    href="/admin/?${new URLSearchParams({ view: View.attendees, year })}"
                    title="Zavřít hledání">
                   <feather-icon name="x" title="Zavřít"></feather-icon>
                 </a>
-              </md-outlined-text-field>
+              </slotted-input>
             </form>
           `, () =>
       html`
@@ -662,24 +661,24 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
       return html`
               <div class="field">
                 <label for="nfc-tron-sn-${i}">S/N #${i + 1}</label>
-                <md-outlined-text-field
-                  id="nfc-tron-sn-${i}"
-                  name="nfcTronSN${i}"
-                  value="${sn}"
-                  @change="${onChange}"
-                >
+                <slotted-input>
+                  <input type="text" id="nfc-tron-sn-${i}" name="nfcTronSN${i}" value="${sn}" @change="${onChange}">
                   ${
-        when(sn === "", () => html`<i slot="trailing-icon">${iconContactless()}</i>`, () =>
-          html`
+        when(
+          sn === "",
+          () => html`<button type="button" disabled class="icon-button">${iconContactless()}</button>`,
+          () =>
+            html`
                         <button class="icon-button small"
-                                slot="trailing-icon" type="button"
+                                type="button"
                                 title="Odebrat" aria-label="Odebrat"
                                 @click="${removeChip(sn)}">
                           <feather-icon name="minus-circle" title="Odebrat"></feather-icon>
                         </button>
-                      `)
+                      `
+        )
       }
-                </md-outlined-text-field>
+                </slotted-input>
                 <div>
                   <strong>ID čipu:</strong>
                   ${
