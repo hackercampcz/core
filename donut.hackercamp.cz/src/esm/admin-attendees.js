@@ -525,14 +525,12 @@ function addAttendeeModalDialog({ year, apiHost }) {
           <div class="field">
             <label for="invoice-address-zip">PSČ</label>
             <input type="text" id="invoice-address-zip"
-                   name="invAddressZip" pattern="\\d{3}\\s\\d{2}"
-                   value="${detail.invAddressZip}">
+                   name="invAddressZip" pattern="\\d{3}\\s\\d{2}">
           </div>
           <div class="field">
             <label for="invoice-address-city">Město</label>
             <input type="text" id="invoice-address-city"
-                   name="invAddressCity"
-                   value="${detail.invAddressCity}">
+                   name="invAddressCity">
           </div>
         </div>
         <div class="group">
@@ -555,8 +553,7 @@ function addAttendeeModalDialog({ year, apiHost }) {
             id="invoice-email"
             name="invEmail"
             type="email"
-            autocomplete="email"
-          >
+            autocomplete="email">
         </div>
       </fieldset>
 
