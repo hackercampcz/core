@@ -47,7 +47,10 @@ export async function handler(event) {
   const isHacker = rest.ticketType === "hacker";
   const isPatron = rest.ticketType === "hacker-patron";
 
-  if (isPatron && rest.volunteerArrivalDay === "th") {
+  if (
+    (isPatron && rest.volunteerArrivalDay === "th")
+    || (isVolunteer && rest.company === "google")
+  ) {
     // API abuse
     return { statusCode: 451, body: "fok off" };
   }
