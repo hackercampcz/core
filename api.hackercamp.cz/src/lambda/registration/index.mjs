@@ -18,9 +18,9 @@ export async function registration(event) {
   try {
     switch (event.httpMethod) {
       case "GET":
-        return await get.handler(event).then(x => withCORS_(x));
+        return await get.handler(event, rollbar).then(x => withCORS_(x));
       case "POST":
-        return await post.handler(event).then(x => withCORS_(x));
+        return await post.handler(event, rollbar).then(x => withCORS_(x));
       case "OPTIONS":
         return withCORS_({ statusCode: 204, body: "" });
       default:

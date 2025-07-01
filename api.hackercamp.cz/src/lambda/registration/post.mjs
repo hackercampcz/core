@@ -7,6 +7,7 @@ import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Response } APIGatewayProxyResult */
+/** @typedef { import("rollbar").Rollbar } Rollbar */
 
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
@@ -35,9 +36,10 @@ function getEditUrl(isNewbee, id) {
 
 /**
  * @param {APIGatewayProxyEvent} event
+ * @param {Rollbar} rollbar
  * @returns {Promise.<APIGatewayProxyResult>}
  */
-export async function handler(event) {
+export async function handler(event, rollbar) {
   let { email, year, firstTime, ...rest } = readPayload(event);
   const isNewbee = firstTime === "1";
   email = email.trim().toLowerCase();
@@ -52,6 +54,7 @@ export async function handler(event) {
     || (isVolunteer && rest.company === "google")
   ) {
     // API abuse
+    rollbar.warn("Spam", event);
     return { statusCode: 451, body: "fok off" };
   }
 
