@@ -3537,7 +3537,7 @@ __metadata:
     chart.js: "npm:4.5.0"
     chartjs-adapter-date-fns: "npm:3.0.0"
     date-fns: "npm:4.1.0"
-    lit-html: "npm:3.3.0"
+    lit-html: "npm:3.3.1"
     lite-youtube-embed: "npm:0.3.3"
     marked: "npm:16.0.0"
     open-props: "npm:1.7.16"
@@ -10346,12 +10346,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lit-html@npm:3.3.0":
-  version: 3.3.0
-  resolution: "lit-html@npm:3.3.0"
+"lit-html@npm:3.3.1":
+  version: 3.3.1
+  resolution: "lit-html@npm:3.3.1"
   dependencies:
     "@types/trusted-types": "npm:^2.0.2"
-  checksum: 10c0/c1065048d89d93df6a46cdeed9abd637ae9bcc0847ee108dccbb2e1627a4074074e1d3ac9360e08a736d76f8c76b2c88166dbe465406da123b9137e29c2e0034
+  checksum: 10c0/0dfb645f35c2ae129a40c09550b4d0e60617b715af7f2e0b825cdfd0624118fc4bf16e9cfaabdfbe43469522e145057d3cc46c64ca1019681480e4b9ae8f52cd
   languageName: node
   linkType: hard
 
