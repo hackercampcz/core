@@ -1,15 +1,21 @@
 import { getToken, validateToken } from "@hackercamp/lib/auth.js";
 
-const openRoutes = new Set(["/program/kalendar"]);
-const authorizedOnly = ["/hackers", "/registrace", "/ubytovani", "/program", "/admin"];
+const openRoutes = [new URLPattern({ pathname: "/program/kalendar" })];
+const authorizedOnly = [
+  new URLPattern({ pathname: "/hackers/*" }),
+  new URLPattern({ pathname: "/registrace/*" }),
+  new URLPattern({ pathname: "/ubytovani/*" }),
+  new URLPattern({ pathname: "/program/*" }),
+  new URLPattern({ pathname: "/admin/*" })
+];
 
 /**
  * @param {EventContext<Env>} context
  */
 export async function onRequest({ request, next, env }) {
   const url = new URL(request.url);
-  if (openRoutes.has(url.pathname)) return next();
-  if (!authorizedOnly.some(x => url.pathname.startsWith(x))) return next();
+  if (openRoutes.some(x => x.test(url))) return next();
+  if (!authorizedOnly.some(x => x.test(url))) return next();
 
   const token = getToken(request.headers);
   const isValidToken = await validateToken(token, env.HC_JWT_SECRET);
