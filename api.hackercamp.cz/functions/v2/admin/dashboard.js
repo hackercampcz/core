@@ -34,20 +34,21 @@ async function getAllRegistrations(client) {
   }));
 }
 
+function credentialProvider(env) {
+  return () => ({
+    accessKeyId: env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: env.AWS_SECRET_ACCESS_KEY
+  });
+}
+
 /**
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
  */
 export async function onRequestGet({ env }) {
-  function credentialProvider() {
-    return {
-      accessKeyId: env.AWS_ACCESS_KEY_ID,
-      secretAccessKey: env.AWS_SECRET_ACCESS_KEY
-    };
-  }
   const client = new DynamoDBClient({
     region: env.AWS_REGION,
-    credentialDefaultProvider: credentialProvider
+    credentialDefaultProvider: credentialProvider(env)
   });
 
   const regs = await getAllRegistrations(client);
