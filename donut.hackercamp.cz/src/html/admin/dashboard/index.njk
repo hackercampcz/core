@@ -58,6 +58,31 @@
       max-height: min(480px, 45vh);
       margin-inline: auto;
     }
+
+    .chart-legend {
+      ul {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin: 0;
+        padding-inline: 2.25rem;
+        list-style-type: none;
+        font-size: 0.875em;
+      }
+      li {
+        display: inline flex;
+        gap: 1ch;
+        align-items: center;
+      }
+      .color {
+        --color: currentColor;
+        --size: 1em;
+        display: inline flow;
+        width: var(--size);
+        height: var(--size);
+        background-color: var(--color);
+      }
+    }
   </style>
 
   <link rel="stylesheet" href="{{ 'admin.css' | assetUrl('stylesheets') }}">
@@ -91,18 +116,38 @@
 
         <article id="registrations-2025">
           <h3>Registrace 2025</h3>
+          <div class="chart-legend">
+            <ul>
+
+            </ul>
+          </div>
           <canvas></canvas>
         </article>
         <article id="registrations-2024">
           <h3>Registrace 2024</h3>
+          <div class="chart-legend">
+            <ul>
+
+            </ul>
+          </div>
           <canvas></canvas>
         </article>
         <article id="registrations-2023">
           <h3>Registrace 2023</h3>
+          <div class="chart-legend">
+            <ul>
+
+            </ul>
+          </div>
           <canvas></canvas>
         </article>
         <article id="registrations-2022">
           <h3>Registrace 2022</h3>
+          <div class="chart-legend">
+            <ul>
+
+            </ul>
+          </div>
           <canvas></canvas>
         </article>
       </div>

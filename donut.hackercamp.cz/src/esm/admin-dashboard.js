@@ -11,6 +11,50 @@ import * as rollbar from "./lib/rollbar.js";
 Chart.defaults.font.size = 12;
 Chart.defaults.font.family = "'PT Mono', system-ui, sans-serif";
 
+const htmlLegendPlugin = {
+  id: "htmlLegend",
+  afterUpdate(chart, args, options) {
+    const container = document.querySelector(options.containerSelector);
+    if (!container) {
+      return console.warn("Legend container not found: " + options.containerSelector);
+    }
+    const ul = container.querySelector("ul");
+
+    // Reuse the built-in legendItems generator
+    const items = chart.options.plugins.legend.labels.generateLabels(chart);
+
+    const fragment = document.createDocumentFragment();
+    for (const item of items) {
+      const li = document.createElement("li");
+      li.addEventListener("click", () => {
+        const { type } = chart.config;
+        if (new Set(["pie", "doughnut"]).has(type)) {
+          // Pie and doughnut charts only have a single dataset and visibility is per item
+          chart.toggleDataVisibility(item.index);
+        } else {
+          chart.setDatasetVisibility(item.datasetIndex, !chart.isDatasetVisible(item.datasetIndex));
+        }
+        chart.update();
+      });
+
+      // Color box
+      const boxSpan = document.createElement("span");
+      boxSpan.classList.add("color");
+      boxSpan.style.setProperty("--color", item.strokeStyle);
+
+      // Text
+      const textContainer = document.createElement("span");
+      textContainer.classList.add("legend");
+      textContainer.textContent = item.text;
+
+      li.appendChild(boxSpan);
+      li.appendChild(textContainer);
+      fragment.appendChild(li);
+    }
+    ul.replaceChildren(fragment);
+  }
+};
+
 async function fetchData({ endpoint, year, page, query }, apiHost) {
   const resource = new URL(`admin/${endpoint}`, apiHost).href;
   const resp = await withAuthHandler(fetch(resource), {
@@ -27,6 +71,7 @@ async function fetchData({ endpoint, year, page, query }, apiHost) {
   });
   return resp.json();
 }
+
 function cumulative(arr) {
   const result = arr.map(x => x);
   for (let i = 1; i < arr.length; i++) {
@@ -71,8 +116,18 @@ function drawChart(year, data) {
           suggestedMax: 300,
           beginAtZero: true
         }
+      },
+      plugins: {
+        htmlLegend: {
+          // ID of the container to put the legend in
+          containerSelector: `#registrations-${year} .chart-legend`
+        },
+        legend: {
+          display: false
+        }
       }
-    }
+    },
+    plugins: [htmlLegendPlugin]
   });
 }
 
