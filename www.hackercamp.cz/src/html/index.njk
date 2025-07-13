@@ -48,17 +48,13 @@
         {% endif %}
       </div>
       <div class="hc-camp-detail">
-        {% set publicId = collections.images["header-camp.png"]["public_id"] %}
-        <video
-          aria-hidden="true"
-          class="responsive"
-          muted
-          autoplay
-          loop
-          playsinline
-          width="622"
-          height="622"
-          poster='{{ publicId | cloudinaryUrl(width=622,height=622,crop="fill",dpr="auto") }}'>
+        {% set publicId = collections.images["header-camp.avif"]["public_id"] %}
+        {% set metadata = collections.images["header-camp.avif"].metadata %}
+        <video aria-hidden="true" class="responsive"
+          muted autoplay loop playsinline
+          width="622" height="622"
+          style="{% if metadata.lqip %}--lqip:{{ metadata.lqip }}{% endif %}"
+          poster="{{ publicId | cloudinaryUrl(width=622, height=622, crop='fill', dpr='auto') }}">
           <source
             media="screen and (max-width: 599px)"
             type="video/mp4; codecs=av01.0.08M.08.0.110.01.01.01.1"
@@ -599,18 +595,21 @@
           (i&nbsp;pokud jde o&nbsp;focení druhých nebo noční klid a podobně)</p>
       </div>
 
+      {% macro image(name, width=500, height=281, alt="") %}
+        {% set publicId = collections.images[name]["public_id"] %}
+        {% set metadata =  collections.images[name].metadata %}
+        <img class="responsive" loading="lazy"
+          alt="{{ alt }}"
+          width="{{ width }}" height="{{ height }}"
+          style="{% if metadata.lqip %}--lqip:{{ metadata.lqip }}{% endif %}"
+          src='{{ publicId | cloudinaryUrl(width=width, height=height, crop="fill", dpr="auto") }}'
+          srcset='{{ publicId | cloudinaryUrl(width=width, height=height, crop="fill", dpr="1") }} 1x,
+                  {{ publicId | cloudinaryUrl(width=width, height=height, crop="fill", dpr="1.5") }} 1.5x,
+                  {{ publicId | cloudinaryUrl(width=width, height=height, crop="fill", dpr="2") }} 2x'>
+      {% endmacro %}
+
       <div class="hc-card hc-card--picture hc-card--centered">
-        {% set publicId = collections.images["A7R04296.jpg"]["public_id"] %}
-        <img
-          class="responsive"
-          loading="lazy"
-          alt=""
-          width="500"
-          height="281"
-          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+        {{ image("A7R04296.jpg") }}
       </div>
 
       <div class="hc-card hc-card--decorated">
@@ -619,17 +618,7 @@
       </div>
 
       <div class="hc-card hc-card--picture hc-card--centered">
-        {% set publicId = collections.images["9895_0041.jpg"]["public_id"] %}
-        <img
-          class="responsive"
-          loading="lazy"
-          alt=""
-          width="500"
-          height="281"
-          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+        {{ image("9895_0041.jpg") }}
       </div>
 
       <div class="hc-card hc-card--decorated hc-card--centered hc-card--half">
@@ -641,31 +630,11 @@
       </div>
 
       <div class="hc-card hc-card--picture hc-card--centered">
-        {% set publicId = collections.images["IMG_5068.jpg"]["public_id"] %}
-        <img
-          class="responsive"
-          loading="lazy"
-          alt=""
-          width="500"
-          height="281"
-          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+        {{ image("IMG_5068.jpg") }}
       </div>
 
       <div class="hc-card hc-card--picture hc-card--centered">
-        {% set publicId = collections.images["IMG_5822.jpg"]["public_id"] %}
-        <img
-          class="responsive"
-          loading="lazy"
-          alt=""
-          width="500"
-          height="281"
-          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+        {{ image("IMG_5822.jpg") }}
       </div>
 
       <div class="hc-card hc-card--decorated">
@@ -674,17 +643,7 @@
       </div>
 
       <div class="hc-card hc-card--picture hc-card--centered">
-        {% set publicId = collections.images["IMG_5046.jpg"]["public_id"] %}
-        <img
-          class="responsive"
-          loading="lazy"
-          alt=""
-          width="500"
-          height="281"
-          src='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="auto") }}'
-          srcset='{{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1") }} 1x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="1.5") }} 1.5x,
-                  {{ publicId | cloudinaryUrl(width=500, height=281, crop="fill", dpr="2") }} 2x'>
+        {{ image("IMG_5046.jpg") }}
       </div>
 
       <div class="hc-card hc-card--decorated">
@@ -712,17 +671,7 @@
           Pojeďte si s&nbsp;námi užít Hacker&nbsp;Camp! Společně můžeme hacknout naši budoucnost!</p>
       </div>
       <div class="hc-card hc-card--picture hc-card--centered">
-        {% set publicId = collections.images["footer.avif"]["public_id"] %}
-        <img
-          class="responsive"
-          loading="lazy"
-          alt=""
-          width="1200"
-          height="600"
-          src='{{ publicId | cloudinaryUrl(width=1200, height=600, crop="fill", dpr="auto") }}'
-          srcset='{{ publicId | cloudinaryUrl(width=1200, height=600, crop="fill", dpr="1") }} 1x,
-                {{ publicId | cloudinaryUrl(width=1200, height=600, crop="fill", dpr="1.5") }} 1.5x,
-                {{ publicId | cloudinaryUrl(width=1200, height=600, crop="fill", dpr="2") }} 2x'>
+        {{ image("footer.avif", width=1200, height=600) }}
       </div>
     </div>
   </section>
