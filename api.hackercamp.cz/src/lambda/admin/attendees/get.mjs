@@ -63,7 +63,7 @@ export async function handler(event) {
   }, event.queryStringParameters);
 
   const respData = await getAttendees(query, type, parseInt(year), parseInt(page), parseInt(pageSize), {
-    allYears: format === "csv" || format === "text/csv" && !event.queryStringParameters.year
+    allYears: (format === "csv" || format === "text/csv") && !event.queryStringParameters.year
   });
   return formatResponse(respData, { year, resource: "attendees", type, format });
 }
