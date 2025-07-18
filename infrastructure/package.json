@@ -9,7 +9,7 @@
     "@pulumi/aws": "6.83.0",
     "@pulumi/awsx": "2.22.0",
     "@pulumi/cloudflare": "5.49.1",
-    "@pulumi/pulumi": "3.183.0",
+    "@pulumi/pulumi": "3.184.0",
     "@topmonks/pulumi-aws": "3.1.4",
     "esbuild": "0.25.6",
     "front-matter": "4.0.2",
