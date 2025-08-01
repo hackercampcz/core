@@ -203,7 +203,7 @@ jobs:
       site_name:
         type: string
     docker:
-      - image: cimg/base:2025.07
+      - image: cimg/base:2025.08
     resource_class: arm.medium
     steps:
       - checkout
