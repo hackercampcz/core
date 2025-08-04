@@ -1,5 +1,5 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 
 const dynamo = createClient();
 
@@ -23,6 +23,6 @@ async function main({ email, token }) {
   await dynamo.putItem({ TableName: "contacts", Item: item });
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config create-contact.js --token=$(op read 'op://HackerCamp/Slack Bot/credential') --email=$(pbpaste)
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-import --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config create-contact.js --token=$(op read 'op://HackerCamp/Slack Bot/credential') --email=$(pbpaste)

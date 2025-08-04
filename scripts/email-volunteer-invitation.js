@@ -1,5 +1,5 @@
-import { parseArgs } from "jsr:@std/cli/parse-args";
 import { partition } from "https://esm.sh/@thi.ng/transducers";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 async function main({ token }) {
