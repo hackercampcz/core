@@ -3501,7 +3501,7 @@ __metadata:
     date-fns: "npm:4.1.0"
     lit-html: "npm:3.3.1"
     lite-youtube-embed: "npm:0.3.3"
-    marked: "npm:16.1.1"
+    marked: "npm:16.1.2"
     open-props: "npm:1.7.16"
     postcss-jit-props: "npm:1.0.16"
     rollbar: "npm:2.26.4"
@@ -3527,7 +3527,7 @@ __metadata:
     "@topmonks/pulumi-aws": "npm:3.1.4"
     esbuild: "npm:0.25.8"
     front-matter: "npm:4.0.2"
-    marked: "npm:16.1.1"
+    marked: "npm:16.1.2"
   languageName: unknown
   linkType: soft
 
@@ -10877,12 +10877,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:16.1.1":
-  version: 16.1.1
-  resolution: "marked@npm:16.1.1"
+"marked@npm:16.1.2":
+  version: 16.1.2
+  resolution: "marked@npm:16.1.2"
   bin:
     marked: bin/marked.js
-  checksum: 10c0/1b02f1b9e82fe8fec1e1fd7d2f96ea19001bf535c8558f70dcb6e28c7afcd03f34095689484bbde600d00c33d5bb51b3f9b29932aee324751047e40f4d092a9c
+  checksum: 10c0/4e5878f1aa89de139bed14835865af20f26527674f41dedf2b33d2f85360298a1a0cc0505c675f072175c86eb30684c7b4e287d18f5958daa26e36bc1308d321
   languageName: node
   linkType: hard
 
