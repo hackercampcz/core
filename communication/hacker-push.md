@@ -1,31 +1,35 @@
 ---
-Subject: "Hacker camp 2024 se blíží a ty nám chybíš! Do konce června můžeš ušetřit."
+Subject: "Posledních pár míst na Hacker Camp 2025. Registruj se, dokud můžeš!"
 LayoutTemplate: hc-basic
 ---
 
-Ahoj, táborníku.
+Ahooj!
 
-Hacker camp už pro tebe není žádnou neznámou. Na Sobeňáku to letos vypukne 29. srpna a počítáme s koncem v neděli 1. září ráno.
+Ťuk, ťuk! Už je srpen a už vážně není na co čekat! Letošní Hacker Camp už klepe na dveře a ať jsme koukali,
+jak jsme koukali, Tebe mezi přihlášenými letos nevidíme. Už nám zbývá jen posledních 50 míst, tak pokud chceš jet,
+je [nejvyšší čas se registrovat](https://donut.hckr.camp/registrace/)!
 
-Abychom tě mohli na místě uvítat, nesmíš se zapomenout registrovat!
-[Přihlaš se přes donut](https://donut.hckr.camp/registrace/).
-Kdyby tě to zlobilo, pingni ve slacku @rarous nebo mu napiš mail na rarous@hckr.camp.
+**O co příjdeš, když se s námi letos nepotkáš na Sobeňáku?**
 
-**Jako zkušený hacker, co už atmošku campu zažil, máš nárok ne cenovku jako loni.
-Ale jen pokud se přihlásíš a zaplatíš vstup do konce června.** Pak už i pro Tebe platí cenovky jako pro nováčky.
-Které i ty můžeš pozvat. Na tom se nic nemění, k tomu [máš v donutu svůj +1 link](https://donut.hckr.camp/).
-A neboj, můžeš ho použít víc než jednou 🙂
+- Letos se budeme o něco víc věnovat přesahu. Hlavně v pátek se budou aktivity motat kolem toho,
+  jak můžeme pomoci (do budoucnosti hacknout) sebe, ale i své okolí, svojí firmu, nejbližší neziskovku,
+  školu, či zastupitelstvo. A tam nekončíme, budeme i řešit, jaké to je pomáhat státu a jak na to.
+- Bezpečnost bude jedním z našich témat. V pátek ráno vykopneme program debatou s Otakarem Foltýnem a pak už je řada na hackerech!
+- Nezapomenutelnou atmosféru campu Ti připomínat nemusíme, ale můžeme říct, že letos nám bude k tanci
+  a poslechu (v pořadí jejich vystoupení) hrát: Ventolin, Midi Lidi, Zrní (u OHNĚ!) a Prago Union (teda jen Kato & DJ).
+- Mezi hosty máme pár fakt zajímavých jmen! Nekecám. Přesvědčit se můžeš ve slacku v kanálu [#kdo-přijede-na-camp](https://hackercampworkspace.slack.com/archives/C026KB0G8V8)
 
-Pokud máš už tři Hacker Campí zářezy, termín do konce června neřeš.
-Za svoji přízeň campu máš od nás sníženou cenovku až do posledního srpnového dne.
-Moc díky, že s námi pořád jsi. Vážíme si toho a doufáme, že se vidíme i letos :)
+Jo a taky jsme dost pečlivě četli zpětnou vazbu, takže:
 
-NGOs cenovku pro ty, kdo si nemůžou dovolit za vstup zaplatit hacker vstupné, necháváme stejnou.
-Pokud si to naopak dovolit můžeš a máš zlaté srdce, co nejen pomůže dorovnat vstupenku pro lidi z nezisku nebo studenty,
-**můžeš si vyzkoušet být pro letošek Patronem campu** :) Poděkování bude :)
+- si dáváme mnohem větší pozor na dodržování no-sales, no-hiring policy
+- zamakáme na podpoře vzájemného respektu v tábořišti po večerce
+- snižujeme ceny drinků a jídla a jedeme de facto za náklady
+- jo a Baues přidává salátky, fermentovanou zeleninu a víc obložených chlebů, co budou k mání celé dny…
 
-Tak neváhej s přihlášením, ať máš ubytko dle představ i zajištěné místo.
+**Už neváhej! Ať to letos neprováháš! Byla by to škoda!**
 
-Těšíme se na Tebe!
+**Nejkratší [cesta k registraci](https://donut.hckr.camp/registrace/) vede 👉 [tudy](https://donut.hckr.camp/registrace/) 👈**
 
-Tvoje Hacker Camp `@crew`: Kuba, Kosi, Pavla, Jirka, Aleš a Ir
+Tak na viděnou už za 3 týdny a pár dní na Sobeňáku!
+
+Tvoje Hacker Camp @crew: Pája, Kuba, Kosi, Jirka, Aleš a Ir
