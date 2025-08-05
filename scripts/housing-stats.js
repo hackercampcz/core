@@ -1,15 +1,15 @@
 import { difference } from "https://deno.land/std/datetime/mod.ts";
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 
 const dynamo = createClient();
 
-async function getAttendees() {
+async function getAttendees(year) {
   const result = await dynamo.scan({
     TableName: "attendees",
     ProjectionExpression: "slackID, checkIn, checkout",
     FilterExpression: "#year = :year AND attribute_exists(checkIn)",
-    ExpressionAttributeValues: { ":year": 2023 },
+    ExpressionAttributeValues: { ":year": year },
     ExpressionAttributeNames: { "#year": "year" }
   });
   return result.Items;
@@ -24,16 +24,17 @@ async function updateAttendee(year, slackID, days) {
   });
 }
 
-async function main({}) {
-  const attendees = await getAttendees();
+async function main({ year }) {
+  year = Number.parseInt(year);
+  const attendees = await getAttendees(year);
   for (const attendee of attendees) {
     const checkIn = attendee.checkIn.substring(0, 10);
-    const checkOut = (attendee.checkout ?? "2023-09-03T08:18:58.427Z").substring(0, 10);
+    const checkOut = (attendee.checkout ?? `${year}-09-03T08:18:58.427Z`).substring(0, 10);
     const diff = difference(new Date(checkIn), new Date(checkOut), { units: ["days"] });
-    await updateAttendee(2023, attendee.slackID, diff.days);
+    await updateAttendee(year, attendee.slackID, diff.days);
   }
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args, { year: new Date().getFullYear() }));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config housing-stats.js
+// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config housing-stats.js
