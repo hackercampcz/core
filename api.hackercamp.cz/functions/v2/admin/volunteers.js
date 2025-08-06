@@ -5,7 +5,7 @@ async function* getRegistrations(client, year) {
     new ScanCommand({
       TableName: "registrations",
       ProjectionExpression:
-        "email, firstName, lastName, #y, #ts, volunteerArrivalDay, volunteerBar, volunteerConstruction, volunteerDriver, volunteerInfoDeskAndRegistration, volunteerSport",
+        "email, phone, firstName, lastName, #ts, volunteerArrivalDay, volunteerBar, volunteerConstruction, volunteerDriver, volunteerInfoDeskAndRegistration, volunteerSport",
       FilterExpression: "#y = :y AND ticketType = :volunteer",
       ExpressionAttributeNames: { "#y": "year", "#ts": "timestamp" },
       ExpressionAttributeValues: {
@@ -48,15 +48,10 @@ export async function onRequestGet({ env, request }) {
     credentialDefaultProvider: credentialProvider(env)
   });
 
-  const result = [];
-  for await (const regs of getRegistrations(client, year)) {
-    for (const reg of regs) {
-      const volunteer = {};
-      for (const [key, value] of Object.entries(reg)) {
-        volunteer[key] = unmarshall(value);
-      }
-      result.push(volunteer);
-    }
-  }
-  return Response.json(result);
+  const result = Array.fromAsync(
+    getRegistrations(client, year),
+    reg => Object.fromEntries(Object.entries(reg).map(([key, value]) => [key, unmarshall(value)]))
+  );
+
+  return Response.json(result.sort((a, b) => -1 * a.timestamp.localeCompare(b.timestamp)));
 }
