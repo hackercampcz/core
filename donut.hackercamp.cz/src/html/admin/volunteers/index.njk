@@ -1,14 +1,18 @@
 {% extends "layouts/application.njk" %}
-{% from "macros/helpers.njk" import sprite %}
 
 {% block title %}Administrace Hacker Campu{% endblock %}
 
 {% block head %}
   <style>
-    body {
-      display: grid;
-      grid-template-rows: auto 1fr auto;
-      height: 100vh;
+    #top {
+      padding-top: 62px;
+      min-height: calc(100vh - 178px);
+    }
+
+    @media screen and (max-width: 479px) {
+      #top {
+        padding-top: 48px;
+      }
     }
 
     table {
@@ -26,7 +30,7 @@
 
     thead {
       background-color: var(--hc-background-color);
-      border-bottom: 3px double var(--hc-border-color);
+      border-bottom: 3px double #ddd;
       z-index: 10;
     }
 
@@ -51,7 +55,7 @@
 {% endblock %}
 
 {% block content %}
-  <mwc-drawer id="drawer" type="dismissible">
+  <mwc-drawer id="drawer" type="dismissible" style="margin-top: 2em">
     <ul class="list">
       <li><a href="/admin/?view=confirmed">Registrace</a></li>
       <li><a href="/admin/?view=attendees">Účastníci</a></li>
@@ -62,13 +66,11 @@
     <div slot="appContent">
       <div id="app-root">
         <header>
-          <button class="icon-button" aria-label="Menu"
-                  slot="navigationIcon"
-                  id="drawer-button">
+          <button class="icon-button" slot="navigationIcon" id="drawer-button" aria-label="Menu">
             <feather-icon name="menu" title="Menu"></feather-icon>
           </button>
           <h2 id="view-title">
-            <span>Administrace</span>,
+            <span>Dobrovolníci</span>,
             <label>ročník
               <select id="year-selector">
                 {% for yr in range(2022, year + 1) %}
@@ -78,6 +80,7 @@
             </label>
           </h2>
         </header>
+
       </div>
       <dialog id="modal" class="hc-dialog">
         <div id="modal-root"></div>
@@ -90,24 +93,24 @@
 {% endblock %}
 
 {% block scripts %}
-<script type="module">
-  import { main } from "{{ 'admin.js' | assetUrl('esm') }}";
+  <script type="module">
+    import { main } from "{{ 'admin-volunteers.js' | assetUrl('esm') }}";
 
-  const build = {{ collections.build | dump(8) | safe }};
-  const event = {{ event | dump(8) | safe }};
-  const tickets = {{ ticket | dump(8) | safe }};
-  const year = {{ year | safe }};
-  const env = Object.assign({ year, event, tickets }, build);
+    const build = {{ collections.build | dump(8) | safe }};
+    const event = {{ event | dump(8) | safe }};
+    const tickets = {{ ticket | dump(8) | safe }};
+    const year = {{ year | safe }};
+    const env = Object.assign({ year, event, tickets }, build);
 
-  main({
-    searchParams: new URLSearchParams(location.search),
-    appRoot: document.getElementById("app-root"),
-    viewTitle: document.getElementById("view-title").querySelector("span"),
-    yearSelector: document.getElementById("year-selector"),
-    env,
-  });
-  const drawer = document.getElementById("drawer");
-  const drawerBtn = document.getElementById("drawer-button");
-  drawerBtn.addEventListener("click", () => { drawer.open = !drawer.open; });
-</script>
+    main({
+      searchParams: new URLSearchParams(location.search),
+      appRoot: document.getElementById("app-root"),
+      viewTitle: document.getElementById("view-title").querySelector("span"),
+      yearSelector: document.getElementById("year-selector"),
+      env,
+    });
+    const drawer = document.getElementById("drawer");
+    const drawerBtn = document.getElementById("drawer-button");
+    drawerBtn.addEventListener("click", () => { drawer.open = !drawer.open; });
+  </script>
 {% endblock %}
