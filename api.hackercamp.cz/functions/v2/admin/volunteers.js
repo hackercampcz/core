@@ -5,10 +5,13 @@ async function* getRegistrations(client, year) {
     new ScanCommand({
       TableName: "registrations",
       ProjectionExpression:
-        "email, #y, invoice_id, paid, invoiced, #ts, volunteerArrivalDay, volunteerBar, volunteerConstruction, volunteerDriver, volunteerInfoDeskAndRegistration, volunteerSport",
+        "email, firstName, lastName, #y, #ts, volunteerArrivalDay, volunteerBar, volunteerConstruction, volunteerDriver, volunteerInfoDeskAndRegistration, volunteerSport",
       FilterExpression: "#y = :y AND ticketType = :volunteer",
       ExpressionAttributeNames: { "#y": "year", "#ts": "timestamp" },
-      ExpressionAttributeValues: { ":y": { N: year.toString() }, ":volunteer": { S: "volunteer" } }
+      ExpressionAttributeValues: {
+        ":y": { N: year.toString() },
+        ":volunteer": { S: "volunteer" }
+      }
     })
   );
   if (result.hasOwnProperty(Symbol.asyncIterator)) {
@@ -39,6 +42,6 @@ export async function onRequestGet({ env, request }) {
     credentialDefaultProvider: credentialProvider(env)
   });
 
-  const regs = await getRegistrations(client, year);
+  const regs = Array.fromAsync(getRegistrations(client, year));
   return Response.json(regs);
 }
