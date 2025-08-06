@@ -42,6 +42,9 @@ export async function onRequestGet({ env, request }) {
     credentialDefaultProvider: credentialProvider(env)
   });
 
-  const regs = Array.fromAsync(getRegistrations(client, year));
-  return Response.json(regs);
+  const result = [];
+  for await (const regs of getRegistrations(client, year)) {
+    result.push(...regs);
+  }
+  return Response.json(result);
 }
