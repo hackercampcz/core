@@ -48,7 +48,7 @@ export async function onRequestGet({ env, request }) {
     credentialDefaultProvider: credentialProvider(env)
   });
 
-  const result = Array.fromAsync(
+  const result = await Array.fromAsync(
     getRegistrations(client, year),
     reg => Object.fromEntries(Object.entries(reg).map(([key, value]) => [key, unmarshall(value)]))
   );
