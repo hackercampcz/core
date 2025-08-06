@@ -30,6 +30,12 @@ function credentialProvider(env) {
   });
 }
 
+function unmarshall(item) {
+  if (item.N) return Number.parseInt(item.N);
+  if (item.S === "on") return true;
+  return item.S;
+}
+
 /**
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
@@ -44,7 +50,13 @@ export async function onRequestGet({ env, request }) {
 
   const result = [];
   for await (const regs of getRegistrations(client, year)) {
-    result.push(...regs);
+    for (const reg of regs) {
+      const volunteer = {};
+      for (const [key, value] of Object.entries(reg)) {
+        volunteer[key] = unmarshall(value);
+      }
+      result.push(volunteer);
+    }
   }
   return Response.json(result);
 }
