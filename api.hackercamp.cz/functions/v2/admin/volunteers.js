@@ -48,10 +48,11 @@ export async function onRequestGet({ env, request }) {
     credentialDefaultProvider: credentialProvider(env)
   });
 
-  const result = await Array.fromAsync(
-    getRegistrations(client, year),
-    reg => Object.fromEntries(Object.entries(reg).map(([key, value]) => [key, unmarshall(value)]))
-  );
-
+  const result = [];
+  for await (const regs of getRegistrations(client, year)) {
+    for (const reg of regs) {
+      result.push(Object.fromEntries(Object.entries(reg).map(([key, value]) => [key, unmarshall(value)])));
+    }
+  }
   return Response.json(result.sort((a, b) => -1 * a.timestamp.localeCompare(b.timestamp)));
 }
