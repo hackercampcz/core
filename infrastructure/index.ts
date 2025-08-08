@@ -97,7 +97,9 @@ const webPages = new cloudflare.PagesProject("web", {
       environmentVariables: {
         HC_API_HOSTNAME: config.require("api-domain"),
         HC_DONUT_HOSTNAME: config.require("donut-domain"),
-        HC_WEB_HOSTNAME: config.require("domain")
+        HC_WEB_HOSTNAME: config.require("domain"),
+        HC_START_DATE: config.require("start-date"),
+        HC_END_DATE: config.require("end-date"),
       }
     }
   }
