@@ -147,6 +147,8 @@ export function createRoutes({
           environment: {
             variables: {
               year: config.require("year"),
+              start_date: config.require("start-date"),
+              end_date: config.require("end-date"),
               rollbar_access_token,
               db_table_optouts: db.optOutsDataTable,
               db_table_registrations: db.registrationsDataTable,
@@ -212,6 +214,8 @@ export function createRoutes({
           fileName: "fakturoid/webhook.mjs",
           environment: {
             variables: {
+              start_date: config.require("start-date"),
+              end_date: config.require("end-date"),
               rollbar_access_token,
               db_table_registrations: db.registrationsDataTable,
               TOKEN: config.require("fakturoid-webhook-token"),

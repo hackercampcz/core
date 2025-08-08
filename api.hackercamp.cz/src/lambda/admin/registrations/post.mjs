@@ -269,6 +269,7 @@ async function editRegistration(db, { key, data }) {
  * @param {{registration: {email: string, year: number}, attendee: {slackID: string, year: number}, admin: string}} params
  */
 async function transferRegistration(db, params) {
+  const { db_table_attendees, db_table_registrations, start_date, end_date, postmark_token } = process.env;
   console.log({ event: "Transfer registration", ...params });
   const registration = await getRegistration(db, params.registration);
   const attendee = await getAttendee(db, params.attendee);
@@ -276,16 +277,16 @@ async function transferRegistration(db, params) {
     new TransactWriteItemsCommand({
       TransactItems: [{
         Put: {
-          TableName: process.env.db_table_registrations,
+          TableName: db_table_registrations,
           Item: Object.assign({}, registration, {
             invoice_id: attendee.invoice_id,
             invoiced: attendee.invoiced,
-            paid: attendee.paid,
+            paid: attendee.paid
           })
         }
       }, {
         Put: {
-          TableName: process.env.db_table_attendees,
+          TableName: db_table_attendees,
           Item: Object.assign({}, attendee, {
             transferred: { S: new Date().toISOString() },
             transferredBy: { S: params.admin }
@@ -295,11 +296,11 @@ async function transferRegistration(db, params) {
     })
   );
   await sendEmailWithTemplate({
-    token: process.env["postmark_token"],
+    token: postmark_token,
     templateId: Template.RegistrationTransferred,
     data: {},
     to: registration.email.S,
-    attachments: [Attachments.Event2025],
+    attachments: [Attachments.calendarInvite(start_date, end_date)],
     tag: "registration-transferred"
   });
   console.log({ event: "Registration transferred", invoiceId: attendee.invoice_id.N, ...params.registration });

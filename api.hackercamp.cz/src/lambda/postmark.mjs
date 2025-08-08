@@ -1,11 +1,13 @@
+import { calendarEvent } from "@hackercamp/lib/calendar.js";
+
 export const Attachments = {
-  Event2025: {
-    Name: "invite.ics",
-    // TODO: make this dynamic based on ENV with dates of beginning and end of the event
-    Content:
-      "QkVHSU46VkNBTEVOREFSClZFUlNJT046Mi4wClBST0RJRDotLy9pY2FsLm1hcnVkb3QuY29tLy9pQ2FsIEV2ZW50IE1ha2VyCkNBTFNDQUxFOkdSRUdPUklBTgpCRUdJTjpWVElNRVpPTkUKVFpJRDpFdXJvcGUvUHJhZ3VlCkxBU1QtTU9ESUZJRUQ6MjAyMzEyMjJUMjMzMzU4WgpUWlVSTDpodHRwczovL3d3dy50enVybC5vcmcvem9uZWluZm8tb3V0bG9vay9FdXJvcGUvUHJhZ3VlClgtTElDLUxPQ0FUSU9OOkV1cm9wZS9QcmFndWUKQkVHSU46REFZTElHSFQKVFpOQU1FOkNFU1QKVFpPRkZTRVRGUk9NOiswMTAwClRaT0ZGU0VUVE86KzAyMDAKRFRTVEFSVDoxOTcwMDMyOVQwMjAwMDAKUlJVTEU6RlJFUT1ZRUFSTFk7QllNT05USD0zO0JZREFZPS0xU1UKRU5EOkRBWUxJR0hUCkJFR0lOOlNUQU5EQVJEClRaTkFNRTpDRVQKVFpPRkZTRVRGUk9NOiswMjAwClRaT0ZGU0VUVE86KzAxMDAKRFRTVEFSVDoxOTcwMTAyNVQwMzAwMDAKUlJVTEU6RlJFUT1ZRUFSTFk7QllNT05USD0xMDtCWURBWT0tMVNVCkVORDpTVEFOREFSRApFTkQ6VlRJTUVaT05FCkJFR0lOOlZFVkVOVApEVFNUQU1QOjIwMjUwNjA5VDEyNTI1MloKVUlEOjE3MTMxODU0OTg5MTAtNzIwODJAaWNhbC5tYXJ1ZG90LmNvbQpEVFNUQVJUO1ZBTFVFPURBVEU6MjAyNTA4MjgKRFRFTkQ7VkFMVUU9REFURToyMDI1MDkwMQpTVU1NQVJZOkhhY2tlciBDYW1wClVSTDpodHRwczovL3d3dy5oYWNrZXJjYW1wLmN6LwpMT0NBVElPTjpTb2JlxYjDoWtcLCBTdGFyw70gUm/Fvm1pdMOhbCAxNDhcLCAyNjIgNDIgUm/Fvm1pdMOhbCBwb2QgVMWZZW3FocOtbmVtXCwgQ3plY2hpYQpFTkQ6VkVWRU5UCkVORDpWQ0FMRU5EQVI=",
-    ContentType: "text/calendar; charset=utf-8; method=REQUEST",
-    Disposition: "inline"
+  calendarInvite(startDate, endDate) {
+    return {
+      Name: "invite.ics",
+      Content: calendarEvent(startDate, endDate),
+      ContentType: "text/calendar; charset=utf-8; method=REQUEST",
+      Disposition: "inline"
+    };
   }
 };
 

@@ -22,22 +22,23 @@ const db = new DynamoDBClient({});
 const rollbar = Rollbar.init({ lambdaName: "fakturoid-webhook" });
 
 async function markAsPaid(registrations, paid_at, invoice_id) {
+  const { db_table_registrations, start_date, end_date, postmark_token } = process.env;
   for (const registration of registrations) {
     console.log({ event: "Marking as paid", ...registration });
     await db.send(
       new UpdateItemCommand({
-        TableName: process.env.db_table_registrations,
+        TableName: db_table_registrations,
         Key: registration,
         UpdateExpression: "SET paid = :paid",
         ExpressionAttributeValues: { ":paid": { S: new Date(paid_at).toISOString() } }
       })
     );
     await sendEmailWithTemplate({
-      token: process.env["postmark_token"],
+      token: postmark_token,
       templateId: Template.RegistrationPaid,
       data: {},
       to: registration.email.S,
-      attachments: [Attachments.Event2025],
+      attachments: [Attachments.calendarInvite(start_date, end_date)],
       tag: "registration-paid"
     });
     console.log({ event: "Invoice marked as paid", invoice_id, ...registration });
@@ -105,7 +106,7 @@ export async function fakturoidWebhook(event) {
         }
 
         if (payload.total < 0) {
-          // canceled invoice has a negative total to compensate the balance
+          // the canceled invoice has a negative total to compensate the balance
           await markAsCancelled(registrations, paid_on ?? paid_at, invoice_id);
         } else {
           await markAsPaid(registrations, paid_on ?? paid_at, invoice_id);
