@@ -10,6 +10,9 @@ export default {
     return new Date().getFullYear();
   },
   year: 2025,
+  program: {
+    enabledSheetEdit: true
+  },
   event: {
     name: "Hacker Camp",
     startDate: new Date("2025-08-28T17:00:00+02:00"),
