@@ -1,6 +1,6 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { partition } from "https://esm.sh/@thi.ng/transducers";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
@@ -57,6 +57,6 @@ async function main({ token }) {
   console.log("DONE");
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-hacker-push.js --token=$(op read "op://HackerCamp/Postmark/credential")
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-import --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-hacker-push.js --token=$(op read "op://HackerCamp/Postmark/credential") --year=2025
