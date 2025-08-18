@@ -73,6 +73,19 @@
     font-size: 14px;
   }
 
+  .calendar {
+    border-width:0;
+    aspect-ratio: 4/3;
+    width: 100%;
+    height: auto;
+  }
+
+  @media screen and (orientation: portrait) {
+    .calendar {
+      aspect-ratio: 16/9;
+    }
+  }
+
 </style>
 {% endblock %}
 
@@ -93,7 +106,9 @@
     {% endif %}
 
   <p><a href="https://donut.hckr.camp/program/{{ year }}">Program {{ year }}</a> naleznate na Google Drive.</p>
-  <p>Program si můžete <a href="https://donut.hckr.camp/program/kalendar">přidat do Kalandáře</a>.</p>
+  <p>Program si můžete <a href="https://donut.hckr.camp/program/kalendar">přidat do Google Kalandáře</a> nebo <a href="http://donut.hckr.camp/program/ical">stáhnout jako iCal</a>.</p>
+
+  <iframe src="https://calendar.google.com/calendar/embed?wkst=2&amp;ctz=Europe%2FPrague&amp;showPrint=0&amp;showNav=0&amp;showTitle=0&amp;showDate=0&amp;mode=AGENDA&amp;hl=cs&amp;showCalendars=0&amp;showTabs=0&amp;src=Y19hZmQ5NTQ2ZWMzM2Y5MzY2MmFjMDMzOGRhNmQyM2E2YjdkYWE2YjVhMWNjMTgxYWZhYmFmNmE4YjExNjkxYjNhQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20&amp;color=%23d81b60" class="calendar" width="800" height="600"></iframe>
 </div>
 
 <dialog id="proposal-editor">
