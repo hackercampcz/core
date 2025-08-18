@@ -227,12 +227,15 @@ a.hc-chip {
   transition: background-position 0.4s ease-in-out;
   border: 0 none;
   margin: 16px auto;
-  display: block;
 }
 
 .hc-button:active,
 .hc-button:hover {
   background-position: 100% 0;
+}
+
+.hc-button:any-link {
+  color: #fff;
 }
 
 .hc-button:disabled {
