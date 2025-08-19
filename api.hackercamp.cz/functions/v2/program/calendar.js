@@ -24,6 +24,6 @@ export async function onRequestGet({ env }) {
     start: start.dateTime,
     end: end.dateTime,
     color: extendedProperties.shared.color
-  })).orderBy(x => x.start) ?? [];
+  }))?.sort((a, b) => a.start.localeCompare(b.start)) ?? [];
   return Response.json(result);
 }
