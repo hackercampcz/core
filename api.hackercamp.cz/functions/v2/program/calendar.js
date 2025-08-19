@@ -14,9 +14,11 @@ export async function onRequestGet({ env }) {
     timeMin: time,
     orderBy: "startTime"
   });
+  console.log(url`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?${params}`);
   const resp = await fetch(url`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?${params}`);
-  const { items } = await resp.json();
-  const result = items.map(({ summary, description, start, end, extendedProperties }) => ({
+  const { items, ...rest } = await resp.json();
+  console.log(rest);
+  const result = items?.map(({ summary, description, start, end, extendedProperties }) => ({
     id: extendedProperties.shared.id,
     summary,
     description,
