@@ -99,7 +99,7 @@ const webPages = new cloudflare.PagesProject("web", {
         HC_DONUT_HOSTNAME: config.require("donut-domain"),
         HC_WEB_HOSTNAME: config.require("domain"),
         HC_START_DATE: config.require("start-date"),
-        HC_END_DATE: config.require("end-date"),
+        HC_END_DATE: config.require("end-date")
       }
     }
   }
@@ -184,6 +184,7 @@ const apiPages = new cloudflare.PagesProject("api", {
         API_HOST: api.url.apply(x => new URL("/v1/", x).href),
         AWS_REGION: awsConfig.require("region"),
         FAKTUROID_CLIENT_ID: config.require("fakturoid-client-id"),
+        GOOGLE_API_KEY: config.require("google-api-key"),
         HC_API_HOSTNAME: config.require("api-domain"),
         HC_DONUT_HOSTNAME: config.require("donut-domain"),
         HC_WEB_HOSTNAME: config.require("domain"),
