@@ -18,7 +18,6 @@
         display: flex;
         gap: 1ch;
         align-items: center;
-        text-wrap: balance;
       }
       li::before {
         content: "" / attr(data-location);
@@ -71,12 +70,11 @@
                   <ul>${
           events.map(event =>
             html`
-                    <li data-location="${event.location}" style="--stage-color: ${colors.get(event.color)}">
-                      <time datetime="${event.start?.toISOString()}">${formatTime(event.start)}
-                      </time>
-                      <strong>${event.title}</strong>
-                    </li>
-                        `
+                    <li data-location="${event.location}"
+                        style="--stage-color: ${colors.get(event.color)}">
+                      <time datetime="${event.start?.toISOString()}">${formatTime(event.start)}</time>
+                      <strong>${event.title}</strong> @ ${event.location}
+                    </li>`
           )
         }
                   </ul>
