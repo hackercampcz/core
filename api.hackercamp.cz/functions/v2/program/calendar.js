@@ -25,9 +25,5 @@ export async function onRequestGet({ env }) {
     end: end.dateTime,
     color: extendedProperties.shared.color
   }))?.sort((a, b) => a.start.localeCompare(b.start)) ?? [];
-  for (const event of result) {
-    event.start = new Date(event.start);
-    event.end = new Date(event.end);
-  }
   return Response.json(Array.from(Map.groupBy(result, x => x.start.getDay())));
 }
