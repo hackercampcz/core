@@ -11,8 +11,7 @@ export async function onRequestGet({ env }) {
   const time = new Date().toISOString();
   const params = new URLSearchParams({
     key: env.GOOGLE_API_KEY,
-    timeMin: time,
-    orderBy: "startTime"
+    timeMin: time
   });
   console.log(url`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?${params}`);
   const resp = await fetch(url`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?${params}`);
@@ -25,6 +24,6 @@ export async function onRequestGet({ env }) {
     start: start.dateTime,
     end: end.dateTime,
     color: extendedProperties.shared.color
-  }));
+  })).orderBy(x => x.start) ?? [];
   return Response.json(result);
 }
