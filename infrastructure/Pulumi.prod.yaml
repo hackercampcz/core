@@ -20,6 +20,8 @@ config:
   hackercamp:year: "2025"
   hackercamp:start-date: "20250828"
   hackercamp:end-date: "20250831"
+  hackercamp:google-api-key:
+    secure: AAABAFoqfAzlH7/6PKtRAd9YkdKTq6nh8TAxvRiE+gvxZVnQgjIODABcM45H7qXA07VYG4u012kXc+woVf5XduGPIZdANWc=
 environment:
   - hackercamp-algolia
   - hackercamp-aws
