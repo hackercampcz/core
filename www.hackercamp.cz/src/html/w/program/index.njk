@@ -11,13 +11,17 @@
       @property --stage-color {
         syntax: "<color>";
       }
+      h3 {
+        text-transform: uppercase;
+      }
       li {
         display: flex;
         gap: 1ch;
         align-items: center;
+        text-wrap: balance;
       }
       li::before {
-        content: "";
+        content: "" / attr(data-location);
         display: inline-block;
         width: 1em;
         height: 1em;
@@ -67,10 +71,10 @@
                   <ul>${
           events.map(event =>
             html`
-                    <li style="--stage-color: ${colors.get(event.color)}">
+                    <li data-location="${event.location}" style="--stage-color: ${colors.get(event.color)}">
                       <time datetime="${event.start?.toISOString()}">${formatTime(event.start)}
                       </time>
-                      <strong>${event.summary}</strong>
+                      <strong>${event.title}</strong>
                     </li>
                         `
           )

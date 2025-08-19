@@ -17,9 +17,15 @@ export async function onRequestGet({ env }) {
   const resp = await fetch(url`https://www.googleapis.com/calendar/v3/calendars/${calendarId}/events?${params}`);
   const { items, ...rest } = await resp.json();
   console.log(rest);
-  const result = items?.map(({ summary, description, start, end, extendedProperties }) => ({
+  const result = items?.map(x => {
+    const [title, location] = x.summary.split(" @ ");
+    x.title = title;
+    x.location = location;
+    return x;
+  })?.map(({ title, location, description, start, end, extendedProperties }) => ({
     id: extendedProperties.shared.id,
-    summary,
+    title,
+    location,
     description,
     start: start.dateTime,
     end: end.dateTime,
