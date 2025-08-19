@@ -30,7 +30,7 @@
     </style>
   </head>
   <body>
-    <header>{% include "shared/logo.html" %}</header>
+    {# <header>{% include "shared/logo.html" %}</header> #}
     <main>
       <div id="app-root"></div>
     </main>
@@ -55,7 +55,7 @@
       console.log(eventsByDay);
 
       function formatTime(d) {
-        return Intl.DateTimeFormat("cs-CZ", { hour: "numeric", minute: "numeric" }).format(d);
+        return Intl.DateTimeFormat("cs-CZ", { hour: "2-digit", minute: "numeric" }).format(d);
       }
 
       function day(events) {
@@ -65,20 +65,24 @@
         }
         const dayName = events[0].start.toLocaleDateString("cs-CZ", { weekday: "long" });
         return html`
-                <article>
-                  <h3>${dayName}</h3>
-                  <ul>${
+                                                                                                                                                                                                                                                                                  <article>
+                                                                                                                                                                                                                                                                                    <h3>${dayName}</h3>
+                                                                                                                                                                                                                                                                                    <ul>${
           events.map(event =>
             html`
-                    <li data-location="${event.location}"
-                        style="--stage-color: ${colors.get(event.color)}">
-                      <time datetime="${event.start?.toISOString()}">${formatTime(event.start)}</time>
-                      <strong>${event.title}</strong> @ ${event.location}
-                    </li>`
+                                                                                                                                                                                                                                                                                      <li data-location="${event.location}"
+                                                                                                                                                                                                                                                                                          style="--stage-color: ${
+              colors.get(event.color)
+            }">
+                                                                                                                                                                                                                                                                                        <time datetime="${event.start?.toISOString()}">${
+              formatTime(event.start)
+            }</time>
+                                                                                                                                                                                                                                                                                        <strong>${event.title}</strong> @ ${event.location}
+                                                                                                                                                                                                                                                                                      </li>`
           )
         }
-                  </ul>
-                </article>`;
+                                                                                                                                                                                                                                                                                    </ul>
+                                                                                                                                                                                                                                                                                  </article>`;
       }
 
       function days(eventsByDay) {
