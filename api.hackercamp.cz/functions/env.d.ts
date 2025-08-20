@@ -15,5 +15,8 @@ export interface Env {
   HC_JWT_SECRET: string;
   HC_WEB_HOSTNAME: string;
 
+  NFCTRON_BEARER_TOKEN: string;
+  NFCTRON_EVENT_ID: string;
+
   ROLLBAR_TOKEN: string;
 }

@@ -22,6 +22,9 @@ config:
   hackercamp:end-date: "20250831"
   hackercamp:google-api-key:
     secure: AAABAFoqfAzlH7/6PKtRAd9YkdKTq6nh8TAxvRiE+gvxZVnQgjIODABcM45H7qXA07VYG4u012kXc+woVf5XduGPIZdANWc=
+  hackercamp:nfctron-event-id: 15d9ccaa-233f-4caf-a598-3b04af047125
+  hackercamp:nfctron-bearer-token:
+    secure: AAABAFA86TCBhPpTA4OZApJUItg6t78glPpiaSuHP0dgLIlYQ7BIXIU2Q9BoXLokO1SGnlzCPZi8t/O/XxOiVto/gPcvfuFFur4GyBs4Z2H3UnyOuxhw8yG1J7xMKTMxWLlQbfldbJSLIsi0tSwmkgsUq8ocUQMcgOZMMj+eGCkjkiwc4eJqkjecJKNBTkrszeTppxccQInkYLm1rmT3pP6Enh3p8nt4pyARcFIXmw2czCZMYX4mEj0EFvMt16vyfj8hqM0/tFZ6w2KOWpX7PWP6chAi9LF5/mGTfvXHRaqn2L75cvr35DXXRHmCO6fiB5meHOjAj7j+020qlTr/LA==
 environment:
   - hackercamp-algolia
   - hackercamp-aws

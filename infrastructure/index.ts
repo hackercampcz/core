@@ -188,6 +188,8 @@ const apiPages = new cloudflare.PagesProject("api", {
         HC_API_HOSTNAME: config.require("api-domain"),
         HC_DONUT_HOSTNAME: config.require("donut-domain"),
         HC_WEB_HOSTNAME: config.require("domain"),
+        NFCTRON_BEARER_TOKEN: config.require("nfctron-bearer-token"),
+        NFCTRON_EVENT_ID: config.require("nfctron-event-id"),
         ROLLBAR_TOKEN: config.require("rollbar-access-token")
       },
       secrets: {
