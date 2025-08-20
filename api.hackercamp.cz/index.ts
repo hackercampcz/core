@@ -250,16 +250,6 @@ export function createRoutes({
               ...postmarkTemplates
             }
           }
-        },
-        nfctron: {
-          httpMethod: "GET",
-          path: "/nfctron",
-          fileName: "nfctron/index.mjs",
-          environment: {
-            variables: {
-              rollbar_access_token
-            }
-          }
         }
       }
     ]

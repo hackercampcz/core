@@ -139,8 +139,7 @@ async function getAttendee(slackID, year, apiUrl) {
 
 async function getNfcTronData(attendee, apiUrl) {
   for (const chip of attendee.nfcTronData?.filter(x => x.sn) ?? []) {
-    const params = new URLSearchParams({ chipID: chip.chipID });
-    const resp = await fetch(apiUrl(`nfctron?${params}`), { headers: { Accept: "application/json" } });
+    const resp = await fetch(apiUrl(`/v2/nfctron/${chip.chipID}`), { headers: { Accept: "application/json" } });
     const data = await resp.json();
     chip.spent = data.totalSpent / 100; // NFCTron has spent in halíř
   }
@@ -211,12 +210,14 @@ function housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHa
         <a class="hc-link" href="/ubytovani/">změnit ubytování</a>.
       </p>
       ${travelText(travel)}
-      ${when(hasRegisteredHackers, () => html`
+      ${
+    when(hasRegisteredHackers, () =>
+      html`
         <p>
           Chceš se podívat, kdo už se na tebe těší? Tak tady je
           <a href="/hackers/">seznam účastníků</a>.
-        </p>`
-      )}
+        </p>`)
+  }
     </div>
   `;
 }
@@ -228,31 +229,37 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
   return html`
     <div class="hc-card hc-card--decorated">
       <h2>Útrata</h2>
-      ${when(total > 0, () => html`
+      ${
+    when(total > 0, () =>
+      html`
         <p>
           Celkem:
           <strong>
             <data value="${total}">${formatMoney(total)}</data>
           </strong>
         </p>
-      `)}
+      `)
+  }
       <ul>
-        ${map(chips, (x) => html`
+        ${
+    map(chips, x =>
+      html`
           <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
             SN chipu:
             <code title="SN najdete na zadní straně čipu - pod páskem">${x.sn.toUpperCase()}</code>
             -
-            ${when(checkOutPaid || x.paid,
-              () => html`<strong style="color: forestgreen">Zaplaceno</strong>`,
-              () => html`
+            ${
+        when(checkOutPaid || x.paid, () => html`<strong style="color: forestgreen">Zaplaceno</strong>`, () =>
+          html`
                 <strong style="color: darkred">Nezaplaceno
                   <data value="${x.spent ?? x.totalSpent}">${formatMoney(x.spent ?? x.totalSpent)}</data>
                 </strong>
-              `
-            )}
+              `)
+      }
             <a href="https://pass.nfctron.com/receipt/${x.chipID}" target="nfcTron">Účet</a>
           </li>
-        `)}
+        `)
+  }
       </ul>
     </div>
   `;
@@ -291,7 +298,9 @@ function renderDashboardScreen(
   showSlackButton
 ) {
   return html`
-    ${when(showSlackButton, () => html`
+    ${
+    when(showSlackButton, () =>
+      html`
       <div class="hc-card hc-card--decorated">
         <p>Pro lepší integraci mezi tvým Slackovým a Donut profilem potřebujeme od tebe potvrdit rozšířená práva.
           To provedeš kliknutím na následující tlačítko:</p>
@@ -304,14 +313,15 @@ function renderDashboardScreen(
               width="139"
               src="https://platform.slack-edge.com/img/add_to_slack.png"
               @click="${() => {
-                rollbar.info(`User clicked on Slack button.`);
-                setReturnUrl(location.href);
-              }}"
+        rollbar.info(`User clicked on Slack button.`);
+        setReturnUrl(location.href);
+      }}"
               srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
                           https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
         </div>
       </div>
-    `)}
+    `)
+  }
     ${when(nfcTronData, () => nfcTronTemplate({ nfcTronData, checkOutPaid }))}
     ${housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers })}
     ${plusOneCard(referralLink)}
@@ -342,17 +352,23 @@ function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers, sh
             Tak s&nbsp;tím moc neváhej, abys spal / spala podle svých
             představ&nbsp;:)
           </p>
-          ${when(attendee?.invoiceUrl, () => html`
+          ${
+        when(attendee?.invoiceUrl, () =>
+          html`
             <p>
               Platbu můžeše rychle odbavit přes <a href="${attendee.invoiceUrl}">webovou fakturu</a>.
             </p>
-          `)}
-          ${when(hasRegisteredHackers, () => html`
+          `)
+      }
+          ${
+        when(hasRegisteredHackers, () =>
+          html`
             <p>
               Chceš se podívat, kdo už se na tebe těší? Tak tady je
               <a href="/hackers/">seznam účastníků</a>.
             </p>
-          `)}
+          `)
+      }
         </div>
         ${plusOneCard(referralLink)}
         <p>
@@ -374,12 +390,15 @@ function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers, sh
           i díky tobě.
         </p>
         <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>
-        ${when(hasRegisteredHackers, () => html`
+        ${
+        when(hasRegisteredHackers, () =>
+          html`
           <p>
             Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
             <a href="/hackers/">seznam účastníků</a>.
           </p>
-        `)}
+        `)
+      }
         ${plusOneCard(referralLink)}
       `;
   }
@@ -391,6 +410,7 @@ async function loadData(profile, year, apiURL) {
     getAttendee(profile.sub, year, apiURL)
   ]);
   if (attendee && !attendee?.nfcTronData?.[0]?.totalSpent) {
+    // TODO: Possibly remove this once we have CRON or something to sync the data
     // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
     // Load them async, because NFCTron API is slow as hell
     getNfcTronData(attendee, apiURL).then(attendee => swapIn("attendee", () => attendee));

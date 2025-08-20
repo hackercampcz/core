@@ -256,8 +256,7 @@ async function fetchData({ selectedView, year, page, query }, apiHost) {
 
 async function getNfcTronData(attendee, apiUrl) {
   for (const chip of attendee.nfcTronData?.filter(x => x.sn) ?? []) {
-    const params = new URLSearchParams({ chipID: chip.chipID });
-    const resp = await fetch(apiUrl(`nfctron?${params}`), { headers: { Accept: "application/json" } });
+    const resp = await fetch(apiUrl(`/v2/nfctron${chip.chipID}`), { headers: { Accept: "application/json" } });
     const data = await resp.json();
     chip.spent = data.totalSpent / 100;
   }
@@ -323,6 +322,7 @@ async function handleMessage(e) {
     }
     case Action.renderDetail: {
       renderDetail(payload.detail);
+      // TODO: Possibly remove this once we have CRON or something to sync the data
       if (payload.detail?.nfcTronData?.[0]?.totalSpent) break;
       // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
       // Load them async, because NFCTron API is slow as hell.
