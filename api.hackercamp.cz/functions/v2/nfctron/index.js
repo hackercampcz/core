@@ -1,3 +1,5 @@
+const userAgent = "HackerCamp Donut (team@hackercamp.cz)";
+
 /**
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
@@ -7,7 +9,8 @@ export async function onRequestGet({ env }) {
   const resp = await fetch(`https://api.nfctron.com/app/event/${eventId}/customer/chip`, {
     headers: {
       "Authorization": `Bearer ${bearer}`,
-      "Accept": "application/json"
+      "Accept": "application/json",
+      "user-agent": userAgent
     },
     referrer: "https://hub.nfctron.com/"
   });
