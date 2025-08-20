@@ -13,6 +13,6 @@ export async function onRequestGet({ params }) {
     },
     referrer: "https://pass.nfctron.com/"
   });
-  const data = await resp.json();
+  const { settings, allowedRefundMethods, ...data } = await resp.json();
   return Response.json(data);
 }
