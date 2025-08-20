@@ -26,7 +26,6 @@ import "./components/feather-icon.js";
 import "./components/pagination.js";
 import { map } from "lit-html/directives/map.js";
 import { iconContactless } from "./lib/icons.js";
-import { getChipID } from "./lib/nfctron.js";
 import { getContact } from "./lib/profile.js";
 
 /**
@@ -241,9 +240,7 @@ export function attendeesTableTemplate(data, { page, pages, total, params, selec
             <td>${ticketName.get(row.ticketType)}</td>
             <td>${row.paid ? formatDateTime(new Date(row.paid)) : ""}</td>
             <td>
-              ${
-        row.nfcTronData?.map(({ chipID }) => chipID).filter(Boolean).join(", ") || html`<em><small>nene</small></em>`
-      }
+              ${row.nfcTronData?.map(({ sn }) => sn).filter(Boolean).join(", ") || html`<em><small>nene</small></em>`}
             </td>
             <td>
                 <span class="hc-detail__tools">
@@ -623,7 +620,7 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
       year: formData.get("year"),
       slackID: formData.get("slackID"),
       note: formData.get("note"),
-      nfcTronData: Array.from(nfcTronData).filter(Boolean).map(sn => ({ sn, chipID: getChipID(sn) }))
+      nfcTronData: Array.from(nfcTronData).filter(Boolean).map(sn => ({ sn }))
     };
     try {
       const result = executeCommand(apiHost, Endpoint.attendees, "checkIn", data);
@@ -661,7 +658,6 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
   }
         ${
     map(nfcTronData, (sn, i) => {
-      const chipID = getChipID(sn);
       return html`
               <div class="field">
                 <label for="nfc-tron-sn-${i}">S/N #${i + 1}</label>
@@ -684,11 +680,11 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
       }
                 </slotted-input>
                 <div>
-                  <strong>ID čipu:</strong>
+                  <strong>SN čipu:</strong>
                   ${
-        when(chipID, () =>
+        when(sn, () =>
           html`<code>
-                        <data value="${chipID}">${chipID}</data>
+                        <data value="${sn}">${sn}</data>
                       </code>`, () => html`<code>neznámý čip</code>`)
       }
                 </div>
