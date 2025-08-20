@@ -642,6 +642,10 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
       <input type="hidden" name="year" value="${year}">
       <input type="hidden" name="slackID" value="${detail.slackID}">
       <h2>Check-in</h2>
+      ${when(detail.isHeartCore, () => html`<p><big>Dej hackerovi <code>♥︎CORE</code> loopy.</big></p>`)}
+      ${
+    when(detail.ticketType === "hacker-patron", () => html`<p><big>Dej hackerovi <code>PATRON</code> loopy.</big></p>`)
+  }
       <fieldset>
         <legend>NCF Tron</legend>
         ${
