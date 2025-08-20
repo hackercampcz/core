@@ -17,13 +17,13 @@
       li {
         display: flex;
         gap: 1ch;
-        align-items: center;
+        align-items: baseline;
       }
       li::before {
         content: "" / attr(data-location);
         display: inline-block;
-        width: 1em;
-        height: 1em;
+        width: 0.8em;
+        height: 0.8em;
         background-color: var(--stage-color);
         flex-shrink: 0;
       }
@@ -65,24 +65,22 @@
         }
         const dayName = events[0].start.toLocaleDateString("cs-CZ", { weekday: "long" });
         return html`
-                                                                                                                                                                                                                                                                                  <article>
-                                                                                                                                                                                                                                                                                    <h3>${dayName}</h3>
-                                                                                                                                                                                                                                                                                    <ul>${
+          <article>
+            <h3>${dayName}</h3>
+            <ul>${
           events.map(event =>
             html`
-                                                                                                                                                                                                                                                                                      <li data-location="${event.location}"
-                                                                                                                                                                                                                                                                                          style="--stage-color: ${
-              colors.get(event.color)
-            }">
-                                                                                                                                                                                                                                                                                        <time datetime="${event.start?.toISOString()}">${
-              formatTime(event.start)
-            }</time>
-                                                                                                                                                                                                                                                                                        <strong>${event.title}</strong> @ ${event.location}
-                                                                                                                                                                                                                                                                                      </li>`
+              <li data-location="${event.location}"
+                  style="--stage-color: ${colors.get(event.color)}">
+                <span>
+                  <time datetime="${event.start?.toISOString()}">${formatTime(event.start)}</time>
+                  <strong>${event.title}</strong> @ ${event.location}
+                </span>
+              </li>`
           )
         }
-                                                                                                                                                                                                                                                                                    </ul>
-                                                                                                                                                                                                                                                                                  </article>`;
+            </ul>
+          </article>`;
       }
 
       function days(eventsByDay) {
