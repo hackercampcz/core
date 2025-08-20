@@ -47,13 +47,13 @@ function handlePlacementSelection(e) {
   const form = e.target.form;
   const section = e.target.parentElement.parentElement.parentElement;
   form.querySelectorAll(`.${section.className} .placements`).forEach(el => {
-    el.ariaHidden = "true";
+    el.hidden = true;
   });
   form.querySelectorAll(`.${section.className} .show-placements`).forEach(el => {
-    el.ariaHidden = "false";
+    el.hidden = false;
   });
-  section.querySelector(".placements").ariaHidden = "false";
-  section.querySelector(".show-placements").ariaHidden = "true";
+  section.querySelector(".placements").hidden = false;
+  section.querySelector(".show-placements").hidden = true;
 }
 
 function initHousingVariants(formElement, { variants, profile }) {
@@ -82,7 +82,7 @@ function initHousingVariants(formElement, { variants, profile }) {
 /**
  * 1. Fill <datalist> with all homeless hackers for autocompletion
  * 2. Fill in <input>s with housed hackers
- * 3. Disable other located hackers, but highlight me
+ * 3. Disable other located hackers but highlight me
  * 4. Once a hacker is autocompleted, remove him from <datalist> and vice versa
  * 5. Allow hackers to change housing from custom to specific placement
  */
@@ -126,7 +126,7 @@ function renderHackers(formElement, { hackers, hacker }) {
       if (inputElement.name === "custom") {
         inputElement.checked = true;
       }
-    } // do not disabled custom housing options
+    } // do not disable custom housing options
     else if (inputElement.type === "search") {
       inputElement.disabled = true;
     }
@@ -209,9 +209,11 @@ function autoShowHousingOfMine(formElement) {
   selectElement.addEventListener("change", ({ target }) => {
     for (const section of formElement.querySelectorAll("section")) {
       if (section.classList.contains(`${target.value}-housing`)) {
-        section.ariaHidden = "false";
+        section.hidden = false;
+        section.disabled = false;
       } else if (!section.classList.contains("housing-type")) {
-        section.ariaHidden = "true";
+        section.hidden = true;
+        section.disabled = true;
       }
 
       const placementsElement = section.querySelector(".placements");
@@ -220,11 +222,11 @@ function autoShowHousingOfMine(formElement) {
         const inputWithMyName = section.querySelector("input.me");
 
         if (inputWithMyName) {
-          placementsElement.ariaHidden = "false";
-          showRoomsElement.ariaHidden = "true";
+          placementsElement.hidden = false;
+          showRoomsElement.hidden = true;
         } else {
-          placementsElement.ariaHidden = "true";
-          showRoomsElement.ariaHidden = "false";
+          placementsElement.hidden = true;
+          showRoomsElement.hidden = false;
         }
       }
     }
@@ -242,7 +244,7 @@ const HOUSING_INPUT_REGEX = /^(cottage|house|tent)\['(.+)']\[(\d+)]$/;
 function handleFormSubmit(formElement, { hackers, profile }) {
   formElement.addEventListener("submit", async e => {
     e.preventDefault();
-    for (const el of formElement.querySelectorAll("button[type='submit']")) {
+    for (const el of formElement.querySelectorAll("button[type=submit]")) {
       el.disabled = true;
     }
     globalThis.showSnackbar("Ukládám tě…");
@@ -258,7 +260,7 @@ function handleFormSubmit(formElement, { hackers, profile }) {
     }
 
     // This allows you to fill somebody else to any placement but yourself to custom housing variant (your :troll:)
-    // and because this is bellow the collection loop, it will override your previously filled up placement (our :troll:)
+    // and because this is below the collection loop, it will override your previously filled up placement (our :troll:)
     if (formData.get("type") === "custom" && formData.get("custom")) {
       jsonData.items = jsonData.items.filter(({ slackID }) => slackID !== profile.sub);
       jsonData.items.push({ slackID: profile.sub, housing: formData.get("custom"), housingPlacement: "custom" });

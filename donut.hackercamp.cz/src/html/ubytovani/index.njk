@@ -119,10 +119,6 @@
       box-sizing: border-box;
     }
 
-    form [aria-hidden="true"] {
-      display: none;
-    }
-
     .show-placements {
       text-align: center;
       margin: 32px 8px 8px 8px;
@@ -225,7 +221,7 @@
           </p>
         </div>
       </section>
-      <section class="custom-housing" aria-hidden="true">
+      <section class="custom-housing" hidden>
         <h2>Na vlastní pěst</h2>
         <div class="hc-card">
           <div class="choose">
@@ -270,7 +266,7 @@
       {%- for variant in collections.housing_variants %}
         {%- set firstPhoto = variant.images.at(0) %}
         {%- set photos = variant.images.slice(1) %}
-        <section class="{{ variant.type }}-housing" aria-hidden="true">
+        <section class="{{ variant.type }}-housing" hidden>
           <h2>{{ variant.title }}</h2>
           <div class="hc-card">
             <p>{{ variant.description }}</p>
@@ -290,13 +286,13 @@
                      data-pswp-src="{{ photo.src }}"
                      data-pswp-width="{{ photo.width }}"
                      data-pswp-height="{{ photo.height }}"
-                     aria-hidden="true"
+                     hidden
                   >
                   </a>
                 {%- endfor %}
               </div>
             {%- endif %}
-            <div class="placements" aria-hidden="true">
+            <div class="placements" hidden>
               {%- set housingOfVariant = collections.housing_index.filter(byVariant(variant)) %}
               {%- for housing in housingOfVariant %}
                 <h3>{{ housing.placement }}</h3>
