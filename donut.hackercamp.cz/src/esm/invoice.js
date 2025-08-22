@@ -168,7 +168,9 @@ export async function main({ env, searchParams }) {
     contacts.push(reg);
     const contactEl = contact.content.cloneNode(true);
     contactEl.querySelector(".name").textContent = reg.invName;
-    contactEl.querySelector(".address").textContent = [reg.invAddress, reg.invAddressZip, reg.invAddressCity].filter(Boolean).join(", ");
+    contactEl.querySelector(".address").textContent = [reg.invAddress, reg.invAddressZip, reg.invAddressCity].filter(
+      Boolean
+    ).join(", ");
     contactEl.querySelector(".email").textContent = reg.invEmail ?? reg["invoice-contact"];
     contactEl.querySelector(".regNo").textContent = reg.invRegNo ? `IČO: ${reg.invRegNo}` : "";
     contactEl.querySelector(".vatId").textContent = reg.invVatNo ? `DIČ: ${reg.invVatNo}` : "";

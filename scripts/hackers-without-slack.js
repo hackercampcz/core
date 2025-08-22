@@ -20,9 +20,9 @@ async function* getAttendees(year) {
   }
 }
 
-async function getAllAttendees() {
+async function getAllAttendees(year) {
   const result = [];
-  for await (const page of getAttendees(2025)) {
+  for await (const page of getAttendees(year)) {
     result.push(...page);
   }
   return result;
@@ -31,7 +31,7 @@ async function getAllAttendees() {
 async function* getRegistrations(year) {
   const result = await dynamo.scan({
     TableName: "registrations",
-    ProjectionExpression: "email, #y, invoice_id, paid, invoiced, #ts",
+    ProjectionExpression: "email, #y, invoice_id, paid, invoiced, ticketType, #ts",
     FilterExpression: "#y = :y",
     ExpressionAttributeNames: { "#y": "year", "#ts": "timestamp" },
     ExpressionAttributeValues: { ":y": year }
@@ -44,23 +44,24 @@ async function* getRegistrations(year) {
     yield result.Items;
   }
 }
-async function getAllRegistrations() {
+async function getAllRegistrations(year) {
   const result = [];
-  for await (const page of getRegistrations(2025)) {
+  for await (const page of getRegistrations(year)) {
     result.push(...page);
   }
   return result;
 }
 
-async function main({}) {
-  const regs = await getAllRegistrations();
-  const attendees = await getAllAttendees();
+async function main({ year }) {
+  year = Number.parseInt(year);
+  const regs = await getAllRegistrations(year);
+  const attendees = await getAllAttendees(year);
   const ok = new Set(attendees.map(x => x.email));
-  const notRegistered = regs.filter(x => x.paid && !ok.has(x.email)).map(x => x.email);
+  const notRegistered = regs.filter(x => x.paid && !ok.has(x.email)).map(x => [x.email, x.ticketType]);
   console.log(notRegistered);
   console.log(notRegistered.length);
 }
 
 await main(parseArgs(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config hackers-without-slack.js
+// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config hackers-without-slack.js --year=2025
