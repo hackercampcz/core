@@ -330,6 +330,10 @@ export async function main({ formElement, env, housing: { reservations, variants
   rollbar.init(env);
   try {
     const profile = getSlackProfile();
+    if (!profile) {
+      window.showSnackbar("Nenašlo jsem tvůj profil, prosím, přihlaš se znovu.");
+      return setTimeout(() => signOut(path => new URL(path, "https://api.hackercamp.cz").href), 3000);
+    }
     rollbar.configure({ payload: { person: { name: profile.real_name, email: profile.email, id: profile.id } } });
     const contact = getContact();
     rollbar.info("Housing profile", { profile, contact });
