@@ -62,7 +62,7 @@ export async function main({ env, formElement, submitButtonElement, searchParams
   const dbgContext = {};
   try {
     const { year } = env;
-    const { email, sub: slackID, picture: image, real_name  } = getSlackProfile();
+    const { email, sub: slackID, picture: image, real_name } = getSlackProfile();
     rollbar.configure({
       payload: { person: { name: real_name, email, id: slackID } }
     });
@@ -128,22 +128,22 @@ export async function main({ env, formElement, submitButtonElement, searchParams
         "Content-Type": "application/x-www-form-urlencoded"
       }
     })
-    .then(response => {
-      if (!response.ok) {
-        throw response;
-      }
-      return response.json();
-    })
-    .then(data => {
-      location.href = `/registrace/potvrzeno/?${searchParams}`;
-    })
-    .catch(err => {
-      rollbar.error(err);
-      alert("Se to někde zaseklo, zkuste to prosím znovu");
-    })
-    .finally(() => {
-      submitButtonElement.disabled = false;
-    });
+      .then(response => {
+        if (!response.ok) {
+          throw response;
+        }
+        return response.json();
+      })
+      .then(data => {
+        location.href = `/registrace/potvrzeno/?${searchParams}`;
+      })
+      .catch(err => {
+        rollbar.error(err);
+        alert("Se to někde zaseklo, zkuste to prosím znovu");
+      })
+      .finally(() => {
+        submitButtonElement.disabled = false;
+      });
   });
 
   hideSection("#someone-else-will-pay");
@@ -163,11 +163,7 @@ export async function main({ env, formElement, submitButtonElement, searchParams
   const stayTime = document.getElementById("stay-time");
   const customStayTime = document.getElementById("custom-stay-time");
   stayTime.addEventListener("change", e => {
-    if (e.target.value == 2) {
-      customStayTime.parentElement.hidden = false;
-    } else {
-      customStayTime.parentElement.hidden = true;
-    }
+    customStayTime.parentElement.hidden = e.target.value != 2;
   });
 
   const shirt = document.getElementById("shirt");
