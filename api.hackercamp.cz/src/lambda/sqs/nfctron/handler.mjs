@@ -41,7 +41,8 @@ async function onAttendeeCheckIn({ slackID, year }) {
   const [pairingTable, attendee] = await Promise.all([getPairingTable(), getAttendee(slackID, year)]);
   if (!attendee) return;
   for (const chip of attendee.nfcTronData.filter(x => !x.chipID)) {
-    Object.assign(chip, pairingTable.get(chip.serialNumber));
+    const nfcData = pairingTable.get(chip.serialNumber);
+    if (nfcData) Object.assign(chip, nfcData);
   }
   await updateAttendee(attendee);
 }
