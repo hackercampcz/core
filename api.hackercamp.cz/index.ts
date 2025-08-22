@@ -420,6 +420,18 @@ export function createDB({ queues, postmarkTemplates }) {
     }),
     { startingPosition: "LATEST" }
   );
+  attendees.onEvent(
+    "check-in",
+    getTableEventHandler("check-in", "attendees/checkin.mjs", defaultLambdaRole, {
+      environment: {
+        variables: {
+          rollbar_access_token,
+          nfctron_queue_url: queues.nfcTronQueueUrl
+        }
+      }
+    }),
+    { startingPosition: "LATEST" }
+  );
 
   const contacts = new aws.dynamodb.Table("contacts", {
     name: "contacts",
