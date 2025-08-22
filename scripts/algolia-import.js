@@ -19,22 +19,22 @@ const indexes = new Map([
       replicas: [
         "hc-registrations_invoicedAt_desc",
         "hc-registrations_paidAt_desc"
-      ],
-    },
+      ]
+    }
   }],
   ["hc-registrations_invoicedAt_desc", {
     indexName: "hc-registrations",
     indexSettings: {
       searchableAttributes: ["name", "email", "company", "invoice_id"],
-      ranking: ["desc(invoicedAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"],
-    },
+      ranking: ["desc(invoicedAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+    }
   }],
   ["hc-registrations_paidAt_desc", {
     indexName: "hc-registrations",
     indexSettings: {
       searchableAttributes: ["name", "email", "company", "invoice_id"],
-      ranking: ["desc(paidAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"],
-    },
+      ranking: ["desc(paidAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
+    }
   }],
   ["hc-attendees", {
     indexName: "hc-attendees",
