@@ -8,7 +8,7 @@ const db = new DynamoDBClient({});
 const rollbar = Rollbar.init({ lambdaName: "sqs-nfctron" });
 const { db_table_attendees } = process.env;
 
-async function getAttendee({ slackID, year }) {
+async function getAttendee(slackID, year) {
   console.log({ event: "Get attendee", year, slackID });
   const resp = await db.send(
     new GetItemCommand({
@@ -30,13 +30,15 @@ function updateAttendee(attendee) {
 }
 
 async function getPairingTable() {
+  console.log({ event: "Get NFCTron Chips", slackID: attendee.slackID });
   const resp = await fetch("https://api.hackercamp.cz/v2/nfctron");
   const data = await resp.json();
+  console.log({ event: "Got NFCTron Chips", count: data.length });
   return new Map(data.map(x => [x.serialNumber, { chipID: x.chipId, vip: x.vip }]));
 }
 
-async function onAttendeeCheckIn({ key }) {
-  const [pairingTable, attendee] = await Promise.all([getPairingTable(), getAttendee(key)]);
+async function onAttendeeCheckIn({ slackID, year }) {
+  const [pairingTable, attendee] = await Promise.all([getPairingTable(), getAttendee(slackID, year)]);
   if (!attendee) return;
   for (const chip of attendee.nfcTronData.filter(x => !x.chipID)) {
     Object.assign(chip, pairingTable.get(chip.serialNumber));
