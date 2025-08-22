@@ -568,7 +568,19 @@ export function createQueues({ postmarkTemplates }) {
       }
     })
   );
-  return { slackQueueUrl: slackQueue.url };
+  const nfcTronQueue = new aws.sqs.Queue(hcName("nfctron-message-queue"), {});
+  nfcTronQueue.onEvent(
+    "nfctron-message",
+    getSQSHandler("nfctron", "nfctron/handler.mjs", defaultRole, {
+      environment: {
+        variables: {
+          rollbar_access_token,
+          db_table_attendees: "attendees"
+        }
+      }
+    })
+  );
+  return { slackQueueUrl: slackQueue.url, nfcTronQueueUrl: nfcTronQueue.url };
 }
 
 export function createApi(
