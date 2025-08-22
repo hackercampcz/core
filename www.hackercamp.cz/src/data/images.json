@@ -850,5 +850,32 @@
     "existing": false,
     "original_filename": "9895_0041",
     "api_key": "375716383121574"
+  },
+  "header-camp.avif": {
+    "asset_id": "4e326bc9b4a4162f03c980edbf5af435",
+    "public_id": "www.hackercamp.cz/header-camp",
+    "version": 1752403225,
+    "version_id": "bc119cfc152a8174fb7219b9b50db981",
+    "signature": "910a163d6f47a5772435fc1c3169fe58c696c3fd",
+    "width": 622,
+    "height": 654,
+    "format": "avif",
+    "resource_type": "image",
+    "created_at": "2024-03-31T06:48:39Z",
+    "tags": [],
+    "pages": 1,
+    "bytes": 62682,
+    "type": "upload",
+    "etag": "ddfa18da8447d41dad7ea4309fd9fa95",
+    "placeholder": false,
+    "url": "http://res.cloudinary.com/hackercamp/image/upload/v1752403225/www.hackercamp.cz/header-camp.avif",
+    "secure_url": "https://res.cloudinary.com/hackercamp/image/upload/v1752403225/www.hackercamp.cz/header-camp.avif",
+    "folder": "www.hackercamp.cz",
+    "metadata": {
+      "lqip": -173412
+    },
+    "overwritten": true,
+    "original_filename": "header-camp",
+    "api_key": "375716383121574"
   }
 }
