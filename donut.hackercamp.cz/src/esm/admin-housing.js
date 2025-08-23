@@ -1,6 +1,7 @@
 import { sortBy } from "@hackercamp/lib/array.js";
 import { html } from "lit-html";
 import { until } from "lit-html/directives/until.js";
+import { when } from "lit-html/directives/when.js";
 import { ticketName, unauthorized } from "./admin/common.js";
 import { housing } from "./lib/attendee.js";
 import "./components/phone-button.js";
@@ -36,9 +37,14 @@ function housingTable(data) {
                 <span class="hc-detail__tools">
                   <hc-mail-button email="${row.email}"></hc-mail-button>
                   <hc-phone-button phone="${row.phone}"></hc-phone-button>
-                  <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${row.slackID}">
-                    <feather-icon name="slack" title="Slack"></feather-icon>
-                  </a>
+                  ${
+        when(row.slackID && !row.slackID.startsWith("hc-"), () =>
+          html`
+                    <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${row.slackID}">
+                      <feather-icon name="slack" title="Slack"></feather-icon>
+                    </a>
+                  `)
+      }
                 </span>
               </td>
             </tr>

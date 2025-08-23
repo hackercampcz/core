@@ -389,7 +389,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         <hc-mail-button email="${detail.email}"></hc-mail-button>
         <hc-phone-button phone="${detail.phone}"></hc-phone-button>
         ${
-    when(detail.slackID, () =>
+    when(detail.slackID && !detail.slackID.startsWith("hc-"), () =>
       html`
           <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}"
              target="slack">

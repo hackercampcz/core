@@ -283,12 +283,18 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
         ${
     when(detail.phone, () =>
       html`
-          <hc-phone-button phone="${detail.phone}"></hc-phone-button>`)
+          <hc-phone-button phone="${detail.phone}"></hc-phone-button>
+      `)
   }
-        <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}" target="slack"
-           title="Otevřít profil na Slacku">
-          <feather-icon name="slack" title="Slack"></feather-icon>
-        </a>
+        ${
+    when(detail.slackID && !detail.slackID.startsWith("hc-"), () =>
+      html`
+          <a class="icon-button small" href="https://hackercampworkspace.slack.com/team/${detail.slackID}" target="slack"
+             title="Otevřít profil na Slacku">
+            <feather-icon name="slack" title="Slack"></feather-icon>
+          </a>
+        `)
+  }
         <button class="icon-button small"
                 title="Upravit účastníka"
                 @click="${renderModalDialog("edit-attendee-modal")}">
