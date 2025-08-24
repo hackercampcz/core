@@ -649,6 +649,12 @@ function checkInModalDialog({ apiHost, year, detail, contact, nfcTronData, isNFC
       ${
     when(detail.ticketType === "hacker-patron", () => html`<p><big>Dej hackerovi <code>PATRON</code> loopy.</big></p>`)
   }
+      <p>
+        Ubytování:
+        <strong>${housing.get(detail.housing) ?? html`Ještě si nevybral`}</strong>
+        <!-- TODO: add link to housing selection -->
+        ${when(detail.housingPlacement, () => html` - <em>${detail.housingPlacement}</em>`)}
+      </p>
       <fieldset>
         <legend>NCF Tron</legend>
         ${
