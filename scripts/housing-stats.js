@@ -29,7 +29,7 @@ async function main({ year }) {
   const attendees = await getAttendees(year);
   for (const attendee of attendees) {
     const checkIn = attendee.checkIn.substring(0, 10);
-    const checkOut = (attendee.checkout ?? `${year}-09-03T08:18:58.427Z`).substring(0, 10);
+    const checkOut = (attendee.checkout ?? `${year}-08-31T08:18:58.427Z`).substring(0, 10);
     const diff = difference(new Date(checkIn), new Date(checkOut), { units: ["days"] });
     await updateAttendee(year, attendee.slackID, diff.days);
   }

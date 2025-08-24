@@ -1,17 +1,17 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { getTotalSpent } from "./lib/nfctron.js";
 
 const dynamo = createClient();
 
-async function getAttendees() {
+async function getAttendees(year) {
   const result = await dynamo.scan({
     TableName: "attendees",
     ProjectionExpression: "email, nfcTronData",
     FilterExpression:
       "#year = :year AND attribute_exists(nfcTronData) AND ticketType IN (:volunteer, :crew, :staff) AND NOT attribute_exists(checkOutPaid)",
     ExpressionAttributeValues: {
-      ":year": 2023,
+      ":year": year,
       ":volunteer": "volunteer",
       ":crew": "crew",
       ":staff": "staff"
@@ -21,9 +21,10 @@ async function getAttendees() {
   return result.Items;
 }
 
-async function main({}) {
+async function main({ year }) {
+  year = Number.parseInt(year);
   const result = [];
-  const attendees = await getAttendees();
+  const attendees = await getAttendees(year);
   const data = attendees.flatMap(a => a.nfcTronData.filter(x => x.sn).map(x => [a.email, x.chipID]));
   for (const [email, chipID] of data) {
     const totalSpent = await getTotalSpent(chipID);
@@ -38,6 +39,6 @@ async function main({}) {
   console.log({ total: result.map(x => x[1]).reduce((acc, x) => acc + x, 0) });
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config fetch-nfctron-chips.js
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-import --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config fetch-nfctron-chips.js --year=2025
