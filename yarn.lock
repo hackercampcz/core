@@ -329,9 +329,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.873.0":
-  version: 3.873.0
-  resolution: "@aws-sdk/client-sqs@npm:3.873.0"
+"@aws-sdk/client-sqs@npm:3.875.0":
+  version: 3.875.0
+  resolution: "@aws-sdk/client-sqs@npm:3.875.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:5.2.0"
     "@aws-crypto/sha256-js": "npm:5.2.0"
@@ -374,7 +374,7 @@ __metadata:
     "@smithy/util-retry": "npm:^4.0.7"
     "@smithy/util-utf8": "npm:^4.0.0"
     tslib: "npm:^2.6.2"
-  checksum: 10c0/81ce776b34bd9d0ffe78b67f6be3648501167b093532cf8ac5149f79137ff55887f704ea903370b131c876cff6c1f453cf95b1e2495b11d05afbc50ad1e2b5ab
+  checksum: 10c0/3cc0059d8f4605dfc25d370bf32c9489a0bae99ea8c34fb980a75338a12349e12577cccc09d65b0abcbdd3f1d5c73cd069844b055b71fcfeb60cdfb54caf7d0e
   languageName: node
   linkType: hard
 
@@ -3563,7 +3563,7 @@ __metadata:
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
     "@aws-sdk/client-dynamodb": "npm:3.873.0"
-    "@aws-sdk/client-sqs": "npm:3.873.0"
+    "@aws-sdk/client-sqs": "npm:3.875.0"
     "@aws-sdk/util-dynamodb": "npm:3.873.0"
     "@cloudflare/workers-types": "npm:4.20250823.0"
     "@fast-csv/format": "npm:5.0.5"
