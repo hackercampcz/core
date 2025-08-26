@@ -3,7 +3,7 @@
 <style>
   :root {
     --hc-dialog-width: 800px;
-    --hc-gutter: clamp(1ch, 10px + 4vw, 2ch);
+    --hc-gutter: clamp(1ch, 10px + 1vw, 2ch);
     --hc-layout-width: 1600px;
     --hc-font-family: PT Mono, monospace;
     --hc-background-color: #fff;
@@ -236,7 +236,7 @@
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     z-index: 1000;
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: max-content 1fr;
     padding-block: 1lh;
     padding-inline: var(--hc-gutter);
     line-height: 1;

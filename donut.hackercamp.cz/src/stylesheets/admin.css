@@ -22,7 +22,7 @@
 }
 
 #app-root {
-  margin-inline: 1em;
+  margin-inline: var(--hc-gutter);
   padding-block-end: 2lh;
   container-type: inline-size;
 }
@@ -30,7 +30,7 @@
 #app-root > header {
   display: flex;
   align-items: center;
-  gap: 1em;
+  gap: var(--hc-gutter);
 
   h2 select {
     color: var(--hc-text-color);
@@ -51,9 +51,10 @@
   &:has(form) {
     grid-template-columns: 1fr;
     gap: 0;
+    container-type: inline-size;
 
     slotted-input {
-      width: 100%;
+      width: 100cqw;
       max-width: 480px;
       line-height: 1;
     }
@@ -165,13 +166,14 @@ hc-slack-avatar {
 }
 
 slotted-input {
+  --_gap: clamp(0.5ch, 1px + 1vw, 1ch);
   display: inline flex;
   justify-content: space-between;
   color: FieldText;
   background-color: Field;
   border: 1px solid var(--hc-border-color);
-  gap: 1ch;
-  padding-inline: 1ch;
+  gap: var(--_gap);
+  padding-inline: var(--_gap);
   overflow: clip;
 
   &:focus-within {
@@ -184,7 +186,7 @@ slotted-input {
   }
   input {
     appearance: none;
-    flex-grow: 2;
+    flex-grow: 1;
     border: none;
     background-color: transparent;
     outline: none;
