@@ -27,19 +27,19 @@
       "name": "Ubytování",
       "url": "/ubytovani",
       "descrition": "Vybrat si ubytování",
-      "icons": [{ "src": "/icons/home.svg", "sizes": "192x192", "type": "image/svg+xml", "purpose": "monochrome" }]
+      "icons": [{ "src": "/icons/home.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "monochrome" }]
     },
     {
       "name": "Spolujízda",
       "url": "/spolujizda",
       "description": "Nabídnout nebo poptat spolujízdu",
-      "icons": [{ "src": "/icons/truck.svg", "sizes": "192x192", "type": "image/svg+xml", "purpose": "monochrome" }]
+      "icons": [{ "src": "/icons/truck.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "monochrome" }]
     },
     {
       "name": "Program",
       "url": "/program",
       "description": "Podívat se na program nebo upravit svoji nabídku",
-      "icons": [{ "src": "/icons/calendar.svg", "sizes": "192x192", "type": "image/svg+xml", "purpose": "monochrome" }]
+      "icons": [{ "src": "/icons/calendar.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "monochrome" }]
     }
   ]
 }
