@@ -21,7 +21,7 @@
   ],
   "display": "standalone",
   "start_url": "/admin/?view=attendees&utm_source=pwa",
-  "scope": "/",
+  "scope": "/admin/",
   "shortcuts": [
     {
       "name": "Registrace",
