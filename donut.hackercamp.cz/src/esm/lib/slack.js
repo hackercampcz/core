@@ -8,6 +8,16 @@ export async function getSlackProfile(uid, token) {
   throw new Error("Get slack profile failed: " + error);
 }
 
+export async function getTeamProfile(token) {
+  const resp = await fetch("https://slack.com/api/team.profile.get", {
+    method: "POST",
+    body: new URLSearchParams({ token })
+  });
+  const { ok, error, profile } = await resp.json();
+  if (ok) return profile;
+  throw new Error("Get slack profile failed: " + error);
+}
+
 export async function setSlackProfile(uid, token, { name, value }) {
   const resp = await fetch("https://slack.com/api/users.profile.set", {
     method: "POST",

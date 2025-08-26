@@ -97,7 +97,6 @@ async function authenticate({ searchParams, apiURL }) {
 }
 
 async function setDonutProfileUrl(user, token, slug, company) {
-  // TODO: extended user permissions (aka Add to Slack, see Admin)
   const profile = await slack.getSlackProfile(user, token);
   if (!profile?.fields?.Xf039UMCJC1G?.value) {
     await setSlackProfile(user, token, { name: "Xf039UMCJC1G", value: `https://donut.hckr.camp/hackers/${slug}/` });
@@ -107,6 +106,15 @@ async function setDonutProfileUrl(user, token, slug, company) {
     await setSlackProfile(user, token, { name: "Xf03A7A5815F", value: { alt: company } });
     console.log("Company set");
   }
+}
+
+async function updateProfile(user, token) {
+  const profile = await slack.getSlackProfile(user, token);
+  const { fields } = await slack.getTeamProfile(token);
+  const fieldName = new Map(fields.map(x => [x.id, x.label]));
+  const result = Array.from(Object.entries(profile.fields)).map(([name, { value }]) => [fieldName.get(name), value]);
+  console.log("Extended properties", result);
+  // TODO: update attendee with extended properties
 }
 
 async function getRegistration(slackID, email, year, apiUrl) {
@@ -205,7 +213,7 @@ function housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHa
       </p>
       <p>
         Do
-        <date datetime="2023-08-21">21. srpna</date>
+        <date datetime="2025-08-21">21. srpna</date>
         si ještě můžeš
         <a class="hc-link" href="/ubytovani/">změnit ubytování</a>.
       </p>
@@ -276,12 +284,18 @@ function plusOneCard(referralLink) {
         </a>
       </p>
       <p>Pokud chceš ukázat atmosféru kempu, můžeš použít tato videa:</p>
-      <lite-youtube videoid="FCvKBikoXOs" params="hl=cs&amp;modestbranding=1"
-                    title="HackerCamp 2024" class="responsive"></lite-youtube>
-      <lite-youtube videoid="xm0Bse4SVRQ" params="hl=cs&amp;modestbranding=1"
-                    title="HackerCamp 2023" class="responsive"></lite-youtube>
-      <lite-youtube videoid="igM6UFAqaOQ" params="hl=cs&amp;modestbranding=1"
-                    title="HackerCamp 2021" class="responsive"></lite-youtube>
+      <p>
+        <lite-youtube videoid="FCvKBikoXOs" params="hl=cs&amp;modestbranding=1"
+                      title="HackerCamp 2024" class="responsive"></lite-youtube>
+      </p>
+      <p>
+        <lite-youtube videoid="xm0Bse4SVRQ" params="hl=cs&amp;modestbranding=1"
+                      title="HackerCamp 2023" class="responsive"></lite-youtube>
+      </p>
+      <p>
+        <lite-youtube videoid="igM6UFAqaOQ" params="hl=cs&amp;modestbranding=1"
+                      title="HackerCamp 2021" class="responsive"></lite-youtube>
+      </p>
       <p>
         Prosíme, cti zásadu, že
         <em>"co se stalo na campu, zůstane na campu"</em> a nevystavujte ho
@@ -424,6 +438,7 @@ async function loadData(profile, year, apiURL) {
       contact.slug,
       registration?.company ?? attendee?.company
     );
+    await updateProfile(profile.sub, getSlackAccessToken());
     rollbar.info("Slack profile set");
   } catch (err) {
     transact(x => Object.assign(x, { showSlackButton: true }));
