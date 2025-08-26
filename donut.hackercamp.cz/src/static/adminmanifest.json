@@ -1,0 +1,57 @@
+{
+  "name": "Hacker Camp Admin",
+  "short_name": "Admin",
+  "icons": [
+    {
+      "src": "/android-chrome-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/maskable_icon_x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "display": "standalone",
+  "start_url": "/admin/?view=attendees&utm_source=pwa",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Registrace",
+      "url": "/admin/",
+      "descrition": "Spravovat registrace",
+      "icons": [{ "src": "/icons/at-sign.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Účastníci",
+      "url": "/admin/?view=attendees",
+      "descrition": "Spravovat účastníky",
+      "icons": [{ "src": "/icons/users.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Ubytování",
+      "url": "/admin/?view=housing",
+      "descrition": "Spravovat ubytování",
+      "icons": [{ "src": "/icons/home.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Dobrovolníci",
+      "url": "/admin/volunteers/",
+      "description": "Nabídnout nebo poptat spolujízdu",
+      "icons": [{ "src": "/icons/heart.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Dashboard",
+      "url": "/admin/dashboard/",
+      "description": "Podívat se na dashboard",
+      "icons": [{ "src": "/icons/bar-chart-2.svg", "sizes": "any", "type": "image/svg+xml" }]
+    }
+  ]
+}
