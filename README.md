@@ -19,13 +19,13 @@ When you run something, use [1password CLI](https://developer.1password.com/docs
 
 For example, to run website locally, you have to use:
 
-```bash
+```shell
 op run --env-file=.env --no-masking -- yarn start:www.hackercamp.cz
 ```
 
 To run Donut locally:
 
-```bash
+```shell
 op run --env-file=.env --no-masking -- yarn start:donut.hackercamp.cz
 ```
 
