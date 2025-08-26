@@ -27,6 +27,7 @@
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#222222" media="(prefers-color-scheme: dark)">
   {% include "shared/app-icons.html" %}
+  {% block sitemanifest %}<link rel="manifest" href="/sitemanifest.json">{% endblock %}
   {% block head %}{% endblock %}
 </head>
 <body>
