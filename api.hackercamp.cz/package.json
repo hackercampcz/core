@@ -20,5 +20,5 @@
     "@types/node": "24.3.0",
     "wrangler": "4.32.0"
   },
-  "packageManager": "yarn@4.9.3"
+  "packageManager": "yarn@4.9.4"
 }
