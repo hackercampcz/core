@@ -26,7 +26,7 @@ Co tedy potřebuješ vědět?
 1. **Začátek a konec akce**
    - Čtrvtek 28. srpna 2025 (začínáme v 17.00) – 31. srpna 2025 (v neděli se nic neděje, jen balíme, uklízíme, střízlivíme, loučíme se)
    - **Registrace a ubytování** se v areálu možné od čtvrtečních **14.00**
-   * Na registraci si na své náramky (dostanete, nebo máte z loňska) nabijete peníze. V areálu se vše platí cashless přes NFCTron náramky. Takže pokud chcete pít a jíst, co hrdlo ráčí, nabijte si na recepc :)  
+   * Na registraci si na své náramky (dostanete, nebo máte z loňska) nabijete peníze. V areálu se vše platí cashless přes NFCTron náramky. Takže pokud chcete pít a jíst, co hrdlo ráčí, nabijte si na recepc :)
    - Kdybyste chtěli přijet později, tak prosíme **doražte nejpozději do půlnoci**. Na našem loginu totiž vždy někoho najdete mezi 8.00 až 24.00
 
 2. **Místo konání**

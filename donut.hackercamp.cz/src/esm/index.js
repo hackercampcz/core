@@ -336,6 +336,13 @@ function renderDashboardScreen(
       </div>
     `)
   }
+    <div class="hc-card hc-card--decorated">
+      <h2>Důležité kontakty</h2>
+      <ul>
+        <li>Odvoz z/na hromadnou dopravu: <a href="tel:+420792365678">792 365 678</a></li>
+        <!--li>Zdravotníci: <a href="tel:+420"></a></li-->
+      </ul>
+    </div>
     ${when(nfcTronData, () => nfcTronTemplate({ nfcTronData, checkOutPaid }))}
     ${housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers })}
     ${plusOneCard(referralLink)}
