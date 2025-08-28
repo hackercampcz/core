@@ -264,6 +264,9 @@ export async function selectionBar(selectedView, selection, data) {
             <button class="icon-button small" title="Vyfakturovat" @click="${renderModalDialog("invoice")()}">
               ${iconFakturoid()}
             </button>
+            <button class="icon-button small" title="Označit jako zaplacené" @click="${renderModalDialog("paid")}">
+              <feather-icon name="dollar-sign" title="Označit jako zaplacené"></feather-icon>
+            </button>
           `)
   }
       ${
@@ -819,4 +822,32 @@ function transferModalDialog({ detail, year }) {
   ]);
   return html`
     <iframe src="transfer.html?${params}"></iframe>`;
+}
+
+/**
+ * @param {Object} payload
+ * @param {string} apiHost
+ * @returns {Promise<void>}
+ */
+export function paid(payload, apiHost) {
+  return executeCommand(apiHost, Endpoint.registrations, "paid", payload).then(() => location.reload());
+}
+
+registerDialog("pay", payModalDialog);
+
+function payModalDialog({ detail, apiHost }) {
+  const onSubmit = async e => {
+    e.preventDefault();
+    const contact = getContact();
+    await paid({
+      key: { email: detail.email, year: detail.year },
+      data: { editedBy: contact?.email }
+    }, apiHost);
+  };
+  return html`
+    <form method="dialog" @submit="${onSubmit}">
+      <p>Chystáš se obejít běžný platební cycklus. Potvrzuj s rozvahou. 😉</p>
+      <button>Označit jako zaplacené</button>
+    </form>
+  `;
 }

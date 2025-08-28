@@ -196,6 +196,28 @@ async function invoiced(db, { registrations, invoiceId }) {
  * @param {DynamoDBClient} db
  * @param {{key: { email: string, year: number }, data: Record<string, any>}} params
  */
+async function markRegistrationAsPaid(db, { key, data }) {
+  console.log({ event: "Marking registration as paid", key, data });
+  await db.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_registrations,
+      Key: marshall(key, { removeUndefinedValues: true, convertEmptyValues: true }),
+      UpdateExpression: "SET paid = :paid, editedBy = :editedBy",
+      ExpressionAttributeValues: marshall({
+        ":paid": new Date().toISOString(),
+        ":editedBy": data.editedBy
+      }, {
+        removeUndefinedValues: true,
+        convertEmptyValues: true
+      })
+    })
+  );
+}
+
+/**
+ * @param {DynamoDBClient} db
+ * @param {{key: { email: string, year: number }, data: Record<string, any>}} params
+ */
 async function editRegistration(db, { key, data }) {
   console.log({ event: "Update registration", key, data });
   if (key.email === data.email) {
@@ -335,6 +357,9 @@ async function processRequest(db, data) {
       break;
     case "transfer":
       await transferRegistration(db, data.params);
+      break;
+    case "paid":
+      await markRegistrationAsPaid(db, data.params);
       break;
   }
 }
