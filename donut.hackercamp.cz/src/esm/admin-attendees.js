@@ -301,22 +301,19 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
                 @click="${renderModalDialog("edit-attendee-modal")}">
           <feather-icon name="edit" title="Upravit"></feather-icon>
         </button>
-        ${
-    when(!detail.checkIn, () =>
-      html`
           <button class="icon-button small"
                   title="Check In"
                   @click="${
-        renderModalDialog("check-in-modal", {
-          preDispatch() {
-            console.log("Check In", { isNFCSupported });
-            if (isNFCSupported) startChipScan();
-          }
-        })
-      }">
+    renderModalDialog("check-in-modal", {
+      preDispatch() {
+        console.log("Check In", { isNFCSupported });
+        if (isNFCSupported) startChipScan();
+      }
+    })
+  }">
             <feather-icon name="log-in" title="Check In"></feather-icon>
-          </button>
-        `, () =>
+          </button> ${
+    when(detail.checkIn, () =>
       html`
           <button class="icon-button small"
                   title="Check Out"
