@@ -391,7 +391,6 @@ function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers, sh
           `)
       }
         </div>
-        ${plusOneCard(referralLink)}
         <p>
           Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
           e-mailem v registraci a na Slacku. Napiš Alešovi na Slacku
