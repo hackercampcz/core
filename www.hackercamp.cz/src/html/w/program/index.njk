@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Program Hacker Campu</title>
+    <meta name="color-scheme" content="light dark">
     {% include "shared/fonts.html" %}
     {% include "shared/styles.html" %}
     <link rel="stylesheet" href="https://unpkg.com/open-props/colors.min.css">
@@ -37,6 +38,12 @@
       }
       :is(html):has(body[data-color-scheme="dark"]) {
         color-scheme: dark !important;
+      }
+      @media all and (display-mode: fullscreen) {
+        html {
+          color-scheme: dark;
+          font-size: 133%;
+        }
       }
     </style>
   </head>
@@ -87,30 +94,30 @@
         }
         const dayName = events[0].start.toLocaleDateString("cs-CZ", { weekday: "long" });
         return html`
-                                                                                                                                                                                          <article>
-                                                                                                                                                                                          <h3>${dayName}</h3>
-                                                                                                                                                                                          <ul>${
+                                                                                                                                                                                                                                                                                                <article>
+                                                                                                                                                                                                                                                                                                <h3>${dayName}</h3>
+                                                                                                                                                                                                                                                                                                <ul>${
           events.map(event =>
             html`
-                                                                                                                                                                                          <li data-location="${event.location}"
-                                                                                                                                                                                            style="--stage-color: ${
+                                                                                                                                                                                                                                                                                                <li data-location="${event.location}"
+                                                                                                                                                                                                                                                                                                  style="--stage-color: ${
               colors.get(event.color)
             }">
-                                                                                                                                                                                            <time datetime="${event.start?.toISOString()}">${
+                                                                                                                                                                                                                                                                                                  <time datetime="${event.start?.toISOString()}">${
               formatTime(event.start)
             }</time>
-                                                                                                                                                                                            <div>
-                                                                                                                                                                                              <strong>${event.title}</strong>
-                                                                                                                                                                                              <span class="location">@ ${event.location}</span>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                          <div class="actors">${
+                                                                                                                                                                                                                                                                                                  <div>
+                                                                                                                                                                                                                                                                                                    <strong>${event.title}</strong>
+                                                                                                                                                                                                                                                                                                    <span class="location">@ ${event.location}</span>
+                                                                                                                                                                                                                                                                                                  </div>
+                                                                                                                                                                                                                                                                                                <div class="actors">${
               extractNames(event)
             }</div>
-                                                                                                                                                                                          </li>`
+                                                                                                                                                                                                                                                                                                </li>`
           )
         }
-                                                                                                                                                                                          </ul>
-                                                                                                                                                                                          </article>`;
+                                                                                                                                                                                                                                                                                                </ul>
+                                                                                                                                                                                                                                                                                                </article>`;
       }
 
       function days(eventsByDay) {

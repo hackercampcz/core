@@ -331,6 +331,10 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
         <strong>${housing.get(detail.housing) ?? "Ještě si nevybral"}</strong>
         ${when(detail.housingPlacement, () => html` - <em>${detail.housingPlacement}</em>`)}
       </p>
+      ${when(detail.isHeartCore, () => html`<p><big>Dej hackerovi <code>♥︎CORE</code> loopy.</big></p>`)}
+      ${
+    when(detail.ticketType === "hacker-patron", () => html`<p><big>Dej hackerovi <code>PATRON</code> loopy.</big></p>`)
+  }
       <p>
         Doprava:
         <strong>${travel.get(detail.travel) ?? "Ještě si nevybral"}</strong>
