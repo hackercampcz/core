@@ -172,7 +172,8 @@ export function attendeesChips(
       })}">
                 <feather-icon name="download" title="Stáhnout"></feather-icon>
               </a>
-              <button class="icon-button small" title="Přidat účastníka" aria-label="Přidat účastníka"
+              <button class="icon-button small" title="Přidat účastníka bez Slacku"
+                      aria-label="Přidat účastníka bez Slacku"
                       @click="${renderModalDialog("add-attendee-modal")}">
                 <feather-icon name="user-plus" title="Přidat"></feather-icon>
               </button
