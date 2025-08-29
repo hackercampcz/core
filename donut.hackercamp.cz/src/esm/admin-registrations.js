@@ -264,9 +264,6 @@ export async function selectionBar(selectedView, selection, data) {
             <button class="icon-button small" title="Vyfakturovat" @click="${renderModalDialog("invoice")()}">
               ${iconFakturoid()}
             </button>
-            <button class="icon-button small" title="Označit jako zaplacené" @click="${renderModalDialog("paid")}">
-              <feather-icon name="dollar-sign" title="Označit jako zaplacené"></feather-icon>
-            </button>
           `)
   }
       ${
@@ -413,6 +410,9 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           <button class="icon-button small" title="Vyfakturovat" @click="${renderModalDialog("invoice")}">
             ${iconFakturoid()}
           </button>
+          <button class="icon-button small" title="Označit jako zaplacené" @click="${renderModalDialog("paid")}">
+            <feather-icon name="dollar-sign" title="Označit jako zaplacené"></feather-icon>
+          </button>
           <button class="icon-button small" title="Převést registraci z předchozích let"
                   @click="${renderModalDialog("transfer")}">
             <feather-icon name="refresh-ccw" title="Obnovit"></feather-icon>
@@ -429,7 +429,11 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           <button class="icon-button small" title="Opt out" @click="${optout(detail.email)}"
                   aria-label="Zamítnout účastníka">
             <feather-icon name="user-minus" title="Zamítnout"></feather-icon>
-          </button>`)
+          </button>
+          <button class="icon-button small" title="Označit jako zaplacené" @click="${renderModalDialog("paid")}">
+            <feather-icon name="dollar-sign" title="Označit jako zaplacené"></feather-icon>
+          </button>
+      `)
   }
         <button class="icon-button small" title="Odstranit registraci" @click="${trashRegistration(detail.email)}">
           <feather-icon name="trash-2" title="Smazat"></feather-icon>
