@@ -410,7 +410,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           <button class="icon-button small" title="Vyfakturovat" @click="${renderModalDialog("invoice")}">
             ${iconFakturoid()}
           </button>
-          <button class="icon-button small" title="Označit jako zaplacené" @click="${renderModalDialog("paid")}">
+          <button class="icon-button small" title="Označit jako zaplacené" @click="${renderModalDialog("pay")}">
             <feather-icon name="dollar-sign" title="Označit jako zaplacené"></feather-icon>
           </button>
           <button class="icon-button small" title="Převést registraci z předchozích let"
@@ -430,7 +430,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
                   aria-label="Zamítnout účastníka">
             <feather-icon name="user-minus" title="Zamítnout"></feather-icon>
           </button>
-          <button class="icon-button small" title="Označit jako zaplacené" @click="${renderModalDialog("paid")}">
+          <button class="icon-button small" title="Označit jako zaplacené" @click="${renderModalDialog("pay")}">
             <feather-icon name="dollar-sign" title="Označit jako zaplacené"></feather-icon>
           </button>
       `)
