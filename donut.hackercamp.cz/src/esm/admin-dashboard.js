@@ -57,7 +57,7 @@ const htmlLegendPlugin = {
 
 async function fetchData({ endpoint, year, page, query }, apiHost) {
   const resource = new URL(`admin/${endpoint}`, apiHost).href;
-  const resp = await withAuthHandler(fetch(resource), {
+  const resp = await withAuthHandler(fetch(resource, { credentials: "include" }), {
     onUnauthenticated() {
       setReturnUrl(location.href);
       return new Promise((resolve, reject) => {
