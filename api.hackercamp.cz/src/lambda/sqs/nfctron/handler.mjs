@@ -30,7 +30,7 @@ function updateAttendee(attendee) {
 }
 
 async function getPairingTable() {
-  console.log({ event: "Get NFCTron Chips", slackID: attendee.slackID });
+  console.log({ event: "Get NFCTron Chips" });
   const resp = await fetch("https://api.hackercamp.cz/v2/nfctron");
   const data = await resp.json();
   console.log({ event: "Got NFCTron Chips", count: data.length });
