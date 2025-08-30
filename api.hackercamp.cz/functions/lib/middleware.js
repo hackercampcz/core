@@ -1,3 +1,5 @@
+import { authorize, getToken } from "./auth.js";
+
 export async function allowCredentials({ next }) {
   const response = await next();
   response.headers.set("Access-Control-Allow-Credentials", "true");
@@ -9,4 +11,20 @@ export async function cors({ request, next }) {
   response.headers.set("Access-Control-Allow-Origin", request.headers.get("origin") ?? "*");
   response.headers.set("Access-Control-Max-Age", "86400");
   return response;
+}
+
+export function roleAuthorization(role) {
+  /**
+   * @param {EventContext<Env>} context
+   */
+  return async function authorization({ request, next, env }) {
+    const token = getToken(request.headers);
+    const privateKey = env.HC_JWT_SECRET;
+    const isAuthorized = await authorize(role, token, privateKey);
+
+    if (isAuthorized) return next();
+
+    const query = new URLSearchParams({ returnUrl: request.url });
+    return Response.redirect(`https://${env.HC_DONUT_HOSTNAME}/?${query}`, 307);
+  };
 }

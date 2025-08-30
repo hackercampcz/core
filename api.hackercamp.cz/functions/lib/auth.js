@@ -80,18 +80,3 @@ export async function authorize(role, token, secret) {
   }
 }
 
-export function roleAuthorization(role) {
-  /**
-   * @param {EventContext<Env>} context
-   */
-  return async function authorization({ request, next, env }) {
-    const token = getToken(request.headers);
-    const privateKey = env.HC_JWT_SECRET;
-    const isAuthorized = await authorize(role, token, privateKey);
-
-    if (isAuthorized) return next();
-
-    const query = new URLSearchParams({ returnUrl: request.url });
-    return Response.redirect(`https://${env.HC_DONUT_HOSTNAME}/?${query}`, 307);
-  };
-}
