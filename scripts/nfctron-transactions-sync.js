@@ -1,6 +1,6 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
-import { getTransactions } from "./lib/nfctron.js";
+import { parseArgs } from "jsr:@std/cli/parse-args";
+import { getPairingTable, getTransactions } from "./lib/nfctron.js";
 
 const dynamo = createClient();
 
@@ -32,11 +32,16 @@ async function updateAttendee(year, slackID, nfcTronData) {
 
 async function main({ year }) {
   const attendees = await getAttendees(year);
+  const pairingTable = await getPairingTable();
+  console.log(`Got ${attendees.length} attendees`);
   for await (const page of attendees) {
     for (const attendee of page) {
       for (const data of attendee.nfcTronData.filter(x => x.sn)) {
-        if (attendee.nfcTronData.transactions) continue;
+        // if (attendee.nfcTronData.transactions) continue;
+        if (!data.chipID) Object.assign(data, pairingTable.get(data.sn));
+        if (!data.chipID) continue;
         const [transactions, totalSpent] = await getTransactions(data.chipID);
+        console.log({ slackID: attendee.slackID, chipID: data.chipID, totalSpent });
         if (!transactions?.length) continue;
         data.transactions = transactions;
         data.totalSpent = totalSpent;
@@ -46,6 +51,6 @@ async function main({ year }) {
   }
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config nfctron-transactions-sync.js --year=2023
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-import --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config nfctron-transactions-sync.js --year=2025
