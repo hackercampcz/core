@@ -4,8 +4,8 @@ import { lambda } from "@pulumi/aws/types/input";
 import { LambdaAuthorizer, Method } from "@pulumi/awsx/classic/apigateway";
 import { Parameter } from "@pulumi/awsx/classic/apigateway/requestValidator";
 import * as pulumi from "@pulumi/pulumi";
-import { Api, ApiRoute, CacheSettings } from "@topmonks/pulumi-aws";
 import * as path from "node:path";
+import { Api, ApiRoute, CacheSettings } from "../infrastructure/apigateway";
 
 const config = new pulumi.Config();
 const postmarkConfig = new pulumi.Config("postmark");
@@ -283,7 +283,7 @@ const getHandler = (
 ): aws.lambda.Function =>
   new aws.lambda.Function(name, {
     publish: true,
-    runtime: "nodejs20.x",
+    runtime: aws.lambda.Runtime.NodeJS22dX,
     architectures: ["arm64"],
     role: role.arn,
     handler: "index.handler",
@@ -640,7 +640,7 @@ export function createApi(
     routes: Object.entries(routes).map(([name, route]) => createHandlerRoute(name, route))
   });
 
-  return { url: api.gateway.url };
+  return { url: api.gateway.url, docsUrl: api.openApiUrl };
 }
 
 interface HandlerArgs {
