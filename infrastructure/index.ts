@@ -24,7 +24,9 @@ const account = new cloudflare.Account(
   "rarous",
   {
     name: "rarous",
-    enforceTwofactor: true
+    settings: {
+      enforceTwofactor: true
+    }
   },
   { protect: true }
 );
@@ -32,9 +34,8 @@ const account = new cloudflare.Account(
 const hackercampCzZone = new cloudflare.Zone(
   "hackercamp.cz",
   {
-    accountId: account.id,
-    plan: "free",
-    zone: domain
+    account: { id: account.id },
+    name: domain
   },
   { protect: true }
 );
@@ -42,9 +43,8 @@ const hackercampCzZone = new cloudflare.Zone(
 const hckrCampZone = new cloudflare.Zone(
   "hckr.camp",
   {
-    accountId: account.id,
-    plan: "free",
-    zone: "hckr.camp"
+    account: { id: account.id },
+    name: "hckr.camp"
   },
   { protect: true }
 );
@@ -94,20 +94,20 @@ const webPages = new cloudflare.PagesProject("web", {
   productionBranch: "trunk",
   deploymentConfigs: {
     production: {
-      compatibilityDate: "2023-09-29",
-      environmentVariables: {
-        HC_API_HOSTNAME: config.require("api-domain"),
-        HC_DONUT_HOSTNAME: config.require("donut-domain"),
-        HC_WEB_HOSTNAME: config.require("domain"),
-        HC_START_DATE: config.require("start-date"),
-        HC_END_DATE: config.require("end-date")
+      compatibilityDate: "2025-09-01",
+      envVars: {
+        HC_API_HOSTNAME: { type: "plain_text", value: config.require("api-domain") },
+        HC_DONUT_HOSTNAME: { type: "plain_text", value: config.require("donut-domain") },
+        HC_WEB_HOSTNAME: { type: "plain_text", value: config.require("domain") },
+        HC_START_DATE: { type: "plain_text", value: config.require("start-date") },
+        HC_END_DATE: { type: "plain_text", value: config.require("end-date") }
       }
     }
   }
 });
 
 // APEX records for redirect to www (redirect is currently handled in hckr.studio/webs stack)
-new cloudflare.Record(`${webDomain}/apex-dns-record`, {
+new cloudflare.DnsRecord(`${webDomain}/apex-dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "@",
   type: "A",
@@ -116,7 +116,7 @@ new cloudflare.Record(`${webDomain}/apex-dns-record`, {
   proxied: true
 });
 
-new cloudflare.Record(`${webDomain}/apex-ipv6-dns-record`, {
+new cloudflare.DnsRecord(`${webDomain}/apex-ipv6-dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "@",
   type: "AAAA",
@@ -125,7 +125,7 @@ new cloudflare.Record(`${webDomain}/apex-ipv6-dns-record`, {
   proxied: true
 });
 
-const wwwRecord = new cloudflare.Record(`${webDomain}/dns-record`, {
+const wwwRecord = new cloudflare.DnsRecord(`${webDomain}/dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "www",
   type: "CNAME",
@@ -136,9 +136,11 @@ const wwwRecord = new cloudflare.Record(`${webDomain}/dns-record`, {
 
 const webPagesDomain = new cloudflare.PagesDomain("web-domain", {
   accountId: account.id,
-  domain: wwwRecord.hostname,
+  name: pulumi.interpolate`${wwwRecord.name}.${hackercampCzZone.name}`,
   projectName: webPages.name
 });
+
+export const webUrl = pulumi.interpolate`https://${webPagesDomain.name}/`;
 
 const donutPages = new cloudflare.PagesProject("donut", {
   accountId: account.id,
@@ -146,20 +148,18 @@ const donutPages = new cloudflare.PagesProject("donut", {
   productionBranch: "trunk",
   deploymentConfigs: {
     production: {
-      compatibilityDate: "2023-09-29",
-      environmentVariables: {
-        HC_API_HOSTNAME: config.require("api-domain"),
-        HC_DONUT_HOSTNAME: config.require("donut-domain"),
-        HC_WEB_HOSTNAME: config.require("domain")
-      },
-      secrets: {
-        HC_JWT_SECRET: config.require("private-key")
+      compatibilityDate: "2025-09-01",
+      envVars: {
+        HC_API_HOSTNAME: { type: "plain_text", value: config.require("api-domain") },
+        HC_DONUT_HOSTNAME: { type: "plain_text", value: config.require("donut-domain") },
+        HC_WEB_HOSTNAME: { type: "plain_text", value: config.require("domain") },
+        HC_JWT_SECRET: { type: "secret_text", value: config.require("private-key") }
       }
     }
   }
 });
 
-const donutRecord = new cloudflare.Record(`${donutDomain}/dns-record`, {
+const donutRecord = new cloudflare.DnsRecord(`${donutDomain}/dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "donut",
   type: "CNAME",
@@ -170,9 +170,11 @@ const donutRecord = new cloudflare.Record(`${donutDomain}/dns-record`, {
 
 const donutPagesDomain = new cloudflare.PagesDomain("donut-domain", {
   accountId: account.id,
-  domain: donutRecord.hostname,
+  name: pulumi.interpolate`${donutRecord.name}.${hackercampCzZone.name}`,
   projectName: donutPages.name
 });
+
+export const donutUrl = pulumi.interpolate`https://${donutPagesDomain.name}/`;
 
 const apiPages = new cloudflare.PagesProject("api", {
   accountId: account.id,
@@ -180,28 +182,26 @@ const apiPages = new cloudflare.PagesProject("api", {
   productionBranch: "trunk",
   deploymentConfigs: {
     production: {
-      compatibilityDate: "2024-11-11",
-      environmentVariables: {
-        API_HOST: api.url.apply(x => new URL("/v1/", x).href),
-        AWS_REGION: awsConfig.require("region"),
-        FAKTUROID_CLIENT_ID: config.require("fakturoid-client-id"),
-        GOOGLE_API_KEY: config.require("google-api-key"),
-        HC_API_HOSTNAME: config.require("api-domain"),
-        HC_DONUT_HOSTNAME: config.require("donut-domain"),
-        HC_WEB_HOSTNAME: config.require("domain"),
-        NFCTRON_BEARER_TOKEN: config.require("nfctron-bearer-token"),
-        NFCTRON_EVENT_ID: config.require("nfctron-event-id"),
-        ROLLBAR_TOKEN: config.require("rollbar-access-token")
-      },
-      secrets: {
-        HC_JWT_SECRET: config.require("private-key"),
-        FAKTUROID_CLIENT_SECRET: config.require("fakturoid-client-secret")
+      compatibilityDate: "2025-09-01",
+      envVars: {
+        API_HOST: { type: "plain_text", value: api.url.apply(x => new URL("/v1/", x).href) },
+        AWS_REGION: { type: "plain_text", value: awsConfig.require("region") },
+        FAKTUROID_CLIENT_ID: { type: "plain_text", value: config.require("fakturoid-client-id") },
+        FAKTUROID_CLIENT_SECRET: { type: "secret_text", value: config.require("fakturoid-client-secret") },
+        GOOGLE_API_KEY: { type: "secret_text", value: config.require("google-api-key") },
+        HC_API_HOSTNAME: { type: "plain_text", value: config.require("api-domain") },
+        HC_DONUT_HOSTNAME: { type: "plain_text", value: config.require("donut-domain") },
+        HC_JWT_SECRET: { type: "secret_text", value: config.require("private-key") },
+        HC_WEB_HOSTNAME: { type: "plain_text", value: config.require("domain") },
+        NFCTRON_BEARER_TOKEN: { type: "secret_text", value: config.require("nfctron-bearer-token") },
+        NFCTRON_EVENT_ID: { type: "plain_text", value: config.require("nfctron-event-id") },
+        ROLLBAR_TOKEN: { type: "secret_text", value: config.require("rollbar-access-token") }
       }
     }
   }
 });
 
-const apiRecord = new cloudflare.Record(`${apiDomain}/dns-record`, {
+const apiRecord = new cloudflare.DnsRecord(`${apiDomain}/dns-record`, {
   zoneId: hackercampCzZone.id,
   name: "api",
   type: "CNAME",
@@ -212,11 +212,13 @@ const apiRecord = new cloudflare.Record(`${apiDomain}/dns-record`, {
 
 const apiPagesDomain = new cloudflare.PagesDomain("api-domain", {
   accountId: account.id,
-  domain: apiRecord.hostname,
+  name: pulumi.interpolate`${apiRecord.name}.${hackercampCzZone.name}`,
   projectName: apiPages.name
 });
 
-new cloudflare.Record(`hckr.camp/apex-dns-record`, {
+export const newApiUrl = pulumi.interpolate`https://${apiPagesDomain.name}/v2/`;
+
+new cloudflare.DnsRecord(`hckr.camp/apex-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "@",
   type: "A",
@@ -225,7 +227,7 @@ new cloudflare.Record(`hckr.camp/apex-dns-record`, {
   proxied: true
 });
 
-new cloudflare.Record(`hckr.camp/apex-ipv6-dns-record`, {
+new cloudflare.DnsRecord(`hckr.camp/apex-ipv6-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "@",
   type: "AAAA",
@@ -234,7 +236,7 @@ new cloudflare.Record(`hckr.camp/apex-ipv6-dns-record`, {
   proxied: true
 });
 
-new cloudflare.Record(`hckr.camp/www-dns-record`, {
+new cloudflare.DnsRecord(`hckr.camp/www-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "www",
   type: "A",
@@ -243,7 +245,7 @@ new cloudflare.Record(`hckr.camp/www-dns-record`, {
   proxied: true
 });
 
-new cloudflare.Record(`hckr.camp/www-ipv6-dns-record`, {
+new cloudflare.DnsRecord(`hckr.camp/www-ipv6-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "www",
   type: "AAAA",
@@ -252,7 +254,7 @@ new cloudflare.Record(`hckr.camp/www-ipv6-dns-record`, {
   proxied: true
 });
 
-new cloudflare.Record(`hckr.camp/donut-dns-record`, {
+new cloudflare.DnsRecord(`hckr.camp/donut-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "donut",
   type: "A",
@@ -261,7 +263,7 @@ new cloudflare.Record(`hckr.camp/donut-dns-record`, {
   proxied: true
 });
 
-new cloudflare.Record(`hckr.camp/donut-ipv6-dns-record`, {
+new cloudflare.DnsRecord(`hckr.camp/donut-ipv6-dns-record`, {
   zoneId: hckrCampZone.id,
   name: "donut",
   type: "AAAA",
