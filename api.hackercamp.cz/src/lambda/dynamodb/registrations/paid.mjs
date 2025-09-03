@@ -95,7 +95,7 @@ async function paidRegistrations(event) {
     const contact = await getContact(dynamo, email);
     if (!contact) {
       console.log({ event: "No contact found", email });
-      // TODO: check if we have existing Slack user with the same email first
+      // TODO: check if we have existing Slack user with the same email first, if so, create contact instead
       await sendSlackInvitation(email, process.env.postmark_token);
     } else {
       const attendee = await getAttendee(dynamo, contact.slackID, year);
