@@ -1,4 +1,4 @@
-import { DynamoDBClient, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
+import { DynamoDBClient, GetItemCommand, PutItemCommand, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { SendMessageCommand, SQSClient } from "@aws-sdk/client-sqs";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { attributes, mapper } from "@hackercamp/lib/attendee.js";
@@ -66,6 +66,16 @@ function enqueueSlackWelcomeMessage(user) {
   );
 }
 
+async function getAttendee(dynamo, slackID, year) {
+  console.log("Get attendee", { slackID, year });
+  const result = await dynamo.send(
+    new GetItemCommand({
+      TableName: "attendees",
+      Key: { slackID: { S: slackID }, year: { N: year.toString() } }
+    })
+  );
+  return result.Item;
+}
 /**
  * @param {DynamoDBStreamEvent} event
  * @returns {Promise<void>}
@@ -88,6 +98,8 @@ async function paidRegistrations(event) {
       // TODO: check if we have existing Slack user with the same email first
       await sendSlackInvitation(email, process.env.postmark_token);
     } else {
+      const attendee = await getAttendee(dynamo, contact.slackID, year);
+      if (attendee) return;
       await Promise.all([
         createAttendee(dynamo, contact, record),
         enqueueSlackWelcomeMessage({ id: contact.slackID, year: parseInt(year) })
