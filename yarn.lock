@@ -3630,7 +3630,7 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:*"
     "@hackercamp/donut": "workspace:*"
-    "@pulumi/aws": "npm:7.6.0"
+    "@pulumi/aws": "npm:7.7.0"
     "@pulumi/awsx": "npm:3.0.0"
     "@pulumi/cloudflare": "npm:6.8.0"
     "@pulumi/pulumi": "npm:3.193.0"
@@ -4919,7 +4919,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.6.0, @pulumi/aws@npm:^7.0.0":
+"@pulumi/aws@npm:7.7.0":
+  version: 7.7.0
+  resolution: "@pulumi/aws@npm:7.7.0"
+  dependencies:
+    "@pulumi/pulumi": "npm:^3.142.0"
+    mime: "npm:^2.0.0"
+  checksum: 10c0/f95e01cad9c1b2649b6e532b4589eb21aa428a0e81c6f13fd367cf862d33e1907f59bbe491c170b1e4bce68a698b8cb010eb437d68b2bd85c24f7edd05b8035d
+  languageName: node
+  linkType: hard
+
+"@pulumi/aws@npm:^7.0.0":
   version: 7.6.0
   resolution: "@pulumi/aws@npm:7.6.0"
   dependencies:
