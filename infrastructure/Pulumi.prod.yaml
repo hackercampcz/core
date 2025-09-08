@@ -24,7 +24,7 @@ config:
     secure: AAABAFoqfAzlH7/6PKtRAd9YkdKTq6nh8TAxvRiE+gvxZVnQgjIODABcM45H7qXA07VYG4u012kXc+woVf5XduGPIZdANWc=
   hackercamp:nfctron-event-id: 15d9ccaa-233f-4caf-a598-3b04af047125
   hackercamp:nfctron-bearer-token:
-    secure: AAABAIkg8UylGmajzFF3YzZM2oT6id2RbBAUjXdDN2IlM0UIhv4bdA/75TCDO0ci15Wlhu0Ge51098AT5WgFGrjCtm7TINkISr2GTnlTef1Lyyg7gvKuTWZaQgerzg0347F1TXbzJoMY7l1cLC576dmCxUqHp7JrQj0LRAV3hZ2zG07x7xwPPBKUaVxUnTGkYwseKCCS9HKmQKg1JXFSaS/ri3X+h+eCH9G/FhhH1aSmOH1i7JRBmRPbk1KFwjpi5i8F5iz6UApw88ISSEhQevXeEkl3zsE9pAZSn5Zj2nyZPU5bmFwpAKcP5eJr9ExodRSbIFkhi4wRMTebmQKv7g==
+    secure: AAABAFx16G0z0lsL/vfwW0TJm4OEa/dh82VwUD8dV28XYwPaLQGfHGO9DZfiznnvP/+TtMzzS5dnt4G86V7dfN4e7I+PzwshZaCBB50O/3+t8T8k5QDdFJWSu9eNrbE0do/MAjZuDpDEzNhFqNJMbzJSGjKQ/tMfGbI23lKj5yFKuQHEd+FjD1faEyHe0IDEyjpTDY8JvMShSx+NgGjnI+gNf3hwbD91l4y8oHuhKme/20UVlgSw7thhraB72bmyIGpKnMFywKRnJuZLf1JdyNPynD7rqlW+ZGEdiX6kqxBVsN0R0jYeD0YQAPzBGZRURvui4wpLDzvhkj4k9Dprtg==
 environment:
   - hackercamp-algolia
   - hackercamp-aws
