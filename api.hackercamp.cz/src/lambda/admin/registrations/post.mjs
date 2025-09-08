@@ -198,18 +198,27 @@ async function invoiced(db, { registrations, invoiceId }) {
  */
 async function markRegistrationAsPaid(db, { key, data }) {
   console.log({ event: "Marking registration as paid", key, data });
+  // Mark registration as paid, so the creation of attendee is triggered
   await db.send(
     new UpdateItemCommand({
       TableName: process.env.db_table_registrations,
       Key: marshall(key, { removeUndefinedValues: true, convertEmptyValues: true }),
       UpdateExpression: "SET paid = :paid, editedBy = :editedBy",
-      ExpressionAttributeValues: marshall({
-        ":paid": new Date().toISOString(),
-        ":editedBy": data.editedBy
-      }, {
-        removeUndefinedValues: true,
-        convertEmptyValues: true
-      })
+      ExpressionAttributeValues: {
+        ":paid": { S: new Date().toISOString() },
+        ":editedBy": { S: data.editedBy }
+      }
+    })
+  );
+  // Revert, so it can be processed (invoiced, paid etc.)
+  await db.send(
+    new UpdateItemCommand({
+      TableName: process.env.db_table_registrations,
+      Key: marshall(key, { removeUndefinedValues: true, convertEmptyValues: true }),
+      UpdateExpression: "REMOVE paid",
+      ExpressionAttributeValues: {
+        ":editedBy": { S: data.editedBy }
+      }
     })
   );
 }
