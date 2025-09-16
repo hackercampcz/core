@@ -1,6 +1,6 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { partition } from "https://esm.sh/@thi.ng/transducers";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { Attachments, sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
@@ -31,10 +31,9 @@ async function getAttendees(year) {
   return new Set(items.map(x => x.email));
 }
 
-async function main({ token }) {
-  const year = 2024;
-  const attendees = await getAttendees(year);
-  const skip = new Set(["adam@influencer.cz", "michaela.mcclelland@javorina.com", "adam@lepsinapad.cz"]);
+async function main({ token, year }) {
+  const attendees = await getAttendees(Number.parseInt(year));
+  const skip = new Set(["auris.kepkova@gmail.com"]);
   console.log(`Found ${attendees.size} attendees`);
   const emails = attendees.difference(skip);
   console.log(`Found ${emails.size} emails`);
@@ -44,7 +43,7 @@ async function main({ token }) {
       emails: batch,
       templateId: Template.FeedbackResults,
       tag: "feedback",
-      attachments: [Attachments.Event2025]
+      attachments: [Attachments.Event2026]
     });
     for (const item of resp) {
       if (item.ErrorCode) console.error(item);
@@ -54,6 +53,6 @@ async function main({ token }) {
   console.log("DONE");
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-feedback.js --token=$(op read "op://HackerCamp/Postmark/credential")
+// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-feedback.js --token=$(op read "op://HackerCamp/Postmark/credential") --year=2025
