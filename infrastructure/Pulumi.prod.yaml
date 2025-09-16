@@ -18,8 +18,8 @@ config:
     secure: AAABAPVKNBH+3caqm5hEgc2T0CgPxs5CJc4gkWRDYtcLBlPPny2aJc2bDVdtNk2zbxWUTks8m5n4CN+XcmTkd+y/wlrJtIS25/aqZTMLo4uvc1uFCFFtEd4=
   hackercamp:web-domain: www.hackercamp.cz
   hackercamp:year: "2025"
-  hackercamp:start-date: "20250828"
-  hackercamp:end-date: "20250831"
+  hackercamp:start-date: "20260827"
+  hackercamp:end-date: "20260830"
   hackercamp:google-api-key:
     secure: AAABAFoqfAzlH7/6PKtRAd9YkdKTq6nh8TAxvRiE+gvxZVnQgjIODABcM45H7qXA07VYG4u012kXc+woVf5XduGPIZdANWc=
   hackercamp:nfctron-event-id: 15d9ccaa-233f-4caf-a598-3b04af047125
