@@ -13,7 +13,7 @@ Ano, **opět to bude 35\. týden v roce, tedy 27\. \- 29\. 8\. (nebo spíš si v
 
 Takže si vložte Hacker Camp 2026 do kalendářů tudy: [Google](https://hckr.camp/gcal/2026), [iCal](https://hckr.camp/ical)\!
 
-Pro nedočkavé: Registraci na další roční otevřeme zase na přelomu zimy a jara, jak si s \#HackerCamp @crew uděláme
+Pro nedočkavé: Registraci na další roční otevřeme zase na přelomu zimy a jara, jak si s `#HackerCamp` `@crew` uděláme
 výkop k dalšímu ročníku. Ale můžeme se vidět už 27\. 11\. na after party [DataDaye](https://www.dataday.cz/).
 Ta je vám všem otevřená - ideálně si vemte náramek nebo tričko z Campu, ať vás rychle poznáme. :)
 
@@ -22,7 +22,7 @@ Ta je vám všem otevřená - ideálně si vemte náramek nebo tričko z Campu, 
 Zajímá nás, čeho máme dělat víc, čeho míň a co rozhodně neměnit. Snad jste se už mohli přesvědčit,
 že vaši zpětnou vazbu čteme a nebere na lehkou váhu, tak se s námi podělte o to, jak má camp vypadat.
 
-A už se můžete rovnou zamyslet nad tím, co vy sami můžete další rok udělat jinak. @rarous je na tuhle vaší
+A už se můžete rovnou zamyslet nad tím, co vy sami můžete další rok udělat jinak. `@rarous` je na tuhle vaší
 osobní reflexi zvědavý, takže ji můžete dát do komentáře na konec a udělat mu radost :)
 
 Chceme, abyste se na Camp chtěli vrátit, pozvat na něj lidí, co máte rádi a užít si ho naplno.
@@ -31,7 +31,7 @@ Jsme zvědaví\! Tak už nás nenapínejte. "[*Ok, řeknu vám to*](https://hckr
 
 Těšíme se nejpozději zase za rok\!
 
-Vaše Hacker Camp @crew: Kuba, Kosi, Pája, Jirka, Aleš a Ir.
+Vaše Hacker Camp `@crew`: Kuba, Kosi, Pája, Jirka, Aleš a Ir.
 
 P.S. Děkujeme i jménem všech dobrovolníků, bez kterých by tábor nestál, nebo byste bez nich nedostali svoje drinky,
 neupekli si buřty na ohni, neudělali své origoš HC tričko, nebo netrefili parking / cestu na vlak. 💙
