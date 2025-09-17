@@ -207,7 +207,8 @@ function travelText(travel) {
   }
 }
 
-function housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers }) {
+function housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers, event, year }) {
+  if (isEnded(event, year)) return "";
   return html`
     <div class="hc-card hc-card--decorated">
       <p>
