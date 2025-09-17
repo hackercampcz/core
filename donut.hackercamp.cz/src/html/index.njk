@@ -4,7 +4,6 @@
 
 {% block head %}
   <style>
-
     :root {
       --slack-btn-background-color: #fff;
       --slack-btn-text-color: #000;
@@ -101,14 +100,9 @@
 {% block scripts %}
 <script type="module">
   import { main } from "{{ 'index.js' | assetUrl('esm') }}";
-
-  if (import.meta.hot) {
-    import.meta.hot.accept((newModule) => {
-      console.log(newModule)
-    })
-  }
   const build = {{ collections.build | dump(8) | safe }};
-  const env = Object.assign({ year: {{ year }}, hasRegisteredHackers: Boolean({{ collections.hackers | length }}) }, build);
+  const event = {{ event | dump(8) | safe }};
+  const env = Object.assign({ year: {{ year }}, event, hasRegisteredHackers: Boolean({{ collections.hackers | length }}) }, build);
   main({
     searchParams: new URLSearchParams(location.search),
     rootElement: document.getElementById("dashboard"),
