@@ -2,6 +2,7 @@ import "lite-youtube-embed";
 import event, { isEnded } from "@hackercamp/lib/event.js";
 import { formatMoney } from "@hackercamp/lib/format.js";
 import { housingToText } from "@hackercamp/lib/housing.js";
+import { processTypo } from "@hckr_/blendid/lib/texy.mjs.mjs";
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { map } from "lit-html/directives/map.js";
@@ -310,6 +311,8 @@ function plusOneCard(referralLink) {
 function renderDashboardScreen(
   { housing, housingPlacement, travel, events = [], nfcTronData, checkOutPaid },
   referralLink,
+  event,
+  year,
   hasRegisteredHackers,
   showSlackButton
 ) {
@@ -338,15 +341,32 @@ function renderDashboardScreen(
       </div>
     `)
   }
-    <div class="hc-card hc-card--decorated">
+    ${
+    when(isEnded(event, year), () =>
+      html`<div class="hc-card hc-card--decorated">
+        <h2>Zpětná vazba</h2>
+        <p>Pomozte nám další ročník Campu udělat ještě lepší! Moc vás prosíme o 2 minuty vašeho času.
+          <a href="https://hckr.camp/feedback/${year}">Dejte nám zpětnou vazbu k tomu letošnímu campu!</a></p>
+        <p>${
+        processTypo(
+          `Zajímá nás, čeho máme dělat víc, čeho míň a co rozhodně neměnit. Snad jste se už mohli přesvědčit,
+          že vaši zpětnou vazbu čteme a nebere na lehkou váhu, tak se s námi podělte o to, jak má camp vypadat.`,
+          { locale: "cs" }
+        )
+      }</p>
+      </div>`, () =>
+      html`<div class="hc-card hc-card--decorated">
       <h2>Důležité kontakty</h2>
       <ul>
         <li>Odvoz z/na hromadnou dopravu: <a href="tel:+420792365678">792 365 678</a></li>
         <li>Zdravotníci: <a href="tel:+420770670155">770 670 155</a></li>
       </ul>
     </div>
+    `)
+  }
+
     ${when(nfcTronData, () => nfcTronTemplate({ nfcTronData, checkOutPaid }))}
-    ${housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers })}
+    ${housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers, event, year })}
     ${plusOneCard(referralLink)}
     </div>
   `;
@@ -358,13 +378,13 @@ function canSelectHousing(registration, attendee) {
   return registration?.paid || freeTickets.has(attendee?.ticketType);
 }
 
-function renderIndex({ profile, attendee, selectedView, hasRegisteredHackers, showSlackButton }) {
+function renderIndex({ event, year, profile, attendee, selectedView, hasRegisteredHackers, showSlackButton }) {
   const referralLink = `https://hckr.camp/r/${profile?.sub}`;
   switch (selectedView) {
     case View.loading:
       return html`<p>Probíhá přihlašovaní. Chvilku strpení&hellip;</p>`;
     case View.dashboard:
-      return renderDashboardScreen(attendee, referralLink, hasRegisteredHackers, showSlackButton);
+      return renderDashboardScreen(attendee, referralLink, event, year, hasRegisteredHackers, showSlackButton);
     case View.selectHousing:
       return renderPaidScreen(referralLink);
     case View.paymentPending:
