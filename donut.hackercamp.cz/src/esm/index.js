@@ -342,27 +342,37 @@ function renderDashboardScreen(
     `)
   }
     ${
-    when(isEnded(event, year), () =>
-      html`<div class="hc-card hc-card--decorated">
+    when(
+      isEnded(event, year),
+      () =>
+        html`<div class="hc-card hc-card--decorated">
         <h2>Zpětná vazba</h2>
-        <p>Pomozte nám další ročník Campu udělat ještě lepší! Moc vás prosíme o 2 minuty vašeho času.
-          <a href="https://hckr.camp/feedback/${year}">Dejte nám zpětnou vazbu k tomu letošnímu campu!</a></p>
+        <p>Pomozte nám další ročník Campu udělat ještě lepší! Moc vás prosíme o 2 minuty vašeho času.
+          <a href="https://hckr.camp/feedback/${year}">Dejte nám zpětnou vazbu k tomu letošnímu campu!</a></p>
         <p>${
-        processTypo(
-          `Zajímá nás, čeho máme dělat víc, čeho míň a co rozhodně neměnit. Snad jste se už mohli přesvědčit,
+          processTypo(
+            `Zajímá nás, čeho máme dělat víc, čeho míň a co rozhodně neměnit. Snad jste se už mohli přesvědčit,
           že vaši zpětnou vazbu čteme a nebere na lehkou váhu, tak se s námi podělte o to, jak má camp vypadat.`,
-          { locale: "cs" }
-        )
-      }</p>
-      </div>`, () =>
-      html`<div class="hc-card hc-card--decorated">
+            { locale: "cs" }
+          )
+        }</p>
+      </div>
+      <div class="hc-card hc-card--decorated">
+        <h2>Ztráty a nálezy</h2>
+        <p>Zjistili jste, že vám na kempu něco zůstalo? Je možný, že jsme to našli!
+          Podívejte se do kanalálu <a href="https://hackercampworkspace.slack.com/archives/C07KTBJEDLH">#lost-and-found</a>,
+          přihlaste se o svou věc a pak si ji můžete vyzvednout v <a href="https://hckr.space/">hckr.space</a>.</p>
+      </div>`,
+      () =>
+        html`<div class="hc-card hc-card--decorated">
       <h2>Důležité kontakty</h2>
       <ul>
         <li>Odvoz z/na hromadnou dopravu: <a href="tel:+420792365678">792 365 678</a></li>
         <li>Zdravotníci: <a href="tel:+420770670155">770 670 155</a></li>
       </ul>
     </div>
-    `)
+    `
+    )
   }
 
     ${when(nfcTronData, () => nfcTronTemplate({ nfcTronData, checkOutPaid }))}
