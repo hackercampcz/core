@@ -101,8 +101,7 @@
 <script type="module">
   import { main } from "{{ 'index.js' | assetUrl('esm') }}";
   const build = {{ collections.build | dump(8) | safe }};
-  const event = {{ event | dump(8) | safe }};
-  const env = Object.assign({ year: {{ year }}, event, hasRegisteredHackers: Boolean({{ collections.hackers | length }}) }, build);
+  const env = Object.assign({ year: {{ year }}, hasRegisteredHackers: Boolean({{ collections.hackers | length }}) }, build);
   main({
     searchParams: new URLSearchParams(location.search),
     rootElement: document.getElementById("dashboard"),

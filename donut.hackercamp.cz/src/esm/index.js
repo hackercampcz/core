@@ -1,4 +1,5 @@
 import "lite-youtube-embed";
+import event, { isEnded } from "@hackercamp/lib/event.js";
 import { formatMoney } from "@hackercamp/lib/format.js";
 import { housingToText } from "@hackercamp/lib/housing.js";
 import { defAtom } from "@thi.ng/atom";
@@ -37,6 +38,7 @@ const View = {
 const state = defAtom({
   attendee: null,
   contact: null,
+  event: null,
   profile: null,
   registration: null,
   view: renderIndex,
@@ -114,7 +116,7 @@ async function updateProfile(user, token) {
   const fieldName = new Map(fields.map(x => [x.id, x.label]));
   const result = Array.from(Object.entries(profile.fields)).map(([name, { value }]) => [fieldName.get(name), value]);
   console.log("Extended properties", result);
-  // TODO: update attendee with extended properties
+  // TODO: update profiles KV with extended properties @see https://github.com/hackercampcz/core/issues/2570
 }
 
 async function getRegistration(slackID, email, year, apiUrl) {
@@ -466,7 +468,7 @@ export async function main({ searchParams, rootElement, env }) {
   initRenderLoop(state, rootElement);
 
   if (isSignedIn()) {
-    transact(x => Object.assign(x, { apiHost, year, hasRegisteredHackers: env.hasRegisteredHackers }));
+    transact(x => Object.assign(x, { apiHost, year, event, hasRegisteredHackers: env.hasRegisteredHackers }));
     try {
       const profile = getSlackProfile();
       rollbar.configure({
