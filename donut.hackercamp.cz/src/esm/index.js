@@ -362,6 +362,12 @@ function renderDashboardScreen(
         <p>Zjistili jste, že vám na kempu něco zůstalo? Je možný, že jsme to našli!
           Podívejte se do kanalálu <a href="https://hackercampworkspace.slack.com/archives/C07KTBJEDLH">#lost-and-found</a>,
           přihlaste se o svou věc a pak si ji můžete vyzvednout v <a href="https://hckr.space/">hckr.space</a>.</p>
+      </div>
+      <div class="hc-card hc-card--decorated">
+        <h2>Fotky z Hacker Campu</h2>
+        <p>Pokud máte nějaké fotky a videa, o které se chcete podělit, máme na to tradičně sdílenou složku na
+          Google Drive - <a href="/fotky/${year}">Fotky ${year}</a>. (udělejte si tam služku se svým jménem, ať případně víme, za kým jít,
+          pokud budeme chtít něco použít 😉).</p>
       </div>`,
       () =>
         html`<div class="hc-card hc-card--decorated">
