@@ -41,8 +41,8 @@ async function main({ token, year }) {
     const resp = await sendEmailsWithTemplate({
       token,
       emails: batch,
-      templateId: Template.Feedback,
-      tag: "feedback",
+      templateId: Template.FeedbackResults,
+      tag: "feedback-results",
       attachments: [Attachments.Event2026]
     });
     for (const item of resp) {
@@ -55,4 +55,4 @@ async function main({ token, year }) {
 
 await main(parseArgs(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-feedback.js --token=$(op read "op://HackerCamp/Postmark/credential") --year=2025
+// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-feedback-results.js --token=$(op read "op://HackerCamp/Postmark/credential") --year=2025
