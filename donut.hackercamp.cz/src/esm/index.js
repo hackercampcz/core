@@ -2,7 +2,7 @@ import "lite-youtube-embed";
 import event, { isEnded } from "@hackercamp/lib/event.js";
 import { formatMoney } from "@hackercamp/lib/format.js";
 import { housingToText } from "@hackercamp/lib/housing.js";
-import { processTypo } from "@hckr_/blendid/lib/texy.mjs.mjs";
+import { processTypo } from "@hckr_/blendid/lib/texy.mjs";
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { map } from "lit-html/directives/map.js";
