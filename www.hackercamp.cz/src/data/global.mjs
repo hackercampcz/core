@@ -8,7 +8,7 @@ export default {
     lang: "cs",
     generator: "@hckr_/blendid - static site generator and assets pipeline"
   },
-  year: 2025,
+  year: 2026,
   get currentYear() {
     return new Date().getFullYear();
   },
