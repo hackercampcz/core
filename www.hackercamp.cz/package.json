@@ -1,6 +1,6 @@
 {
   "name": "@hackercamp/web",
-  "packageManager": "yarn@4.9.4",
+  "packageManager": "yarn@4.10.0",
   "dependencies": {
     "lite-youtube-embed": "0.3.3"
   },
