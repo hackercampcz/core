@@ -1,7 +1,7 @@
 {
   "name": "@hackercamp/lib",
   "type": "module",
-  "packageManager": "yarn@4.10.0",
+  "packageManager": "yarn@4.10.3",
   "dependencies": {
     "cookie": "1.0.2",
     "jose": "6.1.0"
