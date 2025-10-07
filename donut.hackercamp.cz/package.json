@@ -14,7 +14,7 @@
     "date-fns": "4.1.0",
     "lit-html": "3.3.1",
     "lite-youtube-embed": "0.3.3",
-    "marked": "16.3.0",
+    "marked": "16.4.0",
     "rollbar": "2.26.4",
     "workbox-precaching": "7.3.0",
     "workbox-recipes": "7.3.0",
