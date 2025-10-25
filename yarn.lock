@@ -3659,9 +3659,9 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:*"
     "@hackercamp/donut": "workspace:*"
-    "@pulumi/aws": "npm:7.9.1"
+    "@pulumi/aws": "npm:7.10.0"
     "@pulumi/awsx": "npm:3.0.1"
-    "@pulumi/cloudflare": "npm:6.10.0"
+    "@pulumi/cloudflare": "npm:6.10.1"
     "@pulumi/pulumi": "npm:3.204.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     esbuild: "npm:0.25.11"
@@ -5156,7 +5156,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.9.1, @pulumi/aws@npm:^7.7.0":
+"@pulumi/aws@npm:7.10.0":
+  version: 7.10.0
+  resolution: "@pulumi/aws@npm:7.10.0"
+  dependencies:
+    "@pulumi/pulumi": "npm:^3.142.0"
+    mime: "npm:^2.0.0"
+  checksum: 10c0/d4026bb44c3603ec4a7e0ea2f79006830d2b95f6eefab82664f7ebdd882a712d09305e9b185b8b797dce5dbc950a67eef09bda6f442a965c68d3ac0e3cf9070f
+  languageName: node
+  linkType: hard
+
+"@pulumi/aws@npm:^7.7.0":
   version: 7.9.1
   resolution: "@pulumi/aws@npm:7.9.1"
   dependencies:
@@ -5182,12 +5192,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/cloudflare@npm:6.10.0":
-  version: 6.10.0
-  resolution: "@pulumi/cloudflare@npm:6.10.0"
+"@pulumi/cloudflare@npm:6.10.1":
+  version: 6.10.1
+  resolution: "@pulumi/cloudflare@npm:6.10.1"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
-  checksum: 10c0/659bbcfbd583e2b31d2188d5edb59e3e2eaee1a9ebfcdc43e100909a74acf565486b480a820dd218ebd55b2d9af5491a0f0d9bfad853f783e3ef92120e35ae8c
+  checksum: 10c0/4aec3ea27241bb69c8b71925b70bb34a904f4ecfcd25e768c76f3a793382971456f9c83bb1153875e19159486f1d986114ab9888005bccd1bb76039ab3a9b95f
   languageName: node
   linkType: hard
 
