@@ -3661,7 +3661,7 @@ __metadata:
     "@hackercamp/api": "workspace:*"
     "@hackercamp/donut": "workspace:*"
     "@pulumi/aws": "npm:7.11.0"
-    "@pulumi/awsx": "npm:3.0.1"
+    "@pulumi/awsx": "npm:3.1.0"
     "@pulumi/cloudflare": "npm:6.11.0"
     "@pulumi/pulumi": "npm:3.206.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
@@ -5157,7 +5157,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.11.0":
+"@pulumi/aws@npm:7.11.0, @pulumi/aws@npm:^7.11.0":
   version: 7.11.0
   resolution: "@pulumi/aws@npm:7.11.0"
   dependencies:
@@ -5167,29 +5167,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:^7.7.0":
-  version: 7.9.1
-  resolution: "@pulumi/aws@npm:7.9.1"
-  dependencies:
-    "@pulumi/pulumi": "npm:^3.142.0"
-    mime: "npm:^2.0.0"
-  checksum: 10c0/6e603bb561f18440f2d6643674e24e84a6aaf2daa07ef4f09040ba04744f316a4fc70e44986fa7aca12c7a03e95fa2e9fcd17b364de5c6a82a0c99d88eaa24cb
-  languageName: node
-  linkType: hard
-
-"@pulumi/awsx@npm:3.0.1":
-  version: 3.0.1
-  resolution: "@pulumi/awsx@npm:3.0.1"
+"@pulumi/awsx@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@pulumi/awsx@npm:3.1.0"
   dependencies:
     "@aws-sdk/client-ecs": "npm:^3.405.0"
-    "@pulumi/aws": "npm:^7.7.0"
+    "@pulumi/aws": "npm:^7.11.0"
     "@pulumi/docker": "npm:^4.6.0"
     "@pulumi/docker-build": "npm:^0.0.14"
     "@pulumi/pulumi": "npm:^3.142.0"
     "@types/aws-lambda": "npm:^8.10.23"
     docker-classic: "npm:@pulumi/docker@3.6.1"
     mime: "npm:^2.0.0"
-  checksum: 10c0/f5e5fd8dfbf3b0a698f3c94efbbac1e7a5e54e583d19b14119bc4d07eddb4b1d2880abd0194bb2a61207f95a7da52a32555243077b3eff7ec72d50587acf02cc
+  checksum: 10c0/b09243f78a68e7026deaf53ae8eed3ce6fcd7b6dbbaa12ca2056d64fd54f25d33ee93e7405f5a184692e7e89cc2407b63f8974808a5863bcd2f1c47d37c53db7
   languageName: node
   linkType: hard
 

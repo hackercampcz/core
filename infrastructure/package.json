@@ -7,7 +7,7 @@
     "@hackercamp/api": "workspace:*",
     "@hackercamp/donut": "workspace:*",
     "@pulumi/aws": "7.11.0",
-    "@pulumi/awsx": "3.0.1",
+    "@pulumi/awsx": "3.1.0",
     "@pulumi/cloudflare": "6.11.0",
     "@pulumi/pulumi": "3.206.0",
     "@topmonks/pulumi-aws": "3.1.4",
