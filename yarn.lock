@@ -3661,7 +3661,7 @@ __metadata:
     open-props: "npm:1.7.16"
     postcss-jit-props: "npm:1.0.16"
     rollbar: "npm:2.26.5"
-    web-types-lit: "npm:0.1.0"
+    web-types-lit: "npm:0.1.1"
     workbox-build: "npm:7.4.0"
     workbox-precaching: "npm:7.4.0"
     workbox-recipes: "npm:7.4.0"
@@ -15983,12 +15983,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"web-types-lit@npm:0.1.0":
-  version: 0.1.0
-  resolution: "web-types-lit@npm:0.1.0"
+"web-types-lit@npm:0.1.1":
+  version: 0.1.1
+  resolution: "web-types-lit@npm:0.1.1"
   dependencies:
     lit: "npm:^2.0.0-rc.2"
-  checksum: 10c0/9cfbe4d2b606ba97223394136c27af73324b574c825c9deccf817fcc0fbedccb0f79c93b0a1eb7467d51829837ea1e344b3d4773a8802f2d7e87bc5d7f510f47
+  checksum: 10c0/16fe2f0a092e9513d46304076b27f0f27826ccc39c71cb74aa06dd8fa48df9d54484fe00f8096ba64e40a06a117f2aa39a5da45550547b614c12a5c64440a19e
   languageName: node
   linkType: hard
 
