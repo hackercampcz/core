@@ -1,24 +1,24 @@
 {
   "name": "@hackercamp/api",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.940.0",
-    "@aws-sdk/client-sqs": "3.940.0",
-    "@aws-sdk/util-dynamodb": "3.940.0",
+    "@aws-sdk/client-dynamodb": "3.972.0",
+    "@aws-sdk/client-sqs": "3.972.0",
+    "@aws-sdk/util-dynamodb": "3.972.0",
     "@fast-csv/format": "5.0.5",
     "@hackercamp/infrastructure": "workspace:*",
     "@hackercamp/lib": "workspace:*",
     "@hckr_/cloudflare-pages-plugin-rollbar": "1.1.4",
-    "@thi.ng/transducers": "9.6.18",
-    "algoliasearch": "5.45.0",
-    "fast-xml-parser": "5.3.2",
+    "@thi.ng/transducers": "9.6.21",
+    "algoliasearch": "5.47.0",
+    "fast-xml-parser": "5.3.3",
     "immutable": "5.1.4",
-    "jsonwebtoken": "9.0.2",
+    "jsonwebtoken": "9.0.3",
     "rollbar": "2.26.5"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20251127.0",
-    "@types/node": "24.10.1",
-    "wrangler": "4.51.0"
+    "@cloudflare/workers-types": "4.20260122.0",
+    "@types/node": "24.10.9",
+    "wrangler": "4.59.3"
   },
   "packageManager": "yarn@4.12.0"
 }

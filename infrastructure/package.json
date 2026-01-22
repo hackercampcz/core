@@ -6,12 +6,12 @@
   "dependencies": {
     "@hackercamp/api": "workspace:*",
     "@hackercamp/donut": "workspace:*",
-    "@pulumi/aws": "7.12.0",
+    "@pulumi/aws": "7.16.0",
     "@pulumi/awsx": "3.1.0",
-    "@pulumi/cloudflare": "6.11.0",
-    "@pulumi/pulumi": "3.209.0",
+    "@pulumi/cloudflare": "6.13.0",
+    "@pulumi/pulumi": "3.216.0",
     "@topmonks/pulumi-aws": "3.1.4",
-    "esbuild": "0.27.0",
+    "esbuild": "0.27.2",
     "front-matter": "4.0.2",
     "marked": "17.0.1"
   }
