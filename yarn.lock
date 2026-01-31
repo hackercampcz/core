@@ -3556,7 +3556,7 @@ __metadata:
     lit-html: "npm:3.3.2"
     lite-youtube-embed: "npm:0.3.4"
     marked: "npm:17.0.1"
-    open-props: "npm:1.7.22"
+    open-props: "npm:1.7.23"
     postcss-jit-props: "npm:1.0.16"
     rollbar: "npm:2.26.5"
     workbox-build: "npm:7.4.0"
@@ -12600,10 +12600,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open-props@npm:1.7.22":
-  version: 1.7.22
-  resolution: "open-props@npm:1.7.22"
-  checksum: 10c0/8d11df320f173c2d4e24f771c6fd5211f9f02ad5ac11d0f46d0c1f29972d4ee7fd2f53cd90d4e563479264865760780cb6401cf557141cc784878c4211b25e79
+"open-props@npm:1.7.23":
+  version: 1.7.23
+  resolution: "open-props@npm:1.7.23"
+  checksum: 10c0/2fd5db10db38950eef224d54ddec60a54cbf18201e39f5c720f92153c782255a0c0aca420809611da3166692c449467ca8babeaf151dd2e29fd80c94d6729058
   languageName: node
   linkType: hard
 
