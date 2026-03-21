@@ -93,7 +93,11 @@ const webPages = new cloudflare.PagesProject("web", {
   name: "hackercamp-web",
   productionBranch: "trunk",
   deploymentConfigs: {
+    preview: {
+      failOpen: false,
+    },
     production: {
+      failOpen: false,
       compatibilityDate: "2025-09-01",
       envVars: {
         HC_API_HOSTNAME: { type: "plain_text", value: config.require("api-domain") },
@@ -147,7 +151,11 @@ const donutPages = new cloudflare.PagesProject("donut", {
   name: "hackercamp-donut",
   productionBranch: "trunk",
   deploymentConfigs: {
+    preview: {
+      failOpen: false,
+    },
     production: {
+      failOpen: false,
       compatibilityDate: "2025-09-01",
       envVars: {
         HC_API_HOSTNAME: { type: "plain_text", value: config.require("api-domain") },
@@ -181,7 +189,11 @@ const apiPages = new cloudflare.PagesProject("api", {
   name: "hackercamp-api",
   productionBranch: "trunk",
   deploymentConfigs: {
+    preview: {
+      failOpen: false,
+    },
     production: {
+      failOpen: false,
       compatibilityDate: "2025-09-01",
       envVars: {
         API_HOST: { type: "plain_text", value: api.url.apply(x => new URL("/v1/", x).href) },
