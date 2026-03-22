@@ -3692,7 +3692,7 @@ __metadata:
     fast-xml-parser: "npm:5.5.8"
     immutable: "npm:5.1.5"
     jsonwebtoken: "npm:9.0.3"
-    rollbar: "npm:2.26.5"
+    rollbar: "npm:3.1.0"
     wrangler: "npm:4.76.0"
   languageName: unknown
   linkType: soft
@@ -3730,7 +3730,7 @@ __metadata:
     marked: "npm:17.0.5"
     open-props: "npm:1.7.23"
     postcss-jit-props: "npm:1.0.16"
-    rollbar: "npm:2.26.5"
+    rollbar: "npm:3.1.0"
     workbox-build: "npm:7.4.0"
     workbox-precaching: "npm:7.4.0"
     workbox-recipes: "npm:7.4.0"
@@ -5785,6 +5785,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rrweb/record@npm:^2.0.0-alpha.18":
+  version: 2.0.0-alpha.20
+  resolution: "@rrweb/record@npm:2.0.0-alpha.20"
+  dependencies:
+    "@rrweb/types": "npm:^2.0.0-alpha.20"
+    "@rrweb/utils": "npm:^2.0.0-alpha.20"
+    rrweb: "npm:^2.0.0-alpha.20"
+  checksum: 10c0/84bab7a416791b18b23e855482bde4cfb2308014955b38ed3d6b4182931d76ee5a8d8bf3e0fc9043acd025f1a72bf71b57304498325ca29bca9bbe5bd23ac82d
+  languageName: node
+  linkType: hard
+
+"@rrweb/types@npm:^2.0.0-alpha.20":
+  version: 2.0.0-alpha.20
+  resolution: "@rrweb/types@npm:2.0.0-alpha.20"
+  checksum: 10c0/9529bdc4f27a2b868082c245bb28d828c1c777937cb9deffe766c1d524a5d8b4b27428477ca334f69e126d2024d86042b1512dbfd5da8f93c776c13ee012cc9d
+  languageName: node
+  linkType: hard
+
+"@rrweb/utils@npm:^2.0.0-alpha.20":
+  version: 2.0.0-alpha.20
+  resolution: "@rrweb/utils@npm:2.0.0-alpha.20"
+  checksum: 10c0/b50c32d9c83769bb9e1b50e825eddd350e26ca56d80fd14bbd32c0b5549895aff46566bcb82cb7b7aad84d61fedef27a6d9f40c288d94812a3bbe261c7f3b459
+  languageName: node
+  linkType: hard
+
 "@sigstore/bundle@npm:^2.3.2":
   version: 2.3.2
   resolution: "@sigstore/bundle@npm:2.3.2"
@@ -7114,6 +7139,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/css-font-loading-module@npm:0.0.7":
+  version: 0.0.7
+  resolution: "@types/css-font-loading-module@npm:0.0.7"
+  checksum: 10c0/a74759a14bcc7d60a1a1d863b53b7638d4aa7f88f1d97347426262cc6fe8f9335d8fa80c7e0608cd67e33ff0067608e9b5475a1227a684e1dfad3cac87df1405
+  languageName: node
+  linkType: hard
+
 "@types/estree@npm:0.0.39":
   version: 0.0.39
   resolution: "@types/estree@npm:0.0.39"
@@ -7271,6 +7303,13 @@ __metadata:
   peerDependencies:
     vite: ^6.0.0 || ^7.0.0
   checksum: 10c0/fcbec6f089d3f16f3c2011a8d7cf41920a0b9a97907a36f1dc367527582f98e6e376fa29b1f4d93c265be765ccd90752bfe6558bfaf71cc4f171196dccd19b56
+  languageName: node
+  linkType: hard
+
+"@xstate/fsm@npm:^1.4.0":
+  version: 1.6.5
+  resolution: "@xstate/fsm@npm:1.6.5"
+  checksum: 10c0/472fe625b84b9e7102b8774e80c441b8b7dbc9585e700223d9c7a39c583d38ba50636909a5d749d44b361555daa841862f932a29c52b81c8829a74884e715bf4
   languageName: node
   linkType: hard
 
@@ -7714,6 +7753,13 @@ __metadata:
   version: 2.6.0
   resolution: "bare-events@npm:2.6.0"
   checksum: 10c0/9bdd727a8df81aae14746c9bb860102f6c5aafc028f17e3a8620f40dc8bfe816ed46b0c50cb3200d1a1099f8028da27110cf711267b296767f37d3e4c6a9d4a6
+  languageName: node
+  linkType: hard
+
+"base64-arraybuffer@npm:^1.0.1":
+  version: 1.0.2
+  resolution: "base64-arraybuffer@npm:1.0.2"
+  checksum: 10c0/3acac95c70f9406e87a41073558ba85b6be9dbffb013a3d2a710e3f2d534d506c911847d5d9be4de458af6362c676de0a5c4c2d7bdf4def502d00b313368e72f
   languageName: node
   linkType: hard
 
@@ -8387,13 +8433,6 @@ __metadata:
   version: 0.0.1
   resolution: "concat-map@npm:0.0.1"
   checksum: 10c0/c996b1cfdf95b6c90fee4dae37e332c8b6eb7d106430c17d538034c0ad9a1630cb194d2ab37293b1bdd4d779494beee7786d586a50bd9376fd6f7bcc2bd4c98f
-  languageName: node
-  linkType: hard
-
-"console-polyfill@npm:0.3.0":
-  version: 0.3.0
-  resolution: "console-polyfill@npm:0.3.0"
-  checksum: 10c0/c68dc48f6592300989e8011b2ca26bc02fb641ecb15b5d3b136f9c79dacbac11fc04c1929c86c56fe55b6d0f1e9198011d63931ef3bbc3489cbf8180c0f529c0
   languageName: node
   linkType: hard
 
@@ -9128,7 +9167,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"error-stack-parser@npm:2.1.4, error-stack-parser@npm:^2.0.4":
+"error-stack-parser@npm:2.1.4":
   version: 2.1.4
   resolution: "error-stack-parser@npm:2.1.4"
   dependencies:
@@ -12432,6 +12471,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"mitt@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "mitt@npm:3.0.1"
+  checksum: 10c0/3ab4fdecf3be8c5255536faa07064d05caa3dd332bd318ff02e04621f7b3069ca1de9106cfe8e7ced675abfc2bec2ce4c4ef321c4a1bb1fb29df8ae090741913
+  languageName: node
+  linkType: hard
+
 "mkdirp@npm:^1.0.3":
   version: 1.0.4
   resolution: "mkdirp@npm:1.0.4"
@@ -14192,6 +14238,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postcss@npm:^8.4.38":
+  version: 8.5.8
+  resolution: "postcss@npm:8.5.8"
+  dependencies:
+    nanoid: "npm:^3.3.11"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 10c0/dd918f7127ee7c60a0295bae2e72b3787892296e1d1c3c564d7a2a00c68d8df83cadc3178491259daa19ccc54804fb71ed8c937c6787e08d8bd4bedf8d17044c
+  languageName: node
+  linkType: hard
+
 "presentable-error@npm:^0.0.1":
   version: 0.0.1
   resolution: "presentable-error@npm:0.0.1"
@@ -14735,18 +14792,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollbar@npm:2.26.5":
-  version: 2.26.5
-  resolution: "rollbar@npm:2.26.5"
+"rollbar@npm:3.1.0":
+  version: 3.1.0
+  resolution: "rollbar@npm:3.1.0"
   dependencies:
+    "@rrweb/record": "npm:^2.0.0-alpha.18"
     async: "npm:~3.2.3"
-    console-polyfill: "npm:0.3.0"
-    error-stack-parser: "npm:^2.0.4"
+    error-stack-parser-es: "npm:^1.0.5"
     json-stringify-safe: "npm:~5.0.0"
     lru-cache: "npm:~2.2.1"
     request-ip: "npm:~3.3.0"
     source-map: "npm:^0.5.7"
-  checksum: 10c0/1747b7642273b079291119cbb4af05b4dd371f28b809095473d316257e466cb0adaec80c29b53d1654d3afe802f09c222b7ede52fe4ecc3278e83b40a58a781c
+  checksum: 10c0/5ff2b7cf955dbbd429f651c971b44350023e468650a56e08661104b70e82f5828091f7dfef265479d189d2fa7ba1d91d9791b0ca2036da650bd44e2bbfe03485
   languageName: node
   linkType: hard
 
@@ -14836,6 +14893,40 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 10c0/f428497fe119fe7c4e34f1020d45ba13e99b94c9aa36958d88823d932b155c9df3d84f53166f3ee913ff68ea6c7599a9ab34861d88562ad9d8420f64ca5dad4c
+  languageName: node
+  linkType: hard
+
+"rrdom@npm:^2.0.0-alpha.20":
+  version: 2.0.0-alpha.20
+  resolution: "rrdom@npm:2.0.0-alpha.20"
+  dependencies:
+    rrweb-snapshot: "npm:^2.0.0-alpha.20"
+  checksum: 10c0/c051fb371e1d6101bbd25dfb1b1b42302d533bf8cae99f1e85acd0ed4decc6f9508e6785a7bab6adf26eee66f2de396159a262d4d86fba6dfe9a1473e4b1e74c
+  languageName: node
+  linkType: hard
+
+"rrweb-snapshot@npm:^2.0.0-alpha.20":
+  version: 2.0.0-alpha.20
+  resolution: "rrweb-snapshot@npm:2.0.0-alpha.20"
+  dependencies:
+    postcss: "npm:^8.4.38"
+  checksum: 10c0/15694fa0e9c1c88e824e6e32c1e9d7caa3933d9582f35efb5f4925346280e9ee74a344c38c57a1e0d19c9a60353d4f531c893a5519f02fb25a0bbf9137f87c64
+  languageName: node
+  linkType: hard
+
+"rrweb@npm:^2.0.0-alpha.20":
+  version: 2.0.0-alpha.20
+  resolution: "rrweb@npm:2.0.0-alpha.20"
+  dependencies:
+    "@rrweb/types": "npm:^2.0.0-alpha.20"
+    "@rrweb/utils": "npm:^2.0.0-alpha.20"
+    "@types/css-font-loading-module": "npm:0.0.7"
+    "@xstate/fsm": "npm:^1.4.0"
+    base64-arraybuffer: "npm:^1.0.1"
+    mitt: "npm:^3.0.0"
+    rrdom: "npm:^2.0.0-alpha.20"
+    rrweb-snapshot: "npm:^2.0.0-alpha.20"
+  checksum: 10c0/63418b8ea2bce990d98cd5ea8ce9f59e55a357a74201746a03b2355e6f5e55aeacc346f4a4f101516aba9a6d5432016bd888d70c157a381693aa5ecd4cb1ee7b
   languageName: node
   linkType: hard
 
