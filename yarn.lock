@@ -3546,7 +3546,7 @@ __metadata:
     "@thi.ng/transducers": "npm:9.6.30"
     "@types/node": "npm:24.12.0"
     algoliasearch: "npm:5.49.2"
-    fast-xml-parser: "npm:5.5.8"
+    fast-xml-parser: "npm:5.5.9"
     immutable: "npm:5.1.5"
     jsonwebtoken: "npm:9.0.3"
     rollbar: "npm:3.1.0"
@@ -9541,6 +9541,19 @@ __metadata:
   bin:
     fxparser: src/cli/cli.js
   checksum: 10c0/b0eb5b5b4b02bb2dfac2fac4c19ce834017553e1f74499929a196b67bfe0741389a89dca4662c97bff138646d7c5fd985af59c7a216c433717e854de3355638c
+  languageName: node
+  linkType: hard
+
+"fast-xml-parser@npm:5.5.9":
+  version: 5.5.9
+  resolution: "fast-xml-parser@npm:5.5.9"
+  dependencies:
+    fast-xml-builder: "npm:^1.1.4"
+    path-expression-matcher: "npm:^1.2.0"
+    strnum: "npm:^2.2.2"
+  bin:
+    fxparser: src/cli/cli.js
+  checksum: 10c0/b7f40f586c01a916a75be15b11ec0e83a38483885395bdeca51da8992a75e3d4d9b6c2690f362b975bfcb5118909ee4b0393e18ec9c9151345d5e13152370969
   languageName: node
   linkType: hard
 
@@ -15694,6 +15707,13 @@ __metadata:
   version: 2.2.1
   resolution: "strnum@npm:2.2.1"
   checksum: 10c0/2773632d58f71ef35a3e9111da6533ba5f7da10edcb86ff5c19e0194c017d22509bc6c5cad4902535de384462170f830dc67e2cbd8060d3375f52466a22fb169
+  languageName: node
+  linkType: hard
+
+"strnum@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "strnum@npm:2.2.2"
+  checksum: 10c0/89c456de32b9495ae34cd6e3b59cb9ef3406b66d1429bbc931afd70be87485dcd355200c42fd638a132adb3121762542346813098ab0c43e44aac303bf17965d
   languageName: node
   linkType: hard
 
