@@ -5,6 +5,6 @@
     "lite-youtube-embed": "0.3.4"
   },
   "devDependencies": {
-    "wrangler": "4.78.0"
+    "wrangler": "4.79.0"
   }
 }
