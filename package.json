@@ -14,7 +14,7 @@
     "undertaker-registry": "2.0.0"
   },
   "resolutions": {
-    "lodash": "4.17.23"
+    "lodash": "4.18.1"
   },
   "scripts": {
     "build:api.hackercamp.cz": "mkdir -p dist/api.hackercamp.cz; cp ./api.hackercamp.cz/public/* ./dist/api.hackercamp.cz/",
