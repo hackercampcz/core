@@ -157,43 +157,13 @@
 
 {% block scripts %}
 <script type="module">
+  import { main } from "{{ "program.js" | assetUrl("esm") }}";
+
   const build = {{ collections.build | dump(8) | safe }};
   const env = Object.assign({ year: {{ year }} }, build);
   const form = document.forms.editor;
   const modal = document.getElementById("proposal-editor");
 
-  try {
-    const { year } = env;
-    const { email, sub: slackID } = JSON.parse(localStorage.getItem("slack:profile"));
-    const response = await fetch(
-      `${env["api-host"]}registration?${new URLSearchParams({ email, year, slackID })}`,
-      { headers: { Accept: "application/json" } },
-    );
-    const data = await response.json();
-    form.year.value = year;
-    form.email.value = email;
-    form.activity.value = data.activity ?? "";
-    form.activityCrew.value = data.activityCrew ?? "";
-    form.activityPlace.value = data.activityPlace ?? "";
-  } catch (o_O) {
-    // TODO: log with rollbar
-    console.error(o_O);
-    alert("Něco se kouslo, zkuste to jindy.");
-  }
-
-  form.addEventListener("submit", async e => {
-    const resp = await fetch(`${env["api-host"]}program`, {
-      method: "POST",
-      credentials: "include",
-      mode: "cors",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body : new URLSearchParams(new FormData(e.target)),
-      referrerPolicy: "no-referrer",
-    });
-    globalThis.showSnackbar(resp.ok ? "Data uložena" : "Došlo k chybě");
-    modal.close();
-  });
+  await main({ env, form, modal});
 </script>
 {% endblock %}

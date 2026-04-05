@@ -143,7 +143,7 @@ export async function main({ env, yearSelector, searchParams }) {
         year
       };
     },
-    payload: { person: { name: profile.real_name, email: profile.email, id: profile.id } }
+    payload: { person: { name: profile.real_name, email: profile.email, id: profile.sub } }
   });
 
   yearSelector.value = year;
