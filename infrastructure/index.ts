@@ -94,7 +94,7 @@ const webPages = new cloudflare.PagesProject("web", {
   productionBranch: "trunk",
   deploymentConfigs: {
     preview: {
-      failOpen: false,
+      failOpen: false
     },
     production: {
       failOpen: false,
@@ -152,7 +152,7 @@ const donutPages = new cloudflare.PagesProject("donut", {
   productionBranch: "trunk",
   deploymentConfigs: {
     preview: {
-      failOpen: false,
+      failOpen: false
     },
     production: {
       failOpen: false,
@@ -190,7 +190,7 @@ const apiPages = new cloudflare.PagesProject("api", {
   productionBranch: "trunk",
   deploymentConfigs: {
     preview: {
-      failOpen: false,
+      failOpen: false
     },
     production: {
       failOpen: false,

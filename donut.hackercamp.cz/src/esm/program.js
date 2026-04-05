@@ -16,10 +16,10 @@ export async function main({ env, form, modal }) {
   });
 
   try {
-    const {email, sub: slackID} = profile;
+    const { email, sub: slackID } = profile;
     const response = await fetch(
-      `${env["api-host"]}registration?${new URLSearchParams({email, year, slackID})}`,
-      {headers: {Accept: "application/json"}},
+      `${env["api-host"]}registration?${new URLSearchParams({ email, year, slackID })}`,
+      { headers: { Accept: "application/json" } }
     );
     const data = await response.json();
     form.year.value = year;
@@ -41,7 +41,7 @@ export async function main({ env, form, modal }) {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: new URLSearchParams(new FormData(e.target)),
-      referrerPolicy: "no-referrer",
+      referrerPolicy: "no-referrer"
     });
     globalThis.showSnackbar(resp.ok ? "Data uložena" : "Došlo k chybě");
     if (!resp.ok) {

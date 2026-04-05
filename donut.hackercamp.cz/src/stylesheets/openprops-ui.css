@@ -5,8 +5,9 @@
     --_border-color: var(--primary);
     --_color: var(--gray-1);
     --_inset-offset: 16px;
-    --_inset: auto auto calc(100% - var(--_inset-offset))
-    calc(100% - var(--_inset-offset));
+    --_inset: auto auto calc(100% - var(--_inset-offset)) calc(
+      100% - var(--_inset-offset)
+    );
     --_translate: 0;
 
     display: inline-flex;
@@ -34,20 +35,24 @@
 
     /* Alignment */
     &.start-start {
-      --_inset: auto calc(100% - var(--_inset-offset))
-      calc(100% - var(--_inset-offset)) auto;
+      --_inset: auto calc(100% - var(--_inset-offset)) calc(
+        100% - var(--_inset-offset)
+      ) auto;
     }
     &.start-end {
-      --_inset: auto auto calc(100% - var(--_inset-offset))
-      calc(100% - var(--_inset-offset));
+      --_inset: auto auto calc(100% - var(--_inset-offset)) calc(
+        100% - var(--_inset-offset)
+      );
     }
     &.end-start {
-      --_inset: calc(100% - var(--_inset-offset))
-      calc(100% - var(--_inset-offset)) auto auto;
+      --_inset: calc(100% - var(--_inset-offset)) calc(
+        100% - var(--_inset-offset)
+      ) auto auto;
     }
     &.end-end {
-      --_inset: calc(100% - var(--_inset-offset)) auto auto
-      calc(100% - var(--_inset-offset));
+      --_inset: calc(100% - var(--_inset-offset)) auto auto calc(
+        100% - var(--_inset-offset)
+      );
     }
 
     /* Dot */
@@ -679,7 +684,11 @@
     /* Disabled */
     &:where([disabled]) {
       opacity: 0.64;
-      --_text-color: color-mix(in oklch, var(--text-color-2) 50%, var(--surface-default));
+      --_text-color: color-mix(
+        in oklch,
+        var(--text-color-2) 50%,
+        var(--surface-default)
+      );
       cursor: not-allowed;
     }
   }
@@ -785,11 +794,17 @@
         /* Inverse hover and active backgrounds */
         &:where(:not([disabled])) {
           &:where(:not(:active):hover) {
-            --_bg-color: light-dark(color-mix(in oklch, white 40%, black), color-mix(in oklch, white 85%, black));
+            --_bg-color: light-dark(
+              color-mix(in oklch, white 40%, black),
+              color-mix(in oklch, white 85%, black)
+            );
           }
 
           &:where(:hover:active) {
-            --_bg-color: light-dark(color-mix(in oklch, white 45%, black), color-mix(in oklch, white 80%, black));
+            --_bg-color: light-dark(
+              color-mix(in oklch, white 45%, black),
+              color-mix(in oklch, white 80%, black)
+            );
           }
         }
       }
@@ -1014,7 +1029,7 @@ Lists meant to be used stand-alone or as part of Select elements
         transition: background var(--button-ripple-duration);
         &:where(:not(:active):hover) {
           --ripple: radial-gradient(circle, transparent 1%, var(--_bg-color) 1%)
-          center/15000%;
+            center/15000%;
         }
 
         &:where(:hover:active) {

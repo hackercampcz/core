@@ -79,4 +79,3 @@ export async function authorize(role, token, secret) {
       return false;
   }
 }
-
