@@ -5,23 +5,31 @@ import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
 
+const skip = new Set([
+]);
+
 async function getAllContactsEmails() {
-  const result = await dynamo.scan({
-    TableName: "contacts",
-    ProjectionExpression: "email",
-  });
-  return result.Items.map((x) => x.email);
+  const result = await dynamo.scan({ TableName: "contacts", ProjectionExpression: "email" });
+  return result.Items.map(x => x.email).filter(email => !skip.has(email));
+}
+
+async function spit(emails) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(emails.join("\n") + "\n");
+  await Deno.writeFile("data/contacts.txt", data);
 }
 
 async function main({ token }) {
-  const emails = await getAllContactsEmails();
+  const emails = await getAllContactsEmails(); //correctedBounces; //
   console.log(`Found ${emails.length} contacts`);
+  await spit(emails);
+  return;
   for (const batch of partition(500, true, emails)) {
     const resp = await sendEmailsWithTemplate({
       token,
       emails: batch,
       templateId: Template.HackerInvitation,
-      tag: "hacker-invitation",
+      tag: "hacker-invitation"
     });
     for (const item of resp) {
       if (item.ErrorCode) console.error(item);
