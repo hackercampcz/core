@@ -374,7 +374,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         <button class="icon-button" aria-label="Zavřít detail" title="Zavřít detail" @click="${closeDetail()}">
           <feather-icon name="arrow-left" title="Zpět"></feather-icon>
         </button>
-        <h2 style="margin: 0">${detail.firstName}&nbsp;${detail.lastName}</h2>
+        <h2 style="margin: 0">${detail.firstName} ${detail.lastName}</h2>
         ${
     when(detail.image, () =>
       html`

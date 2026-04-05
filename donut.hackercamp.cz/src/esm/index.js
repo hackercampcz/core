@@ -409,8 +409,8 @@ function renderIndex({ event, year, profile, attendee, selectedView, hasRegister
         <div class="hc-card hc-card--decorated">
           <p>
             Svoje ubytování si budeš moct vybrat až po zaplacení faktury.
-            Tak s&nbsp;tím moc neváhej, abys spal / spala podle svých
-            představ&nbsp;:)
+            Tak s tím moc neváhej, abys spal / spala podle svých
+            představ :)
           </p>
           ${
         when(attendee?.invoiceUrl, () =>

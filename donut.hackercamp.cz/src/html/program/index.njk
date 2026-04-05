@@ -96,32 +96,35 @@
     aktivity, co už táborníci zapsali. Další aktivty přibývají a některé
     mohou hackeři jen nahlásit na začátku každého bloku před Mainframe.
     Zkrátka: Program se může a bude měnit za chodu :) Takže se těš a sleduj
-    co se děje online i&nbsp;offline.</p>
+    co se děje online i offline.</p>
 
   <p>
     {% if program.enabledSheetEdit %}
     <a href="https://donut.hckr.camp/program/edit" class="hc-button">Chci upravit svůj návrh programu</a>
     {% else %}
-    <button class="hc-button" onclick="document.getElementById('proposal-editor').showModal()">Chci upravit svůj návrh programu</button></p>
+    <button class="hc-button" onclick="document.getElementById('proposal-editor').showModal()">Chci upravit svůj návrh programu</button>
     {% endif %}
+  </p>
 
+  {% if program.enabledSheetEdit %}
   <p><a href="https://donut.hckr.camp/program/{{ year }}">Program {{ year }}</a> naleznate na Google Drive.</p>
   <p>Program si můžete <a href="https://donut.hckr.camp/program/kalendar">přidat do Google Kalandáře</a> nebo <a href="http://donut.hckr.camp/program/ical">stáhnout jako iCal</a>.</p>
 
   <iframe src="https://www.hackercamp.cz/w/program/" class="calendar" width="800" height="600"></iframe>
+  {% endif %}
 </div>
 
 <dialog id="proposal-editor">
   <form method="dialog" class="hc-card" id="editor">
-    <p>Každý z&nbsp;účastníků je zároveň aktivní tvůrce programu. Ať jsi
+    <p>Každý z účastníků je zároveň aktivní tvůrce programu. Ať jsi
       jednotlivec, nebo se hlásíš za tým, jak náš Hacker Camp můžeš obohatit?
       Nápady nelimitujeme :) Můžeš přispět přednáškou, workshopem,
       panelovkou, zorganizovat ranní výběh nebo turnaj ve fotbálku. Přivést
-      můžeš i&nbsp;jakýkoliv doprovodný program&nbsp;&ndash; uvítáme vše od pípy, baristy
-      a přípravy kávy až po&nbsp;DJs.</p>
-    <p>V&nbsp;každé aktivitě respektujeme základní pravidlo: Hacker Camp je
-      z&nbsp;principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš
-      propagovat a nabízet jen pokud to obohatí samotnou&nbsp;akci.</p>
+      můžeš i jakýkoliv doprovodný program &ndash; uvítáme vše od pípy, baristy
+      a přípravy kávy až po DJs.</p>
+    <p>V každé aktivitě respektujeme základní pravidlo: Hacker Camp je
+      z principu nekomerční akce. Svoji vlastní službu nebo produkt můžeš
+      propagovat a nabízet jen pokud to obohatí samotnou akci.</p>
     <fieldset>
       <input type="hidden" name="year">
       <input type="hidden" name="email">

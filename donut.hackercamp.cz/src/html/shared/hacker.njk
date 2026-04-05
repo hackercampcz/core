@@ -36,7 +36,7 @@
     </div>
     <h1>{{ profile.real_name }}</h1>
     {% if attendee.company %}<h2>{{ attendee.company }}</h2>{% endif %}
-    <p>Na Slacku jako&nbsp;<a
+    <p>Na Slacku jako <a
         href="https://hackercampworkspace.slack.com/team/{{ attendee.slackID }}"><code>@{{ profile.display_name or profile.real_name }}</code></a>
     </p>
     {% if profile.title %}<p>{{ profile.title }}</p>{% endif %}
