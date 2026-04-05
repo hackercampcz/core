@@ -3603,9 +3603,9 @@ __metadata:
     "@hackercamp/api": "workspace:*"
     "@hackercamp/donut": "workspace:*"
     "@pulumi/aws": "npm:7.24.0"
-    "@pulumi/awsx": "npm:3.3.1"
-    "@pulumi/cloudflare": "npm:6.13.1"
-    "@pulumi/pulumi": "npm:3.228.0"
+    "@pulumi/awsx": "npm:3.4.0"
+    "@pulumi/cloudflare": "npm:6.14.0"
+    "@pulumi/pulumi": "npm:3.229.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     esbuild: "npm:0.27.4"
     front-matter: "npm:4.0.2"
@@ -5285,7 +5285,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.24.0":
+"@pulumi/aws@npm:7.24.0, @pulumi/aws@npm:^7.24.0":
   version: 7.24.0
   resolution: "@pulumi/aws@npm:7.24.0"
   dependencies:
@@ -5295,38 +5295,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:^7.15.0":
-  version: 7.23.0
-  resolution: "@pulumi/aws@npm:7.23.0"
-  dependencies:
-    "@pulumi/pulumi": "npm:^3.142.0"
-    mime: "npm:^2.0.0"
-  checksum: 10c0/e776dd8a68ae1de30a30aa8f8990cab2c4f3e5e715a6377beff6b71fbd8ea882634aa1797d3510797a31844679693a4937d36489a86fd90cf227c11de93ffdd9
-  languageName: node
-  linkType: hard
-
-"@pulumi/awsx@npm:3.3.1":
-  version: 3.3.1
-  resolution: "@pulumi/awsx@npm:3.3.1"
+"@pulumi/awsx@npm:3.4.0":
+  version: 3.4.0
+  resolution: "@pulumi/awsx@npm:3.4.0"
   dependencies:
     "@aws-sdk/client-ecs": "npm:^3.405.0"
-    "@pulumi/aws": "npm:^7.15.0"
+    "@pulumi/aws": "npm:^7.24.0"
     "@pulumi/docker": "npm:^4.6.0"
     "@pulumi/docker-build": "npm:^0.0.14"
     "@pulumi/pulumi": "npm:^3.142.0"
     "@types/aws-lambda": "npm:^8.10.23"
     docker-classic: "npm:@pulumi/docker@3.6.1"
     mime: "npm:^2.0.0"
-  checksum: 10c0/592e7328a2955257f4a81a43f72ef396ab552d333c7e82b71290838fa7abea10240472f56318e311a7e8a2f142f4a2fb2e12e27ae57d171829644de39d66fa2d
+  checksum: 10c0/eea3d24485ab0d1e7539ef2ce10da7fed42cd2a6829e36f563ef363833ce79ab001d4545553f64f5a96d93bd4805908e3f3f8d0b50b5f4baa9bce77ae799a364
   languageName: node
   linkType: hard
 
-"@pulumi/cloudflare@npm:6.13.1":
-  version: 6.13.1
-  resolution: "@pulumi/cloudflare@npm:6.13.1"
+"@pulumi/cloudflare@npm:6.14.0":
+  version: 6.14.0
+  resolution: "@pulumi/cloudflare@npm:6.14.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
-  checksum: 10c0/0f905217ec2d96eb1b31dc33613cb449d10dbcf980472dd09ae15f9d6e75e46b2ce802743b541016e573847fb3be3085d302230a53ee0988583bc7b2b98f4d3e
+  checksum: 10c0/301f94dde9ea5ca810795791db419da7c6e38b9815d240d9fa941173c2005768e7262610122dea8fab6dc320327e8a879f558403325992e7b4dc2dc087640dca
   languageName: node
   linkType: hard
 
@@ -5349,9 +5339,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.228.0":
-  version: 3.228.0
-  resolution: "@pulumi/pulumi@npm:3.228.0"
+"@pulumi/pulumi@npm:3.229.0":
+  version: 3.229.0
+  resolution: "@pulumi/pulumi@npm:3.229.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -5376,7 +5366,7 @@ __metadata:
     minimist: "npm:^1.2.6"
     normalize-package-data: "npm:^6.0.0"
     package-directory: "npm:^8.1.0"
-    picomatch: "npm:^3.0.1"
+    picomatch: "npm:^4.0.0"
     require-from-string: "npm:^2.0.1"
     semver: "npm:^7.5.2"
     source-map-support: "npm:^0.5.6"
@@ -5384,13 +5374,13 @@ __metadata:
     upath: "npm:^1.1.0"
   peerDependencies:
     ts-node: ">= 7.0.1 < 12"
-    typescript: ">= 3.8.3 < 6"
+    typescript: ">= 3.8.3 < 7"
   peerDependenciesMeta:
     ts-node:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/363fa9ba818330dd63cbc516b67865b031e7e4bf20e153b54ef9f464b6afc6bfb47f404d8d6751118be2101df09b9703548a34590a735efc9d355c8f848f1a0b
+  checksum: 10c0/9c4ec3e9b1a1584e6e29a7ee12ecc77c9bf6deff668ef2d51aa64f33073b60ed2e54b71291c05be1eea402da240d87c977ab7ffaf73aad2e28ea1dcda4fcd49c
   languageName: node
   linkType: hard
 
@@ -13247,6 +13237,13 @@ __metadata:
   version: 3.0.1
   resolution: "picomatch@npm:3.0.1"
   checksum: 10c0/70ec738569f1864658378b7abdab8939d15dae0718c1df994eae3346fd33daf6a3c1ff4e0c1a0cd1e2c0319130985b63a2cff34d192f2f2acbb78aca76111736
+  languageName: node
+  linkType: hard
+
+"picomatch@npm:^4.0.0":
+  version: 4.0.4
+  resolution: "picomatch@npm:4.0.4"
+  checksum: 10c0/e2c6023372cc7b5764719a5ffb9da0f8e781212fa7ca4bd0562db929df8e117460f00dff3cb7509dacfc06b86de924b247f504d0ce1806a37fac4633081466b0
   languageName: node
   linkType: hard
 
