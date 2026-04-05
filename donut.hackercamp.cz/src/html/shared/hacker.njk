@@ -6,7 +6,7 @@
 {% block title %}{{ attendee.name }} - Profil hackera{% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="/assets/css/profile.css">
+  <link rel="stylesheet" href="{{ "profile.css" | assetsUrl("stylesheets") }}">
   <script src="https://cdn.jsdelivr.net/gh/nuxodin/dialog-polyfill@x.x.x/dialog.min.js" type="module"></script>
 {% endblock %}
 
@@ -60,7 +60,7 @@
 
 {% block scripts %}
 <script type="module">
-  import {main} from "/assets/esm/profile.js";
+  import { main } from "{{ "profile.js" | assetUrl("esm")  }}";
 
   const build = {{ collections.build | dump(8) | safe }};
   const env = Object.assign({ year: {{ year }} }, build);

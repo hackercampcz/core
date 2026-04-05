@@ -12,7 +12,7 @@
   {% block head_scripts %}{% endblock %}
   {% include "shared/fonts.html" %}
   {% include "shared/styles.html" %}
-  <link rel="stylesheet" href="/assets/css/index.css">
+  <link rel="stylesheet" href="{{ "index.css" | assetUrl("stylesheets") }}">
   {% block head_stylesheets %}{% endblock %}
   {% block head_preload %}{% endblock %}
   {% block head_defer_scripts %}{% endblock %}
@@ -32,7 +32,7 @@
 </head>
 <body>
 
-<link rel="stylesheet" href="/assets/css/header.css">
+<link rel="stylesheet" href="{{ "header.css" | assetUrl("stylesheets") }}">
 <nav class="hc-navbar">
   <div class="hc-navbar__logo">
     {% include "shared/logo.html" %}

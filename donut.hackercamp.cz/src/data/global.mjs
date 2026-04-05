@@ -12,9 +12,9 @@ export default {
   get currentYear() {
     return new Date().getFullYear();
   },
-  year: 2025,
+  year: 2026,
   program: {
-    enabledSheetEdit: true
+    enabledSheetEdit: false
   },
   event,
   ticket,
