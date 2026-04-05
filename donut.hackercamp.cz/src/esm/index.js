@@ -1,12 +1,12 @@
 import "lite-youtube-embed";
-import event, { isEnded } from "@hackercamp/lib/event.js";
-import { formatMoney } from "@hackercamp/lib/format.js";
-import { housingToText } from "@hackercamp/lib/housing.js";
-import { processTypo } from "@hckr_/blendid/lib/texy.mjs";
-import { defAtom } from "@thi.ng/atom";
-import { html } from "lit-html";
-import { map } from "lit-html/directives/map.js";
-import { when } from "lit-html/directives/when.js";
+import event, {isEnded} from "@hackercamp/lib/event.js";
+import {formatMoney} from "@hackercamp/lib/format.js";
+import {housingToText} from "@hackercamp/lib/housing.js";
+import {processTypo} from "@hckr_/blendid/lib/texy.mjs";
+import {defAtom} from "@thi.ng/atom";
+import {html} from "lit-html";
+import {map} from "lit-html/directives/map.js";
+import {when} from "lit-html/directives/when.js";
 import {
   getContact,
   getSlackAccessToken,
@@ -17,11 +17,11 @@ import {
   signIn,
   signOut
 } from "./lib/profile.js";
-import { withAuthHandler } from "./lib/remoting.js";
-import { initRenderLoop } from "./lib/renderer.js";
+import {withAuthHandler} from "./lib/remoting.js";
+import {initRenderLoop} from "./lib/renderer.js";
 import * as rollbar from "./lib/rollbar.js";
 import * as slack from "./lib/slack.js";
-import { setSlackProfile } from "./lib/slack.js";
+import {setSlackProfile} from "./lib/slack.js";
 
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
 /** @typedef {import("@thi.ng/atom").Path} Path */
@@ -84,11 +84,11 @@ if (__DEVELOPMENT__) {
   globalThis.View = View;
 }
 
-async function authenticate({ searchParams, apiURL }) {
+async function authenticate({searchParams, apiURL}) {
   const code = searchParams.get("code");
   const resp = await fetch(apiURL("auth"), {
     method: "POST",
-    body: new URLSearchParams({ code }),
+    body: new URLSearchParams({code}),
     credentials: "include"
   });
   if (resp.ok) {
@@ -96,38 +96,38 @@ async function authenticate({ searchParams, apiURL }) {
     if (data.ok) return signIn(data, apiURL);
   }
   const data = await resp.text();
-  throw new Error("Authentication error", { cause: data });
+  throw new Error("Authentication error", {cause: data});
 }
 
 async function setDonutProfileUrl(user, token, slug, company) {
   const profile = await slack.getSlackProfile(user, token);
   if (!profile?.fields?.Xf039UMCJC1G?.value) {
-    await setSlackProfile(user, token, { name: "Xf039UMCJC1G", value: `https://donut.hckr.camp/hackers/${slug}/` });
+    await setSlackProfile(user, token, {name: "Xf039UMCJC1G", value: `https://donut.hckr.camp/hackers/${slug}/`});
     console.log("Donut URL set");
   }
   if (!profile.fields.Xf03A7A5815F?.value) {
-    await setSlackProfile(user, token, { name: "Xf03A7A5815F", value: { alt: company } });
+    await setSlackProfile(user, token, {name: "Xf03A7A5815F", value: {alt: company}});
     console.log("Company set");
   }
 }
 
 async function updateProfile(user, token) {
   const profile = await slack.getSlackProfile(user, token);
-  const { fields } = await slack.getTeamProfile(token);
+  const {fields} = await slack.getTeamProfile(token);
   const fieldName = new Map(fields.map(x => [x.id, x.label]));
-  const result = Array.from(Object.entries(profile.fields)).map(([name, { value }]) => [fieldName.get(name), value]);
+  const result = Array.from(Object.entries(profile.fields)).map(([name, {value}]) => [fieldName.get(name), value]);
   console.log("Extended properties", result);
   // TODO: update profiles KV with extended properties @see https://github.com/hackercampcz/core/issues/2570
 }
 
 async function getRegistration(slackID, email, year, apiUrl) {
-  const params = new URLSearchParams({ slackID, email, year });
+  const params = new URLSearchParams({slackID, email, year});
   const resp = await withAuthHandler(fetch(apiUrl(`registration?${params}`)), {
     onUnauthenticated() {
       setReturnUrl(location.href);
       return new Promise((resolve, reject) => {
         signOut(apiUrl);
-        reject({ unauthenticated: true });
+        reject({unauthenticated: true});
       });
     }
   });
@@ -135,13 +135,13 @@ async function getRegistration(slackID, email, year, apiUrl) {
 }
 
 async function getAttendee(slackID, year, apiUrl) {
-  const params = new URLSearchParams({ slackID, year });
+  const params = new URLSearchParams({slackID, year});
   const resp = await withAuthHandler(fetch(apiUrl(`attendees?${params}`)), {
     onUnauthenticated() {
       setReturnUrl(location.href);
       return new Promise((resolve, reject) => {
         signOut(apiUrl);
-        reject({ unauthenticated: true });
+        reject({unauthenticated: true});
       });
     }
   });
@@ -150,7 +150,7 @@ async function getAttendee(slackID, year, apiUrl) {
 
 async function getNfcTronData(attendee, apiUrl) {
   for (const chip of attendee.nfcTronData?.filter(x => x.sn) ?? []) {
-    const resp = await fetch(apiUrl(`/v2/nfctron/${chip.chipID}`), { headers: { Accept: "application/json" } });
+    const resp = await fetch(apiUrl(`/v2/nfctron/${chip.chipID}`), {headers: {Accept: "application/json"}});
     const data = await resp.json();
     chip.spent = data.totalSpent / 100; // NFCTron has spent in halíř
   }
@@ -173,9 +173,7 @@ function renderPaidScreen(referralLink) {
 const placement = p => (p === "custom" ? "" : ` ${p}`);
 
 function housingText(housing, housingPlacement) {
-  return html`<strong
-  >${housingToText.get(housing) + placement(housingPlacement)}</strong
-  >`;
+  return html`<strong>${housingToText.get(housing) + placement(housingPlacement)}</strong>`;
 }
 
 function travelText(travel) {
@@ -207,7 +205,7 @@ function travelText(travel) {
   }
 }
 
-function housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers, event, year }) {
+function housedCardTemplate({housing, housingPlacement, travel, hasRegisteredHackers, event, year}) {
   if (isEnded(event, year)) return "";
   return html`
     <div class="hc-card hc-card--decorated">
@@ -222,56 +220,47 @@ function housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHa
         <a class="hc-link" href="/ubytovani/">změnit ubytování</a>.
       </p>
       ${travelText(travel)}
-      ${
-    when(hasRegisteredHackers, () =>
-      html`
+      ${when(hasRegisteredHackers, () => html`
         <p>
           Chceš se podívat, kdo už se na tebe těší? Tak tady je
           <a href="/hackers/">seznam účastníků</a>.
-        </p>`)
-  }
+        </p>
+      `)}
     </div>
   `;
 }
 
-function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
+function nfcTronTemplate({nfcTronData, checkOutPaid}) {
   if (!nfcTronData) return null;
   const chips = nfcTronData.filter(x => x.sn);
   const total = chips.reduce((acc, x) => acc + (x.spent ?? x.totalSpent), 0);
   return html`
     <div class="hc-card hc-card--decorated">
       <h2>Útrata</h2>
-      ${
-    when(total > 0, () =>
-      html`
+      ${when(total > 0, () => html`
         <p>
           Celkem:
           <strong>
             <data value="${total}">${formatMoney(total)}</data>
           </strong>
         </p>
-      `)
-  }
+      `)}
       <ul>
-        ${
-    map(chips, x =>
-      html`
+        ${map(chips, x => html`
           <li data-chip-id="${x.chipID}" data-chip-sn="${x.sn}">
             SN chipu:
             <code title="SN najdete na zadní straně čipu - pod páskem">${x.sn.toUpperCase()}</code>
             -
-            ${
-        when(checkOutPaid || x.paid, () => html`<strong style="color: forestgreen">Zaplaceno</strong>`, () =>
-          html`
+            ${when(checkOutPaid || x.paid,
+              () => html`<strong style="color: forestgreen">Zaplaceno</strong>`,
+              () => html`
                 <strong style="color: darkred">Nezaplaceno
                   <data value="${x.spent ?? x.totalSpent}">${formatMoney(x.spent ?? x.totalSpent)}</data>
                 </strong>
-              `)
-      }
+              `)}
             <a href="https://pass.nfctron.com/receipt/${x.chipID}" target="nfcTron">Účet</a>
           </li>
-        `)
-  }
+        `)}
       </ul>
     </div>
   `;
@@ -310,7 +299,7 @@ function plusOneCard(referralLink) {
 }
 
 function renderDashboardScreen(
-  { housing, housingPlacement, travel, events = [], nfcTronData, checkOutPaid },
+  {housing, housingPlacement, travel, events = [], nfcTronData, checkOutPaid},
   referralLink,
   event,
   year,
@@ -318,9 +307,7 @@ function renderDashboardScreen(
   showSlackButton
 ) {
   return html`
-    ${
-    when(showSlackButton, () =>
-      html`
+    ${when(showSlackButton, () => html`
       <div class="hc-card hc-card--decorated">
         <p>Pro lepší integraci mezi tvým Slackovým a Donut profilem potřebujeme od tebe potvrdit rozšířená práva.
           To provedeš kliknutím na následující tlačítko:</p>
@@ -333,57 +320,52 @@ function renderDashboardScreen(
               width="139"
               src="https://platform.slack-edge.com/img/add_to_slack.png"
               @click="${() => {
-        rollbar.info(`User clicked on Slack button.`);
-        setReturnUrl(location.href);
-      }}"
+                rollbar.info(`User clicked on Slack button.`);
+                setReturnUrl(location.href);
+              }}"
               srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x,
-                          https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
+                      https://platform.slack-edge.com/img/add_to_slack@2x.png 2x"></a>
         </div>
       </div>
-    `)
-  }
-    ${
-    when(
-      isEnded(event, year),
-      () =>
-        html`<div class="hc-card hc-card--decorated">
-        <h2>Zpětná vazba</h2>
-        <p>Pomozte nám další ročník Campu udělat ještě lepší! Moc vás prosíme o 2 minuty vašeho času.
-          <a href="https://hckr.camp/feedback/${year}">Dejte nám zpětnou vazbu k tomu letošnímu campu!</a></p>
-        <p>${
-          processTypo(
+    `)}
+    ${when(isEnded(event, year), () => html`
+        <div class="hc-card hc-card--decorated">
+          <h2>Zpětná vazba</h2>
+          <p>Pomozte nám další ročník Campu udělat ještě lepší! Moc vás prosíme o 2 minuty vašeho času.
+            <a href="https://hckr.camp/feedback/${year}">Dejte nám zpětnou vazbu k tomu letošnímu campu!</a></p>
+          <p>${processTypo(
             `Zajímá nás, čeho máme dělat víc, čeho míň a co rozhodně neměnit. Snad jste se už mohli přesvědčit,
           že vaši zpětnou vazbu čteme a nebere na lehkou váhu, tak se s námi podělte o to, jak má camp vypadat.`,
-            { locale: "cs" }
-          )
-        }</p>
-      </div>
-      <div class="hc-card hc-card--decorated">
-        <h2>Ztráty a nálezy</h2>
-        <p>Zjistili jste, že vám na kempu něco zůstalo? Je možný, že jsme to našli!
-          Podívejte se do kanalálu <a href="https://hackercampworkspace.slack.com/archives/C07KTBJEDLH">#lost-and-found</a>,
-          přihlaste se o svou věc a pak si ji můžete vyzvednout v <a href="https://hckr.space/">hckr.space</a>.</p>
-      </div>
-      <div class="hc-card hc-card--decorated">
-        <h2>Fotky z Hacker Campu</h2>
-        <p>Pokud máte nějaké fotky a videa, o které se chcete podělit, máme na to tradičně sdílenou složku na
-          Google Drive - <a href="/fotky/${year}">Fotky ${year}</a>. (udělejte si tam služku se svým jménem, ať případně víme, za kým jít,
-          pokud budeme chtít něco použít 😉).</p>
-      </div>`,
-      () =>
-        html`<div class="hc-card hc-card--decorated">
-      <h2>Důležité kontakty</h2>
-      <ul>
-        <li>Odvoz z/na hromadnou dopravu: <a href="tel:+420792365678">792 365 678</a></li>
-        <li>Zdravotníci: <a href="tel:+420770670155">770 670 155</a></li>
-      </ul>
-    </div>
-    `
-    )
-  }
+            {locale: "cs"}
+          )}</p>
+        </div>
+        <div class="hc-card hc-card--decorated">
+          <h2>Ztráty a nálezy</h2>
+          <p>Zjistili jste, že vám na kempu něco zůstalo? Je možný, že jsme to našli!
+            Podívejte se do kanalálu <a
+              href="https://hackercampworkspace.slack.com/archives/C07KTBJEDLH">#lost-and-found</a>,
+            přihlaste se o svou věc a pak si ji můžete vyzvednout v <a href="https://hckr.space/">hckr.space</a>.
+          </p>
+        </div>
+        <div class="hc-card hc-card--decorated">
+          <h2>Fotky z Hacker Campu</h2>
+          <p>Pokud máte nějaké fotky a videa, o které se chcete podělit, máme na to tradičně sdílenou složku na
+            Google Drive - <a href="/fotky/${year}">Fotky ${year}</a>. (udělejte si tam služku se svým jménem, ať
+            případně víme, za kým jít,
+            pokud budeme chtít něco použít 😉).</p>
+        </div>`,
+      () => html`
+        <div class="hc-card hc-card--decorated">
+          <h2>Důležité kontakty</h2>
+          <ul>
+            <li>Odvoz z/na hromadnou dopravu: <a href="tel:+420792365678">792 365 678</a></li>
+            <li>Zdravotníci: <a href="tel:+420770670155">770 670 155</a></li>
+          </ul>
+        </div>
+      `)}
 
-    ${when(nfcTronData, () => nfcTronTemplate({ nfcTronData, checkOutPaid }))}
-    ${housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHackers, event, year })}
+    ${when(nfcTronData, () => nfcTronTemplate({nfcTronData, checkOutPaid}))}
+    ${housedCardTemplate({housing, housingPlacement, travel, hasRegisteredHackers, event, year})}
     ${plusOneCard(referralLink)}
     </div>
   `;
@@ -395,7 +377,16 @@ function canSelectHousing(registration, attendee) {
   return registration?.paid || freeTickets.has(attendee?.ticketType);
 }
 
-function renderIndex({ event, year, profile, attendee, selectedView, hasRegisteredHackers, showSlackButton }) {
+function renderIndex({
+                       event,
+                       year,
+                       profile,
+                       attendee,
+                       selectedView,
+                       isRegistrationOpen,
+                       hasRegisteredHackers,
+                       showSlackButton
+                     }) {
   const referralLink = `https://hckr.camp/r/${profile?.sub}`;
   switch (selectedView) {
     case View.loading:
@@ -412,23 +403,17 @@ function renderIndex({ event, year, profile, attendee, selectedView, hasRegister
             Tak s tím moc neváhej, abys spal / spala podle svých
             představ :)
           </p>
-          ${
-        when(attendee?.invoiceUrl, () =>
-          html`
+          ${when(attendee?.invoiceUrl, () => html`
             <p>
               Platbu můžeše rychle odbavit přes <a href="${attendee.invoiceUrl}">webovou fakturu</a>.
             </p>
-          `)
-      }
-          ${
-        when(hasRegisteredHackers, () =>
-          html`
+          `)}
+          ${when(hasRegisteredHackers, () => html`
             <p>
               Chceš se podívat, kdo už se na tebe těší? Tak tady je
               <a href="/hackers/">seznam účastníků</a>.
             </p>
-          `)
-      }
+          `)}
         </div>
         <p>
           Máš zaplaceno, ale pořád vidíš tohle? Pak máme asi nesoulad mezi
@@ -444,20 +429,19 @@ function renderIndex({ event, year, profile, attendee, selectedView, hasRegister
       `;
     default:
       return html`
-        <p>
-          Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to
-          i díky tobě.
-        </p>
-        <a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a>
-        ${
-        when(hasRegisteredHackers, () =>
-          html`
+        ${when(isRegistrationOpen, () => html`
+          <p>
+            Nepropásni další Hacker Camp, bude ještě lepší než ty minulý! A to
+            i díky tobě.
+          </p>
+          <p><a class="hc-link--decorated" href="/registrace/">Zaregistrovat se</a></p>
+        `)}
+        ${when(hasRegisteredHackers, () => html`
           <p>
             Chceš se nejprve podívat, kdo už se na tebe těší? Tak tady je
             <a href="/hackers/">seznam účastníků</a>.
           </p>
-        `)
-      }
+        `)}
         ${plusOneCard(referralLink)}
       `;
   }
@@ -475,7 +459,7 @@ async function loadData(profile, year, apiURL) {
     getNfcTronData(attendee, apiURL).then(attendee => swapIn("attendee", () => attendee));
   }
   const contact = getContact();
-  transact(x => Object.assign(x, { profile, contact, registration, attendee }));
+  transact(x => Object.assign(x, {profile, contact, registration, attendee}));
   try {
     await setDonutProfileUrl(
       profile.sub,
@@ -486,12 +470,12 @@ async function loadData(profile, year, apiURL) {
     await updateProfile(profile.sub, getSlackAccessToken());
     rollbar.info("Slack profile set");
   } catch (err) {
-    transact(x => Object.assign(x, { showSlackButton: true }));
+    transact(x => Object.assign(x, {showSlackButton: true}));
     rollbar.error(err);
   }
 }
 
-export async function main({ searchParams, rootElement, env }) {
+export async function main({searchParams, rootElement, env}) {
   rollbar.init(env);
   const year = searchParams.get("year") ?? env.year;
   const apiHost = env["api-host"];
@@ -505,7 +489,7 @@ export async function main({ searchParams, rootElement, env }) {
   initRenderLoop(state, rootElement);
 
   if (isSignedIn()) {
-    transact(x => Object.assign(x, { apiHost, year, event, hasRegisteredHackers: env.hasRegisteredHackers }));
+    transact(x => Object.assign(x, {apiHost, year, event, hasRegisteredHackers: env.hasRegisteredHackers}));
     try {
       const profile = getSlackProfile();
       rollbar.configure({
@@ -534,7 +518,7 @@ export async function main({ searchParams, rootElement, env }) {
   if (searchParams.has("code")) {
     try {
       transact(x => Object.assign({}, x));
-      await authenticate({ searchParams, apiURL });
+      await authenticate({searchParams, apiURL});
       handleReturnUrl();
     } catch (err) {
       rollbar.error(err);

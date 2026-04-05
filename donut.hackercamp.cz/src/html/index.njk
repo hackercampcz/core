@@ -100,9 +100,15 @@
 {% block scripts %}
 <script type="module">
   import { main } from "{{ 'index.js' | assetUrl('esm') }}";
+
   const build = {{ collections.build | dump(8) | safe }};
-  const env = Object.assign({ year: {{ year }}, hasRegisteredHackers: Boolean({{ collections.hackers | length }}) }, build);
-  main({
+  const env = Object.assign({
+    year: {{ year }},
+    hasRegisteredHackers: Boolean({{ collections.hackers | length }}),
+    isRegistrationOpen: Boolean({{ isRegistrationOpen }}),
+  }, build);
+
+  await main({
     searchParams: new URLSearchParams(location.search),
     rootElement: document.getElementById("dashboard"),
     env
