@@ -317,7 +317,8 @@
               </button>
             </div>
             <div class="show-placements">
-              <p><strong>Volných míst: <data class="free-capacity" value="0">0</data>
+              <p><strong>Volných míst: 
+                  <data class="free-capacity" value="0">0</data>
                 </strong></p>
               <button type="button" class="hc-link hc-link--decorated placement-selection">chci sem</button>
             </div>
@@ -333,15 +334,17 @@
 {% endblock %}
 
 {% block scripts %}
-<script type="module">
-  import { main } from "/assets/esm/housing.js?v2s";
-  const formElement = document.getElementById("housing");
-  const build = {{ collections.build | dump(8) | safe }};
-  const housing = {
-    reservations: {{ collections.housing_reservations | dump(8) | safe }},
-    variants: {{ collections.housing_variants | dump(8) | safe }},
-  };
-  const env = Object.assign({ year: {{ year }} }, build);
-  main({ formElement, env, housing });
-</script>
+  <script type="module">
+    import { main } from "{{ "housing.js" | assetUrl("esm") }}?v2s";
+
+    const formElement = document.getElementById("housing");
+    const build = {{ collections.build | dump(8) | safe }};
+    const housing = {
+      reservations: {{ collections.housing_reservations | dump(8) | safe }},
+      variants: {{ collections.housing_variants | dump(8) | safe }},
+    };
+    const env = Object.assign({ year: {{ year }} }, build);
+
+    await main({ formElement, env, housing });
+  </script>
 {% endblock %}

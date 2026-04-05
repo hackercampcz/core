@@ -334,7 +334,7 @@ export async function main({ formElement, env, housing: { reservations, variants
       window.showSnackbar("Nenašlo jsem tvůj profil, prosím, přihlaš se znovu.");
       return setTimeout(() => signOut(path => new URL(path, "https://api.hackercamp.cz").href), 3000);
     }
-    rollbar.configure({ payload: { person: { name: profile.real_name, email: profile.email, id: profile.id } } });
+    rollbar.configure({ payload: { person: { name: profile.real_name, email: profile.email, id: profile.sub } } });
     const contact = getContact();
     rollbar.info("Housing profile", { profile, contact });
     initHousingVariants(formElement, { variants, profile });
