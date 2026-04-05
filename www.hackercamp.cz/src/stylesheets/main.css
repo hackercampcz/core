@@ -22,6 +22,7 @@ code {
 }
 
 .hc-hero video {
+  height: auto;
   max-width: calc(100vw - var(--hc-gutter, 16px) * 2);
   @media screen and (min-width: 640px) {
     max-width: 100%;
@@ -100,6 +101,7 @@ code {
   }
 
   .hc-camp-detail img, .hc-camp-detail video {
+    height: auto;
     width: 80%;
     max-width: 622px;
   }
