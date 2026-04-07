@@ -1,5 +1,5 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { sendEmailWithTemplate, Template } from "./lib/postmark.js";
 
 async function inviteSlackUser(email, token) {
@@ -156,7 +156,7 @@ async function main({ slackToken, postmarkToken }) {
     "travel",
     "year"
   ]);
-  const existingAttendees = await getAttendees(dynamo, 2022);
+  const existingAttendees = await getAttendees(dynamo, 2025);
   const attendees = registrations
     .filter(x => !existingAttendees.has(x.email))
     .map(x => {
@@ -177,4 +177,4 @@ async function main({ slackToken, postmarkToken }) {
   await createAttendees(attendees, dynamo);
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args));

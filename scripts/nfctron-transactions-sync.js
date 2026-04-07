@@ -40,11 +40,13 @@ async function main({ year }) {
         // if (attendee.nfcTronData.transactions) continue;
         if (!data.chipID) Object.assign(data, pairingTable.get(data.sn));
         if (!data.chipID) continue;
-        const [transactions, totalSpent] = await getTransactions(data.chipID);
+        const [transactions, totalSpent, firstTransaction, lastTransaction] = await getTransactions(data.chipID);
         console.log({ slackID: attendee.slackID, chipID: data.chipID, totalSpent });
         if (!transactions?.length) continue;
         data.transactions = transactions;
         data.totalSpent = totalSpent;
+        data.firstTransaction = firstTransaction;
+        data.lastTransaction = lastTransaction;
       }
       await updateAttendee(year, attendee.slackID, attendee.nfcTronData.filter(x => x.sn));
     }

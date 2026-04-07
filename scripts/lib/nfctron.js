@@ -18,7 +18,9 @@ export async function getTransactions(chipID) {
   if (!resp) return [];
   const data = await resp.json();
   if (Array.isArray(data.transactions)) {
-    return [data.transactions, data.totalSpent / 100];
+    const firstTransaction = data.transactions?.map(x => x.date)?.sort()?.at(0);
+    const lastTransaction = data.transactions?.map(x => x.date)?.sort()?.at(-1);
+    return [data.transactions, data.totalSpent / 100, firstTransaction, lastTransaction];
   }
   return [];
 }
