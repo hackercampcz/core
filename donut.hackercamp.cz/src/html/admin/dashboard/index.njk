@@ -119,7 +119,7 @@
           </h2>
         </header>
 
-        {% for yr in range(2022, year + 1) %}
+        {% for yr in range(2022, year + 1) | reverse %}
           <article id="registrations-{{ yr }}">
             <h3>Registrace {{ yr }}</h3>
             <div class="chart-legend">
