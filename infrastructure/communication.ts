@@ -2,7 +2,7 @@ import { processTypo } from "@hckr_/blendid/lib/texy.mjs";
 import { marked } from "marked";
 import * as fs from "node:fs";
 import * as path from "node:path";
-import type { TemplateInputs } from "./postmark";
+import type { TemplateInputs } from "./postmark.ts";
 
 const markdownExt = ".md";
 

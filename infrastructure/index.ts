@@ -3,9 +3,9 @@ import * as pulumi from "@pulumi/pulumi";
 import { Output } from "@pulumi/pulumi";
 import { registerAutoTags } from "@topmonks/pulumi-aws";
 import * as fs from "node:fs";
-import { createApi, createDB, createQueues, createRoutes } from "./api";
-import { readTemplates } from "./communication";
-import * as postmark from "./postmark";
+import { createApi, createDB, createQueues, createRoutes } from "./api.ts";
+import { readTemplates } from "./communication.ts";
+import * as postmark from "./postmark.ts";
 
 registerAutoTags({
   "user:Project": pulumi.getProject(),

@@ -4,8 +4,8 @@ import { LambdaAuthorizer, Method } from "@pulumi/awsx/classic/apigateway";
 import { Parameter } from "@pulumi/awsx/classic/apigateway/requestValidator";
 import * as pulumi from "@pulumi/pulumi";
 import * as path from "node:path";
-import { Api, ApiRoute, CacheSettings } from "./apigateway";
-import * as lambdaBuilder from "./lambda-builder";
+import { Api, ApiRoute, CacheSettings } from "./apigateway.ts";
+import * as lambdaBuilder from "./lambda-builder.ts";
 
 const config = new pulumi.Config();
 const postmarkConfig = new pulumi.Config("postmark");
