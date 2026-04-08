@@ -1,11 +1,11 @@
-import * as lambdaBuilder from "@hackercamp/infrastructure/lambda-builder";
 import * as aws from "@pulumi/aws";
 import { lambda } from "@pulumi/aws/types/input";
 import { LambdaAuthorizer, Method } from "@pulumi/awsx/classic/apigateway";
 import { Parameter } from "@pulumi/awsx/classic/apigateway/requestValidator";
 import * as pulumi from "@pulumi/pulumi";
 import * as path from "node:path";
-import { Api, ApiRoute, CacheSettings } from "../infrastructure/apigateway";
+import { Api, ApiRoute, CacheSettings } from "./apigateway";
+import * as lambdaBuilder from "./lambda-builder";
 
 const config = new pulumi.Config();
 const postmarkConfig = new pulumi.Config("postmark");

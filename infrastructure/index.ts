@@ -1,9 +1,9 @@
-import { createApi, createDB, createQueues, createRoutes } from "@hackercamp/api";
 import * as cloudflare from "@pulumi/cloudflare";
 import * as pulumi from "@pulumi/pulumi";
 import { Output } from "@pulumi/pulumi";
 import { registerAutoTags } from "@topmonks/pulumi-aws";
 import * as fs from "node:fs";
+import { createApi, createDB, createQueues, createRoutes } from "./api";
 import { readTemplates } from "./communication";
 import * as postmark from "./postmark";
 
