@@ -169,6 +169,18 @@ export const ticketPrice = new Map([
       ["crew", 0],
       ["staff", 0]
     ])
+  ],
+  [
+    2026,
+    new Map([
+      ["nonprofit", 3000],
+      ["hacker", 7000],
+      ["hacker-plus", 12000],
+      ["hacker-patron", 12000],
+      ["volunteer", 0],
+      ["crew", 0],
+      ["staff", 0]
+    ])
   ]
 ]);
 
