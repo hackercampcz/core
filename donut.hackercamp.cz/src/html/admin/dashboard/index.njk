@@ -2,7 +2,9 @@
 
 {% block title %}Administrace Hacker Campu{% endblock %}
 
-{% block sitemanifest %}<link rel="manifest" href="/admin/sitemanifest.json">{% endblock %}
+{% block sitemanifest %}
+  <link rel="manifest" href="/admin/sitemanifest.json">
+{% endblock %}
 
 {% block head %}
   <style>
@@ -70,11 +72,13 @@
       list-style-type: none;
       font-size: 0.875em;
     }
+
     .chart-legend li {
       display: inline flex;
       gap: 1ch;
       align-items: center;
     }
+
     .color {
       --color: currentColor;
       --size: 1em;
@@ -115,42 +119,17 @@
           </h2>
         </header>
 
-        <article id="registrations-2025">
-          <h3>Registrace 2025</h3>
-          <div class="chart-legend">
-            <ul>
+        {% for yr in range(2022, year + 1) %}
+          <article id="registrations-{{ yr }}">
+            <h3>Registrace {{ yr }}</h3>
+            <div class="chart-legend">
+              <ul>
 
-            </ul>
-          </div>
-          <canvas></canvas>
-        </article>
-        <article id="registrations-2024">
-          <h3>Registrace 2024</h3>
-          <div class="chart-legend">
-            <ul>
-
-            </ul>
-          </div>
-          <canvas></canvas>
-        </article>
-        <article id="registrations-2023">
-          <h3>Registrace 2023</h3>
-          <div class="chart-legend">
-            <ul>
-
-            </ul>
-          </div>
-          <canvas></canvas>
-        </article>
-        <article id="registrations-2022">
-          <h3>Registrace 2022</h3>
-          <div class="chart-legend">
-            <ul>
-
-            </ul>
-          </div>
-          <canvas></canvas>
-        </article>
+              </ul>
+            </div>
+            <canvas></canvas>
+          </article>
+        {% endfor %}
       </div>
       <dialog id="modal" class="hc-dialog">
         <div id="modal-root"></div>
@@ -163,24 +142,26 @@
 {% endblock %}
 
 {% block scripts %}
-<script type="module">
-  import { main } from "{{ 'admin-dashboard.js' | assetUrl('esm') }}";
+  <script type="module">
+    import { main } from "{{ 'admin-dashboard.js' | assetUrl('esm') }}";
 
-  const build = {{ collections.build | dump(8) | safe }};
-  const event = {{ event | dump(8) | safe }};
-  const tickets = {{ ticket | dump(8) | safe }};
-  const year = {{ year | safe }};
-  const env = Object.assign({ year, event, tickets }, build);
+    const build = {{ collections.build | dump(8) | safe }};
+    const event = {{ event | dump(8) | safe }};
+    const tickets = {{ ticket | dump(8) | safe }};
+    const year = {{ year | safe }};
+    const env = Object.assign({ year, event, tickets }, build);
 
-  main({
-    searchParams: new URLSearchParams(location.search),
-    appRoot: document.getElementById("app-root"),
-    viewTitle: document.getElementById("view-title").querySelector("span"),
-    yearSelector: document.getElementById("year-selector"),
-    env,
-  });
-  const drawer = document.getElementById("drawer");
-  const drawerBtn = document.getElementById("drawer-button");
-  drawerBtn.addEventListener("click", () => { drawer.open = !drawer.open; });
-</script>
+    main({
+      searchParams: new URLSearchParams(location.search),
+      appRoot: document.getElementById("app-root"),
+      viewTitle: document.getElementById("view-title").querySelector("span"),
+      yearSelector: document.getElementById("year-selector"),
+      env,
+    });
+    const drawer = document.getElementById("drawer");
+    const drawerBtn = document.getElementById("drawer-button");
+    drawerBtn.addEventListener("click", () => {
+      drawer.open = !drawer.open;
+    });
+  </script>
 {% endblock %}
