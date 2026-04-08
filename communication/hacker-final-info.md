@@ -18,13 +18,13 @@ Na začátek to nejdůležitější:
 
 - Donut se dá jako PWA nainstalovat do telefonu: [donut.hckr.camp](https://donut.hckr.camp/),
 - Stejně tak **[program](https://donut.hckr.camp/program)** - ten jde přidat taky **do tvého [kalendáře](https://donut.hckr.camp/program/kalendar)**,
-  zároveň se v něm dá **upravit svoji [anotaci](https://donut.hckr.camp/program/2025)**.
+  zároveň se v něm dá **upravit svoji [anotaci](https://donut.hckr.camp/program/2026)**.
 - Pokud něco nevíš, koukni do **[FAQs](https://hckr.camp/faq/)** na našem webu (tldr; pejsky stopro nechte doma, děti sice nezakazujeme, ale camp rozhodně nemá program přímo pro ně)
 
 Co tedy potřebuješ vědět?
 
 1. **Začátek a konec akce**
-   - Čtrvtek 28. srpna 2025 (začínáme v 17.00) – 31. srpna 2025 (v neděli se nic neděje, jen balíme, uklízíme, střízlivíme, loučíme se)
+   - Čtrvtek 27. srpna 2026 (začínáme v 17.00) – 30. srpna 2026 (v neděli se nic neděje, jen balíme, uklízíme, střízlivíme, loučíme se)
    - **Registrace a ubytování** se v areálu možné od čtvrtečních **14.00**
    * Na registraci si na své náramky (dostanete, nebo máte z loňska) nabijete peníze. V areálu se vše platí cashless přes NFCTron náramky. Takže pokud chcete pít a jíst, co hrdlo ráčí, nabijte si na recepc :)
    - Kdybyste chtěli přijet později, tak prosíme **doražte nejpozději do půlnoci**. Na našem loginu totiž vždy někoho najdete mezi 8.00 až 24.00
@@ -54,8 +54,9 @@ Co tedy potřebuješ vědět?
 5. **Program**
    - Aktuální (a neustále aktualizovaný) program najdeš v [donutu](https://donut.hckr.camp/program), dále sleduj kanál na [slacku #program](https://hackercampworkspace.slack.com/archives/C01URRT4Z8W)
    - 📱**I program** můžeš si tady **přidat** náš program **do svého [kalendáře](https://donut.hckr.camp/program/kalendar)** a mít ho u sebe v mobilu.
-   - **Anotaci** svého vystoupení můžeš upravit ve druhém listu [tabulky](https://donut.hckr.camp/program/2025), hledej
-     [sloupeček J](https://docs.google.com/spreadsheets/d/1bO0RYdm_keyn2cCDHewfdYbiDbj9QFN2C6E-npbaIJY/edit?gid=1603736629#gid=1603736629&range=J:J). nebo **upravit svojí [anotaci](https://donut.hckr.camp/program/2025)**.
+   - **Anotaci** svého vystoupení můžeš upravit ve druhém listu [tabulky](https://donut.hckr.camp/program/2026), hledej
+     [sloupeček J](https://docs.google.com/spreadsheets/d/1bO0RYdm_keyn2cCDHewfdYbiDbj9QFN2C6E-npbaIJY/edit?gid=1603736629#gid=1603736629&range=J:J). 
+     nebo **upravit svojí [anotaci](https://donut.hckr.camp/program/2026)**.
    - Nemáš svoji aktivitu v programu?! Nevadí! **Přidáš na místě! Před každým blokem se sejdeme všichni na Mainframe
      a řekneme si, co nás v dalších dvou hoďkách čeká.**
    - Máš nějaký trouble s programem? Piš `@Ir`.

@@ -43,7 +43,7 @@ jak ostatní táborníci camp vidí. Takže tady je [pár obrázků](https://doc
 a [jeden sheet](https://docs.google.com/spreadsheets/d/1TEyqC82pm0Z5Y_jVGjwzCEoLXTxBMD_gx9EyZjABeV8/edit?usp=sharing)
 se slovními odpověďmi, pro ty z vás, koho zajímají podrobnosti.
 
-🗓️ Už jsme to říkali: **Další rok Campu bude**. Pokud chcete přijet znovu, **[zapište si do kalendářů 28.8.2025 \- 31.8. 2025!](https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=Y2NyajJwOWg2NHNtNGI5bTY0czM0YjlrY2tvamliYjJjb3AzYWI5cGNsaDM4ZTMxNzVnamVkOWw2OCBpckBpemF0bG91ay5jeg&tmsrc=ir%40izatlouk.cz)**
+🗓️ Už jsme to říkali: **Další rok Campu bude**. Pokud chcete přijet znovu, **[zapište si do kalendářů 27.8.2026 \- 30.8. 2026!](https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=Y2NyajJwOWg2NHNtNGI5bTY0czM0YjlrY2tvamliYjJjb3AzYWI5cGNsaDM4ZTMxNzVnamVkOWw2OCBpckBpemF0bG91ay5jeg&tmsrc=ir%40izatlouk.cz)**
 My se na vás už teď těšíme. **Registraci otevřeme někdy na jaře. Zase vám dáme vědět mailem i na slacku**.
 Pokud můžete slack si nevypínejte. Chceme mít možnost o vás vědět i během roku.
 `#random` je ready na pozvánky, nabídky a věci, co chcete s táborníky sdílet. Budeme za každou aktivitu rádi!

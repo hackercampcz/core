@@ -18,7 +18,7 @@ výkop k dalšímu ročníku. Ale můžeme se vidět už 27\. 11\. na after part
 Ta je vám všem otevřená - ideálně si vemte náramek nebo tričko z Campu, ať vás rychle poznáme. :)
 
 **Pomozte nám další ročník Campu udělat ještě lepší\! Moc vás prosíme o 2 minuty vašeho času.
-[Dejte nám zpětnou vazbu k tomu letošnímu campu\!](https://hckr.camp/feedback/2025)** Vracíme se k jednoduché struktuře.
+[Dejte nám zpětnou vazbu k tomu letošnímu campu\!](https://hckr.camp/feedback/2026)** Vracíme se k jednoduché struktuře.
 Zajímá nás, čeho máme dělat víc, čeho míň a co rozhodně neměnit. Snad jste se už mohli přesvědčit,
 že vaši zpětnou vazbu čteme a nebere na lehkou váhu, tak se s námi podělte o to, jak má camp vypadat.
 
@@ -27,7 +27,7 @@ osobní reflexi zvědavý, takže ji můžete dát do komentáře na konec a ud�
 
 Chceme, abyste se na Camp chtěli vrátit, pozvat na něj lidí, co máte rádi a užít si ho naplno.
 Dejte své minuty zamyšlení se nad tím, co pro to potřebujete od nás a co můžete přinést vy.
-Jsme zvědaví\! Tak už nás nenapínejte. "[*Ok, řeknu vám to*](https://hckr.camp/feedback/2025)".
+Jsme zvědaví\! Tak už nás nenapínejte. "[*Ok, řeknu vám to*](https://hckr.camp/feedback/2026)".
 
 Těšíme se nejpozději zase za rok\!
 

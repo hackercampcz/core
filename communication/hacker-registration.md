@@ -78,7 +78,7 @@ Uff. Dlouhý mail a dlouhé čtení. Ale nezapomeň, všechno
 **podstatné je, že camp bude jen takový, jaký si ho uděláme!**
 Takže úsměv a klid a bude to super :)
 
-Vidíme se ve čtvrtek 28. srpna v pozdním odpolku na Sobeňáku
+Vidíme se ve čtvrtek 27. srpna v pozdním odpolku na Sobeňáku
 (začínat budeme podobně jako loni cca okolo 5. a rozloučíme se ideálně v neděli po snídani :)
 Teda pokud nezůstaneš až do odpoledne (střízlivět, u čehož nám můžeš pomoci s bouráním tábora :))
 

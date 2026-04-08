@@ -1,11 +1,11 @@
 ---
-Subject: Hacker Camp startuje už 28. srpna
+Subject: Hacker Camp startuje už 27. srpna
 LayoutTemplate: hc-basic
 ---
 
 Ahoj, táborníku!
 
-Hacker Camp začíná už příští týden! **28. 8. se sejdeme všichni na [Sobeňáku](https://www.sobenak.cz/) - nejpozději v 16:30.**
+Hacker Camp začíná už příští týden! **27. 8. se sejdeme všichni na [Sobeňáku](https://www.sobenak.cz/) - nejpozději v 16:30.**
 To abys už s přiděleným noclehem / povlečením na klid zvládal první program od 17:00.
 
 Pojďme se kouknout na pár letošních praktikálií, aby se nám camp vydařil :)
@@ -36,7 +36,7 @@ Pokud chceš bydlení pod střechou, nebo potřebuješ místo v glamping stanu, 
 (Pokud ne, ulož se co nejdřív: [Tohle je tvůj kouzelný link](https://donut.hackercamp.cz/ubytovani/) :)
 (A nezapomeň se přihlásit do [Hacker Camp workspacu](http://hackercampworkspace.slack.com) na slacku, jinak Tě to dál nepustí :))
 
-Ubytko hlídá Pája Verflová. Pokud do 23. 8. nebudeš mít booklou svoji postel, buď tě bude nahánět, nebo ti prostě nějakou volnou vybere.
+Ubytko hlídá Pája Verflová. Pokud do 21. 8. nebudeš mít booklou svoji postel, buď tě bude nahánět, nebo ti prostě nějakou volnou vybere.
 
 Kde spíš si vždycky můžeš [zkouknout u sebe na profilu](https://donut.hackercamp.cz/) a případně i upravit.
 
@@ -87,7 +87,7 @@ a hudební tvorbou :) A nejen u ohně. Prostě fantazii se meze nekladou.
 **Shrnutí:**
 
 - **Kdy to celé ofiko začíná?**\
-  Ve čtvrtek 28. 8. 2025 v 17:00
+  Ve čtvrtek 27. 8. 2026 v 17:00
 
 - **A kdy končíme?**\
   V neděli ráno, jak se vzbudíš po sobotní party :)
@@ -127,15 +127,18 @@ a hudební tvorbou :) A nejen u ohně. Prostě fantazii se meze nekladou.
   Letos se zase pojede i na kole, takže pokud se chceš přidat, sleduj [info od Toma tady](https://hackercampworkspace.slack.com/archives/C08TFG3EULV)!
   Domluv se, kdo Ti přiveze věci a doraž na camp s dalšími cyklonadšenci :)
 
-Uff. Dlouhý mail a dlouhé čtení. Ale nezapomeň, všechno **podstatné je, že Camp bude jen takový, jaký si ho uděláme!** Takže úsměv a klid a bude to super :)
+Uff. Dlouhý mail a dlouhé čtení. Ale nezapomeň, všechno **podstatné je, že Camp bude jen takový, jaký si ho uděláme!** 
+Takže úsměv a klid a bude to super :)
 
-Vidíme se ve čtvrtek 28. 8. v pozdním odpolku na Sobeňáku (začínat budeme cca okolo 5. a rozloučíme se ideálně v neděli po snídani :) Teda pokud nezůstaneš až do odpoledne (střízlivět totiž můžeš i u toho, že nám pomůžeš s „bouráním“ tábora:))
+Vidíme se ve čtvrtek 27. 8. v pozdním odpolku na Sobeňáku (začínat budeme cca okolo 5. a rozloučíme se ideálně 
+v neděli po snídani :) Teda pokud nezůstaneš až do odpoledne (střízlivět totiž můžeš i u toho, že nám pomůžeš 
+s „bouráním“ tábora:))
 
 **Všechny další věci, na které tenhle mail neodpovídá najdeš [na webu v FAQs](https://hckr.camp/faq/).**\
 **Pokud by ti tohle info ještě nestačilo, tak nám určitě napiš. Na slack, na mail. Nebo volej.**
 
 Těšíme se na viděnou, táborníku!
 
-Už 28. 8. na Sobeňáku!
+Už 27. 8. na Sobeňáku!
 
 Tvoje Hacker Camp `@crew`: Pája, Kuba, Kosi, Jirka, Aleš & Ir

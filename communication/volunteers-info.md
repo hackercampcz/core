@@ -7,7 +7,7 @@ Ahoj týme,
 
 Moc vás zdravím, doufám, že se máte prima :)
 
-Hlavní info o letošku [na webu](https://www.hackercamp.cz/) (termín **28. - 31. srpna 2025**)
+Hlavní info o letošku [na webu](https://www.hackercamp.cz/) (termín **27. - 30. srpna 2026**)
 
 V tomto mailu chci nasdílet základní info k vašemu zapojení:
 

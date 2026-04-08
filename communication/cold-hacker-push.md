@@ -5,7 +5,7 @@ LayoutTemplate: hc-basic
 
 Ahoj, táborníku,
 
-Už 29. 8. odpoledne se letos opět scházíme na Sobeňáku na [start HackerCampu](https://hckr.camp/)!
+Už 27. 8. odpoledne se letos opět scházíme na Sobeňáku na [start HackerCampu](https://hckr.camp/)!
 **A ty nám mezi letošními účastníky stále chybíš. Nezapadlo Ti někde info, že už je čas se přihlásit?**
 Nedošlo někde k chybě? Nebo pořád váháš, jestli letos vyrazit?
 

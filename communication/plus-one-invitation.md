@@ -9,7 +9,7 @@ Ahoj,
 nám na tebe dal / dala mail, protože by Tě letos chtěl / chtěla vzít s sebou.
 Jsme rádi, že se řady hackerů rozšiřují o ty, kdo do naší komunity zapadnou
 a užijí si s námi [camp podle našich jednoduchých pravidel](https://www.hackercamp.cz/#co-vse-cekat).
-**Píšeme Ti, abys svoji účast mohl / mohla potvrdit. Hacker Camp bude 28. 8. – 31. 8. 2025 na [Sobeňáku](https://www.sobenak.cz/)**.
+**Píšeme Ti, abys svoji účast mohl / mohla potvrdit. Hacker Camp bude 27. 8. – 30. 8. 2026 na [Sobeňáku](https://www.sobenak.cz/)**.
 Základní pravidlo je, že camp bude jen takový, jaký si ho společně uděláme.
 
 Je to pro Tebe cajk? No sales, no hiring rules bereš? Budeš se podílet
