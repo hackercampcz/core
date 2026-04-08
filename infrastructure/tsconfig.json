@@ -2,9 +2,9 @@
   "compilerOptions": {
     "strict": false,
     "outDir": "bin",
-    "target": "ES2024",
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
     "sourceMap": true,
     "experimentalDecorators": true,
     "pretty": true,
