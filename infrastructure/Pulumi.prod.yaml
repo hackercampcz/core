@@ -17,7 +17,7 @@ config:
   hackercamp:slack-bot-token:
     secure: AAABAPVKNBH+3caqm5hEgc2T0CgPxs5CJc4gkWRDYtcLBlPPny2aJc2bDVdtNk2zbxWUTks8m5n4CN+XcmTkd+y/wlrJtIS25/aqZTMLo4uvc1uFCFFtEd4=
   hackercamp:web-domain: www.hackercamp.cz
-  hackercamp:year: "2025"
+  hackercamp:year: "2026"
   hackercamp:start-date: "20260827"
   hackercamp:end-date: "20260830"
   hackercamp:google-api-key:
