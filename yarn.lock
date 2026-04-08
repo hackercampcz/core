@@ -3608,7 +3608,7 @@ __metadata:
     "@pulumi/cloudflare": "npm:6.14.0"
     "@pulumi/pulumi": "npm:3.230.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
-    "@types/node": "npm:24.1.0"
+    "@types/node": "npm:24.12.2"
     esbuild: "npm:0.28.0"
     front-matter: "npm:4.0.2"
     marked: "npm:18.0.0"
@@ -7053,15 +7053,6 @@ __metadata:
   dependencies:
     undici-types: "npm:~7.8.0"
   checksum: 10c0/e1f3d4ea8973b1f2f987814ac5343d05ad8b56bf7fa41755295dee0ce0f7b4e2de4f3daef5296429180228970cef0d70f2ad873c61dbafc6f5eeca9d023aba76
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:24.1.0":
-  version: 24.1.0
-  resolution: "@types/node@npm:24.1.0"
-  dependencies:
-    undici-types: "npm:~7.8.0"
-  checksum: 10c0/6c4686bc144f6ce7bffd4cadc3e1196e2217c1da4c639c637213719c8a3ee58b6c596b994befcbffeacd9d9eb0c3bff6529d2bc27da5d1cb9d58b1da0056f9f4
   languageName: node
   linkType: hard
 
