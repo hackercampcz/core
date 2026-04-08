@@ -21,7 +21,7 @@ async function* getRegistrations(client, year) {
 
 async function getAllRegistrations(client) {
   const result = [];
-  for (const year of [2022, 2023, 2024, 2025]) {
+  for (const year of [2022, 2023, 2024, 2025, 2026]) {
     for await (const page of getRegistrations(client, year)) {
       result.push(...page);
     }
