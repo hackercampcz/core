@@ -1,4 +1,5 @@
 import { formatMoney } from "@hackercamp/lib/format.js";
+import { ticketPrice, ticketName } from "@hackercamp/lib/ticket.js";
 import { html } from "lit-html";
 import { classMap } from "lit-html/directives/class-map.js";
 import { until } from "lit-html/directives/until.js";
@@ -110,79 +111,6 @@ export function unauthorized() {
     </div>
   `;
 }
-
-export const ticketName = new Map([
-  ["nonprofit", "Táborník z neziskovky"],
-  ["hacker", "Hacker"],
-  ["hacker-plus", "Hacker filantrop"],
-  ["hacker-patron", "Patron Campu"],
-  ["volunteer", "Dobrovolník"],
-  ["crew", "Crew"],
-  ["staff", "Ostatní"]
-]);
-
-export const ticketPrice = new Map([
-  [
-    2022,
-    new Map([
-      ["nonprofit", 2500],
-      ["hacker", 5000],
-      ["hacker-plus", 7500],
-      ["hacker-patron", 7500],
-      ["volunteer", 0],
-      ["crew", 0],
-      ["staff", 0]
-    ])
-  ],
-  [
-    2023,
-    new Map([
-      ["nonprofit", 3000],
-      ["hacker", 6000],
-      ["hacker-plus", 9000],
-      ["hacker-patron", 9000],
-      ["volunteer", 0],
-      ["crew", 0],
-      ["staff", 0]
-    ])
-  ],
-  [
-    2024,
-    new Map([
-      ["nonprofit", 3000],
-      ["hacker", 7000],
-      ["hacker-plus", 12000],
-      ["hacker-patron", 12000],
-      ["volunteer", 0],
-      ["crew", 0],
-      ["staff", 0]
-    ])
-  ],
-  [
-    2025,
-    new Map([
-      ["nonprofit", 3000],
-      ["hacker", 7000],
-      ["hacker-plus", 12000],
-      ["hacker-patron", 12000],
-      ["volunteer", 0],
-      ["crew", 0],
-      ["staff", 0]
-    ])
-  ],
-  [
-    2026,
-    new Map([
-      ["nonprofit", 3000],
-      ["hacker", 7000],
-      ["hacker-plus", 12000],
-      ["hacker-patron", 12000],
-      ["volunteer", 0],
-      ["crew", 0],
-      ["staff", 0]
-    ])
-  ]
-]);
 
 export function chip({ text, count, selected, view, year }) {
   const chipClasses = classMap({

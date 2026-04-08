@@ -1,6 +1,6 @@
+import { ticketName } from "@hackercamp/lib/ticket.js";
 import { html, render } from "lit-html";
 import { when } from "lit-html/directives/when.js";
-import { ticketName } from "../admin/common.js";
 import { ticketBadge } from "../lib/attendee.js";
 
 export class SlackAvatar extends HTMLElement {

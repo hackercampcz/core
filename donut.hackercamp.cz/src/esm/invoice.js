@@ -1,4 +1,5 @@
-import { getTicketPrice, ticketName } from "./admin/common.js";
+import { ticketName } from "@hackercamp/lib/ticket.js";
+import { getTicketPrice } from "./admin/common.js";
 import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { submitDecorator, withAuthHandler, withErrorReporting } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";

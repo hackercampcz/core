@@ -1,8 +1,9 @@
 import { sortBy } from "@hackercamp/lib/array.js";
+import { ticketName } from "@hackercamp/lib/ticket.js";
 import { html } from "lit-html";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
-import { ticketName, unauthorized } from "./admin/common.js";
+import { unauthorized } from "./admin/common.js";
 import { housing } from "./lib/attendee.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";

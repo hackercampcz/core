@@ -1,5 +1,6 @@
 import { sortBy } from "@hackercamp/lib/array.js";
 import { formatDateTime, formatMoney } from "@hackercamp/lib/format.js";
+import { ticketName } from "@hackercamp/lib/ticket.js";
 import { html } from "lit-html";
 import { until } from "lit-html/directives/until.js";
 import { when } from "lit-html/directives/when.js";
@@ -14,7 +15,6 @@ import {
   renderDetail,
   renderModalDialog,
   ticketDetail,
-  ticketName,
   unauthorized,
   View
 } from "./admin/common.js";
