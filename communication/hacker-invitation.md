@@ -9,27 +9,27 @@ Jednou táborník, vždycky táborník! Ať už s námi jezdíš pravidelně, ne
 i letos se na Tebe těšíme na konci srpna na Sobeňáku. **Letos vychází 35. týden v roce tak, že začínáme ve čtvrtek 27.
 8.** a domů se rozjedeme v neděli 30. 8. (více infa [na webu](https://www.hackercamp.cz/)).
 
-**A teď to nejdůležitější: Právě jsme otevřeli registrace!**  
+**A teď to nejdůležitější: Právě jsme otevřeli registrace!**\
 Jako každý rok, je i letos kapacita omezená na 250 táborníků max. Příjemnou atmosféru prostě dělá jen omezený počet
 super lidí a taky víme, že areál prostě není nafukovací :)
 
 **Jak si zajistíš svoje místo na campu? Včasnou registrací.**
 
-* **Ty, jako táborník si svoje místo chytneš [přes donut](https://donut.hckr.camp/registrace/)**, aka přes náš
+- **Ty, jako táborník si svoje místo chytneš [přes donut](https://donut.hckr.camp/registrace/)**, aka přes náš
   registrovaný prostor. Potřebuješ k němu přihlášení na náš HC slack. (Pro ty, kdo by nevěděli, jak na to přihlášení,
   máme u něj [tenhle návod](https://donut.hckr.camp/help/#slack-prihlaseni) ;))
-  * Připomínám, že při registraci vyplňuješ to, jak se zapojíš do programu (přečti si k tomu více níže) a svoje
+  - Připomínám, že při registraci vyplňuješ to, jak se zapojíš do programu (přečti si k tomu více níže) a svoje
     fakturační údaje.
-  * Faktura k zaplacení campu Ti přijde cca do týdne (nemáme na to automat, ručně schvalujeme a posíláme).
-  * Až fakturu zaplatíš, máš svoje místo na campu zaručené a můžeš si vybrat ubytko, upravit svůj návrh programu atd.
+  - Faktura k zaplacení campu Ti přijde cca do týdne (nemáme na to automat, ručně schvalujeme a posíláme).
+  - Až fakturu zaplatíš, máš svoje místo na campu zaručené a můžeš si vybrat ubytko, upravit svůj návrh programu atd.
 
-* Můžeš rovnou **pozvat svoje +1**. Pokud jde o nováčka, za kterého se zaručíš, že na camp zapadne, obohatí ho a ty se
+- Můžeš rovnou **pozvat svoje +1**. Pokud jde o nováčka, za kterého se zaručíš, že na camp zapadne, obohatí ho a ty se
   o něj/ji na místě postaráš.
-  * **Jak na to?**
-    * Pošli nováčka přes [registraci na webu](https://hckr.camp/registrace/), kde Tě musí uvést jako toho, kdo ho zve.
-    * Ještě líp uděláš, když jim pošleš svůj zvací link, který najdeš, v [donutu](https://donut.hckr.camp/) - tam je
+  - **Jak na to?**
+    - Pošli nováčka přes [registraci na webu](https://hckr.camp/registrace/), kde Tě musí uvést jako toho, kdo ho zve.
+    - Ještě líp uděláš, když jim pošleš svůj zvací link, který najdeš, v [donutu](https://donut.hckr.camp/) - tam je
       vše potřebné předvyplněno.
-  * **Během dubna a května necháváme nováčky na Waiting Listu.**   
+  - **Během dubna a května necháváme nováčky na Waiting Listu.**\
     Aka oni se registrují, my o nich víme. Přijde jim k tomu od nás potvrzení a mail. Ale přednostně odbavujeme
     táborníky. Takže na nováčky přijde řada, až pokud budou v červnu ještě volná místa.
 
@@ -67,16 +67,16 @@ pokrytí nákladů na naše dny společně strávené na Sobeňáku. Zkrátka ne
 camp dělat pro sebe a vás, naše kamarády a skvělé lidi. Všichni z crew děláme camp ve svém volném čase, zcela bez nároku
 na jakoukoliv odměnu.
 
-* Pokud vybíráte **nezisk vstupenku**, vězte, že je určena těm, **kdo si plný vstup nemohou dovolit**. Chceme mít na
+- Pokud vybíráte **nezisk vstupenku**, vězte, že je určena těm, **kdo si plný vstup nemohou dovolit**. Chceme mít na
   campu studenty, lidi z nezisku i veřejné správy. Je to vstupenka určená pro podporu diverzity na akci pro ty, kdo v
   těchto oblastech pracují naplno a jiné úvazky nemají.
-* Pokud si to naopak dovolit můžete a máte zlaté srdce, co nejen pomůže dorovnat právě vstupenku pro lidi z nezisku,
+- Pokud si to naopak dovolit můžete a máte zlaté srdce, co nejen pomůže dorovnat právě vstupenku pro lidi z nezisku,
   veřejné správy nebo studenty, můžete si vyzkoušet být pro letošek nejen Filantropy, ale i Patrony campu :) Můžeme už
   teď slíbit, že i letos patroni od nás dostanou malé poděkování navíc ;)
 
-Takže s registracemi ani platbami neváhejte! Nezapomeňte, že můžete s sebou vzít kámoše, co nám obohatí camp.   
+Takže s registracemi ani platbami neváhejte! Nezapomeňte, že můžete s sebou vzít kámoše, co nám obohatí camp.\
 **Prosím, pojďte už teď do našeho slacku.** Tam budeme sypat všechny novinky a vše pro vás podstatné! Ve slacku, kde
-můžete kromě jiného sledovat i [\#kdo\_prijede\_na\_camp](https://hackercampworkspace.slack.com/archives/C026KB0G8V8) a
+můžete kromě jiného sledovat i [#kdo_prijede_na_camp](https://hackercampworkspace.slack.com/archives/C026KB0G8V8) a
 vyplnit si svůj profil, ať se poznáte.
 
 My se každopádně těšíme na viděnou :) Otázky, které nezodpoví naše [FAQs](https://hckr.camp/faq/)
