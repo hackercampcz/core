@@ -3602,6 +3602,7 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:*"
     "@hackercamp/donut": "workspace:*"
+    "@hckr_/blendid": "npm:9.6.10"
     "@pulumi/aws": "npm:7.24.0"
     "@pulumi/awsx": "npm:3.4.0"
     "@pulumi/cloudflare": "npm:6.14.0"

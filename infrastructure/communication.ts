@@ -1,3 +1,4 @@
+import { processTypo } from "@hckr_/blendid/lib/texy.mjs";
 import { marked } from "marked";
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -5,17 +6,32 @@ import type { TemplateInputs } from "./postmark";
 
 const markdownExt = ".md";
 
-const hooks = {
-  preprocess(markdown) {
-    // Let's make Postmark interpolation look like URL string, so it is converted to link as intended
-    return markdown.replaceAll("{{ editUrl }}", "/{{editUrl}}/");
-  },
-  postprocess(html) {
-    // Convert it back to Postmark interpolation string
-    return html.replaceAll("/%7B%7BeditUrl%7D%7D/", "{{ editUrl }}");
+function postmarkInterpolation() {
+  return {
+    hooks: {
+      preprocess(markdown) {
+        // Let's make Postmark interpolation look like URL string, so it is converted to link as intended
+        return markdown.replaceAll("{{ editUrl }}", "/{{editUrl}}/");
+      },
+      postprocess(html) {
+        // Convert it back to Postmark interpolation string
+        return html.replaceAll("/%7B%7BeditUrl%7D%7D/", "{{ editUrl }}");
+      }
+    }
   }
-};
-marked.use({ hooks });
+}
+
+function texyTypography() {
+  return {
+    hooks: {
+      preprocess(markdown) {
+        return processTypo(markdown, { locale: "cs" });
+      }
+    }
+  }
+}
+
+marked.use(postmarkInterpolation(), texyTypography());
 const frontmatter = require("front-matter");
 
 export function* readTemplates(relPath: string): Generator<TemplateInputs> {
