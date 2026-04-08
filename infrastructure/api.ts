@@ -354,8 +354,16 @@ export function createDB({ queues, postmarkTemplates }) {
     streamEnabled: true,
     streamViewType: "NEW_AND_OLD_IMAGES",
     globalSecondaryIndexes: [
-      { name: "registrations-by-id", hashKey: "id", projectionType: "KEYS_ONLY" },
-      { name: "registrations-by-invoice-id", hashKey: "invoice_id", rangeKey: "email", projectionType: "KEYS_ONLY" }
+      {
+        name: "registrations-by-id",
+        projectionType: "KEYS_ONLY",
+        keySchemas: [{ attributeName: "id", keyType: "HASH" }]
+      },
+      {
+        name: "registrations-by-invoice-id",
+        projectionType: "KEYS_ONLY",
+        keySchemas: [{ attributeName: "invoice_id", keyType: "HASH" }, { attributeName: "email", keyType: "RANGE" }]
+      }
     ]
   });
   registrations.onEvent(
@@ -401,9 +409,8 @@ export function createDB({ queues, postmarkTemplates }) {
     streamViewType: "NEW_AND_OLD_IMAGES",
     globalSecondaryIndexes: [{
       name: "attendees-by-email",
-      hashKey: "email",
-      rangeKey: "year",
-      projectionType: "KEYS_ONLY"
+      projectionType: "KEYS_ONLY",
+      keySchemas: [{ attributeName: "email", keyType: "HASH" }, { attributeName: "year", keyType: "RANGE" }]
     }]
   });
   attendees.onEvent(
