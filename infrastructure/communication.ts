@@ -18,7 +18,7 @@ function postmarkInterpolation() {
         return html.replaceAll("/%7B%7BeditUrl%7D%7D/", "{{ editUrl }}");
       }
     }
-  }
+  };
 }
 
 function texyTypography() {
@@ -28,7 +28,7 @@ function texyTypography() {
         return processTypo(markdown, { locale: "cs" });
       }
     }
-  }
+  };
 }
 
 marked.use(postmarkInterpolation(), texyTypography());

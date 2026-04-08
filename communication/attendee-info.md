@@ -127,11 +127,11 @@ a hudební tvorbou :) A nejen u ohně. Prostě fantazii se meze nekladou.
   Letos se zase pojede i na kole, takže pokud se chceš přidat, sleduj [info od Toma tady](https://hackercampworkspace.slack.com/archives/C08TFG3EULV)!
   Domluv se, kdo Ti přiveze věci a doraž na camp s dalšími cyklonadšenci :)
 
-Uff. Dlouhý mail a dlouhé čtení. Ale nezapomeň, všechno **podstatné je, že Camp bude jen takový, jaký si ho uděláme!** 
+Uff. Dlouhý mail a dlouhé čtení. Ale nezapomeň, všechno **podstatné je, že Camp bude jen takový, jaký si ho uděláme!**
 Takže úsměv a klid a bude to super :)
 
-Vidíme se ve čtvrtek 27. 8. v pozdním odpolku na Sobeňáku (začínat budeme cca okolo 5. a rozloučíme se ideálně 
-v neděli po snídani :) Teda pokud nezůstaneš až do odpoledne (střízlivět totiž můžeš i u toho, že nám pomůžeš 
+Vidíme se ve čtvrtek 27. 8. v pozdním odpolku na Sobeňáku (začínat budeme cca okolo 5. a rozloučíme se ideálně
+v neděli po snídani :) Teda pokud nezůstaneš až do odpoledne (střízlivět totiž můžeš i u toho, že nám pomůžeš
 s „bouráním“ tábora:))
 
 **Všechny další věci, na které tenhle mail neodpovídá najdeš [na webu v FAQs](https://hckr.camp/faq/).**\

@@ -55,7 +55,7 @@ Co tedy potřebuješ vědět?
    - Aktuální (a neustále aktualizovaný) program najdeš v [donutu](https://donut.hckr.camp/program), dále sleduj kanál na [slacku #program](https://hackercampworkspace.slack.com/archives/C01URRT4Z8W)
    - 📱**I program** můžeš si tady **přidat** náš program **do svého [kalendáře](https://donut.hckr.camp/program/kalendar)** a mít ho u sebe v mobilu.
    - **Anotaci** svého vystoupení můžeš upravit ve druhém listu [tabulky](https://donut.hckr.camp/program/2026), hledej
-     [sloupeček J](https://docs.google.com/spreadsheets/d/1bO0RYdm_keyn2cCDHewfdYbiDbj9QFN2C6E-npbaIJY/edit?gid=1603736629#gid=1603736629&range=J:J). 
+     [sloupeček J](https://docs.google.com/spreadsheets/d/1bO0RYdm_keyn2cCDHewfdYbiDbj9QFN2C6E-npbaIJY/edit?gid=1603736629#gid=1603736629&range=J:J).
      nebo **upravit svojí [anotaci](https://donut.hckr.camp/program/2026)**.
    - Nemáš svoji aktivitu v programu?! Nevadí! **Přidáš na místě! Před každým blokem se sejdeme všichni na Mainframe
      a řekneme si, co nás v dalších dvou hoďkách čeká.**
