@@ -2,9 +2,9 @@
   "compilerOptions": {
     "strict": false,
     "outDir": "bin",
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "es2020",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "sourceMap": true,
     "experimentalDecorators": true,
     "pretty": true,
