@@ -263,7 +263,7 @@ function hcName(t: string, options?: { stage?: string; }) {
 
 const buildAssets = (fileName: string) =>
   lambdaBuilder.buildCodeAsset(
-    path.join(__dirname, "src", "lambda", fileName),
+    path.join(__dirname, "..", "api.hackercamp.cz", "src", "lambda", fileName),
     {
       minify: false,
       format: "esm",
