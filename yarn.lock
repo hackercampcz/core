@@ -3602,7 +3602,7 @@ __metadata:
   dependencies:
     "@hackercamp/api": "workspace:*"
     "@hackercamp/donut": "workspace:*"
-    "@hckr_/blendid": "npm:9.6.10"
+    "@hckr_/blendid": "npm:9.6.11"
     "@pulumi/aws": "npm:7.24.0"
     "@pulumi/awsx": "npm:3.4.0"
     "@pulumi/cloudflare": "npm:6.14.0"
@@ -3633,64 +3633,6 @@ __metadata:
     wrangler: "npm:4.81.1"
   languageName: unknown
   linkType: soft
-
-"@hckr_/blendid@npm:9.6.10":
-  version: 9.6.10
-  resolution: "@hckr_/blendid@npm:9.6.10"
-  dependencies:
-    "@csstools/postcss-gamut-mapping": "npm:3.0.2"
-    "@lokesh.dhakar/quantize": "npm:1.4.0"
-    "@vitejs/plugin-basic-ssl": "npm:2.2.0"
-    cloudinary: "npm:2.9.0"
-    cssnano: "npm:7.1.3"
-    del: "npm:8.0.1"
-    gulp: "npm:5.0.1"
-    gulp-changed: "npm:5.0.4"
-    gulp-data: "npm:1.3.1"
-    gulp-debug: "npm:5.0.1"
-    gulp-esbuild: "npm:0.14.1"
-    gulp-htmlmin-next: "npm:6.0.1"
-    gulp-if: "npm:3.0.0"
-    gulp-inject: "npm:5.0.5"
-    gulp-markdown-to-json: "npm:1.1.0"
-    gulp-merge-json: "npm:2.2.1"
-    gulp-mode: "npm:1.1.0"
-    gulp-nunjucks-render: "npm:2.2.3"
-    gulp-postcss: "npm:10.0.0"
-    gulp-rev-delete-original: "npm:0.2.3"
-    gulp-rev-rewrite: "npm:=5.0.0"
-    gulp-sizereport: "npm:1.2.1"
-    gulp-svgmin: "npm:4.1.0"
-    gulp-svgstore: "npm:9.0.0"
-    gulplog: "npm:2.2.0"
-    lodash-es: "npm:4.17.23"
-    marked: "npm:17.0.5"
-    marked-gfm-heading-id: "npm:4.1.3"
-    marked-highlight: "npm:2.2.3"
-    marked-mangle: "npm:1.1.12"
-    modify-filename: "npm:2.0.0"
-    ndarray-pixels: "npm:5.0.1"
-    nunjucks: "npm:3.2.4"
-    nunjucks-markdown: "npm:2.0.1"
-    plugin-error: "npm:2.0.1"
-    postcss: "npm:8.5.8"
-    postcss-functions: "npm:4.0.2"
-    postcss-import: "npm:16.1.1"
-    postcss-preset-env: "npm:11.2.0"
-    rev-hash: "npm:4.1.0"
-    rev-path: "npm:3.0.0"
-    sharp: "npm:0.34.5"
-    sort-keys: "npm:6.0.0"
-    through2: "npm:4.0.2"
-    undertaker-registry: "npm:2.0.0"
-    vinyl: "npm:3.0.1"
-    vinyl-file: "npm:5.0.0"
-    vite: "npm:8.0.1"
-  bin:
-    blendid: bin/blendid.js
-  checksum: 10c0/00457f32e2b0c644fc4f8a17167652dcb4f5a9ba45ffb796033e2ac0d8d05d7e7fb7bc228168d73c8d8a3004bd25ab1e03836fe62162540b898e0f26ea8df13e
-  languageName: node
-  linkType: hard
 
 "@hckr_/blendid@npm:9.6.11":
   version: 9.6.11
