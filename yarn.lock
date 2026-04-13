@@ -3546,7 +3546,7 @@ __metadata:
     "@thi.ng/transducers": "npm:9.6.31"
     "@types/node": "npm:24.12.2"
     algoliasearch: "npm:5.50.1"
-    fast-xml-parser: "npm:5.5.11"
+    fast-xml-parser: "npm:5.5.12"
     immutable: "npm:5.1.5"
     jsonwebtoken: "npm:9.0.3"
     rollbar: "npm:3.1.0"
@@ -9533,16 +9533,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:5.5.11":
-  version: 5.5.11
-  resolution: "fast-xml-parser@npm:5.5.11"
+"fast-xml-parser@npm:5.5.12":
+  version: 5.5.12
+  resolution: "fast-xml-parser@npm:5.5.12"
   dependencies:
     fast-xml-builder: "npm:^1.1.4"
-    path-expression-matcher: "npm:^1.4.0"
+    path-expression-matcher: "npm:^1.5.0"
     strnum: "npm:^2.2.3"
   bin:
     fxparser: src/cli/cli.js
-  checksum: 10c0/979f84d3ef0f979cdbee610a6bed88bb24555b8e4df6fe683644f937bb2e89ce39ed05ca07538da3d6fd7c05b8fe17c5f589dcafb470bca363de30fd37094c23
+  checksum: 10c0/fe2985517b7fe160b1f0529f2b285063184f21b0590c4cc65d34d464eea98f22ecad2a64575f2376d196d9e7a2e9e1a05f6603f02df4a1d6ac845aec0cda9f5b
   languageName: node
   linkType: hard
 
@@ -13164,10 +13164,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-expression-matcher@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "path-expression-matcher@npm:1.4.0"
-  checksum: 10c0/b6cf6aef88a29396ce0b459a8817a2a8d14f15dc6e059c8b5e04cf1d852789949dac6de059a7f574441e9bf71627b9beaa07bed1f21040209bda69aece26b21a
+"path-expression-matcher@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "path-expression-matcher@npm:1.5.0"
+  checksum: 10c0/646cb5bc66cd7d809a52288336f3ac1e6223f156fd8e912936e490e590f7f93e8056d4fd25fcbcc7da61bb698fa520112cb050372a3f65e7b79bd4afa0f77610
   languageName: node
   linkType: hard
 
