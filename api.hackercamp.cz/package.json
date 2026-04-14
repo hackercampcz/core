@@ -9,7 +9,7 @@
     "@hackercamp/lib": "workspace:*",
     "@hckr_/cloudflare-pages-plugin-rollbar": "1.1.4",
     "@thi.ng/transducers": "9.6.31",
-    "algoliasearch": "5.50.1",
+    "algoliasearch": "5.50.2",
     "fast-xml-parser": "5.5.12",
     "immutable": "5.1.5",
     "jsonwebtoken": "9.0.3",
