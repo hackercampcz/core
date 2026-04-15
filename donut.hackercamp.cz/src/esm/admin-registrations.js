@@ -84,11 +84,11 @@ function approveVolunteersSummary(selection) {
       map(selection, email => {
         const reg = registrations.get(email);
         return html`
-              <li
-                style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between">
-                <span>${reg.name}</span>
-              </li>
-            `;
+            <li
+              style="display: flex; flex-direction: row; align-items: stretch; justify-content: space-between">
+              <span>${reg.name}</span>
+            </li>
+          `;
       })
     }
       </ul>
@@ -138,46 +138,46 @@ export function registrationsChips(
       ${
     when(view === View.search, () =>
       html`
-        <form name="search">
-          <input type="hidden" name="view" value="${View.search}">
-          <input type="hidden" name="year" value="${year}">
-          <slotted-input>
-            <button class="icon-button small" type="submit"
-                    title="Hledat" aria-label="Hledat">
-              <feather-icon name="search" title="Hledat"></feather-icon>
-            </button>
-            <input
-              name="query"
-              placeholder="Hledat jméno, e-mail, firmu&hellip;"
-              value="${params.get("query")}"
-              autofocus
-              @keyup="${e => {
+          <form name="search">
+            <input type="hidden" name="view" value="${View.search}">
+            <input type="hidden" name="year" value="${year}">
+            <slotted-input>
+              <button class="icon-button small" type="submit"
+                      title="Hledat" aria-label="Hledat">
+                <feather-icon name="search" title="Hledat"></feather-icon>
+              </button>
+              <input
+                name="query"
+                placeholder="Hledat jméno, e-mail, firmu&hellip;"
+                value="${params.get("query")}"
+                autofocus
+                @keyup="${e => {
         if (e.key === "Escape") document.getElementById("hc-search__close").click();
       }}"
-              @change="${e => e.target.form.submit()}">
-            <a class="icon-button small"
-               id="hc-search__close"
-               href="/admin/"
-               title="Zavřít hledání">
-              <feather-icon name="x" title="Zavřít"></feather-icon>
-            </a>
-          </slotted-input>
-        </form>`, () =>
+                @change="${e => e.target.form.submit()}">
+              <a class="icon-button small"
+                 id="hc-search__close"
+                 href="/admin/"
+                 title="Zavřít hledání">
+                <feather-icon name="x" title="Zavřít"></feather-icon>
+              </a>
+            </slotted-input>
+          </form>`, () =>
       html`
-        <div>
-          <a class="icon-button small" href="/admin/?${new URLSearchParams({ view: View.search, year })}"
-             title="Hledat" aria-label="Hledat">
-            <feather-icon name="search" title="Hledat"></feather-icon>
-          </a>
-        </div>
-        <div
-          class="hc-chip-set"
-          role="grid"
-          id="filters"
-          aria-orientation="horizontal"
-          aria-multiselectable="false">
-          ${chip({ text: "Zaplacení", count: paid, selected: view === View.paid, view: View.paid, year })}
-          ${
+          <div>
+            <a class="icon-button small" href="/admin/?${new URLSearchParams({ view: View.search, year })}"
+               title="Hledat" aria-label="Hledat">
+              <feather-icon name="search" title="Hledat"></feather-icon>
+            </a>
+          </div>
+          <div
+            class="hc-chip-set"
+            role="grid"
+            id="filters"
+            aria-orientation="horizontal"
+            aria-multiselectable="false">
+            ${chip({ text: "Zaplacení", count: paid, selected: view === View.paid, view: View.paid, year })}
+            ${
         chip({
           text: "Vyfakturovaní",
           count: invoiced,
@@ -186,7 +186,7 @@ export function registrationsChips(
           year
         })
       }
-          ${
+            ${
         chip({
           text: "Potvrzení",
           count: confirmed,
@@ -195,7 +195,7 @@ export function registrationsChips(
           year
         })
       }
-          ${
+            ${
         chip({
           text: "Waiting list",
           count: waitingList,
@@ -204,7 +204,7 @@ export function registrationsChips(
           year
         })
       }
-          ${
+            ${
         chip({
           text: "Dobrovolníci",
           count: volunteer,
@@ -213,25 +213,25 @@ export function registrationsChips(
           year
         })
       }
-          ${chip({ text: "Ostatní", count: staff, selected: view === View.staff, view: View.staff, year })}
-          ${chip({ text: "Opt-outs", count: optouts, selected: view === View.optouts, view: View.optouts, year })}
-        </div>
-        <div>
-          <button class="icon-button small"
-                  title="Zkopírovat statistiky"
-                  @click="${copyToClipboard([paid, invoiced, confirmed, waitingList, volunteer, staff])}">
-            <feather-icon name="copy" title="Kopírovat"></feather-icon>
-          </button>
-          <a class="icon-button small"
-             href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
+            ${chip({ text: "Ostatní", count: staff, selected: view === View.staff, view: View.staff, year })}
+            ${chip({ text: "Opt-outs", count: optouts, selected: view === View.optouts, view: View.optouts, year })}
+          </div>
+          <div>
+            <button class="icon-button small"
+                    title="Zkopírovat statistiky"
+                    @click="${copyToClipboard([paid, invoiced, confirmed, waitingList, volunteer, staff])}">
+              <feather-icon name="copy" title="Kopírovat"></feather-icon>
+            </button>
+            <a class="icon-button small"
+               href="https://api.hackercamp.cz/v1/admin/registrations?${new URLSearchParams(
         Object.assign(Object.fromEntries(params), { year, type: view, format: "csv", pageSize: 500 })
       )}"
-             title="Stáhnout CSV"
-             aria-label="Stáhnout CSV">
-            <feather-icon name="download" title="Stáhnout"></feather-icon>
-          </a>
-        </div>
-      `)
+               title="Stáhnout CSV"
+               aria-label="Stáhnout CSV">
+              <feather-icon name="download" title="Stáhnout"></feather-icon>
+            </a>
+          </div>
+        `)
   }
     </search>
   `;
@@ -261,19 +261,19 @@ export async function selectionBar(selectedView, selection, data) {
       ${
     when(selectedView === View.confirmed, () =>
       html`
-            <button class="icon-button small" title="Vyfakturovat" @click="${renderModalDialog("invoice")()}">
-              ${iconFakturoid()}
-            </button>
-          `)
+          <button class="icon-button small" title="Vyfakturovat" @click="${renderModalDialog("invoice")}">
+            ${iconFakturoid()}
+          </button>
+        `)
   }
       ${
     when(new Set([View.volunteer, View.staff]).has(selectedView), () =>
       html`
-            <button class="icon-button small" title="Schválit" @click="${approveSelected()}"
-                    aria-label="Schválit účastníka">
-              <feather-icon name="user-plus" title="Schválit"></feather-icon>
-            </button>
-          `)
+          <button class="icon-button small" title="Schválit" @click="${approveSelected()}"
+                  aria-label="Schválit účastníka">
+            <feather-icon name="user-plus" title="Schválit"></feather-icon>
+          </button>
+        `)
   }
     </div>
   `;
@@ -316,7 +316,7 @@ export function registrationsTableTemplate(
         ${
     when(selectedView === View.search, () =>
       html`
-              <th>Stav</th>`)
+          <th>Stav</th>`)
   }
         <th>Akce</th>
       </tr>
@@ -324,7 +324,8 @@ export function registrationsTableTemplate(
       <tfoot>
       <tr>
         <td colspan="6">
-          <hc-pagination page="${page}" pages="${pages}" total="${total}" count="${data.length}" params="${params}"></hc-pagination>
+          <hc-pagination page="${page}" pages="${pages}" total="${total}" count="${data.length}"
+                         params="${params}"></hc-pagination>
         </td>
       </tr>
       </tfoot>
@@ -332,33 +333,31 @@ export function registrationsTableTemplate(
       ${
     data.map(row =>
       html`
-          <tr @click="${renderDetail(row)}">
-            <td>
-              <label class="checkbox">
-                <input type="checkbox" value="${row.email}" @click="${selectRow}" ?checked="${
-        selection.has(row.email)
-      }">
-                <span class="sr-only">Vybrat</span>
-              </label>
-            </td>
-            <td>${row.name}</td>
-            <td>${row.company}</td>
-            <td>
-              ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
-            </td>
-            ${
+        <tr @click="${renderDetail(row)}">
+          <td>
+            <label class="checkbox">
+              <input type="checkbox" value="${row.email}" @click="${selectRow}" ?checked="${selection.has(row.email)}">
+              <span class="sr-only">Vybrat</span>
+            </label>
+          </td>
+          <td>${row.name}</td>
+          <td>${row.company}</td>
+          <td>
+            ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
+          </td>
+          ${
         when(selectedView === View.search, () =>
           html`
-                  <td>${registrationStatus(row)}</td>`)
+            <td>${registrationStatus(row)}</td>`)
       }
-            <td>
+          <td>
               <span class="hc-detail__tools">
                 <hc-mail-button email="${row.email}"></hc-mail-button>
                 <hc-phone-button phone="${row.phone}"></hc-phone-button>
               </span>
-            </td>
-          </tr>
-        `
+          </td>
+        </tr>
+      `
     )
   }
       </tbody>
@@ -378,10 +377,10 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         ${
     when(detail.image, () =>
       html`
-            <hc-slack-avatar
-              src="${detail.image}"
-              name="${detail.firstName + " " + detail.lastName}"
-              badge="${detail.ticketType}"></hc-slack-avatar>`, () => html`${ticketBadge.get(detail.ticketType)}`)
+          <hc-slack-avatar
+            src="${detail.image}"
+            name="${`${detail.firstName} ${detail.lastName}`}"
+            badge="${detail.ticketType}"></hc-slack-avatar>`, () => html`${ticketBadge.get(detail.ticketType)}`)
   }
       </div>
       <p>${detail.company}</p>
@@ -402,7 +401,8 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           <button class="icon-button small" title="Opt in" @click="${optin(detail.email)}"
                   aria-label="Schválit účastníka">
             <feather-icon name="user-plus" title="Schválit"></feather-icon>
-          </button>`)
+          </button>
+        `)
   }
         ${
     when(selectedView === View.confirmed, () =>
@@ -417,7 +417,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
                   @click="${renderModalDialog("transfer")}">
             <feather-icon name="refresh-ccw" title="Obnovit"></feather-icon>
           </button>
-      `)
+        `)
   }
         <button class="icon-button small" title="Upravit registraci"
                 @click="${renderModalDialog("registration-modal")}">
@@ -433,7 +433,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
           <button class="icon-button small" title="Označit jako zaplacené" @click="${renderModalDialog("pay")}">
             <feather-icon name="dollar-sign" title="Označit jako zaplacené"></feather-icon>
           </button>
-      `)
+        `)
   }
         <button class="icon-button small" title="Odstranit registraci" @click="${trashRegistration(detail.email)}">
           <feather-icon name="trash-2" title="Smazat"></feather-icon>
@@ -446,47 +446,47 @@ export function registrationDetailTemplate({ detail, selectedView }) {
       ${
     when(detail.activity, () =>
       html`
-            <h3>Aktivita</h3>
-            ${unsafeHTML(marked.parse(detail.activity))}
-            ${when(detail.activityCrew, () => html`<p>Parťáci: ${detail.activityCrew}</p>`)}
-            ${when(detail.activityPlace, () => html`<p>Zázemí: ${detail.activityPlace}</p>`)}
-          `)
+        <h3>Aktivita</h3>
+        ${unsafeHTML(marked.parse(detail.activity))}
+        ${when(detail.activityCrew, () => html`<p>Parťáci: ${detail.activityCrew}</p>`)}
+        ${when(detail.activityPlace, () => html`<p>Zázemí: ${detail.activityPlace}</p>`)}
+      `)
   }
       ${
     when(detail.invRecipient === "1", () =>
       html`
-            <p>
-              Fakturovat za něj bude
-              <a href="mailto:${detail.invRecipientEmail}">${detail.invRecipientFirstname}
-                ${detail.invRecipientLastname}</a>
-              <a href="tel:${detail.invRecipientPhone}">${detail.invRecipientPhone}</a>
-            </p>
-          `)
+        <p>
+          Fakturovat za něj bude
+          <a href="mailto:${detail.invRecipientEmail}">${detail.invRecipientFirstname}
+            ${detail.invRecipientLastname}</a>
+          <a href="tel:${detail.invRecipientPhone}">${detail.invRecipientPhone}</a>
+        </p>
+      `)
   }
       ${when(detail.invAddress, () => invoiceDetails(detail))}
       ${
     when(detail.invoiced, () =>
       html`
-            <p>
-              Vyfakturováno
-              <strong>${formatDateTime(new Date(detail.invoiced))}</strong>;
-              ID faktury
-              <a rel="noopener" target="fakturoid"
-                 href="https://app.fakturoid.cz/hackercampcrew/invoices/${detail.invoice_id}"><code>${detail.invoice_id}</code></a>
-            </p>
-          `)
+        <p>
+          Vyfakturováno
+          <strong>${formatDateTime(new Date(detail.invoiced))}</strong>;
+          ID faktury
+          <a rel="noopener" target="fakturoid"
+             href="https://app.fakturoid.cz/hackercampcrew/invoices/${detail.invoice_id}"><code>${detail.invoice_id}</code></a>
+        </p>
+      `)
   }
       ${when(detail.paid, () => html`<p>Zaplaceno: ${formatDateTime(new Date(detail.paid))}</p>`)}
       ${
     when(detail.edited, () =>
       html`
-            <p>
-              Naposledy editováno
-              <strong>${formatDateTime(new Date(detail.edited))}</strong>
-              administrátorem
-              <strong>${detail.editedBy}</strong>
-            </p>
-          `)
+        <p>
+          Naposledy editováno
+          <strong>${formatDateTime(new Date(detail.edited))}</strong>
+          administrátorem
+          <strong>${detail.editedBy}</strong>
+        </p>
+      `)
   }
     </div>
   `;
@@ -501,11 +501,11 @@ function invoiceDetails(detail) {
       ${
     when(detail.invEmail || detail["invoice-contact"], () =>
       html`
-            <p>
-              E-mail:
-              <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
-            </p>
-          `)
+        <p>
+          E-mail:
+          <code>${detail.invEmail ?? detail["invoice-contact"]}</code>
+        </p>
+      `)
   }
       <p>
         ${when(detail.invRegNo, () => html`IČ: ${detail.invRegNo}`)}
@@ -516,10 +516,11 @@ function invoiceDetails(detail) {
   `;
 }
 
-const timeColumn = new Map([[View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }], [View.attendees, {
-  timeHeader: "Čas zaplacení",
-  timeAttr: "paid"
-}], [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }]]);
+const timeColumn = new Map([
+  [View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
+  [View.attendees, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
+  [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }]
+]);
 
 export function registrationsTemplate(state) {
   const { data, selectedView, detail, year, page, params, selection } = state;
@@ -547,14 +548,14 @@ export function registrationsTemplate(state) {
           ?? { timeHeader: "Čas registrace", timeAttr: "timestamp" };
         if (selectedView === View.optouts) {
           return html`
-                  <ul>
-                    ${
+                <ul>${
             data.map(x =>
               html`
-                          <li>${x}</li>`
+                  <li>${x}</li>`
             )
           }
-                  </ul>`;
+                </ul>
+              `;
         }
         return registrationsTableTemplate(
           sortBy(
@@ -604,54 +605,31 @@ function registrationModalDialog({ detail, apiHost }) {
       <div class="group">
         <div class="field">
           <label for="firstName">Jméno</label>
-          <input
-            id="firstName"
-            name="firstName"
-            value="${detail.firstName}"
-            required
-          >
+          <input id="firstName" name="firstName" value="${detail.firstName}" required>
         </div>
         <div class="field">
           <label for="lastName">Příjmení</label>
-          <input
-            id="lastName"
-            name="lastName"
-            value="${detail.lastName}"
-            required
-          >
+          <input id="lastName" name="lastName" value="${detail.lastName}" required>
         </div>
       </div>
       <div class="group">
         <div class="field">
           <label for="email">E-mail</label>
-          <input
-            id="email"
-            name="email"
-            value="${detail.email}"
-            type="email"
-            required
-          >
+          <input id="email" name="email" value="${detail.email}" type="email" required>
         </div>
         <div class="field">
           <label for="phone">Tel</label>
-          <input
-            id="phone"
-            name="phone"
-            value="${detail.phone}"
-            type="tel"
-            autocomplete="tel"
-            required
-          >
+          <input id="phone" name="phone" value="${detail.phone}" type="tel" autocomplete="tel" required>
         </div>
       </div>
       ${
     when(detail.paid, () =>
       html`
-            <div class="field">
-              <label for="paid">Čas zaplacení</label>
-              <input id="paid" name="paid" value="${detail.paid}" required>
-            </div>
-          `)
+        <div class="field">
+          <label for="paid">Čas zaplacení</label>
+          <input id="paid" name="paid" value="${detail.paid}" required>
+        </div>
+      `)
   }
       <div class="field">
         <label for="company">Společnost</label>
@@ -675,71 +653,40 @@ function registrationModalDialog({ detail, apiHost }) {
         <legend>Zaplatí sám</legend>
         <div class="field">
           <label for="invoice-name"> Jméno / název společnosti </label>
-          <input
-            id="invoice-name"
-            name="invName"
-            type="text"
-            value="${detail.invName}"
-          >
+          <input id="invoice-name" name="invName" type="text" value="${detail.invName}">
         </div>
         <div class="field">
           <label for="invoice-address"> Adresa (Ulice č.p.) </label>
-          <input id="invoice-address"
-                 name="invAddress" type="text"
-                 value="${detail.invAddress}">
+          <input id="invoice-address" name="invAddress" type="text" value="${detail.invAddress}">
         </div>
         <div class="group">
           <div class="field">
             <label for="invoice-address-zip">PSČ</label>
-            <input type="text" id="invoice-address-zip"
-                   name="invAddressZip" pattern="\\d{3}\\s\\d{2}"
+            <input type="text" id="invoice-address-zip" name="invAddressZip" pattern="\\d{3}\\s\\d{2}"
                    value="${detail.invAddressZip}">
           </div>
           <div class="field">
             <label for="invoice-address-city">Město</label>
-            <input type="text" id="invoice-address-city"
-                   name="invAddressCity"
-                   value="${detail.invAddressCity}">
+            <input type="text" id="invoice-address-city" name="invAddressCity" value="${detail.invAddressCity}">
           </div>
         </div>
         <div class="group">
           <div class="field">
-            <label for="invoice-regno"> IČO </label>
-            <input
-              id="invoice-regno"
-              name="invRegNo"
-              type="text"
-              value="${detail.invRegNo}"
-            >
+            <label for="invoice-regno">IČO</label>
+            <input id="invoice-regno" name="invRegNo" type="text" value="${detail.invRegNo}">
           </div>
           <div class="field">
-            <label for="invoice-vatno"> DIČ </label>
-            <input
-              id="invoice-vatno"
-              name="invVatNo"
-              type="text"
-              value="${detail.invVatNo}"
-            >
+            <label for="invoice-vatno">DIČ</label>
+            <input id="invoice-vatno" name="invVatNo" type="text" value="${detail.invVatNo}">
           </div>
         </div>
         <div class="field">
-          <label for="invoice-text"> Text na faktuře </label>
-          <input
-            id="invoice-text"
-            name="invText"
-            type="text"
-            value="${detail.invText}"
-          >
+          <label for="invoice-text">Text na faktuře</label>
+          <input id="invoice-text" name="invText" type="text" value="${detail.invText}">
         </div>
         <div class="field">
-          <label for="invoice-email"> Kontakt pro fakturaci </label>
-          <input
-            id="invoice-email"
-            name="invEmail"
-            value="${detail.invEmail}"
-            type="email"
-            autocomplete="email"
-          >
+          <label for="invoice-email">Kontakt pro fakturaci</label>
+          <input id="invoice-email" name="invEmail" value="${detail.invEmail}" type="email" autocomplete="email">
         </div>
       </fieldset>
 
@@ -748,41 +695,23 @@ function registrationModalDialog({ detail, apiHost }) {
         <div class="group">
           <div class="field">
             <label for="invoice-recipient-firstname"> Jméno </label>
-            <input
-              id="invoice-recipient-firstname"
-              name="invRecipientFirstname"
-              value="${detail.invRecipientFirstname}"
-              type="text"
-            >
+            <input id="invoice-recipient-firstname" name="invRecipientFirstname"
+                   value="${detail.invRecipientFirstname}">
           </div>
           <div class="field">
             <label for="invoice-recipient-lastname"> Příjmení </label>
-            <input
-              id="invoice-recipient-lastname"
-              name="invRecipientLastname"
-              value="${detail.invRecipientLastname}"
-              type="text"
-            >
+            <input id="invoice-recipient-lastname" name="invRecipientLastname" value="${detail.invRecipientLastname}">
           </div>
         </div>
         <div class="group">
           <div class="field">
             <label for="invoice-recipient-email"> E-mail </label>
-            <input
-              id="invoice-recipient-email"
-              name="invRecipientEmail"
-              value="${detail.invRecipientEmail}"
-              type="email"
-            >
+            <input id="invoice-recipient-email" name="invRecipientEmail" value="${detail.invRecipientEmail}"
+                   type="email">
           </div>
           <div class="field">
             <label for="invoice-recipient-phone"> Telefon </label>
-            <input
-              id="invoice-recipient-phone"
-              name="invRecipientPhone"
-              value="${detail.invRecipientPhone}"
-              type="tel"
-            >
+            <input id="invoice-recipient-phone" name="invRecipientPhone" value="${detail.invRecipientPhone}" type="tel">
           </div>
         </div>
       </fieldset>
@@ -807,7 +736,8 @@ function invoiceModalDialog({ detail, selection, year }) {
     ...(selection.size ? Array.from(selection).map(email => ["email", email]) : [["email", detail.email]])
   ]);
   return html`
-    <iframe src="invoice.html?${params}"></iframe>`;
+    <iframe src="invoice.html?${params}"></iframe>
+  `;
 }
 
 registerDialog("transfer", transferModalDialog);
@@ -819,13 +749,10 @@ function transferModalDialog({ detail, year }) {
     }
   });
   console.log({ detail, year });
-  const params = new URLSearchParams([
-    ["year", year],
-    ["modal", 1],
-    ["email", detail.email]
-  ]);
+  const params = new URLSearchParams({ year, modal: 1, email: detail.email });
   return html`
-    <iframe src="transfer.html?${params}"></iframe>`;
+    <iframe src="transfer.html?${params}"></iframe>
+  `;
 }
 
 /**
