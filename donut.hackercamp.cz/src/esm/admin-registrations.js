@@ -518,6 +518,7 @@ function invoiceDetails(detail) {
 
 const timeColumn = new Map([
   [View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
+  [View.confirmed, { timeHeader: "Čas registrace", timeAttr: "createdAt" }],
   [View.attendees, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
   [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }]
 ]);
