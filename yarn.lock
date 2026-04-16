@@ -3602,10 +3602,10 @@ __metadata:
     "@hackercamp/api": "workspace:*"
     "@hackercamp/donut": "workspace:*"
     "@hckr_/blendid": "npm:9.6.12"
-    "@pulumi/aws": "npm:7.25.0"
+    "@pulumi/aws": "npm:7.26.0"
     "@pulumi/awsx": "npm:3.5.0"
     "@pulumi/cloudflare": "npm:6.14.0"
-    "@pulumi/pulumi": "npm:3.230.0"
+    "@pulumi/pulumi": "npm:3.231.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@types/node": "npm:24.12.2"
     esbuild: "npm:0.28.0"
@@ -5294,13 +5294,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.25.0":
-  version: 7.25.0
-  resolution: "@pulumi/aws@npm:7.25.0"
+"@pulumi/aws@npm:7.26.0":
+  version: 7.26.0
+  resolution: "@pulumi/aws@npm:7.26.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
     mime: "npm:^2.0.0"
-  checksum: 10c0/51d0d75b8b7b5f7f7ddcb85a3f15ad04f6af306ed4e2e37697e9c2a36f069a420231d597db9842e552da5da763d1d428b6f4189332ca917f0185c850e292772c
+  checksum: 10c0/0786368f58f69816a3df9856d71d73be92558d45aacc1da60e9942da7de56c1b1efbd3067cec5f38a9083d86518e1eadb6dc79d1d6cc0aea1f96fdf0d34a85f9
   languageName: node
   linkType: hard
 
@@ -5358,9 +5358,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.230.0":
-  version: 3.230.0
-  resolution: "@pulumi/pulumi@npm:3.230.0"
+"@pulumi/pulumi@npm:3.231.0":
+  version: 3.231.0
+  resolution: "@pulumi/pulumi@npm:3.231.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -5379,12 +5379,10 @@ __metadata:
     execa: "npm:^5.1.0"
     fdir: "npm:^6.5.0"
     google-protobuf: "npm:^3.21.4"
-    got: "npm:^11.8.6"
     ini: "npm:^2.0.0"
     js-yaml: "npm:^3.14.2"
     minimist: "npm:^1.2.6"
     normalize-package-data: "npm:^6.0.0"
-    package-directory: "npm:^8.1.0"
     picomatch: "npm:^4.0.0"
     require-from-string: "npm:^2.0.1"
     semver: "npm:^7.5.2"
@@ -5399,7 +5397,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10c0/a1cda59ca469c5b2d510206e09d6ccb26f28882c098a8d8e24655f9046f89500743b465f94310004fba66d829e9346eac86d7703c487f07af04c297f1f2477b7
+  checksum: 10c0/9cafd311a5f3b48657394908db8927200ea179325adee51dffe92edaaec56f0bf1e53bcc55abada9417a0cdd4b8bdf326036fd29fb03baa62e48567fc269752f
   languageName: node
   linkType: hard
 
@@ -9624,13 +9622,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"find-up-simple@npm:^1.0.0":
-  version: 1.0.1
-  resolution: "find-up-simple@npm:1.0.1"
-  checksum: 10c0/ad34de157b7db925d50ff78302fefb28e309f3bc947c93ffca0f9b0bccf9cf1a2dc57d805d5c94ec9fc60f4838f5dbdfd2a48ecd77c23015fa44c6dd5f60bc40
-  languageName: node
-  linkType: hard
-
 "find-up@npm:^6.3.0":
   version: 6.3.0
   resolution: "find-up@npm:6.3.0"
@@ -13000,15 +12991,6 @@ __metadata:
   version: 7.0.3
   resolution: "p-map@npm:7.0.3"
   checksum: 10c0/46091610da2b38ce47bcd1d8b4835a6fa4e832848a6682cf1652bc93915770f4617afc844c10a77d1b3e56d2472bb2d5622353fa3ead01a7f42b04fc8e744a5c
-  languageName: node
-  linkType: hard
-
-"package-directory@npm:^8.1.0":
-  version: 8.1.0
-  resolution: "package-directory@npm:8.1.0"
-  dependencies:
-    find-up-simple: "npm:^1.0.0"
-  checksum: 10c0/29eee99ac9979dc852bbaab64968123ba44abaa8f2d49add065101612db81f3d4ac1eb27df3b1893878cd67dd8b5c36186876a139ec4fdd6a755abc810ce2749
   languageName: node
   linkType: hard
 
