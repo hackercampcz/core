@@ -560,7 +560,8 @@ export function registrationsTemplate(state) {
         return registrationsTableTemplate(
           sortBy(
             timeColumnSettings.timeAttr,
-            data.items.map(x => Object.assign({}, x, { name: x.name ?? `${x.firstName} ${x.lastName}` }))
+            data.items.map(x => Object.assign({}, x, { name: x.name ?? `${x.firstName} ${x.lastName}` })),
+            { asc: timeColumnSettings.timeAttr === "createdAt" }
           ),
           timeColumnSettings,
           { page, pages: data.pages, total: data.total, params, selection },
