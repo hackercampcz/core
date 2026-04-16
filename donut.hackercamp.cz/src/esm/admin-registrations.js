@@ -518,7 +518,6 @@ function invoiceDetails(detail) {
 
 const timeColumn = new Map([
   [View.paid, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
-  [View.confirmed, { timeHeader: "Čas registrace", timeAttr: "createdAt" }],
   [View.attendees, { timeHeader: "Čas zaplacení", timeAttr: "paid" }],
   [View.invoiced, { timeHeader: "Čas fakturace", timeAttr: "invoiced" }]
 ]);
@@ -548,21 +547,13 @@ export function registrationsTemplate(state) {
         const timeColumnSettings = timeColumn.get(selectedView)
           ?? { timeHeader: "Čas registrace", timeAttr: "timestamp" };
         if (selectedView === View.optouts) {
-          return html`
-                <ul>${
-            data.map(x =>
-              html`
-                  <li>${x}</li>`
-            )
-          }
-                </ul>
-              `;
+          return html`<ul>${data.map(x => html`<li>${x}</li>`)}</ul>`;
         }
         return registrationsTableTemplate(
           sortBy(
             timeColumnSettings.timeAttr,
             data.items.map(x => Object.assign({}, x, { name: x.name ?? `${x.firstName} ${x.lastName}` })),
-            { asc: timeColumnSettings.timeAttr === "createdAt" }
+            { asc: timeColumnSettings.timeAttr === "timestamp" }
           ),
           timeColumnSettings,
           { page, pages: data.pages, total: data.total, params, selection },
