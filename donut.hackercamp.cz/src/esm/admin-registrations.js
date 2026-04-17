@@ -342,9 +342,7 @@ export function registrationsTableTemplate(
             ${
         when(row.firstTime, () =>
           html`<span title="Jede poprvé">${
-            when(selectedView === View.paid, () => html`🐥`, () =>
-              when(selectedView === View.invoiced, () => html`🐣`, () =>
-                html`🥚`))
+            when(row.paid, () => html`🐥`, () => when(row.invoiced, () => html`🐣`, () => html`🥚`))
           }</span>`)
       }
           </td>
