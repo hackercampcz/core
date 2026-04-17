@@ -131,7 +131,7 @@ hc-slack-avatar {
   > * {
     grid-area: 1 / 1;
   }
-  .hc-badge {
+  hc-badge {
     z-index: 1;
     translate: 50% 50%;
     scale: 0.75;

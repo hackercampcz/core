@@ -22,6 +22,7 @@ import {
   View
 } from "./admin/common.js";
 import { housing, ticketBadge, travel } from "./lib/attendee.js";
+import "./components/badge.js";
 import "./components/phone-button.js";
 import "./components/mail-button.js";
 import "./components/slack-avatar.js";
@@ -337,8 +338,7 @@ export function registrationsTableTemplate(
               <span class="sr-only">Vybrat</span>
             </label>
           </td>
-          <td><i class="hc-badge"
-                 title="${ticketName.get(row.ticketType)}">${ticketBadge.get(row.ticketType)}</i>${row.name}
+          <td><hc-badge badge="${row.ticketType}"></hc-badge>${row.name}
             ${
         when(row.firstTime, () =>
           html`<span title="Jede poprvé">${

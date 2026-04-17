@@ -1,7 +1,7 @@
 import { ticketName } from "@hackercamp/lib/ticket.js";
 import { html, render } from "lit-html";
 import { when } from "lit-html/directives/when.js";
-import { ticketBadge } from "../lib/attendee.js";
+import "./badge.js";
 
 export class SlackAvatar extends HTMLElement {
   static get observedAttributes() {
@@ -52,7 +52,7 @@ export class SlackAvatar extends HTMLElement {
       <div class="avatar">
         <img src="${image}" alt="${this.name}">
       </div>
-      ${when(this.badge, () => html`<span class="hc-badge">${ticketBadge.get(this.badge)}</span>`)}
+      ${when(this.badge, () => html`<hc-badge badge="${this.badge}"></hc-badge>`)}
     `;
   }
 }
