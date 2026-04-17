@@ -329,40 +329,44 @@ export function registrationsTableTemplate(
       </tfoot>
       <tbody>
       ${
-    data.map(row =>
-      html`
-        <tr @click="${renderDetail(row)}">
-          <td>
-            <label class="checkbox">
-              <input type="checkbox" value="${row.email}" @click="${selectRow}" ?checked="${selection.has(row.email)}">
-              <span class="sr-only">Vybrat</span>
-            </label>
-          </td>
-          <td><hc-badge badge="${row.ticketType}"></hc-badge>${row.name}
+    data.map(row =>{
+        return html`
+          <tr @click="${renderDetail(row)}">
+            <td>
+              <label class="checkbox">
+                <input type="checkbox" value="${row.email}"
+                       @click="${selectRow}"
+                       ?checked="${selection.has(row.email)}"
+                       ?disabled="${selectedView === View.search}">
+                <span class="sr-only">Vybrat</span>
+              </label>
+            </td>
+            <td><hc-badge badge="${row.ticketType}"></hc-badge>${row.name}
+              ${
+          when(row.firstTime, () =>
+            html`<span title="Jede poprvé">${
+              when(row.paid, () => html`🐥`, () => when(row.invoiced, () => html`🐣`, () => html`🥚`))
+            }</span>`)
+        }
+            </td>
+            <td>${row.company}</td>
+            <td>
+              ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
+            </td>
             ${
-        when(row.firstTime, () =>
-          html`<span title="Jede poprvé">${
-            when(row.paid, () => html`🐥`, () => when(row.invoiced, () => html`🐣`, () => html`🥚`))
-          }</span>`)
+          when(selectedView === View.search, () =>
+            html`
+              <td>${registrationStatus(row)}</td>`)
+        }
+            <td>
+                <span class="hc-detail__tools">
+                  <hc-mail-button email="${row.email}"></hc-mail-button>
+                  <hc-phone-button phone="${row.phone}"></hc-phone-button>
+                </span>
+            </td>
+          </tr>
+        `;
       }
-          </td>
-          <td>${row.company}</td>
-          <td>
-            ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
-          </td>
-          ${
-        when(selectedView === View.search, () =>
-          html`
-            <td>${registrationStatus(row)}</td>`)
-      }
-          <td>
-              <span class="hc-detail__tools">
-                <hc-mail-button email="${row.email}"></hc-mail-button>
-                <hc-phone-button phone="${row.phone}"></hc-phone-button>
-              </span>
-          </td>
-        </tr>
-      `
     )
   }
       </tbody>
