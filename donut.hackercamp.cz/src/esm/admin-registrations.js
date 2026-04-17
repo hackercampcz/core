@@ -339,7 +339,15 @@ export function registrationsTableTemplate(
           </td>
           <td><i class="hc-badge"
                  title="${ticketName.get(row.ticketType)}">${ticketBadge.get(row.ticketType)}</i>${row.name}
-            ${when(row.firstTime, () => html`<span title="Jede poprvé">🐣</span>`)}</td>
+            ${
+        when(row.firstTime, () =>
+          html`<span title="Jede poprvé">${
+            when(selectedView === View.paid, () => html`🐥`, () =>
+              when(selectedView === View.invoiced, () => html`🐣`, () =>
+                html`🥚`))
+          }</span>`)
+      }
+          </td>
           <td>${row.company}</td>
           <td>
             ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
