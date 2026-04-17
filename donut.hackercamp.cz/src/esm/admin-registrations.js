@@ -445,6 +445,7 @@ export function registrationDetailTemplate({ detail, selectedView }) {
         </button>
       </div>
       ${ticketDetail(detail)}
+      ${when(detail.firstTime, () => html`<p><strong>Jede poprvé</strong></p>`)}
       ${when(detail.inviter, () => html`<p>Pozvání: <strong>${detail.inviter}</strong></p>`)}
       <p>Ubytování: <strong>${housing.get(detail.housing) ?? "Ještě si nevybral"}</strong></p>
       <p>Doprava: <strong>${travel.get(detail.travel) ?? "Ještě si nevybral"}</strong></p>
