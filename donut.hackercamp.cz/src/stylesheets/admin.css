@@ -109,6 +109,12 @@
   border-bottom: 3px double #ddd;
 }
 
+.hc-master-detail__list .hc-badge {
+  display: inline-flex;
+  vertical-align: bottom;
+  scale: 0.75;
+}
+
 .hc-detail__tools {
   display: flex;
   align-items: baseline;

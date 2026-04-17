@@ -1,5 +1,6 @@
 import { sortBy } from "@hackercamp/lib/array.js";
 import { formatDateTime } from "@hackercamp/lib/format.js";
+import { ticketName } from "@hackercamp/lib/ticket.js";
 import { html } from "lit-html";
 import { map } from "lit-html/directives/map.js";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
@@ -313,11 +314,7 @@ export function registrationsTableTemplate(
         <th>Jméno</th>
         <th>Společnost</th>
         <th>${timeHeader}</th>
-        ${
-    when(selectedView === View.search, () =>
-      html`
-          <th>Stav</th>`)
-  }
+        ${when(selectedView === View.search, () => html`<th>Stav</th>`)}
         <th>Akce</th>
       </tr>
       </thead>
@@ -340,7 +337,9 @@ export function registrationsTableTemplate(
               <span class="sr-only">Vybrat</span>
             </label>
           </td>
-          <td>${row.name}</td>
+          <td><i class="hc-badge"
+                 title="${ticketName.get(row.ticketType)}">${ticketBadge.get(row.ticketType)}</i>${row.name}
+            ${when(row.firstTime, () => html`<span title="Jede poprvé">🐣</span>`)}</td>
           <td>${row.company}</td>
           <td>
             ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
