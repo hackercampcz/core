@@ -7,7 +7,7 @@
     "@hackercamp/api": "workspace:*",
     "@hackercamp/donut": "workspace:*",
     "@hckr_/blendid": "9.6.12",
-    "@pulumi/aws": "7.26.0",
+    "@pulumi/aws": "7.27.0",
     "@pulumi/awsx": "3.5.0",
     "@pulumi/cloudflare": "6.14.0",
     "@pulumi/pulumi": "3.232.0",
