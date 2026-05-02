@@ -3659,7 +3659,7 @@ __metadata:
     "@hckr_/blendid": "npm:9.6.13"
     "@pulumi/aws": "npm:7.28.0"
     "@pulumi/awsx": "npm:3.5.0"
-    "@pulumi/cloudflare": "npm:6.14.0"
+    "@pulumi/cloudflare": "npm:6.15.0"
     "@pulumi/pulumi": "npm:3.234.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@types/node": "npm:24.12.2"
@@ -5386,12 +5386,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/cloudflare@npm:6.14.0":
-  version: 6.14.0
-  resolution: "@pulumi/cloudflare@npm:6.14.0"
+"@pulumi/cloudflare@npm:6.15.0":
+  version: 6.15.0
+  resolution: "@pulumi/cloudflare@npm:6.15.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
-  checksum: 10c0/301f94dde9ea5ca810795791db419da7c6e38b9815d240d9fa941173c2005768e7262610122dea8fab6dc320327e8a879f558403325992e7b4dc2dc087640dca
+  checksum: 10c0/209792534bfdbaf264af2386aa0c9c59640d99a84ff55c03e7f2556f59bbc328a7a88a7e48fe6e27bbafc8fade9309b06f6ea8c9635dfeb88598f63a30b17981
   languageName: node
   linkType: hard
 
