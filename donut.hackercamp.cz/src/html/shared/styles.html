@@ -204,7 +204,7 @@
     cursor: wait;
   }
 
-  .feather {
+  .feather, .icon {
     width: 24px;
     height: 24px;
     fill: none;
@@ -326,7 +326,7 @@
     border: 1px solid var(--hc-border-color);
   }
 
-  search .field, form .field {
+  search .field:not([hidden]), form .field:not([hidden]) {
     display: flex;
     flex-direction: column;
     padding-bottom: 4px;
