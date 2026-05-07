@@ -228,9 +228,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.1044.0":
-  version: 3.1044.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.1044.0"
+"@aws-sdk/client-dynamodb@npm:3.1045.0":
+  version: 3.1045.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.1045.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:5.2.0"
     "@aws-crypto/sha256-js": "npm:5.2.0"
@@ -274,7 +274,7 @@ __metadata:
     "@smithy/util-utf8": "npm:^4.2.2"
     "@smithy/util-waiter": "npm:^4.3.0"
     tslib: "npm:^2.6.2"
-  checksum: 10c0/e607a808b06a4fc32dc1c44b4e013915822b1b24d3865fff5fdc0f27e2411b23dad3371516bf861c062a172431c78c4c808df118b3a289279f50c6a7b70f7483
+  checksum: 10c0/c273c9c347f9742464af82bdc25c6917f5b7f33326010e6e41099b0b72f5f442d117b13f2a78c374c0114f20e5f3e5d4722114b8c23c394f1f19967409625601
   languageName: node
   linkType: hard
 
@@ -328,9 +328,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.1044.0":
-  version: 3.1044.0
-  resolution: "@aws-sdk/client-sqs@npm:3.1044.0"
+"@aws-sdk/client-sqs@npm:3.1045.0":
+  version: 3.1045.0
+  resolution: "@aws-sdk/client-sqs@npm:3.1045.0"
   dependencies:
     "@aws-crypto/sha256-browser": "npm:5.2.0"
     "@aws-crypto/sha256-js": "npm:5.2.0"
@@ -373,7 +373,7 @@ __metadata:
     "@smithy/util-retry": "npm:^4.3.6"
     "@smithy/util-utf8": "npm:^4.2.2"
     tslib: "npm:^2.6.2"
-  checksum: 10c0/f1d7f61dd8c2f5a9650062f5d65ffadf1b44c660ea35d894744bcf0a3122ce8be28eaab93f0444ecd8a8af4db3dc254af72bdd98b626a408129c2b08e3ec61e9
+  checksum: 10c0/b2b97acd3d44d025d1fd0eeafdd253eaebfa398344e52cb7bff6412b675f5565c5e6c6b7f477613c5c7f8b17cf2970c6d27521b842ebb3b55ced7422c0fbddba
   languageName: node
   linkType: hard
 
@@ -3674,8 +3674,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
-    "@aws-sdk/client-dynamodb": "npm:3.1044.0"
-    "@aws-sdk/client-sqs": "npm:3.1044.0"
+    "@aws-sdk/client-dynamodb": "npm:3.1045.0"
+    "@aws-sdk/client-sqs": "npm:3.1045.0"
     "@aws-sdk/util-dynamodb": "npm:3.996.2"
     "@cloudflare/workers-types": "npm:4.20260507.1"
     "@fast-csv/format": "npm:5.0.7"
