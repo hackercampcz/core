@@ -1,5 +1,5 @@
-import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
-import { marshall } from "@aws-sdk/util-dynamodb";
+import { DynamoDBClient, GetItemCommand, PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import crypto from "node:crypto";
 import { accepted, getHeader, readPayload, seeOther } from "../http.mjs";
 import { sendEmailWithTemplate, Template } from "../postmark.mjs";
@@ -34,6 +34,24 @@ function getEditUrl(isNewbee, id) {
   return `https://${process.env["donut"]}/registrace/`;
 }
 
+async function getRegistrationByEmail(email, year) {
+  console.log({ event: "Checking email used", email, year });
+  const regResp = db.send(
+    new GetItemCommand({
+      TableName: "registrations",
+      ProjectionExpression: "email",
+      Key: marshall({ email, year: parseInt(year) })
+    })
+  );
+
+  if (regResp.Item) {
+    console.log({ event: "Got registration", registration: regResp.Item });
+    return unmarshall(regResp.Item);
+  }
+
+  return null;
+}
+
 /**
  * @param {APIGatewayProxyEvent} event
  * @param {Rollbar} rollbar
@@ -41,6 +59,12 @@ function getEditUrl(isNewbee, id) {
  */
 export async function handler(event, rollbar) {
   let { email, year, firstTime, ...rest } = readPayload(event);
+
+  const existingReg = await getRegistrationByEmail(email, year);
+  if (existingReg && !rest.id) {
+    return { statusCode: 409, body: "E-mail is already registered." };
+  }
+
   const isNewbee = firstTime === "1";
   email = email.trim().toLowerCase();
   year = parseInt(year, 10);
