@@ -21,8 +21,13 @@ být ve víru akce a výpomoc v rámci konání HC je pro tebe to pravý :)
 
 O co bychom vás teď poprosili?
 
-Pojedeš s námi jako dobrovolník na letošní Hacker Camp? (27. 8.- 30. 8. 2026).
-Prosím [vyplň nám tento formulář](https://hckr.camp/r/dobrovolnik).
+Pojedeš s námi jako dobrovolník na letošní Hacker Camp? (27. - 30. 8. 2026).
+Prosím [vyplň nám tento formulář](https://hckr.camp/r/dobrovolnik) do 31. 5. 2026., ať máme přehled.
+
+Pokud rovnou víš, že nepojedeš, stačí vyplnit na linku, nebo mi prosím napiš info obratem na tento e-mail.
+
+Máš nějakého kámoše/kámošku co by se hodil jako dobrovolník? Klidně mu pinkni registraci (a informuj na slacku Páju Verflovou).
+
 Pokud máš ke svojí účasti dotazy, určitě se na mě obrať.
 
 Budeme se těšit!
