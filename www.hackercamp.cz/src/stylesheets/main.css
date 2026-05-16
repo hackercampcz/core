@@ -173,8 +173,7 @@ code {
 }
 
 .hc-people-bg {
-  background: #82140d
-    cloudinary-url("www.hackercamp.cz/IMG_20210902_213129.jpg", "{\"effect\": \"blur:300\"}") no-repeat 50% 50%;
+  background: #82140d var(--hc-people-bg) no-repeat 50% 50%;
   background-size: cover;
   height: 440px;
 
@@ -207,19 +206,9 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #d3a684 cloudinary-url("www.hackercamp.cz/bg-camp.png") no-repeat
+  background: #d3a684 var(--hc-camp-bg) no-repeat
     50% 50%;
   background-size: cover;
-}
-
-@media screen and (min-resolution: 2dppx) {
-  .hc-camp-bg {
-    background-image: cloudinary-url("www.hackercamp.cz/bg-camp.png", "{\"dpr\": 2}");
-  }
-
-  .hc-people-bg {
-    background-image: cloudinary-url("www.hackercamp.cz/IMG_20210902_213129.jpg", "{\"dpr\": 2, \"effect\": \"blur:300\"}");
-  }
 }
 
 @media screen and (prefers-color-scheme: light) {
