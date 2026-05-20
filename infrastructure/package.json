@@ -14,7 +14,7 @@
     "@topmonks/pulumi-aws": "3.1.4",
     "esbuild": "0.28.0",
     "front-matter": "4.0.2",
-    "marked": "18.0.3"
+    "marked": "18.0.4"
   },
   "devDependencies": {
     "@types/node": "24.12.4",
