@@ -8,7 +8,7 @@
     "@hackercamp/infrastructure": "workspace:*",
     "@hackercamp/lib": "workspace:*",
     "@hckr_/cloudflare-pages-plugin-rollbar": "1.1.4",
-    "@thi.ng/transducers": "9.6.36",
+    "@thi.ng/transducers": "9.6.38",
     "algoliasearch": "5.52.1",
     "fast-xml-parser": "5.8.0",
     "immutable": "5.1.5",
