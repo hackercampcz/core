@@ -82,7 +82,7 @@ export async function handler(event, rollbar) {
     return { statusCode: 451, body: "fok off" };
   }
 
-  const id = crypto.randomBytes(20).toString("hex");
+  const id = rest.id ?? crypto.randomBytes(20).toString("hex");
   console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
   const editUrl = getEditUrl(isNewbee, id);
 
