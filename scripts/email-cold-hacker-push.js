@@ -1,6 +1,6 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { partition } from "https://esm.sh/@thi.ng/transducers";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
@@ -41,12 +41,16 @@ async function getOptOuts(year) {
   return outOuts;
 }
 
+const skip = new Set([
+]);
+
 async function main({ token, year }) {
   const allEmails = await getAllContactsEmails();
   const alreadyRegistered = await getRegistrations(year);
   const optedOut = await getOptOuts(year);
-  const emails = allEmails.difference(alreadyRegistered).difference(optedOut);
+  const emails = allEmails.difference(alreadyRegistered).difference(optedOut).difference(skip);
   console.log(`Found ${emails.size} cold hackers`);
+  // return console.log(JSON.stringify(Array.from(emails), null, 2));
   for (const batch of partition(500, true, emails)) {
     const resp = await sendEmailsWithTemplate({
       token,
@@ -62,6 +66,6 @@ async function main({ token, year }) {
   console.log("DONE");
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-cold-hacker-push.js --token=$(op read "op://HackerCamp/Postmark/credential") --year=2024
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-import --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-cold-hacker-push.js --token=$(op read "op://HackerCamp/Postmark/credential") --year=2024

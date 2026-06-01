@@ -1,16 +1,19 @@
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
-import { partition } from "https://esm.sh/@thi.ng/transducers";
-import { parseArgs } from "jsr:@std/cli/parse-args";
-import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
+import {createClient} from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import {partition} from "https://esm.sh/@thi.ng/transducers";
+import {parseArgs} from "jsr:@std/cli/parse-args";
+import {sendEmailsWithTemplate, Template} from "./lib/postmark.js";
 
 const dynamo = createClient();
+
+export const skip = new Set([
+]);
 
 async function getAllContactsEmails() {
   const result = await dynamo.scan({
     TableName: "contacts",
     ProjectionExpression: "email"
   });
-  return result.Items.map(x => x.email);
+  return new Set(result.Items.map(x => x.email));
 }
 
 async function getOptOuts(year) {
@@ -18,8 +21,8 @@ async function getOptOuts(year) {
     TableName: "optouts",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
-    ExpressionAttributeNames: { "#year": "year" },
-    ExpressionAttributeValues: { ":year": year }
+    ExpressionAttributeNames: {"#year": "year"},
+    ExpressionAttributeValues: {":year": year}
   });
   return new Set(result.Items.map(x => x.email));
 }
@@ -29,19 +32,30 @@ async function getRegistrations(year) {
     TableName: "registrations",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
-    ExpressionAttributeNames: { "#year": "year" },
-    ExpressionAttributeValues: { ":year": year }
+    ExpressionAttributeNames: {"#year": "year"},
+    ExpressionAttributeValues: {":year": year}
   });
   return new Set(result.Items.map(x => x.email));
 }
 
-async function main({ token }) {
-  const year = 2024;
+async function spit(emails) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(Array.from(emails).join("\n") + "\n");
+  await Deno.writeFile("data/contacts.txt", data);
+}
+
+async function main({token, year, ["dry-run"]: dryRun}) {
+  year = Number.parseInt(year);
   const contacts = await getAllContactsEmails();
   const registrations = await getRegistrations(year);
   const optOuts = await getOptOuts(year);
-  const emails = contacts.filter(x => !registrations.has(x)).filter(x => !optOuts.has(x));
-  console.log(`Found ${emails.length} contacts`);
+  const emails = contacts.difference(registrations.union(optOuts).union(skip));
+  console.log(`Found ${emails.size} contacts`);
+  if (dryRun) {
+    await spit(emails);
+    console.log("cat ./data/contacts.txt");
+    return;
+  }
   for (const batch of partition(500, true, emails)) {
     const resp = await sendEmailsWithTemplate({
       token,

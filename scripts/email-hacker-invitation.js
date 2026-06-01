@@ -1,6 +1,6 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { partition } from "https://esm.sh/@thi.ng/transducers";
+import { parseArgs } from "jsr:@std/cli/parse-args";
 import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
@@ -19,11 +19,17 @@ async function spit(emails) {
   await Deno.writeFile("data/contacts.txt", data);
 }
 
-async function main({ token }) {
-  const emails = await getAllContactsEmails(); //correctedBounces; //
+const correctedBounces = [
+];
+
+async function main({ token, ["dry-run"]: dryRun }) {
+  const emails = correctedBounces; // await getAllContactsEmails(); //
   console.log(`Found ${emails.length} contacts`);
-  await spit(emails);
-  return;
+  if (dryRun) {
+    await spit(emails);
+    console.log("cat ./data/contacts.txt");
+    return;
+  }
   for (const batch of partition(500, true, emails)) {
     const resp = await sendEmailsWithTemplate({
       token,
@@ -39,6 +45,6 @@ async function main({ token }) {
   console.log("DONE");
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(Deno.args));
 
 // AWS_PROFILE=hackercamp deno run --allow-env --allow-import --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-hacker-invitation.js --token=$(op read "op://HackerCamp/Postmark/credential")

@@ -54,7 +54,7 @@ async function spit(emails) {
   await Deno.writeFile("data/volunteers.txt", data);
 }
 
-async function main({ token, dryRun }) {
+async function main({ token, ["dry-run"]: dryRun }) {
   const optOuts = await getOptOuts(2026);
   for (const email in optOuts) skip.add(email);
   const emails = await getVolunteers(optOuts, skip, include);
