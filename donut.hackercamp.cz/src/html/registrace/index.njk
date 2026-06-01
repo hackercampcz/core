@@ -126,7 +126,7 @@
       </div>
     </header>
   </div>
-  <form action="{{ collections.build['api-host'] }}registration" method="post" id="reg">
+  <form action="{{ 'registration' | resolveUrl(collections.build['api-host']) }}" method="post" id="reg">
     <section id="contact">
       <h2>Hacker</h2>
       <div class="hc-card">
@@ -333,7 +333,7 @@
               <label for="invoice-address-zip">PSČ</label>
               <input type="text" id="invoice-address-zip"
                      autocomplete="billing postal-code"
-                     name="invAddressZip" pattern="\d{3}\s\d{2}"
+                     name="invAddressZip" pattern="\d{3}\s?\d{2}"
               placeholder="119 08">
             </div>
             <div class="field">
