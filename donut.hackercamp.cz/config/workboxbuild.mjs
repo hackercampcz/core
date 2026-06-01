@@ -3,6 +3,8 @@ import DefaultRegistry from "undertaker-registry";
 import { generateSW } from "workbox-build/build/generate-sw.js";
 import { injectManifest } from "workbox-build/build/inject-manifest.js";
 
+/** @typedef {import("@types/gulp").Gulp} Gulp */
+
 function transformConfigPaths({ globDirectory, swDest, swSrc, ...config }) {
   if (globDirectory) {
     config.globDirectory = projectPath(globDirectory);
@@ -26,7 +28,7 @@ export class WorkboxBuildRegistry extends DefaultRegistry {
   }
 
   /**
-   * @param {Undertaker} taker
+   * @param {Gulp} taker
    */
   init({ task }) {
     if (!this.config) return;

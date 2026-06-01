@@ -1,4 +1,4 @@
-import { processTypo } from "@hckr_/blendid/lib/texy.mjs";
+import { processTypo } from "@gryphoon/texy";
 import { marked } from "marked";
 import * as fs from "node:fs";
 import * as path from "node:path";

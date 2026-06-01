@@ -2,6 +2,7 @@
   "name": "@hackercamp/donut",
   "packageManager": "yarn@4.15.0",
   "dependencies": {
+    "@gryphoon/texy": "1.0.0",
     "@hackercamp/infrastructure": "workspace:*",
     "@hackercamp/lib": "workspace:*",
     "@material/mwc-drawer": "0.27.0",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "4.20260520.1",
+    "@types/gulp": "4.0.18",
     "@types/w3c-web-nfc": "1.0.4",
     "open-props": "1.7.23",
     "postcss-jit-props": "1.0.16",
