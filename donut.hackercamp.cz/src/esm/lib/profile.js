@@ -66,9 +66,24 @@ export function handleReturnUrl() {
   location.assign(returnUrl ?? "/");
 }
 
+function getTokenExpiration(token) {
+  try {
+    // JWT payload is the second segment, base64url-encoded
+    const base64 = token.split(".")[1].replace(/-/g, "+").replace(/_/g, "/");
+    const { exp } = JSON.parse(atob(base64));
+    return exp ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export function isSignedIn() {
-  // TODO: validate token expiration
-  return Boolean(storage.getItem("hc:id_token"));
+  const token = storage.getItem("hc:id_token");
+  if (!token) return false;
+  const exp = getTokenExpiration(token);
+  // If exp can't be read, treat token as invalid (fail-safe)
+  if (exp === null) return false;
+  return exp > Date.now() / 1000;
 }
 
 export function getSlackAccessToken() {
