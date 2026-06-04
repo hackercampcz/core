@@ -162,6 +162,26 @@ jobs:
           template: basic_fail_1
           channel: ntf-donut
 
+  test-lib:
+    executor:
+      name: node/default
+    resource_class: arm.medium
+    steps:
+      - checkout
+      - node/install:
+          install-yarn: true
+      - node/install-packages:
+          pkg-manager: yarn-berry
+          with-cache: false
+          override-ci-command: yarn workspaces focus @hackercamp/lib
+      - run:
+          name: Test @hackercamp/lib
+          command: yarn workspace @hackercamp/lib test
+      - slack/notify:
+          event: fail
+          template: basic_fail_1
+          channel: ntf-donut
+
   build-website:
     parameters:
       site_name:
@@ -289,6 +309,7 @@ workflows:
             branches:
               only: trunk
       - test-donut
+      - test-lib
       - build-website:
           name: build-donut
           site_name: donut.hackercamp.cz
@@ -297,6 +318,7 @@ workflows:
           requires:
             - provision
             - test-donut
+            - test-lib
       - deploy-site:
           name: deploy-donut
           project_name: hackercamp-donut
@@ -315,6 +337,7 @@ workflows:
           context: org-global
           requires:
             - provision
+            - test-lib
       - deploy-site:
           name: deploy-web
           project_name: hackercamp-web
@@ -330,6 +353,7 @@ workflows:
           site_name: api.hackercamp.cz
           requires:
             - provision
+            - test-lib
       - deploy-site:
           name: deploy-api
           project_name: hackercamp-api

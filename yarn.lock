@@ -3558,6 +3558,7 @@ __metadata:
   dependencies:
     cookie: "npm:1.1.1"
     jose: "npm:6.2.3"
+    vitest: "npm:4.1.8"
   languageName: unknown
   linkType: soft
 

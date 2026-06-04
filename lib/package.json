@@ -2,8 +2,14 @@
   "name": "@hackercamp/lib",
   "type": "module",
   "packageManager": "yarn@4.16.0",
+  "scripts": {
+    "test": "vitest run"
+  },
   "dependencies": {
     "cookie": "1.1.1",
     "jose": "6.2.3"
+  },
+  "devDependencies": {
+    "vitest": "4.1.8"
   }
 }
