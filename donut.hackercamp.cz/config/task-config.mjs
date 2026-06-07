@@ -67,10 +67,10 @@ export default function(pathConfig, mode, verbose) {
       nunjucksRender: {
         filters: {
           longDate(x, locale = "cs-CZ") {
-            return new Intl.DateTimeFormat(locale, { day: "numeric", month: "long" }).format(new Date(x));
+            return new Intl.DateTimeFormat(locale, { day: "numeric", month: "long" }).format(Temporal.PlainDate.from(x));
           },
           formatDateTime(s, locale = "cs-CZ") {
-            return formatDateTime(new Date(s), locale);
+            return formatDateTime(Temporal.Instant.from(s), locale);
           },
           price(x, currency, locale = "cs-CZ") {
             return new Intl.NumberFormat(locale, {

@@ -10,7 +10,7 @@ export default {
     lang: "cs"
   },
   get currentYear() {
-    return new Date().getFullYear();
+    return Temporal.Now.plainDateISO().year;
   },
   year: 2026,
   program: {

@@ -8,6 +8,7 @@
   <title>{% block title %}{{ meta.title }} {{ title }}{% endblock %}</title>
   {% block head_preconnect %}{% endblock %}
   {% block head_async_scripts %}{% endblock %}
+  <script type="module">if (typeof globalThis.Temporal === "undefined") import("https://cdn.jsdelivr.net/npm/temporal-polyfill@0.3.0/global.min.js");</script>
   {% block head_import_stylesheets %}{% endblock %}
   {% block head_scripts %}{% endblock %}
   {% include "shared/fonts.html" %}

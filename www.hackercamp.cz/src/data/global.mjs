@@ -10,7 +10,7 @@ export default {
   },
   year: 2026,
   get currentYear() {
-    return new Date().getFullYear();
+    return Temporal.Now.plainDateISO().year;
   },
   event,
   ticket
