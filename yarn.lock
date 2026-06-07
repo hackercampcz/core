@@ -3524,6 +3524,7 @@ __metadata:
     postcss-jit-props: "npm:1.0.16"
     rollbar: "npm:3.1.0"
     vitest: "npm:4.1.8"
+    vitest-localstorage-mock: "npm:^0.1.2"
     workbox-build: "npm:7.4.1"
     workbox-precaching: "npm:7.4.1"
     workbox-recipes: "npm:7.4.1"
@@ -16977,6 +16978,15 @@ __metadata:
   bin:
     vite: bin/vite.js
   checksum: 10/a5d91d26f6110672a292a06ca161af9a58279fe9d27106c8c0afb725a942b0b47091c440c3b1e7ebc8e0fe901f64ac6a2ffee3cdae2f899339686dbecd0c0266
+  languageName: node
+  linkType: hard
+
+"vitest-localstorage-mock@npm:^0.1.2":
+  version: 0.1.2
+  resolution: "vitest-localstorage-mock@npm:0.1.2"
+  peerDependencies:
+    vitest: "*"
+  checksum: 10/b452aed6756634e18f966943553c682f4c95e5779493a0101fc6ab42ef75e025f6e1f5cbc1dd038a59d3d356f9769ce1be551e96dd77b904042d925b2373fd2c
   languageName: node
   linkType: hard
 
