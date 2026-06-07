@@ -3479,7 +3479,7 @@ __metadata:
     "@types/node": "npm:24.12.4"
     algoliasearch: "npm:5.52.1"
     fast-xml-parser: "npm:5.8.0"
-    immutable: "npm:5.1.5"
+    immutable: "npm:5.1.6"
     jsonwebtoken: "npm:9.0.3"
     rollbar: "npm:3.1.0"
     wrangler: "npm:4.93.0"
@@ -10778,10 +10778,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"immutable@npm:5.1.5":
-  version: 5.1.5
-  resolution: "immutable@npm:5.1.5"
-  checksum: 10/7aec2740239772ec8e92e793c991bd809203a97694f4ff3a18e50e28f9a6b02393ad033d87b458037bdf8c0ea37d4446d640e825f6171df3405cf6cf300ce028
+"immutable@npm:5.1.6":
+  version: 5.1.6
+  resolution: "immutable@npm:5.1.6"
+  checksum: 10/4ba416dac4cc9d1cab4155bd6aefa54d5ca25e56bfee8a1d4edc3f23115b599486edafe76e91f83d22961bd065754fd705b04f052809ec967ccd71817c8dac2a
   languageName: node
   linkType: hard
 
