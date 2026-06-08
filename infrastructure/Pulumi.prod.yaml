@@ -1,5 +1,5 @@
 config:
-  cloudflare:pages-compatibility-date: "2026-06-01"
+  cloudflare-pages:compatibility-date: "2026-06-01"
   hackercamp:algolia-attendees-index-name: hc-attendees
   hackercamp:algolia-registrations-index-name: hc-registrations
   hackercamp:api-domain: api.hackercamp.cz

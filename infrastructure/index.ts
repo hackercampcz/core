@@ -14,15 +14,16 @@ registerAutoTags({
 
 const config = new pulumi.Config();
 const awsConfig = new pulumi.Config("aws");
-const cloudflareConfig = new pulumi.Config("cloudflare");
+const cloudflarePagesConfig = new pulumi.Config("cloudflare-pages");
+const cloudflareInfraConfig = new pulumi.Config("cloudflare-infra");
 
 const domain = config.require("domain");
 const donutDomain = config.require("donut-domain");
 const webDomain = config.require("web-domain");
 const apiDomain = config.require("api-domain");
-const compatibilityDate = cloudflareConfig.require("pages-compatibility-date");
-const redirectIPv4 = cloudflareConfig.require("redirect-ipv4");
-const redirectIPv6 = cloudflareConfig.require("redirect-ipv6");
+const compatibilityDate = cloudflarePagesConfig.require("compatibility-date");
+const redirectIPv4 = cloudflareInfraConfig.require("redirect-ipv4");
+const redirectIPv6 = cloudflareInfraConfig.require("redirect-ipv6");
 
 const account = new cloudflare.Account(
   "rarous",
