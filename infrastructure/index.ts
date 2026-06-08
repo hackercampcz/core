@@ -98,7 +98,7 @@ const webPages = new cloudflare.PagesProject("web", {
     },
     production: {
       failOpen: false,
-      compatibilityDate: "2025-09-01",
+      compatibilityDate: "2026-06-01",
       envVars: {
         HC_API_HOSTNAME: { type: "plain_text", value: config.require("api-domain") },
         HC_DONUT_HOSTNAME: { type: "plain_text", value: config.require("donut-domain") },
@@ -156,7 +156,7 @@ const donutPages = new cloudflare.PagesProject("donut", {
     },
     production: {
       failOpen: false,
-      compatibilityDate: "2025-09-01",
+      compatibilityDate: "2026-06-01",
       envVars: {
         HC_API_HOSTNAME: { type: "plain_text", value: config.require("api-domain") },
         HC_DONUT_HOSTNAME: { type: "plain_text", value: config.require("donut-domain") },
@@ -194,7 +194,7 @@ const apiPages = new cloudflare.PagesProject("api", {
     },
     production: {
       failOpen: false,
-      compatibilityDate: "2025-09-01",
+      compatibilityDate: "2026-06-01",
       envVars: {
         API_HOST: { type: "plain_text", value: api.url.apply(x => new URL("/v1/", x).href) },
         AWS_REGION: { type: "plain_text", value: awsConfig.require("region") },
