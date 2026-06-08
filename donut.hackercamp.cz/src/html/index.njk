@@ -105,7 +105,7 @@
   const env = Object.assign({
     year: {{ year }},
     hasRegisteredHackers: Boolean({{ collections.hackers | length }}),
-    isRegistrationOpen: Boolean({{ isRegistrationOpen }}),
+    isRegistrationOpen: Boolean({{ event.isRegistrationOpen }}),
   }, build);
 
   await main({
