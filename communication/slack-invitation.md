@@ -10,9 +10,9 @@ prosím, přihlas se na slack.
 
 Tady máš svůj invite: https://hckr.camp/join/slack.
 
-Pro registraci do Slacku, prosím, použij e-mailovou adresu, na kterou ti přišel tento e-mail,
-jinak se nám tvá registrace nespojí. Kdyby to byl problém a musíš použít jinou, napiš `@rarous` na Slacku
-nebo na e-mail rarous@hckr.camp s prosbou o spárování tvého Slack účtu a registrace.
+Pro registraci do Slacku, prosím, **použij e-mailovou adresu, na kterou ti přišel tento e-mail**,
+jinak se nám tvá registrace nespojí a proces se zasekne. Kdyby to byl problém a musíš použít jinou, 
+napiš `@rarous` na Slacku nebo na e-mail rarous@hckr.camp s prosbou o spárování tvého Slack účtu a registrace.
 
 Na Slacku řešíme veškerou konverzaci, posíláme updaty a představujeme účastníky campu.
 Na Slack je navázaná možnost si vybrat konkrétní postel, kam se uložíš, nebo to,
