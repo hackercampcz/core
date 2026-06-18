@@ -24,7 +24,7 @@ async function getAttendees(db, year) {
       indexName: algolia_index_name,
       query: "",
       attributesToRetrieve: ["year", "slackID"],
-      tagFilters: [year.toString()],
+      tagFilters: [year.toString(), "-staff"],
       hitsPerPage: 500
     }]
   });
