@@ -86,7 +86,7 @@ function drawChart(year, data) {
   const start = new Date(`${year}-01-01`);
   const end = new Date(`${year}-09-07`);
   const days = eachDayOfInterval({ start, end });
-  const entries = days.map(day => diary.get(formatISO(day, { representation: "date" })) ?? [0, 0, 0]);
+  const entries = days.map(day => diary.getOrInsert(formatISO(day, { representation: "date" }), [0, 0, 0]));
 
   entries[0] = data[year].filter(x => x[0] < `${year}-01-01`).reduce(
     (acc, [, [r, i, p]]) => [acc[0] + r, acc[1] + i, acc[2] + p],

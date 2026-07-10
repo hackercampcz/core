@@ -70,9 +70,8 @@ export async function onRequestGet({ env }) {
     for (const [key, group] of groups) {
       for (const [date, items] of group) {
         if (!date) continue;
-        const stats = days.get(date) ?? { r: 0, i: 0, p: 0 };
+        const stats = days.getOrInsert(date, { r: 0, i: 0, p: 0 });
         stats[key] += items.length;
-        days.set(date, stats);
       }
     }
     result.push([
