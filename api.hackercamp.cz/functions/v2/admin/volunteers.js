@@ -5,7 +5,7 @@ async function* getRegistrations(client, year) {
     new ScanCommand({
       TableName: "registrations",
       ProjectionExpression:
-        "email, phone, firstName, lastName, #ts, volunteerArrivalDay, volunteerBar, volunteerConstruction, volunteerDriver, volunteerInfoDeskAndRegistration, volunteerSport",
+        "email, phone, firstName, lastName, #ts, volunteerArrivalDay, volunteerBar, volunteerConstruction, volunteerDriver, volunteerInfoDeskAndRegistration, volunteerSport, t-shirt-size",
       FilterExpression: "#y = :y AND ticketType = :volunteer",
       ExpressionAttributeNames: { "#y": "year", "#ts": "timestamp" },
       ExpressionAttributeValues: {
