@@ -1,5 +1,6 @@
-import { GetItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
+import { GetItemCommand, PutItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import crypto from "node:crypto";
 import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 /**
@@ -28,10 +29,12 @@ async function getRegistrationById(client, tableName, id) {
     return null;
   }
 
-  const resp = await client.send(new GetItemCommand({
-    TableName: tableName,
-    Key: indexResp.Items[0]
-  }));
+  const resp = await client.send(
+    new GetItemCommand({
+      TableName: tableName,
+      Key: indexResp.Items[0]
+    })
+  );
 
   return resp.Item ? unmarshall(resp.Item) : null;
 }
@@ -48,14 +51,18 @@ async function getRegistrationByEmail(client, email, year, slackID) {
   console.log({ event: "Loading data by registered user", email, year, slackID });
 
   const [contactResp, regResp] = await Promise.all([
-    client.send(new GetItemCommand({
-      TableName: "contacts",
-      Key: marshall({ email, slackID })
-    })),
-    client.send(new GetItemCommand({
-      TableName: "registrations",
-      Key: marshall({ email, year: parseInt(year) })
-    }))
+    client.send(
+      new GetItemCommand({
+        TableName: "contacts",
+        Key: marshall({ email, slackID })
+      })
+    ),
+    client.send(
+      new GetItemCommand({
+        TableName: "registrations",
+        Key: marshall({ email, year: parseInt(year) })
+      })
+    )
   ]);
 
   if (regResp.Item) {
@@ -84,6 +91,20 @@ async function getRegistrationByEmail(client, email, year, slackID) {
   return null;
 }
 
+async function getData(params, client, tableName) {
+  const id = params.get("id");
+  const email = params.get("email");
+  const year = params.get("year");
+  const slackID = params.get("slackID");
+
+  if (id) {
+    return getRegistrationById(client, tableName, id);
+  } else if (email && year && slackID) {
+    return getRegistrationByEmail(client, email, parseInt(year), slackID);
+  }
+  return null;
+}
+
 /**
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
@@ -92,23 +113,11 @@ export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
 
-  const id = params.get("id");
-  const email = params.get("email");
-  const year = params.get("year");
-  const slackID = params.get("slackID");
-
-  console.log("Registration GET request", { id, email, year, slackID });
+  console.log("Registration GET request", Object.fromEntries(params));
 
   const client = createDynamoDBClient(env);
   const tableName = env.db_table_registrations;
-
-  let data = null;
-
-  if (id) {
-    data = await getRegistrationById(client, tableName, id);
-  } else if (email && year && slackID) {
-    data = await getRegistrationByEmail(client, email, parseInt(year), slackID);
-  }
+  const data = await getData(params, client, tableName);
 
   if (!data) {
     return new Response(JSON.stringify({ error: "Data not found" }), {
@@ -117,8 +126,62 @@ export async function onRequestGet({ request, env }) {
     });
   }
 
-  return new Response(JSON.stringify(data), {
-    status: 200,
-    headers: { "Content-Type": "application/json" }
-  });
+  return Response.json(data);
+}
+
+async function getRegistrationByEmailOnly(client, tableName, email, year) {
+  const resp = await client.send(
+    new GetItemCommand({
+      TableName: tableName,
+      Key: marshall({ email, year: parseInt(year) })
+    })
+  );
+  return resp.Item ? unmarshall(resp.Item) : null;
+}
+
+export async function onRequestPost({ request, env }) {
+  const data = await request.json();
+  let { email, year, firstTime, ...rest } = data;
+
+  const client = createDynamoDBClient(env);
+  const tableName = env.db_table_registrations;
+
+  const existingReg = await getRegistrationByEmailOnly(client, tableName, email, year);
+  if (existingReg && !rest.id) {
+    return new Response("E-mail is already registered.", { status: 409 });
+  }
+
+  const isNewbee = firstTime === "1";
+  email = email.trim().toLowerCase();
+  year = parseInt(year, 10);
+  rest = Object.fromEntries(Object.entries(rest).map(([k, v]) => [k, v?.trim()]).filter(([, v]) => Boolean(v)));
+  const isVolunteer = rest.ticketType === "volunteer";
+  const isHacker = rest.ticketType === "hacker";
+  const isPatron = rest.ticketType === "hacker-patron";
+
+  if (
+    (isPatron && rest.volunteerArrivalDay === "th")
+    || (isVolunteer && rest.company === "google")
+  ) {
+    return new Response("fok off", { status: 451 });
+  }
+
+  const id = rest.id ?? crypto.randomBytes(20).toString("hex");
+  console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
+
+  await client.send(
+    new PutItemCommand({
+      TableName: tableName,
+      Item: marshall({
+        email,
+        year,
+        firstTime: isNewbee,
+        ...rest,
+        id,
+        timestamp: new Date().toISOString()
+      }, { convertEmptyValues: true, removeUndefinedValues: true, convertClassInstanceToMap: true })
+    })
+  );
+
+  return new Response(null, { status: 202 });
 }

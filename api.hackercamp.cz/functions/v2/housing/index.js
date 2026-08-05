@@ -1,6 +1,8 @@
+import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { marshall } from "@aws-sdk/util-dynamodb";
 import { liteClient } from "algoliasearch/lite";
+import { authorize, getToken, validateToken } from "../../lib/auth.js";
 import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
-import { authorize, getToken } from "../../lib/auth.js";
 
 async function getAttendees(db, env, year) {
   const client = liteClient(env.algolia_app_id, env.algolia_search_key);
@@ -38,4 +40,31 @@ export async function onRequestGet({ request, env }) {
 
   const data = await getAttendees(client, env, year);
   return Response.json(data);
+}
+
+export async function onRequestPost({ request, env }) {
+  const data = await request.json();
+  const token = getToken(request.headers);
+  const payload = await validateToken(token, env.HC_JWT_SECRET);
+  const year = parseInt(data.year, 10);
+
+  console.log({ method: "POST", data, token: payload });
+
+  const client = createDynamoDBClient(env);
+
+  for (const item of data.items) {
+    await client.send(
+      new UpdateItemCommand({
+        TableName: env.db_table_attendees,
+        Key: { slackID: { S: item.slackID }, year: { N: year.toString() } },
+        UpdateExpression: "SET housing = :housing, housingPlacement = :housingPlacement",
+        ExpressionAttributeValues: marshall({ 
+          ":housing": item.housing, 
+          ":housingPlacement": item.housingPlacement 
+        }, { removeUndefinedValues: true })
+      })
+    );
+  }
+
+  return new Response(null, { status: 202 });
 }

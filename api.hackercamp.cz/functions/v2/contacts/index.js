@@ -1,7 +1,7 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { createDynamoDBClient } from "../../lib/dynamodb.js";
 import { authorize, getToken } from "../../lib/auth.js";
+import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 async function getContact(db, slackID, email) {
   const resp = await db.send(
