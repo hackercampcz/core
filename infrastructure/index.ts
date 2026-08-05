@@ -215,7 +215,10 @@ const apiPages = new cloudflare.PagesProject("api", {
         ROLLBAR_TOKEN: { type: "secret_text", value: config.require("rollbar-access-token") },
         db_table_registrations: { type: "plain_text", value: dataTables.registrations },
         db_table_contacts: { type: "plain_text", value: dataTables.contacts },
-        db_table_attendees: { type: "plain_text", value: dataTables.attendees }
+        db_table_attendees: { type: "plain_text", value: dataTables.attendees },
+        algolia_app_id: { type: "plain_text", value: config.require("algolia-app-id") },
+        algolia_search_key: { type: "plain_text", value: config.require("algolia-search-key") },
+        algolia_index_name: { type: "plain_text", value: config.require("algolia-attendees-index-name") }
       }
     }
   }
