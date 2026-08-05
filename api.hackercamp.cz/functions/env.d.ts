@@ -19,4 +19,8 @@ export interface Env {
   NFCTRON_EVENT_ID: string;
 
   ROLLBAR_TOKEN: string;
+
+  db_table_registrations: string;
+  db_table_contacts: string;
+  db_table_attendees: string;
 }

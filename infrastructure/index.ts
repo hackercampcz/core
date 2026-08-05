@@ -212,7 +212,10 @@ const apiPages = new cloudflare.PagesProject("api", {
         HC_WEB_HOSTNAME: { type: "plain_text", value: config.require("domain") },
         NFCTRON_BEARER_TOKEN: { type: "secret_text", value: config.require("nfctron-bearer-token") },
         NFCTRON_EVENT_ID: { type: "plain_text", value: config.require("nfctron-event-id") },
-        ROLLBAR_TOKEN: { type: "secret_text", value: config.require("rollbar-access-token") }
+        ROLLBAR_TOKEN: { type: "secret_text", value: config.require("rollbar-access-token") },
+        db_table_registrations: { type: "plain_text", value: dataTables.registrations },
+        db_table_contacts: { type: "plain_text", value: dataTables.contacts },
+        db_table_attendees: { type: "plain_text", value: dataTables.attendees }
       }
     }
   }
