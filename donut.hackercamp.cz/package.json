@@ -34,6 +34,6 @@
     "vitest": "4.1.8",
     "vitest-localstorage-mock": "^0.1.2",
     "workbox-build": "7.4.1",
-    "wrangler": "4.99.0"
+    "wrangler": "4.119.0"
   }
 }
