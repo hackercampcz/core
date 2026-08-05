@@ -1,29 +1,6 @@
-import { DynamoDBClient, GetItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
+import { GetItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-
-/**
- * Create credential provider for DynamoDB client
- * @param {Env} env
- * @returns {() => {accessKeyId: string, secretAccessKey: string}}
- */
-function credentialProvider(env) {
-  return () => ({
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY
-  });
-}
-
-/**
- * Create DynamoDB client with credentials from environment
- * @param {Env} env
- * @returns {DynamoDBClient}
- */
-function createDynamoDBClient(env) {
-  return new DynamoDBClient({
-    region: env.AWS_REGION,
-    credentialDefaultProvider: credentialProvider(env)
-  });
-}
+import { createDynamoDBClient } from "../lib/dynamodb.js";
 
 /**
  * Get registration by ID using the by-id GSI

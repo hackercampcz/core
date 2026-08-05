@@ -1,4 +1,6 @@
-import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
+import { ScanCommand } from "@aws-sdk/client-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
+import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 async function* getRegistrations(client, year) {
   const result = await client.send(
@@ -23,13 +25,6 @@ async function* getRegistrations(client, year) {
   }
 }
 
-function credentialProvider(env) {
-  return () => ({
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY
-  });
-}
-
 function unmarshall(item) {
   if (item.N) return Number.parseInt(item.N);
   if (item.S === "on") return true;
@@ -43,10 +38,7 @@ function unmarshall(item) {
 export async function onRequestGet({ env, request }) {
   const url = new URL(request.url);
   const year = Number.parseInt(url.searchParams.get("year"));
-  const client = new DynamoDBClient({
-    region: env.AWS_REGION,
-    credentialDefaultProvider: credentialProvider(env)
-  });
+  const client = createDynamoDBClient(env);
 
   const result = [];
   for await (const regs of getRegistrations(client, year)) {

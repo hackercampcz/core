@@ -1,4 +1,5 @@
-import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
+import { ScanCommand } from "@aws-sdk/client-dynamodb";
+import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 async function* getRegistrations(client, year) {
   const result = await client.send(
@@ -34,22 +35,12 @@ async function getAllRegistrations(client) {
   }));
 }
 
-function credentialProvider(env) {
-  return () => ({
-    accessKeyId: env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: env.AWS_SECRET_ACCESS_KEY
-  });
-}
-
 /**
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
  */
 export async function onRequestGet({ env }) {
-  const client = new DynamoDBClient({
-    region: env.AWS_REGION,
-    credentialDefaultProvider: credentialProvider(env)
-  });
+  const client = createDynamoDBClient(env);
 
   const regs = await getAllRegistrations(client);
   const regsByYear = Map.groupBy(regs, x => x.year);
