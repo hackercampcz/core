@@ -1,6 +1,6 @@
 import { GetItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { liteClient } from "algoliasearch/lite";
-import { createDynamoDBClient, getItemsFromDB } from "../lib/dynamodb.js";
+import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
 
 /**
  * Get all attendees for a specific year using Algolia search
@@ -74,21 +74,21 @@ async function getAttendeeByEmail(db, tableName, email) {
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
-  
+
   const year = parseInt(params.get("year") ?? "2022", 10);
-  
+
   console.log({ method: "GET", params: Object.fromEntries(params), year });
-  
+
   const client = createDynamoDBClient(env);
   const tableName = env.db_table_attendees;
-  
+
   if (params.has("slackID")) {
     return Response.json(await getAttendee(client, tableName, params.get("slackID"), year));
   }
-  
+
   if (params.has("email")) {
     return Response.json(await getAttendeeByEmail(client, tableName, params.get("email")));
   }
-  
+
   return Response.json(await getAttendees(client, env, year));
 }

@@ -1,6 +1,6 @@
 import { GetItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { createDynamoDBClient } from "../lib/dynamodb.js";
+import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 /**
  * Get registration by ID using the by-id GSI
@@ -11,7 +11,7 @@ import { createDynamoDBClient } from "../lib/dynamodb.js";
  */
 async function getRegistrationById(client, tableName, id) {
   console.log({ event: "Loading data by id", id });
-  
+
   const indexResp = await client.send(
     new QueryCommand({
       TableName: tableName,
@@ -22,17 +22,17 @@ async function getRegistrationById(client, tableName, id) {
       ProjectionExpression: "#year, email"
     })
   );
-  
+
   if (!indexResp.Items || !indexResp.Items.length) {
     console.log({ event: "Registration not found", id });
     return null;
   }
-  
+
   const resp = await client.send(new GetItemCommand({
     TableName: tableName,
     Key: indexResp.Items[0]
   }));
-  
+
   return resp.Item ? unmarshall(resp.Item) : null;
 }
 
@@ -46,7 +46,7 @@ async function getRegistrationById(client, tableName, id) {
  */
 async function getRegistrationByEmail(client, email, year, slackID) {
   console.log({ event: "Loading data by registered user", email, year, slackID });
-  
+
   const [contactResp, regResp] = await Promise.all([
     client.send(new GetItemCommand({
       TableName: "contacts",
@@ -91,32 +91,32 @@ async function getRegistrationByEmail(client, email, year, slackID) {
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
-  
+
   const id = params.get("id");
   const email = params.get("email");
   const year = params.get("year");
   const slackID = params.get("slackID");
-  
+
   console.log("Registration GET request", { id, email, year, slackID });
-  
+
   const client = createDynamoDBClient(env);
   const tableName = env.db_table_registrations;
-  
+
   let data = null;
-  
+
   if (id) {
     data = await getRegistrationById(client, tableName, id);
   } else if (email && year && slackID) {
     data = await getRegistrationByEmail(client, email, parseInt(year), slackID);
   }
-  
+
   if (!data) {
     return new Response(JSON.stringify({ error: "Data not found" }), {
       status: 404,
       headers: { "Content-Type": "application/json" }
     });
   }
-  
+
   return new Response(JSON.stringify(data), {
     status: 200,
     headers: { "Content-Type": "application/json" }

@@ -1,6 +1,6 @@
 import { liteClient } from "algoliasearch/lite";
-import { createDynamoDBClient, getItemsFromDB } from "../lib/dynamodb.js";
-import { authorize, getToken } from "../lib/auth.js";
+import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
+import { authorize, getToken } from "../../lib/auth.js";
 
 async function getAttendees(db, env, year) {
   const client = liteClient(env.algolia_app_id, env.algolia_search_key);
