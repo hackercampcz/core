@@ -1,5 +1,5 @@
 import { GetItemCommand } from "@aws-sdk/client-dynamodb";
-import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { authorize, getToken } from "../../lib/auth.js";
 import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
@@ -9,13 +9,14 @@ import { createDynamoDBClient } from "../../lib/dynamodb.js";
  * @param {DynamoDBClient} db
  * @param {String} slackID
  * @param {String} email
+ * @param {Env} env
  * @returns {Promise<Record<string, any>|null>}
  */
 async function getContact(db, slackID, email, env) {
   const resp = await db.send(
     new GetItemCommand({
       TableName: env.db_table_contacts,
-      Key: marshall({ slackID, email }, { removeUndefinedValues: true, convertEmptyValues: true })
+      Key: { slackID: { S: slackID }, email: { S: email } }
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
@@ -30,12 +31,6 @@ export async function onRequestGet({ request, env }) {
   const params = new URLSearchParams(url.search);
 
   console.log({ method: "GET", params: Object.fromEntries(params) });
-
-  const token = getToken(request.headers);
-  const isAuthorized = await authorize("admin", token, env.HC_JWT_SECRET);
-  if (!isAuthorized) {
-    return new Response(null, { status: 401 });
-  }
 
   const client = createDynamoDBClient(env);
 
