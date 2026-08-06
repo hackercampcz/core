@@ -1,4 +1,5 @@
 import { GetItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { liteClient } from "algoliasearch/lite";
 import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
 
