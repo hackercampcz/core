@@ -41,12 +41,6 @@ export async function onRequestGet({ request, env }) {
 
   console.log({ method: "GET", params: Object.fromEntries(params) });
 
-  const token = getToken(request.headers);
-  const isAuthorized = await authorize("admin", token, env.HC_JWT_SECRET);
-  if (!isAuthorized) {
-    return new Response(null, { status: 401 });
-  }
-
   const client = createDynamoDBClient(env);
   const year = parseInt(params.get("year") ?? env.year ?? "2022", 10);
 
@@ -60,11 +54,9 @@ export async function onRequestGet({ request, env }) {
  */
 export async function onRequestPost({ request, env }) {
   const data = await request.json();
-  const token = getToken(request.headers);
-  const payload = await validateToken(token, env.HC_JWT_SECRET);
   const year = parseInt(data.year, 10);
 
-  console.log({ method: "POST", data, token: payload });
+  console.log({ method: "POST", data });
 
   const client = createDynamoDBClient(env);
 
