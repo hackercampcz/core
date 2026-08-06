@@ -65,7 +65,7 @@ async function getAttendeeByEmail(db, tableName, email) {
       ExpressionAttributeValues: { ":email": { S: email } }
     })
   );
-  return result.Items ? result.Items.map(item => unmarshall(item)) : [];
+  return result.Items;
 }
 
 /**
