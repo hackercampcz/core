@@ -1,37 +1,36 @@
 ---
-Subject: Nenech si utéct letošní Hacker Camp!
+Subject: Posledních pár míst na Hacker Camp, registruj se a neprováhej to!
 LayoutTemplate: hc-basic
 ---
 
-Ahoj, táborníku,
+Ahooj!
 
-Už 27. 8. odpoledne se letos opět scházíme na Sobeňáku na [start HackerCampu](https://hckr.camp/)!
-**A ty nám mezi letošními účastníky stále chybíš. Nezapadlo Ti někde info, že už je čas se přihlásit?**
-Nedošlo někde k chybě? Nebo pořád váháš, jestli letos vyrazit?
+Ťuk, ťuk! Už je srpen a už vážně není na co čekat! Letošní Hacker Camp už klepe na dveře a ať jsme koukali,
+jak jsme koukali, Tebe mezi přihlášenými letos nevidíme. Už nám zbývá jen posledních 34 míst. Jakože vážně 34!
+A víc jich letos nebude. Tak pokud chceš jet, je [nejvyšší čas se registrovat](https://donut.hckr.camp/registrace/)!
+Ať pak není mrzeníčko a smutek, že při 250 lidech registrace zavřeme…
 
-**Jak Camp vypadá víš, na co se ale letos můžeš těšit? **
+**O co příjdeš, když se s námi letos nepotkáš na Sobeňáku?**
 
-- Zase přijedou [na dvě stovky skvělých lidí](https://hackercampworkspace.slack.com/archives/C026KB0G8V8),
-  kteří se pohybují na a kolem české a slovenské tech scény.
-- O perličky z letošního programu se postará třeba náš oblíbený místní policista Václav, první pomoc se naučíme
-  od PrPomu a Olda nám ukáže, proč je Česko nejlepším místem k životu.
-- Ve večerním programu nebudou chybět Z prdele slidy (Jirka loni sliboval i nějaké školeníčko, jak na ně, tak snad to přijde),
-  oheň, DJs a taky sauna a sanunové rituály.
-- Ve čtvrtek nám zahraje **Vypsaná Fixa** (jako letos s náma fakt počítají a dojedou), v pátek **N.O.H.A.** a
-  v sobotu nebude chybět tradiční hvězda **Ventolin**!
-- Jako vždy řešíme spolujízdu na slacku. Máme zájemce o [hromadnou dopravu z Brna](https://hackercampworkspace.slack.com/archives/C01V4Q0AZ0U/p1721387424950429)
-  a někteří i řeší [cestu na camp na kole](https://hackercampworkspace.slack.com/archives/C0278R69JUQ/p1722333577570759).
-- Jungle release bude opět krásně nachystaná v lese nejen na noční parties, ale i na denní workshopy a přednášky.
-- **O jídlo se nám letos postará [Baues](https://www.baues.cz/bistro/)**. Takže naše jídlo bude krásně zážitkové.
+- Letos se opět chceme věnovat tématům s přesahem. Hlavně v pátek se chceme věnovat naší budoucnosti.
+  Zapojíme snad i svět akademie a byznysu. Opět se chceme motat kolem toho, jak můžeme pomoci (do budoucnosti hacknout)
+  sebe, ale i své okolí, svojí firmu, nejbližší neziskovku, školu, či zastupitelstvo. A tam nekončíme, protože
+  toho účastníci letos mají na srdci opravdu hodně.
+- Nezapomenutelnou atmosféru campu Ti připomínat nemusíme, ale můžeme říct, že letos nám bude k tanci a poslechu
+  (v pořadí jejich vystoupení) hrát: Pam Rabbit, Ventolin, PAST a máme i překvapení k OHNI!).
+- Mezi hosty máme pár fakt zajímavých jmen! Nekecám. Přesvědčit se můžeš ve slacku v kanálu
+  [#kdo-přijede-na-camp](https://hackercampworkspace.slack.com/archives/C026KB0G8V8)
 
-Bude i dobrý kafe, dortíky, drinky, pivo i nealko a super naladěná Crew i všichni dobrovolníci, co nám pomáhají dělat
-Camp i pro Tebe příjemný a nezapomenutelný.
+Jo a taky jsme dost pečlivě četli zpětnou vazbu, takže:
 
-Všechno najdeš na [slacku](https://hckr.camp/slack), kam máš pořád přístup!
+- si dáváme mnohem větší pozor na dodržování no sales, no hiring policy
+- zamakáme na podpoře vzájemného respektu v tábořišti po večerce (žádné čekání, zda přijde Irča zavřít bar…
+  V noci to bude žít jen na Junglu)
+- necháváme co nejrozumnější ceny drinků a jídla a taky rozšiřujeme výběr - jídel i nealka i něčeho na večerní hladíčky…
 
-**Tak už neváhej a i letos doraž!** [Přihlas se přes donut](https://donut.hckr.camp/registrace/).
-A nezapomeň, že s sebou můžeš vzít, nebo za náma poslat super lidi, co jim Hacker Camp bude sedět!
+**Už neváhej! Ať to letos neprováháš! Byla by to škoda!**\
+**Nejkratší cesta k registraci vede 👉 [tudy](https://donut.hckr.camp/registrace/) 👈**
 
-Těšíme se na viděnou!
+Tak na viděnou už za 3 týdny na Sobeňáku!
 
-Tvoje Hacker Camp `@crew`: Kuba, Kosi, Pája, Jirka, Aleš & Ir
+Tvoje HackerCamp @crew: Pája, Kuba, Kosi, Jirka, Aleš a Ir
