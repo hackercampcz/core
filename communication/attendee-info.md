@@ -46,7 +46,7 @@ ale nechceš vyrábět FOMO? **Nabídni pomoc!**
 - **Nadšence do** krájení zeleniny a jiných **přípravných prací v kuchyni**, ochotných na povel přijít pomoci Bauesovi/Vesmírkům s přípravou (na snídaně nebo během dne)
 
 To ale neznamená, že nemůže nabídnou přednášku, workshop nebo vyjížďku na kole či výběh do lesa. To je taky cajk.
-Tenhle výčet ber jako ukázku toho, jak se časem třeba přiblížíme tomu self-organizovaném nefesťáku, co byl předobraz campu ;)
+Tenhle výčet ber jako ukázku toho, jak se časem třeba přiblížíme tomu samoorganizovanému nefesťáku, co byl předobraz campu ;)
 
 Teď o víkendu Ir stáhne vše, co jste napsali ke svému zapojení do programu, ještě máte možnost to přes
 [tenhle link v donutu](https://donut.hackercamp.cz/program/) upravit, pokud se vám cokoliv rozleželo.
