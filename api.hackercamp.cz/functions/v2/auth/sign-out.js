@@ -1,4 +1,4 @@
-import { createCookie } from "@hackercamp/lib/auth.js";
+import { createCookie } from "../../lib/auth.js";
 
 /**
  * @param {EventContext<Env>} context
