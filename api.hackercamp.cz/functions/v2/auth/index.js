@@ -1,3 +1,4 @@
+import { createCookie } from "@hackercamp/lib/auth.js";
 import { signJWT } from "../../lib/auth.js";
 
 async function getJWT(code, env, origin) {
@@ -41,11 +42,15 @@ function getPayload(request) {
   return request.formData().then(formData => Object.fromEntries(formData.entries()));
 }
 
+/**
+ * @param {EventContext<Env>} context
+ * @returns {Promise<Response>}
+ */
 export async function onRequestPost({ request, env }) {
   const origin = request.headers.get("Origin") ?? `https://${env.HC_DONUT_HOSTNAME}`;
   const params = await getPayload(request);
   const { resp, data } = await getJWT(params.code, env, origin);
-  
+
   if (resp.ok && data.ok) {
     const token = data.access_token;
     const { resp: userInfoResp, data: profile } = await getUserInfo(token);
@@ -59,13 +64,20 @@ export async function onRequestPost({ request, env }) {
         "https://slack.com/user_id": profile.sub,
         "https://slack.com/access_token": token
       };
-      const idToken = signJWT(payload, env.private_key);
+      const idToken = await signJWT(payload, env.private_key);
       delete profile.ok;
-      
+
       // For local development we need to relax Cross site security
-      const sameSite = origin.includes("localhost") ? "None" : "Strict";
-      const cookieValue = `hc-id=${idToken}; Max-Age=1209600; Domain=hackercamp.cz; Path=/; SameSite=${sameSite}; Secure; HttpOnly`;
-      
+      const sameSite = origin.includes("localhost") ? "none" : "strict";
+      const cookieValue = createCookie(idToken, {
+        domain: "hackercamp.cz",
+        path: "/",
+        sameSite,
+        secure: true,
+        httpOnly: true,
+        maxAge: 1_209_600
+      });
+
       return Response.json({
         ok: true,
         idToken,
@@ -82,12 +94,12 @@ export async function onRequestPost({ request, env }) {
     }
     console.error({ token, profile });
   }
-  
+
   console.error({ code: params.code, data });
-  return new Response(null, { 
+  return new Response(null, {
     status: 401,
     headers: {
-      "WWW-Authenticate": 'Bearer realm="https://donut.hackercamp.cz/", error="invalid_token"',
+      "WWW-Authenticate": "Bearer realm=\"https://donut.hackercamp.cz/\", error=\"invalid_token\"",
       "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Credentials": "true"
     }
