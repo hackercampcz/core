@@ -1,4 +1,4 @@
-import csv from "@fast-csv/format";
+import { writeToString } from "@fast-csv/format";
 
 /**
  * @param {Request} request
@@ -22,7 +22,7 @@ function getAllHeaders(data) {
 export async function csv(data, { year, resource, type }) {
   console.log({ event: "Formatting CSV" });
   const headers = getAllHeaders(data);
-  const text = await csv.writeToString(data.items, { headers });
+  const text = await writeToString(data.items, { headers });
   const fileName = `hc-${year}-${resource}-${type}.csv`;
   return new Response(text, {
     headers: {
