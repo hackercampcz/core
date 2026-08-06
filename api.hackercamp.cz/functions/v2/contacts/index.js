@@ -11,10 +11,10 @@ import { createDynamoDBClient } from "../../lib/dynamodb.js";
  * @param {String} email
  * @returns {Promise<Record<string, any>|null>}
  */
-async function getContact(db, slackID, email) {
+async function getContact(db, slackID, email, env) {
   const resp = await db.send(
     new GetItemCommand({
-      TableName: "contacts",
+      TableName: env.db_table_contacts,
       Key: marshall({ slackID, email }, { removeUndefinedValues: true, convertEmptyValues: true })
     })
   );
@@ -39,7 +39,7 @@ export async function onRequestGet({ request, env }) {
 
   const client = createDynamoDBClient(env);
 
-  const contact = await getContact(client, params.get("slackID"), params.get("email"));
+  const contact = await getContact(client, params.get("slackID"), params.get("email"), env);
   if (!contact) {
     return new Response(null, { status: 404 });
   }

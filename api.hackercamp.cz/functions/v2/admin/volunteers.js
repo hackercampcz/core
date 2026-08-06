@@ -1,10 +1,10 @@
 import { ScanCommand } from "@aws-sdk/client-dynamodb";
 import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
-async function* getRegistrations(client, year) {
+async function* getRegistrations(client, year, env) {
   const result = await client.send(
     new ScanCommand({
-      TableName: "registrations",
+      TableName: env.db_table_registrations,
       ProjectionExpression:
         "email, phone, firstName, lastName, #ts, volunteerArrivalDay, volunteerBar, volunteerConstruction, volunteerDriver, volunteerInfoDeskAndRegistration, volunteerSport, #shirtSize",
       FilterExpression: "#y = :y AND ticketType = :volunteer",
@@ -40,7 +40,7 @@ export async function onRequestGet({ env, request }) {
   const client = createDynamoDBClient(env);
 
   const result = [];
-  for await (const regs of getRegistrations(client, year)) {
+  for await (const regs of getRegistrations(client, year, env)) {
     for (const reg of regs) {
       result.push(Object.fromEntries(Object.entries(reg).map(([key, value]) => [key, unmarshall(value)])));
     }

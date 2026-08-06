@@ -268,7 +268,7 @@ async function moveToTrash(db, env, { email, year, slackID }) {
   const reg = await getRegistration(db, env, { email, year });
   await db.send(
     new PutItemCommand({
-      TableName: "trash",
+      TableName: env.db_table_trash,
       Item: Object.assign({}, reg, {
         deletedBy: { S: slackID },
         deleted: { S: new Date().toISOString() }

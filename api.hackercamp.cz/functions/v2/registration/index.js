@@ -46,22 +46,23 @@ async function getRegistrationById(client, tableName, id) {
  * @param {string} email
  * @param {number} year
  * @param {string} slackID
+ * @param {Env} env
  * @returns {Promise<Object|null>}
  */
-async function getRegistrationByEmail(client, email, year, slackID) {
+async function getRegistrationByEmail(client, email, year, slackID, env) {
   console.log({ event: "Loading data by registered user", email, year, slackID });
 
   const [contactResp, regResp] = await Promise.all([
     client.send(
       new GetItemCommand({
-        TableName: "contacts",
-        Key: marshall({ email, slackID })
+        TableName: env.db_table_contacts,
+        Key: { email: { S: email }, slackID: { S: slackID } }
       })
     ),
     client.send(
       new GetItemCommand({
-        TableName: "registrations",
-        Key: marshall({ email, year: parseInt(year) })
+        TableName: env.db_table_registrations,
+        Key: { email: { S: email }, year: { N: year.toString() } }
       })
     )
   ]);
@@ -95,19 +96,19 @@ async function getRegistrationByEmail(client, email, year, slackID) {
 /**
  * @param {URLSearchParams} params
  * @param {DynamoDBClient} client
- * @param {String} tableName
+ * @param {Env} env
  * @returns {Promise<Object|null>}
  */
-async function getData(params, client, tableName) {
+async function getData(params, client, env) {
   const id = params.get("id");
   const email = params.get("email");
   const year = params.get("year");
   const slackID = params.get("slackID");
 
   if (id) {
-    return getRegistrationById(client, tableName, id);
+    return getRegistrationById(client, env.db_table_registrations, id);
   } else if (email && year && slackID) {
-    return getRegistrationByEmail(client, email, parseInt(year), slackID);
+    return getRegistrationByEmail(client, email, parseInt(year), slackID, env);
   }
   return null;
 }
@@ -123,8 +124,7 @@ export async function onRequestGet({ request, env }) {
   console.log("Registration GET request", Object.fromEntries(params));
 
   const client = createDynamoDBClient(env);
-  const tableName = env.db_table_registrations;
-  const data = await getData(params, client, tableName);
+  const data = await getData(params, client, env);
 
   if (!data) {
     return new Response(JSON.stringify({ error: "Data not found" }), {
@@ -147,7 +147,7 @@ async function getRegistrationByEmailOnly(client, tableName, email, year) {
   const resp = await client.send(
     new GetItemCommand({
       TableName: tableName,
-      Key: marshall({ email, year: parseInt(year) })
+      Key: { email: { S: email }, year: { N: year.toString() } }
     })
   );
   return resp.Item ? unmarshall(resp.Item) : null;
@@ -184,12 +184,12 @@ export async function onRequestPost({ request, env }) {
     return new Response("fok off", { status: 451 });
   }
 
-  const id = rest.id ?? crypto.randomBytes(20).toString("hex");
+  const id = rest.id || crypto.randomUUID();
   console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
 
   await client.send(
     new PutItemCommand({
-      TableName: tableName,
+      TableName: env.db_table_registrations,
       Item: marshall({
         email,
         year,

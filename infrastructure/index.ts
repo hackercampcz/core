@@ -205,8 +205,6 @@ const apiPages = new cloudflare.PagesProject("api", {
       envVars: {
         API_HOST: { type: "plain_text", value: api.url.apply(x => new URL("/v1/", x).href) },
         AWS_REGION: { type: "plain_text", value: awsConfig.require("region") },
-        AWS_ACCESS_KEY_ID: { type: "secret_text", value: awsConfig.require("accessKeyId") },
-        AWS_SECRET_ACCESS_KEY: { type: "secret_text", value: awsConfig.require("secretAccessKey") },
         FAKTUROID_CLIENT_ID: { type: "plain_text", value: config.require("fakturoid-client-id") },
         FAKTUROID_CLIENT_SECRET: { type: "secret_text", value: config.require("fakturoid-client-secret") },
         GOOGLE_API_KEY: { type: "secret_text", value: config.require("google-api-key") },
