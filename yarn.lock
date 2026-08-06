@@ -3365,7 +3365,7 @@ __metadata:
   resolution: "@hackercamp/lib@workspace:lib"
   dependencies:
     cookie: "npm:1.1.1"
-    jose: "npm:6.2.3"
+    jose: "npm:6.2.8"
     vitest: "npm:4.1.8"
   languageName: unknown
   linkType: soft
@@ -11346,10 +11346,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:6.2.3":
-  version: 6.2.3
-  resolution: "jose@npm:6.2.3"
-  checksum: 10/876974613c5ee988d43b65a34c96ce440dbf7706a2f07f465b8874af16ee532102e224459a7068d2c6ef044affe49690667d23ca12770c279804baec95a09608
+"jose@npm:6.2.8":
+  version: 6.2.8
+  resolution: "jose@npm:6.2.8"
+  checksum: 10/d1534f56cf693dfbb4b433b72df469c3c858748fe627621e27d9c1e7894716fc1d0225923be3ae98153345b9823a25c0ac376bfccce3ed363a4c032cfd4e2f5b
   languageName: node
   linkType: hard
 
