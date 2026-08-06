@@ -7,21 +7,20 @@ import { createDynamoDBClient } from "../../lib/dynamodb.js";
  * @returns {Promise<Response>}
  */
 export async function onRequestPost({ request, env }) {
-  const data = await request.json();
-  const { email, year } = data;
-
   const client = createDynamoDBClient(env);
+  const { token } = new URL(request.url).searchParams;
 
+  if (token !== env.postmark_webhook_token) {
+    return new Response(null, { status: 401 });
+  }
+
+  const payload = await request.json();
   await client.send(
     new PutItemCommand({
-      TableName: env.db_table_optouts,
-      Item: marshall({ email, year: parseInt(year, 10), timestamp: new Date().toISOString() }, {
-        convertEmptyValues: true,
-        removeUndefinedValues: true,
-        convertClassInstanceToMap: true
-      })
+      TableName: env.db_table_postmark,
+      Item: marshall(payload)
     })
   );
 
-  return new Response(null, { status: 202 });
+  return Response.json({ status: "ok" });
 }

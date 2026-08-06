@@ -4,6 +4,14 @@ import { liteClient } from "algoliasearch/lite";
 import { authorize, getToken, validateToken } from "../../lib/auth.js";
 import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
 
+/** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
+
+/**
+ * @param {DynamoDBClient} db
+ * @param {Env} env
+ * @param {Number} year
+ * @returns {Promise<({isEditable: boolean} & Record<string, *>)[]>}
+ */
 async function getAttendees(db, env, year) {
   const client = liteClient(env.algolia_app_id, env.algolia_search_key);
   const { results: [{ hits }] } = await client.search({
@@ -23,6 +31,10 @@ async function getAttendees(db, env, year) {
   return items.map(x => Object.assign({ isEditable: true }, x));
 }
 
+/**
+ * @param {EventContext<Env>} context
+ * @returns {Promise<Response>}
+ */
 export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
@@ -36,12 +48,16 @@ export async function onRequestGet({ request, env }) {
   }
 
   const client = createDynamoDBClient(env);
-  const year = parseInt(params.get("year") ?? "2022", 10);
+  const year = parseInt(params.get("year") ?? env.year ?? "2022", 10);
 
   const data = await getAttendees(client, env, year);
   return Response.json(data);
 }
 
+/**
+ * @param {EventContext<Env>} context
+ * @returns {Promise<Response>}
+ */
 export async function onRequestPost({ request, env }) {
   const data = await request.json();
   const token = getToken(request.headers);
@@ -58,9 +74,9 @@ export async function onRequestPost({ request, env }) {
         TableName: env.db_table_attendees,
         Key: { slackID: { S: item.slackID }, year: { N: year.toString() } },
         UpdateExpression: "SET housing = :housing, housingPlacement = :housingPlacement",
-        ExpressionAttributeValues: marshall({ 
-          ":housing": item.housing, 
-          ":housingPlacement": item.housingPlacement 
+        ExpressionAttributeValues: marshall({
+          ":housing": item.housing,
+          ":housingPlacement": item.housingPlacement
         }, { removeUndefinedValues: true })
       })
     );

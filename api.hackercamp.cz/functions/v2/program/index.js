@@ -1,8 +1,12 @@
 import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { createDynamoDBClient } from "../../lib/dynamodb.js";
 import { authorize, getToken } from "../../lib/auth.js";
+import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
+/**
+ * @param {EventContext<Env>} context
+ * @returns {Promise<Response>}
+ */
 export async function onRequestGet({ request, env }) {
   const token = getToken(request.headers);
   const isAuthorized = await authorize("admin", token, env.HC_JWT_SECRET);
@@ -13,6 +17,10 @@ export async function onRequestGet({ request, env }) {
   return Response.json([]);
 }
 
+/**
+ * @param {EventContext<Env>} context
+ * @returns {Promise<Response>}
+ */
 export async function onRequestPost({ request, env }) {
   const token = getToken(request.headers);
   const isAuthorized = await authorize("admin", token, env.HC_JWT_SECRET);

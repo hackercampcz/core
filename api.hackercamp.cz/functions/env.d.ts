@@ -20,11 +20,25 @@ export interface Env {
 
   ROLLBAR_TOKEN: string;
 
-  db_table_registrations: string;
-  db_table_contacts: string;
-  db_table_attendees: string;
+  year: string;
+  start_date: string;
+  end_date: string;
 
   algolia_app_id: string;
   algolia_search_key: string;
   algolia_index_name: string;
+
+  db_table_attendees: string;
+  db_table_contacts: string;
+  db_table_optouts: string;
+  db_table_postmark: string;
+  db_table_registrations: string;
+  db_table_trash: string;
+
+  fakturoid_webhook_token: string;
+  nfc_tron_queue_url: string;
+  postmark_token: string;
+  postmark_webhook_token: string;
+  slack_queue_url: string;
+  slack_webhook_token: string;
 }

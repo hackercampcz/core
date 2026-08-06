@@ -75,7 +75,7 @@ export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const params = new URLSearchParams(url.search);
 
-  const year = parseInt(params.get("year") ?? "2022", 10);
+  const year = parseInt(params.get("year") ?? env.year ?? "2022", 10);
 
   console.log({ method: "GET", params: Object.fromEntries(params), year });
 

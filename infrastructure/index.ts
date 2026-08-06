@@ -16,6 +16,7 @@ const config = new pulumi.Config();
 const awsConfig = new pulumi.Config("aws");
 const cloudflarePagesConfig = new pulumi.Config("cloudflare-pages");
 const cloudflareInfraConfig = new pulumi.Config("cloudflare-infra");
+const postmarkConfig = new pulumi.Config("postmark");
 
 const domain = config.require("domain");
 const donutDomain = config.require("donut-domain");
@@ -85,7 +86,8 @@ export const dataTables = {
   optOuts: db.optOutsDataTable,
   attendees: db.attendeesDataTable,
   program: db.programDataTable,
-  postmark: db.postmarkDataTable
+  postmark: db.postmarkDataTable,
+  trash: db.trashDataTable
 };
 
 const routes = createRoutes({ queues, db, postmarkTemplates });
@@ -203,6 +205,8 @@ const apiPages = new cloudflare.PagesProject("api", {
       envVars: {
         API_HOST: { type: "plain_text", value: api.url.apply(x => new URL("/v1/", x).href) },
         AWS_REGION: { type: "plain_text", value: awsConfig.require("region") },
+        AWS_ACCESS_KEY_ID: { type: "secret_text", value: awsConfig.require("accessKeyId") },
+        AWS_SECRET_ACCESS_KEY: { type: "secret_text", value: awsConfig.require("secretAccessKey") },
         FAKTUROID_CLIENT_ID: { type: "plain_text", value: config.require("fakturoid-client-id") },
         FAKTUROID_CLIENT_SECRET: { type: "secret_text", value: config.require("fakturoid-client-secret") },
         GOOGLE_API_KEY: { type: "secret_text", value: config.require("google-api-key") },
@@ -213,12 +217,24 @@ const apiPages = new cloudflare.PagesProject("api", {
         NFCTRON_BEARER_TOKEN: { type: "secret_text", value: config.require("nfctron-bearer-token") },
         NFCTRON_EVENT_ID: { type: "plain_text", value: config.require("nfctron-event-id") },
         ROLLBAR_TOKEN: { type: "secret_text", value: config.require("rollbar-access-token") },
-        db_table_registrations: { type: "plain_text", value: dataTables.registrations },
-        db_table_contacts: { type: "plain_text", value: dataTables.contacts },
-        db_table_attendees: { type: "plain_text", value: dataTables.attendees },
+        year: { type: "plain_text", value: config.require("year") },
+        start_date: { type: "plain_text", value: config.require("start-date") },
+        end_date: { type: "plain_text", value: config.require("end-date") },
         algolia_app_id: { type: "plain_text", value: config.require("algolia-app-id") },
         algolia_search_key: { type: "plain_text", value: config.require("algolia-search-key") },
-        algolia_index_name: { type: "plain_text", value: config.require("algolia-attendees-index-name") }
+        algolia_index_name: { type: "plain_text", value: config.require("algolia-attendees-index-name") },
+        db_table_attendees: { type: "plain_text", value: dataTables.attendees },
+        db_table_contacts: { type: "plain_text", value: dataTables.contacts },
+        db_table_optouts: { type: "plain_text", value: dataTables.optOuts },
+        db_table_postmark: { type: "plain_text", value: dataTables.postmark },
+        db_table_registrations: { type: "plain_text", value: dataTables.registrations },
+        db_table_trash: { type: "plain_text", value: dataTables.trash },
+        fakturoid_webhook_token: { type: "secret_text", value: config.require("fakturoid-webhook-token") },
+        nfc_tron_queue_url: { type: "plain_text", value: queues.nfcTronQueueUrl },
+        postmark_token: { type: "secret_text", value: postmarkConfig.require("server-api-token") },
+        postmark_webhook_token: { type: "secret_text", value: config.require("postmark-webhook-token") },
+        slack_queue_url: { type: "plain_text", value: queues.slackQueueUrl },
+        slack_webhook_token: { type: "secret_text", value: config.require("slack-webhook-token") }
       }
     }
   }

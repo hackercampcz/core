@@ -1,7 +1,8 @@
 import { GetItemCommand, PutItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import crypto from "node:crypto";
 import { createDynamoDBClient } from "../../lib/dynamodb.js";
+
+/** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 
 /**
  * Get registration by ID using the by-id GSI
@@ -91,6 +92,12 @@ async function getRegistrationByEmail(client, email, year, slackID) {
   return null;
 }
 
+/**
+ * @param {URLSearchParams} params
+ * @param {DynamoDBClient} client
+ * @param {String} tableName
+ * @returns {Promise<Object|null>}
+ */
 async function getData(params, client, tableName) {
   const id = params.get("id");
   const email = params.get("email");
@@ -129,6 +136,13 @@ export async function onRequestGet({ request, env }) {
   return Response.json(data);
 }
 
+/**
+ * @param {DynamoDBClient} client
+ * @param {String} tableName
+ * @param {String} email
+ * @param {Number} year
+ * @returns {Promise<Record<string, any>|null>}
+ */
 async function getRegistrationByEmailOnly(client, tableName, email, year) {
   const resp = await client.send(
     new GetItemCommand({
@@ -139,6 +153,10 @@ async function getRegistrationByEmailOnly(client, tableName, email, year) {
   return resp.Item ? unmarshall(resp.Item) : null;
 }
 
+/**
+ * @param {EventContext<Env>} context
+ * @returns {Promise<Response>}
+ */
 export async function onRequestPost({ request, env }) {
   const data = await request.json();
   let { email, year, firstTime, ...rest } = data;
