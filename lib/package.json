@@ -1,7 +1,7 @@
 {
   "name": "@hackercamp/lib",
   "type": "module",
-  "packageManager": "yarn@4.17.0",
+  "packageManager": "yarn@4.18.0",
   "scripts": {
     "test": "vitest run"
   },

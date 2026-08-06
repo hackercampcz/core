@@ -2,7 +2,7 @@
   "name": "@hackercamp/infrastructure",
   "main": "index.ts",
   "version": "1.0.0",
-  "packageManager": "yarn@4.17.0",
+  "packageManager": "yarn@4.18.0",
   "dependencies": {
     "@gryphoon/texy": "1.0.0",
     "@pulumi/aws": "7.40.0",
