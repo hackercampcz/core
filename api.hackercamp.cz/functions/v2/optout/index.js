@@ -1,5 +1,4 @@
 import { PutItemCommand } from "@aws-sdk/client-dynamodb";
-import { marshall } from "@aws-sdk/util-dynamodb";
 import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 /**
@@ -15,11 +14,11 @@ export async function onRequestPost({ request, env }) {
   await client.send(
     new PutItemCommand({
       TableName: env.db_table_optouts,
-      Item: marshall({ email, year: parseInt(year, 10), timestamp: new Date().toISOString() }, {
-        convertEmptyValues: true,
-        removeUndefinedValues: true,
-        convertClassInstanceToMap: true
-      })
+      Item: {
+        email: { S: email },
+        year: { N: year.toString() },
+        timestamp: { S: new Date().toISOString() }
+      }
     })
   );
 
