@@ -9,7 +9,7 @@
     "@hackercamp/lib": "workspace:*",
     "@hckr_/cloudflare-pages-plugin-rollbar": "1.1.4",
     "@std/csv": "jsr:1.0.6",
-    "@thi.ng/transducers": "9.6.40",
+    "@thi.ng/transducers": "9.6.42",
     "algoliasearch": "5.56.0",
     "fast-xml-parser": "5.10.1",
     "immutable": "5.1.9",
@@ -17,7 +17,7 @@
     "rollbar": "3.1.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "4.20260702.1",
+    "@cloudflare/workers-types": "5.20260804.1",
     "@types/node": "24.13.3",
     "wrangler": "4.119.0"
   },
