@@ -1,6 +1,6 @@
 {
   "name": "@hackercamp/donut",
-  "packageManager": "yarn@4.17.0",
+  "packageManager": "yarn@4.18.0",
   "dependencies": {
     "@gryphoon/texy": "1.0.0",
     "@hackercamp/lib": "workspace:*",
