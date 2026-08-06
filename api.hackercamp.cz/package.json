@@ -5,7 +5,6 @@
     "@aws-sdk/client-sqs": "3.1104.0",
     "@aws-sdk/util-dynamodb": "3.996.7",
     "@fast-csv/format": "5.0.7",
-    "@hackercamp/infrastructure": "workspace:*",
     "@hackercamp/lib": "workspace:*",
     "@hckr_/cloudflare-pages-plugin-rollbar": "1.1.4",
     "@std/csv": "jsr:1.0.6",

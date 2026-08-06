@@ -3,7 +3,6 @@
   "packageManager": "yarn@4.17.0",
   "dependencies": {
     "@gryphoon/texy": "1.0.0",
-    "@hackercamp/infrastructure": "workspace:*",
     "@hackercamp/lib": "workspace:*",
     "@material/mwc-drawer": "0.27.0",
     "@oddbird/popover-polyfill": "0.7.1",

@@ -2845,7 +2845,6 @@ __metadata:
     "@aws-sdk/util-dynamodb": "npm:3.996.7"
     "@cloudflare/workers-types": "npm:5.20260804.1"
     "@fast-csv/format": "npm:5.0.7"
-    "@hackercamp/infrastructure": "workspace:*"
     "@hackercamp/lib": "workspace:*"
     "@hckr_/cloudflare-pages-plugin-rollbar": "npm:1.1.4"
     "@std/csv": "jsr:1.0.6"
@@ -2878,7 +2877,6 @@ __metadata:
   dependencies:
     "@cloudflare/workers-types": "npm:5.20260804.1"
     "@gryphoon/texy": "npm:1.0.0"
-    "@hackercamp/infrastructure": "workspace:*"
     "@hackercamp/lib": "workspace:*"
     "@material/mwc-drawer": "npm:0.27.0"
     "@oddbird/popover-polyfill": "npm:0.7.1"
@@ -2907,7 +2905,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hackercamp/infrastructure@workspace:*, @hackercamp/infrastructure@workspace:infrastructure":
+"@hackercamp/infrastructure@workspace:infrastructure":
   version: 0.0.0-use.local
   resolution: "@hackercamp/infrastructure@workspace:infrastructure"
   dependencies:
