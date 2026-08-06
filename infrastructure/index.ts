@@ -232,7 +232,10 @@ const apiPages = new cloudflare.PagesProject("api", {
         postmark_token: { type: "secret_text", value: postmarkConfig.require("server-api-token") },
         postmark_webhook_token: { type: "secret_text", value: config.require("postmark-webhook-token") },
         slack_queue_url: { type: "plain_text", value: queues.slackQueueUrl },
-        slack_webhook_token: { type: "secret_text", value: config.require("slack-webhook-token") }
+        slack_webhook_token: { type: "secret_text", value: config.require("slack-webhook-token") },
+        slack_client_id: { type: "plain_text", value: config.require("slack-client-id") },
+        slack_client_secret: { type: "secret_text", value: config.require("slack-client-secret") },
+        private_key: { type: "secret_text", value: config.require("private-key") }
       }
     }
   }

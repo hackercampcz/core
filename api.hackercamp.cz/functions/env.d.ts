@@ -41,4 +41,7 @@ export interface Env {
   postmark_webhook_token: string;
   slack_queue_url: string;
   slack_webhook_token: string;
+  slack_client_id: string;
+  slack_client_secret: string;
+  private_key: string;
 }
