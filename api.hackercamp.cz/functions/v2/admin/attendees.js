@@ -76,7 +76,7 @@ export async function onRequestGet({ request, env }) {
     allYears: acceptsCSV(request) && !params.has("year")
   });
   if (acceptsCSV(request)) {
-    return await csv(respData, { year, resource: "attendees", type });
+    return csv(respData, { year, resource: "attendees", type });
   }
   return Response.json(respData);
 }

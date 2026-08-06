@@ -19,7 +19,7 @@ function getAllHeaders(data) {
   return Array.from(headers);
 }
 
-export async function csv(data, { year, resource, type }) {
+export function csv(data, { year, resource, type }) {
   console.log({ event: "Formatting CSV" });
   const headers = getAllHeaders(data);
   const text = stringify(data.items, { columns: headers });
