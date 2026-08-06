@@ -53,7 +53,7 @@ Teď o víkendu Ir stáhne vše, co jste napsali ke svému zapojení do programu
 Vlastně na to máte cca týden.\
 Ale prosím vězte, že jakékoliv změny, co uděláte po 15.8. už Ir neuvidí a do programu dostanete až na místě.
 Jo. Furt jedeme “**nekonference / barcamp style**” \= **program bude přibývat i na místě**, může se měnit.
-Přesný program si vždy ti, kdo vystupují před startem celého bloku předství. Takže vždy v 10, 14 a 16 uslyšíš fanfáru
+Přesný program si vždy ti, kdo vystupují před startem celého bloku představí. Takže vždy v 10, 14 a 16 uslyšíš fanfáru
 a po ní krátké anotace od všech, co ti jdou něco nabídnout. Takže cokoliv Tě napadne na místě, můžeš prostě rovnou vyhlásit :)
 
 Kostru programu dostaneš cca za 14 dní. Jen prosím nečekej, že to bude komplet program. Pevně dané jsou časy
@@ -69,7 +69,7 @@ do dne či dvou :))
   \-\> [\#spolujízda](https://hackercampworkspace.slack.com/archives/C0278R69JUQ), nebo [ideálně vyplň tabulku](https://docs.google.com/spreadsheets/d/1OIvaCxGbn7i7qhYm4bSP5oOKHt_kSWjD2z-e0dMfngQ/edit?usp=sharing). **Prosím, nedělej z lesa parkoviště a pokud to není nezbytně nutné, nejezdi v autě sám/sama.** Přisedni k někomu, nebo jeďte ve dvou třech, ideálně 4\. Moc nám to pomůže! Díky.
 
 - **Chceš dorazit na kole?**\
-  Každý rok organizuje společnou cestu [Tom Severyn](https://hackercampworkspace.slack.com/team/U02D2MV63AL). tak pokud máš zájem, pingni ho na slacku, nebo jukni do tohoto kanálu \-\> [cyklisté](https://hackercampworkspace.slack.com/archives/C08TFG3EULV)! Domluvte, zda jedete spolu, a jestli vám někdo přiveze věci do tábora a doraž na camp s dalšími cyklonadšenci :)
+  Každý rok organizuje společnou cestu [Tom Severyn](https://hackercampworkspace.slack.com/team/U02D2MV63AL), tak pokud máš zájem, pingni ho na slacku, nebo jukni do tohoto kanálu \-\> [#cyklisti](https://hackercampworkspace.slack.com/archives/C08TFG3EULV)! Domluvte, zda jedete spolu a jestli vám někdo přiveze věci do tábora, a doraž na camp s dalšími cyklonadšenci :)
 
 Nezapomeň, všechno **podstatné je, že Camp bude jen takový, jaký si ho uděláme!** Takže úsměv a klid a bude to super :)
 
