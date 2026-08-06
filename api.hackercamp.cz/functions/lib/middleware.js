@@ -1,4 +1,4 @@
-import { authorize, getToken } from "./auth.js";
+import { authorize, getToken, validateToken } from "./auth.js";
 
 export async function allowCredentials({ next }) {
   const response = await next();
@@ -11,6 +11,15 @@ export async function cors({ request, next }) {
   response.headers.set("Access-Control-Allow-Origin", request.headers.get("origin") ?? "*");
   response.headers.set("Access-Control-Max-Age", "86400");
   return response;
+}
+
+export async function authorization({ request, env, next }) {
+  const token = getToken(request.headers);
+  const pkey = env.private_key;
+  console.log({ event: "check-authorization", token, pkey });
+  const isAuthorized = await validateToken(token, pkey);
+  if (!isAuthorized) return new Response(null, { status: 401 });
+  return next();
 }
 
 export function roleAuthorization(role) {
