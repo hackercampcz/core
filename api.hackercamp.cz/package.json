@@ -1,5 +1,8 @@
 {
   "name": "@hackercamp/api",
+  "imports": {
+    "#lib/*.js": "./functions/lib/*.js"
+  },
   "dependencies": {
     "@algolia/requester-fetch": "^5.56.0",
     "@aws-sdk/client-dynamodb": "3.1104.0",
