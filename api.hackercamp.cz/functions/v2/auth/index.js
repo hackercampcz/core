@@ -1,4 +1,5 @@
 import { signJWT } from "#lib/auth.js";
+import { getPayload } from "#lib/request.js";
 import { createCookie } from "@hackercamp/lib/auth.js";
 
 async function getJWT(code, env, origin) {
@@ -32,14 +33,6 @@ async function getUsersInfo(user, token) {
   });
   const data = await resp.json();
   return { resp, data };
-}
-
-function getPayload(request) {
-  const contentType = request.headers.get("Content-Type");
-  if (contentType === "application/json") {
-    return request.json();
-  }
-  return request.formData().then(formData => Object.fromEntries(formData.entries()));
 }
 
 /**

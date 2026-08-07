@@ -1,3 +1,4 @@
+import { getPayload } from "#lib/request.js";
 import { createSubject, getAuthHeader, searchSubject } from "@hackercamp/lib/fakturoid.js";
 
 /**
@@ -16,10 +17,10 @@ export async function onRequestGet({ request, env }) {
  * @returns {Promise<Response>}
  */
 export async function onRequestPost({ request, env }) {
-  const formData = await request.formData();
+  const data = await getPayload(request);
   const authHeader = await getAuthHeader(env.FAKTUROID_CLIENT_ID, env.FAKTUROID_CLIENT_SECRET);
   try {
-    const subject = await createSubject(authHeader, Object.fromEntries(formData));
+    const subject = await createSubject(authHeader, data);
     return Response.json(subject);
   } catch (err) {
     return Response.json({ error: "Failed to create subject", ...err.details }, { status: 422 });

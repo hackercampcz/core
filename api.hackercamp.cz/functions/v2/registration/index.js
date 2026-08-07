@@ -1,4 +1,5 @@
 import { createDynamoDBClient } from "#lib/dynamodb.js";
+import { getPayload } from "#lib/request.js";
 import { GetItemCommand, PutItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 
@@ -158,7 +159,7 @@ async function getRegistrationByEmailOnly(client, tableName, email, year) {
  * @returns {Promise<Response>}
  */
 export async function onRequestPost({ request, env }) {
-  const data = await request.json();
+  const data = await getPayload(request);
   let { email, year, firstTime, ...rest } = data;
 
   const client = createDynamoDBClient(env);

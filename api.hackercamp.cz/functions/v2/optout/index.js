@@ -1,4 +1,5 @@
 import { createDynamoDBClient } from "#lib/dynamodb.js";
+import { getPayload } from "#lib/request.js";
 import { PutItemCommand } from "@aws-sdk/client-dynamodb";
 
 /**
@@ -6,7 +7,7 @@ import { PutItemCommand } from "@aws-sdk/client-dynamodb";
  * @returns {Promise<Response>}
  */
 export async function onRequestPost({ request, env }) {
-  const data = await request.json();
+  const data = await getPayload(request);
   const { email, year } = data;
 
   const client = createDynamoDBClient(env);

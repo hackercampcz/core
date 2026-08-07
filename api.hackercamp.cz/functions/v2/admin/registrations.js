@@ -2,6 +2,7 @@ import { createAlgoliaClient } from "#lib/algolia.js";
 import { acceptsCSV, csv } from "#lib/csv.js";
 import { createDynamoDBClient } from "#lib/dynamodb.js";
 import { Attachments, getTemplateId, sendEmailWithTemplate, Template } from "#lib/postmark.js";
+import { getPayload } from "#lib/request.js";
 import {
   BatchGetItemCommand,
   DeleteItemCommand,
@@ -591,7 +592,7 @@ async function processRequest(db, env, data) {
  */
 export async function onRequestPost({ request, env }) {
   const client = createDynamoDBClient(env);
-  const data = await request.json();
+  const data = await getPayload(request);
   await processRequest(client, env, data);
 
   const acceptHeader = request.headers.get("Accept");

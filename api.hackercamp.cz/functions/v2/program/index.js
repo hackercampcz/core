@@ -1,4 +1,5 @@
 import { createDynamoDBClient } from "#lib/dynamodb.js";
+import { getPayload } from "#lib/request.js";
 import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 
@@ -7,7 +8,7 @@ import { marshall } from "@aws-sdk/util-dynamodb";
  * @returns {Promise<Response>}
  */
 export async function onRequestPost({ request, env }) {
-  const data = await request.json();
+  const data = await getPayload(request);
   const sanitizedData = Object.fromEntries(Object.entries(data).map(([k, v]) => [k, v?.trim ? v.trim() : v]));
 
   const client = createDynamoDBClient(env);

@@ -1,6 +1,7 @@
 import { createAlgoliaClient, resultsCount } from "#lib/algolia.js";
 import { acceptsCSV, csv } from "#lib/csv.js";
 import { createDynamoDBClient, getItemsFromDB } from "#lib/dynamodb.js";
+import { getPayload } from "#lib/request.js";
 import { PutItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 
@@ -181,7 +182,7 @@ async function checkOut(db, env, data) {
  * @returns {Promise<Response>}
  */
 export async function onRequestPost({ request, env }) {
-  const data = await request.json();
+  const data = await getPayload(request);
   const client = createDynamoDBClient(env);
 
   console.log({ method: "POST", data });

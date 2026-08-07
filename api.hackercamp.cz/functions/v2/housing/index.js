@@ -1,5 +1,6 @@
 import { createAlgoliaClient } from "#lib/algolia.js";
 import { createDynamoDBClient, getItemsFromDB } from "#lib/dynamodb.js";
+import { getPayload } from "#lib/request.js";
 import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 
@@ -52,7 +53,7 @@ export async function onRequestGet({ request, env }) {
  * @returns {Promise<Response>}
  */
 export async function onRequestPost({ request, env }) {
-  const data = await request.json();
+  const data = await getPayload(request);
   const year = parseInt(data.year, 10);
 
   console.log({ method: "POST", data });
