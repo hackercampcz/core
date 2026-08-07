@@ -6,6 +6,14 @@ export async function allowCredentials({ next }) {
   return response;
 }
 
+export function allowMethods(methods) {
+  return async ({ next }) => {
+    const response = await next();
+    response.headers.set("Access-Control-Methods", methods?.join(", ") ?? "GET, OPTIONS");
+    return response;
+  };
+}
+
 export async function cors({ request, next }) {
   const response = await next();
   response.headers.set("Access-Control-Allow-Origin", request.headers.get("origin") ?? "*");

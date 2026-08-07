@@ -1,5 +1,5 @@
-import { allowCredentials, authorization } from "#lib/middleware.js";
+import { allowCredentials, allowMethods, authorization } from "#lib/middleware.js";
 
-export const onRequestOptions = [allowCredentials];
-export const onRequestGet = [allowCredentials, authorization];
-export const onRequestPost = [allowCredentials, authorization];
+export const onRequest = [allowCredentials, allowMethods(["GET", "POST", "OPTIONS"])];
+export const onRequestGet = [authorization];
+export const onRequestPost = [authorization];
