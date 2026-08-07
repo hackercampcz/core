@@ -27,7 +27,7 @@
     "@cloudflare/workers-types": "5.20260804.1",
     "@types/gulp": "4.0.18",
     "@types/w3c-web-nfc": "1.0.4",
-    "happy-dom": "20.11.1",
+    "happy-dom": "20.11.2",
     "open-props": "1.7.23",
     "postcss-jit-props": "1.0.16",
     "vitest": "4.1.10",
