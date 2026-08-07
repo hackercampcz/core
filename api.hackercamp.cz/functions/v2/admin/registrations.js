@@ -1,4 +1,4 @@
-import { createAlgoliaClient, resultsCount } from "#lib/algolia.mjs";
+import { createAlgoliaClient, resultsCount } from "#lib/algolia.js";
 import { acceptsCSV, csv } from "#lib/csv.js";
 import { createDynamoDBClient } from "#lib/dynamodb.js";
 import { Attachments, getTemplateId, sendEmailWithTemplate, Template } from "#lib/postmark.js";
