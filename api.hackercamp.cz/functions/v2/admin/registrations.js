@@ -81,18 +81,19 @@ async function getItemsFromDB(db, env, hits) {
 async function getRegistrations(client, env, query, tag, year, page, pageSize, { allYears }) {
   const clientSearch = createAlgoliaClient(env);
 
-  console.log({ event: "Loading registrations", tag, year, page, pageSize, query, allYears });
-
   const indexPostfix = tag === "invoiced" ? "_invoicedAt_desc" : tag === "paid" ? "_paidAt_desc" : "";
   const indexName = env.algolia_registrations_index + indexPostfix;
 
+  console.log({ event: "Loading registrations", indexName, tag, year, page, pageSize, query, allYears });
+
+  const tagFilters = [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(Boolean);
   const { results } = await clientSearch.search({
     requests: [
       {
         indexName,
         query,
         attributesToRetrieve: ["year", "email"],
-        tagFilters: [allYears ? null : year.toString(), tag === "search" ? null : tag].filter(Boolean),
+        tagFilters,
         hitsPerPage: pageSize,
         page
       },
