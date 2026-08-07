@@ -141,7 +141,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@algolia/requester-fetch@npm:5.56.0":
+"@algolia/requester-fetch@npm:5.56.0, @algolia/requester-fetch@npm:^5.56.0":
   version: 5.56.0
   resolution: "@algolia/requester-fetch@npm:5.56.0"
   dependencies:
@@ -2840,6 +2840,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
+    "@algolia/requester-fetch": "npm:^5.56.0"
     "@aws-sdk/client-dynamodb": "npm:3.1104.0"
     "@aws-sdk/client-sqs": "npm:3.1104.0"
     "@aws-sdk/util-dynamodb": "npm:3.996.7"
