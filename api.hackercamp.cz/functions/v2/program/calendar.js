@@ -7,6 +7,7 @@ function url(strings, ...values) {
  * @returns {Promise<Response>}
  */
 export async function onRequestGet({ env }) {
+  // TODO: extract to pulumi state and inject via env
   const calendarId = "c_afd9546ec33f93662ac0338da6d23a6b7daa6b5a1cc181afabaf6a8b11691b3a@group.calendar.google.com";
   const time = new Date().toISOString();
   const params = new URLSearchParams({

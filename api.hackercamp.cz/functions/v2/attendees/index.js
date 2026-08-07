@@ -1,7 +1,7 @@
+import { createAlgoliaClient } from "#lib/algolia.js";
+import { createDynamoDBClient, getItemsFromDB } from "#lib/dynamodb.js";
 import { GetItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
-import { createAlgoliaClient } from "../../lib/algolia.js";
-import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
 
 /**
  * Get all attendees for a specific year using Algolia search

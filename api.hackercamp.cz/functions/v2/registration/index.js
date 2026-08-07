@@ -1,6 +1,6 @@
+import { createDynamoDBClient } from "#lib/dynamodb.js";
 import { GetItemCommand, PutItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 

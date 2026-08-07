@@ -1,6 +1,6 @@
+import { createDynamoDBClient } from "#lib/dynamodb.js";
+import { Attachments, getTemplateId, sendEmailWithTemplate, Template } from "#lib/postmark.js";
 import { QueryCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
-import { createDynamoDBClient } from "../../lib/dynamodb.js";
-import { Attachments, getTemplateId, sendEmailWithTemplate, Template } from "../../lib/postmark.js";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 

@@ -1,5 +1,5 @@
+import { createDynamoDBClient } from "#lib/dynamodb.js";
 import { ScanCommand } from "@aws-sdk/client-dynamodb";
-import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 

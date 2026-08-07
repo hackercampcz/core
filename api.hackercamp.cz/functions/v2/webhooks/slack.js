@@ -1,5 +1,5 @@
+import { createSQSClient } from "#lib/sqs.js";
 import { SendMessageCommand } from "@aws-sdk/client-sqs";
-import { createSQSClient } from "../../lib/sqs.js";
 
 /** @typedef { import("@aws-sdk/client-sqs").SQSClient } SQSClient */
 /** @typedef { import("@aws-sdk/client-sqs").SendMessageCommandOutput } SendMessageCommandOutput */

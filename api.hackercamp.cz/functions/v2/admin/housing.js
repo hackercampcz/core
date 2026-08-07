@@ -1,5 +1,5 @@
-import { createAlgoliaClient } from "../../lib/algolia.js";
-import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
+import { createAlgoliaClient } from "#lib/algolia.js";
+import { createDynamoDBClient, getItemsFromDB } from "#lib/dynamodb.js";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 

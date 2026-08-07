@@ -1,8 +1,4 @@
 /**
- * @typedef {import("../env.d.ts").Env} Env
- */
-
-/**
  * Proxy request to AWS API Gateway
  * @param {EventContext<Env>} context
  */

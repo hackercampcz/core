@@ -1,3 +1,7 @@
+import { createAlgoliaClient } from "#lib/algolia.js";
+import { acceptsCSV, csv } from "#lib/csv.js";
+import { createDynamoDBClient } from "#lib/dynamodb.js";
+import { Attachments, getTemplateId, sendEmailWithTemplate, Template } from "#lib/postmark.js";
 import {
   BatchGetItemCommand,
   DeleteItemCommand,
@@ -10,10 +14,6 @@ import {
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { fetchInvoice, getAuthHeader } from "@hackercamp/lib/fakturoid.js";
 import { partition } from "@thi.ng/transducers";
-import { createAlgoliaClient } from "../../lib/algolia.js";
-import { acceptsCSV, csv } from "../../lib/csv.js";
-import { createDynamoDBClient } from "../../lib/dynamodb.js";
-import { Attachments, getTemplateId, sendEmailWithTemplate, Template } from "../../lib/postmark.js";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 

@@ -1,5 +1,5 @@
+import { createDynamoDBClient } from "#lib/dynamodb.js";
 import { ScanCommand } from "@aws-sdk/client-dynamodb";
-import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 async function* getRegistrations(client, year, env) {
   const result = await client.send(

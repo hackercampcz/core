@@ -1,5 +1,5 @@
+import { createDynamoDBClient } from "#lib/dynamodb.js";
 import { PutItemCommand } from "@aws-sdk/client-dynamodb";
-import { createDynamoDBClient } from "../../lib/dynamodb.js";
 
 /**
  * @param {EventContext<Env>} context

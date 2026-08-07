@@ -1,8 +1,8 @@
+import { createAlgoliaClient, resultsCount } from "#lib/algolia.js";
+import { acceptsCSV, csv } from "#lib/csv.js";
+import { createDynamoDBClient, getItemsFromDB } from "#lib/dynamodb.js";
 import { PutItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { createAlgoliaClient, resultsCount } from "../../lib/algolia.js";
-import { acceptsCSV, csv } from "../../lib/csv.js";
-import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 
