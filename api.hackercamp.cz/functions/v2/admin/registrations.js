@@ -84,7 +84,7 @@ async function getRegistrations(client, env, query, tag, year, page, pageSize, {
   console.log({ event: "Loading registrations", tag, year, page, pageSize, query, allYears });
 
   const indexPostfix = tag === "invoiced" ? "_invoicedAt_desc" : tag === "paid" ? "_paidAt_desc" : "";
-  const indexName = env.algolia_index_name + indexPostfix;
+  const indexName = env.algolia_registrations_index + indexPostfix;
 
   const { results } = await clientSearch.search({
     requests: [
@@ -98,7 +98,7 @@ async function getRegistrations(client, env, query, tag, year, page, pageSize, {
       },
       {
         requests: [{
-          indexName: env.algolia_index_name,
+          indexName: env.algolia_registrations_index,
           query: "",
           tagFilters: [year.toString(), "paid"],
           hitsPerPage: 1
@@ -106,7 +106,7 @@ async function getRegistrations(client, env, query, tag, year, page, pageSize, {
       },
       {
         requests: [{
-          indexName: env.algolia_index_name,
+          indexName: env.algolia_registrations_index,
           query: "",
           tagFilters: [year.toString(), "invoiced"],
           hitsPerPage: 1
@@ -114,7 +114,7 @@ async function getRegistrations(client, env, query, tag, year, page, pageSize, {
       },
       {
         requests: [{
-          indexName: env.algolia_index_name,
+          indexName: env.algolia_registrations_index,
           query: "",
           tagFilters: [year.toString(), "confirmed"],
           hitsPerPage: 1
@@ -122,7 +122,7 @@ async function getRegistrations(client, env, query, tag, year, page, pageSize, {
       },
       {
         requests: [{
-          indexName: env.algolia_index_name,
+          indexName: env.algolia_registrations_index,
           query: "",
           tagFilters: [year.toString(), "waitingList"],
           hitsPerPage: 1
@@ -130,7 +130,7 @@ async function getRegistrations(client, env, query, tag, year, page, pageSize, {
       },
       {
         requests: [{
-          indexName: env.algolia_index_name,
+          indexName: env.algolia_registrations_index,
           query: "",
           tagFilters: [year.toString(), "volunteer"],
           hitsPerPage: 1
@@ -138,7 +138,7 @@ async function getRegistrations(client, env, query, tag, year, page, pageSize, {
       },
       {
         requests: [{
-          indexName: env.algolia_index_name,
+          indexName: env.algolia_registrations_index,
           query: "",
           tagFilters: [year.toString(), "staff"],
           hitsPerPage: 1

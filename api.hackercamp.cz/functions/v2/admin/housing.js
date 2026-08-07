@@ -14,7 +14,7 @@ async function getHousing(year, env, dynamo) {
   const client = createAlgoliaClient(env);
   const { results: [{ hits }] } = await client.search({
     requests: [{
-      indexName: env.algolia_index_name,
+      indexName: env.algolia_attendees_index,
       query: "",
       attributesToRetrieve: ["year", "slackID"],
       tagFilters: [year.toString()],

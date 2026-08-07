@@ -28,7 +28,7 @@ async function getAttendees(env, db, query, tag, year, page, pageSize, { allYear
     requests: [
       {
         query,
-        indexName: env.algolia_index_name,
+        indexName: env.algolia_attendees_index,
         attributesToRetrieve: ["year", "slackID"],
         tagFilters: [
           allYears ? null : year.toString(),
@@ -37,11 +37,11 @@ async function getAttendees(env, db, query, tag, year, page, pageSize, { allYear
         hitsPerPage: pageSize,
         page
       },
-      resultsCount(algolia_index_name, year, null),
-      resultsCount(algolia_index_name, year, "hacker"),
-      resultsCount(algolia_index_name, year, "volunteer"),
-      resultsCount(algolia_index_name, year, "staff"),
-      resultsCount(algolia_index_name, year, "crew")
+      resultsCount(env.algolia_attendees_index, year, null),
+      resultsCount(env.algolia_attendees_index, year, "hacker"),
+      resultsCount(env.algolia_attendees_index, year, "volunteer"),
+      resultsCount(env.algolia_attendees_index, year, "staff"),
+      resultsCount(env.algolia_attendees_index, year, "crew")
     ]
   });
 

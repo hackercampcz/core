@@ -26,7 +26,8 @@ export interface Env {
 
   algolia_app_id: string;
   algolia_search_key: string;
-  algolia_index_name: string;
+  algolia_attendees_index: string;
+  algolia_registrations_index: string;
 
   db_table_attendees: string;
   db_table_contacts: string;
