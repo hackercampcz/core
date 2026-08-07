@@ -1,7 +1,6 @@
 import { PutItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { liteClient } from "algoliasearch/lite";
-import { resultsCount } from "../../lib/algolia.js";
+import { createAlgoliaClient, resultsCount } from "../../lib/algolia.js";
 import { acceptsCSV, csv } from "../../lib/csv.js";
 import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
 
@@ -20,8 +19,7 @@ import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
  * @returns {Promise<{items: Array<Record<string, *>>, page: *, pages: *, total: *, counts: {all: *, hacker: *, volunteer: *, staff: *, crew: *}}>}
  */
 async function getAttendees(env, db, query, tag, year, page, pageSize, { allYears }) {
-  const { algolia_app_id, algolia_search_key, algolia_index_name } = env;
-  const client = liteClient(algolia_app_id, algolia_search_key);
+  const client = createAlgoliaClient(env);
 
   console.log({ event: "Loading Attendees", tag, year, page, pageSize, query, allYears });
 
@@ -29,7 +27,7 @@ async function getAttendees(env, db, query, tag, year, page, pageSize, { allYear
     requests: [
       {
         query,
-        indexName: algolia_index_name,
+        indexName: env.algolia_index_name,
         attributesToRetrieve: ["year", "slackID"],
         tagFilters: [
           allYears ? null : year.toString(),

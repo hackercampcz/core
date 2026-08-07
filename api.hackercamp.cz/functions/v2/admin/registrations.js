@@ -10,7 +10,7 @@ import {
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import { fetchInvoice, getAuthHeader } from "@hackercamp/lib/fakturoid.js";
 import { partition } from "@thi.ng/transducers";
-import { liteClient } from "algoliasearch/lite";
+import { createAlgoliaClient } from "../../lib/algolia.js";
 import { acceptsCSV, csv } from "../../lib/csv.js";
 import { createDynamoDBClient } from "../../lib/dynamodb.js";
 import { Attachments, getTemplateId, sendEmailWithTemplate, Template } from "../../lib/postmark.js";
@@ -78,7 +78,7 @@ async function getItemsFromDB(db, env, hits) {
  * @param {boolean} options.allYears
  */
 async function getRegistrations(client, env, query, tag, year, page, pageSize, { allYears }) {
-  const clientSearch = liteClient(env.algolia_app_id, env.algolia_search_key);
+  const clientSearch = createAlgoliaClient(env);
 
   console.log({ event: "Loading registrations", tag, year, page, pageSize, query, allYears });
 

@@ -1,4 +1,4 @@
-import { liteClient } from "algoliasearch/lite";
+import { createAlgoliaClient } from "../../lib/algolia.js";
 import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -11,11 +11,10 @@ import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
  */
 async function getHousing(year, env, dynamo) {
   console.log("Loading housing", { year });
-  const { algolia_app_id, algolia_search_key, algolia_index_name } = env;
-  const client = liteClient(algolia_app_id, algolia_search_key);
+  const client = createAlgoliaClient(env);
   const { results: [{ hits }] } = await client.search({
     requests: [{
-      indexName: algolia_index_name,
+      indexName: env.algolia_index_name,
       query: "",
       attributesToRetrieve: ["year", "slackID"],
       tagFilters: [year.toString()],

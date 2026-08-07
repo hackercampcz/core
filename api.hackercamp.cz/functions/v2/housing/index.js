@@ -1,7 +1,6 @@
-import { createFetchRequester } from "@algolia/requester-fetch";
 import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import { liteClient } from "algoliasearch/lite";
+import { createAlgoliaClient } from "../../lib/algolia.js";
 import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
@@ -13,7 +12,7 @@ import { createDynamoDBClient, getItemsFromDB } from "../../lib/dynamodb.js";
  * @returns {Promise<({isEditable: boolean} & Record<string, *>)[]>}
  */
 async function getAttendees(db, env, year) {
-  const client = liteClient(env.algolia_app_id, env.algolia_search_key, { requester: createFetchRequester() });
+  const client = createAlgoliaClient(env);
   const { results: [{ hits }] } = await client.search({
     requests: [{
       indexName: env.algolia_index_name,
