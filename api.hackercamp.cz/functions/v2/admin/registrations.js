@@ -1,4 +1,4 @@
-import { createAlgoliaClient } from "#lib/algolia.js";
+import { createAlgoliaClient, resultsCount } from "#lib/algolia.mjs";
 import { acceptsCSV, csv } from "#lib/csv.js";
 import { createDynamoDBClient } from "#lib/dynamodb.js";
 import { Attachments, getTemplateId, sendEmailWithTemplate, Template } from "#lib/postmark.js";
@@ -96,54 +96,12 @@ async function getRegistrations(client, env, query, tag, year, page, pageSize, {
         hitsPerPage: pageSize,
         page
       },
-      {
-        requests: [{
-          indexName: env.algolia_registrations_index,
-          query: "",
-          tagFilters: [year.toString(), "paid"],
-          hitsPerPage: 1
-        }]
-      },
-      {
-        requests: [{
-          indexName: env.algolia_registrations_index,
-          query: "",
-          tagFilters: [year.toString(), "invoiced"],
-          hitsPerPage: 1
-        }]
-      },
-      {
-        requests: [{
-          indexName: env.algolia_registrations_index,
-          query: "",
-          tagFilters: [year.toString(), "confirmed"],
-          hitsPerPage: 1
-        }]
-      },
-      {
-        requests: [{
-          indexName: env.algolia_registrations_index,
-          query: "",
-          tagFilters: [year.toString(), "waitingList"],
-          hitsPerPage: 1
-        }]
-      },
-      {
-        requests: [{
-          indexName: env.algolia_registrations_index,
-          query: "",
-          tagFilters: [year.toString(), "volunteer"],
-          hitsPerPage: 1
-        }]
-      },
-      {
-        requests: [{
-          indexName: env.algolia_registrations_index,
-          query: "",
-          tagFilters: [year.toString(), "staff"],
-          hitsPerPage: 1
-        }]
-      }
+      resultsCount(env.algolia_registrations_index, year, "paid"),
+      resultsCount(env.algolia_registrations_index, year, "invoiced"),
+      resultsCount(env.algolia_registrations_index, year, "confirmed"),
+      resultsCount(env.algolia_registrations_index, year, "waitingList"),
+      resultsCount(env.algolia_registrations_index, year, "volunteer"),
+      resultsCount(env.algolia_registrations_index, year, "staff")
     ]
   });
 
