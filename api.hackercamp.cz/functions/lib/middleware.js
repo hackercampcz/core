@@ -9,7 +9,7 @@ export async function allowCredentials({ next }) {
 export function allowMethods(methods) {
   return async ({ next }) => {
     const response = await next();
-    response.headers.set("Access-Control-Methods", methods?.join(", ") ?? "GET, OPTIONS");
+    response.headers.set("Access-Control-Allow-Methods", methods?.join(", ") ?? "GET, OPTIONS");
     return response;
   };
 }

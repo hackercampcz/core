@@ -1,3 +1,3 @@
-import { allowCredentials, roleAuthorization } from "#lib/middleware.js";
+import { allowCredentials, allowMethods, roleAuthorization } from "#lib/middleware.js";
 
-export const onRequest = [allowCredentials, roleAuthorization("admin")];
+export const onRequest = [allowCredentials, allowMethods(["GET", "POST", "OPTIONS"]), roleAuthorization("admin")];
