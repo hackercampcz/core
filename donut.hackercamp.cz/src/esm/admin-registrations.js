@@ -329,8 +329,8 @@ export function registrationsTableTemplate(
       </tfoot>
       <tbody>
       ${
-    data.map(row =>{
-        return html`
+    data.map(row => {
+      return html`
           <tr @click="${renderDetail(row)}">
             <td>
               <label class="checkbox">
@@ -343,21 +343,22 @@ export function registrationsTableTemplate(
             </td>
             <td><hc-badge badge="${row.ticketType}"></hc-badge>${row.name}
               ${
-          when(row.firstTime, () =>
-            html`<span title="Jede poprvé">${
-              when(row.paid, () => html`🐥`, () => when(row.invoiced, () => html`🐣`, () => html`🥚`))
-            }</span>`)
-        }
+        when(row.firstTime, () =>
+          html`<span title="Jede poprvé">${
+            when(row.paid, () => html`🐥`, () =>
+              when(row.invoiced, () => html`🐣`, () => html`🥚`))
+          }</span>`)
+      }
             </td>
             <td>${row.company}</td>
             <td>
               ${row[timeAttr] ? formatDateTime(new Date(row[timeAttr])) : ""}
             </td>
             ${
-          when(selectedView === View.search, () =>
-            html`
+        when(selectedView === View.search, () =>
+          html`
               <td>${registrationStatus(row)}</td>`)
-        }
+      }
             <td>
                 <span class="hc-detail__tools">
                   <hc-mail-button email="${row.email}"></hc-mail-button>
@@ -366,8 +367,7 @@ export function registrationsTableTemplate(
             </td>
           </tr>
         `;
-      }
-    )
+    })
   }
       </tbody>
     </table>

@@ -72,8 +72,8 @@ describe("throttle", () => {
   it("invokes the trailing call after the wait period", () => {
     const fn = vi.fn();
     const throttled = throttle(fn, 100);
-    throttled();        // leading — fires now
-    throttled();        // schedules trailing
+    throttled(); // leading — fires now
+    throttled(); // schedules trailing
     vi.advanceTimersByTime(100);
     expect(fn).toHaveBeenCalledTimes(2);
   });

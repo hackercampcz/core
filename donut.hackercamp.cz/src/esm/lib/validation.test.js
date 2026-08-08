@@ -6,8 +6,8 @@ describe("isISODateTime", () => {
     "2023-09-01T14:00:00",
     "2023-09-01T14:00:00.123",
     "2022-01-31T23:59:59.999",
-    "2023-09-01T14:00",
-  ])("returns true for valid ISO datetime %s", (value) => {
+    "2023-09-01T14:00"
+  ])("returns true for valid ISO datetime %s", value => {
     expect(isISODateTime(value)).toBe(true);
   });
 
@@ -19,7 +19,7 @@ describe("isISODateTime", () => {
     ["a number", 123],
     ["null", null],
     ["undefined", undefined],
-    ["an object", {}],
+    ["an object", {}]
   ])("returns false for %s", (_, value) => {
     expect(isISODateTime(value)).toBe(false);
   });

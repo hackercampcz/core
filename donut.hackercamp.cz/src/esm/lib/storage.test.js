@@ -1,11 +1,13 @@
 import { beforeEach, describe, expect, it } from "vitest";
-import { SafeStorage, memoryStorage } from "./storage.js";
+import { memoryStorage, SafeStorage } from "./storage.js";
 
 // A minimal Storage-compatible object used as the primary in SafeStorage tests.
 function makeStorage() {
   const data = new Map();
   return {
-    get length() { return data.size; },
+    get length() {
+      return data.size;
+    },
     getItem: key => data.get(key) ?? null,
     setItem: (key, value) => data.set(key, value),
     removeItem: key => data.delete(key),

@@ -1,10 +1,10 @@
-import { DynamoDBClient, BatchGetItemCommand } from "@aws-sdk/client-dynamodb";
+import { BatchGetItemCommand, DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { partition } from "@thi.ng/transducers";
 
 /**
  * Create credential provider for AWS SDK clients
- * 
+ *
  * @param {Object} env - Environment variables
  * @param {string} env.AWS_ACCESS_KEY_ID - AWS access key ID
  * @param {string} env.AWS_SECRET_ACCESS_KEY - AWS secret access key
@@ -19,7 +19,7 @@ export function credentialProvider(env) {
 
 /**
  * Create DynamoDB client with credentials from environment
- * 
+ *
  * @param {Object} env - Environment variables
  * @param {string} env.AWS_REGION - AWS region
  * @param {string} env.AWS_ACCESS_KEY_ID - AWS access key ID
@@ -35,7 +35,7 @@ export function createDynamoDBClient(env) {
 
 /**
  * Get items from DynamoDB in batches
- * 
+ *
  * @param {import("@aws-sdk/client-dynamodb").DynamoDBClient} db - DynamoDB client
  * @param {string} tableName - Name of the DynamoDB table
  * @param {Array<{year: number, slackID: string}>} hits - Array of items with year and slackID
@@ -47,19 +47,19 @@ export function createDynamoDBClient(env) {
 export async function getItemsFromDB(db, tableName, hits, queryOptions = {}) {
   const result = [];
   if (hits.length === 0) return result;
-  
+
   for (const batch of partition(100, true, hits)) {
     const keys = batch.map(({ year, slackID }) => ({
       year: { N: year.toString() },
       slackID: { S: slackID }
     }));
-    
+
     const items = await db.send(
       new BatchGetItemCommand({
         RequestItems: { [tableName]: { Keys: keys, ...queryOptions } }
       })
     );
-    
+
     const tableItems = items.Responses[tableName] || [];
     result.push(
       ...tableItems
@@ -67,6 +67,6 @@ export async function getItemsFromDB(db, tableName, hits, queryOptions = {}) {
         .sort((a, b) => -1 * (a.timestamp?.localeCompare(b.timestamp) || 0))
     );
   }
-  
+
   return result;
 }

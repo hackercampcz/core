@@ -58,7 +58,7 @@ export async function main({ env, yearSelector, searchParams, appRoot }) {
         year
       };
     },
-    payload: { person: { name: profile.real_name, email: profile.email, id: profile.id } }
+    payload: { person: { name: profile?.real_name, email: profile.email, id: profile.id } }
   });
 
   yearSelector.value = year;

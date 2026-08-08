@@ -206,8 +206,7 @@ code {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #d3a684 var(--hc-camp-bg) no-repeat
-    50% 50%;
+  background: #d3a684 var(--hc-camp-bg) no-repeat 50% 50%;
   background-size: cover;
 }
 

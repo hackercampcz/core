@@ -1,8 +1,8 @@
 import "lite-youtube-embed";
+import { processTypo } from "@gryphoon/texy";
 import event, { isEnded } from "@hackercamp/lib/event.js";
 import { formatMoney } from "@hackercamp/lib/format.js";
 import { housingToText } from "@hackercamp/lib/housing.js";
-import { processTypo } from "@gryphoon/texy";
 import { defAtom } from "@thi.ng/atom";
 import { html } from "lit-html";
 import { map } from "lit-html/directives/map.js";

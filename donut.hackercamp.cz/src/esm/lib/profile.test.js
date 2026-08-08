@@ -4,8 +4,7 @@ import { memoryStorage } from "./storage.js";
 
 /** Build a minimal JWT with the given `exp` (Unix seconds). The signature is fake — we only need to test the payload decoding. */
 function makeJWT(exp) {
-  const encode = obj =>
-    btoa(JSON.stringify(obj)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+  const encode = obj => btoa(JSON.stringify(obj)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
   const header = encode({ alg: "HS256", typ: "JWT" });
   const payload = encode({ exp });
   return `${header}.${payload}.fakesignature`;
@@ -39,8 +38,7 @@ describe("isSignedIn", () => {
   });
 
   it("returns false for a token missing the exp claim", () => {
-    const encode = obj =>
-      btoa(JSON.stringify(obj)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+    const encode = obj => btoa(JSON.stringify(obj)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
     const token = `${encode({ alg: "HS256", typ: "JWT" })}.${encode({ sub: "U123" })}.sig`;
     localStorage.setItem("hc:id_token", token);
     expect(isSignedIn()).toBe(false);

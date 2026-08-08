@@ -1,6 +1,6 @@
 import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
 import logger from "fancy-log";
-import {writeFile} from "node:fs/promises";
+import { writeFile } from "node:fs/promises";
 import DefaultRegistry from "undertaker-registry";
 
 /** @typedef {import("@types/gulp").Gulp} Gulp */
@@ -8,7 +8,7 @@ import DefaultRegistry from "undertaker-registry";
 async function getSlackProfiles(token) {
   logger.info("Loading Slack profiles…");
   const skip = new Set(["slackbot", "jakub"]);
-  const resp = await fetch("https://slack.com/api/users.list", {headers: {Authorization: `Bearer ${token}`}});
+  const resp = await fetch("https://slack.com/api/users.list", { headers: { Authorization: `Bearer ${token}` } });
   const data = await resp.json();
   if (!resp.ok) {
     logger.warn("Slack profiles:", data.error);
@@ -32,14 +32,14 @@ export class HackersRegistry extends DefaultRegistry {
   /**
    * @param {Gulp} gulp
    */
-  init({task}) {
+  init({ task }) {
     task("prepare-data", async () => {
       const [profiles, items] = await Promise.all([
         getSlackProfiles(this.config.slackToken),
         getAttendees(this.config.year)
       ]);
       const attendees = items.map(x => [x.slug, profiles.get(x.slackID), x]);
-      return writeFile(this.dest, JSON.stringify(attendees, null, 2), {encoding: "utf-8"});
+      return writeFile(this.dest, JSON.stringify(attendees, null, 2), { encoding: "utf-8" });
     });
   }
 }

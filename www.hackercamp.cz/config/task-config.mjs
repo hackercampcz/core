@@ -6,7 +6,7 @@
  * @param {Boolean} verbose
  * @return {TaskConfig}
  */
-export default function (pathConfig, mode, verbose) {
+export default function(pathConfig, mode, verbose) {
   return {
     images: false,
     cloudflare: true,
@@ -18,14 +18,16 @@ export default function (pathConfig, mode, verbose) {
     stylesheets: true,
 
     html: {
-      data: {collections: ["build", "images"]},
+      data: { collections: ["build", "images"] },
       nunjucksRender: {
         filters: {
           isoDate(x) {
-            return Temporal.ZonedDateTime.from(x).toString({timeZoneName: "never"});
+            return Temporal.ZonedDateTime.from(x).toString({ timeZoneName: "never" });
           },
           longDate(x) {
-            return new Intl.DateTimeFormat("cs-CZ", {day: "numeric", month: "long"}).format(Temporal.PlainDate.from(x));
+            return new Intl.DateTimeFormat("cs-CZ", { day: "numeric", month: "long" }).format(
+              Temporal.PlainDate.from(x)
+            );
           },
           shortDate(x) {
             return new Intl.DateTimeFormat("cs-CZ", {
@@ -34,7 +36,7 @@ export default function (pathConfig, mode, verbose) {
             }).format(Temporal.PlainDate.from(x));
           },
           year(x) {
-            return new Intl.DateTimeFormat("cs-CZ", {year: "numeric"}).format(Temporal.PlainDate.from(x));
+            return new Intl.DateTimeFormat("cs-CZ", { year: "numeric" }).format(Temporal.PlainDate.from(x));
           },
           price(x, currency) {
             return new Intl.NumberFormat("cs-CZ", {
@@ -44,9 +46,9 @@ export default function (pathConfig, mode, verbose) {
             }).format(x).replace(/\u00A0/, "\u202F");
           },
           calendarURL(event) {
-            const format = ({y, m, d}) => `${y}${m.toString().padStart(2, "0")}${d.toString().padStart(2, "0")}`;
-            const d = d => ({y: d.year, m: d.month, d: d.day});
-            const incDay = ({y, m, d}) => ({y, m, d: d + 1});
+            const format = ({ y, m, d }) => `${y}${m.toString().padStart(2, "0")}${d.toString().padStart(2, "0")}`;
+            const d = d => ({ y: d.year, m: d.month, d: d.day });
+            const incDay = ({ y, m, d }) => ({ y, m, d: d + 1 });
             return new URL(
               `?${new URLSearchParams({
                 action: "TEMPLATE",
@@ -64,7 +66,7 @@ export default function (pathConfig, mode, verbose) {
     },
 
     vite: {
-      server: {port: 3001},
+      server: { port: 3001 },
       browser: "firefox developer edition"
     },
 

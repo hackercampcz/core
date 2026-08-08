@@ -1,8 +1,8 @@
-import {DynamoDBClient, GetItemCommand, PutItemCommand} from "@aws-sdk/client-dynamodb";
-import {marshall, unmarshall} from "@aws-sdk/util-dynamodb";
+import { DynamoDBClient, GetItemCommand, PutItemCommand } from "@aws-sdk/client-dynamodb";
+import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
 import crypto from "node:crypto";
-import {accepted, getHeader, readPayload, seeOther} from "../http.mjs";
-import {sendEmailWithTemplate, Template} from "../postmark.mjs";
+import { accepted, getHeader, readPayload, seeOther } from "../http.mjs";
+import { sendEmailWithTemplate, Template } from "../postmark.mjs";
 
 /** @typedef { import("@aws-sdk/client-dynamodb").DynamoDBClient } DynamoDBClient */
 /** @typedef { import("@pulumi/awsx/classic/apigateway").Request } APIGatewayProxyEvent */
@@ -12,7 +12,7 @@ import {sendEmailWithTemplate, Template} from "../postmark.mjs";
 /** @type DynamoDBClient */
 const db = new DynamoDBClient({});
 
-function getTemplateId(isNewbee, isVolunteer, {referral}) {
+function getTemplateId(isNewbee, isVolunteer, { referral }) {
   if (isVolunteer) {
     // TODO: registration confirmation mail for volunteers
     return null;
@@ -28,23 +28,23 @@ function getTemplateId(isNewbee, isVolunteer, {referral}) {
 
 function getEditUrl(isNewbee, id) {
   if (isNewbee) {
-    const params = new URLSearchParams({id});
+    const params = new URLSearchParams({ id });
     return `https://${process.env["hostname"]}/registrace/?${params}`;
   }
   return `https://${process.env["donut"]}/registrace/`;
 }
 
 async function getRegistrationByEmail(email, year) {
-  console.log({event: "Get registration by email used", email, year});
+  console.log({ event: "Get registration by email used", email, year });
   const regResp = db.send(
     new GetItemCommand({
       TableName: "registrations",
-      Key: {email: {S: email}, year: {N: year.toString()}}
+      Key: { email: { S: email }, year: { N: year.toString() } }
     })
   );
 
   if (regResp.Item) {
-    console.log({event: "Got registration", registration: regResp.Item});
+    console.log({ event: "Got registration", registration: regResp.Item });
     return unmarshall(regResp.Item);
   }
 
@@ -57,11 +57,11 @@ async function getRegistrationByEmail(email, year) {
  * @returns {Promise.<APIGatewayProxyResult>}
  */
 export async function handler(event, rollbar) {
-  let {email, year, firstTime, ...rest} = readPayload(event);
+  let { email, year, firstTime, ...rest } = readPayload(event);
 
   const existingReg = await getRegistrationByEmail(email, year);
   if (existingReg && !rest.id) {
-    return {statusCode: 409, body: "E-mail is already registered."};
+    return { statusCode: 409, body: "E-mail is already registered." };
   }
 
   const isNewbee = firstTime === "1";
@@ -78,11 +78,11 @@ export async function handler(event, rollbar) {
   ) {
     // API abuse
     rollbar.warn("Spam", event);
-    return {statusCode: 451, body: "fok off"};
+    return { statusCode: 451, body: "fok off" };
   }
 
   const id = rest.id ?? crypto.randomBytes(20).toString("hex");
-  console.log({event: "Put registration", email, year, isNewbee, isVolunteer, ...rest});
+  console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
   const editUrl = getEditUrl(isNewbee, id);
 
   await Promise.all([
@@ -96,19 +96,19 @@ export async function handler(event, rollbar) {
           ...rest,
           id,
           timestamp: new Date().toISOString()
-        }, {convertEmptyValues: true, removeUndefinedValues: true, convertClassInstanceToMap: true})
+        }, { convertEmptyValues: true, removeUndefinedValues: true, convertClassInstanceToMap: true })
       })
     ),
     sendEmailWithTemplate({
       token: process.env["postmark_token"],
       templateId: getTemplateId(isNewbee, isVolunteer, rest),
-      data: {editUrl},
+      data: { editUrl },
       to: email,
       tag: "registration"
     })
   ]);
   if (getHeader(event.headers, "Accept") === "application/json") {
-    return accepted({editUrl});
+    return accepted({ editUrl });
   }
   return seeOther(editUrl);
 }
