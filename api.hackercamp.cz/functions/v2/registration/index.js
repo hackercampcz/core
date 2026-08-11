@@ -1,4 +1,5 @@
 import { createDynamoDBClient } from "#lib/dynamodb.js";
+import { getTemplateId, Template, sendEmailWithTemplate } from "#lib/postmark.js";
 import { getPayload } from "#lib/request.js";
 import { GetItemCommand, PutItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
@@ -155,10 +156,39 @@ async function getRegistrationByEmailOnly(client, tableName, email, year) {
 }
 
 /**
+ *
+ * @param {Env} env
+ * @param {Boolean} isNewbee
+ * @param {String} id
+ * @returns {string}
+ */
+function getEditUrl(env, isNewbee, id) {
+  if (isNewbee) {
+    const params = new URLSearchParams({ id });
+    return `https://${env.hostname}/registrace/?${params}`;
+  }
+  return `https://${env.donut}/registrace/`;
+}
+
+function getEmailTemplate(env, isNewbee, isVolunteer, { referral }) {
+  if (isVolunteer) {
+    // TODO: registration confirmation mail for volunteers
+    return null;
+  }
+  if (isNewbee && !referral) {
+    return getTemplateId(env, Template.NewRegistration);
+  } else if (isNewbee) {
+    return getTemplateId(env, Template.PlusOneRegistration);
+  } else {
+    return getTemplateId(env, Template.HackerRegistration);
+  }
+}
+
+/**
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
  */
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request, env, data: { rollbar } }) {
   const data = await getPayload(request);
   let { email, year, firstTime, ...rest } = data;
 
@@ -182,25 +212,40 @@ export async function onRequestPost({ request, env }) {
     (isPatron && rest.volunteerArrivalDay === "th")
     || (isVolunteer && rest.company === "google")
   ) {
+    rollbar.warn("Spam", data);
     return new Response("fok off", { status: 451 });
   }
 
   const id = rest.id || crypto.randomUUID();
   console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
+  const editUrl = getEditUrl(env, isNewbee, id);
 
-  await client.send(
-    new PutItemCommand({
-      TableName: env.db_table_registrations,
-      Item: marshall({
-        email,
-        year,
-        firstTime: isNewbee,
-        ...rest,
-        id,
-        timestamp: new Date().toISOString()
-      }, { convertEmptyValues: true, removeUndefinedValues: true, convertClassInstanceToMap: true })
+
+  await Promise.all([
+    client.send(
+      new PutItemCommand({
+        TableName:  env.db_table_registrations,
+        Item: marshall({
+          email,
+          year,
+          firstTime: isNewbee,
+          ...rest,
+          id,
+          timestamp: new Date().toISOString()
+        }, { convertEmptyValues: true, removeUndefinedValues: true, convertClassInstanceToMap: true })
+      })
+    ),
+    sendEmailWithTemplate({
+      token: env.postmark_token,
+      templateId: getEmailTemplate(env, isNewbee, isVolunteer, rest),
+      data: { editUrl },
+      to: email,
+      tag: "registration"
     })
-  );
+  ]);
 
-  return new Response(null, { status: 202 });
+  if (request.headers.get("accept") === "application/json") {
+    return new Response(JSON.stringify({ editUrl }), { status: 202 });
+  }
+  return new Response(null, { status: 303, headers: { Location: editUrl } });
 }

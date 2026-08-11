@@ -225,7 +225,7 @@
 
 {% block content %}
   {% if event.isRegistrationOpen %}
-    <form action='{{ collections.build["api-host"] }}registration' method="post" id="reg">
+    <form action='{{ "registration" | resolveUrl(collections.build["api-host"]) }}' method="post" id="reg">
       <section id="contact">
         <h2>Něco o tobě</h2>
         <div class="hc-card">
@@ -733,6 +733,14 @@
       <input type="hidden" name="id">
     </form>
     <script type="module">
+      const build = {{ collections.build | dump(8) | safe }};
+      const env = Object.assign({
+        year: {{ year }},
+        isRegistrationOpen: Boolean({{ event.isRegistrationOpen }}),
+      }, build);
+      const apiHost = env["api-host"];
+      const apiURL = endpoint => new URL(endpoint, apiHost).href;
+
       const formElement = document.querySelector("#reg");
       const submitButtonElement = formElement.querySelector("button[type=submit]");
       const storagePrefix = "reg:";
@@ -784,7 +792,7 @@
 
       if (searchParams.has("id")) {
         const params = new URLSearchParams({ id: searchParams.get("id") });
-        const response = await fetch(`https://api.hackercamp.cz/v1/registration?${params}`, {
+        const response = await fetch(apiURL(`registration?${params}`), {
           headers: { Accept: "application/json" }
         });
         const data = await response.json();
@@ -833,7 +841,10 @@
         fetch(event.target.action, {
           method: "POST",
           body: new URLSearchParams(new FormData(event.target)),
-          headers: { Accept: "application/json", "Content-Type": "application/x-www-form-urlencoded" }
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
         }).then(response => {
           if (!response.ok) {
             throw response.json();

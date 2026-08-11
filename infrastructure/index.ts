@@ -215,6 +215,8 @@ const apiPages = new cloudflare.PagesProject("api", {
         NFCTRON_BEARER_TOKEN: { type: "secret_text", value: config.require("nfctron-bearer-token") },
         NFCTRON_EVENT_ID: { type: "plain_text", value: config.require("nfctron-event-id") },
         ROLLBAR_TOKEN: { type: "secret_text", value: config.require("rollbar-access-token") },
+        hostname: { type: "secret_text", value: config.require("web-domain") },
+        donut: { type: "secret_text", value: config.require("donut-domain") },
         year: { type: "plain_text", value: config.require("year") },
         start_date: { type: "plain_text", value: config.require("start-date") },
         end_date: { type: "plain_text", value: config.require("end-date") },

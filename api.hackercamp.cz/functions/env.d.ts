@@ -21,6 +21,8 @@ export interface Env {
   ROLLBAR_TOKEN: string;
 
   year: string;
+  hostname: string;
+  donut: string;
   start_date: string;
   end_date: string;
 
