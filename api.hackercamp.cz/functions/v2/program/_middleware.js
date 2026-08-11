@@ -1,4 +1,4 @@
-import { allowCredentials, authorization } from "#lib/middleware.js";
+import { allowCredentials, authorization, gracefulOptions } from "#lib/middleware.js";
 
-export const onRequest = [allowCredentials];
+export const onRequest = [allowCredentials, gracefulOptions];
 export const onRequestPost = [authorization];

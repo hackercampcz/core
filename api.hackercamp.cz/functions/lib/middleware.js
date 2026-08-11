@@ -14,6 +14,20 @@ export function allowMethods(methods) {
   };
 }
 
+export async function gracefulOptions(context) {
+  const { request, next } = context;
+
+  // Handle CORS preflight without forwarding to the route handler
+  if (request.method === "OPTIONS") {
+    return new Response(null, {
+      status: 204,
+    });
+  }
+
+  // For all other methods, proceed to the route handler
+  return next();
+}
+
 export async function cors({ request, next }) {
   const response = await next();
   response.headers.set("Access-Control-Allow-Origin", request.headers.get("origin") ?? "*");
