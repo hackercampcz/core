@@ -200,6 +200,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/client-ecs@npm:^3.974.0":
+  version: 3.1104.0
+  resolution: "@aws-sdk/client-ecs@npm:3.1104.0"
+  dependencies:
+    "@aws-sdk/core": "npm:^3.977.6"
+    "@aws-sdk/credential-provider-node": "npm:^3.972.78"
+    "@aws-sdk/types": "npm:^3.974.2"
+    "@smithy/core": "npm:^3.31.1"
+    "@smithy/fetch-http-handler": "npm:^5.6.13"
+    "@smithy/node-http-handler": "npm:^4.9.13"
+    "@smithy/types": "npm:^4.16.1"
+    tslib: "npm:^2.6.2"
+  checksum: 10/204120ead308f22bd6fd0c36e5ef8746d8b31ecb5ebd5baf1c8d9a17b07f240c12673c17c28c0f4abf2a7e5818f6db692b7dfa3695be9bb45ea96d41e3985703
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/client-sqs@npm:3.1107.0":
   version: 3.1107.0
   resolution: "@aws-sdk/client-sqs@npm:3.1107.0"
@@ -3078,6 +3094,7 @@ __metadata:
   dependencies:
     "@gryphoon/texy": "npm:1.0.0"
     "@pulumi/aws": "npm:7.40.0"
+    "@pulumi/awsx": "npm:3.8.0"
     "@pulumi/cloudflare": "npm:6.14.0"
     "@pulumi/pulumi": "npm:3.256.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
@@ -5170,7 +5187,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.40.0":
+"@pulumi/aws@npm:7.40.0, @pulumi/aws@npm:^7.38.0":
   version: 7.40.0
   resolution: "@pulumi/aws@npm:7.40.0"
   dependencies:
@@ -5180,12 +5197,47 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pulumi/awsx@npm:3.8.0":
+  version: 3.8.0
+  resolution: "@pulumi/awsx@npm:3.8.0"
+  dependencies:
+    "@aws-sdk/client-ecs": "npm:^3.974.0"
+    "@pulumi/aws": "npm:^7.38.0"
+    "@pulumi/docker": "npm:^4.6.0"
+    "@pulumi/docker-build": "npm:^0.0.14"
+    "@pulumi/pulumi": "npm:^3.142.0"
+    "@types/aws-lambda": "npm:^8.10.23"
+    docker-classic: "npm:@pulumi/docker@3.6.1"
+    mime: "npm:^2.0.0"
+  checksum: 10/135381dfa10d245c5aad272efa14ca082cdc0171e08630be2700e09c66cde9b957e8a741f0a74dbbd839f413b6569b74d9838622d1b82df7a739ec60db62fa38
+  languageName: node
+  linkType: hard
+
 "@pulumi/cloudflare@npm:6.14.0":
   version: 6.14.0
   resolution: "@pulumi/cloudflare@npm:6.14.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
   checksum: 10/88aebb162dd7ac3302f282202ee0cf66fd640f6007f535a098718eac92e60b08120bd4ebd9f0e4f9e7cb4d2908b7162e44bd8492b44f3d0d95283b2dc6837cb8
+  languageName: node
+  linkType: hard
+
+"@pulumi/docker-build@npm:^0.0.14":
+  version: 0.0.14
+  resolution: "@pulumi/docker-build@npm:0.0.14"
+  dependencies:
+    "@pulumi/pulumi": "npm:^3.142.0"
+  checksum: 10/682aa4e6cda8a158c930e1c6ab59cc1f01fdea7a130d4d530b3235bd0ede681cf4ee7df5377de01f96eb829f303f948232cbefc5e4a4fbaa34fd4b8e6925dc2c
+  languageName: node
+  linkType: hard
+
+"@pulumi/docker@npm:^4.6.0":
+  version: 4.8.0
+  resolution: "@pulumi/docker@npm:4.8.0"
+  dependencies:
+    "@pulumi/pulumi": "npm:^3.142.0"
+    semver: "npm:^5.4.0"
+  checksum: 10/f0ac6434df2a550d9a2966541ddd008d42a594fcdd6abfb28df64523abbc25496cfc3729dce6e734f1eec308700eaa36797db640ebb224767978b154a9e4410c
   languageName: node
   linkType: hard
 
@@ -5230,7 +5282,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:^3.142.0":
+"@pulumi/pulumi@npm:^3.0.0, @pulumi/pulumi@npm:^3.142.0":
   version: 3.181.0
   resolution: "@pulumi/pulumi@npm:3.181.0"
   dependencies:
@@ -6214,6 +6266,13 @@ __metadata:
   dependencies:
     tslib: "npm:^2.4.0"
   checksum: 10/7fe0d239397aebb002ac4855d30c197c06a05ea8df8511350a3a5b1abeefe26167c60eda8a5508337571161e4c4b53d7c1342296123f9607af8705369de9fa7f
+  languageName: node
+  linkType: hard
+
+"@types/aws-lambda@npm:^8.10.23":
+  version: 8.10.150
+  resolution: "@types/aws-lambda@npm:8.10.150"
+  checksum: 10/d837ae0b94fb16c7cfec3711126f0e7fb109fc3e6d14d994d083d2039c4f2bc52a75f256ee31a8010f023ce78ddcf3746ad43d552592a0f56720167f6d3111be
   languageName: node
   linkType: hard
 
@@ -8174,6 +8233,16 @@ __metadata:
   version: 2.0.4
   resolution: "detect-libc@npm:2.0.4"
   checksum: 10/136e995f8c5ffbc515955b0175d441b967defd3d5f2268e89fa695e9c7170d8bed17993e31a34b04f0fad33d844a3a598e0fd519a8e9be3cad5f67662d96fee0
+  languageName: node
+  linkType: hard
+
+"docker-classic@npm:@pulumi/docker@3.6.1":
+  version: 3.6.1
+  resolution: "@pulumi/docker@npm:3.6.1"
+  dependencies:
+    "@pulumi/pulumi": "npm:^3.0.0"
+    semver: "npm:^5.4.0"
+  checksum: 10/85f04b8281585681121cfd675e91e6dd570e2967955eb210c51e855749710eb84a3b21040ef4b2911780af7e82ee8c9bdc09b39deeb61cb154223fd6181222eb
   languageName: node
   linkType: hard
 
@@ -14545,6 +14614,15 @@ __metadata:
   dependencies:
     sver: "npm:^1.8.3"
   checksum: 10/478a52a34fa4a265d7caf1f2279bf3f427abeee36175bfa03c29d48df65040f4d934ccdf5896b7ae6012f60f7364ec30826390ecb7c913f94109002dbd53a588
+  languageName: node
+  linkType: hard
+
+"semver@npm:^5.4.0":
+  version: 5.7.2
+  resolution: "semver@npm:5.7.2"
+  bin:
+    semver: bin/semver
+  checksum: 10/fca14418a174d4b4ef1fecb32c5941e3412d52a4d3d85165924ce3a47fbc7073372c26faf7484ceb4bbc2bde25880c6b97e492473dc7e9708fdfb1c6a02d546e
   languageName: node
   linkType: hard
 
