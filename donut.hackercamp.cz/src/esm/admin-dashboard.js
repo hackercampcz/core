@@ -55,13 +55,13 @@ const htmlLegendPlugin = {
   }
 };
 
-async function fetchData({ endpoint, year, page, query }, apiHost) {
-  const resource = new URL(`admin/${endpoint}`, apiHost).href;
+async function fetchData({ endpoint, year, page, query }, apiURL) {
+  const resource = apiURL(`admin/${endpoint}`);
   const resp = await withAuthHandler(fetch(resource, { credentials: "include" }), {
     onUnauthenticated() {
       setReturnUrl(location.href);
       return new Promise((resolve, reject) => {
-        signOut(path => new URL(path, apiHost).href);
+        signOut(apiURL);
         reject({ unauthenticated: true });
       });
     },
@@ -136,6 +136,8 @@ export async function main({ env, yearSelector, searchParams }) {
 
   const year = parseInt(searchParams.get("year") ?? env.year);
   const apiHost = env["api-host"];
+  const apiURL = endpoint => new URL(endpoint, apiHost).href;
+
   const profile = getSlackProfile();
   rollbar.configure({
     transform(payload) {
@@ -151,7 +153,7 @@ export async function main({ env, yearSelector, searchParams }) {
     location.assign(`?${new URLSearchParams({ year: e.target.value })}`);
   });
 
-  const data = await fetchData({ endpoint: "dashboard" }, new URL("/v2/", apiHost).href);
+  const data = await fetchData({ endpoint: "dashboard" }, apiURL);
   const years = Object.fromEntries(data);
   for (const year of Object.keys(years)) {
     drawChart(year, years);

@@ -66,7 +66,7 @@ export async function main({ env, yearSelector, searchParams, appRoot }) {
     location.assign(`?${new URLSearchParams({ year: e.target.value })}`);
   });
 
-  const data = await fetchData({ endpoint: "volunteers", year }, new URL("/v2/", apiHost).href);
+  const data = await fetchData({ endpoint: "volunteers", year }, apiHost);
   render(
     html`
     <table>

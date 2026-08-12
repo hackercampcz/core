@@ -1,14 +1,14 @@
 import { getSlackProfile } from "./lib/profile.js";
 import * as rollbar from "./lib/rollbar.js";
 
-export function optoutHandler(apiUrl) {
+export function optoutHandler(apiURL) {
   return async function optout() {
     if (!confirm("Opravdu se letos nezúčastníš? Tohle nejde vzít zpět.")) {
       return;
     }
     try {
       const {email} = getSlackProfile();
-      await fetch(apiUrl("optout"), {
+      await fetch(apiURL("optout"), {
         method: "POST",
         body: new URLSearchParams({email, year: document.forms.reg.year.value}),
         headers: {
@@ -61,6 +61,8 @@ function disableForm(form) {
 
 export async function main({ env, formElement, submitButtonElement, searchParams }) {
   rollbar.init(env);
+  const apiHost = env["api-host"];
+  const apiURL = endpoint => new URL(endpoint, apiHost).href;
   const dbgContext = {};
   try {
     const { year } = env;
@@ -71,10 +73,7 @@ export async function main({ env, formElement, submitButtonElement, searchParams
     formElement.image.value = image;
     formElement.slackID.value = slackID;
 
-    const apiHost = env["api-host"];
-    const apiUrl = x => new URL(x, apiHost).href;
-
-    const response = await fetch(apiUrl(`registration?${new URLSearchParams({ email, year, slackID })}`),
+    const response = await fetch(apiURL(`registration?${new URLSearchParams({ email, year, slackID })}`),
       { headers: { Accept: "application/json" } }
     );
     const data = await response.json();

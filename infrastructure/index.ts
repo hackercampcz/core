@@ -92,7 +92,7 @@ export const dataTables = {
 
 const routes = createRoutes({ queues, db, postmarkTemplates });
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
-export const apiUrl = new URL("/v1/", `https://${apiDomain}`).href;
+export const apiUrl = new URL("/v2/", `https://${apiDomain}`).href;
 export const apiDocsUrl = api.docsUrl;
 
 const webPages = new cloudflare.PagesProject("web", {

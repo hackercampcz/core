@@ -17,19 +17,19 @@ const authHandler = {
   }
 };
 
-async function getRegistration(year, email, apiUrl) {
+async function getRegistration(year, email, apiURL) {
   const params = new URLSearchParams({ year, email, slackID: "Z" });
   const resp = await withErrorReporting(
-    withAuthHandler(fetch(apiUrl(`registration?${params}`)), authHandler),
+    withAuthHandler(fetch(apiURL(`registration?${params}`)), authHandler),
     { rollbar }
   );
   return resp.json();
 }
 
-async function markRegistrationAsInvoiced(year, emails, data, apiUrl) {
+async function markRegistrationAsInvoiced(year, emails, data, apiURL) {
   const resp = await withErrorReporting(
     withAuthHandler(
-      fetch(apiUrl("admin/registrations"), {
+      fetch(apiURL("admin/registrations"), {
         method: "POST",
         headers: { "Accept": "application/json", "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -46,11 +46,11 @@ async function markRegistrationAsInvoiced(year, emails, data, apiUrl) {
   return resp.ok;
 }
 
-async function getSubject(q, apiUrl) {
+async function getSubject(q, apiURL) {
   const params = new URLSearchParams({ q });
   const resp = await withErrorReporting(
     withAuthHandler(
-      fetch(apiUrl(`/v2/fakturoid/subject?${params}`), { credentials: "include", mode: "cors" }),
+      fetch(apiURL(`fakturoid/subject?${params}`), { credentials: "include", mode: "cors" }),
       authHandler
     ),
     { rollbar }
@@ -58,10 +58,10 @@ async function getSubject(q, apiUrl) {
   return resp.json();
 }
 
-async function createSubject(data, apiUrl) {
+async function createSubject(data, apiURL) {
   const resp = await withErrorReporting(
     withAuthHandler(
-      fetch(apiUrl("/v2/fakturoid/subject"), {
+      fetch(apiURL("fakturoid/subject"), {
         method: "POST",
         headers: { "Accept": "application/json" },
         body: new URLSearchParams(data),
@@ -110,9 +110,9 @@ function renderSubjects(subjectSet, subsById, listener) {
   return subjectSet;
 }
 
-async function searchSubjects(invRegNo, invEmail, invName, apiUrl) {
+async function searchSubjects(invRegNo, invEmail, invName, apiURL) {
   const sub = await Promise.all(
-    [invRegNo ? getSubject(invRegNo, apiUrl) : null, getSubject(invEmail, apiUrl), getSubject(invName, apiUrl)].filter(Boolean)
+    [invRegNo ? getSubject(invRegNo, apiURL) : null, getSubject(invEmail, apiURL), getSubject(invName, apiURL)].filter(Boolean)
   );
   return sub.flat().map(x => [x.id, x]);
 }
@@ -124,7 +124,7 @@ export async function main({ env, searchParams }) {
   rollbar.configure({ payload: { person: { name: profile.real_name, email: profile.email, id: profile.id } } });
 
   const apiHost = env["api-host"];
-  const apiUrl = x => new URL(x, apiHost).href;
+  const apiURL = x => new URL(x, apiHost).href;
 
   const isModal = searchParams.has("modal");
   if (isModal) {
@@ -152,7 +152,7 @@ export async function main({ env, searchParams }) {
         { rollbar }
       );
       const data = await resp.json();
-      await markRegistrationAsInvoiced(year, emails, data, apiUrl);
+      await markRegistrationAsInvoiced(year, emails, data, apiURL);
       if (isModal) {
         window.parent.postMessage({ event: "invoiced", invoiceId: data.id });
       } else {
@@ -209,7 +209,7 @@ export async function main({ env, searchParams }) {
   }
 
   const subsById = new Map();
-  const registrations = await Promise.all(emails.map(email => getRegistration(year, email, apiUrl)));
+  const registrations = await Promise.all(emails.map(email => getRegistration(year, email, apiURL)));
   for (const reg of registrations) {
     if (reg.invAddress) {
       addContact(reg);
@@ -226,7 +226,7 @@ export async function main({ env, searchParams }) {
     } = reg;
     const email = invEmail ?? invRecipientEmail ?? c ?? reg.email;
     const name = invName ?? `${invRecipientFirstname} ${invRecipientLastname}`;
-    const subjects = await searchSubjects(invRegNo, email, name, apiUrl);
+    const subjects = await searchSubjects(invRegNo, email, name, apiURL);
     for (const [id, subject] of subjects) {
       subsById.set(id, subject);
     }
@@ -253,7 +253,7 @@ export async function main({ env, searchParams }) {
         vat_no: reg.invVatNo
       }).filter(([_, v]) => Boolean(v))
     );
-    const resp = await createSubject(subject, apiUrl);
+    const resp = await createSubject(subject, apiURL);
     if (resp.validationErrors) {
       globalThis.showPersistentSnackbar("Chyba při vytváření kontaktu");
       console.error("Validation errors:", resp.validationErrors);

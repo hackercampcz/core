@@ -120,13 +120,13 @@ async function updateProfile(user, token) {
   // TODO: update profiles KV with extended properties @see https://github.com/hackercampcz/core/issues/2570
 }
 
-async function getRegistration(slackID, email, year, apiUrl) {
+async function getRegistration(slackID, email, year, apiURL) {
   const params = new URLSearchParams({ slackID, email, year });
-  const resp = await withAuthHandler(fetch(apiUrl(`registration?${params}`)), {
+  const resp = await withAuthHandler(fetch(apiURL(`registration?${params}`)), {
     onUnauthenticated() {
       setReturnUrl(location.href);
       return new Promise((resolve, reject) => {
-        signOut(apiUrl);
+        signOut(apiURL);
         reject({ unauthenticated: true });
       });
     }
@@ -134,13 +134,13 @@ async function getRegistration(slackID, email, year, apiUrl) {
   return resp.json();
 }
 
-async function getAttendee(slackID, year, apiUrl) {
+async function getAttendee(slackID, year, apiURL) {
   const params = new URLSearchParams({ slackID, year });
-  const resp = await withAuthHandler(fetch(apiUrl(`attendees?${params}`)), {
+  const resp = await withAuthHandler(fetch(apiURL(`attendees?${params}`)), {
     onUnauthenticated() {
       setReturnUrl(location.href);
       return new Promise((resolve, reject) => {
-        signOut(apiUrl);
+        signOut(apiURL);
         reject({ unauthenticated: true });
       });
     }
@@ -148,9 +148,9 @@ async function getAttendee(slackID, year, apiUrl) {
   return resp.json();
 }
 
-async function getNfcTronData(attendee, apiUrl) {
+async function getNfcTronData(attendee, apiURL) {
   for (const chip of attendee.nfcTronData?.filter(x => x.sn) ?? []) {
-    const resp = await fetch(apiUrl(`/v2/nfctron/${chip.chipID}`), { headers: { Accept: "application/json" } });
+    const resp = await fetch(apiURL(`nfctron/${chip.chipID}`), { headers: { Accept: "application/json" } });
     const data = await resp.json();
     chip.spent = data.totalSpent / 100; // NFCTron has spent in halíř
   }
@@ -215,7 +215,7 @@ function housedCardTemplate({ housing, housingPlacement, travel, hasRegisteredHa
       </p>
       <p>
         Do
-        <date datetime="2025-08-21">21. srpna</date>
+        <date datetime="${year}-08-21">21. srpna</date>
         si ještě můžeš
         <a class="hc-link" href="/ubytovani/">změnit ubytování</a>.
       </p>

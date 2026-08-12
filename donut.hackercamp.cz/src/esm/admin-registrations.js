@@ -134,7 +134,7 @@ export function registrationsChips(
   year,
   { waitingList, confirmed, invoiced, paid, optouts, volunteer, staff },
   params,
-  apiUrl
+  apiURL
 ) {
   return html`
     <search>
@@ -226,7 +226,7 @@ export function registrationsChips(
               <feather-icon name="copy" title="Kopírovat"></feather-icon>
             </button>
             <a class="icon-button small"
-               href="${apiUrl(`admin/registrations?${new URLSearchParams(Object.assign(Object.fromEntries(params), { year, type: view, format: "csv", pageSize: 500 }))}`)}"
+               href="${apiURL(`admin/registrations?${new URLSearchParams(Object.assign(Object.fromEntries(params), { year, type: view, format: "csv", pageSize: 500 }))}`)}"
                title="Stáhnout CSV"
                aria-label="Stáhnout CSV">
               <feather-icon name="download" title="Stáhnout"></feather-icon>
@@ -533,7 +533,7 @@ const timeColumn = new Map([
 
 export function registrationsTemplate(state) {
   const { data, selectedView, detail, year, page, params, selection, apiHost } = state;
-  const apiUrl = x => new URL(x, apiHost).href;
+  const apiURL = x => new URL(x, apiHost).href;
   return html`
     ${
     when(selection.size, () =>
@@ -547,7 +547,7 @@ export function registrationsTemplate(state) {
         [View.waitingList]: data?.then(data => data.counts.waitingList),
         [View.volunteer]: data?.then(data => data.counts.volunteer),
         [View.staff]: data?.then(data => data.counts.staff)
-      }, params, apiUrl))
+      }, params, apiURL))
   }
     <section class="hc-master-detail">
       <div class="hc-card hc-master-detail__list">

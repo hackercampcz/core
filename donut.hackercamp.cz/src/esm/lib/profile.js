@@ -20,16 +20,16 @@ export function signOut(apiURL) {
   storage.removeItem("slack:id_token");
   storage.removeItem("slack:access_token");
   storage.removeItem("slack:profile");
-  location.assign(apiURL("/v2/auth/sign-out"));
+  location.assign(apiURL("auth/sign-out"));
 }
 
-async function getContactFromDb(slackID, email, apiUrl) {
+async function getContactFromDb(slackID, email, apiURL) {
   const params = new URLSearchParams({ slackID, email });
-  const resp = await withAuthHandler(fetch(apiUrl(`contacts?${params}`), { credentials: "include" }), {
+  const resp = await withAuthHandler(fetch(apiURL(`contacts?${params}`), { credentials: "include" }), {
     onUnauthenticated() {
       setReturnUrl(location.href);
       return new Promise((resolve, reject) => {
-        signOut(apiUrl);
+        signOut(apiURL);
         reject({ unauthenticated: true });
       });
     }

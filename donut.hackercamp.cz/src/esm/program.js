@@ -4,6 +4,9 @@ import * as rollbar from "./lib/rollbar.js";
 export async function main({ env, form, modal }) {
   rollbar.init(env);
 
+  const apiHost = env["api-host"];
+  const apiURL = endpoint => new URL(endpoint, apiHost).href;
+
   const year = parseInt(env.year);
   const profile = getSlackProfile();
   rollbar.configure({
@@ -17,10 +20,10 @@ export async function main({ env, form, modal }) {
 
   try {
     const { email, sub: slackID } = profile;
-    const response = await fetch(
-      `${env["api-host"]}registration?${new URLSearchParams({ email, year, slackID })}`,
-      { headers: { Accept: "application/json" } }
-    );
+    const params = new URLSearchParams({ email, year, slackID });
+    const response = await fetch(apiURL(`registration?${params}`), {
+      headers: { Accept: "application/json" }
+    });
     const data = await response.json();
     form.year.value = year;
     form.email.value = email;
@@ -33,7 +36,7 @@ export async function main({ env, form, modal }) {
   }
 
   form.addEventListener("submit", async e => {
-    const resp = await fetch(`${env["api-host"]}program`, {
+    const resp = await fetch(apiURL("program"), {
       method: "POST",
       credentials: "include",
       mode: "cors",

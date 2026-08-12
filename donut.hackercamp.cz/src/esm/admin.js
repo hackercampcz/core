@@ -254,9 +254,9 @@ async function fetchData({ selectedView, year, page, query }, apiHost) {
   return resp.json();
 }
 
-async function getNfcTronData(attendee, apiUrl) {
+async function getNfcTronData(attendee, apiURL) {
   for (const chip of attendee.nfcTronData?.filter(x => x.sn) ?? []) {
-    const resp = await fetch(apiUrl(`/v2/nfctron${chip.chipID}`), { headers: { Accept: "application/json" } });
+    const resp = await fetch(apiURL(`nfctron${chip.chipID}`), { headers: { Accept: "application/json" } });
     const data = await resp.json();
     chip.spent = data.totalSpent / 100;
   }
@@ -327,8 +327,8 @@ async function handleMessage(e) {
       // Get data from NFCTron API only if we don't have them in the database. Typically, during the event.
       // Load them async, because NFCTron API is slow as hell.
       const { apiHost } = state.deref();
-      const apiUrl = x => new URL(x, apiHost).href;
-      const attendee = await getNfcTronData(payload.detail, apiUrl);
+      const apiURL = x => new URL(x, apiHost).href;
+      const attendee = await getNfcTronData(payload.detail, apiURL);
       renderDetail(attendee);
       break;
     }
