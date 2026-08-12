@@ -50,7 +50,7 @@ async function getSubject(q, apiUrl) {
   const params = new URLSearchParams({ q });
   const resp = await withErrorReporting(
     withAuthHandler(
-      fetch(`https://api.hackercamp.cz/v2/fakturoid/subject?${params}`, { credentials: "include", mode: "cors" }),
+      fetch(apiUrl(`/v2/fakturoid/subject?${params}`), { credentials: "include", mode: "cors" }),
       authHandler
     ),
     { rollbar }
@@ -61,7 +61,7 @@ async function getSubject(q, apiUrl) {
 async function createSubject(data, apiUrl) {
   const resp = await withErrorReporting(
     withAuthHandler(
-      fetch("https://api.hackercamp.cz/v2/fakturoid/subject", {
+      fetch(apiUrl("/v2/fakturoid/subject"), {
         method: "POST",
         headers: { "Accept": "application/json" },
         body: new URLSearchParams(data),
