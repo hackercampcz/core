@@ -1,4 +1,3 @@
-import { allowCredentials, gracefulOptions, roleAuthorization } from "#lib/middleware.js";
+import { allowCredentials, gracefulOptions, authorization } from "#lib/middleware.js";
 
-export const onRequest = [allowCredentials, gracefulOptions];
-export const onRequestGet = [roleAuthorization("admin")];
+export const onRequest = [allowCredentials, gracefulOptions, authorization];
