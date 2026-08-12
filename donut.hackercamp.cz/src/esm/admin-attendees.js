@@ -63,7 +63,8 @@ export function attendeesChips(
   view,
   year,
   { attendees, crewAttendees, staffAttendees, volunteerAttendees, hackerAttendees },
-  params
+  params,
+  apiUrl
 ) {
   return html`
     <search>
@@ -164,12 +165,7 @@ export function attendeesChips(
                 <feather-icon name="copy" title="Kopírovat"></feather-icon>
               </button>
               <a class="icon-button small" title="Stáhnout CSV" aria-label="Stáhnout CSV"
-                 href="https://api.hackercamp.cz/v1/admin/attendees?${new URLSearchParams({
-        year,
-        type: view,
-        format: "csv",
-        pageSize: 500
-      })}">
+                 href="${apiUrl(`admin/attendees?${new URLSearchParams({ year, type: view, format: "csv", pageSize: 500 })}`)}">
                 <feather-icon name="download" title="Stáhnout"></feather-icon>
               </a>
               <button class="icon-button small" title="Přidat účastníka bez Slacku"
@@ -780,7 +776,8 @@ function checkOutModalDialog({ apiHost, year, detail, contact }) {
 }
 
 export function attendeesTemplate(state) {
-  const { data, selectedView, detail, year, page, params, selection, isNFCSupported } = state;
+  const { data, selectedView, detail, year, page, params, selection, isNFCSupported, apiHost } = state;
+  const apiUrl = x => new URL(x, apiHost).href;
   return html`
     ${
     attendeesChips(selectedView, year, {
@@ -789,7 +786,7 @@ export function attendeesTemplate(state) {
       [View.volunteerAttendees]: data?.then(data => data.counts.volunteer),
       [View.staffAttendees]: data?.then(data => data.counts.staff),
       [View.crewAttendees]: data?.then(data => data.counts.crew)
-    }, params)
+    }, params, apiUrl)
   }
     <section class="hc-master-detail">
       <div class="hc-card hc-master-detail__list">

@@ -1,26 +1,28 @@
 import { getSlackProfile } from "./lib/profile.js";
 import * as rollbar from "./lib/rollbar.js";
 
-export async function optout() {
-  if (!confirm("Opravdu se letos nezúčastníš? Tohle nejde vzít zpět.")) {
-    return;
-  }
-  try {
-    const { email } = getSlackProfile();
-    await fetch("https://api.hackercamp.cz/v1/optout", {
-      method: "POST",
-      body: new URLSearchParams({ email, year: document.forms.reg.year.value }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/x-www-form-urlencoded"
-      }
-    });
-    if (confirm("Ohlášeno. Díky za ochotu.")) {
-      location.assign("https://donut.hackercamp.cz/");
+export function optoutHandler(apiUrl) {
+  return async function optout() {
+    if (!confirm("Opravdu se letos nezúčastníš? Tohle nejde vzít zpět.")) {
+      return;
     }
-  } catch (err) {
-    rollbar.error(err);
-    alert("Se nepovedlo, zkusim prosím jiny.");
+    try {
+      const {email} = getSlackProfile();
+      await fetch(apiUrl("optout"), {
+        method: "POST",
+        body: new URLSearchParams({email, year: document.forms.reg.year.value}),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
+      });
+      if (confirm("Ohlášeno. Díky za ochotu.")) {
+        location.assign("https://donut.hackercamp.cz/");
+      }
+    } catch (err) {
+      rollbar.error(err);
+      alert("Se nepovedlo, zkusim prosím jiny.");
+    }
   }
 }
 
@@ -69,8 +71,10 @@ export async function main({ env, formElement, submitButtonElement, searchParams
     formElement.image.value = image;
     formElement.slackID.value = slackID;
 
-    const response = await fetch(
-      `${env["api-host"]}registration?${new URLSearchParams({ email, year, slackID })}`,
+    const apiHost = env["api-host"];
+    const apiUrl = x => new URL(x, apiHost).href;
+
+    const response = await fetch(apiUrl(`registration?${new URLSearchParams({ email, year, slackID })}`),
       { headers: { Accept: "application/json" } }
     );
     const data = await response.json();

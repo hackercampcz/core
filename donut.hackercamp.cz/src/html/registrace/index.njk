@@ -622,7 +622,7 @@
     <input type="hidden" name="id">
   </form>
   <script type="module">
-    import { main, optout } from "{{ 'registration.js' | assetUrl('esm') }}";
+    import { main, optoutHandler } from "{{ 'registration.js' | assetUrl('esm') }}";
 
     const build = {{ collections.build | dump(8) | safe }};
     const env = Object.assign({ year: {{ year }} }, build);
@@ -632,6 +632,8 @@
 
     await main({ env, formElement, submitButtonElement, searchParams });
 
-    window.optout = optout;
+    const apiHost = env["api-host"];
+    const apiUrl = x => new URL(x, apiHost).href;
+    window.optout = optoutHandler(apiUrl);
   </script>
 {% endblock %}
