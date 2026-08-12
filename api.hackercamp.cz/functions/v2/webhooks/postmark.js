@@ -8,7 +8,7 @@ import { marshall } from "@aws-sdk/util-dynamodb";
  */
 export async function onRequestPost({ request, env }) {
   const client = createDynamoDBClient(env);
-  const { token } = new URL(request.url).searchParams;
+  const token = request.headers.get("Authorization").split(" ").at(-1);
 
   if (token !== env.postmark_webhook_token) {
     return new Response(null, { status: 401 });
