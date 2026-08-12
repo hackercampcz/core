@@ -87,7 +87,7 @@ async function markAsCancelled(db, env, registrations, paid_at, invoice_id) {
  */
 export async function onRequestPost({ request, env }) {
   const client = createDynamoDBClient(env);
-  const { token } = new URL(request.url).searchParams;
+  const token = new URL(request.url).searchParams.get("token");
 
   if (token !== env.fakturoid_webhook_token) {
     console.log({ event: "Invalid token", token });
