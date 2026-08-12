@@ -96,7 +96,6 @@ export async function onRequestPost({ request, env, data: { rollbar } }) {
 
   const payload = await request.json();
   console.log({ payload });
-  rollbar.configure({ payload: { body: payload } });
 
   switch (payload.event_name) {
     case "invoice_overdue": {

@@ -65,6 +65,5 @@ export async function onRequestPost({ request, env, data: { rollbar } }) {
     return new Response(null, { status: 401 });
   }
 
-  rollbar.configure({ payload: { body: payload.event ?? payload } });
   return await dispatchByType(env, payload.event ?? payload);
 }
