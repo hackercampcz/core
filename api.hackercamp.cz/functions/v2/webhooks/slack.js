@@ -57,12 +57,14 @@ async function dispatchByType(env, event) {
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
  */
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request, env, data: { rollbar } }) {
   const payload = await request.json();
   const token = new URL(request.url).searchParams.get("token");
 
   if (token !== env.slack_webhook_token) {
     return new Response(null, { status: 401 });
   }
+
+  rollbar.configure({ payload: { body: payload.event ?? payload } });
   return await dispatchByType(env, payload.event ?? payload);
 }

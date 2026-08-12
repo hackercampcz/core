@@ -85,7 +85,7 @@ async function markAsCancelled(db, env, registrations, paid_at, invoice_id) {
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
  */
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost({ request, env, data: { rollbar } }) {
   const client = createDynamoDBClient(env);
   const token = new URL(request.url).searchParams.get("token");
 
@@ -96,6 +96,7 @@ export async function onRequestPost({ request, env }) {
 
   const payload = await request.json();
   console.log({ payload });
+  rollbar.configure({ payload: { body: payload } });
 
   switch (payload.event_name) {
     case "invoice_overdue": {
