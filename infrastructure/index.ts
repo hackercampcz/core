@@ -3,7 +3,7 @@ import * as pulumi from "@pulumi/pulumi";
 import { Output } from "@pulumi/pulumi";
 import { registerAutoTags } from "@topmonks/pulumi-aws";
 import * as fs from "node:fs";
-import { createApi, createDB, createQueues, createRoutes } from "./api";
+import { createDB, createQueues } from "./aws";
 import { readTemplates } from "./communication";
 import * as postmark from "./postmark";
 
@@ -90,10 +90,7 @@ export const dataTables = {
   trash: db.trashDataTable
 };
 
-const routes = createRoutes({ queues, db, postmarkTemplates });
-const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = new URL("/v2/", `https://${apiDomain}`).href;
-export const apiDocsUrl = api.docsUrl;
 
 const webPages = new cloudflare.PagesProject("web", {
   accountId: account.id,
@@ -203,7 +200,6 @@ const apiPages = new cloudflare.PagesProject("api", {
       failOpen: false,
       compatibilityDate,
       envVars: {
-        API_HOST: { type: "plain_text", value: api.url.apply(x => new URL("/v1/", x).href) },
         AWS_REGION: { type: "plain_text", value: awsConfig.require("region") },
         FAKTUROID_CLIENT_ID: { type: "plain_text", value: config.require("fakturoid-client-id") },
         FAKTUROID_CLIENT_SECRET: { type: "secret_text", value: config.require("fakturoid-client-secret") },
@@ -258,8 +254,6 @@ const apiPagesDomain = new cloudflare.PagesDomain("api-domain", {
   name: pulumi.interpolate`${apiRecord.name}.${hackercampCzZone.name}`,
   projectName: apiPages.name
 });
-
-export const newApiUrl = pulumi.interpolate`https://${apiPagesDomain.name}/v2/`;
 
 new cloudflare.DnsRecord(`hckr.camp/apex-dns-record`, {
   zoneId: hckrCampZone.id,
