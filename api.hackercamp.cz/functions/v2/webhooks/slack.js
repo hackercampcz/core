@@ -59,7 +59,7 @@ async function dispatchByType(env, event) {
  */
 export async function onRequestPost({ request, env }) {
   const payload = await request.json();
-  const { token } = new URL(request.url).searchParams;
+  const token = new URL(request.url).searchParams.get("token");
 
   if (token !== env.slack_webhook_token) {
     return new Response(null, { status: 401 });
