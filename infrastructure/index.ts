@@ -90,7 +90,7 @@ export const dataTables = {
   trash: db.trashDataTable
 };
 
-const routes = createRoutes({ queues, db, postmarkTemplates });
+const routes = new Map([["v1", {}]]);
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = new URL("/v2/", `https://${apiDomain}`).href;
 export const apiDocsUrl = api.docsUrl;
@@ -230,8 +230,6 @@ const apiPages = new cloudflare.PagesProject("api", {
         db_table_postmark: { type: "plain_text", value: dataTables.postmark },
         db_table_registrations: { type: "plain_text", value: dataTables.registrations },
         db_table_trash: { type: "plain_text", value: dataTables.trash },
-        fakturoid_client_id: { type: "plain_text", value: config.require("fakturoid-client-id") },
-        fakturoid_client_secret: { type: "secret_text", value: config.require("fakturoid-client-secret") },
         fakturoid_webhook_token: { type: "secret_text", value: config.require("fakturoid-webhook-token") },
         nfc_tron_queue_url: { type: "plain_text", value: queues.nfcTronQueueUrl },
         postmark_token: { type: "secret_text", value: postmarkConfig.require("server-api-token") },

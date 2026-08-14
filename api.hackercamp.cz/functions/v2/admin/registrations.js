@@ -335,8 +335,8 @@ async function approveVolunteer(db, env, { registrations, referral }) {
  * @param {{registrations: Array<Record<string, any>>, invoiceId: number}} data
  */
 async function invoiced(db, env, { registrations, invoiceId }) {
-  const { fakturoid_client_id, fakturoid_client_secret } = env;
-  const authHeader = await getAuthHeader(fakturoid_client_id, fakturoid_client_secret);
+  const { FAKTUROID_CLIENT_ID, FAKTUROID_CLIENT_SECRET } = env;
+  const authHeader = await getAuthHeader(FAKTUROID_CLIENT_ID, FAKTUROID_CLIENT_SECRET);
   const { created_at: invoiced, id, public_html_url } = await fetchInvoice(authHeader, invoiceId);
   for (const key of registrations) {
     console.log({ event: "Marking registration as invoiced", invoiceId, ...key });
