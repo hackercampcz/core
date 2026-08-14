@@ -90,7 +90,7 @@ export const dataTables = {
   trash: db.trashDataTable
 };
 
-const routes = new Map([["v1", {}]]);
+const routes = createRoutes({ queues, db, postmarkTemplates });
 const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = new URL("/v2/", `https://${apiDomain}`).href;
 export const apiDocsUrl = api.docsUrl;
