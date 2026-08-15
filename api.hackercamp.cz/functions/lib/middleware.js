@@ -1,4 +1,4 @@
-import { authorize, getToken, validateToken } from "./auth.js";
+import { authorize, getToken, validateToken } from "@hackercamp/lib/auth.js";
 
 export async function allowCredentials({ next }) {
   const response = await next();

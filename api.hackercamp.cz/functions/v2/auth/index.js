@@ -1,6 +1,5 @@
-import { signJWT } from "#lib/auth.js";
 import { getPayload } from "#lib/request.js";
-import { createCookie } from "@hackercamp/lib/auth.js";
+import { createCookie, signJWT } from "@hackercamp/lib/auth.js";
 
 async function getJWT(code, env, origin) {
   const resp = await fetch("https://slack.com/api/openid.connect.token", {
