@@ -9,6 +9,7 @@ export interface Env {
   FAKTUROID_CLIENT_SECRET: string;
 
   GOOGLE_API_KEY: string;
+  GOOGLE_CALENDAR_PROGRAM_ID: string;
 
   HC_API_HOSTNAME: string;
   HC_DONUT_HOSTNAME: string;

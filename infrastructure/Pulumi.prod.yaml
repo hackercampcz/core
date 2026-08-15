@@ -10,6 +10,7 @@ config:
     secure: AAABAPF3dXdFHC2cn3M2ZWMPL+E9isx8OzB7ZbhbToOZmii8XIAuWIgVGEBGxGud65uiympQrdQrNgERKuqP9vaNgbaWNmTR
   hackercamp:fakturoid-webhook-token:
     secure: AAABAC2y0+KPnVrs8PNrWEkp0ytfAbj0bon6HXIVRctgJJsEuoiAFKLUwaTRgd8UENvcfhw4jIhuzpNG3e/Xa6LRPrBk7lIiVnj6nVch1zt89si3ScRWVwH3XYsWkCJE76nVv5YpV3nnRtBdAcX2eQ==
+  hackercamp:google-calendar-program-id: c_afd9546ec33f93662ac0338da6d23a6b7daa6b5a1cc181afabaf6a8b11691b3a@group.calendar.google.com
   hackercamp:postmark-webhook-token:
     secure: AAABAC7xWGnAjPQWfgJOAVN6YcRB89HWc9sDFa3oC2V/PdezbM1W8lbzri3h+wiTxHzy5I5CdvpMu+9yY1PrEA==
   hackercamp:private-key:

@@ -1,14 +1,11 @@
-function url(strings, ...values) {
-  return String.raw({ raw: strings }, ...values.map(x => x instanceof URLSearchParams ? x : encodeURIComponent(x)));
-}
+import { url } from "#lib/url.js";
 
 /**
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
  */
 export async function onRequestGet({ env }) {
-  // TODO: extract to pulumi state and inject via env
-  const calendarId = "c_afd9546ec33f93662ac0338da6d23a6b7daa6b5a1cc181afabaf6a8b11691b3a@group.calendar.google.com";
+  const calendarId = env.GOOGLE_CALENDAR_PROGRAM_ID;
   const time = new Date().toISOString();
   const params = new URLSearchParams({
     key: env.GOOGLE_API_KEY,

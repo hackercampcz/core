@@ -208,6 +208,7 @@ const apiPages = new cloudflare.PagesProject("api", {
         FAKTUROID_CLIENT_ID: { type: "plain_text", value: config.require("fakturoid-client-id") },
         FAKTUROID_CLIENT_SECRET: { type: "secret_text", value: config.require("fakturoid-client-secret") },
         GOOGLE_API_KEY: { type: "secret_text", value: config.require("google-api-key") },
+        GOOGLE_CALENDAR_PROGRAM_ID: { type: "plain_text", value: config.require("google-calendar-program-id") },
         HC_API_HOSTNAME: { type: "plain_text", value: config.require("api-domain") },
         HC_DONUT_HOSTNAME: { type: "plain_text", value: config.require("donut-domain") },
         HC_JWT_SECRET: { type: "secret_text", value: config.require("private-key") },
