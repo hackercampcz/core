@@ -3297,7 +3297,7 @@ __metadata:
     "@gryphoon/texy": "npm:1.0.0"
     "@pulumi/aws": "npm:7.42.0"
     "@pulumi/awsx": "npm:3.8.0"
-    "@pulumi/cloudflare": "npm:6.14.0"
+    "@pulumi/cloudflare": "npm:6.19.0"
     "@pulumi/pulumi": "npm:3.257.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@types/node": "npm:24.13.3"
@@ -5425,12 +5425,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/cloudflare@npm:6.14.0":
-  version: 6.14.0
-  resolution: "@pulumi/cloudflare@npm:6.14.0"
+"@pulumi/cloudflare@npm:6.19.0":
+  version: 6.19.0
+  resolution: "@pulumi/cloudflare@npm:6.19.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
-  checksum: 10/88aebb162dd7ac3302f282202ee0cf66fd640f6007f535a098718eac92e60b08120bd4ebd9f0e4f9e7cb4d2908b7162e44bd8492b44f3d0d95283b2dc6837cb8
+  checksum: 10/4808b83560a252dba8d0fe0f2f5cac816c0f17114a66ca78fb615ba9220e935506a2cf1ea1cceb9b968b89ded41b8d51e40c3456d9c3b4e685c9e6593280dcfd
   languageName: node
   linkType: hard
 
