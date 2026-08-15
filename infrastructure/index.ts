@@ -147,7 +147,7 @@ const wwwRecord = new cloudflare.DnsRecord(`${webDomain}/dns-record`, {
 
 const webPagesDomain = new cloudflare.PagesDomain("web-domain", {
   accountId: account.id,
-  name: pulumi.interpolate`${wwwRecord.name}.${hackercampCzZone.name}`,
+  name: pulumi.interpolate`${wwwRecord.name}`,
   projectName: webPages.name
 });
 
@@ -185,7 +185,7 @@ const donutRecord = new cloudflare.DnsRecord(`${donutDomain}/dns-record`, {
 
 const donutPagesDomain = new cloudflare.PagesDomain("donut-domain", {
   accountId: account.id,
-  name: pulumi.interpolate`${donutRecord.name}.${hackercampCzZone.name}`,
+  name: pulumi.interpolate`${donutRecord.name}`,
   projectName: donutPages.name
 });
 
@@ -256,7 +256,7 @@ const apiRecord = new cloudflare.DnsRecord(`${apiDomain}/dns-record`, {
 
 const apiPagesDomain = new cloudflare.PagesDomain("api-domain", {
   accountId: account.id,
-  name: pulumi.interpolate`${apiRecord.name}.${hackercampCzZone.name}`,
+  name: pulumi.interpolate`${apiRecord.name}`,
   projectName: apiPages.name
 });
 
