@@ -3,6 +3,7 @@ config:
   hackercamp:algolia-attendees-index-name: hc-attendees
   hackercamp:algolia-registrations-index-name: hc-registrations
   hackercamp:api-domain: api.hackercamp.cz
+  hackercamp:aws-access-key-id: AKIAXAAHYX5INGZUDN7Y
   hackercamp:domain: hackercamp.cz
   hackercamp:donut-domain: donut.hackercamp.cz
   hackercamp:fakturoid-client-id: 0c56913e623e9e3aca9d7f4e93381b9283f5b574
@@ -29,6 +30,8 @@ config:
     secure: AAABAFx16G0z0lsL/vfwW0TJm4OEa/dh82VwUD8dV28XYwPaLQGfHGO9DZfiznnvP/+TtMzzS5dnt4G86V7dfN4e7I+PzwshZaCBB50O/3+t8T8k5QDdFJWSu9eNrbE0do/MAjZuDpDEzNhFqNJMbzJSGjKQ/tMfGbI23lKj5yFKuQHEd+FjD1faEyHe0IDEyjpTDY8JvMShSx+NgGjnI+gNf3hwbD91l4y8oHuhKme/20UVlgSw7thhraB72bmyIGpKnMFywKRnJuZLf1JdyNPynD7rqlW+ZGEdiX6kqxBVsN0R0jYeD0YQAPzBGZRURvui4wpLDzvhkj4k9Dprtg==
   hackercamp:slack-webhook-token:
     secure: AAABACy3bzpru9OxLE7eeHaoElan2qEwiBfpB+Q8UPzkON2oIC0vInjyQJGXVItq7MfVWyVm7CKwv8+1k55PN1jlsbCDwR/B0ZU=
+  hackercamp:aws-secret-access-key:
+    secure: AAABAB8a1howilYSZAMJBkh06lef2UYZu80eUhXHklsKn6yx+TrI1O3LvgSJNYeZBSRNEGeGd3IqM3lqs9ujGryBUBQnS7hc
 environment:
   - hackercamp-algolia
   - hackercamp-aws

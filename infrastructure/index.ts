@@ -1,10 +1,10 @@
 import * as cloudflare from "@pulumi/cloudflare";
 import * as pulumi from "@pulumi/pulumi";
-import { Output } from "@pulumi/pulumi";
-import { registerAutoTags } from "@topmonks/pulumi-aws";
+import {Output} from "@pulumi/pulumi";
+import {registerAutoTags} from "@topmonks/pulumi-aws";
 import * as fs from "node:fs";
-import { createApi, createDB, createQueues, createRoutes } from "./api";
-import { readTemplates } from "./communication";
+import {createApi, createDB, createQueues, createRoutes} from "./api";
+import {readTemplates} from "./communication";
 import * as postmark from "./postmark";
 
 registerAutoTags({
@@ -204,6 +204,8 @@ const apiPages = new cloudflare.PagesProject("api", {
       compatibilityDate,
       envVars: {
         API_HOST: { type: "plain_text", value: api.url.apply(x => new URL("/v1/", x).href) },
+        AWS_ACCESS_KEY_ID: { type: "plain_text", value: config.require("aws-access-key-id") },
+        AWS_SECRET_ACCESS_KEY: { type: "secret_text", value: config.require("aws-secret-access-key") },
         AWS_REGION: { type: "plain_text", value: awsConfig.require("region") },
         FAKTUROID_CLIENT_ID: { type: "plain_text", value: config.require("fakturoid-client-id") },
         FAKTUROID_CLIENT_SECRET: { type: "secret_text", value: config.require("fakturoid-client-secret") },
