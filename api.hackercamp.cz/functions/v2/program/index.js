@@ -19,7 +19,7 @@ export async function onRequestPost({ request, env }) {
       Key: { email: { S: data.email }, year: { N: data.year.toString() } }
     })
   );
-  if (!resp.Item){
+  if (!resp.Item) {
     // registration not found
     return new Response(null, { status: 404 });
   }

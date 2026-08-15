@@ -1,5 +1,5 @@
 import { createDynamoDBClient } from "#lib/dynamodb.js";
-import { getTemplateId, Template, sendEmailWithTemplate } from "#lib/postmark.js";
+import { getTemplateId, sendEmailWithTemplate, Template } from "#lib/postmark.js";
 import { getPayload } from "#lib/request.js";
 import { GetItemCommand, PutItemCommand, QueryCommand } from "@aws-sdk/client-dynamodb";
 import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
@@ -156,7 +156,6 @@ async function getRegistrationByEmailOnly(client, tableName, email, year) {
 }
 
 /**
- *
  * @param {Env} env
  * @param {Boolean} isNewbee
  * @param {String} id
@@ -220,11 +219,10 @@ export async function onRequestPost({ request, env, data: { rollbar } }) {
   console.log({ event: "Put registration", email, year, isNewbee, isVolunteer, ...rest });
   const editUrl = getEditUrl(env, isNewbee, id);
 
-
   await Promise.all([
     client.send(
       new PutItemCommand({
-        TableName:  env.db_table_registrations,
+        TableName: env.db_table_registrations,
         Item: marshall({
           email,
           year,

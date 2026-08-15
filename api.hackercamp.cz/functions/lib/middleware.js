@@ -20,7 +20,7 @@ export async function gracefulOptions(context) {
   // Handle CORS preflight without forwarding to the route handler
   if (request.method === "OPTIONS") {
     return new Response(null, {
-      status: 204,
+      status: 204
     });
   }
 

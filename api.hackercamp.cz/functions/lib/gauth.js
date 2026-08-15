@@ -1,4 +1,4 @@
-import { parse } from "cookie";
+import { parseCookie } from "cookie";
 
 async function verify(credential, { clientId, domain }) {
   const resp = await fetch(`https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=${credential}`);
@@ -10,7 +10,7 @@ async function verify(credential, { clientId, domain }) {
 }
 
 export async function verifyGoogleAuth(request, env) {
-  const cookies = parse(request.headers.get("cookie") ?? "");
+  const cookies = parseCookie(request.headers.get("cookie") ?? "");
   const csrfCookie = cookies["g_csrf_token"];
   if (!csrfCookie) {
     return { error: "No CSRF token in Cookie." };

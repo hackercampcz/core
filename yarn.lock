@@ -3295,10 +3295,10 @@ __metadata:
   resolution: "@hackercamp/infrastructure@workspace:infrastructure"
   dependencies:
     "@gryphoon/texy": "npm:1.0.0"
-    "@pulumi/aws": "npm:7.40.0"
+    "@pulumi/aws": "npm:7.42.0"
     "@pulumi/awsx": "npm:3.8.0"
     "@pulumi/cloudflare": "npm:6.14.0"
-    "@pulumi/pulumi": "npm:3.256.0"
+    "@pulumi/pulumi": "npm:3.257.0"
     "@topmonks/pulumi-aws": "npm:3.1.4"
     "@types/node": "npm:24.13.3"
     esbuild: "npm:0.28.2"
@@ -3312,8 +3312,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/lib@workspace:lib"
   dependencies:
-    cookie: "npm:1.1.1"
-    jose: "npm:6.2.8"
+    cookie: "npm:2.0.1"
+    jose: "npm:6.2.9"
     vitest: "npm:4.1.10"
   languageName: unknown
   linkType: soft
@@ -5389,7 +5389,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.40.0, @pulumi/aws@npm:^7.38.0":
+"@pulumi/aws@npm:7.42.0":
+  version: 7.42.0
+  resolution: "@pulumi/aws@npm:7.42.0"
+  dependencies:
+    "@pulumi/pulumi": "npm:^3.142.0"
+    mime: "npm:^2.0.0"
+  checksum: 10/8243992071843a325c02e05fc67ae750ad26ce5613935a7b6509c7710ed25c11f1b7fba872e613533c6991e09a7bfbd04e3955e3a76c2864e62870ba1d6f654a
+  languageName: node
+  linkType: hard
+
+"@pulumi/aws@npm:^7.38.0":
   version: 7.40.0
   resolution: "@pulumi/aws@npm:7.40.0"
   dependencies:
@@ -5443,9 +5453,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.256.0":
-  version: 3.256.0
-  resolution: "@pulumi/pulumi@npm:3.256.0"
+"@pulumi/pulumi@npm:3.257.0":
+  version: 3.257.0
+  resolution: "@pulumi/pulumi@npm:3.257.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -5480,7 +5490,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/ee0b3ab5522c0fdf35248d7bd8b09b0d627b57dcb8f84e99cba503dc39da8209de43c2f217045e7cb5bf25391c62db8b44799c8f5d9c265ed3915c258f71e9a4
+  checksum: 10/13927fd9f42918b9e189bb68889e0ddc3597933aa5e22a196681df722fcc21948aba23699bb4a8e506fafc16d1b5e0d7299ce97fb1ed17c32c26fc60d5cf13af
   languageName: node
   linkType: hard
 
@@ -8036,10 +8046,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cookie@npm:1.1.1":
-  version: 1.1.1
-  resolution: "cookie@npm:1.1.1"
-  checksum: 10/85538153054791155cf4d38d2e807e3b9382d71bf71d92fc46fca348515ea574049d0d9ef8eb84d2d54a681ad1d7a7316b1989b901dace50a6c0f4c3858dbdb2
+"cookie@npm:2.0.1":
+  version: 2.0.1
+  resolution: "cookie@npm:2.0.1"
+  checksum: 10/9fd785e98334f78e6337f4aafd5a3558a2ff49931b92c9cd9f1f3f042819532dc7f0730d55bd1666bb1d82b86090581d690388764aab1b84dfcd47eb0b959361
   languageName: node
   linkType: hard
 
@@ -11087,10 +11097,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jose@npm:6.2.8":
-  version: 6.2.8
-  resolution: "jose@npm:6.2.8"
-  checksum: 10/d1534f56cf693dfbb4b433b72df469c3c858748fe627621e27d9c1e7894716fc1d0225923be3ae98153345b9823a25c0ac376bfccce3ed363a4c032cfd4e2f5b
+"jose@npm:6.2.9":
+  version: 6.2.9
+  resolution: "jose@npm:6.2.9"
+  checksum: 10/297a644db9076337b70e497b16a602961d823928a9035917cd383148ef2b8b27879f41030bddbe8db4dc9c580bdf84df8a6cd3dadbe2f20d2a703c4e1a1ba8da
   languageName: node
   linkType: hard
 

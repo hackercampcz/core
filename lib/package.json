@@ -6,8 +6,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "cookie": "1.1.1",
-    "jose": "6.2.8"
+    "cookie": "2.0.1",
+    "jose": "6.2.9"
   },
   "devDependencies": {
     "vitest": "4.1.10"
