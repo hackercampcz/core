@@ -3,7 +3,7 @@ import * as pulumi from "@pulumi/pulumi";
 import {Output} from "@pulumi/pulumi";
 import {registerAutoTags} from "@topmonks/pulumi-aws";
 import * as fs from "node:fs";
-import {createApi, createDB, createQueues, createRoutes} from "./api";
+import {createDB, createQueues} from "./api";
 import {readTemplates} from "./communication";
 import * as postmark from "./postmark";
 
@@ -90,10 +90,7 @@ export const dataTables = {
   trash: db.trashDataTable
 };
 
-const routes = createRoutes({ queues, db, postmarkTemplates });
-const api = createApi("hc-api", "v1", apiDomain, routes.get("v1"));
 export const apiUrl = new URL("/v2/", `https://${apiDomain}`).href;
-export const apiDocsUrl = api.docsUrl;
 
 const webPages = new cloudflare.PagesProject("web", {
   accountId: account.id,
@@ -203,7 +200,7 @@ const apiPages = new cloudflare.PagesProject("api", {
       failOpen: false,
       compatibilityDate,
       envVars: {
-        API_HOST: { type: "plain_text", value: api.url.apply(x => new URL("/v1/", x).href) },
+        API_HOST: { type: "plain_text", value: new URL("/v1/", apiUrl).href },
         AWS_ACCESS_KEY_ID: { type: "plain_text", value: config.require("aws-access-key-id") },
         AWS_SECRET_ACCESS_KEY: { type: "secret_text", value: config.require("aws-secret-access-key") },
         AWS_REGION: { type: "plain_text", value: awsConfig.require("region") },

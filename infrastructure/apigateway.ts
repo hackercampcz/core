@@ -1,9 +1,9 @@
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx/classic";
-import { LambdaAuthorizer } from "@pulumi/awsx/classic/apigateway/lambdaAuthorizer";
-import { Parameter } from "@pulumi/awsx/classic/apigateway/requestValidator";
+import {LambdaAuthorizer} from "@pulumi/awsx/classic/apigateway/lambdaAuthorizer";
+import {Parameter} from "@pulumi/awsx/classic/apigateway/requestValidator";
 import * as pulumi from "@pulumi/pulumi";
-import { ComponentResource, Config, interpolate, Output, ResourceOptions } from "@pulumi/pulumi";
+import {ComponentResource, Config, interpolate, Output, ResourceOptions} from "@pulumi/pulumi";
 
 const awsConfig = new Config("aws");
 
@@ -24,7 +24,6 @@ export class Api extends ComponentResource {
       name,
       {
         stageName: args.stageName,
-        routes: createRoutes(name, args.deploymentGroup, args.routes),
         restApiArgs: {
           minimumCompressionSize: "860",
           description: args.description
@@ -36,22 +35,6 @@ export class Api extends ComponentResource {
       },
       { parent: this }
     );
-
-    const anySchemaModel = new aws.apigateway.Model(
-      name,
-      {
-        name: name.replace(/-/g, "") + "AnySchema",
-        contentType: "application/json",
-        restApi: this.gateway.restAPI,
-        schema: JSON.stringify({
-          type: "object",
-          title: "Any Schema"
-        })
-      },
-      { parent: this, dependsOn: [this.gateway.restAPI] }
-    );
-
-    createLambdaMethodExecutions(name, this, anySchemaModel, args.routes);
   }
 }
 

@@ -1,10 +1,7 @@
 import * as aws from "@pulumi/aws";
-import { lambda } from "@pulumi/aws/types/input";
-import { LambdaAuthorizer, Method } from "@pulumi/awsx/classic/apigateway";
-import { Parameter } from "@pulumi/awsx/classic/apigateway/requestValidator";
+import {lambda} from "@pulumi/aws/types/input";
 import * as pulumi from "@pulumi/pulumi";
 import * as path from "node:path";
-import { Api, ApiRoute, CacheSettings } from "./apigateway";
 import * as lambdaBuilder from "./lambda-builder";
 
 const config = new pulumi.Config();
@@ -16,36 +13,6 @@ const algoliaEnv = {
   algolia_search_key: config.require("algolia-search-key")
 };
 const rollbar_access_token = config.require("rollbar-access-token");
-
-export function createRoutes({
-  queues,
-  db,
-  postmarkTemplates
-}: Record<string, any>) {
-  return new Map<string, Record<string, RouteArgs>>([
-    [
-      "v1",
-      {
-        auth: {
-          httpMethod: "POST",
-          path: "/auth",
-          fileName: "auth/index.mjs",
-          environment: {
-            variables: {
-              rollbar_access_token,
-              hostname: config.require("donut-domain"),
-              private_key: config.require("private-key"),
-              slack_client_id: config.require("slack-client-id"),
-              slack_client_secret: config.require("slack-client-secret"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates
-            }
-          }
-        }
-      }
-    ]
-  ]);
-}
 
 function hcName(t: string, options?: { stage?: string; }) {
   const suffix = options?.stage ? `-${options.stage}` : "";
@@ -83,13 +50,6 @@ const getHandler = (
     timeout, // reasonable timeout for initial request without 500
     environment
   });
-
-const getRouteHandler = (
-  name: string,
-  fileName: string,
-  role: aws.iam.Role,
-  { stage, ...args }: RouteHandlerArgs
-): aws.lambda.Function => getHandler(hcName(`api-${name}-lambda`, { stage }), fileName, role, args);
 
 const getTableEventHandler = (
   name: string,
@@ -393,73 +353,8 @@ export function createQueues({ postmarkTemplates }) {
   return { slackQueueUrl: slackQueue.url, nfcTronQueueUrl: nfcTronQueue.url };
 }
 
-export function createApi(
-  name: string,
-  stage: string,
-  domain: string,
-  routes: Record<string, RouteArgs> | undefined
-) {
-  if (!routes) throw new Error("No routes provided");
-  const defaultLambdaRole = createDefaultLambdaRole(stage);
-  const createHandlerRoute = (
-    name: string,
-    {
-      httpMethod,
-      path,
-      fileName,
-      role,
-      requiredParameters,
-      cache,
-      timeout,
-      memorySize,
-      authorizers,
-      environment
-    }: RouteArgs
-  ): ApiRoute => ({
-    type: "handler",
-    handler: getRouteHandler(name, fileName, role ?? defaultLambdaRole, {
-      timeout: timeout ?? 15,
-      memorySize,
-      environment,
-      stage
-    }),
-    authorizers,
-    requiredParameters,
-    httpMethod,
-    path,
-    cache
-  });
-
-  const api = new Api(name, {
-    stageName: stage,
-    description: "HackerCamp API",
-    cacheEnabled: false,
-    cacheSize: "0.5", // GB
-    routes: Object.entries(routes).map(([name, route]) => createHandlerRoute(name, route))
-  });
-
-  return { url: api.gateway.url, docsUrl: api.openApiUrl };
-}
-
 interface HandlerArgs {
   timeout?: number;
-  environment?: lambda.FunctionEnvironment;
-  memorySize?: number;
-}
-
-interface RouteHandlerArgs extends HandlerArgs {
-  stage?: string;
-}
-
-interface RouteArgs {
-  httpMethod: Method;
-  path: string;
-  fileName: string;
-  role?: aws.iam.Role;
-  requiredParameters?: Parameter[];
-  cache?: CacheSettings;
-  timeout?: number;
-  authorizers?: LambdaAuthorizer[] | LambdaAuthorizer;
   environment?: lambda.FunctionEnvironment;
   memorySize?: number;
 }
