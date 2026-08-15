@@ -1,10 +1,10 @@
 import * as cloudflare from "@pulumi/cloudflare";
 import * as pulumi from "@pulumi/pulumi";
-import {Output} from "@pulumi/pulumi";
-import {registerAutoTags} from "@topmonks/pulumi-aws";
+import { Output } from "@pulumi/pulumi";
+import { registerAutoTags } from "@topmonks/pulumi-aws";
 import * as fs from "node:fs";
-import {createDB, createQueues} from "./api";
-import {readTemplates} from "./communication";
+import { createDB, createQueues } from "./aws";
+import { readTemplates } from "./communication";
 import * as postmark from "./postmark";
 
 registerAutoTags({

@@ -1,5 +1,5 @@
 import * as aws from "@pulumi/aws";
-import {lambda} from "@pulumi/aws/types/input";
+import { lambda } from "@pulumi/aws/types/input";
 import * as pulumi from "@pulumi/pulumi";
 import * as path from "node:path";
 import * as lambdaBuilder from "./lambda-builder";

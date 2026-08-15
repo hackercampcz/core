@@ -6,7 +6,6 @@
   "dependencies": {
     "@gryphoon/texy": "1.0.0",
     "@pulumi/aws": "7.42.0",
-    "@pulumi/awsx": "3.8.0",
     "@pulumi/cloudflare": "6.19.0",
     "@pulumi/pulumi": "3.257.0",
     "@topmonks/pulumi-aws": "3.1.4",
