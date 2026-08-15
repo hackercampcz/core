@@ -3,7 +3,7 @@ import { unmarshall } from "@aws-sdk/util-dynamodb";
 import { partition } from "@thi.ng/transducers";
 
 /**
- * Create credential provider for AWS SDK clients
+ * Creates a credential provider for AWS SDK clients
  *
  * @param {Object} env - Environment variables
  * @param {string} env.AWS_ACCESS_KEY_ID - AWS access key ID
