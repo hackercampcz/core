@@ -1,6 +1,6 @@
 import { createDynamoDBClient } from "#lib/dynamodb.js";
 import { getPayload } from "#lib/request.js";
-import { UpdateItemCommand } from "@aws-sdk/client-dynamodb";
+import { GetItemCommand, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
 
 /**
@@ -12,6 +12,17 @@ export async function onRequestPost({ request, env }) {
   const sanitizedData = Object.fromEntries(Object.entries(data).map(([k, v]) => [k, v?.trim ? v.trim() : v]));
 
   const client = createDynamoDBClient(env);
+
+  const resp = await client.send(
+    new GetItemCommand({
+      TableName: env.db_table_registrations,
+      Key: { email: { S: data.email }, year: { N: data.year.toString() } }
+    })
+  );
+  if (!resp.Item){
+    // registration not found
+    return new Response(null, { status: 404 });
+  }
 
   await client.send(
     new UpdateItemCommand({
