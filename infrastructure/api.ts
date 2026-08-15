@@ -1,10 +1,10 @@
 import * as aws from "@pulumi/aws";
-import { lambda } from "@pulumi/aws/types/input";
-import { LambdaAuthorizer, Method } from "@pulumi/awsx/classic/apigateway";
-import { Parameter } from "@pulumi/awsx/classic/apigateway/requestValidator";
+import {lambda} from "@pulumi/aws/types/input";
+import {LambdaAuthorizer, Method} from "@pulumi/awsx/classic/apigateway";
+import {Parameter} from "@pulumi/awsx/classic/apigateway/requestValidator";
 import * as pulumi from "@pulumi/pulumi";
 import * as path from "node:path";
-import { Api, ApiRoute, CacheSettings } from "./apigateway";
+import {Api, ApiRoute, CacheSettings} from "./apigateway";
 import * as lambdaBuilder from "./lambda-builder";
 
 const config = new pulumi.Config();
@@ -26,21 +26,6 @@ export function createRoutes({
     [
       "v1",
       {
-        attendees: {
-          httpMethod: "ANY",
-          path: "/attendees",
-          fileName: "attendees/index.mjs",
-          environment: {
-            variables: {
-              rollbar_access_token,
-              db_table_attendees: db.attendeesDataTable,
-              postmark_token: postmarkConfig.require("server-api-token"),
-              algolia_index_name: config.require("algolia-attendees-index-name"),
-              ...algoliaEnv,
-              ...postmarkTemplates
-            }
-          }
-        },
         auth: {
           httpMethod: "POST",
           path: "/auth",
@@ -52,200 +37,6 @@ export function createRoutes({
               private_key: config.require("private-key"),
               slack_client_id: config.require("slack-client-id"),
               slack_client_secret: config.require("slack-client-secret"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates
-            }
-          }
-        },
-        authSignOut: {
-          httpMethod: "GET",
-          path: "/auth/sign-out",
-          fileName: "auth/sign-out.mjs",
-          environment: {
-            variables: {
-              rollbar_access_token,
-              hostname: config.require("donut-domain"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates
-            }
-          }
-        },
-        contacts: {
-          httpMethod: "GET",
-          path: "/contacts",
-          fileName: "contacts/index.mjs",
-          environment: {
-            variables: {
-              rollbar_access_token,
-              db_table_contacts: db.contactsDataTable,
-              hostname: config.require("web-domain"),
-              donut: config.require("donut-domain"),
-              private_key: config.require("private-key"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates
-            }
-          }
-        },
-        registration: {
-          httpMethod: "ANY",
-          path: "/registration",
-          fileName: "registration/index.mjs",
-          environment: {
-            variables: {
-              rollbar_access_token,
-              db_table_registrations: db.registrationsDataTable,
-              hostname: config.require("web-domain"),
-              donut: config.require("donut-domain"),
-              private_key: config.require("private-key"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates
-            }
-          }
-        },
-        housing: {
-          httpMethod: "ANY",
-          path: "/housing",
-          fileName: "housing/index.mjs",
-          environment: {
-            variables: {
-              rollbar_access_token,
-              donut: config.require("donut-domain"),
-              db_table_attendees: db.attendeesDataTable,
-              private_key: config.require("private-key"),
-              slack_bot_token: config.require("slack-bot-token"),
-              algolia_index_name: config.require("algolia-attendees-index-name"),
-              ...algoliaEnv
-            }
-          }
-        },
-        program: {
-          httpMethod: "ANY",
-          path: "/program",
-          fileName: "program/index.mjs",
-          environment: {
-            variables: {
-              rollbar_access_token,
-              db_table_registrations: db.registrationsDataTable,
-              private_key: config.require("private-key")
-            }
-          }
-        },
-        optout: {
-          httpMethod: "POST",
-          path: "/optout",
-          fileName: "optout/index.mjs",
-          environment: {
-            variables: {
-              rollbar_access_token
-            }
-          }
-        },
-        adminRegistrations: {
-          httpMethod: "ANY",
-          path: "/admin/registrations",
-          fileName: "admin/registrations/index.mjs",
-          environment: {
-            variables: {
-              year: config.require("year"),
-              start_date: config.require("start-date"),
-              end_date: config.require("end-date"),
-              rollbar_access_token,
-              db_table_optouts: db.optOutsDataTable,
-              db_table_registrations: db.registrationsDataTable,
-              db_table_attendees: db.attendeesDataTable,
-              private_key: config.require("private-key"),
-              fakturoid_client_id: config.require("fakturoid-client-id"),
-              fakturoid_client_secret: config.require("fakturoid-client-secret"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              algolia_index_name: config.require("algolia-registrations-index-name"),
-              ...algoliaEnv,
-              ...postmarkTemplates
-            }
-          }
-        },
-        adminAttendees: {
-          httpMethod: "ANY",
-          path: "/admin/attendees",
-          fileName: "admin/attendees/index.mjs",
-          environment: {
-            variables: {
-              year: config.require("year"),
-              rollbar_access_token,
-              db_table_attendees: db.attendeesDataTable,
-              private_key: config.require("private-key"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              algolia_index_name: config.require("algolia-attendees-index-name"),
-              ...algoliaEnv,
-              ...postmarkTemplates
-            }
-          }
-        },
-        adminHousing: {
-          httpMethod: "ANY",
-          path: "/admin/housing",
-          fileName: "admin/housing/index.mjs",
-          environment: {
-            variables: {
-              year: config.require("year"),
-              rollbar_access_token,
-              db_table_attendees: db.attendeesDataTable,
-              private_key: config.require("private-key"),
-              algolia_index_name: config.require("algolia-attendees-index-name"),
-              ...algoliaEnv
-            }
-          }
-        },
-        ares: {
-          httpMethod: "GET",
-          path: "/ares",
-          fileName: "ares/index.mjs",
-          requiredParameters: [{ in: "query", name: "ico" }],
-          cache: { ttl: 3600 },
-          memorySize: 512,
-          environment: {
-            variables: {
-              rollbar_access_token
-            }
-          }
-        },
-        fakturoidWebhook: {
-          httpMethod: "POST",
-          path: "/webhooks/fakturoid",
-          fileName: "fakturoid/webhook.mjs",
-          environment: {
-            variables: {
-              start_date: config.require("start-date"),
-              end_date: config.require("end-date"),
-              rollbar_access_token,
-              db_table_registrations: db.registrationsDataTable,
-              TOKEN: config.require("fakturoid-webhook-token"),
-              postmark_token: postmarkConfig.require("server-api-token"),
-              ...postmarkTemplates
-            }
-          }
-        },
-        postmarkWebhook: {
-          httpMethod: "POST",
-          path: "/webhooks/postmark",
-          fileName: "postmark/webhook.mjs",
-          environment: {
-            variables: {
-              db_table_postmark: db.postmarkDataTable,
-              token: config.require("postmark-webhook-token"),
-              rollbar_access_token
-            }
-          }
-        },
-        slackWebhook: {
-          httpMethod: "POST",
-          path: "/webhooks/slack",
-          fileName: "slack/webhook.mjs",
-          environment: {
-            variables: {
-              year: config.require("year"),
-              rollbar_access_token,
-              slack_queue_url: queues.slackQueueUrl,
-              slack_bot_token: config.require("slack-bot-token"),
               postmark_token: postmarkConfig.require("server-api-token"),
               ...postmarkTemplates
             }
