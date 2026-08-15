@@ -3080,7 +3080,6 @@ __metadata:
     "@pulumi/aws": "npm:7.42.0"
     "@pulumi/cloudflare": "npm:6.19.0"
     "@pulumi/pulumi": "npm:3.257.0"
-    "@topmonks/pulumi-aws": "npm:3.1.4"
     "@types/node": "npm:24.13.3"
     esbuild: "npm:0.28.2"
     front-matter: "npm:4.0.2"
@@ -6148,17 +6147,6 @@ __metadata:
     "@thi.ng/random": "npm:^4.1.53"
     "@thi.ng/timestamp": "npm:^1.1.46"
   checksum: 10/4ff4661534525aaf3bda7b345eeb828a4b3d203759c59340bb9ab4bd83c4373a43c4ae12b028d082b3efd9b5d9e210104e1c92ff0d28a8e8b557ac152f0164df
-  languageName: node
-  linkType: hard
-
-"@topmonks/pulumi-aws@npm:3.1.4":
-  version: 3.1.4
-  resolution: "@topmonks/pulumi-aws@npm:3.1.4"
-  peerDependencies:
-    "@pulumi/aws": ">=5.30.0"
-    "@pulumi/awsx": ">=1.0.0"
-    "@pulumi/pulumi": ">=3.55.0"
-  checksum: 10/0c3340a658ea382d64c185e20ca2a840722ae4ed85bc55ffbc926eb25cdbcf2bbe04f1e29de9bbbb54a103ed34eb925be3a9781eaa8eb9e4c25a3691d54c7e72
   languageName: node
   linkType: hard
 

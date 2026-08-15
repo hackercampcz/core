@@ -8,7 +8,6 @@
     "@pulumi/aws": "7.42.0",
     "@pulumi/cloudflare": "6.19.0",
     "@pulumi/pulumi": "3.257.0",
-    "@topmonks/pulumi-aws": "3.1.4",
     "esbuild": "0.28.2",
     "front-matter": "4.0.2",
     "marked": "18.0.9"
