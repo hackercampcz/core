@@ -14,7 +14,7 @@ export default {
   },
   year: 2026,
   program: {
-    enabledSheetEdit: false
+    enabledSheetEdit: true
   },
   event,
   ticket,
