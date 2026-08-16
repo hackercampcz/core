@@ -150,6 +150,11 @@ const webPagesDomain = new cloudflare.PagesDomain("web-domain", {
 
 export const webUrl = pulumi.interpolate`https://${webPagesDomain.name}/`;
 
+const hckrKv = new cloudflare.WorkersKvNamespace("hckr-kv", {
+  accountId: account.id,
+  title: "hackercamp"
+});
+
 const donutPages = new cloudflare.PagesProject("donut", {
   accountId: account.id,
   name: "hackercamp-donut",
@@ -166,6 +171,9 @@ const donutPages = new cloudflare.PagesProject("donut", {
         HC_DONUT_HOSTNAME: { type: "plain_text", value: config.require("donut-domain") },
         HC_WEB_HOSTNAME: { type: "plain_text", value: config.require("domain") },
         HC_JWT_SECRET: { type: "secret_text", value: config.require("private-key") }
+      },
+      kvNamespaces: {
+        HCKR_KV: { namespaceId: hckrKv.id }
       }
     }
   }
