@@ -108,8 +108,16 @@
 
   {% if program.enabledSheetEdit %}
   <p><a href="https://donut.hckr.camp/program/{{ year }}">Program {{ year }}</a> naleznate na Google Drive.</p>
-  <p>Program si můžete <a href="https://donut.hckr.camp/program/kalendar">přidat do Google Kalandáře</a> nebo <a href="http://donut.hckr.camp/program/ical">stáhnout jako iCal</a>.</p>
+  <p>Program si můžete přidat do Kalandáře:</p>
 
+    <a href="https://donut.hckr.camp/program/kalendar" class="button outlined" title="Přidat do Google Kalendáře">
+      <feather-icon name="calendar" title="Přidat do kalendáře"></feather-icon>
+      Google Calendar
+    </a>
+    <a href="http://donut.hckr.camp/program/ical" class="button outlined" title="Stáhnout iCal">
+      <feather-icon name="calendar" title="Stáhnout iCal"></feather-icon>
+      iCal
+    </a>
   <iframe src="https://www.hackercamp.cz/w/program/" class="calendar" width="800" height="600"></iframe>
   {% endif %}
 </div>
