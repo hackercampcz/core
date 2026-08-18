@@ -30,7 +30,7 @@
     "happy-dom": "20.11.2",
     "open-props": "1.7.23",
     "postcss-jit-props": "1.0.16",
-    "vitest": "4.1.10",
+    "vitest": "4.1.11",
     "vitest-localstorage-mock": "^0.1.2",
     "workbox-build": "7.4.1",
     "wrangler": "4.123.0"
