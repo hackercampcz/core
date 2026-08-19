@@ -2,7 +2,7 @@
 
 {% block title %}Účastníci Hacker Campu{% endblock %}
 
-{% block content %}
+{% block head_stylesheets %}
   <style>
     :root {
       --card-width: 192px;
@@ -56,7 +56,9 @@
       font-weight: bold;
     }
   </style>
+{% endblock %}
 
+{% block content %}
   <section id="crew">
     <h2>Hacker Camp Crew</h2>
     <ul class="hc-profile-list">

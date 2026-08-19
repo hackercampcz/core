@@ -1,0 +1,26 @@
+{% extends "layouts/application.njk" %}
+
+{% block title %}Přihlášení do Donutu na jiném zařízení{% endblock %}
+
+{% block content %}
+  <div class="hc-card">
+    <h2>Přihlášení na jiném zařízení</h2>
+    <p>Pro zjednodušené přihlášení naskenuj QR kód:</p>
+    <figure>
+      <img id="qr-code" alt="QR kód" src="/qr" width="300" height="300">
+    </figure>
+    <p>QR kód funguje jen jednu minutu. Pokud to nestihneš, aktualizuj stránku a načti ho znova.</p>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script type="module">
+    import { main } from "{{ 'qr-login.js' | assetUrl('esm') }}";
+
+    const build = {{ collections.build | dump(8) | safe }};
+    const env = Object.assign({ year: {{ year }} }, build);
+    const qrCodeImg = document.getElementById("qr-code");
+
+    await main({ env, qrCodeImg });
+  </script>
+{% endblock %}
