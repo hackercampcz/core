@@ -13,7 +13,7 @@
     "@hckr_/cloudflare-pages-plugin-rollbar": "1.1.4",
     "@std/csv": "jsr:1.0.6",
     "@thi.ng/transducers": "9.6.42",
-    "algoliasearch": "5.56.0",
+    "algoliasearch": "5.57.0",
     "fast-xml-parser": "5.11.0",
     "immutable": "5.1.9",
     "jsonwebtoken": "9.0.3",
