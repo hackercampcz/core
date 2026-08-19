@@ -14,7 +14,7 @@ export async function signIn({ idToken, slackProfile, slackToken, slackAccessTok
   return slackProfile;
 }
 
-export async function stringify() {
+export function stringify() {
   const idToken = storage.getItem("hc:id_token");
   const slackToken = storage.getItem("slack:id_token");
   const slackAccessToken = storage.getItem("slack:access_token");
