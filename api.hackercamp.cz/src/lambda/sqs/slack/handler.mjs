@@ -6,11 +6,11 @@ import {
   ScanCommand,
   UpdateItemCommand
 } from "@aws-sdk/client-dynamodb";
-import { marshall, unmarshall } from "@aws-sdk/util-dynamodb";
-import { attributes, mapper } from "@hackercamp/lib/attendee.js";
-import { selectKeys } from "@hackercamp/lib/object.js";
+import {marshall, unmarshall} from "@aws-sdk/util-dynamodb";
+import {attributes, mapper} from "@hackercamp/lib/attendee.js";
+import {selectKeys} from "@hackercamp/lib/object.js";
 import Rollbar from "../../rollbar.mjs";
-import { attendeeAnnouncement, postChatMessage, postMessage } from "../../slack.mjs";
+import {attendeeAnnouncement, postChatMessage, postMessage} from "../../slack.mjs";
 
 /** @typedef {import("aws-lambda").SQSEvent} SQSEvent */
 
@@ -183,6 +183,7 @@ async function sendAttendeeAnnouncement({ slackID, year }, { slack_bot_token, sl
 
 async function onTeamJoin({ user }, { year }) {
   const { email } = user.profile;
+  if (user.is_bot) return;
   console.log({ event: "Team join", email });
   const [registration, attendee] = await Promise.all([getRegistration(email, year), getAttendeeByEmail(email, year)]);
   if (attendee) {
