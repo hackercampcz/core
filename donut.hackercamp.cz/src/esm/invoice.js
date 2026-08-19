@@ -112,7 +112,9 @@ function renderSubjects(subjectSet, subsById, listener) {
 
 async function searchSubjects(invRegNo, invEmail, invName, apiURL) {
   const sub = await Promise.all(
-    [invRegNo ? getSubject(invRegNo, apiURL) : null, getSubject(invEmail, apiURL), getSubject(invName, apiURL)].filter(Boolean)
+    [invRegNo ? getSubject(invRegNo, apiURL) : null, getSubject(invEmail, apiURL), getSubject(invName, apiURL)].filter(
+      Boolean
+    )
   );
   return sub.flat().map(x => [x.id, x]);
 }

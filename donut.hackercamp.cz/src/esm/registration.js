@@ -7,10 +7,10 @@ export function optoutHandler(apiURL) {
       return;
     }
     try {
-      const {email} = getSlackProfile();
+      const { email } = getSlackProfile();
       await fetch(apiURL("optout"), {
         method: "POST",
-        body: new URLSearchParams({email, year: document.forms.reg.year.value}),
+        body: new URLSearchParams({ email, year: document.forms.reg.year.value }),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/x-www-form-urlencoded"
@@ -23,7 +23,7 @@ export function optoutHandler(apiURL) {
       rollbar.error(err);
       alert("Se nepovedlo, zkusim prosím jiny.");
     }
-  }
+  };
 }
 
 function showSection(selectors) {
@@ -73,9 +73,9 @@ export async function main({ env, formElement, submitButtonElement, searchParams
     formElement.image.value = image;
     formElement.slackID.value = slackID;
 
-    const response = await fetch(apiURL(`registration?${new URLSearchParams({ email, year, slackID })}`),
-      { headers: { Accept: "application/json" } }
-    );
+    const response = await fetch(apiURL(`registration?${new URLSearchParams({ email, year, slackID })}`), {
+      headers: { Accept: "application/json" }
+    });
     const data = await response.json();
 
     if (data.invoiced || data.paid) disableForm(formElement);
