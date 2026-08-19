@@ -3061,6 +3061,7 @@ __metadata:
     marked: "npm:18.0.10"
     open-props: "npm:1.7.23"
     postcss-jit-props: "npm:1.0.16"
+    qreator: "npm:10.0.2"
     rollbar: "npm:3.1.0"
     vitest: "npm:4.1.11"
     vitest-localstorage-mock: "npm:^0.1.2"
@@ -7664,7 +7665,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-string@npm:^1.9.0":
+"color-string@npm:^1.9.0, color-string@npm:^1.9.1":
   version: 1.9.1
   resolution: "color-string@npm:1.9.1"
   dependencies:
@@ -10811,6 +10812,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-base64@npm:^3.7.7":
+  version: 3.9.3
+  resolution: "js-base64@npm:3.9.3"
+  checksum: 10/ce8706664209a7424e504418faf84f39ff3005245b664cb1444f2cfdbd6101cfebcbfdb4acb717798692a733ebbf35cf8cb9e2b506687afcf4552f679f3bcd03
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -13817,6 +13825,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"qreator@npm:10.0.2":
+  version: 10.0.2
+  resolution: "qreator@npm:10.0.2"
+  dependencies:
+    color-string: "npm:^1.9.1"
+    js-base64: "npm:^3.7.7"
+    sharp: "npm:^0.34.3"
+  checksum: 10/4a31783b1fa2c534cdcdcfe9f37040ec77aebbfee7f5fbc6ce8404c648414745f2540b17deab27f8f875983a9fdcb37dbd591573802a013cc6068907caafe2a6
+  languageName: node
+  linkType: hard
+
 "queue-microtask@npm:^1.2.2":
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
@@ -14625,7 +14644,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sharp@npm:0.34.5":
+"sharp@npm:0.34.5, sharp@npm:^0.34.3":
   version: 0.34.5
   resolution: "sharp@npm:0.34.5"
   dependencies:
