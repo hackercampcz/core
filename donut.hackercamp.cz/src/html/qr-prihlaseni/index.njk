@@ -2,6 +2,21 @@
 
 {% block title %}Přihlášení do Donutu na jiném zařízení{% endblock %}
 
+{% block head_stylesheets %}
+  <style>
+    .hc-dashboard {
+      margin: 1lh auto;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      @container (width > 600px) {
+        margin: 3lh auto;
+      }
+    }
+  </style>
+{% endblock %}
+
 {% block content %}
 <div class="hc-dashboard hc-card-grid">
   <div class="hc-card">
@@ -17,7 +32,7 @@
 
 {% block scripts %}
   <script type="module">
-    import { main } from "{{ 'qr-login.js' | assetUrl('esm') }}";
+    import {main} from "";
 
     const build = {{ collections.build | dump(8) | safe }};
     const env = Object.assign({ year: {{ year }} }, build);
