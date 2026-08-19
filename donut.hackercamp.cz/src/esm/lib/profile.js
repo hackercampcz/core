@@ -14,6 +14,14 @@ export async function signIn({ idToken, slackProfile, slackToken, slackAccessTok
   return slackProfile;
 }
 
+export async function stringify() {
+  const idToken = storage.getItem("hc:id_token");
+  const slackToken = storage.getItem("slack:id_token");
+  const slackAccessToken = storage.getItem("slack:access_token");
+  const slackProfile = JSON.parse(storage.getItem("slack:profile"));
+  return JSON.stringify({ idToken, slackToken, slackAccessToken, slackProfile });
+}
+
 export function signOut(apiURL) {
   storage.removeItem("hc:id_token");
   storage.removeItem("hc:contact");
