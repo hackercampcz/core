@@ -28,6 +28,25 @@ code {
   color: var(--hc-text-color);
 }
 
+.hc-dashboard {
+  margin: 1lh auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  @container (width > 600px) {
+    margin: 3lh auto;
+  }
+}
+
+.hc-dashboard .hc-card {
+  max-width: 40em;
+}
+
+.hc-dashboard .hc-card h2 {
+  margin: 0 auto;
+}
+
 .hc-action-button {
   -webkit-appearance: none;
   border: none;
