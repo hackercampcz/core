@@ -104,6 +104,7 @@ async function qrLogin({ searchParams, apiURL }) {
   const resp = await fetch(link);
   if (resp.ok) {
     const session = await resp.json();
+    rollbar.info("QR login", { session });
     try {
       const resp = await fetch(apiURL("auth"), {
         method: "POST",
@@ -112,6 +113,7 @@ async function qrLogin({ searchParams, apiURL }) {
       });
       if (resp.ok) {
         const data = await resp.json();
+        rollbar.info("QR login", { auth: data });
         if (data.ok) return signIn(data, apiURL);
       }
       const cause = await resp.text();
