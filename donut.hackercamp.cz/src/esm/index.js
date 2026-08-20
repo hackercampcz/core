@@ -85,10 +85,9 @@ if (__DEVELOPMENT__) {
 }
 
 async function authenticate({ searchParams, apiURL }) {
-  const code = searchParams.get("code");
   const resp = await fetch(apiURL("auth"), {
     method: "POST",
-    body: new URLSearchParams({ code }),
+    body: searchParams,
     credentials: "include"
   });
   if (resp.ok) {
@@ -97,26 +96,6 @@ async function authenticate({ searchParams, apiURL }) {
   }
   const data = await resp.text();
   throw new Error("Authentication error", { cause: data });
-}
-
-async function qrLogin({ searchParams, apiURL }) {
-  try {
-    const resp = await fetch(apiURL("auth"), {
-      method: "POST",
-      body: searchParams,
-      credentials: "include"
-    });
-    if (resp.ok) {
-      const data = await resp.json();
-      rollbar.info("QR login", { auth: data });
-      if (data.ok) return signIn(data, apiURL);
-    }
-    const cause = await resp.text();
-    rollbar.error("Authentication error", { cause });
-  } catch (e) {
-    rollbar.error("Authentication error", { cause: e.message });
-  }
-  globalThis.showSnackbar("Přihlášení se nezdařilo. Zkus to znova.");
 }
 
 async function setDonutProfileUrl(user, token, slug, company) {
@@ -565,7 +544,7 @@ export async function main({ searchParams, rootElement, env }) {
     setReturnUrl(searchParams.get("returnUrl"));
   }
 
-  if (searchParams.has("code")) {
+  if (searchParams.has("code") || searchParams.has("qr-login")) {
     try {
       transact(x => Object.assign({}, x));
       await authenticate({ searchParams, apiURL });
@@ -574,10 +553,5 @@ export async function main({ searchParams, rootElement, env }) {
       rollbar.error(err);
       signOut(apiURL);
     }
-  }
-
-  if (searchParams.has("qr-login")) {
-    transact(x => Object.assign({}, x));
-    await qrLogin({ searchParams, apiURL });
   }
 }
