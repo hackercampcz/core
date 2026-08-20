@@ -1,5 +1,5 @@
-import { getPayload } from "#lib/request.js";
-import { createCookie, signJWT } from "@hackercamp/lib/auth.js";
+import {getPayload} from "#lib/request.js";
+import {createCookie, signJWT} from "@hackercamp/lib/auth.js";
 
 async function getJWT(code, env, origin) {
   const resp = await fetch("https://slack.com/api/openid.connect.token", {
@@ -34,6 +34,33 @@ async function getUsersInfo(user, token) {
   return { resp, data };
 }
 
+function authResponse(origin, idToken, slackToken, slackProfile, slackAccessToken) {
+  // For local development we need to relax Cross site security
+  const sameSite = origin.includes("localhost") ? "none" : "strict";
+  const cookieValue = createCookie(idToken, {
+    domain: "hackercamp.cz",
+    path: "/",
+    sameSite,
+    secure: true,
+    httpOnly: true,
+    maxAge: 1_209_600
+  });
+
+  return Response.json({
+    ok: true,
+    idToken,
+    slackToken,
+    slackProfile,
+    slackAccessToken
+  }, {
+    headers: {
+      "Set-Cookie": cookieValue,
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Credentials": "true"
+    }
+  });
+}
+
 /**
  * @param {EventContext<Env>} context
  * @returns {Promise<Response>}
@@ -41,12 +68,19 @@ async function getUsersInfo(user, token) {
 export async function onRequestPost({ request, env }) {
   const origin = request.headers.get("Origin") ?? `https://${env.HC_DONUT_HOSTNAME}`;
   const params = await getPayload(request);
+
+  if (params.idToken) {
+    return authResponse(origin, params.idToken, params.slackToken, params.slackProfile, params.slackAccessToken);
+  }
+
   const { resp, data } = await getJWT(params.code, env, origin);
 
   if (resp.ok && data.ok) {
-    const token = data.access_token;
-    const { resp: userInfoResp, data: profile } = await getUserInfo(token);
-    const { data: { user } } = await getUsersInfo(profile.sub, token);
+    const slackAccessToken = data.access_token;
+    const slackToken = data.id_token;
+    const { resp: userInfoResp, data: profile } = await getUserInfo(slackAccessToken);
+    const { data: { user } } = await getUsersInfo(profile.sub, slackAccessToken);
+    const slackProfile = Object.assign({}, profile, user);
 
     if (userInfoResp.ok && profile.ok) {
       console.log({ event: "Logged in", email: profile.email, slackID: profile.sub });
@@ -54,37 +88,13 @@ export async function onRequestPost({ request, env }) {
         "https://hackercamp.cz/email": profile.email,
         "https://hackercamp.cz/is_admin": user?.is_admin,
         "https://slack.com/user_id": profile.sub,
-        "https://slack.com/access_token": token
+        "https://slack.com/access_token": slackAccessToken
       };
       const idToken = await signJWT(payload, env.private_key);
       delete profile.ok;
-
-      // For local development we need to relax Cross site security
-      const sameSite = origin.includes("localhost") ? "none" : "strict";
-      const cookieValue = createCookie(idToken, {
-        domain: "hackercamp.cz",
-        path: "/",
-        sameSite,
-        secure: true,
-        httpOnly: true,
-        maxAge: 1_209_600
-      });
-
-      return Response.json({
-        ok: true,
-        idToken,
-        slackToken: data.id_token,
-        slackProfile: Object.assign({}, profile, user),
-        slackAccessToken: data.access_token
-      }, {
-        headers: {
-          "Set-Cookie": cookieValue,
-          "Access-Control-Allow-Origin": origin,
-          "Access-Control-Allow-Credentials": "true"
-        }
-      });
+      return authResponse(origin, idToken, slackToken, slackProfile, slackAccessToken);
     }
-    console.error({ token, profile });
+    console.error({ token: slackAccessToken, profile });
   }
 
   console.error({ code: params.code, data });
