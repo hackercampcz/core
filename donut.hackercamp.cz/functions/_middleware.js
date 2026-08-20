@@ -6,7 +6,10 @@ const authorizedOnly = [
   new URLPattern({ pathname: "/registrace/*" }),
   new URLPattern({ pathname: "/ubytovani/*" }),
   new URLPattern({ pathname: "/program/*" }),
-  new URLPattern({ pathname: "/admin/*" })
+  new URLPattern({ pathname: "/admin/*" }),
+  new URLPattern({ pathname: "/qr-login/*" }),
+  new URLPattern({ pathname: "/api/v1/qr-login/" }),
+  new URLPattern({ pathname: "/api/v1/nfctron/*" })
 ];
 
 /**

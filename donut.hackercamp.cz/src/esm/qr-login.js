@@ -9,7 +9,7 @@ import { stringify } from "./lib/profile.js";
  */
 export async function main({ env, qrCodeImg }) {
   const payload = stringify();
-  const resp = await fetch("/qr-login/", {
+  const resp = await fetch("/api/v1/qr-login/", {
     method: "POST",
     headers: {
       "Accept": "application/json",
