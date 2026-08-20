@@ -182,9 +182,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.1114.0":
-  version: 3.1114.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.1114.0"
+"@aws-sdk/client-dynamodb@npm:3.1115.0":
+  version: 3.1115.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.1115.0"
   dependencies:
     "@aws-sdk/core": "npm:^3.977.8"
     "@aws-sdk/credential-provider-node": "npm:^3.972.80"
@@ -196,13 +196,13 @@ __metadata:
     "@smithy/node-http-handler": "npm:^4.9.13"
     "@smithy/types": "npm:^4.16.1"
     tslib: "npm:^2.6.2"
-  checksum: 10/7133fd0f414a78966a582bfd46f26a07d5b0f9e4ec79ceb785561a6c9ccda7fefb4ade10328c69e0e166d20af91fecdcaa9a30c17a0a30704d038fc233c698ce
+  checksum: 10/1ed6f2839d3da77e26671ea0d1e0734fd85f661b360898fca1f0b9cde86838a523dba63000c4119eaadf93c4e2cc1b2ac06add2c6a1ed1d5ccadf4da7903863f
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.1114.0":
-  version: 3.1114.0
-  resolution: "@aws-sdk/client-sqs@npm:3.1114.0"
+"@aws-sdk/client-sqs@npm:3.1115.0":
+  version: 3.1115.0
+  resolution: "@aws-sdk/client-sqs@npm:3.1115.0"
   dependencies:
     "@aws-sdk/core": "npm:^3.977.8"
     "@aws-sdk/credential-provider-node": "npm:^3.972.80"
@@ -213,7 +213,7 @@ __metadata:
     "@smithy/node-http-handler": "npm:^4.9.13"
     "@smithy/types": "npm:^4.16.1"
     tslib: "npm:^2.6.2"
-  checksum: 10/1233248e35f74015afe874977e516149adaa4c37c201ebe9b2120fe4277fa551969ff18603a992f895b736ef00102643e173fdc5beb85e125a96fa6077f09cbf
+  checksum: 10/c8f38e539249b1b16732f5ad7c7c5593f06d3356af87e245bd098ec2feaadc02434ad628bf9573a7bb3409fac6489d70081cf4968b89c7ec7db414fa71b6a132
   languageName: node
   linkType: hard
 
@@ -3007,8 +3007,8 @@ __metadata:
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
     "@algolia/requester-fetch": "npm:^5.56.0"
-    "@aws-sdk/client-dynamodb": "npm:3.1114.0"
-    "@aws-sdk/client-sqs": "npm:3.1114.0"
+    "@aws-sdk/client-dynamodb": "npm:3.1115.0"
+    "@aws-sdk/client-sqs": "npm:3.1115.0"
     "@aws-sdk/util-dynamodb": "npm:3.996.9"
     "@cloudflare/workers-types": "npm:5.20260818.1"
     "@fast-csv/format": "npm:5.0.7"
