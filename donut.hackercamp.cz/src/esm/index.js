@@ -103,18 +103,22 @@ async function qrLogin({ searchParams, apiURL }) {
   const link = `/api/v1/qr-login/${searchParams.get("qr-login")}`;
   const resp = await fetch(link);
   if (resp.ok) {
-    const data = await resp.json();
-    const resp = await fetch(apiURL("auth"), {
-      method: "POST",
-      body: new URLSearchParams(data),
-      credentials: "include"
-    });
-    if (resp.ok) {
-      const data = await resp.json();
-      if (data.ok) return signIn(data, apiURL);
+    const session = await resp.json();
+    try {
+      const resp = await fetch(apiURL("auth"), {
+        method: "POST",
+        body: new URLSearchParams(session),
+        credentials: "include"
+      });
+      if (resp.ok) {
+        const data = await resp.json();
+        if (data.ok) return signIn(data, apiURL);
+      }
+      const cause = await resp.text();
+      console.error("Authentication error", { cause });
+    } catch (e) {
+      console.error("Authentication error", { cause: e.message });
     }
-    const cause = await resp.text();
-    console.error("Authentication error", { cause });
   }
   globalThis.showSnackbar("Přihlášení se nezdařilo. Zkus to znova.");
 }
