@@ -104,7 +104,17 @@ async function qrLogin({ searchParams, apiURL }) {
   const resp = await fetch(link);
   if (resp.ok) {
     const data = await resp.json();
-    return signIn(data, apiURL);
+    const resp = await fetch(apiURL("auth"), {
+      method: "POST",
+      body: new URLSearchParams(data),
+      credentials: "include"
+    });
+    if (resp.ok) {
+      const data = await resp.json();
+      if (data.ok) return signIn(data, apiURL);
+    }
+    const cause = await resp.text();
+    console.error("Authentication error", { cause });
   }
   globalThis.showSnackbar("Přihlášení se nezdařilo. Zkus to znova.");
 }
