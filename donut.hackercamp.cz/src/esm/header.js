@@ -44,6 +44,7 @@ function headerProfilePopup(contact, profile, signOut) {
         <li><a href="/program/">Program kempu</a></li>
         <li><a href="/hackers/">Seznam účastníků</a></li>
         <li><a href="https://www.hackercamp.cz/faq/">Často kladené dotazy</a></li>
+        <li><a href="/qr-login/">Přihlásit se na mobilu</a></li>
         <li>
           <button class="hc-btn hc-btn__sign-out" @click="${() => signOut(apiURL)}">Odhlásit se</button>
         </li>
