@@ -15,6 +15,7 @@ export interface Env {
   HC_DONUT_HOSTNAME: string;
   HC_JWT_SECRET: string;
   HC_WEB_HOSTNAME: string;
+  HCKR_KV: KVNamespace;
 
   NFCTRON_BEARER_TOKEN: string;
   NFCTRON_EVENT_ID: string;

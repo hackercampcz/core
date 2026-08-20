@@ -1,5 +1,5 @@
-import {getPayload} from "#lib/request.js";
-import {createCookie, signJWT} from "@hackercamp/lib/auth.js";
+import { getPayload } from "#lib/request.js";
+import { createCookie, signJWT } from "@hackercamp/lib/auth.js";
 
 async function getJWT(code, env, origin) {
   const resp = await fetch("https://slack.com/api/openid.connect.token", {
@@ -69,8 +69,10 @@ export async function onRequestPost({ request, env }) {
   const origin = request.headers.get("Origin") ?? `https://${env.HC_DONUT_HOSTNAME}`;
   const params = await getPayload(request);
 
-  if (params.idToken) {
-    return authResponse(origin, params.idToken, params.slackToken, params.slackProfile, params.slackAccessToken);
+  if (params["qr-login"]) {
+    const key = `qr-login/${params["qr-login"]}`;
+    const data = await env.HCKR_KV.get(key, "json");
+    return authResponse(origin, data.idToken, data.slackToken, data.slackProfile, data.slackAccessToken);
   }
 
   const { resp, data } = await getJWT(params.code, env, origin);

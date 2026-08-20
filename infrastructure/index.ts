@@ -247,6 +247,9 @@ const apiPages = new cloudflare.PagesProject("api", {
         slack_client_id: { type: "plain_text", value: config.require("slack-client-id") },
         slack_client_secret: { type: "secret_text", value: config.require("slack-client-secret") },
         private_key: { type: "secret_text", value: config.require("private-key") }
+      },
+      kvNamespaces: {
+        HCKR_KV: { namespaceId: hckrKv.id }
       }
     }
   }
