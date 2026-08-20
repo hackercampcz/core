@@ -32,7 +32,7 @@
 
 {% block scripts %}
   <script type="module">
-    import {main} from "";
+    import { main } from "{{ "qr-login.js" | assetUrl("esm") }}";
 
     const build = {{ collections.build | dump(8) | safe }};
     const env = Object.assign({ year: {{ year }} }, build);
