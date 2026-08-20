@@ -19,7 +19,7 @@ export async function onRequestGet({ request, env }) {
     status: 200,
     headers: {
       "Content-Type": "image/svg+xml",
-      "Access-Control-Allow-Origin": env.HC_DONUT_HOSTNAME,
-    },
+      "Access-Control-Allow-Origin": env.HC_DONUT_HOSTNAME
+    }
   });
 }

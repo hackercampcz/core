@@ -99,6 +99,16 @@ async function authenticate({ searchParams, apiURL }) {
   throw new Error("Authentication error", { cause: data });
 }
 
+async function qrLogin({ searchParams, apiURL }) {
+  const link = `/api/v1/qr-login/${searchParams.get("qr-login")}`;
+  const resp = await fetch(link);
+  if (resp.ok) {
+    const data = await resp.json();
+    return signIn(data, apiURL);
+  }
+  globalThis.showSnackbar("Přihlášení se nezdařilo. Zkus to znova.");
+}
+
 async function setDonutProfileUrl(user, token, slug, company) {
   const profile = await slack.getSlackProfile(user, token);
   if (!profile?.fields?.Xf039UMCJC1G?.value) {
@@ -554,5 +564,10 @@ export async function main({ searchParams, rootElement, env }) {
       rollbar.error(err);
       signOut(apiURL);
     }
+  }
+
+  if (searchParams.has("qr-login")) {
+    transact(x => Object.assign({}, x));
+    await qrLogin({ searchParams, apiURL });
   }
 }
