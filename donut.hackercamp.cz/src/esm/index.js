@@ -115,9 +115,9 @@ async function qrLogin({ searchParams, apiURL }) {
         if (data.ok) return signIn(data, apiURL);
       }
       const cause = await resp.text();
-      console.error("Authentication error", { cause });
+      rollbar.error("Authentication error", { cause });
     } catch (e) {
-      console.error("Authentication error", { cause: e.message });
+      rollbar.error("Authentication error", { cause: e.message });
     }
   }
   globalThis.showSnackbar("Přihlášení se nezdařilo. Zkus to znova.");
