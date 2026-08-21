@@ -5,9 +5,10 @@ import { stringify } from "./lib/profile.js";
  * @param param0
  * @param param0.env
  * @param {HTMLImageElement} param0.qrCodeImg
+ * @param {HTMLAnchorElement} param0.qrLink
  * @returns {Promise<void>}
  */
-export async function main({ env, qrCodeImg }) {
+export async function main({ env, qrCodeImg, qrLink }) {
   const payload = stringify();
   const resp = await fetch("/api/v1/qr-login/", {
     method: "POST",
@@ -19,4 +20,6 @@ export async function main({ env, qrCodeImg }) {
   });
   const { link } = await resp.json();
   qrCodeImg.src += `?${new URLSearchParams({ t: link })}`;
+  qrLink.href = link;
+  qrLink.textContent = link;
 }

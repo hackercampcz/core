@@ -9,6 +9,7 @@
     <p>Pro zjednodušené přihlášení naskenuj QR kód:</p>
     <figure>
       <img id="qr-code" alt="QR kód" src="/api/v1/qr" width="300" height="300">
+      <figcaption><code><a id="qr-link" href="/">https://donut.hckr.camp/</a></code></figcaption>
     </figure>
     <p>QR kód funguje jen jednu minutu. Pokud to nestihneš, aktualizuj stránku a načti ho znova.</p>
   </div>
@@ -22,7 +23,8 @@
     const build = {{ collections.build | dump(8) | safe }};
     const env = Object.assign({ year: {{ year }} }, build);
     const qrCodeImg = document.getElementById("qr-code");
+    const qrLink = document.getElementById("qr-link");
 
-    await main({ env, qrCodeImg });
+    await main({ env, qrCodeImg, qrLink });
   </script>
 {% endblock %}
