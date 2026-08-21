@@ -9,7 +9,7 @@
   "devDependencies": {
     "@hckr_/blendid": "9.6.16",
     "@types/nunjucks": "3.2.6",
-    "dprint": "0.56.0",
+    "dprint": "0.56.1",
     "npm-run-all2": "9.0.3",
     "undertaker-registry": "2.0.0"
   },
