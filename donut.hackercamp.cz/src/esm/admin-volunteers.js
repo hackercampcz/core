@@ -69,33 +69,37 @@ export async function main({ env, yearSelector, searchParams, appRoot }) {
   const data = await fetchData({ endpoint: "volunteers", year }, apiHost);
   render(
     html`
-    <table>
-      <thead>
-      <tr>
-        <th scope="col">Jméno</th>
-        <th scope="col">Příjezd</th>
-        <th scope="col">Aktivita</th>
-        <th scope="col">Akce</th>
-      </tr>
-      </thead>
-      <tbody>
-      ${
-      map(data, x =>
-        html`
-        <tr>
-          <td>${x.firstName} ${x.lastName}</td>
-          <td>${day.get(x.volunteerArrivalDay)}</td>
-          <td>${activity(x)}</td>
-          <td>
-            <span class="hc-detail__tools">
-                <hc-mail-button email="${x.email}"></hc-mail-button>
-                <hc-phone-button phone="${x.phone}"></hc-phone-button>
-              </span>
-            </td>
-        </tr>`)
-    }
-      </tbody>
-    </table>`,
+      <section class="hc-master-detail">
+        <div class="hc-card hc-master-detail__list">
+          <table>
+            <thead>
+            <tr>
+              <th scope="col">Jméno</th>
+              <th scope="col">Příjezd</th>
+              <th scope="col">Aktivita</th>
+              <th scope="col">Akce</th>
+            </tr>
+            </thead>
+            <tbody>
+            ${
+            map(data, x =>
+              html`
+              <tr>
+                <td>${x.firstName} ${x.lastName}</td>
+                <td>${day.get(x.volunteerArrivalDay)}</td>
+                <td>${activity(x)}</td>
+                <td>
+                  <span class="hc-detail__tools">
+                      <hc-mail-button email="${x.email}"></hc-mail-button>
+                      <hc-phone-button phone="${x.phone}"></hc-phone-button>
+                    </span>
+                  </td>
+              </tr>`)
+            }
+            </tbody>
+          </table>
+        </div>
+      </section>`,
     appRoot
   );
 }
