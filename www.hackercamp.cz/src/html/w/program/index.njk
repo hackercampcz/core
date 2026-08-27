@@ -1,94 +1,94 @@
 <!DOCTYPE html>
 <html lang="cs">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Program Hacker Campu</title>
-  <meta name="color-scheme" content="light dark">
-  {% include "shared/fonts.html" %}
-  {% include "shared/styles.njk" %}
-  <link rel="stylesheet" href="https://unpkg.com/open-props/colors.min.css">
-  <style>
-    @property --stage-color {
-      syntax: "<color>";
-    }
-
-    h3 {
-      text-transform: uppercase;
-    }
-
-    li {
-      display: grid;
-      column-gap: 1ch;
-      align-items: baseline;
-      grid-template: "color time headline";
-      grid-template-columns: 1ch 5ch 1fr;
-    }
-
-    li::before {
-      content: "" / attr(data-location);
-      display: inline-block;
-      width: 0.8em;
-      height: 0.8em;
-      background-color: var(--stage-color);
-      flex-shrink: 0;
-    }
-
-    .actors {
-      grid-column: 3;
-    }
-
-    body:not([data-actors="visible"]) .actors {
-      display: none;
-    }
-
-    :is(html):has(body[data-color-scheme="dark"]) {
-      color-scheme: dark !important;
-    }
-
-    @media all and (display-mode: fullscreen) {
-      html {
-        color-scheme: dark;
-        font-size: 133%;
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Program Hacker Campu</title>
+    <meta name="color-scheme" content="light dark">
+    {% include "shared/fonts.html" %}
+    {% include "shared/styles.njk" %}
+    <link rel="stylesheet" href="https://unpkg.com/open-props/colors.min.css">
+    <style>
+      @property --stage-color {
+        syntax: "<color>";
       }
-    }
-  </style>
-</head>
-<body>
-{# <header>{% include "shared/logo.html" %}</header> #}
-<main>
-  <div id="app-root"></div>
-</main>
-<script type="module">
-  import {html, render} from "https://unpkg.com/lit-html";
 
-  const colors = new Map([
-    ["1", "var(--blue-2)"],
-    ["2", "var(--green-2)"],
-    ["3", "var(--violet-2)"],
-    ["4", "var(--red-2)"],
-    ["5", "var(--yellow-5)"],
-    ["6", "var(--orange-5)"],
-    ["7", "var(--cyan-5)"],
-    ["8", "var(--gray-5)"],
-    ["9", "var(--indigo-5)"],
-    ["10", "var(--lime-5)"],
-    ["11", "var(--red-5)"]
-  ]);
-  const resp = await fetch("https://api.hackercamp.cz/v2/program/calendar");
-  const events = await resp.json();
-  const eventsByDay = new Map(events);
-  console.log(eventsByDay);
+      h3 {
+        text-transform: uppercase;
+      }
 
-  const body = document.body;
-  const params = new URL(location.href).searchParams;
-  for (const [key, value] of params) {
-    body.setAttribute(`data-${key}`, value);
-  }
+      li {
+        display: grid;
+        column-gap: 1ch;
+        align-items: baseline;
+        grid-template: "color time headline";
+        grid-template-columns: 1ch 5ch 1fr;
+      }
 
-  function formatTime(d) {
-    return Intl.DateTimeFormat("cs-CZ", {hour: "2-digit", minute: "numeric"}).format(d);
-  }
+      li::before {
+        content: "" / attr(data-location);
+        display: inline-block;
+        width: 0.8em;
+        height: 0.8em;
+        background-color: var(--stage-color);
+        flex-shrink: 0;
+      }
+
+      .actors {
+        grid-column: 3;
+      }
+
+      body:not([data-actors="visible"]) .actors {
+        display: none;
+      }
+
+      :is(html):has(body[data-color-scheme="dark"]) {
+        color-scheme: dark !important;
+      }
+
+      @media all and (display-mode: fullscreen) {
+        html {
+          color-scheme: dark;
+          font-size: 133%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    {# <header>{% include "shared/logo.html" %}</header> #}
+    <main>
+      <div id="app-root"></div>
+    </main>
+    <script type="module">
+      import { html, render } from "https://unpkg.com/lit-html";
+
+      const colors = new Map([
+        ["1", "var(--blue-2)"],
+        ["2", "var(--green-2)"],
+        ["3", "var(--violet-2)"],
+        ["4", "var(--red-2)"],
+        ["5", "var(--yellow-5)"],
+        ["6", "var(--orange-5)"],
+        ["7", "var(--cyan-5)"],
+        ["8", "var(--gray-5)"],
+        ["9", "var(--indigo-5)"],
+        ["10", "var(--lime-5)"],
+        ["11", "var(--red-5)"]
+      ]);
+      const resp = await fetch("https://api.hackercamp.cz/v2/program/calendar");
+      const events = await resp.json();
+      const eventsByDay = new Map(events);
+      console.log(eventsByDay);
+
+      const body = document.body;
+      const params = new URL(location.href).searchParams;
+      for (const [key, value] of params) {
+        body.dataset[key] = value;
+      }
+
+      function formatTime(d) {
+        return Intl.DateTimeFormat("cs-CZ", { hour: "2-digit", minute: "numeric" }).format(d);
+      }
 
       function extractNames(event) {
         if (!event.description) return "";
@@ -96,46 +96,40 @@
         return names.join(", ");
       }
 
-  function day(events) {
-    for (const event of events) {
-      event.start = new Date(event.start);
-      event.end = new Date(event.end);
-    }
-    const dayName = events[0].start.toLocaleDateString("cs-CZ", {weekday: "long"});
-    return html`
-      <article>
-        <h3>${dayName}</h3>
-        <ul>${
+      function day(events) {
+        for (const event of events) {
+          event.start = new Date(event.start);
+          event.end = new Date(event.end);
+        }
+        const dayName = events[0].start.toLocaleDateString("cs-CZ", { weekday: "long" });
+        return html`
+            <article>
+              <h3>${dayName}</h3>
+              <ul>${
           events.map(event =>
             html`
-              <li data-location="${event.location}"
-                  style="--stage-color: ${
-                    colors.get(event.color)
-                  }">
-                <time datetime="${event.start?.toISOString()}">${
-                  formatTime(event.start)
-                }
-                </time>
-                <div>
-                  <strong>${event.title}</strong>
-                  <span class="location">@ ${event.location}</span>
-                </div>
-                <div class="actors">${
-                  extractNames(event)
-                }
-                </div>
-              </li>`
+                    <li data-location="${event.location}"
+                        style="--stage-color: ${colors.get(event.color)}">
+                      <time datetime="${event.start?.toISOString()}">${formatTime(event.start)}
+                      </time>
+                      <div>
+                        <strong>${event.title}</strong>
+                        <span class="location">@ ${event.location}</span>
+                      </div>
+                      <div class="actors">${extractNames(event)}
+                      </div>
+                    </li>`
           )
         }
-        </ul>
-      </article>`;
-  }
+              </ul>
+            </article>`;
+      }
 
-  function days(eventsByDay) {
-    return html`${Array.from(eventsByDay.values()).map(x => day(x))}`;
-  }
+      function days(eventsByDay) {
+        return html`${Array.from(eventsByDay.values()).map(x => day(x))}`;
+      }
 
-  render(days(eventsByDay), document.querySelector("#app-root"));
-</script>
-</body>
+      render(days(eventsByDay), document.querySelector("#app-root"));
+    </script>
+  </body>
 </html>
