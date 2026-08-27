@@ -81,8 +81,9 @@ export async function onRequestPost({ request, env }) {
     const slackAccessToken = data.access_token;
     const slackToken = data.id_token;
     const { resp: userInfoResp, data: profile } = await getUserInfo(slackAccessToken);
-    const { data: { user } } = await getUsersInfo(profile.sub, slackAccessToken);
-    console.log({ user });
+    console.log({ profile });
+    const { data: { user, ...restData }, ...rest } = await getUsersInfo(profile.sub, slackAccessToken);
+    console.log({ data: { user, ...restData }, ...rest });
     const slackProfile = Object.assign({}, profile, user);
 
     if (userInfoResp.ok && profile.ok) {
