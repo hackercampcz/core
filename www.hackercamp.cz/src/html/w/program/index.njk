@@ -8,6 +8,13 @@
     {% include "shared/fonts.html" %}
     {% include "shared/styles.njk" %}
     <link rel="stylesheet" href="https://unpkg.com/open-props/colors.min.css">
+    <!--
+     Supported GET parameters:
+     @param {"dark"} colorScheme? Enforce dark color scheme
+     @param {"visible"} actors? Show actors names in the schedule
+
+     Example @link https://hckr.camp/w/program/?colorScheme=dark&actors=visible for Big screen on Mainframe
+     -->
     <style>
       @property --stage-color {
         syntax: "<color>";
