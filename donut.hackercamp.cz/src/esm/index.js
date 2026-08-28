@@ -375,7 +375,7 @@ function renderDashboardScreen(
           <h2>Důležité kontakty</h2>
           <ul>
             <li>Odvoz z/na hromadnou dopravu: <a href="tel:+420792365678">792 365 678</a></li>
-            <li>Zdravotníci: <a href="tel:+420770670155">770 670 155</a></li>
+            <li>Zdravotníci: <a href="tel:+420776491692">776 491 692</a></li>
           </ul>
         </div>
       `)
