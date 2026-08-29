@@ -25,10 +25,10 @@ async function getAttendees(db, env, year) {
   });
 
   const items = await getItemsFromDB(db, env.db_table_attendees, hits, {
-    ProjectionExpression: "slackID, #name, company, housing, housingPlacement",
+    ProjectionExpression: "slackID, #name, company, housing, housingPlacement, checkout",
     ExpressionAttributeNames: { "#name": "name" }
   });
-  return items.map(x => Object.assign({ isEditable: true }, x));
+  return items.map(x => Object.assign({ isEditable: true }, x).filter(x => x.checkout));
 }
 
 /**
