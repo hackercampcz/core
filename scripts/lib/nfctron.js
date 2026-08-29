@@ -34,8 +34,9 @@ export async function getTotalSpent(chipID) {
 
 export async function getPairingTable() {
   console.log({ event: "Get NFCTron Chips" });
-  const resp = await fetch("https://api.hackercamp.cz/v2/nfctron");
+  const resp = await fetch("https://api.hackercamp.cz/v2/nfctron/");
   const data = await resp.json();
+  console.log({data});
   console.log({ event: "Got NFCTron Chips", count: data.length });
   return new Map(data.map(x => [x.serialNumber, { chipID: x.chipId, vip: x.vip }]));
 }
