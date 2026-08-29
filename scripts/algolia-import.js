@@ -39,7 +39,7 @@ const indexes = new Map([
   ["hc-attendees", {
     indexName: "hc-attendees",
     indexSettings: {
-      searchableAttributes: ["name", "email", "company", "invoice_id"],
+      searchableAttributes: ["name", "email", "company", "invoice_id", "nfcSN"],
       ranking: ["desc(createdAt)", "typo", "words", "filters", "proximity", "attribute", "exact", "custom"]
     }
   }]
@@ -72,7 +72,8 @@ async function getRegistrations() {
       "referral",
       "ticketType",
       "approved",
-      "image"
+      "image",
+      "nfcTronData"
     ].join(),
     ExpressionAttributeNames: { "#year": "year", "#timestamp": "timestamp" }
   });
@@ -103,7 +104,8 @@ async function getAttendees() {
       "ticketType",
       "travel",
       "housing",
-      "image"
+      "image",
+      "nfcTronData"
     ].join(),
     ExpressionAttributeNames: { "#year": "year", "#name": "name" }
   });

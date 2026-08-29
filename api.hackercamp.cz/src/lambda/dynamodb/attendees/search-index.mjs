@@ -22,7 +22,8 @@ const keysToIndex = new Set([
   "ticketType",
   "travel",
   "housing",
-  "image"
+  "image",
+  "nfcTronData"
 ]);
 
 /**
