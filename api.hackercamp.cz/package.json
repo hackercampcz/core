@@ -14,7 +14,7 @@
     "@std/csv": "jsr:1.0.6",
     "@thi.ng/transducers": "9.6.43",
     "algoliasearch": "5.57.0",
-    "fast-xml-parser": "5.11.0",
+    "fast-xml-parser": "5.11.1",
     "immutable": "5.1.9",
     "jsonwebtoken": "9.0.3",
     "rollbar": "3.1.0"
