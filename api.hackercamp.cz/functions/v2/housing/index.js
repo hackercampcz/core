@@ -28,7 +28,7 @@ async function getAttendees(db, env, year) {
     ProjectionExpression: "slackID, #name, company, housing, housingPlacement, checkout",
     ExpressionAttributeNames: { "#name": "name" }
   });
-  return items.map(x => Object.assign({ isEditable: true }, x)).filter(x => x.checkout);
+  return items.map(x => Object.assign({ isEditable: true }, x));
 }
 
 /**
