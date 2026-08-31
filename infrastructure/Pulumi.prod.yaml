@@ -1,5 +1,5 @@
 config:
-  cloudflare-pages:compatibility-date: "2026-06-01"
+  cloudflare-pages:compatibility-date: "2026-09-01"
   hackercamp:algolia-attendees-index-name: hc-attendees
   hackercamp:algolia-registrations-index-name: hc-registrations
   hackercamp:api-domain: api.hackercamp.cz
@@ -21,8 +21,8 @@ config:
     secure: AAABAPVKNBH+3caqm5hEgc2T0CgPxs5CJc4gkWRDYtcLBlPPny2aJc2bDVdtNk2zbxWUTks8m5n4CN+XcmTkd+y/wlrJtIS25/aqZTMLo4uvc1uFCFFtEd4=
   hackercamp:web-domain: www.hackercamp.cz
   hackercamp:year: "2026"
-  hackercamp:start-date: "20260827"
-  hackercamp:end-date: "20260830"
+  hackercamp:start-date: "20270902"
+  hackercamp:end-date: "20270905"
   hackercamp:google-api-key:
     secure: AAABAFoqfAzlH7/6PKtRAd9YkdKTq6nh8TAxvRiE+gvxZVnQgjIODABcM45H7qXA07VYG4u012kXc+woVf5XduGPIZdANWc=
   hackercamp:nfctron-event-id: f39e0e21-be1d-4499-b92a-d0c38e45698b
