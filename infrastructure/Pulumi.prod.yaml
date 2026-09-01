@@ -33,7 +33,7 @@ config:
   hackercamp:aws-secret-access-key:
     secure: AAABAB8a1howilYSZAMJBkh06lef2UYZu80eUhXHklsKn6yx+TrI1O3LvgSJNYeZBSRNEGeGd3IqM3lqs9ujGryBUBQnS7hc
   hackercamp:nfc-bearer-token:
-    secure: AAABADRb1v7/ru1EQNEr2AqTYhZ6/CF1G8/DnAsVOr4uf/v4Knd1dczm1AnWRBqCpInavIhSrA2CSOe4/Liq7atKIlGN3iXLQK4S2MEpGUIv6UwTNkccSUZxgAu2pCCxTZ1kbJkHeTyeKT0C8ISjAEQK+x6xrn4RceHXYn5850ky/hmGJTL7e2F82bv0nK0QgRm9KDAKLWkeeoCI/dbqms/71jJDlkuS1DNsYI19cqqqIcelxwP96J3B3uQtt+7V/DFkq/mMi8PTSgdFmnJJNQLgZKC5Pefg7K9ivRSR6fEHPVMizqpztMjKwSojxfr/ubUlxeaEJxPRkHzzuqwWmA==
+    secure: AAABAL6wJIcr+1Yl8MlWWtBV4aHHSrL2FAOqNQiq7JiZJHQXoDyCnsc+tYVRaIyfq/4y+UouHY1Wsf5cURYlj/IjfY1mBA1ZQc6pXKxU9xLZ2tc+93G3oet5fcDN7pimPfuj8ycwHKBxCtgw4DLKTnDeVUAhr6rcT4dU7OS20JWQlRXFADvNz6uyK1RlNoD6QRyh1/6MMEAOD4i9sbud4xjeCT8XA4k5ljZT8InmwtzTjDXHQDC095HbIE8qENljvNAwaaQcb3KB5Yauhkqd+g65Y328FIs/f/n9pojGltlmO7gfzL/KRP2SSJ85gzrsEqOD/Lpt+K484/b+tnt/zQ==
 environment:
   - hackercamp-algolia
   - hackercamp-aws

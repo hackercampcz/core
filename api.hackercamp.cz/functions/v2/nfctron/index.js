@@ -10,6 +10,7 @@ export async function onRequestGet({ env }) {
     headers: {
       "Authorization": `Bearer ${bearer}`,
       "Accept": "application/json",
+      "referer": "https://hub.nfctron.com/",
       "user-agent": userAgent
     },
     referrer: "https://hub.nfctron.com/"
