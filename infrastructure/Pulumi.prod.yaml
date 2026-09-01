@@ -27,13 +27,11 @@ config:
     secure: AAABAFoqfAzlH7/6PKtRAd9YkdKTq6nh8TAxvRiE+gvxZVnQgjIODABcM45H7qXA07VYG4u012kXc+woVf5XduGPIZdANWc=
   hackercamp:nfctron-event-id: f39e0e21-be1d-4499-b92a-d0c38e45698b
   hackercamp:nfctron-bearer-token:
-    secure: AAABAFx16G0z0lsL/vfwW0TJm4OEa/dh82VwUD8dV28XYwPaLQGfHGO9DZfiznnvP/+TtMzzS5dnt4G86V7dfN4e7I+PzwshZaCBB50O/3+t8T8k5QDdFJWSu9eNrbE0do/MAjZuDpDEzNhFqNJMbzJSGjKQ/tMfGbI23lKj5yFKuQHEd+FjD1faEyHe0IDEyjpTDY8JvMShSx+NgGjnI+gNf3hwbD91l4y8oHuhKme/20UVlgSw7thhraB72bmyIGpKnMFywKRnJuZLf1JdyNPynD7rqlW+ZGEdiX6kqxBVsN0R0jYeD0YQAPzBGZRURvui4wpLDzvhkj4k9Dprtg==
+    secure: AAABAPIPensBMm8Fsq2vyqSNWRc0KutcLvCcfevItuUKelRZ2Yj4rTZSnBXAgDs/K87KdClma4HjNrWP6A+Jmts0bPAicu67VdXR0VUraV2Od0nGusw+KeUF9bLdIgj1cQfysT6Y1O8AMYeeZSNVlPnX/jcl1hwYxupm7aEkKi2rYBLTN/Kq3VvQQCYfwPMzzi9UL7YoRNVCYXl4gFNvM2UagNFPgLW+VNC5HPFGZZm+fFPms9KzM7iho+NdqExw1zt6HzvYNQW1BpThioKM7rwRBT2bIHJD/NUzT2rxslPEnaPq38jslQ7B4d7lDlPQh2SCQZ/bBlr35IHPbHj5+w==
   hackercamp:slack-webhook-token:
     secure: AAABACy3bzpru9OxLE7eeHaoElan2qEwiBfpB+Q8UPzkON2oIC0vInjyQJGXVItq7MfVWyVm7CKwv8+1k55PN1jlsbCDwR/B0ZU=
   hackercamp:aws-secret-access-key:
     secure: AAABAB8a1howilYSZAMJBkh06lef2UYZu80eUhXHklsKn6yx+TrI1O3LvgSJNYeZBSRNEGeGd3IqM3lqs9ujGryBUBQnS7hc
-  hackercamp:nfc-bearer-token:
-    secure: AAABAL6wJIcr+1Yl8MlWWtBV4aHHSrL2FAOqNQiq7JiZJHQXoDyCnsc+tYVRaIyfq/4y+UouHY1Wsf5cURYlj/IjfY1mBA1ZQc6pXKxU9xLZ2tc+93G3oet5fcDN7pimPfuj8ycwHKBxCtgw4DLKTnDeVUAhr6rcT4dU7OS20JWQlRXFADvNz6uyK1RlNoD6QRyh1/6MMEAOD4i9sbud4xjeCT8XA4k5ljZT8InmwtzTjDXHQDC095HbIE8qENljvNAwaaQcb3KB5Yauhkqd+g65Y328FIs/f/n9pojGltlmO7gfzL/KRP2SSJ85gzrsEqOD/Lpt+K484/b+tnt/zQ==
 environment:
   - hackercamp-algolia
   - hackercamp-aws
