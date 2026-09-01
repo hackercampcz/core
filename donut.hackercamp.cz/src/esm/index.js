@@ -258,15 +258,8 @@ function nfcTronTemplate({ nfcTronData, checkOutPaid }) {
             SN chipu:
             <code title="SN najdete na zadní straně čipu - pod páskem">${x.sn.toUpperCase()}</code>
             -
-            ${
-        when(checkOutPaid || x.paid, () => html`<strong style="color: forestgreen">Zaplaceno</strong>`, () =>
-          html`
-                <strong style="color: darkred">Nezaplaceno
-                  <data value="${x.spent ?? x.totalSpent}">${formatMoney(x.spent ?? x.totalSpent)}</data>
-                </strong>
-              `)
-      }
-            <a href="https://pass.nfctron.com/receipt/${x.chipID}" target="nfcTron">Účet</a>
+            <data value="${x.spent ?? x.totalSpent}">${formatMoney(x.spent ?? x.totalSpent)}</data>
+            <a href="https://tickets.nfctron.com/receipt/${x.chipID}" target="nfcTron">Účet</a>
           </li>
         `)
   }

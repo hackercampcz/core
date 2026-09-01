@@ -346,18 +346,10 @@ export function attendeeDetailTemplate({ detail, isNFCSupported }) {
         map(detail.nfcTronData.filter(({ chipID }) => chipID), ({ chipID, spent, totalSpent, sn }) =>
           html`
                     <li data-chip-sn="${sn}" data-chip-id="${chipID}">
-                      <a
-                        title="Online účet"
-                        href="https://pass.nfctron.com/receipt/v2/${chipID}/"
-                      >
-                        ${chipID}
-                      </a>
+                      <a title="Online účet"
+                        href="https://tickets.nfctron.com/receipt/${chipID}">${chipID}</a>
                       -
-                      <data value="${spent ?? totalSpent}"
-                      >${formatMoney(spent ?? totalSpent)}
-                      </data
-                      >
-                      ${when(detail.checkOutPaid, () => html` <strong>zaplaceno</strong>`)}
+                      <data value="${spent ?? totalSpent}">${formatMoney(spent ?? totalSpent)}</data>
                     </li>
                   `)
       }
