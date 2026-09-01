@@ -3015,7 +3015,7 @@ __metadata:
     "@hackercamp/lib": "workspace:*"
     "@hckr_/cloudflare-pages-plugin-rollbar": "npm:1.1.4"
     "@std/csv": "jsr:1.0.6"
-    "@thi.ng/transducers": "npm:9.6.43"
+    "@thi.ng/transducers": "npm:9.7.0"
     "@types/node": "npm:24.13.3"
     algoliasearch: "npm:5.57.0"
     fast-xml-parser: "npm:5.11.1"
@@ -3048,7 +3048,7 @@ __metadata:
     "@material/mwc-drawer": "npm:0.27.0"
     "@oddbird/popover-polyfill": "npm:0.7.2"
     "@thi.ng/atom": "npm:5.3.70"
-    "@thi.ng/transducers": "npm:9.6.43"
+    "@thi.ng/transducers": "npm:9.7.0"
     "@types/gulp": "npm:4.0.18"
     "@types/w3c-web-nfc": "npm:1.0.4"
     "@ungap/structured-clone": "npm:1.4.0"
@@ -6153,9 +6153,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@thi.ng/transducers@npm:9.6.43":
-  version: 9.6.43
-  resolution: "@thi.ng/transducers@npm:9.6.43"
+"@thi.ng/transducers@npm:9.7.0":
+  version: 9.7.0
+  resolution: "@thi.ng/transducers@npm:9.7.0"
   dependencies:
     "@thi.ng/api": "npm:^8.12.28"
     "@thi.ng/arrays": "npm:^2.14.26"
@@ -6166,7 +6166,7 @@ __metadata:
     "@thi.ng/math": "npm:^5.15.17"
     "@thi.ng/random": "npm:^4.1.54"
     "@thi.ng/timestamp": "npm:^1.1.47"
-  checksum: 10/7a0f051a02c176e0f99e1ff0a94d0d6fe04417df2501dde70a8097e52ef8c413b5e467bec39a1deb97612fa820d6000cf7a05e33259d4510251f93ba2f89d869
+  checksum: 10/73f05b000eb89afc34d9ec6a85e50fc60a433952ee2f1e212fa9f3e40bfd32ee879531e8e991e9d88278922fa74567467c2e8f52ba078128ba2bc9fdbf1a9677
   languageName: node
   linkType: hard
 
