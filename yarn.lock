@@ -182,12 +182,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.1121.0":
-  version: 3.1121.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.1121.0"
+"@aws-sdk/client-dynamodb@npm:3.1123.0":
+  version: 3.1123.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.1123.0"
   dependencies:
     "@aws-sdk/core": "npm:^3.977.9"
-    "@aws-sdk/credential-provider-node": "npm:^3.972.81"
+    "@aws-sdk/credential-provider-node": "npm:^3.972.82"
     "@aws-sdk/dynamodb-codec": "npm:^3.973.44"
     "@aws-sdk/middleware-endpoint-discovery": "npm:^3.972.30"
     "@aws-sdk/types": "npm:^3.974.5"
@@ -196,16 +196,16 @@ __metadata:
     "@smithy/node-http-handler": "npm:^4.11.3"
     "@smithy/types": "npm:^4.17.2"
     tslib: "npm:^2.6.2"
-  checksum: 10/a9ea30f432e2cdbe79228ce6d5de70bf31da72c39c317d406d305903f0de12f9796d052182bf8c8346beda423d017da75d0f259e00fae824b7ce3a8c61f349ca
+  checksum: 10/d2858e0051be905651fcb98eb0733c7f85b1a23de7ac83669bc673be048b0ac8b93c42ea0ba79942b832d7a37efabdb51b516c79ef601b3924828149f9999311
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.1121.0":
-  version: 3.1121.0
-  resolution: "@aws-sdk/client-sqs@npm:3.1121.0"
+"@aws-sdk/client-sqs@npm:3.1123.0":
+  version: 3.1123.0
+  resolution: "@aws-sdk/client-sqs@npm:3.1123.0"
   dependencies:
     "@aws-sdk/core": "npm:^3.977.9"
-    "@aws-sdk/credential-provider-node": "npm:^3.972.81"
+    "@aws-sdk/credential-provider-node": "npm:^3.972.82"
     "@aws-sdk/middleware-sdk-sqs": "npm:^3.972.42"
     "@aws-sdk/types": "npm:^3.974.5"
     "@smithy/core": "npm:^3.33.3"
@@ -213,7 +213,7 @@ __metadata:
     "@smithy/node-http-handler": "npm:^4.11.3"
     "@smithy/types": "npm:^4.17.2"
     tslib: "npm:^2.6.2"
-  checksum: 10/b1f073c4ff8457e4b4ed0b359bb0499271feeed8249a26f5453f55d202e2cc59a0f2a56b5f943aecc7037a5464af59f195723c00b1c15258805a24c16e66a8b9
+  checksum: 10/476dd028c2211efb561b56b92a6ef4f7f9af32ddced99832b470b48a6b77dd9839ed79616b43154c8e4d8b534efa32df51d1ab961025c2dc77cc01ccb4231643
   languageName: node
   linkType: hard
 
@@ -296,9 +296,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/credential-provider-node@npm:^3.972.81":
-  version: 3.972.81
-  resolution: "@aws-sdk/credential-provider-node@npm:3.972.81"
+"@aws-sdk/credential-provider-node@npm:^3.972.82":
+  version: 3.972.82
+  resolution: "@aws-sdk/credential-provider-node@npm:3.972.82"
   dependencies:
     "@aws-sdk/credential-provider-env": "npm:^3.972.70"
     "@aws-sdk/credential-provider-http": "npm:^3.972.72"
@@ -311,7 +311,7 @@ __metadata:
     "@smithy/credential-provider-imds": "npm:^4.4.16"
     "@smithy/types": "npm:^4.17.2"
     tslib: "npm:^2.6.2"
-  checksum: 10/adc322099542d8a05954c7f9715f3db85172270500d2f2b12c115fc2d36a890ceea87d13ad55c2b43f4696079aca7633c7c17ed883a7e6f9d1f7c285119953f8
+  checksum: 10/14075a6bed1a3b0a05b9764b4024e485ac918378e470e7ea9ce12303f3fd5b60142c923d2b0b6ca247c66f63e28e217216734ceb5fe120bf91ae144253030b78
   languageName: node
   linkType: hard
 
@@ -3007,8 +3007,8 @@ __metadata:
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
     "@algolia/requester-fetch": "npm:^5.56.0"
-    "@aws-sdk/client-dynamodb": "npm:3.1121.0"
-    "@aws-sdk/client-sqs": "npm:3.1121.0"
+    "@aws-sdk/client-dynamodb": "npm:3.1123.0"
+    "@aws-sdk/client-sqs": "npm:3.1123.0"
     "@aws-sdk/util-dynamodb": "npm:3.996.9"
     "@cloudflare/workers-types": "npm:5.20260831.1"
     "@fast-csv/format": "npm:5.0.7"
