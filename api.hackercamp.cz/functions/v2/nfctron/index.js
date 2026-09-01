@@ -6,6 +6,7 @@ const userAgent = "HackerCamp Donut (team@hackercamp.cz)";
  */
 export async function onRequestGet({ env }) {
   const { NFCTRON_EVENT_ID: eventId, NFCTRON_BEARER_TOKEN: bearer } = env;
+  console.log({ eventId, bearer})
   const resp = await fetch(`https://api.nfctron.com/app/event/${eventId}/customer/chip`, {
     headers: {
       "Authorization": `Bearer ${bearer}`,
