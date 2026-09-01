@@ -366,9 +366,8 @@ function renderDashboardScreen(
         <div class="hc-card hc-card--decorated">
           <h2>Fotky z Hacker Campu</h2>
           <p>Pokud máte nějaké fotky a videa, o které se chcete podělit, máme na to tradičně sdílenou složku na
-            Google Drive - <a href="/fotky/${year}">Fotky ${year}</a>. (udělejte si tam služku se svým jménem, ať
-            případně víme, za kým jít,
-            pokud budeme chtít něco použít 😉).</p>
+            Google Drive - <a href="/fotky/${year}">Fotky ${year}</a>. (udělejte si tam složku se svým jménem, ať
+            případně víme, za kým jít, pokud budeme chtít něco použít 😉).</p>
         </div>`, () =>
       html`
         <div class="hc-card hc-card--decorated">
