@@ -12,8 +12,9 @@
      Supported GET parameters:
      @param {"dark"} colorScheme? Enforce dark color scheme
      @param {"visible"} actors? Show actors names in the schedule
+     @param {number} refresh? How often should be the page refreshed in seconds. If not set, the page would not refresh at all.
 
-     Example @link https://hckr.camp/w/program/?colorScheme=dark&actors=visible for Big screen on Mainframe
+     Example @link https://hckr.camp/w/program/?colorScheme=dark&actors=visible&refresh=300 for Big screen on Mainframe
      -->
     <style>
       @property --stage-color {
@@ -99,10 +100,17 @@
       const resp = await fetch("https://api.hackercamp.cz/v2/program/calendar");
       const events = await resp.json();
       const eventsByDay = new Map(events);
-      console.log(eventsByDay);
 
-      const body = document.body;
+      const { body, head } = document;
       const params = new URL(location.href).searchParams;
+
+      if (params.has("refresh")) {
+        const refresh = document.createElement("meta");
+        refresh.setAttribute("http-equiv", "refresh");
+        refresh.setAttribute("content", params.get("refresh"));
+        head.insertAdjacentElement("beforeend", refresh);
+        params.delete("refresh");
+      }
       for (const [key, value] of params) {
         body.dataset[key] = value;
       }
@@ -124,26 +132,25 @@
         }
         const dayName = events[0].start.toLocaleDateString("cs-CZ", { weekday: "long" });
         return html`
-            <article>
-              <h3>${dayName}</h3>
-              <ul>${
-          events.map(event =>
-            html`
-                    <li data-location="${event.location}"
-                        style="--stage-color: ${colors.get(event.color)}">
-                      <time datetime="${event.start?.toISOString()}">${formatTime(event.start)}
-                      </time>
-                      <div>
-                        <strong>${event.title}</strong>
-                        <span class="location">@ ${event.location}</span>
-                      </div>
-                      <div class="actors">${extractNames(event)}
-                      </div>
-                    </li>`
-          )
-        }
-              </ul>
-            </article>`;
+          <article>
+            <h3>${dayName}</h3>
+            <ul>${events.map(event => html`
+              <li data-location="${event.location}"
+                  style="--stage-color: ${colors.get(event.color)}">
+                <time datetime="${event.start?.toISOString()}">${formatTime(event.start)}
+                </time>
+                <div>
+                  <strong>${event.title}</strong>
+                  <span class="location">@ ${event.location}</span>
+                </div>
+                <div class="actors">${extractNames(event)}
+                </div>
+              </li>
+              `)
+            }
+            </ul>
+          </article>
+        `;
       }
 
       function days(eventsByDay) {
