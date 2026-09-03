@@ -3080,7 +3080,7 @@ __metadata:
     "@gryphoon/texy": "npm:1.0.0"
     "@pulumi/aws": "npm:7.44.0"
     "@pulumi/cloudflare": "npm:6.20.0"
-    "@pulumi/pulumi": "npm:3.260.0"
+    "@pulumi/pulumi": "npm:3.261.0"
     "@types/node": "npm:24.13.3"
     esbuild: "npm:0.28.2"
     front-matter: "npm:4.0.2"
@@ -5189,9 +5189,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.260.0":
-  version: 3.260.0
-  resolution: "@pulumi/pulumi@npm:3.260.0"
+"@pulumi/pulumi@npm:3.261.0":
+  version: 3.261.0
+  resolution: "@pulumi/pulumi@npm:3.261.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -5226,7 +5226,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/563785828a66f3a88e8f2e07dc0d8def2c8ddc3189124bf10d144c3dcf75464323b225a8449095fbb48ff4fa88a10b220e1dffdc51fdead0a487bc6fd2ffa7db
+  checksum: 10/fd876293f63e55397d8dbc591ec2c39f39c2713005052dfd4c1c55ffd4bd034fc7e5c24c31e97d13c120953f3293d455be369e810b298784125b6fe3d9eebba8
   languageName: node
   linkType: hard
 
