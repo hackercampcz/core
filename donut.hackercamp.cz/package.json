@@ -25,7 +25,7 @@
     "test": "vitest run"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "5.20260902.1",
+    "@cloudflare/workers-types": "5.20260903.1",
     "@types/gulp": "4.0.18",
     "@types/w3c-web-nfc": "1.0.4",
     "happy-dom": "20.12.2",
