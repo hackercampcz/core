@@ -7,7 +7,7 @@
     "@gryphoon/texy": "1.0.0",
     "@pulumi/aws": "7.44.0",
     "@pulumi/cloudflare": "6.20.0",
-    "@pulumi/pulumi": "3.260.0",
+    "@pulumi/pulumi": "3.261.0",
     "esbuild": "0.28.2",
     "front-matter": "4.0.2",
     "marked": "18.0.11"
