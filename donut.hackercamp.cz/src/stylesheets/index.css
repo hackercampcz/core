@@ -33,6 +33,7 @@ code {
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: 2lh;
 
   @container (width > 600px) {
     margin: 3lh auto;
