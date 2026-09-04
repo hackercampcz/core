@@ -3055,7 +3055,7 @@ __metadata:
     chart.js: "npm:4.5.1"
     chartjs-adapter-date-fns: "npm:3.0.0"
     date-fns: "npm:4.4.0"
-    happy-dom: "npm:20.12.2"
+    happy-dom: "npm:20.14.0"
     lit-html: "npm:3.3.3"
     lite-youtube-embed: "npm:0.3.4"
     marked: "npm:18.0.11"
@@ -9948,9 +9948,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"happy-dom@npm:20.12.2":
-  version: 20.12.2
-  resolution: "happy-dom@npm:20.12.2"
+"happy-dom@npm:20.14.0":
+  version: 20.14.0
+  resolution: "happy-dom@npm:20.14.0"
   dependencies:
     "@types/node": "npm:>=20.0.0"
     "@types/whatwg-mimetype": "npm:^3.0.2"
@@ -9959,7 +9959,7 @@ __metadata:
     entities: "npm:^7.0.1"
     whatwg-mimetype: "npm:^3.0.0"
     ws: "npm:^8.21.0"
-  checksum: 10/9178d1eb7550251a4c015f4c6ecc39082d5a8452328f5850a3de06540bada0c951ced9c120c490cd382653f121032dc9b7229ec5fa64d940fac0a0dbdc208fa7
+  checksum: 10/d6cc3d22c4cec42e163225eddf2afe7fe9c98d38a69d5870d0b6195c83478f0d833c9747ba44f4a3cfb99f94d0c6ce4ab9a5b8174e8500a8d6b7f53f21bc0426
   languageName: node
   linkType: hard
 
