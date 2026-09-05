@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "cookie": "2.0.1",
-    "jose": "6.2.10"
+    "jose": "6.2.12"
   },
   "devDependencies": {
     "vitest": "4.1.11"
