@@ -1,23 +1,10 @@
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { partition } from "https://esm.sh/@thi.ng/transducers";
 import { parseArgs } from "jsr:@std/cli/parse-args";
+import { collect } from "./lib/dynamodb.js";
 import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
-
-/**
- * Result can be async iterator or just array. This collects all the results to the array
- * @param result
- * @returns {Promise<Object[]>}
- */
-async function collect(result) {
-  if (result.Items) return result.Items;
-  const items = [];
-  for await (const page of result) {
-    items.push(...page.Items);
-  }
-  return items;
-}
 
 async function getAttendees(year) {
   const result = await dynamo.scan({
@@ -66,4 +53,4 @@ async function main({ token, year }) {
 
 await main(parseArgs(Deno.args));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-import --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-hacker-final-info.js --token=$(op read "op://HackerCamp/Postmark/credential") --year=2025
+// AWS_PROFILE=hackercamp deno run --allow-env --allow-import --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-hacker-final-info.js --token=$(op read "op://HackerCamp/Postmark/credential") --year=2026

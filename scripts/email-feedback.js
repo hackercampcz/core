@@ -1,23 +1,10 @@
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { partition } from "https://esm.sh/@thi.ng/transducers";
 import { parseArgs } from "jsr:@std/cli/parse-args";
+import { collect } from "./lib/dynamodb.js";
 import { Attachments, sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
-
-/**
- * The result may be async iterator or just an array. This function collects all the results in the array.
- * @param result
- * @returns {Promise<Object[]>}
- */
-async function collect(result) {
-  if (result.Items) return result.Items;
-  const items = [];
-  for await (const page of result) {
-    items.push(...page.Items);
-  }
-  return items;
-}
 
 async function getAttendees(year) {
   const result = await dynamo.scan({
@@ -43,7 +30,7 @@ async function main({ token, year }) {
       emails: batch,
       templateId: Template.Feedback,
       tag: "feedback",
-      attachments: [Attachments.Event2026]
+      attachments: [Attachments.Event2027]
     });
     for (const item of resp) {
       if (item.ErrorCode) console.error(item);

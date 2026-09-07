@@ -1,7 +1,7 @@
-import {createClient} from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
-import {partition} from "https://esm.sh/@thi.ng/transducers";
-import {parseArgs} from "jsr:@std/cli/parse-args";
-import {sendEmailsWithTemplate, Template} from "./lib/postmark.js";
+import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { partition } from "https://esm.sh/@thi.ng/transducers";
+import { parseArgs } from "jsr:@std/cli/parse-args";
+import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
 
@@ -21,8 +21,8 @@ async function getOptOuts(year) {
     TableName: "optouts",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
-    ExpressionAttributeNames: {"#year": "year"},
-    ExpressionAttributeValues: {":year": year}
+    ExpressionAttributeNames: { "#year": "year" },
+    ExpressionAttributeValues: { ":year": year }
   });
   return new Set(result.Items.map(x => x.email));
 }
@@ -32,8 +32,8 @@ async function getRegistrations(year) {
     TableName: "registrations",
     ProjectionExpression: "email",
     FilterExpression: "#year = :year",
-    ExpressionAttributeNames: {"#year": "year"},
-    ExpressionAttributeValues: {":year": year}
+    ExpressionAttributeNames: { "#year": "year" },
+    ExpressionAttributeValues: { ":year": year }
   });
   return new Set(result.Items.map(x => x.email));
 }
@@ -44,7 +44,7 @@ async function spit(emails) {
   await Deno.writeFile("data/contacts.txt", data);
 }
 
-async function main({token, year, ["dry-run"]: dryRun}) {
+async function main({ token, year, ["dry-run"]: dryRun }) {
   year = Number.parseInt(year);
   const contacts = await getAllContactsEmails();
   const registrations = await getRegistrations(year);

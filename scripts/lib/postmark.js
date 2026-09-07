@@ -18,6 +18,12 @@ export const Attachments = {
     Content: calendarEvent("20260827", "20260830"),
     ContentType: "text/calendar; charset=utf-8; method=REQUEST",
     Disposition: "inline"
+  },
+  Event2027: {
+    Name: "invite.ics",
+    Content: calendarEvent("20270902", "20270905"),
+    ContentType: "text/calendar; charset=utf-8; method=REQUEST",
+    Disposition: "inline"
   }
 };
 

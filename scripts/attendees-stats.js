@@ -187,9 +187,7 @@ async function main({}) {
   for await (const batch of batches) {
     for (const attendee of batch.Items) {
       if (ignoredTickets.has(attendee.ticketType)) continue;
-      const entries = bySlackID.get(attendee.slackID) ?? [];
-      entries.push(attendee);
-      bySlackID.set(attendee.slackID, entries);
+      bySlackID.getOrInsert(attendee.slackID, []).push(attendee);
     }
   }
   for (const [key, entries] of bySlackID) {

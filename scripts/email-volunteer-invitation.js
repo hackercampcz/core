@@ -1,15 +1,14 @@
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { partition } from "https://esm.sh/@thi.ng/transducers";
 import { parseArgs } from "jsr:@std/cli/parse-args";
+import { collect } from "./lib/dynamodb.js";
 import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
 
-const skip = new Set([
-]);
+const skip = new Set([]);
 
-const include = new Set([
-]);
+const include = new Set([]);
 
 async function getOptOuts(year) {
   const result = await dynamo.scan({
@@ -20,20 +19,6 @@ async function getOptOuts(year) {
     ExpressionAttributeValues: { ":year": year }
   });
   return new Set(result.Items.map(x => x.email));
-}
-
-/**
- * Result can be async iterator or just array. This collects all the results to the array
- * @param result
- * @returns {Promise<Object[]>}
- */
-async function collect(result) {
-  if (result.Items) return result.Items;
-  const items = [];
-  for await (const page of result) {
-    items.push(...page.Items);
-  }
-  return items;
 }
 
 async function getVolunteers(optOuts, skip, include) {

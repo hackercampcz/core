@@ -1,22 +1,9 @@
 import { difference } from "https://deno.land/std/datetime/mod.ts";
 import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
 import { parseArgs } from "jsr:@std/cli/parse-args";
+import { collect } from "./lib/dynamodb.js";
 
 const dynamo = createClient();
-
-/**
- * Result can be async iterator or just array. This collects all the results to the array
- * @param result
- * @returns {Promise<Object[]>}
- */
-async function collect(result) {
-  if (result.Items) return result.Items;
-  const items = [];
-  for await (const page of result) {
-    items.push(...page.Items);
-  }
-  return items;
-}
 
 async function getAttendees(year) {
   const result = await dynamo.scan({
