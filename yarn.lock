@@ -3078,7 +3078,7 @@ __metadata:
   resolution: "@hackercamp/infrastructure@workspace:infrastructure"
   dependencies:
     "@gryphoon/texy": "npm:1.0.0"
-    "@pulumi/aws": "npm:7.44.0"
+    "@pulumi/aws": "npm:7.45.0"
     "@pulumi/cloudflare": "npm:6.20.0"
     "@pulumi/pulumi": "npm:3.261.0"
     "@types/node": "npm:24.13.3"
@@ -5170,13 +5170,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.44.0":
-  version: 7.44.0
-  resolution: "@pulumi/aws@npm:7.44.0"
+"@pulumi/aws@npm:7.45.0":
+  version: 7.45.0
+  resolution: "@pulumi/aws@npm:7.45.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
     mime: "npm:^2.0.0"
-  checksum: 10/769dcc50c755a43e3aaece9eb540977629e02161f6a039c0c709afa52e6acf718c9bfed627cb9cbecfc7bf6ff14a924b97250187dfb6b5b48964e4f8a6325a7a
+  checksum: 10/43ed9a4a66cfaafcdbbedb32211346351991a59c3c6d743201564b1a7fb8e74da296dde569024ccb42d10bc71970f5eef503c6f534f75d9c4789a2855e22b719
   languageName: node
   linkType: hard
 
