@@ -3040,7 +3040,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@hckr_/blendid": "npm:9.7.1"
+    "@hckr_/blendid": "npm:9.7.2"
     "@types/nunjucks": "npm:3.2.6"
     dprint: "npm:0.57.4"
     npm-run-all2: "npm:9.0.3"
@@ -3118,9 +3118,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hckr_/blendid@npm:9.7.1":
-  version: 9.7.1
-  resolution: "@hckr_/blendid@npm:9.7.1"
+"@hckr_/blendid@npm:9.7.2":
+  version: 9.7.2
+  resolution: "@hckr_/blendid@npm:9.7.2"
   dependencies:
     "@csstools/postcss-gamut-mapping": "npm:3.0.12"
     "@gryphoon/texy": "npm:1.0.0"
@@ -3169,7 +3169,7 @@ __metadata:
     vite: "npm:8.3.0"
   bin:
     blendid: bin/blendid.js
-  checksum: 10/8375024dfb84db8f0a1d0197c1996b613e6880130ea3a2436c5fbc67292ae8a5b44a6cd3e7e7a653f1a18653129de2f1135147b6d5a157394b7aabe488c34b22
+  checksum: 10/844dcb0078eaca11154cd7f70e74a85921a425bf124232e74c5cf30b90ed2fc13f61e5ff9a4ed31cd67bbe6a319a4c70be4140e55282dd40719dd5892542f4ce
   languageName: node
   linkType: hard
 
