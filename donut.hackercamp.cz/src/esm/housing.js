@@ -3,6 +3,8 @@ import { withAuthHandler } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
 import "./components/feather-icon.js";
 
+const buildId = __BUILD_ID__;
+
 async function loadHousingData(apiBase, year) {
   try {
     const params = new URLSearchParams({ year });

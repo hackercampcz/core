@@ -23,6 +23,8 @@ import * as rollbar from "./lib/rollbar.js";
 import * as slack from "./lib/slack.js";
 import { setSlackProfile } from "./lib/slack.js";
 
+const buildId = __BUILD_ID__;
+
 /** @typedef {import("@thi.ng/atom").IAtom} IAtom */
 /** @typedef {import("@thi.ng/atom").Path} Path */
 /** @typedef {import("@thi.ng/atom").SwapFn} SwapFn */

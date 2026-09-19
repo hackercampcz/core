@@ -5,6 +5,7 @@ import { getContact, getSlackProfile, signOut } from "./lib/profile.js";
 import { initRenderLoop } from "./lib/renderer.js";
 import * as workbox from "./lib/workbox.js";
 
+const buildId = __BUILD_ID__;
 const state = defAtom({ apiURL: () => "", contact: null, profile: null, idPopupVisible: false, view: renderProfile });
 
 function headerProfile({ name, picture }, togglePopup) {

@@ -1,6 +1,8 @@
 import "@oddbird/popover-polyfill";
 import "./components/feather-icon.js";
 
+const buildId = __BUILD_ID__;
+
 export async function init({ snackbar }) {
   globalThis.snackbar = snackbar;
   globalThis.showSnackbar = showSnackbar;
