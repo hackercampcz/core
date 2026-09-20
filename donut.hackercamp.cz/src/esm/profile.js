@@ -3,6 +3,7 @@ import { ticketBadge } from "./lib/attendee.js";
 import { getSlackProfile } from "./lib/profile.js";
 import * as rollbar from "./lib/rollbar.js";
 
+const buildId = __BUILD_ID__;
 const supporters = new Set(["hacker-plus", "hacker-patron"]);
 const labels = new Map([["hacker-plus", "Hacker filantrop"], ["hacker-patron", "Patron Campu"]]);
 

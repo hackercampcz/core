@@ -4,6 +4,8 @@ import { getSlackProfile, setReturnUrl, signOut } from "./lib/profile.js";
 import { submitDecorator, withAuthHandler, withErrorReporting } from "./lib/remoting.js";
 import * as rollbar from "./lib/rollbar.js";
 
+const buildId = __BUILD_ID__;
+
 const authHandler = {
   onUnauthenticated() {
     setReturnUrl(location.href);

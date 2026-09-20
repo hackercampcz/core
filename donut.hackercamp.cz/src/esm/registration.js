@@ -1,6 +1,8 @@
 import { getSlackProfile } from "./lib/profile.js";
 import * as rollbar from "./lib/rollbar.js";
 
+const buildId = __BUILD_ID__;
+
 export function optoutHandler(apiURL) {
   return async function optout() {
     if (!confirm("Opravdu se letos nezúčastníš? Tohle nejde vzít zpět.")) {

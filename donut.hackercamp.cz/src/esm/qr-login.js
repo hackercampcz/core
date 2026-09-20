@@ -1,5 +1,7 @@
 import { stringify } from "./lib/profile.js";
 
+const buildId = __BUILD_ID__;
+
 /**
  * Stores serialized profile for a limited time retrieval and encodes the link as a QR code image
  * @param param0

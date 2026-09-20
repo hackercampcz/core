@@ -1,3 +1,5 @@
+const buildId = __BUILD_ID__;
+
 /**
  * @param {string} id ID of <dialog> element
  */
