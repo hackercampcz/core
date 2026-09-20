@@ -1732,10 +1732,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/workers-types@npm:5.20260919.1":
-  version: 5.20260919.1
-  resolution: "@cloudflare/workers-types@npm:5.20260919.1"
-  checksum: 10/19b4297a23e8877e4db73daac75d2aca6edafcb1c7d3d447a3b580554c65d673a2a8408598e3b83f83856693f72c5ae55b4df9619465cec478bbed87bb649663
+"@cloudflare/workers-types@npm:5.20260920.1":
+  version: 5.20260920.1
+  resolution: "@cloudflare/workers-types@npm:5.20260920.1"
+  checksum: 10/d6e33d568ccf7592ef4ed59b35bec537f4b790155aa82a5ca422f576113fd35152a44468bcd81e2fd1b77bd58b507175f05840b9b99fd12a818ad4ebeea59203
   languageName: node
   linkType: hard
 
@@ -3020,7 +3020,7 @@ __metadata:
     "@aws-sdk/client-dynamodb": "npm:3.1136.0"
     "@aws-sdk/client-sqs": "npm:3.1136.0"
     "@aws-sdk/util-dynamodb": "npm:3.996.9"
-    "@cloudflare/workers-types": "npm:5.20260919.1"
+    "@cloudflare/workers-types": "npm:5.20260920.1"
     "@fast-csv/format": "npm:5.0.7"
     "@hackercamp/lib": "workspace:*"
     "@hckr_/cloudflare-pages-plugin-rollbar": "npm:1.1.4"
@@ -3052,7 +3052,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
-    "@cloudflare/workers-types": "npm:5.20260919.1"
+    "@cloudflare/workers-types": "npm:5.20260920.1"
     "@gryphoon/texy": "npm:1.0.0"
     "@hackercamp/lib": "workspace:*"
     "@material/mwc-drawer": "npm:0.27.0"
