@@ -5,8 +5,8 @@
   },
   "dependencies": {
     "@algolia/requester-fetch": "5.59.0",
-    "@aws-sdk/client-dynamodb": "3.1136.0",
-    "@aws-sdk/client-sqs": "3.1136.0",
+    "@aws-sdk/client-dynamodb": "3.1141.0",
+    "@aws-sdk/client-sqs": "3.1141.0",
     "@aws-sdk/util-dynamodb": "3.996.9",
     "@fast-csv/format": "5.0.7",
     "@hackercamp/lib": "workspace:*",
