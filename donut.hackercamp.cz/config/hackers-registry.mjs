@@ -1,4 +1,4 @@
-import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
+import projectPath from "@hckr_/blendid/project-path";
 import logger from "fancy-log";
 import { writeFile } from "node:fs/promises";
 import DefaultRegistry from "undertaker-registry";

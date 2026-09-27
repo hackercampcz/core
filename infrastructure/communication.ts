@@ -1,4 +1,5 @@
-import { processTypo } from "@gryphoon/texy";
+import { processTypo } from "@hckr_/blendid/texy";
+import frontmatter from "@hckr_/blendid/front-matter";
 import { marked } from "marked";
 import * as fs from "node:fs";
 import * as path from "node:path";
@@ -32,7 +33,6 @@ function texyTypography() {
 }
 
 marked.use(postmarkInterpolation(), texyTypography());
-const frontmatter = require("front-matter");
 
 export function* readTemplates(relPath: string): Generator<TemplateInputs> {
   const communication = path.resolve(relPath);

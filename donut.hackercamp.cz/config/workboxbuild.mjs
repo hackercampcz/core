@@ -1,4 +1,4 @@
-import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
+import projectPath from "@hckr_/blendid/project-path";
 import DefaultRegistry from "undertaker-registry";
 import { generateSW } from "workbox-build/build/generate-sw.js";
 import { injectManifest } from "workbox-build/build/inject-manifest.js";

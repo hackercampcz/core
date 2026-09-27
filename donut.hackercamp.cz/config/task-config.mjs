@@ -1,5 +1,5 @@
-import projectPath from "@hckr_/blendid/lib/projectPath.mjs";
-import { texyTypography } from "@hckr_/blendid/lib/texy.mjs";
+import projectPath from "@hckr_/blendid/project-path";
+import { texyTypography } from "@hckr_/blendid/texy";
 import fs from "node:fs";
 import path from "node:path";
 import OpenProps from "open-props";
