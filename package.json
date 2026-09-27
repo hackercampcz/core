@@ -7,14 +7,11 @@
   "private": true,
   "packageManager": "yarn@4.18.0",
   "devDependencies": {
-    "@hckr_/blendid": "9.7.6",
-    "@types/nunjucks": "3.2.6",
+    "@hckr_/blendid": "9.8.0",
+    "@types/node": "26.6.3",
     "dprint": "0.57.4",
     "npm-run-all2": "9.0.3",
     "undertaker-registry": "2.0.0"
-  },
-  "resolutions": {
-    "lodash": "4.18.1"
   },
   "scripts": {
     "build:api.hackercamp.cz": "mkdir -p dist/api.hackercamp.cz; cp ./api.hackercamp.cz/public/* ./dist/api.hackercamp.cz/",

@@ -42,7 +42,10 @@ export default function(pathConfig, mode, verbose) {
     static: true,
     esbuild: {
       options: {
-        define: { __BUILD_ID__: `"${process.env.CIRCLE_BUILD_NUM ?? "HEAD"}"` },
+        define: {
+          __BUILD_ID__: `"${process.env.CIRCLE_BUILD_NUM ?? "HEAD"}"`,
+          __DEVELOPMENT__: mode.development() ? "true" : "undefined"
+        },
         conditions: [mode.development() ? "development" : undefined].filter(Boolean)
       }
     },
@@ -96,7 +99,6 @@ export default function(pathConfig, mode, verbose) {
 
     production: {
       rev: {
-        exclude: ["_headers", "_redirects"]
       }
     },
 

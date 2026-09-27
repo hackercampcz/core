@@ -10,7 +10,7 @@ export default {
     lang: "cs"
   },
   get currentYear() {
-    return Temporal.Now.plainDateISO().year;
+    return Temporal.Now.plainDateISO("Europe/Prague").year;
   },
   year: 2026,
   program: {

@@ -10,7 +10,7 @@ export default {
   },
   year: 2026,
   get currentYear() {
-    return Temporal.Now.plainDateISO().year;
+    return Temporal.Now.plainDateISO("Europe/Prague").year;
   },
   event,
   ticket
