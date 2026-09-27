@@ -2907,11 +2907,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@hckr_/blendid": "npm:9.8.0"
+    "@hckr_/blendid": "npm:9.8.1"
     "@types/node": "npm:26.6.3"
     dprint: "npm:0.57.4"
     npm-run-all2: "npm:9.0.3"
-    undertaker-registry: "npm:2.0.0"
   languageName: unknown
   linkType: soft
 
@@ -2954,13 +2953,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/infrastructure@workspace:infrastructure"
   dependencies:
-    "@gryphoon/texy": "npm:1.0.0"
+    "@hckr_/blendid": "npm:9.8.1"
     "@pulumi/aws": "npm:7.48.0"
     "@pulumi/cloudflare": "npm:6.21.0"
     "@pulumi/pulumi": "npm:3.265.0"
     "@types/node": "npm:26.6.3"
     esbuild: "npm:0.28.2"
-    front-matter: "npm:4.0.2"
     marked: "npm:18.0.14"
     typescript: "npm:5.9.3"
   languageName: unknown
@@ -2985,9 +2983,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hckr_/blendid@npm:9.8.0":
-  version: 9.8.0
-  resolution: "@hckr_/blendid@npm:9.8.0"
+"@hckr_/blendid@npm:9.8.1":
+  version: 9.8.1
+  resolution: "@hckr_/blendid@npm:9.8.1"
   dependencies:
     "@11ty/nunjucks": "npm:4.0.0-alpha.3"
     "@csstools/postcss-gamut-mapping": "npm:3.0.12"
@@ -3034,7 +3032,7 @@ __metadata:
     vite: "npm:8.3.0"
   bin:
     blendid: bin/blendid.js
-  checksum: 10/b05cbd8683d13cf556dd9cf698bd8d7bc87b9e64f94e3b4efc54c6ec72564672c96112e68687891209d6abd507b06a2256e73662614425f635c1ecc59f613e98
+  checksum: 10/c245903b000caf9b9abf1d9de0ebecf7a2cb30ae0a5481f1f1cb7c874bd58e4723f9de389ec8ce3b859497cbde6bf8450a1b08d71e52ea58ed3f7b3257e6070d
   languageName: node
   linkType: hard
 
@@ -5683,15 +5681,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"argparse@npm:^1.0.7":
-  version: 1.0.10
-  resolution: "argparse@npm:1.0.10"
-  dependencies:
-    sprintf-js: "npm:~1.0.2"
-  checksum: 10/c6a621343a553ff3779390bb5ee9c2263d6643ebcd7843227bdde6cc7adbed796eb5540ca98db19e3fd7b4714e1faa51551f8849b268bb62df27ddb15cbcd91e
-  languageName: node
-  linkType: hard
-
 "argparse@npm:^2.0.1":
   version: 2.0.1
   resolution: "argparse@npm:2.0.1"
@@ -7316,16 +7305,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esprima@npm:^4.0.0":
-  version: 4.0.1
-  resolution: "esprima@npm:4.0.1"
-  bin:
-    esparse: ./bin/esparse.js
-    esvalidate: ./bin/esvalidate.js
-  checksum: 10/f1d3c622ad992421362294f7acf866aa9409fbad4eb2e8fa230bd33944ce371d32279667b242d8b8907ec2b6ad7353a717f3c0e60e748873a34a7905174bc0eb
-  languageName: node
-  linkType: hard
-
 "estree-walker@npm:^2.0.2":
   version: 2.0.2
   resolution: "estree-walker@npm:2.0.2"
@@ -7621,15 +7600,6 @@ __metadata:
   version: 5.3.4
   resolution: "fraction.js@npm:5.3.4"
   checksum: 10/ef2c4bc81b2484065f8f7e4c2498f3fdfe6d233b8e7c7f75e3683ed10698536129b2c2dbd6c3f788ca4a020ec07116dd909a91036a364c98dc802b5003bfc613
-  languageName: node
-  linkType: hard
-
-"front-matter@npm:4.0.2":
-  version: 4.0.2
-  resolution: "front-matter@npm:4.0.2"
-  dependencies:
-    js-yaml: "npm:^3.13.1"
-  checksum: 10/8897a831a82c5d35413b02b806ed421e793068ad8bf75e864163ec07b7f0cfd87e2fcce0893e8ceccc8f6c63a46e953a6c01208e573627626867a8b86cf6abb9
   languageName: node
   linkType: hard
 
@@ -8899,18 +8869,6 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.mjs
   checksum: 10/f2461abd1d6268fb226733f0a0e0aa48004bb824116e3dfa75f1a1279001936343b672066dfecdb852ac3ca883452706c383a760aa90430cb68ba395aa2cbc84
-  languageName: node
-  linkType: hard
-
-"js-yaml@npm:^3.13.1":
-  version: 3.15.2
-  resolution: "js-yaml@npm:3.15.2"
-  dependencies:
-    argparse: "npm:^1.0.7"
-    esprima: "npm:^4.0.0"
-  bin:
-    js-yaml: bin/js-yaml.js
-  checksum: 10/320b5471c1b7309a15d9c0068ba273e2da7382a369038a9746c92ef649087c3d6d2a5c676810154efb4eb2ca9584179c8ae14e2fc2e4bd558d964e6bf4fafd3d
   languageName: node
   linkType: hard
 
@@ -12173,13 +12131,6 @@ __metadata:
   version: 3.0.24
   resolution: "spdx-license-ids@npm:3.0.24"
   checksum: 10/f8aaa5e869c9b4ad1bb4b3c1f1ef234bb10fda65e53879d918f3126710af1bd2df89cc4fe6400da90b3281317d909fd035e54e1c2bd4d1b10fb7ac1d30a420e7
-  languageName: node
-  linkType: hard
-
-"sprintf-js@npm:~1.0.2":
-  version: 1.0.3
-  resolution: "sprintf-js@npm:1.0.3"
-  checksum: 10/c34828732ab8509c2741e5fd1af6b767c3daf2c642f267788f933a65b1614943c282e74c4284f4fa749c264b18ee016a0d37a3e5b73aee446da46277d3a85daa
   languageName: node
   linkType: hard
 

@@ -1,5 +1,5 @@
 import projectPath from "@hckr_/blendid/project-path";
-import DefaultRegistry from "undertaker-registry";
+import { Registry } from "@hckr_/blendid/registry";
 import { generateSW } from "workbox-build/build/generate-sw.js";
 import { injectManifest } from "workbox-build/build/inject-manifest.js";
 
@@ -20,7 +20,7 @@ function transformConfigPaths({ globDirectory, swDest, swSrc, ...config }) {
   return config;
 }
 
-export class WorkboxBuildRegistry extends DefaultRegistry {
+export class WorkboxBuildRegistry extends Registry {
   constructor(config, pathConfig) {
     super();
     this.config = config;

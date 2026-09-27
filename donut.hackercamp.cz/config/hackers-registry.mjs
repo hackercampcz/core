@@ -1,7 +1,7 @@
+import { logger } from "@hckr_/blendid/logger";
 import projectPath from "@hckr_/blendid/project-path";
-import logger from "fancy-log";
+import { Registry } from "@hckr_/blendid/registry";
 import { writeFile } from "node:fs/promises";
-import DefaultRegistry from "undertaker-registry";
 
 /** @typedef {import("@types/gulp").Gulp} Gulp */
 
@@ -22,7 +22,7 @@ async function getAttendees(year) {
   return resp.json();
 }
 
-export class HackersRegistry extends DefaultRegistry {
+export class HackersRegistry extends Registry {
   constructor(config, pathConfig) {
     super();
     this.config = config;
