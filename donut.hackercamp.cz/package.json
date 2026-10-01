@@ -5,7 +5,7 @@
     "@gryphoon/texy": "1.0.0",
     "@hackercamp/lib": "workspace:*",
     "@material/mwc-drawer": "0.27.0",
-    "@oddbird/popover-polyfill": "0.7.2",
+    "@oddbird/popover-polyfill": "0.7.3",
     "@thi.ng/atom": "5.3.70",
     "@thi.ng/transducers": "9.7.0",
     "@ungap/structured-clone": "1.4.0",
