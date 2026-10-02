@@ -2893,7 +2893,7 @@ __metadata:
     "@hckr_/cloudflare-pages-plugin-rollbar": "npm:1.1.4"
     "@std/csv": "jsr:1.0.6"
     "@thi.ng/transducers": "npm:9.7.0"
-    "@types/node": "npm:26.6.3"
+    "@types/node": "npm:26.6.4"
     algoliasearch: "npm:5.59.0"
     fast-xml-parser: "npm:5.11.2"
     immutable: "npm:5.1.9"
@@ -2908,7 +2908,7 @@ __metadata:
   resolution: "@hackercamp/core@workspace:."
   dependencies:
     "@hckr_/blendid": "npm:9.8.2"
-    "@types/node": "npm:26.6.3"
+    "@types/node": "npm:26.6.4"
     dprint: "npm:0.58.0"
     npm-run-all2: "npm:9.0.3"
   languageName: unknown
@@ -2957,7 +2957,7 @@ __metadata:
     "@pulumi/aws": "npm:7.48.0"
     "@pulumi/cloudflare": "npm:6.21.0"
     "@pulumi/pulumi": "npm:3.265.0"
-    "@types/node": "npm:26.6.3"
+    "@types/node": "npm:26.6.4"
     esbuild: "npm:0.28.2"
     marked: "npm:18.0.14"
     typescript: "npm:5.9.3"
@@ -5345,12 +5345,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:26.6.3":
-  version: 26.6.3
-  resolution: "@types/node@npm:26.6.3"
+"@types/node@npm:26.6.4":
+  version: 26.6.4
+  resolution: "@types/node@npm:26.6.4"
   dependencies:
     undici-types: "npm:~8.9.0"
-  checksum: 10/278d5241522520fbadd46b41065d7587bbb214adb3c6f8a2a9a28754d374c578d090f7387866d09c79be1e9bbf5adc7eeea453032a52f77e70b06077f85c5c14
+  checksum: 10/649173a03497020b8d3624a5149e0286bd175baf6d1df070c538637ccb256ce5554a76c5b63b454bda2cdb1821fa457e074477a75c3c78fc8f562d5c4a31cba8
   languageName: node
   linkType: hard
 
