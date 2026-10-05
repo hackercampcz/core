@@ -2934,7 +2934,7 @@ __metadata:
     happy-dom: "npm:20.14.5"
     lit-html: "npm:3.3.3"
     lite-youtube-embed: "npm:0.3.4"
-    marked: "npm:18.0.14"
+    marked: "npm:18.1.0"
     open-props: "npm:1.7.23"
     postcss-jit-props: "npm:1.0.16"
     qreator: "npm:10.0.2"
@@ -2959,7 +2959,7 @@ __metadata:
     "@pulumi/pulumi": "npm:3.267.0"
     "@types/node": "npm:26.6.4"
     esbuild: "npm:0.28.2"
-    marked: "npm:18.0.14"
+    marked: "npm:18.1.0"
     typescript: "npm:5.9.3"
   languageName: unknown
   linkType: soft
@@ -9431,6 +9431,15 @@ __metadata:
   bin:
     marked: bin/marked.js
   checksum: 10/d97c79d605ef9f786a379fc86893421f9598f7f05a8e837206279b3a50e9e1f3666769876ea7d8b58b378325da47d2d63758f9d28347440ae25feefbfcf2aeac
+  languageName: node
+  linkType: hard
+
+"marked@npm:18.1.0":
+  version: 18.1.0
+  resolution: "marked@npm:18.1.0"
+  bin:
+    marked: bin/marked.js
+  checksum: 10/c0230bae0188db4f474d8b6639e632aebe7e80c369f24c8faeb7fbc59fda95d88e063a417735b6fab198bee25669713fb44dc6118ad5abc6f8838745b0d9c737
   languageName: node
   linkType: hard
 
