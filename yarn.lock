@@ -2816,12 +2816,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fast-csv/format@npm:5.0.7":
-  version: 5.0.7
-  resolution: "@fast-csv/format@npm:5.0.7"
-  dependencies:
-    lodash.escaperegexp: "npm:^4.1.2"
-  checksum: 10/38253f12dab94d8cc1c907fbdd73f3b087fb5d14a731a8a6337d8e0f51d12fcaf1bde133759c52d42067889bc1b2797b06d60d2c5354d413989811acf19608a4
+"@fast-csv/format@npm:5.0.8":
+  version: 5.0.8
+  resolution: "@fast-csv/format@npm:5.0.8"
+  checksum: 10/157bfa370b14f9c32957a022f1e0a61a346bf22e6c1b7a4e7351c2cb46780f37a6307c20b11fa00fedc93ebd845ede3321cca8a6de752685ad490aea4297e524
   languageName: node
   linkType: hard
 
@@ -2888,7 +2886,7 @@ __metadata:
     "@aws-sdk/client-sqs": "npm:3.1146.0"
     "@aws-sdk/util-dynamodb": "npm:3.996.9"
     "@cloudflare/workers-types": "npm:5.20261005.1"
-    "@fast-csv/format": "npm:5.0.7"
+    "@fast-csv/format": "npm:5.0.8"
     "@hackercamp/lib": "workspace:*"
     "@hckr_/cloudflare-pages-plugin-rollbar": "npm:1.1.4"
     "@std/csv": "jsr:1.0.6"
@@ -9250,13 +9248,6 @@ __metadata:
   version: 4.0.8
   resolution: "lodash.debounce@npm:4.0.8"
   checksum: 10/cd0b2819786e6e80cb9f5cda26b1a8fc073daaf04e48d4cb462fa4663ec9adb3a5387aa22d7129e48eed1afa05b482e2a6b79bfc99b86886364449500cbb00fd
-  languageName: node
-  linkType: hard
-
-"lodash.escaperegexp@npm:^4.1.2":
-  version: 4.1.2
-  resolution: "lodash.escaperegexp@npm:4.1.2"
-  checksum: 10/6d99452b1cfd6073175a9b741a9b09ece159eac463f86f02ea3bee2e2092923fce812c8d2bf446309cc52d1d61bf9af51c8118b0d7421388e6cead7bd3798f0f
   languageName: node
   linkType: hard
 
