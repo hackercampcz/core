@@ -2952,9 +2952,9 @@ __metadata:
   resolution: "@hackercamp/infrastructure@workspace:infrastructure"
   dependencies:
     "@hckr_/blendid": "npm:9.8.2"
-    "@pulumi/aws": "npm:7.48.0"
-    "@pulumi/cloudflare": "npm:6.21.0"
-    "@pulumi/pulumi": "npm:3.267.0"
+    "@pulumi/aws": "npm:7.49.0"
+    "@pulumi/cloudflare": "npm:6.22.0"
+    "@pulumi/pulumi": "npm:3.268.0"
     "@types/node": "npm:26.6.4"
     esbuild: "npm:0.28.2"
     marked: "npm:18.1.0"
@@ -4420,28 +4420,28 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.48.0":
-  version: 7.48.0
-  resolution: "@pulumi/aws@npm:7.48.0"
+"@pulumi/aws@npm:7.49.0":
+  version: 7.49.0
+  resolution: "@pulumi/aws@npm:7.49.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
     mime: "npm:^2.0.0"
-  checksum: 10/44f827bf1907799b0a213863cc108091511ed0496b5058f0bbb2bad90da6b383ba52839429201b1c570beaeeb846620af67aeec9b46b0f5b0214d635c834c61b
+  checksum: 10/b8db43e19626384adaaec4909ef1c892c5d083a28a9d107984e72b79405f374596f411f2c2ee2de396aad2af837436b122c1604a3cd32e521bcf71f3d44ac072
   languageName: node
   linkType: hard
 
-"@pulumi/cloudflare@npm:6.21.0":
-  version: 6.21.0
-  resolution: "@pulumi/cloudflare@npm:6.21.0"
+"@pulumi/cloudflare@npm:6.22.0":
+  version: 6.22.0
+  resolution: "@pulumi/cloudflare@npm:6.22.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
-  checksum: 10/5e39601b5f87d94a563b4af16a3824d894f8f742f60c7b4e89df377e719493c69395458cbc50ef867d0bbd9ebcd6646b1b7fcab672988d874e7d6c7036b95dc2
+  checksum: 10/2581f34ae5458fc6530e0f738772a60f4514d68a8a06b419177ee300a148b7df8f5bc6d81f930bb8081e50ca4200fb107cdcfcdae488b54008ba7777ee7929d9
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.267.0":
-  version: 3.267.0
-  resolution: "@pulumi/pulumi@npm:3.267.0"
+"@pulumi/pulumi@npm:3.268.0":
+  version: 3.268.0
+  resolution: "@pulumi/pulumi@npm:3.268.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -4476,7 +4476,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/03e3b2707369eba4f09e2665044918488a1c2fd134bd05866f965d1550bceb34d5fbd452594a465a95f696201ca2924fc7c121ba00a08dcb0918b1bed7a5842c
+  checksum: 10/7a3ffdf36af8bb3da837475a53cdcf3ee3d4a8c3a00c5a40508595f8d189abaa50392eea731676f83c5b0f91bf5310cb4331b0bde220ed83696ff41c96906b06
   languageName: node
   linkType: hard
 
