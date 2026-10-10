@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
+import { parseArgs } from "@std/cli/parse-args";
 
 const actions = [
   "Znáte se? → 😈",
@@ -101,6 +101,6 @@ Máš otázky? Neváhej se na nás obrátit. Help line: team@hackercamp.cz`;
   }
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(process.argv.slice(2)));
 
-// deno run --allow-net=hooks.slack.com slack-webhook-test.js --token $(op read "op://HackerCamp/Slack Bot/credential") --url $(op read "op://HackerCamp/Slack Bot/incomming webhook")
+// node --permission --allow-net --allow-fs-read=../ slack-webhook-test.js --token $(op read "op://HackerCamp/Slack Bot/credential") --url $(op read "op://HackerCamp/Slack Bot/incomming webhook")

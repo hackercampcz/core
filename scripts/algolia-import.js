@@ -1,8 +1,7 @@
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
-import { parseArgs } from "jsr:@std/cli/parse-args";
-import { createFetchRequester } from "npm:@algolia/requester-fetch";
-import { algoliasearch } from "npm:algoliasearch";
+import { parseArgs } from "@std/cli/parse-args";
+import { algoliasearch } from "algoliasearch";
 import { getAttendeesProjection, getRegistrationProjection } from "../lib/search.js";
+import { createClient } from "./lib/dynamodb.js";
 
 /** @typedef { import("algoliasearch").SearchClient} SearchClient */
 /** @typedef { import("algoliasearch").SetSettingsProps} SetSettingsProps */
@@ -150,9 +149,7 @@ async function indexAttendees(client) {
 }
 
 async function main({ adminToken }) {
-  const client = algoliasearch("J77BFM3PLE", adminToken, {
-    requester: createFetchRequester()
-  });
+  const client = algoliasearch("J77BFM3PLE", adminToken);
 
   console.log(await indexRegistrations(client));
   console.log(await indexAttendees(client));
@@ -160,9 +157,9 @@ async function main({ adminToken }) {
 
 await main(
   Object.assign(
-    { adminToken: Deno.env.get("ALGOLIA_ADMIN_API_KEY") },
-    parseArgs(Deno.args)
+    { adminToken: process.env.ALGOLIA_ADMIN_API_KEY },
+    parseArgs(process.argv.slice(2))
   )
 );
 
-// op run --env-file=../.env -- deno run --allow-env --allow-import --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config algolia-import.js
+// op run --env-file=../.env -- node --permission --allow-net --allow-fs-read=../ --allow-fs-read=$HOME/.aws/credentials --allow-fs-read=$HOME/.aws/config algolia-import.js

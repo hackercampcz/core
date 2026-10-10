@@ -1,7 +1,5 @@
-import { difference } from "https://deno.land/std/datetime/mod.ts";
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
-import { parseArgs } from "jsr:@std/cli/parse-args";
-import { collect } from "./lib/dynamodb.js";
+import { parseArgs } from "@std/cli/parse-args";
+import { collect, createClient } from "./lib/dynamodb.js";
 
 const dynamo = createClient();
 
@@ -32,11 +30,11 @@ async function main({ year }) {
     const checkIn = attendee.checkIn.substring(0, 10);
     const lastTransaction = attendee.nfcTronData?.map(x => x.lastTransaction)?.sort()?.at(-1);
     const checkOut = (attendee.checkout ?? lastTransaction ?? `${year}-08-31T08:18:58.427Z`).substring(0, 10);
-    const diff = difference(new Date(checkIn), new Date(checkOut), { units: ["days"] });
-    await updateAttendee(year, attendee.slackID, diff.days);
+    const { days } = Temporal.PlainDate.from(checkIn).until(Temporal.PlainDate.from(checkOut));
+    await updateAttendee(year, attendee.slackID, days);
   }
 }
 
-await main(parseArgs(Deno.args, { year: new Date().getFullYear() }));
+await main(parseArgs(process.argv.slice(2), { year: new Date().getFullYear() }));
 
-// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config housing-stats.js --year=2025
+// AWS_PROFILE=hackercamp node --permission --allow-net --allow-fs-read=../ --allow-fs-read=$HOME/.aws/credentials --allow-fs-read=$HOME/.aws/config housing-stats.js --year=2025

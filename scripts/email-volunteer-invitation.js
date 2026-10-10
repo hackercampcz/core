@@ -1,7 +1,7 @@
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
-import { partition } from "https://esm.sh/@thi.ng/transducers";
-import { parseArgs } from "jsr:@std/cli/parse-args";
-import { collect } from "./lib/dynamodb.js";
+import { parseArgs } from "@std/cli/parse-args";
+import { partition } from "@thi.ng/transducers";
+import { writeFile } from "node:fs/promises";
+import { collect, createClient } from "./lib/dynamodb.js";
 import { sendEmailsWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
@@ -36,7 +36,7 @@ async function getVolunteers(optOuts, skip, include) {
 async function spit(emails) {
   const encoder = new TextEncoder();
   const data = encoder.encode(emails.join("\n") + "\n");
-  await Deno.writeFile("data/volunteers.txt", data);
+  await writeFile("data/volunteers.txt", data);
 }
 
 async function main({ token, ["dry-run"]: dryRun }) {
@@ -61,6 +61,6 @@ async function main({ token, ["dry-run"]: dryRun }) {
   console.log("DONE");
 }
 
-await main(parseArgs(Deno.args));
+await main(parseArgs(process.argv.slice(2)));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-read=$HOME/.aws/credentials,$HOME/.aws/config --allow-write=./data --allow-import --allow-net=api.postmarkapp.com,dynamodb.eu-central-1.amazonaws.com email-volunteer-invitation.js --token=$(op read "op://HackerCamp/Postmark/credential")
+// AWS_PROFILE=hackercamp node --permission --allow-net --allow-fs-read=../ --allow-fs-read=$HOME/.aws/credentials --allow-fs-read=$HOME/.aws/config --allow-fs-write=./data email-volunteer-invitation.js --token=$(op read "op://HackerCamp/Postmark/credential")

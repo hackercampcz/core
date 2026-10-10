@@ -1,5 +1,5 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { parseArgs } from "@std/cli/parse-args";
+import { createClient } from "./lib/dynamodb.js";
 import { sendEmailWithTemplate, Template } from "./lib/postmark.js";
 
 const dynamo = createClient();
@@ -184,11 +184,9 @@ async function main({}) {
   // const contacts = await getContacts();
   const batches = await getAttendees();
   const bySlackID = new Map();
-  for await (const batch of batches) {
-    for (const attendee of batch.Items) {
-      if (ignoredTickets.has(attendee.ticketType)) continue;
-      bySlackID.getOrInsert(attendee.slackID, []).push(attendee);
-    }
+  for (const attendee of batches.Items) {
+    if (ignoredTickets.has(attendee.ticketType)) continue;
+    bySlackID.getOrInsert(attendee.slackID, []).push(attendee);
   }
   for (const [key, entries] of bySlackID) {
     if (entries.length === 1) bySlackID.delete(key);
@@ -200,6 +198,6 @@ async function main({}) {
   }
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(process.argv.slice(2)));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config attendees-stats.js
+// AWS_PROFILE=hackercamp node --permission --allow-net --allow-fs-read=../ --allow-fs-read=$HOME/.aws/credentials --allow-fs-read=$HOME/.aws/config attendees-stats.js

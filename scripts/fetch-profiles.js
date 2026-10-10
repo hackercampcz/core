@@ -1,6 +1,5 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
-import { writeCSVObjects } from "https://deno.land/x/csv@v0.7.5/mod.ts";
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
+import { parseArgs } from "@std/cli/parse-args";
+import { createClient } from "./lib/dynamodb.js";
 
 const dynamo = createClient();
 
@@ -20,17 +19,8 @@ async function main({ token }) {
   for (const contact of items) {
     await dynamo.putItem({ TableName: "contacts", Item: contact });
   }
-
-  return;
-  const header = Object.keys(items[0]);
-  const f = await Deno.open("./data/contacts.csv", { write: true, create: true, truncate: true });
-  try {
-    await writeCSVObjects(f, items, { header });
-  } finally {
-    f.close();
-  }
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(process.argv.slice(2)));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config fetch-profiles.js --token $(op read 'op://HackerCamp/Slack Bot/credential')
+// AWS_PROFILE=hackercamp node --permission --allow-net --allow-fs-read=../ --allow-fs-read=$HOME/.aws/credentials --allow-fs-read=$HOME/.aws/config fetch-profiles.js --token $(op read 'op://HackerCamp/Slack Bot/credential')

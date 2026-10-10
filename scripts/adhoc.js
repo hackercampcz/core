@@ -1,7 +1,5 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
-// import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
-// import attendees from "./data/attendees.json" with { type: "json" };
-// import paidRegistrations from "./data/paid-registrations.json" with { type: "json" };
+import { parseArgs } from "@std/cli/parse-args";
+import { createClient } from "./lib/dynamodb.js";
 
 // const dynamo = createClient();
 
@@ -711,6 +709,6 @@ async function main({}) {
   console.dir(b.difference(a));
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(process.argv.slice(2)));
 
-// AWS_PROFILE=hackercamp deno run --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config adhoc.js
+// AWS_PROFILE=hackercamp node --permission --allow-net --allow-fs-read=../ --allow-fs-read=$HOME/.aws/credentials --allow-fs-read=$HOME/.aws/config adhoc.js --year=2026

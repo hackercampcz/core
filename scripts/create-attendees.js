@@ -1,5 +1,5 @@
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb@master/mod.ts";
-import { parseArgs } from "jsr:@std/cli/parse-args";
+import { parseArgs } from "@std/cli/parse-args";
+import { createClient } from "./lib/dynamodb.js";
 import { sendEmailWithTemplate, Template } from "./lib/postmark.js";
 
 async function inviteSlackUser(email, token) {
@@ -177,4 +177,4 @@ async function main({ slackToken, postmarkToken }) {
   await createAttendees(attendees, dynamo);
 }
 
-await main(parseArgs(Deno.args));
+await main(parseArgs(process.argv.slice(2)));

@@ -1,4 +1,4 @@
-import { parse } from "https://deno.land/std/flags/mod.ts";
+import { parseArgs } from "@std/cli/parse-args";
 import { sendEmailWithTemplate, Template } from "./lib/postmark.js";
 
 async function main({ token }) {
@@ -17,6 +17,6 @@ async function main({ token }) {
   console.log("DONE");
 }
 
-await main(parse(Deno.args));
+await main(parseArgs(process.argv.slice(2)));
 
-// deno run --allow-import --allow-env --allow-net=api.postmarkapp.com email-generic.js --token=$(op read "op://HackerCamp/Postmark/credential")
+// node --permission --allow-net --allow-fs-read=../ email-generic.js --token=$(op read "op://HackerCamp/Postmark/credential")

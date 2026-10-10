@@ -1,6 +1,5 @@
-import { createClient } from "https://denopkg.com/chiefbiiko/dynamodb/mod.ts";
-import { parseArgs } from "jsr:@std/cli/parse-args";
-import { collect } from "./lib/dynamodb.js";
+import { parseArgs } from "@std/cli/parse-args";
+import { collect, createClient } from "./lib/dynamodb.js";
 
 const dynamo = createClient();
 
@@ -126,6 +125,6 @@ async function main({ slackID, email, slackToken }) {
   console.log(result.ok ? "OK" : "FAIL");
 }
 
-await main(parseArgs(Deno.args));
+await main(parseArgs(process.argv.slice(2)));
 
-// AWS_PROFILE=hackercamp deno run --allow-import --allow-env --allow-net --allow-read=$HOME/.aws/credentials,$HOME/.aws/config change-hacker-email.js --slackToken=$(op read "op://HackerCamp/Slack Admin/credential") --slackID=hc-test --email=new@example.com
+// AWS_PROFILE=hackercamp node --permission --allow-net --allow-fs-read=../ --allow-fs-read=$HOME/.aws/credentials --allow-fs-read=$HOME/.aws/config change-hacker-email.js --slackToken=$(op read "op://HackerCamp/Slack Admin/credential") --slackID=hc-test --email=new@example.com

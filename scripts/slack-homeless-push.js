@@ -1,4 +1,4 @@
-import { parseArgs } from "jsr:@std/cli/parse-args";
+import { parseArgs } from "@std/cli/parse-args";
 
 export async function postChatMessage(channel, message, token) {
   const resp = await fetch("https://slack.com/api/chat.postMessage", {
@@ -53,6 +53,6 @@ async function main({ token }) {
   }
 }
 
-await main(parseArgs(Deno.args));
+await main(parseArgs(process.argv.slice(2)));
 
-// deno run --allow-import --allow-net=slack.com slack-homeless-push.js --token $(op read "op://HackerCamp/Slack Bot/credential")
+// node --permission --allow-net --allow-fs-read=../ slack-homeless-push.js --token $(op read "op://HackerCamp/Slack Bot/credential")

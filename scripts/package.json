@@ -7,5 +7,9 @@
     "@std/cli": "jsr:1.0.25",
     "@thi.ng/transducers": "9.7.0",
     "algoliasearch": "5.59.0"
-  }
+  },
+  "engines": {
+    "node": ">=26"
+  },
+  "packageManager": "yarn@4.18.1"
 }
