@@ -375,6 +375,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@aws-sdk/lib-dynamodb@npm:3.1149.0":
+  version: 3.1149.0
+  resolution: "@aws-sdk/lib-dynamodb@npm:3.1149.0"
+  dependencies:
+    "@aws-sdk/core": "npm:^3.978.2"
+    "@aws-sdk/util-dynamodb": "npm:^3.996.9"
+    "@smithy/core": "npm:^3.35.2"
+    "@smithy/types": "npm:^4.19.0"
+    tslib: "npm:^2.6.2"
+  peerDependencies:
+    "@aws-sdk/client-dynamodb": ^3.1149.0
+  checksum: 10/918561abffcdff62ccc0dd466e2668d651e146cfb3e2de73e39fdb4403122e7ca6d4230b056301efffa52a551e9983d40959a62b9910be758d92bd4418f6dac5
+  languageName: node
+  linkType: hard
+
 "@aws-sdk/middleware-endpoint-discovery@npm:^3.972.32":
   version: 3.972.32
   resolution: "@aws-sdk/middleware-endpoint-discovery@npm:3.972.32"
@@ -452,7 +467,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/util-dynamodb@npm:3.996.9":
+"@aws-sdk/util-dynamodb@npm:3.996.9, @aws-sdk/util-dynamodb@npm:^3.996.9":
   version: 3.996.9
   resolution: "@aws-sdk/util-dynamodb@npm:3.996.9"
   dependencies:
@@ -2790,6 +2805,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@hackercamp/scripts@workspace:scripts":
+  version: 0.0.0-use.local
+  resolution: "@hackercamp/scripts@workspace:scripts"
+  dependencies:
+    "@aws-sdk/client-dynamodb": "npm:3.1149.0"
+    "@aws-sdk/lib-dynamodb": "npm:3.1149.0"
+    "@std/cli": "jsr:1.0.25"
+    "@thi.ng/transducers": "npm:9.7.0"
+    algoliasearch: "npm:5.59.0"
+  languageName: unknown
+  linkType: soft
+
 "@hackercamp/web@workspace:www.hackercamp.cz":
   version: 0.0.0-use.local
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
@@ -3659,6 +3686,13 @@ __metadata:
   version: 1.0.6
   resolution: "@jsr/std__bytes@npm:1.0.6::__archiveUrl=https%3A%2F%2Fnpm.jsr.io%2F~%2F11%2F%40jsr%2Fstd__bytes%2F1.0.6.tgz"
   checksum: 10/b0d2d637dce5d0cf474e02d3c36c8ddbf1119c1ddb88b6b3ba71b1ed1f7f77fbef4bb58d18303e17d04756aac9b295a88c4e9f853dd00cf8bf8d5da9d43c03ba
+  languageName: node
+  linkType: hard
+
+"@jsr/std__internal@npm:^1.0.12":
+  version: 1.0.14
+  resolution: "@jsr/std__internal@npm:1.0.14::__archiveUrl=https%3A%2F%2Fnpm.jsr.io%2F~%2F11%2F%40jsr%2Fstd__internal%2F1.0.14.tgz"
+  checksum: 10/d05f199dea6041b0dd2752e1db44ee71efa43bea324803219bad7e3cbfda75d353ba65a5f7e54b27313bf9385492a8347fb3e40c5e633bca592e948daec4a5f8
   languageName: node
   linkType: hard
 
@@ -5148,6 +5182,24 @@ __metadata:
   version: 1.1.0
   resolution: "@standard-schema/spec@npm:1.1.0"
   checksum: 10/a209615c9e8b2ea535d7db0a5f6aa0f962fd4ab73ee86a46c100fb78116964af1f55a27c1794d4801e534a196794223daa25ff5135021e03c7828aa3d95e1763
+  languageName: node
+  linkType: hard
+
+"@std/cli@jsr:1.0.25":
+  version: 1.0.25
+  resolution: "@std/cli@jsr:1.0.25::__archiveUrl=https%3A%2F%2Fnpm.jsr.io%2F~%2F11%2F%40jsr%2Fstd__cli%2F1.0.25.tgz"
+  dependencies:
+    "@jsr/std__internal": "npm:^1.0.12"
+  checksum: 10/2727268eed571deb5da7dd1822d14fa2b752b657e52ccd3dc2d68a9a253ab8b4aa1165fc45468172cfb6b8c3a32bd0e535de4e541785aab1fe68a8fe6488ae6d
+  languageName: node
+  linkType: hard
+
+"@std/cli@npm:@jsr/std__cli@1.0.25":
+  version: 1.0.25
+  resolution: "@jsr/std__cli@npm:1.0.25::__archiveUrl=https%3A%2F%2Fnpm.jsr.io%2F~%2F11%2F%40jsr%2Fstd__cli%2F1.0.25.tgz"
+  dependencies:
+    "@jsr/std__internal": "npm:^1.0.12"
+  checksum: 10/2727268eed571deb5da7dd1822d14fa2b752b657e52ccd3dc2d68a9a253ab8b4aa1165fc45468172cfb6b8c3a32bd0e535de4e541785aab1fe68a8fe6488ae6d
   languageName: node
   linkType: hard
 
