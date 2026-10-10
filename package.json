@@ -8,7 +8,7 @@
   "packageManager": "yarn@4.18.1",
   "devDependencies": {
     "@hckr_/blendid": "9.8.2",
-    "@types/node": "26.6.4",
+    "@types/node": "26.6.5",
     "dprint": "0.61.1",
     "npm-run-all2": "9.0.3"
   },
