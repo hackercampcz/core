@@ -2758,7 +2758,7 @@ __metadata:
     immutable: "npm:5.1.9"
     jsonwebtoken: "npm:9.0.3"
     rollbar: "npm:4.0.0"
-    wrangler: "npm:4.149.0"
+    wrangler: "npm:4.150.0"
   languageName: unknown
   linkType: soft
 
@@ -2804,7 +2804,7 @@ __metadata:
     workbox-precaching: "npm:7.4.1"
     workbox-recipes: "npm:7.4.1"
     workbox-window: "npm:7.4.1"
-    wrangler: "npm:4.149.0"
+    wrangler: "npm:4.150.0"
   languageName: unknown
   linkType: soft
 
@@ -2850,7 +2850,7 @@ __metadata:
   resolution: "@hackercamp/web@workspace:www.hackercamp.cz"
   dependencies:
     lite-youtube-embed: "npm:0.3.4"
-    wrangler: "npm:4.149.0"
+    wrangler: "npm:4.150.0"
   languageName: unknown
   linkType: soft
 
@@ -9571,9 +9571,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"miniflare@npm:5.20261006.1-alpha":
-  version: 5.20261006.1-alpha
-  resolution: "miniflare@npm:5.20261006.1-alpha"
+"miniflare@npm:5.20261006.2-beta":
+  version: 5.20261006.2-beta
+  resolution: "miniflare@npm:5.20261006.2-beta"
   dependencies:
     "@cspotcode/source-map-support": "npm:0.8.1"
     sharp: "npm:0.35.5"
@@ -9581,7 +9581,7 @@ __metadata:
     workerd: "npm:1.20261006.1"
     ws: "npm:8.21.0"
     youch: "npm:4.1.0-beta.10"
-  checksum: 10/1738739b430813df342b29650eeaea8c6bcb7c0fa234b2d2e4e84bb7f7364b8f03ddd518e2a5dcf4fd829d3a039f408d8cbbc69e6b9c4b9d92017c9d940cee26
+  checksum: 10/f26a2575935c10765bfba421be3f51cd0e12774d89c02fb876d47ebed7e67f69f8a3301bef8598a7b0a47ffe9a00c98cf885973b030d57d43eae7d4e4642d1ba
   languageName: node
   linkType: hard
 
@@ -13582,16 +13582,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"wrangler@npm:4.149.0":
-  version: 4.149.0
-  resolution: "wrangler@npm:4.149.0"
+"wrangler@npm:4.150.0":
+  version: 4.150.0
+  resolution: "wrangler@npm:4.150.0"
   dependencies:
     "@cloudflare/kv-asset-handler": "npm:0.5.0"
     "@cloudflare/unenv-preset": "npm:2.16.2"
     blake3-wasm: "npm:2.1.5"
     esbuild: "npm:0.28.2"
     fsevents: "npm:2.3.3"
-    miniflare: "npm:5.20261006.1-alpha"
+    miniflare: "npm:5.20261006.2-beta"
     path-to-regexp: "npm:6.3.0"
     unenv: "npm:2.0.0-rc.24"
     workerd: "npm:1.20261006.1"
@@ -13607,7 +13607,7 @@ __metadata:
     cf-wrangler: bin/cf-wrangler.js
     wrangler: bin/wrangler.js
     wrangler2: bin/wrangler.js
-  checksum: 10/e2d9c3859ae84df33b1c1eb67a3722a43b4903be91e7d4803d2b3f330e8bfcba7e52cca4ede8c29abcd08d74c15c70c0f53bb8429568c2cf534cee4f3d55f384
+  checksum: 10/0a5d29aa6c43bfd2188b9561e8c058e2da892dfef89b495fd07f5782b5a97a9c518a04ccaea17e83a4ffcf74ec1cf9d28fc5c94c4217e26a7a49422798bf4d45
   languageName: node
   linkType: hard
 
