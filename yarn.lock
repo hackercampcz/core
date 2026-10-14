@@ -2812,7 +2812,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/core@workspace:."
   dependencies:
-    "@hckr_/blendid": "npm:9.9.0"
+    "@hckr_/blendid": "npm:9.9.1"
     "@types/node": "npm:26.6.5"
     dprint: "npm:0.63.0"
     npm-run-all2: "npm:9.0.3"
@@ -2858,7 +2858,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/infrastructure@workspace:infrastructure"
   dependencies:
-    "@hckr_/blendid": "npm:9.9.0"
+    "@hckr_/blendid": "npm:9.9.1"
     "@pulumi/aws": "npm:7.50.0"
     "@pulumi/cloudflare": "npm:6.22.1"
     "@pulumi/pulumi": "npm:3.268.0"
@@ -2900,9 +2900,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@hckr_/blendid@npm:9.9.0":
-  version: 9.9.0
-  resolution: "@hckr_/blendid@npm:9.9.0"
+"@hckr_/blendid@npm:9.9.1":
+  version: 9.9.1
+  resolution: "@hckr_/blendid@npm:9.9.1"
   dependencies:
     "@11ty/nunjucks": "npm:4.0.0-alpha.3"
     "@csstools/postcss-gamut-mapping": "npm:3.0.15"
@@ -2947,7 +2947,7 @@ __metadata:
     vite: "npm:8.3.4"
   bin:
     blendid: bin/blendid.js
-  checksum: 10/be3c92c1d2eb41144ed1edc00834583f6067fc4c70e5faa39deae8f421e031d442eba3336dc4394e19f6eeaec703f558d39104f2fb8240b3651fd09712ffb5d9
+  checksum: 10/e249904049417122e42da0b996282b8371d126465a48ca2ea9d85f8e7bad5035c22a02c3b3ad6c3773061a0b1dcee21af1ac37ffd794ea44be2d6d44fd2f96a2
   languageName: node
   linkType: hard
 
