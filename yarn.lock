@@ -2859,7 +2859,7 @@ __metadata:
   resolution: "@hackercamp/infrastructure@workspace:infrastructure"
   dependencies:
     "@hckr_/blendid": "npm:9.9.1"
-    "@pulumi/aws": "npm:7.50.0"
+    "@pulumi/aws": "npm:7.51.0"
     "@pulumi/cloudflare": "npm:6.22.1"
     "@pulumi/pulumi": "npm:3.268.0"
     "@types/node": "npm:26.6.5"
@@ -4592,13 +4592,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.50.0":
-  version: 7.50.0
-  resolution: "@pulumi/aws@npm:7.50.0"
+"@pulumi/aws@npm:7.51.0":
+  version: 7.51.0
+  resolution: "@pulumi/aws@npm:7.51.0"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
     mime: "npm:^2.0.0"
-  checksum: 10/89f1f2255a176a4662086f241888b1432602bccedb7053eb148240a3b889c1232f09b578b23d106f5924e75c984c1926d19ccd9297be9f5ea1ab602ca19cf879
+  checksum: 10/ba7ed1a09e9cba864da9f99c0a936b21ba49d1400b97374997705c7de769bbb1ea3b42f65dc9957c9955b064d43a2011a1682177e6a7715cdda33dea6c636fe9
   languageName: node
   linkType: hard
 
