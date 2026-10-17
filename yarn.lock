@@ -2859,9 +2859,9 @@ __metadata:
   resolution: "@hackercamp/infrastructure@workspace:infrastructure"
   dependencies:
     "@hckr_/blendid": "npm:9.9.1"
-    "@pulumi/aws": "npm:7.51.0"
+    "@pulumi/aws": "npm:7.51.1"
     "@pulumi/cloudflare": "npm:6.22.1"
-    "@pulumi/pulumi": "npm:3.268.0"
+    "@pulumi/pulumi": "npm:3.270.0"
     "@types/node": "npm:26.6.5"
     esbuild: "npm:0.28.2"
     marked: "npm:18.1.1"
@@ -4592,13 +4592,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/aws@npm:7.51.0":
-  version: 7.51.0
-  resolution: "@pulumi/aws@npm:7.51.0"
+"@pulumi/aws@npm:7.51.1":
+  version: 7.51.1
+  resolution: "@pulumi/aws@npm:7.51.1"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
     mime: "npm:^2.0.0"
-  checksum: 10/ba7ed1a09e9cba864da9f99c0a936b21ba49d1400b97374997705c7de769bbb1ea3b42f65dc9957c9955b064d43a2011a1682177e6a7715cdda33dea6c636fe9
+  checksum: 10/e4e689881a5f8dab85f9f6cc4e2734d5b33541dd7149de3f206d4e03021c8061776d228991e34fcacb58bc1bf16a56a3491a9665e28403a010dc87aae89edd66
   languageName: node
   linkType: hard
 
@@ -4611,9 +4611,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.268.0":
-  version: 3.268.0
-  resolution: "@pulumi/pulumi@npm:3.268.0"
+"@pulumi/pulumi@npm:3.270.0":
+  version: 3.270.0
+  resolution: "@pulumi/pulumi@npm:3.270.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -4648,7 +4648,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/7a3ffdf36af8bb3da837475a53cdcf3ee3d4a8c3a00c5a40508595f8d189abaa50392eea731676f83c5b0f91bf5310cb4331b0bde220ed83696ff41c96906b06
+  checksum: 10/2883d26e1a5229b3b370b57262d6675932c43220fc79c33977fa36e2180fe07ff71cd17da97a529473a55b0a106a999ec246bc4b5e599d2d0377f73f2320c7de
   languageName: node
   linkType: hard
 
