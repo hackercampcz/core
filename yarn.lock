@@ -2803,7 +2803,7 @@ __metadata:
     fast-xml-parser: "npm:5.11.2"
     immutable: "npm:5.1.9"
     jsonwebtoken: "npm:9.0.3"
-    rollbar: "npm:4.0.0"
+    rollbar: "npm:4.1.0"
     wrangler: "npm:4.151.1"
   languageName: unknown
   linkType: soft
@@ -2843,7 +2843,7 @@ __metadata:
     open-props: "npm:1.7.23"
     postcss-jit-props: "npm:1.0.16"
     qreator: "npm:10.0.2"
-    rollbar: "npm:4.0.0"
+    rollbar: "npm:4.1.0"
     vitest: "npm:4.1.12"
     vitest-localstorage-mock: "npm:^0.1.2"
     workbox-build: "npm:7.4.1"
@@ -11627,9 +11627,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollbar@npm:4.0.0":
-  version: 4.0.0
-  resolution: "rollbar@npm:4.0.0"
+"rollbar@npm:4.1.0":
+  version: 4.1.0
+  resolution: "rollbar@npm:4.1.0"
   dependencies:
     "@rrweb/record": "npm:^2.0.0-alpha.18"
     async: "npm:~3.2.3"
@@ -11638,7 +11638,7 @@ __metadata:
     lru-cache: "npm:~2.2.1"
     request-ip: "npm:~3.3.0"
     source-map: "npm:^0.5.7"
-  checksum: 10/2292c65a02fd7d8f0e11811befb5c5678840f537dd0e488f0ca754b6c85b5cd36d4f6cc97ac8e39ebd3a4ec38fe22f25feea398f0872cd1b0e979ac067580e8d
+  checksum: 10/5a0b213aada62881500392e19cc116d7cea4cad3fdf1f91c3512f0a082882d5ea0423f28e415d0804d6d2cda0f1fdad683d5e0e5f6f1bd313a029e3bd0a4c1bf
   languageName: node
   linkType: hard
 
