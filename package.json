@@ -9,7 +9,7 @@
   "devDependencies": {
     "@hckr_/blendid": "9.9.1",
     "@types/node": "26.6.5",
-    "dprint": "0.64.0",
+    "dprint": "0.64.1",
     "npm-run-all2": "9.0.3"
   },
   "scripts": {
