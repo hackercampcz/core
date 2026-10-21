@@ -13492,11 +13492,11 @@ __metadata:
   linkType: hard
 
 "vitest-localstorage-mock@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "vitest-localstorage-mock@npm:0.1.2"
+  version: 0.1.3
+  resolution: "vitest-localstorage-mock@npm:0.1.3"
   peerDependencies:
     vitest: "*"
-  checksum: 10/b452aed6756634e18f966943553c682f4c95e5779493a0101fc6ab42ef75e025f6e1f5cbc1dd038a59d3d356f9769ce1be551e96dd77b904042d925b2373fd2c
+  checksum: 10/b1add2c885b46501af23c015e3c302687e5f6ac8bca2a5b0f29f2b9696483c7bef7a51ae5e0ddabeac434f4a0a6b39eb61a594f0153ac2cec0d2249710841617
   languageName: node
   linkType: hard
 
