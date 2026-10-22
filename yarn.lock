@@ -2860,8 +2860,8 @@ __metadata:
   dependencies:
     "@hckr_/blendid": "npm:9.9.1"
     "@pulumi/aws": "npm:7.51.1"
-    "@pulumi/cloudflare": "npm:6.22.1"
-    "@pulumi/pulumi": "npm:3.270.0"
+    "@pulumi/cloudflare": "npm:6.23.1"
+    "@pulumi/pulumi": "npm:3.271.0"
     "@types/node": "npm:26.6.5"
     esbuild: "npm:0.28.2"
     marked: "npm:18.1.1"
@@ -4602,18 +4602,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/cloudflare@npm:6.22.1":
-  version: 6.22.1
-  resolution: "@pulumi/cloudflare@npm:6.22.1"
+"@pulumi/cloudflare@npm:6.23.1":
+  version: 6.23.1
+  resolution: "@pulumi/cloudflare@npm:6.23.1"
   dependencies:
     "@pulumi/pulumi": "npm:^3.142.0"
-  checksum: 10/bb202b5e29afa574a4c423d407bceddb0ffbc360c98e1bdf11c8231fd846cf0c35d28911e720d80b97e6764d943d3acc45179e4a4e4a04b650902adb6c55de04
+  checksum: 10/20e479b79722acd24306adc434057440652b0ba459b644d055aab555ce079e7f0b0fc9702073b609647165c822c61b865035161b4e08dc6a3e87c221749ee7b4
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.270.0":
-  version: 3.270.0
-  resolution: "@pulumi/pulumi@npm:3.270.0"
+"@pulumi/pulumi@npm:3.271.0":
+  version: 3.271.0
+  resolution: "@pulumi/pulumi@npm:3.271.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -4648,7 +4648,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/2883d26e1a5229b3b370b57262d6675932c43220fc79c33977fa36e2180fe07ff71cd17da97a529473a55b0a106a999ec246bc4b5e599d2d0377f73f2320c7de
+  checksum: 10/c84fd2aee1050ecee37d3ab92369b33af646c669c1df68c4bbc93bcd5d57020e02aa6154f9320715871893eaedd8c496a497696084f3fe7a8c13148c6eeb2f23
   languageName: node
   linkType: hard
 
