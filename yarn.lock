@@ -178,9 +178,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-dynamodb@npm:3.1155.0":
-  version: 3.1155.0
-  resolution: "@aws-sdk/client-dynamodb@npm:3.1155.0"
+"@aws-sdk/client-dynamodb@npm:3.1156.0":
+  version: 3.1156.0
+  resolution: "@aws-sdk/client-dynamodb@npm:3.1156.0"
   dependencies:
     "@aws-sdk/core": "npm:^3.978.5"
     "@aws-sdk/credential-provider-node": "npm:^3.972.88"
@@ -192,13 +192,13 @@ __metadata:
     "@smithy/node-http-handler": "npm:^4.12.1"
     "@smithy/types": "npm:^4.19.0"
     tslib: "npm:^2.6.2"
-  checksum: 10/0e22bf0435e560c62428cb16a5a96de185f594da41b48f9a33d0e14731dd254d7228c61943692c9c5474d08c8184b332f9549f779afd3b42cfa422fdd2f88ee1
+  checksum: 10/3fbf76aa80ff37bf96f87627748d69444739bf10cb2d185e01bff9c1550c3c80edbdf58ec233a1f80d7b8c56cc64b212810667fe2ff091a4ad5a91f12d3f34cb
   languageName: node
   linkType: hard
 
-"@aws-sdk/client-sqs@npm:3.1155.0":
-  version: 3.1155.0
-  resolution: "@aws-sdk/client-sqs@npm:3.1155.0"
+"@aws-sdk/client-sqs@npm:3.1156.0":
+  version: 3.1156.0
+  resolution: "@aws-sdk/client-sqs@npm:3.1156.0"
   dependencies:
     "@aws-sdk/core": "npm:^3.978.5"
     "@aws-sdk/credential-provider-node": "npm:^3.972.88"
@@ -209,7 +209,7 @@ __metadata:
     "@smithy/node-http-handler": "npm:^4.12.1"
     "@smithy/types": "npm:^4.19.0"
     tslib: "npm:^2.6.2"
-  checksum: 10/3ba65d350b786ab2a6d7df7c76cf6d25ddc6b6a17f85d50423a2d2ced862c3ae138213d39582504a6180c56d6ad8d8b3f1bc28b67befa61697f2245b62d3e7fd
+  checksum: 10/c2c3da87fdf3aa39bba307fefc9acdf65a74a1beac2263be5d51c0f3e91a5e719084e73895849a267fbed7c4905a6fa099b3b57be17a375490ba8a24a8d2ded3
   languageName: node
   linkType: hard
 
@@ -375,9 +375,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-sdk/lib-dynamodb@npm:3.1155.0":
-  version: 3.1155.0
-  resolution: "@aws-sdk/lib-dynamodb@npm:3.1155.0"
+"@aws-sdk/lib-dynamodb@npm:3.1156.0":
+  version: 3.1156.0
+  resolution: "@aws-sdk/lib-dynamodb@npm:3.1156.0"
   dependencies:
     "@aws-sdk/core": "npm:^3.978.5"
     "@aws-sdk/util-dynamodb": "npm:^3.996.9"
@@ -385,8 +385,8 @@ __metadata:
     "@smithy/types": "npm:^4.19.0"
     tslib: "npm:^2.6.2"
   peerDependencies:
-    "@aws-sdk/client-dynamodb": ^3.1155.0
-  checksum: 10/d724bac30c3f8cc46c3327e2d047076577fa696197fc1da24a4e9979bd4df44270097b24caf23ac00bbad72e8c8b907881a10f5357dbb2e87155f874c84ec3c3
+    "@aws-sdk/client-dynamodb": ^3.1156.0
+  checksum: 10/a174e9d80cec4c9a87fa478f6f598759a9bf19d655d290379dda4147d60516da73815905e015a2a9a01179df9f9813e3561f99762934f92dc5454f89b665a327
   languageName: node
   linkType: hard
 
@@ -2789,8 +2789,8 @@ __metadata:
   resolution: "@hackercamp/api@workspace:api.hackercamp.cz"
   dependencies:
     "@algolia/requester-fetch": "npm:5.60.0"
-    "@aws-sdk/client-dynamodb": "npm:3.1155.0"
-    "@aws-sdk/client-sqs": "npm:3.1155.0"
+    "@aws-sdk/client-dynamodb": "npm:3.1156.0"
+    "@aws-sdk/client-sqs": "npm:3.1156.0"
     "@aws-sdk/util-dynamodb": "npm:3.996.9"
     "@cloudflare/workers-types": "npm:5.20261022.1"
     "@fast-csv/format": "npm:5.0.8"
@@ -2883,8 +2883,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@hackercamp/scripts@workspace:scripts"
   dependencies:
-    "@aws-sdk/client-dynamodb": "npm:3.1155.0"
-    "@aws-sdk/lib-dynamodb": "npm:3.1155.0"
+    "@aws-sdk/client-dynamodb": "npm:3.1156.0"
+    "@aws-sdk/lib-dynamodb": "npm:3.1156.0"
     "@std/cli": "jsr:1.0.25"
     "@thi.ng/transducers": "npm:9.7.0"
     algoliasearch: "npm:5.60.0"
