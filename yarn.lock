@@ -2861,7 +2861,7 @@ __metadata:
     "@hckr_/blendid": "npm:9.9.1"
     "@pulumi/aws": "npm:7.51.1"
     "@pulumi/cloudflare": "npm:6.23.1"
-    "@pulumi/pulumi": "npm:3.271.0"
+    "@pulumi/pulumi": "npm:3.272.0"
     "@types/node": "npm:26.6.5"
     esbuild: "npm:0.28.2"
     marked: "npm:18.1.1"
@@ -4611,9 +4611,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pulumi/pulumi@npm:3.271.0":
-  version: 3.271.0
-  resolution: "@pulumi/pulumi@npm:3.271.0"
+"@pulumi/pulumi@npm:3.272.0":
+  version: 3.272.0
+  resolution: "@pulumi/pulumi@npm:3.272.0"
   dependencies:
     "@grpc/grpc-js": "npm:^1.10.1"
     "@logdna/tail-file": "npm:^2.0.6"
@@ -4648,7 +4648,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/c84fd2aee1050ecee37d3ab92369b33af646c669c1df68c4bbc93bcd5d57020e02aa6154f9320715871893eaedd8c496a497696084f3fe7a8c13148c6eeb2f23
+  checksum: 10/b32f02a49690f8b1e6ca45366e7a190b42529e85693086c37af711ba7f98ecd6c9b1436ca4294e7651ece87ad17bba66702aadd459b76792bc1c0bc7c2a0ad83
   languageName: node
   linkType: hard
 
