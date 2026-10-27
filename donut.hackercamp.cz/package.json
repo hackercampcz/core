@@ -16,7 +16,7 @@
     "lite-youtube-embed": "0.3.4",
     "marked": "18.1.2",
     "qreator": "10.0.2",
-    "rollbar": "4.1.0",
+    "rollbar": "4.2.0",
     "workbox-precaching": "7.4.1",
     "workbox-recipes": "7.4.1",
     "workbox-window": "7.4.1"
