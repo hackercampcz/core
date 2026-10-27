@@ -2,8 +2,8 @@
   "name": "@hackercamp/scripts",
   "type": "module",
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "3.1157.0",
-    "@aws-sdk/lib-dynamodb": "3.1157.0",
+    "@aws-sdk/client-dynamodb": "3.1158.0",
+    "@aws-sdk/lib-dynamodb": "3.1158.0",
     "@std/cli": "jsr:1.0.25",
     "@thi.ng/transducers": "9.7.0",
     "algoliasearch": "5.60.0"
