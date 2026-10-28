@@ -5,9 +5,9 @@
   "packageManager": "yarn@4.18.1",
   "dependencies": {
     "@hckr_/blendid": "9.9.1",
-    "@pulumi/aws": "7.51.1",
-    "@pulumi/cloudflare": "6.23.1",
-    "@pulumi/pulumi": "3.272.0",
+    "@pulumi/aws": "7.52.1",
+    "@pulumi/cloudflare": "6.23.2",
+    "@pulumi/pulumi": "3.273.0",
     "esbuild": "0.28.2",
     "marked": "18.1.2"
   },
