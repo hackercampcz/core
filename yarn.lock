@@ -2752,13 +2752,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gryphoon/texy@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@gryphoon/texy@npm:1.0.0"
-  checksum: 10/0f8619018408bcd323ed6fb2357e63e511d3cd44843d7e8af06db0641239354e21262e27fe98c95d004d5f000c2e232d505c2f88ff71bded8dd62d1647f2dfad
-  languageName: node
-  linkType: hard
-
 "@gryphoon/texy@npm:2.0.2":
   version: 2.0.2
   resolution: "@gryphoon/texy@npm:2.0.2"
@@ -2824,7 +2817,7 @@ __metadata:
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
     "@cloudflare/workers-types": "npm:5.20261028.1"
-    "@gryphoon/texy": "npm:1.0.0"
+    "@gryphoon/texy": "npm:2.0.2"
     "@hackercamp/lib": "workspace:*"
     "@material/mwc-drawer": "npm:0.27.0"
     "@oddbird/popover-polyfill": "npm:0.7.3"
