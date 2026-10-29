@@ -4,7 +4,7 @@
     "#lib/*.js": "./functions/lib/*.js"
   },
   "dependencies": {
-    "@algolia/requester-fetch": "5.60.0",
+    "@algolia/requester-fetch": "5.61.0",
     "@aws-sdk/client-dynamodb": "3.1158.0",
     "@aws-sdk/client-sqs": "3.1158.0",
     "@aws-sdk/util-dynamodb": "3.996.9",
@@ -13,7 +13,7 @@
     "@hckr_/cloudflare-pages-plugin-rollbar": "1.1.4",
     "@std/csv": "jsr:1.0.6",
     "@thi.ng/transducers": "9.7.0",
-    "algoliasearch": "5.60.0",
+    "algoliasearch": "5.61.0",
     "fast-xml-parser": "5.11.2",
     "immutable": "5.1.9",
     "jsonwebtoken": "9.0.3",
