@@ -12,6 +12,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@acemir/cssom@npm:^0.9.32":
+  version: 0.9.32
+  resolution: "@acemir/cssom@npm:0.9.32"
+  checksum: 10/ad7d3cdd55fc72b90f535fe5512c00392e72405476ac2a38b5784493aba0819c6050ec465f2da540489fe6d04e19cb817c16e3bcdfd7b3e63717f759ad31a9ca
+  languageName: node
+  linkType: hard
+
 "@algolia/abtesting@npm:1.26.0":
   version: 1.26.0
   resolution: "@algolia/abtesting@npm:1.26.0"
@@ -2752,19 +2759,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@gryphoon/texy@npm:1.0.0":
-  version: 1.0.0
-  resolution: "@gryphoon/texy@npm:1.0.0"
-  checksum: 10/0f8619018408bcd323ed6fb2357e63e511d3cd44843d7e8af06db0641239354e21262e27fe98c95d004d5f000c2e232d505c2f88ff71bded8dd62d1647f2dfad
-  languageName: node
-  linkType: hard
-
 "@gryphoon/texy@npm:2.0.2":
   version: 2.0.2
   resolution: "@gryphoon/texy@npm:2.0.2"
   dependencies:
     linkedom: "npm:0.18.13"
   checksum: 10/7610626f3da403d5ccb67ceefef26f7d27246e41b8f8afd972eb216e0add0df61a7c9e92efae02f2ebed92a1853ca4c52836cbc461ea3e3743dccdc6a238f6a1
+  languageName: node
+  linkType: hard
+
+"@gryphoon/texy@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@gryphoon/texy@npm:2.1.0"
+  dependencies:
+    linkedom: "npm:0.18.14"
+  checksum: 10/20b6c51d708ed4b73b75351c6e2037d286fbfec6128efb9f35f61cac3e32d1bab62d23ccaaa6d0030b716a6311cfc5074d6f7c621cb8c1359e48a997af75b9f0
   languageName: node
   linkType: hard
 
@@ -2824,7 +2833,7 @@ __metadata:
   resolution: "@hackercamp/donut@workspace:donut.hackercamp.cz"
   dependencies:
     "@cloudflare/workers-types": "npm:5.20261028.1"
-    "@gryphoon/texy": "npm:1.0.0"
+    "@gryphoon/texy": "npm:2.1.0"
     "@hackercamp/lib": "workspace:*"
     "@material/mwc-drawer": "npm:0.27.0"
     "@oddbird/popover-polyfill": "npm:0.7.3"
@@ -9447,6 +9456,24 @@ __metadata:
     canvas:
       optional: true
   checksum: 10/45304e54cebeae6dab613558f4a6a0af5eb8b9a2cc05e7ab58d4648322c6a9de56f7e4245f8824ba6565e9954556ddd2dc8f75389ddbeee6f39a198ccd831884
+  languageName: node
+  linkType: hard
+
+"linkedom@npm:0.18.14":
+  version: 0.18.14
+  resolution: "linkedom@npm:0.18.14"
+  dependencies:
+    "@acemir/cssom": "npm:^0.9.32"
+    css-select: "npm:^7.0.0"
+    html-escaper: "npm:^3.0.3"
+    htmlparser2: "npm:^10.1.0"
+    uhyphen: "npm:^0.2.0"
+  peerDependencies:
+    canvas: ">= 2"
+  peerDependenciesMeta:
+    canvas:
+      optional: true
+  checksum: 10/bbc21d8597c0e055b4f60b082563cbff8ad536b6ef576326a9b15f050735ffc4ad144a2883c7444bac0b52c346261ffe67dc9def5690b001f5f8248b9cd95c8a
   languageName: node
   linkType: hard
 
